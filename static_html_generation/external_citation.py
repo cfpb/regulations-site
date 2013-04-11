@@ -51,4 +51,4 @@ class ExternalCitationLayer():
                     ot = text[int(start):int(end)]
                     rt = ExternalCitationLayer.create_link(ot, layer_element)
                     layer_pairs.append((ot, rt))
-                return layer_pairs
+            return layer_pairs

@@ -1,12 +1,12 @@
 <li id="{{node.markup_id}}">
-    {%if node.marked_up %}
+    {% if node.marked_up %}
     <p> {{node.marked_up|safe}} </p>
     {% endif %}
     {% if node.children %}
     <ol class="level-{{node.tree_level}}" 
         type="{% if node.tree_level == 2%}1{% elif node.tree_level == 3 %}i{% elif node.tree_level == 4 %}A{% endif %}">
         {% for c in node.children %}
-            {%with node=c template_name="tree.html" %}
+            {%with node=c template_name="interpretation_tree.html" %}
                 {% include template_name %}
             {% endwith %}
         {% endfor %}
