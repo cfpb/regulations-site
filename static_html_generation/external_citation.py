@@ -1,8 +1,15 @@
 import urllib
+from django.template import loader, Template, Context
+from django.conf import settings
 
 class ExternalCitationLayer():
     def __init__(self, layer):
         self.layer = layer
+
+        if not settings.configured:
+            settings.configure(TEMPLATE_DEBUG=False, 
+                TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',), 
+                TEMPLATE_DIRS = ('templates/',))
 
     @staticmethod
     def generate_fdsys_href_tag(text, parameters):
@@ -12,8 +19,12 @@ class ExternalCitationLayer():
 
         fdsys_url_base = "http://api.fdsys.gov/link"
         fdsys_url = "%s?%s" % (fdsys_url_base, urllib.urlencode(parameters))
-        tag = '<a href="%s">%s</a>' % (fdsys_url, text)
-        return tag
+
+        template = loader.get_template('external_citation.html')
+        citation = {'url':fdsys_url,
+            'label':text}
+        c = Context({'citation':citation})
+        return template.render(c).strip('\n')
 
     @staticmethod
     def generate_cfr_link(text, citation):
