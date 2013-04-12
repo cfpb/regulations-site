@@ -1,24 +1,24 @@
 {% if c.node_type == "interpretation" %}
     {% if c.children %}
-        {% for node in c.children %}
-            <section id="{{node.markup_title}}">
-                <h3> {{node.markup_title}} </h3>
+        {% for level_one in c.children %}
+            <section id="{{level_one.markup_title}}">
+                <h3> {{level_one.markup_title}} </h3>
 
-                {% if node.marked_up %}
-                <p> {{node.marked_up|safe}}</p>
+                {% if level_one.marked_up %}
+                <p> {{level_one.marked_up|safe}}</p>
                 {% endif %}
 
-                {% if node.children %}
-                    {% for n in node.children %}
-                        <h4> {{n.markup_title}} </h4>
+                {% if level_one.children %}
+                    {% for level_two in level_one.children %}
+                        <h4> {{level_two.markup_title}} </h4>
 
-                        {%if n.marked_up %}
-                        <p> {{n.marked_up|safe}}</p>
+                        {%if level_two.marked_up %}
+                        <p> {{level_two.marked_up|safe}}</p>
                         {% endif %}
 
-                        {% if n.children %}
+                        {% if level_two.children %}
                         <ol class="level-1" type="a">
-                            {% for x in n.children %}
+                            {% for node in level_two.children %}
                                 {% include "tree.html" %}
                             {% endfor %}
                         </ol>
