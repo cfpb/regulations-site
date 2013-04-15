@@ -1,7 +1,10 @@
 {% if c.node_type == "appendix" %}
+    <section id="{{c.markup_id}}">
+        <h2 class="appendix-title"> {{c.markup_title}} </h2>
+
     {% if c.children %}
         {% for level_one in c.children %}
-            <h3 class="appendix-header"> {{level_one.markup_title}} </h3>
+            <h3 class="appendix-heading"> {{level_one.markup_title}} </h3>
 
             {% if level_one.marked_up %}
             <p> {{level_one.marked_up|safe}} </p>
