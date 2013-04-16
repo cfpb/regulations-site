@@ -3,6 +3,8 @@
 from django.template import loader, Template, Context
 from django.conf import settings
 
+import settings as app_settings
+
 class HTMLBuilder():
     def __init__(self, layers_applier, toc_applier):
         self.markup = u''
@@ -11,11 +13,6 @@ class HTMLBuilder():
         self.layers_applier = layers_applier
         self.toc_applier = toc_applier
         
-        if not settings.configured:
-            settings.configure(TEMPLATE_DEBUG=False, 
-                TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',), 
-                TEMPLATE_DIRS = ('templates/',))
-
     def generate_all_html(self):
         generate_html(self.tree[''])
 
@@ -59,7 +56,9 @@ class HTMLBuilder():
 
     def render_markup(self, f=None):
         main_template = loader.get_template('simpler.html')
-        c = Context({'tree':self.tree})
+        c = Context({'tree':self.tree, 
+                        'GOOGLE_ANALYTICS_SITE':app_settings.GOOGLE_ANALYTICS_SITE, 
+                        'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID})
         return main_template.render(c) 
 
 
