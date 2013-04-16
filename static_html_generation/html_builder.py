@@ -1,13 +1,7 @@
 #!/usr/bin/env python
 
-import codecs
-import json
-
 from django.template import loader, Template, Context
 from django.conf import settings
-
-import api_stub
-from layers_applier import LayersApplier
 
 class HTMLBuilder():
     def __init__(self, layers_applier, toc_applier):
@@ -55,6 +49,11 @@ class HTMLBuilder():
         if len(node['text'].strip()):
             node['marked_up'] = self.layers_applier.apply_layers(node['text'], node['markup_id'])
 
+        toc = self.toc_applier.apply_layer(node['markup_id'])
+
+        if toc:
+            node[toc[0]] = toc[1]
+
         for c in node['children']:
             self.process_node(c)
 
@@ -63,7 +62,4 @@ class HTMLBuilder():
         c = Context({'tree':self.tree})
         return main_template.render(c) 
 
-def write_file(filename, markup):
-    f = codecs.open(filename, 'w', encoding='utf-8')
-    f.write(markup)
-    f.close()
+

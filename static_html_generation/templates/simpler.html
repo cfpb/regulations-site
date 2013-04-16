@@ -7,7 +7,14 @@
     <body>
         <div class="wrap" id="reg-content">
         <section id="{{tree.markup_id}}">
-            <h1> {{tree.markup_title}} </h1>
+         <h1> {{tree.markup_title}} </h1>
+
+         {%if tree.TOC %}
+            {% with nav_class='regulation-nav' toc_items=tree.TOC %}
+               {% include "toc.html" %} 
+            {% endwith %}
+         {%endif%}
+
             {% if tree.children %}
                 {% for c in tree.children %}
                     {%include "regulation_text.html" %}

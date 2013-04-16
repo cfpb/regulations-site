@@ -1,14 +1,8 @@
-from django.template import loader, Template, Context
-from django.conf import settings
+from django.template import loader, Context
 
 class InternalCitationLayer():
     def __init__(self, layer):
         self.layer = layer
-
-        if not settings.configured:
-            settings.configure(TEMPLATE_DEBUG=False, 
-                TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',), 
-                TEMPLATE_DIRS = ('templates/',))
 
     @staticmethod
     def create_link(text, layer_element):

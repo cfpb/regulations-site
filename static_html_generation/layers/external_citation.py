@@ -1,15 +1,10 @@
 import urllib
-from django.template import loader, Template, Context
-from django.conf import settings
+from django.template import loader, Context
 
 class ExternalCitationLayer():
-    def __init__(self, layer):
+    def __init__(self, layer, the_act):
         self.layer = layer
-
-        if not settings.configured:
-            settings.configure(TEMPLATE_DEBUG=False, 
-                TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',), 
-                TEMPLATE_DIRS = ('templates/',))
+        self.the_act = the_act
 
     @staticmethod
     def generate_fdsys_href_tag(text, parameters):
@@ -44,12 +39,18 @@ class ExternalCitationLayer():
                       "section":citation[1]}
         return ExternalCitationLayer.generate_fdsys_href_tag(text, parameters)
 
-    @staticmethod
-    def create_link(text, layer_element):
+    def generate_act_link(self, text, citation):
+        citation = self.the_act
+        return ExternalCitationLayer.generate_uscode_link(text, citation)
+
+    def create_link(self, text, layer_element):
         if layer_element['citation_type'] == 'USC':
             generator = ExternalCitationLayer.generate_uscode_link
         elif layer_element['citation_type'] == 'CFR':
             generator = ExternalCitationLayer.generate_cfr_link
+        elif layer_element['citation_type'] == 'ACT':
+            generator = self.generate_act_link
+
         return generator(text, layer_element['citation'])
 
     def apply_layer(self, text, text_index):
@@ -60,6 +61,6 @@ class ExternalCitationLayer():
             for layer_element in layer_elements:
                 for start, end in layer_element['offsets']:
                     ot = text[int(start):int(end)]
-                    rt = ExternalCitationLayer.create_link(ot, layer_element)
+                    rt = self.create_link(ot, layer_element)
                     layer_pairs.append((ot, rt))
             return layer_pairs
