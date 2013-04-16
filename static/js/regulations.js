@@ -1,13 +1,4 @@
 var RegsApp = {
-  state: {
-    // open defintions 
-    // location: definition
-    definitions: {
-      '1005-3': '1005-2-a-1'
-    }
-  },
-  layout: {},
-
   model: {
     inventory: [],
 
@@ -20,8 +11,13 @@ var RegsApp = {
       // designate a json object as the model
       if (typeof jsonObj === 'object') {
         for (var key in jsonObj) {
-          this.inventory.push(key);
-          if (typeof jsonObj[key] === 'object') {
+          if (key === 'label') {
+            if (this.inventory.indexOf(jsonObj[key]['text']) === -1) {
+              this.inventory.push(jsonObj[key]['text']);
+            }
+          }
+
+          if (isEnumerableObject(jsonObj[key])) {
             this.set(jsonObj[key]);
           }
         } 
@@ -41,27 +37,18 @@ var RegsApp = {
   } 
 };
 
+// very naive helper function
+var isEnumerableObject = function(obj) {
+  if (typeof obj === 'array' || typeof obj === 'object') {
+    return true;
+  }
+  return false;
+};
 
 // var Regs = RegsApp.model.loadFromDOM('#reg-container');
 
-var JSONObj = JSON.stringify({
-  '1005': {
-    '1005.1': {
-      'a': 'baslfkjas;dlkfjals;kdfj',
-      'b': {
-        'i': 'sdfslkdjfsalkdf',
-        'ii': 'sdkflsjdfkls'
-      },
-      'c': 'sdfsdfsdf'
-    },
-
-    '1005.3': {
-      'a': 'sdfklsjdflksdf',
-      'b': 'asdlfkjsdfk'
-    }
-  }
-});
-
 $(document).ready(function() {
-  var regE = RegsApp.model.set(JSON.parse(JSONObj)); 
+  if (typeof JSONObj !== 'undefined') {
+    var regE = RegsApp.model.set(JSONObj); 
+  }
 });

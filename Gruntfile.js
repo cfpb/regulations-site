@@ -87,7 +87,7 @@ module.exports = function(grunt) {
      * jQuery and Jasmine jQuery is included for your pleasure: https://github.com/velesin/jasmine-jquery
      */
     jasmine: {
-      src: '<%= uglify.dist.src %>',
+      src: 'static/js/regulations.js',
       options: {
         specs: 'specs/js/*.js',
         vendor: [
