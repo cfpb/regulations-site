@@ -25,7 +25,7 @@ if __name__ == "__main__":
             TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',), 
             TEMPLATE_DIRS = ('templates/',))
 
-    reg_json = api_stub.get_regulation_as_json('/vagrant/data/regulations/rege/rege.json')
+    reg_json = api_stub.get_regulation_as_json('regulations/rege/rege.json')
 
     layers_applier = LayersApplier()
 
