@@ -1,0 +1,15 @@
+{%if c.node_type == 'regulation' %}
+<section id="{{c.markup_id}}">
+    <h2 class="section-title"> {{c.markup_title}} </h2>
+        {% if c.marked_up %}
+        <p> {{c.marked_up|safe}} </p>
+        {% endif %}
+
+        <ol class="level-1" type="a">
+        {% if c.children %}
+            {% for node in c.children %}
+                {% include "tree.html"  %}
+            {% endfor %}
+        {% endif %}
+        </ol>
+{% endif %}

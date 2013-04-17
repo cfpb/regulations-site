@@ -1,0 +1,22 @@
+<li id="{{node.markup_id}}">
+    {%if node.marked_up %}
+    <p> {{node.marked_up|safe}} </p>
+    {% endif %}
+    {% if node.children %}
+    {% if node.node_type == "appendix" %}
+        {% with level=node.tree_level|add:"-1" %}
+        <ol class="level-{{level}}" 
+        type="{% if level == 2%}1{% elif level == 3 %}i{% elif level == 4 %}A{% endif %}">
+        {% endwith %}
+    {% else %}
+        <ol class="level-{{node.tree_level}}" 
+        type="{% if node.tree_level == 2%}1{% elif node.tree_level == 3 %}i{% elif node.tree_level == 4 %}A{% endif %}">
+    {% endif %}
+        {% for c in node.children %}
+            {%with node=c template_name="tree.html" %}
+                {% include template_name %}
+            {% endwith %}
+        {% endfor %}
+    </ol>
+    {% endif %}
+</li>

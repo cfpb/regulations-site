@@ -1,0 +1,34 @@
+{% if c.node_type == "interpretation" %}
+    <section id="{{c.markup_id}}">
+        <h2 class="appendix-title"> {{c.markup_title}} </h2>
+
+    {% if c.children %}
+        {% for level_one in c.children %}
+            <section id="{{level_one.markup_title}}">
+                <h3> {{level_one.markup_title}} </h3>
+
+                {% if level_one.marked_up %}
+                <p> {{level_one.marked_up|safe}}</p>
+                {% endif %}
+
+                {% if level_one.children %}
+                    {% for level_two in level_one.children %}
+                        <h4 class="appendix-subheading"> {{level_two.markup_title}} </h4>
+
+                        {%if level_two.marked_up %}
+                        <p> {{level_two.marked_up|safe}}</p>
+                        {% endif %}
+
+                        {% if level_two.children %}
+                        <ol class="level-1" type="a">
+                            {% for node in level_two.children %}
+                                {% include "tree.html" %}
+                            {% endfor %}
+                        </ol>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </section>
+        {% endfor %}
+    {% endif %}
+{% endif %}

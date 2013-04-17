@@ -1,0 +1,7 @@
+<nav>
+    <ol class="{{nav_class}}">
+        {% for item in toc_items %}
+            <li><a href="{{item.url}}">{{item.label}}</a></li>
+        {% endfor %}
+    </ol>
+</nav>
