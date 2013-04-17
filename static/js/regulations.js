@@ -4,8 +4,6 @@ var Regs = {
     content: {},
 
     loadFromDOM: function($el) {
-      // traverse dom starting at $el
-      // create a tree from all IDed els?
     },
 
     parse: function(jsonObj) {
