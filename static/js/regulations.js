@@ -53,7 +53,7 @@ var Regs = {
       var format = format || 'json',
           withChildren = withChildren || false,
           obj = this.isLoaded(id) || this.request(id, format);
-      if (format === 'json') return obj;
+      if (format === 'json') return obj || false;
     }
   } 
 };
