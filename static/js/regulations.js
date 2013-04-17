@@ -1,6 +1,7 @@
 var RegsApp = {
   model: {
     inventory: [],
+    content: {},
 
     loadFromDOM: function($el) {
       // traverse dom starting at $el
@@ -8,20 +9,24 @@ var RegsApp = {
     },
 
     set: function(jsonObj) {
-      // designate a json object as the model
+      // add json objects as model instances
+      var workingObj;
+
       if (typeof jsonObj === 'object') {
         for (var key in jsonObj) {
           if (key === 'label') {
-            if (this.inventory.indexOf(jsonObj[key]['text']) === -1) {
-              this.inventory.push(jsonObj[key]['text']);
+            workingObj = jsonObj[key];
+            if (this.inventory.indexOf(workingObj['text']) === -1) {
+              this.inventory.push(workingObj['text']);
+              this.content[workingObj['text']] = jsonObj['text'];
             }
           }
 
-          if (isEnumerableObject(jsonObj[key])) {
+          if (isIterable(jsonObj[key])) {
             this.set(jsonObj[key]);
           }
         } 
-      }            
+      } 
     },
 
     isLoaded: function(id) {
@@ -38,7 +43,7 @@ var RegsApp = {
 };
 
 // very naive helper function
-var isEnumerableObject = function(obj) {
+var isIterable = function(obj) {
   if (typeof obj === 'array' || typeof obj === 'object') {
     return true;
   }
