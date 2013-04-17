@@ -5,8 +5,8 @@ class InternalCitationLayer():
         self.layer = layer
 
     @staticmethod
-    def create_link(text, layer_element):
-        template =  loader.get_template('internal_citation.html')
+    def create_link(text, layer_element, template_name='internal_citation.html'):
+        template =  loader.get_template(template_name)
 
         citation_url = "-".join(layer_element['citation'])
         citation = {'url': citation_url, 
