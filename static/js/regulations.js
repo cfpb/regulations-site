@@ -8,25 +8,38 @@ var Regs = {
       // create a tree from all IDed els?
     },
 
-    set: function(jsonObj) {
-      // add object as reg entity
+    parse: function(jsonObj) {
       var workingObj;
-
       if (typeof jsonObj === 'object') {
         for (var key in jsonObj) {
           if (key === 'label') {
             workingObj = jsonObj[key];
-            if (this.inventory.indexOf(workingObj['text']) === -1) {
-              this.inventory.push(workingObj['text']);
-              this.content[workingObj['text']] = jsonObj['text'];
-            }
+            workingObj['content'] = jsonObj['text'];
+            this.store(workingObj);
           }
 
           if (isIterable(jsonObj[key])) {
-            this.set(jsonObj[key]);
+            this.parse(jsonObj[key]);
           }
         } 
-      } 
+      }
+    },
+
+    store: function(obj) {
+      var label = obj['text'],
+          record,
+          cached = this.isLoaded(label);
+
+      if (!(cached)) {
+        this.inventory.push(label);
+        this.content[label] = obj['content'];
+        record = obj['content'];
+      }
+      else {
+        record = cached;
+      }
+
+      return record; 
     },
 
     isLoaded: function(id) {
@@ -36,15 +49,15 @@ var Regs = {
       return false;    
     },
 
-    retrieve: function(id, format) {
+    retrieve: function(id, format, withChildren) {
       var format = format || 'json',
+          withChildren = withChildren || false,
           obj = this.isLoaded(id) || this.request(id, format);
       if (format === 'json') return obj;
     }
   } 
 };
 
-// very naive helper function
 var isIterable = function(obj) {
   if (typeof obj === 'array' || typeof obj === 'object') {
     return true;
@@ -56,6 +69,6 @@ var isIterable = function(obj) {
 
 $(document).ready(function() {
   if (typeof JSONObj !== 'undefined') {
-    var regE = Regs.data.set(JSONObj); 
+    var regE = Regs.data.parse(JSONObj); 
   }
 });

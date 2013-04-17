@@ -42,7 +42,7 @@ describe("App data", function() {
         ]
     }
 
-    Regs.data.set(this.jsonFixture);
+    Regs.data.parse(this.jsonFixture);
   });
 
   it("should have json", function() {
