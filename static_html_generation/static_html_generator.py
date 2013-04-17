@@ -5,6 +5,7 @@ import json
 
 from layers.external_citation import ExternalCitationLayer
 from layers.internal_citation import InternalCitationLayer
+from layers.definitions import DefinitionsLayer
 from layers.layers_applier import LayersApplier
 from layers.toc_applier import TableOfContentsLayer
 from html_builder import HTMLBuilder
@@ -34,6 +35,9 @@ if __name__ == "__main__":
     layers_applier.add_layer(ExternalCitationLayer(el, ['15', '1693']))
     il = json.load(open('regulations/rege/internal_citations_layer.json'))
     layers_applier.add_layer(InternalCitationLayer(il))
+
+    dl = json.load(open('regulations/rege/terms.json'))
+    layers_applier.add_layer(DefinitionsLayer(dl))
 
     tl = json.load(open('regulations/rege/toc_layer.json'))
     toc_applier = TableOfContentsLayer(tl)
