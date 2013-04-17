@@ -3,9 +3,6 @@ var Regs = {
     inventory: [],
     content: {},
 
-    loadFromDOM: function($el) {
-    },
-
     parse: function(jsonObj) {
       var workingObj;
       if (typeof jsonObj === 'object') {
@@ -90,10 +87,8 @@ var isIterable = function(obj) {
   return false;
 };
 
-// var Regs = Regs.data.loadFromDOM('#reg-container');
-
 $(document).ready(function() {
   if (typeof JSONObj !== 'undefined') {
-    var regE = Regs.data.parse(JSONObj); 
+    Regs.data.parse(JSONObj); 
   }
 });
