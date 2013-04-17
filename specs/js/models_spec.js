@@ -68,4 +68,18 @@ describe("App data", function() {
   it("should retrieve 2345-1", function() {
     expect(Regs.data.retrieve('2345-1')).toEqual("asdfksjflksjdf"); 
   });
+
+  it("should get children", function() {
+    var arr = ["2345-1", "2345-1-b", "2345-1-a"];
+
+    expect(Regs.data.getChildren('2345')).toEqual(arr);
+  });
+
+  it("should not get children", function() {
+    expect(Regs.data.getChildren('233')).toEqual([]);
+  });
+
+  it("should get parent", function() {
+    expect(Regs.data.getParent('2345-1-b')).toEqual("asdfksjflksjdf");
+  });
 });

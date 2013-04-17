@@ -52,6 +52,33 @@ var Regs = {
           withChildren = withChildren || false,
           obj = this.isLoaded(id) || this.request(id, format);
       if (format === 'json') return obj || false;
+    },
+
+    getChildren: function(id) {
+      var kids = [],
+          inventoryLen = this.inventory.length,
+          regex = new RegExp(id + "[\-,a-z,0-9]");
+
+      while (inventoryLen--) {
+        if (regex.test(this.inventory[inventoryLen])) {
+          kids.push(this.inventory[inventoryLen]);
+        } 
+      }
+
+      return kids;
+    },
+
+    getParent: function(id) {
+      var parent, z;
+      z  = id.split('-');
+      z.pop();
+      parent = z.join('-');
+
+      if (this.inventory.indexOf(parent) !== -1) {
+        return this.content[parent];
+      }
+
+      return false;
     }
   } 
 };
