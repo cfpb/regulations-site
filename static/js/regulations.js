@@ -1,5 +1,5 @@
-var RegsApp = {
-  model: {
+var Regs = {
+  data: {
     inventory: [],
     content: {},
 
@@ -9,7 +9,7 @@ var RegsApp = {
     },
 
     set: function(jsonObj) {
-      // add json objects as model instances
+      // add object as reg entity
       var workingObj;
 
       if (typeof jsonObj === 'object') {
@@ -30,14 +30,16 @@ var RegsApp = {
     },
 
     isLoaded: function(id) {
-      // return boolean 
-      // is piece of content loaded in app?
+      if (this.inventory.indexOf(id) !== -1) {
+        return this.content[id];
+      }
+      return false;    
     },
 
     retrieve: function(id, format) {
-      // determine if content is loaded locally
-      // if not, request from server
-      // format = json or html
+      var format = format || 'json',
+          obj = this.isLoaded(id) || this.request(id, format);
+      if (format === 'json') return obj;
     }
   } 
 };
@@ -50,10 +52,10 @@ var isIterable = function(obj) {
   return false;
 };
 
-// var Regs = RegsApp.model.loadFromDOM('#reg-container');
+// var Regs = Regs.data.loadFromDOM('#reg-container');
 
 $(document).ready(function() {
   if (typeof JSONObj !== 'undefined') {
-    var regE = RegsApp.model.set(JSONObj); 
+    var regE = Regs.data.set(JSONObj); 
   }
 });

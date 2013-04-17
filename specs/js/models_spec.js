@@ -37,12 +37,12 @@ describe("App data", function() {
                   "text": "2345-1", 
                   "title": "2345.1 asdlkfjasldkfj"
               }, 
-              "text": "asdfksjflksjdf\n\n"
+              "text": "asdfksjflksjdf"
           } 
         ]
     }
 
-    RegsApp.model.set(this.jsonFixture);
+    Regs.data.set(this.jsonFixture);
   });
 
   it("should have json", function() {
@@ -50,18 +50,22 @@ describe("App data", function() {
   });
 
   it("should have an inventory", function() {
-    expect(RegsApp.model.inventory).toBeTruthy();
+    expect(Regs.data.inventory).toBeTruthy();
   });
 
   it("should have an inventory with 3 values", function() {
-    expect(RegsApp.model.inventory.length).toEqual( 3 );
+    expect(Regs.data.inventory.length).toEqual( 3 );
   });
 
   it("should have content", function() {
-    expect(RegsApp.model.content).toBeTruthy(); 
+    expect(Regs.data.content).toBeTruthy(); 
   });
 
   it("should have content for 2345-1-b", function() {
-    expect(RegsApp.model.content['2345-1-b'].valueOf()).toEqual("sdlkfjslkdfjskldj");
+    expect(Regs.data.content['2345-1-b'].valueOf()).toEqual("sdlkfjslkdfjskldj");
+  });
+
+  it("should retrieve 2345-1", function() {
+    expect(Regs.data.retrieve('2345-1')).toEqual("asdfksjflksjdf"); 
   });
 });
