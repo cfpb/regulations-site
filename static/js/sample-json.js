@@ -4,37 +4,66 @@ define("sample-json", function() {
       {
           "children": [
               {
-                  "children": [], 
+                  "children": [
+                    {
+                      "label": {
+                        "text": "2345-9-a-1"
+                      },
+                      "text": "<dfn>odio vitae</dfn> Integer eleifend, magna nec rutrum rhoncus, dolor tellus pellentesque nunc, et laoreet augue augue elementum neque. Praesent et metus elementum ipsum ultricies condimentum."
+                    },
+                    
+                    {
+                      "label": {
+                        "text": "2345-9-a-2"
+                      },
+                      "title": "Phasellus pellentesque ultricies augue, sed tincidunt mi tempus quis"
+                    }
+
+                  ], 
                   "label": {
                       "parts": [
                           "2345", 
-                          "1", 
+                          "9", 
                           "a"
                       ], 
-                      "text": "2345-1-a"
+                      "text": "2345-9-a"
                   }, 
-                  "text": "sdflkjsdklfjsd"
+                  "text": "<p><dfn>placerat in egestas.</dfn> Sed erat enim, hendrerit mollis tempus et, consequat et ante. Donec imperdiet orci eget nisi lobortis molestie. Nullam pellentesque scelerisque hendrerit</p>"
               }, 
               {
-                  "children": [], 
+                  "children": [
+                    {
+                      "label": {
+                        "text": "2345-9-b-1"
+                      },
+                      "title": "Nam auctor"
+                    },
+
+                    {
+                      "label": {
+                        "text": "2345-9-b-2"
+                      },
+                      "title": "Nulla consectetur tristique nulla ut posuere"
+                    }
+                  ], 
                   "label": {
                       "parts": [
                           "2345", 
-                          "1", 
+                          "9", 
                           "b"
                       ], 
-                      "text": "2345-1-b"
+                      "text": "2345-9-b"
                   }, 
-                  "text": "sdlkfjslkdfjskldj"
+                  "title": "<p>Curabitur venenatis orci et est interdum</p>"
               }
           ], 
           "label": {
               "parts": [
                   "2345", 
-                  "1"
+                  "9"
               ], 
-              "text": "2345-1", 
-              "title": "2345.1 asdlkfjasldkfj"
+              "text": "2345-9", 
+              "title": "2345.9 asdlkfjasldkfj"
           }, 
           "text": "asdfksjflksjdf\n\n"
       } 

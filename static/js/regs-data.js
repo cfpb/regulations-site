@@ -50,7 +50,17 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
       var format = format || 'json',
           withChildren = withChildren || false,
           obj = this.isLoaded(id) || this.request(id, format);
-      if (format === 'json') return obj || false;
+      return obj;
+    },
+
+    // stub for talking to api
+    request: function(id, format) {
+      var content = {
+        "2345-9-b-1": "sdflkjsdfkjsdklfj",
+        "2345-9-b-2": "weoiruwoieruwioeur",
+        "2345-9-c": "xmncbvnmxbcvmnxb" 
+      };
+      return content[id];
     },
 
     getChildren: function(id) {
