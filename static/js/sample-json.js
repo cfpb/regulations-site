@@ -1,4 +1,5 @@
-JSONObj = {
+define("sample-json", function() {
+  return {
    "children": [
       {
           "children": [
@@ -38,4 +39,5 @@ JSONObj = {
           "text": "asdfksjflksjdf\n\n"
       } 
     ]
-};
+  }
+});

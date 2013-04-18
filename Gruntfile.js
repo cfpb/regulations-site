@@ -87,15 +87,18 @@ module.exports = function(grunt) {
      * jQuery and Jasmine jQuery is included for your pleasure: https://github.com/velesin/jasmine-jquery
      */
     jasmine: {
-      src: 'static/js/regulations.js',
-      options: {
-        specs: 'specs/js/*.js',
-        vendor: [
-          'specs/js/vendor/*.js'
-        ],
-        helpers: [
-          'specs/js/helpers/*.js'
-        ]
+      all: {
+        src: 'src/js/*.js',
+        options: {
+          template: require('grunt-template-jasmine-requirejs'),
+          specs: ['specs/js/*.js'],
+          vendor: [
+            'specs/js/vendor/*.js'
+          ],
+          helpers: [
+            'specs/js/helpers/*.js'
+          ]
+        }
       }
     },
 
