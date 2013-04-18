@@ -1,4 +1,4 @@
-require(['static/js/regs-data'], function(RegsData) {
+require(['regs-data'], function(RegsData) {
   describe("App data", function() {
     beforeEach(function() {
       testjson = {
@@ -44,10 +44,6 @@ require(['static/js/regs-data'], function(RegsData) {
       }
 
       RegsData.parse(testjson);
-    });
-
-    it("should have json", function() {
-      expect(this.jsonFixture).toBeTruthy();
     });
 
     it("should have an inventory", function() {
