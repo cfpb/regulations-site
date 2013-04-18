@@ -1,75 +1,32 @@
-require(['regs-data'], function(RegsData) {
+require(['regs-data', 'sample-json'], function(RegsData, testjson) {
   describe("App data", function() {
-    beforeEach(function() {
-      testjson = {
-         "children": [
-            {
-                "children": [
-                    {
-                        "children": [], 
-                        "label": {
-                            "parts": [
-                                "2345", 
-                                "1", 
-                                "a"
-                            ], 
-                            "text": "2345-1-a"
-                        }, 
-                        "text": "sdflkjsdklfjsd"
-                    }, 
-                    {
-                        "children": [], 
-                        "label": {
-                            "parts": [
-                                "2345", 
-                                "1", 
-                                "b"
-                            ], 
-                            "text": "2345-1-b"
-                        }, 
-                        "text": "sdlkfjslkdfjskldj"
-                    }
-                ], 
-                "label": {
-                    "parts": [
-                        "2345", 
-                        "1"
-                    ], 
-                    "text": "2345-1", 
-                    "title": "2345.1 asdlkfjasldkfj"
-                }, 
-                "text": "asdfksjflksjdf"
-            } 
-          ]
-      }
-
-      RegsData.parse(testjson);
-    });
+    RegsData.parse(testjson);
 
     it("should have an inventory", function() {
       expect(RegsData.inventory).toBeTruthy();
     });
 
-    it("should have an inventory with 3 values", function() {
-      expect(RegsData.inventory.length).toEqual( 3 );
+    it("should have an inventory with 8 values", function() {
+      expect(RegsData.inventory.length).toEqual( 8 );
     });
 
     it("should have content", function() {
       expect(RegsData.content).toBeTruthy(); 
     });
 
-    it("should have content for 2345-1-b", function() {
-      expect(RegsData.content['2345-1-b'].valueOf()).toEqual("sdlkfjslkdfjskldj");
+    it("should have content for 2345-9-a", function() {
+      var content = "<p><dfn>placerat in egestas.</dfn> Sed erat enim, hendrerit mollis tempus et, consequat et ante. Donec imperdiet orci eget nisi lobortis molestie. Nullam pellentesque scelerisque hendrerit</p>";
+      expect(RegsData.content['2345-9-a'].valueOf()).toEqual(content);
     });
 
-    it("should retrieve 2345-1", function() {
-      expect(RegsData.retrieve('2345-1')).toEqual("asdfksjflksjdf"); 
+    it("should retrieve 2345-9", function() {
+      expect(RegsData.retrieve('2345-9')).toEqual("asdfksjflksjdf"); 
     });
 
     it("should get children", function() {
-      var arr = ["2345-1", "2345-1-b", "2345-1-a"];
+      var arr = ["2345-9-a-2", "2345-9-a-1"];
 
-      expect(RegsData.getChildren('2345')).toEqual(arr);
+      expect(RegsData.getChildren('2345-9-a')).toEqual(arr);
     });
 
     it("should not get children", function() {
@@ -77,7 +34,15 @@ require(['regs-data'], function(RegsData) {
     });
 
     it("should get parent", function() {
-      expect(RegsData.getParent('2345-1-b')).toEqual("asdfksjflksjdf");
+      expect(RegsData.getParent('2345-9-b')).toEqual("asdfksjflksjdf");
+    });
+
+    it("should differentiate between inventory presence and being loaded", function() {
+      expect(RegsData.isLoaded("2345-9-b-1")).toEqual(false);
+    });
+
+    it("should return content for 2345-9-b-2", function() {
+      expect(RegsData.retrieve("2345-9-b-2")).toEqual("weoiruwoieruwioeur");
     });
   });
 });

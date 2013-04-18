@@ -6,7 +6,7 @@ require(["jquery", "regs-data", "sample-json"], function($, RegsData, JSONObj) {
     };
 
     if (typeof JSONObj !== 'undefined') {
-      // RegsData.parse(JSONObj); 
+      RegsData.parse(JSONObj); 
         
       // event bindings
       $('.expand').on('click', function(e) {

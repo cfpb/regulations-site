@@ -41,7 +41,9 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
 
     isLoaded: function(id) {
       if (this.inventory.indexOf(id) !== -1) {
-        return this.content[id];
+        if (this.content[id]) {
+          return this.content[id];
+        }
       }
       return false;    
     },

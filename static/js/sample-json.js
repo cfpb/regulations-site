@@ -55,8 +55,15 @@ define("sample-json", function() {
                       "text": "2345-9-b"
                   }, 
                   "title": "<p>Curabitur venenatis orci et est interdum</p>"
-              }
+              },
+            {
+              "label": {
+                "text": "2345-9-c"
+              },
+              "title": "Cras id venenatis tellus"
+            }
           ], 
+
           "label": {
               "parts": [
                   "2345", 
@@ -65,7 +72,7 @@ define("sample-json", function() {
               "text": "2345-9", 
               "title": "2345.9 asdlkfjasldkfj"
           }, 
-          "text": "asdfksjflksjdf\n\n"
+          "text": "asdfksjflksjdf"
       } 
     ]
   }
