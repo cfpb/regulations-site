@@ -23,3 +23,5 @@ To experiment and test solutions for managing data on the client in a way that:
 - minimizes DOM traversal for performance
 - minimizes API calls for performance
 - can use data stored both in cache and in the DOM to give content different presentation attributes based on user input
+- to accept data from the server in either html and json, to be extensible for other input
+- to keep the DOM light enough so that the user has a fluid experience
