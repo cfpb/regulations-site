@@ -9,9 +9,11 @@ from layers.definitions import DefinitionsLayer
 from layers.layers_applier import LayersApplier
 from layers.toc_applier import TableOfContentsLayer
 from html_builder import HTMLBuilder
-import api_stub
+import api_reader
 
+import settings as app_settings
 from django.conf import settings
+
 
 def write_file(filename, markup):
     """ Write out a file using the UTF-8 codec. """
@@ -25,21 +27,23 @@ if __name__ == "__main__":
             TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',), 
             TEMPLATE_DIRS = ('templates/',))
 
-    reg_json = api_stub.get_regulation_as_json('regulations/rege/rege.json')
+    api = api_reader.Client(app_settings.API_BASE)
+    regulation, version = "1005", "20111227"
+    reg_json = api.regulation(regulation, version)
 
     layers_applier = LayersApplier()
 
-    el = json.load(open('regulations/rege/external_citations_layer.json'))
+    el = api.layer("external-citations", regulation, version)
     reference_EFT_act = ['15', '1693'] #Title 15, Section 1693 of the United States Code
 
     layers_applier.add_layer(ExternalCitationLayer(el, ['15', '1693']))
-    il = json.load(open('regulations/rege/internal_citations_layer.json'))
+    il = api.layer("internal-citations", regulation, version)
     layers_applier.add_layer(InternalCitationLayer(il))
 
-    dl = json.load(open('regulations/rege/terms.json'))
+    dl = api.layer("terms", regulation, version)
     layers_applier.add_layer(DefinitionsLayer(dl))
 
-    tl = json.load(open('regulations/rege/toc_layer.json'))
+    tl = api.layer("toc", regulation, version)
     toc_applier = TableOfContentsLayer(tl)
     
     makers_markup = HTMLBuilder(layers_applier, toc_applier)
