@@ -1,4 +1,4 @@
-require(["jquery", "regs-data", "sample-json"], function($, RegsData, JSONObj) {
+require(["jquery", "./lib/underscore", "./lib/backbone", "regs-data", "sample-json"], function($, _, Backbone, RegsData, JSONObj) {
   $(document).ready(function() {
     // template stub
     var template = function(b, p) {
