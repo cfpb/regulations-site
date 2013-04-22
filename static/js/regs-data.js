@@ -52,6 +52,11 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
       var format = format || 'json',
           withChildren = withChildren || false,
           obj = this.isLoaded(id) || this.request(id, format);
+
+      if (!obj) {
+        throw new Error("Can't retrive this definition");
+      }
+
       return obj;
     },
 

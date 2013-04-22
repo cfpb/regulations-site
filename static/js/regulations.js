@@ -6,17 +6,23 @@ require(["jquery", "underscore", "backbone", "regs-data", "sample-json", "defini
     };
 
     if (typeof JSONObj !== 'undefined') {
+      // test data
       RegsData.parse(JSONObj); 
 
+      /* 
+       * EVENT BINDINGS 
+       */
+
+      // click term link, open definition
       $('.definition').on('click', function(e) {
         e.preventDefault();
         var defId = $(this).attr('data-definition'),
             def = new DefinitionView({
-              model: defId
+              termId: defId
             });
       });
-        
-      // event bindings
+
+      // test "V" links
       $('.expand').on('click', function(e) {
         e.preventDefault();
         var pid = $(this).parent().attr('id'),

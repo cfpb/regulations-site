@@ -1,15 +1,25 @@
-define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
+define(["jquery", "underscore", "backbone", "regs-data"], function($, _, Backbone, RegsData) {
   var DefinitionView = Backbone.View.extend({
     className: "open-definition",
     events: {},
 
     initialize: function() {
-      console.log(this.model);
+      console.log(this.options.termId);
+      this.termLink = {
+      };
+
+      this.model = {
+        id: this.options.termId,
+        content: RegsData.retrieve(this.options.termId) 
+      };
+
+      this.render();
 //      this.listenTo(this.termLink, "close", this.remove);
     },
 
     render: function() {
-      // find context from this.termLink
+      this.$el.html(this.model.content);
+      $('body').append(this.$el);
     }
   });
 
