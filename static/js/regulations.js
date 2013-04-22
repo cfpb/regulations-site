@@ -1,8 +1,9 @@
 require(["jquery", "underscore", "backbone", "regs-data", "sample-json", "definition-view"], function($, _, Backbone, RegsData, JSONObj, DefinitionView) {
 
-window.RegsViews = {
-  openDefinitions: {}
-}; 
+  // global state objects
+  window.RegsViews = {
+    openDefinitions: {}
+  }; 
 
   $(document).ready(function() {
     // template stub
@@ -17,12 +18,16 @@ window.RegsViews = {
       /* 
        * EVENT BINDINGS 
        */
-
       // click term link, open definition
       $('.definition').on('click', function(e) {
         e.preventDefault();
         var defId = $(this).attr('data-definition');
 
+        // briefly considered giving the term link its own view
+        // decided that it was unecessary for now. if this event
+        // binding section gets out of hand, we should reconsider [ts]
+
+        // TODO: supports only one open definition
         if (!RegsViews.openDefinitions[defId]) {
           RegsViews.openDefinitions[defId] = new DefinitionView({
             termId: defId,
@@ -33,7 +38,6 @@ window.RegsViews = {
           RegsViews.openDefinitions[defId].remove();
           delete(RegsViews.openDefinitions[defId]);
         }
-
       });
 
       // test "V" links
