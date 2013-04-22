@@ -4,9 +4,7 @@ define(["jquery", "underscore", "backbone", "regs-data"], function($, _, Backbon
     events: {},
 
     initialize: function() {
-      console.log(this.options.termId);
-      this.termLink = {
-      };
+      this.$termLink = $(this.options.termLink);
 
       this.model = {
         id: this.options.termId,
@@ -14,13 +12,13 @@ define(["jquery", "underscore", "backbone", "regs-data"], function($, _, Backbon
       };
 
       this.render();
-//      this.listenTo(this.termLink, "close", this.remove);
     },
 
     render: function() {
       this.$el.html(this.model.content);
       $('body').append(this.$el);
     }
+
   });
 
   return DefinitionView;

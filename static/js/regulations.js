@@ -1,4 +1,9 @@
 require(["jquery", "underscore", "backbone", "regs-data", "sample-json", "definition-view"], function($, _, Backbone, RegsData, JSONObj, DefinitionView) {
+
+window.RegsViews = {
+  openDefinitions: {}
+}; 
+
   $(document).ready(function() {
     // template stub
     var template = function(b, p) {
@@ -16,10 +21,19 @@ require(["jquery", "underscore", "backbone", "regs-data", "sample-json", "defini
       // click term link, open definition
       $('.definition').on('click', function(e) {
         e.preventDefault();
-        var defId = $(this).attr('data-definition'),
-            def = new DefinitionView({
-              termId: defId
-            });
+        var defId = $(this).attr('data-definition');
+
+        if (!RegsViews.openDefinitions[defId]) {
+          RegsViews.openDefinitions[defId] = new DefinitionView({
+            termId: defId,
+            termLink: e.target
+          });
+        }
+        else {
+          RegsViews.openDefinitions[defId].remove();
+          delete(RegsViews.openDefinitions[defId]);
+        }
+
       });
 
       // test "V" links
