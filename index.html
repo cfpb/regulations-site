@@ -1,6 +1,19 @@
 <script>
   var require = {
-    baseUrl: "static/js"
+    baseUrl: "static/js",
+    paths: {
+      underscore: './lib/underscore',
+      backbone: './lib/backbone'
+    },
+    shim: {
+      underscore: {
+        exports: '_'
+      },
+      backbone: {
+        deps: ['underscore'],
+        exports: 'Backbone'
+      }
+    }
   };
 </script>
 <script data-main="regulations" src="static/js/lib/require-jquery.js"></script>
@@ -14,7 +27,7 @@
       <li id="2345-9-a"><p><dfn>placerat in egestas.</dfn> Sed erat enim, hendrerit mollis tempus et, consequat et ante. Donec imperdiet orci eget nisi lobortis molestie. Nullam pellentesque scelerisque hendrerit</p>
 
       <ol class="level-2" type="1">
-        <li id="2345-9-a-1"><dfn>odio vitae</dfn> Integer eleifend, magna nec rutrum rhoncus, dolor tellus pellentesque nunc, et laoreet augue augue elementum neque. Praesent et metus elementum ipsum ultricies condimentum. </li>
+        <li id="2345-9-a-1"><dfn>odio vitae</dfn> Integer eleifend, magna nec rutrum rhoncus, dolor tellus <a href="#1005-2-e" data-definition="1005-2-e" class="definition">pellentesque</a> nunc, et laoreet augue augue elementum neque. Praesent et metus elementum ipsum ultricies condimentum. </li>
 
         <li id="2345-9-a-2">Phasellus pellentesque ultricies augue, sed tincidunt mi tempus quis <a href="" class="expand">V</a></li>
       </ol>
