@@ -91,6 +91,23 @@ module.exports = function(grunt) {
         src: 'static/js/*.js',
         options: {
           template: require('grunt-template-jasmine-requirejs'),
+          templateOptions: {
+            requireConfig: {
+              paths: {
+                underscore: './lib/underscore',
+                backbone: './lib/backbone'
+              },
+              shim: {
+                underscore: {
+                  exports: '_'
+                },
+                backbone: {
+                  deps: ['underscore'],
+                  exports: 'Backbone'
+                }
+              }
+            }
+          },
           specs: ['specs/js/*.js'],
           vendor: [
             'specs/js/vendor/*.js'

@@ -1,4 +1,4 @@
-define(["jquery", "underscore", "backbone", "regs-data"], function($, _, Backbone, RegsData) {
+define("definition-view", ["jquery", "underscore", "backbone", "regs-data"], function($, _, Backbone, RegsData) {
   var DefinitionView = Backbone.View.extend({
     className: "open-definition",
     events: {},
@@ -17,6 +17,8 @@ define(["jquery", "underscore", "backbone", "regs-data"], function($, _, Backbon
     render: function() {
       this.$el.html(this.model.content);
       $('body').append(this.$el);
+
+      return this;
     }
 
   });
