@@ -2,6 +2,8 @@
 
 import codecs
 import json
+from os import path
+import shutil
 
 from layers.external_citation import ExternalCitationLayer
 from layers.internal_citation import InternalCitationLayer
@@ -52,3 +54,6 @@ if __name__ == "__main__":
     markup = makers_markup.render_markup()
 
     write_file('/tmp/rege.html', markup)
+    if path.exists('/tmp/static/css'):
+        shutil.rmtree('/tmp/static/css')
+    shutil.copytree('static/css', '/tmp/static/css')
