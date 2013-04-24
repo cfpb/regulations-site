@@ -88,11 +88,13 @@ module.exports = function(grunt) {
      */
     jasmine: {
       all: {
-        src: 'static/js/*.js',
+        src: './static/js/*.js',
         options: {
+          keepRunner: true,
           template: require('grunt-template-jasmine-requirejs'),
           templateOptions: {
             requireConfig: {
+              baseUrl: 'static/js',
               paths: {
                 underscore: './lib/underscore',
                 backbone: './lib/backbone'
@@ -108,12 +110,12 @@ module.exports = function(grunt) {
               }
             }
           },
-          specs: ['specs/js/*.js'],
+          specs: ['./specs/js/*.js'],
           vendor: [
-            'specs/js/vendor/*.js'
+            './vendor/*.js'
           ],
           helpers: [
-            'specs/js/helpers/*.js'
+            './helpers/*.js'
           ]
         }
       }

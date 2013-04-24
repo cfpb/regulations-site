@@ -13,7 +13,9 @@ require(["jquery", "underscore", "backbone", "regs-data", "sample-json", "defini
 
     if (typeof JSONObj !== 'undefined') {
       // test data
-      RegsData.parse(JSONObj); 
+      if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+        RegsData.parse(JSONObj); 
+      }
 
       /* 
        * EVENT BINDINGS 
