@@ -1,13 +1,11 @@
 require(['regs-data', 'sample-json'], function(RegsData, testjson) {
   describe("App data", function() {
-    RegsData.parse(testjson);
-
-    it("should have an inventory", function() {
-      expect(RegsData.inventory).toBeTruthy();
+    it("should have an regStructure", function() {
+      expect(RegsData.regStructure).toBeTruthy();
     });
 
-    it("should have an inventory with 8 values", function() {
-      expect(RegsData.inventory.length).toEqual( 8 );
+    it("should have an regStructure with 8 values", function() {
+      expect(RegsData.regStructure.length).toEqual( 8 );
     });
 
     it("should have content", function() {
@@ -37,7 +35,7 @@ require(['regs-data', 'sample-json'], function(RegsData, testjson) {
       expect(RegsData.getParent('2345-9-b')).toEqual("asdfksjflksjdf");
     });
 
-    it("should differentiate between inventory presence and being loaded", function() {
+    it("should differentiate between regStructure presence and being loaded", function() {
       expect(RegsData.isLoaded("2345-9-b-1")).toEqual(false);
     });
 

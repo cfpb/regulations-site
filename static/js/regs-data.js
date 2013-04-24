@@ -1,6 +1,6 @@
 define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
   return {
-    inventory: [],
+    regStructure: [],
     content: {},
 
     parse: function(jsonObj) {
@@ -28,9 +28,12 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
           cached = this.isLoaded(label);
 
       if (!(cached)) {
-        this.inventory.push(label);
         this.content[label] = obj['content'];
         record = obj['content'];
+
+        if (this.regStructure.indexOf(label) === -1) {
+          this.regStructure.push(label);
+        }
       }
       else {
         record = cached;
@@ -40,10 +43,8 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
     },
 
     isLoaded: function(id) {
-      if (this.inventory.indexOf(id) !== -1) {
-        if (this.content[id]) {
-          return this.content[id];
-        }
+      if (this.content[id]) {
+        return this.content[id];
       }
       return false;    
     },
@@ -63,6 +64,7 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
     // stub for talking to api
     request: function(id, format) {
       var content = {
+        "2345-9-a-2": "klsdiuenjwkd",
         "2345-9-b-1": "sdflkjsdfkjsdklfj",
         "2345-9-b-2": "weoiruwoieruwioeur",
         "2345-9-c": "xmncbvnmxbcvmnxb" 
@@ -72,12 +74,12 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
 
     getChildren: function(id) {
       var kids = [],
-          inventoryLen = this.inventory.length,
+          regStructureLen = this.regStructure.length,
           regex = new RegExp(id + "[\-,a-z,0-9]");
 
-      while (inventoryLen--) {
-        if (regex.test(this.inventory[inventoryLen])) {
-          kids.push(this.inventory[inventoryLen]);
+      while (regStructureLen--) {
+        if (regex.test(this.regStructure[regStructureLen])) {
+          kids.push(this.regStructure[regStructureLen]);
         } 
       }
 
@@ -90,7 +92,7 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
       z.pop();
       parent = z.join('-');
 
-      if (this.inventory.indexOf(parent) !== -1) {
+      if (this.regStructure.indexOf(parent) !== -1) {
         return this.content[parent];
       }
 
