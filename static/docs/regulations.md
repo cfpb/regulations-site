@@ -10,11 +10,12 @@
 ## Tech stack
 - Backbone, Underscore
 - RequireJS with jQuery built in
-- Vanilla RequireJS and jQuery 1.9.1 for unit tests
+- Vanilla RequireJS and jQuery 1.9.1 for unit tests (Jasmine and Require w/ jQuery onboard do not get along)
 - Grunt
 - Jasmine
 
 ## Dependencies
+- If you're new to Grunt, ask Theresa about it. 
 - If you have the Grunt packages installed already, you should just be able to "npm install" at the project root and get all dependencies
 
 ## Doing stuff
