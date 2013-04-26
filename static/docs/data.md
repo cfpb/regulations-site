@@ -6,16 +6,22 @@
   - Deps: regs-helpers.js, sample-json.js
 
 ## Tech stack
+- Backbone, Underscore
 - RequireJS with jQuery built in
+- Vanilla RequireJS and jQuery 1.9.1 for unit tests
 - Grunt
 - Jasmine
-  - When you run specs, for now you'll see an error like "Illegal path or script error: ['jquery']". I think this has to do with us using the RequireJS with jQuery built in. All specs should run fine, though.
 
 ## Dependencies
 - If you have the Grunt packages installed already, you should just be able to "npm install" at the project root and get all dependencies
 
 ## Doing stuff
-- To run tests, "grunt jasmine" at the project root
+- To run tests on the command line, "grunt jasmine" at the project root
+- To run tests in the browser, use python -m SimpleHTTPServer and then load up 0.0.0.0:8000/tests/browser/_SpecRunner.html
+
+## Current Direction
+- Management of DOM manipulation, custom event triggers/handlers and URL routing via Backbone
+- Custom data management module to replace Backbone's Model and Collection modules
 
 ## Goal
 To experiment and test solutions for managing data on the client in a way that:
