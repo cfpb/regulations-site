@@ -4,6 +4,8 @@
 - App inits in static/js/regulations.js
 - Data module is static/js/regs-data.js
   - Deps: regs-helpers.js, sample-json.js
+- Definitions controller* is static/js/definition-view.js
+  - Deps: regs-data.js
 
 ## Tech stack
 - Backbone, Underscore
@@ -31,3 +33,6 @@ To experiment and test solutions for managing data on the client in a way that:
 - can use data stored both in cache and in the DOM to give content different presentation attributes based on user input
 - to accept data from the server in either html and json, to be extensible for other input
 - to keep the DOM light enough so that the user has a fluid experience
+
+## Notes
+- * Controller = Backbone View. I find "View" a misnomer.
