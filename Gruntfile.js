@@ -94,7 +94,6 @@ module.exports = function(grunt) {
           template: require('grunt-template-jasmine-requirejs'),
           templateOptions: {
             requireConfig: {
-              baseUrl: 'static/js',
               paths: {
                 underscore: './lib/underscore',
                 backbone: './lib/backbone'

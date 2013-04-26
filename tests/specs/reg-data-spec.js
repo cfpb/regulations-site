@@ -1,10 +1,12 @@
-require(['regs-data', 'sample-json'], function(RegsData, testjson) {
+define(['regs-data', 'sample-json'], function(RegsData, testjson) {
   describe("App data", function() {
-    it("should have an regStructure", function() {
+    RegsData.parse(testjson);
+
+    it("should have a regStructure array", function() {
       expect(RegsData.regStructure).toBeTruthy();
     });
 
-    it("should have an regStructure with 8 values", function() {
+    it("should have a regStructure array with 8 values", function() {
       expect(RegsData.regStructure.length).toEqual( 8 );
     });
 
