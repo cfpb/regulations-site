@@ -37,3 +37,23 @@ To experiment and test solutions for managing data on the client in a way that:
 
 ## Notes
 - * Controller = Backbone View. I find "View" a misnomer.
+
+## Env - Ubuntu
+- $ Fork, checkout
+- $ sudo add-apt-repository ppa:chris-lea/node.js
+- $ sudo apt-get update
+- $ sudo apt-get install nodejs
+- $ npm install -g grunt-cli grunt-init
+- $ cd to/repo
+- $ npm install
+- $ grunt jasmine (to test that all is well, specs should run)
+- If it cries about PhantomJS when you try to run 'grunt jasmine', do the following
+- sudo apt-get install phantomjs
+
+## Env - OSX
+- $ Fork, checkout
+- $ brew install node
+- $ npm install -g grunt-cli grunt-init
+- $ cd to/repo
+- $ npm install
+- $ grunt jasmine (to test that all is well, specs should run)
