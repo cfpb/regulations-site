@@ -6,11 +6,6 @@ require(["jquery", "app-init"], function($, startApp) {
     }; 
 
     $(document).ready(function() {
-        // template stub
-        var template = function(b, p) {
-            $('#' + p).append(b);
-        };
-
         startApp();
     });
 });

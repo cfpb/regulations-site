@@ -1,10 +1,34 @@
+// TODO: function -> module
 define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], function($, _, Backbone, RegsData,  DefinitionView) {
     return function() {
+        var getTree = function($obj) {
+            $obj.children().each(function() {
+                var $child = $(this),
+                    cid = $child.attr('id');
+
+                RegsData.store({
+                    'text': cid,
+                    'content': $child.html()
+                }); 
+
+                if (typeof cid !== 'undefined') {
+                    getTree($child);
+                }
+            });
+        };
+
+        getTree($('#reg-content')); 
+
+        // fake template
+        var template = function(b, p) {
+            $('#' + p).append(b);
+        };
+
         /* 
         * EVENT BINDINGS 
         */
         // click term link, open definition
-        $('.definition').on('click', function(e) {
+        $('.definitionBREAK').on('click', function(e) {
             e.preventDefault();
             var defId = $(this).attr('data-definition');
 
