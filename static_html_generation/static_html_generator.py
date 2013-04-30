@@ -55,4 +55,4 @@ if __name__ == "__main__":
 
     write_file('/tmp/rege.html', markup)
     if not path.exists('/tmp/static'):
-      shutil.copytree('../static/', '/tmp/static', True)
+        shutil.copytree('../static/', '/tmp/static', True)
