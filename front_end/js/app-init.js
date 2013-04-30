@@ -1,7 +1,8 @@
-// TODO: function -> module
 define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], function($, _, Backbone, RegsData,  DefinitionView) {
+    "use strict";
     return {
         getTree: function($obj) {
+            var parent = this;
             $obj.children().each(function() {
                 var $child = $(this),
                     cid = $child.attr('id');
@@ -12,7 +13,7 @@ define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], fun
                 }); 
 
                 if (typeof cid !== 'undefined') {
-                    getTree($child);
+                    parent.getTree($child);
                 }
             });
         },
