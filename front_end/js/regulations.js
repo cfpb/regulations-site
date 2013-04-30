@@ -6,6 +6,6 @@ require(["jquery", "app-init"], function($, startApp) {
     }; 
 
     $(document).ready(function() {
-        startApp();
+        startApp.init();
     });
 });
