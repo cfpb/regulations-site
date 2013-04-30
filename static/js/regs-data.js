@@ -43,13 +43,8 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
     },
 
     isLoaded: function(id) {
-      var jQObj;
       if (this.content[id]) {
         return this.content[id];
-      }
-      else if (jQObj = $('#' + id), jQObj.length > 0) {
-        this.content[id] = jQObj.html();
-        return this.content[id];  
       }
       return false;    
     },
