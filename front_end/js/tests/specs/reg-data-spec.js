@@ -1,4 +1,4 @@
-define(['regs-data', 'sample-json'], function(RegsData, testjson) {
+define(['regs-data', 'samplejson'], function(RegsData, testjson) {
   describe("App data", function() {
     RegsData.parse(testjson);
 
@@ -6,8 +6,8 @@ define(['regs-data', 'sample-json'], function(RegsData, testjson) {
       expect(RegsData.regStructure).toBeTruthy();
     });
 
-    it("should have a regStructure array with 8 values", function() {
-      expect(RegsData.regStructure.length).toEqual( 8 );
+    it("should have a regStructure array with 7 values", function() {
+      expect(RegsData.regStructure.length).toEqual( 7 );
     });
 
     it("should have content", function() {
@@ -41,8 +41,5 @@ define(['regs-data', 'sample-json'], function(RegsData, testjson) {
       expect(RegsData.isLoaded("2345-9-b-1")).toEqual(false);
     });
 
-    it("should return content for 2345-9-b-2", function() {
-      expect(RegsData.retrieve("2345-9-b-2")).toEqual("weoiruwoieruwioeur");
-    });
   });
 });
