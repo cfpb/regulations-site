@@ -43,8 +43,13 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
     },
 
     isLoaded: function(id) {
+      var jQObj;
       if (this.content[id]) {
         return this.content[id];
+      }
+      else if (jQObj = $('#' + id), jQObj.length > 0) {
+        this.content[id] = jQObj.html();
+        return this.content[id];  
       }
       return false;    
     },
@@ -53,23 +58,12 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
       var format = format || 'json',
           withChildren = withChildren || false,
           obj = this.isLoaded(id) || this.request(id, format);
-
-      if (!obj) {
-        throw new Error("Can't retrive this definition");
-      }
-
       return obj;
     },
 
     // stub for talking to api
     request: function(id, format) {
-      var content = {
-        "2345-9-a-2": "klsdiuenjwkd",
-        "2345-9-b-1": "sdflkjsdfkjsdklfj",
-        "2345-9-b-2": "weoiruwoieruwioeur",
-        "2345-9-c": "xmncbvnmxbcvmnxb" 
-      };
-      return content[id];
+        return false;
     },
 
     getChildren: function(id) {
