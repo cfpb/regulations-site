@@ -18,8 +18,8 @@ module.exports = function(grunt) {
      */
     recess: {
       dist: {
-        src: ['<%= banner %>', 'static/css/font-awesome.css', 'static/css/<%= pkg.name %>.css', '!static/css/*.min.css'],
-        dest: 'static/css/<%= pkg.name %>.min.css',
+        src: ['<%= banner %>', 'front_end/css/font-awesome.css', 'front_end/css/<%= pkg.name %>.css', '!front_end/css/*.min.css'],
+        dest: 'front_end/css/<%= pkg.name %>.min.css',
         options: {
           compile: true,
           compress: true
@@ -39,8 +39,8 @@ module.exports = function(grunt) {
         banner: '<%= banner %>'
       },
       dist: {
-        src: ['static/js/jquery-1.9.1.js', 'static/js/<%= pkg.name %>.js', '!static/js/*.min.js'],
-        dest: 'static/js/<%= pkg.name %>.min.js'
+        src: ['front_end/js/jquery-1.9.1.js', 'front_end/js/<%= pkg.name %>.js', '!front_end/js/*.min.js'],
+        dest: 'front_end/js/<%= pkg.name %>.min.js'
       }
     },
 
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
           Highcharts: true
         }
       },
-      all: ['static/js/<%= pkg.name %>.js']
+      all: ['front_end/js/<%= pkg.name %>.js']
     },
 
     /**
@@ -88,17 +88,18 @@ module.exports = function(grunt) {
      */
     jasmine: {
       all: {
-        src: 'static/js',
+        src: 'front_end/js',
         options: {
           template: require('grunt-template-jasmine-requirejs'),
-          specs: 'tests/specs/*.js',
+          specs: 'front_end/js/tests/specs/*.js',
           templateOptions: {
             requireConfig: {
-              baseUrl: 'static/js',
+              baseUrl: 'front_end/js',
               paths: {
                 underscore: './lib/underscore',
                 backbone: './lib/backbone',
-                jquery: './lib/jquery-1.9.1'
+                jquery: './lib/jquery-1.9.1',
+                samplejson: './tests/grunt/js/fixtures/sample-json'
               },
               shim: {
                 underscore: {

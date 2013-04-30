@@ -1,4 +1,4 @@
-define("sample-json", function() {
+define("samplejson", function() {
   return {
    "children": [
       {

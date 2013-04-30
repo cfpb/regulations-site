@@ -12,11 +12,12 @@
   <script>
 
   require.config({
-    "baseUrl": "/static/js",
+    "baseUrl": "/front_end/js",
       "paths": {
         "underscore": "./lib/underscore",
         "backbone": "./lib/backbone",
-        "jquery": "./lib/jquery-1.9.1"
+        "jquery": "./lib/jquery-1.9.1",
+        "samplejson": "./tests/grunt/js/fixtures/sample-json"
       },
       "shim": {
         "underscore": {
@@ -31,10 +32,10 @@
       }
   });
 
-  require(['../../tests/specs/reg-data-spec', '../../tests/specs/reg-definitions-view-spec'], function() {
+  require(['/front_end/js/tests/specs/reg-data-spec.js', '/front_end/js/tests/specs/reg-definitions-view-spec.js'], function() {
     $(function() {
-    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute();
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
     });
   });
 

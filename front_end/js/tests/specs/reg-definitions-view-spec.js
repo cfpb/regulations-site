@@ -1,4 +1,4 @@
-define(["definition-view", "regs-data", 'sample-json'], function(DefinitionView, RegsData, testjson) {
+define(["definition-view", "regs-data", 'samplejson'], function(DefinitionView, RegsData, testjson) {
   describe("Definitions views", function() {
     RegsData.parse(testjson);
 
