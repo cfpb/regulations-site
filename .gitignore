@@ -45,3 +45,9 @@ node_modules/
 ###############
 *.min.js
 *.min.css
+
+# Custom #
+##########
+*.py[co]
+regulations
+*.swp
