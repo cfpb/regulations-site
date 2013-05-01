@@ -51,3 +51,4 @@ node_modules/
 *.py[co]
 regulations
 *.swp
+local_settings.py
