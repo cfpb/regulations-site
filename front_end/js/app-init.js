@@ -5,15 +5,18 @@ define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], fun
             var parent = this;
             $obj.children().each(function() {
                 var $child = $(this),
-                    cid = $child.attr('id');
+                    cid = $child.attr('id'),
+                    clist = $child.find('ol'),
+                    $nextChild;
 
                 RegsData.store({
                     'text': cid,
                     'content': $child.html()
                 }); 
 
-                if (typeof cid !== 'undefined') {
-                    parent.getTree($child);
+                if (typeof (cid, clist) !== 'undefined') {
+                    $nextChild = clist ? $(clist) : $child;
+                    parent.getTree($nextChild);
                 }
             });
         },
@@ -63,6 +66,7 @@ define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], fun
         init: function() {
             this.getTree($('#reg-content')); 
             this.bindEvents();
+            console.log(RegsData);
         }
     }
 });
