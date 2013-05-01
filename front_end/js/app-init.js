@@ -31,7 +31,7 @@ define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], fun
             * EVENT BINDINGS 
             */
             // click term link, open definition
-            $('.definitionBREAK').on('click', function(e) {
+            $('.definition').on('click', function(e) {
                 e.preventDefault();
                 var defId = $(this).attr('data-definition');
 
