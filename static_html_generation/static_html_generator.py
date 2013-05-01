@@ -54,6 +54,6 @@ if __name__ == "__main__":
     markup = makers_markup.render_markup()
 
     write_file('/tmp/rege.html', markup)
-    if path.exists('/tmp/static/css'):
-        shutil.rmtree('/tmp/static/css')
-    shutil.copytree('static/css', '/tmp/static/css')
+    if path.exists('/tmp/front_end'):
+        shutil.rmtree('/tmp/front_end')
+    shutil.copytree('../front_end', '/tmp/front_end')
