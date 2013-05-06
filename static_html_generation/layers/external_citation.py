@@ -32,6 +32,15 @@ class ExternalCitationLayer():
         return ExternalCitationLayer.generate_fdsys_href_tag(text, parameters)
 
     @staticmethod
+    def generate_public_law_link(text, citation):
+        """ Convert the Public Law references into an HTML <a href> tag. """
+        parameters = {'congress':citation[0], 
+                'lawnum':citation[1], 
+                'collection':'plaw', 
+                'lawtype':'public'}
+        return ExternalCitationLayer.generate_fdsys_href_tag(text, parameters)
+
+    @staticmethod
     def generate_uscode_link(text, citation):
         """ Convert the US Code references into an HTML <a href> tag. """
         parameters = {"collection":"uscode", 
@@ -44,12 +53,15 @@ class ExternalCitationLayer():
         return ExternalCitationLayer.generate_uscode_link(text, citation)
 
     def create_link(self, text, layer_element):
+        generator = None
         if layer_element['citation_type'] == 'USC':
             generator = ExternalCitationLayer.generate_uscode_link
         elif layer_element['citation_type'] == 'CFR':
             generator = ExternalCitationLayer.generate_cfr_link
         elif layer_element['citation_type'] == 'ACT':
             generator = self.generate_act_link
+        elif layer_element['citation_type'] == 'PUBLIC_LAW':
+            generator = ExternalCitationLayer.generate_public_law_link
 
         return generator(text, layer_element['citation'])
 
