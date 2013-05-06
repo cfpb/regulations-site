@@ -8,6 +8,7 @@ import shutil
 from layers.external_citation import ExternalCitationLayer
 from layers.internal_citation import InternalCitationLayer
 from layers.definitions import DefinitionsLayer
+from layers.interpretations import InterpretationsLayer
 from layers.layers_applier import LayersApplier
 from layers.toc_applier import TableOfContentsLayer
 from html_builder import HTMLBuilder
@@ -45,9 +46,12 @@ if __name__ == "__main__":
     dl = api.layer("terms", regulation, version)
     layers_applier.add_layer(DefinitionsLayer(dl))
 
+    intl = api.layer("interpretations", regulation, version)
+    layers_applier.add_layer(InterpretationsLayer(intl))
+    
     tl = api.layer("toc", regulation, version)
     toc_applier = TableOfContentsLayer(tl)
-    
+
     makers_markup = HTMLBuilder(layers_applier, toc_applier)
     makers_markup.tree = reg_json
     makers_markup.generate_html()

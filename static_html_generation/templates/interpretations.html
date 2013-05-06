@@ -13,7 +13,7 @@
 
                 {% if level_one.children %}
                     {% for level_two in level_one.children %}
-                        <h4 class="appendix-subheading"> {{level_two.markup_title}} </h4>
+                        <h4 class="appendix-subheading" id="{{level_two.markup_id}}"> {{level_two.markup_title}} </h4>
 
                         {%if level_two.marked_up %}
                         <p> {{level_two.marked_up|safe}}</p>
