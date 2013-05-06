@@ -13,19 +13,21 @@
 
                 {% if level_one.children %}
                     {% for level_two in level_one.children %}
-                        <h4 class="appendix-subheading" id="{{level_two.markup_id}}"> {{level_two.markup_title}} </h4>
+                        <section id="{{level_two.markup_id}}">
+                            <h4 class="appendix-subheading"> {{level_two.markup_title}} </h4>
 
-                        {%if level_two.marked_up %}
-                        <p> {{level_two.marked_up|safe}}</p>
-                        {% endif %}
+                            {%if level_two.marked_up %}
+                                <p> {{level_two.marked_up|safe}}</p>
+                            {% endif %}
 
-                        {% if level_two.children %}
-                        <ol class="level-1" type="a">
-                            {% for node in level_two.children %}
-                                {% include "tree.html" %}
-                            {% endfor %}
-                        </ol>
-                        {% endif %}
+                            {% if level_two.children %}
+                                <ol class="level-1" type="a">
+                                    {% for node in level_two.children %}
+                                        {% include "tree.html" %}
+                                    {% endfor %}
+                                </ol>
+                            {% endif %}
+                        </section>
                     {% endfor %}
                 {% endif %}
             </section>
