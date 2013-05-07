@@ -41,6 +41,12 @@ class ExternalCitationLayer():
         return ExternalCitationLayer.generate_fdsys_href_tag(text, parameters)
 
     @staticmethod
+    def generate_statutes_at_large_link(text, citation):
+        parameters = {'statutecitation':'%s stat %s' % (citation[0], citation[2]), 
+                    'collection':'plaw'}
+        return ExternalCitationLayer.generate_fdsys_href_tag(text, parameters)
+
+    @staticmethod
     def generate_uscode_link(text, citation):
         """ Convert the US Code references into an HTML <a href> tag. """
         parameters = {"collection":"uscode", 
@@ -52,17 +58,19 @@ class ExternalCitationLayer():
         citation = self.the_act
         return ExternalCitationLayer.generate_uscode_link(text, citation)
 
-    def create_link(self, text, layer_element):
-        generator = None
-        if layer_element['citation_type'] == 'USC':
-            generator = ExternalCitationLayer.generate_uscode_link
-        elif layer_element['citation_type'] == 'CFR':
-            generator = ExternalCitationLayer.generate_cfr_link
-        elif layer_element['citation_type'] == 'ACT':
-            generator = self.generate_act_link
-        elif layer_element['citation_type'] == 'PUBLIC_LAW':
-            generator = ExternalCitationLayer.generate_public_law_link
+    def citation_type_to_generator(self, citation_type):
+        generator_map = {
+            'USC': ExternalCitationLayer.generate_uscode_link,
+            'CFR': ExternalCitationLayer.generate_cfr_link,
+            'ACT': self.generate_act_link,
+            'PUBLIC_LAW': self.generate_public_law_link,
+            'STATUTES_AT_LARGE': self.generate_statutes_at_large_link
+        }
+        generator = generator_map[citation_type]
+        return generator
 
+    def create_link(self, text, layer_element):
+        generator = self.citation_type_to_generator(layer_element['citation_type'])
         return generator(text, layer_element['citation'])
 
     def apply_layer(self, text, text_index):
