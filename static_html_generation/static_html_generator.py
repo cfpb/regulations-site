@@ -60,5 +60,6 @@ if __name__ == "__main__":
     write_file('/tmp/rege.html', markup)
     front_end_dir = '/tmp/front_end'
     if not path.islink(front_end_dir):
-        shutil.rmtree(front_end_dir)
+        if path.exists(front_end_dir):
+            shutil.rmtree(front_end_dir)
         shutil.copytree('../front_end', front_end_dir)
