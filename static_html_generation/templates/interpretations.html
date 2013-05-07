@@ -4,7 +4,7 @@
 
     {% if c.children %}
         {% for level_one in c.children %}
-            <section id="{{level_one.markup_title}}">
+            <section id="{{level_one.markup_id}}">
                 <h3> {{level_one.markup_title}} </h3>
 
                 {% if level_one.marked_up %}
