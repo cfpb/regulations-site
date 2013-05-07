@@ -58,6 +58,7 @@ if __name__ == "__main__":
     markup = makers_markup.render_markup()
 
     write_file('/tmp/rege.html', markup)
-    if path.exists('/tmp/front_end'):
-        shutil.rmtree('/tmp/front_end')
-    shutil.copytree('../front_end', '/tmp/front_end')
+    front_end_dir = '/tmp/front_end'
+    if not path.islink(front_end_dir):
+        shutil.rmtree(front_end_dir)
+        shutil.copytree('../front_end', front_end_dir)
