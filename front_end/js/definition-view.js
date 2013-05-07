@@ -5,19 +5,19 @@ define("definition-view", ["jquery", "underscore", "backbone", "regs-data"], fun
         events: {},
 
         initialize: function() {
-            this.$termLink = $(this.options.termLink);
-
             this.model = {
                 id: this.options.termId,
-                content: RegsData.retrieve(this.options.termId) 
+                content: RegsData.retrieve(this.options.termId),
+                $termLink: $(this.options.termLink)
             };
 
             this.render();
         },
 
         render: function() {
+            var xoff = this.model.$termLink.offset().top;
             this.$el.html(this.model.content);
-            $('body').append(this.$el);
+            $('#reg-content').append(this.$el.css('top', xoff + 'px').css('left', '10px').css('width', '100px').css('position', 'absolute'));
 
             return this;
         }
