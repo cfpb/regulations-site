@@ -29,7 +29,7 @@ p {
  hidden elements
  ========================================================================== */
 
- img, #table-of-contents, #menu-link {
+ img, nav, #table-of-contents, #menu-link {
     display: none;
  }
 
