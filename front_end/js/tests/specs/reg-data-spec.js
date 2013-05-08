@@ -1,5 +1,5 @@
 define(['regs-data', 'samplejson'], function(RegsData, testjson) {
-  describe("App data", function() {
+  describe("RegsData module", function() {
     RegsData.parse(testjson);
 
     it("should have a regStructure array", function() {
