@@ -1,4 +1,3 @@
-import sys
 class NodeTypes():
     def __init__(self):
         self.node_types_map = {'Interpretations': 'I'}
@@ -9,5 +8,3 @@ class NodeTypes():
                 id_parts.remove(k)
                 id_parts.insert(0, v)
         return "-".join(id_parts)
-
- 
