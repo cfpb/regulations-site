@@ -11,6 +11,7 @@ from layers.definitions import DefinitionsLayer
 from layers.interpretations import InterpretationsLayer
 from layers.layers_applier import LayersApplier
 from layers.toc_applier import TableOfContentsLayer
+from node_types import NodeTypes
 from html_builder import HTMLBuilder
 import api_reader
 
@@ -35,6 +36,7 @@ if __name__ == "__main__":
     reg_json = api.regulation(regulation, version)
 
     layers_applier = LayersApplier()
+    node_types = NodeTypes()
 
     el = api.layer("external-citations", regulation, version)
     reference_EFT_act = ['15', '1693'] #Title 15, Section 1693 of the United States Code
@@ -50,9 +52,9 @@ if __name__ == "__main__":
     layers_applier.add_layer(InterpretationsLayer(intl))
     
     tl = api.layer("toc", regulation, version)
-    toc_applier = TableOfContentsLayer(tl)
+    toc_applier = TableOfContentsLayer(tl, node_types)
 
-    makers_markup = HTMLBuilder(layers_applier, toc_applier)
+    makers_markup = HTMLBuilder(layers_applier, toc_applier, node_types)
     makers_markup.tree = reg_json
     makers_markup.generate_html()
     markup = makers_markup.render_markup()

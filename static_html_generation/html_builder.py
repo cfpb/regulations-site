@@ -6,12 +6,13 @@ from django.conf import settings
 import settings as app_settings
 
 class HTMLBuilder():
-    def __init__(self, layers_applier, toc_applier):
+    def __init__(self, layers_applier, toc_applier, node_types):
         self.markup = u''
         self.sections = None
         self.tree = None
         self.layers_applier = layers_applier
         self.toc_applier = toc_applier
+        self.node_types = node_types
         
     def generate_all_html(self):
         generate_html(self.tree[''])
@@ -38,7 +39,7 @@ class HTMLBuilder():
         if 'title' in node['label']:
             node['markup_title']  = node['label']['title']
 
-        node['markup_id'] = "-".join(node['label']['parts'])
+        node['markup_id'] = self.node_types.change_type_names(node['label']['parts'])
         node['tree_level'] = len(node['label']['parts']) - 1
 
         node['node_type'] = self.node_type(node['tree_level'], node['label']['parts'])
@@ -60,5 +61,3 @@ class HTMLBuilder():
                         'GOOGLE_ANALYTICS_SITE':app_settings.GOOGLE_ANALYTICS_SITE, 
                         'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID})
         return main_template.render(c) 
-
-
