@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import sys
 from django.template import loader, Template, Context
 from django.conf import settings
 from node_types import NodeTypes
