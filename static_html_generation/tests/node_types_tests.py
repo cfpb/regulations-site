@@ -1,4 +1,3 @@
-from unittest import TestCase
 from node_types import NodeTypes
 from unittest import TestCase
 
