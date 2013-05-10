@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-
 from django.template import loader, Template, Context
 from django.conf import settings
-
+from node_types import NodeTypes
 import settings as app_settings
 
 class HTMLBuilder():
@@ -12,6 +11,7 @@ class HTMLBuilder():
         self.tree = None
         self.layers_applier = layers_applier
         self.toc_applier = toc_applier
+        self.node_types = NodeTypes()
         
     def generate_all_html(self):
         generate_html(self.tree[''])
@@ -38,6 +38,7 @@ class HTMLBuilder():
         if 'title' in node['label']:
             node['markup_title']  = node['label']['title']
 
+        node['label']['parts'] = self.node_types.change_type_names(node['label']['parts'])
         node['markup_id'] = "-".join(node['label']['parts'])
         node['tree_level'] = len(node['label']['parts']) - 1
 
@@ -60,5 +61,3 @@ class HTMLBuilder():
                         'GOOGLE_ANALYTICS_SITE':app_settings.GOOGLE_ANALYTICS_SITE, 
                         'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID})
         return main_template.render(c) 
-
-
