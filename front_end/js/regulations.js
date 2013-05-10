@@ -2,7 +2,8 @@ require(["jquery", "app-init"], function($, startApp) {
 
     // global state objects
     window.RegsViews = {
-        openDefinitions: {}
+        openDefinitions: {},
+        openInterpretations: {}
     }; 
 
     $(document).ready(function() {

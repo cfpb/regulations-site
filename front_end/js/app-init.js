@@ -1,4 +1,4 @@
-define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], function($, _, Backbone, RegsData,  DefinitionView) {
+define(["jquery", "underscore", "backbone", "regs-data", "definition-view", "interpretation-view"], function($, _, Backbone, RegsData,  DefinitionView, InterpretationView) {
     "use strict";
     return {
         getTree: function($obj) {
@@ -60,6 +60,24 @@ define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], fun
                 template(body, pid);
 
                 $(this).remove();
+            });
+
+            $('.interpretation-ref').on('click', function(e) {
+                e.preventDefault();
+                var $domContext = $(this),
+                    parent = $domContext.closest('li').attr('id'),
+                    interpretationId = "I-" + parent;
+
+                if (!RegsViews.openInterpretations[interpretationId]) {
+                    RegsViews.openInterpretations[interpretationId] = new InterpretationView({
+                        id: interpretationId,
+                        $domContext: $domContext
+                    });
+                }
+                else {
+                    RegsViews.openInterpretations[interpretationId].remove();
+                    delete(RegsViews.openInterpretations[interpretationId]);                    
+                }
             });
         },
 
