@@ -1,7 +1,9 @@
+from node_types import NodeTypes
+
 class TableOfContentsLayer(object):
-    def __init__(self, layer, node_types):
+    def __init__(self, layer):
         self.layer = layer
-        self.node_types = node_types
+        self.node_types = NodeTypes()
 
     def apply_layer(self, text_index):
         if text_index in self.layer:

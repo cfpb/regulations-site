@@ -2,17 +2,17 @@
 
 from django.template import loader, Template, Context
 from django.conf import settings
-
+from node_types import NodeTypes
 import settings as app_settings
 
 class HTMLBuilder():
-    def __init__(self, layers_applier, toc_applier, node_types):
+    def __init__(self, layers_applier, toc_applier):
         self.markup = u''
         self.sections = None
         self.tree = None
         self.layers_applier = layers_applier
         self.toc_applier = toc_applier
-        self.node_types = node_types
+        self.node_types = NodeTypes()
         
     def generate_all_html(self):
         generate_html(self.tree[''])
