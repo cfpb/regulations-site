@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import sys
 from django.template import loader, Template, Context
 from django.conf import settings
 from node_types import NodeTypes
@@ -39,7 +39,8 @@ class HTMLBuilder():
         if 'title' in node['label']:
             node['markup_title']  = node['label']['title']
 
-        node['markup_id'] = self.node_types.change_type_names(node['label']['parts'])
+        node['label']['parts'] = self.node_types.change_type_names(node['label']['parts'])
+        node['markup_id'] = "-".join(node['label']['parts'])
         node['tree_level'] = len(node['label']['parts']) - 1
 
         node['node_type'] = self.node_type(node['tree_level'], node['label']['parts'])

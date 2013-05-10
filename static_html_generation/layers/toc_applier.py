@@ -12,6 +12,6 @@ class TableOfContentsLayer(object):
             toc_list = []
             for element in layer_elements:
                 element_url = self.node_types.change_type_names(element['index']);
-                toc_list.append({'url': "#%s" % element_url,
+                toc_list.append({'url': "#%s" % "-".join(element_url),
                 'label': element['title']})
             return ('TOC', toc_list)

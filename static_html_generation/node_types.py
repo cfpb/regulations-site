@@ -13,9 +13,9 @@ class NodeTypes():
         out more node types. "1005-Interpretations" -> "I-1005"
         [ts] """
 
-        node_elements = id_parts
+        node_elements = list(id_parts)
         for k, v in self.node_types_map.items():
             if node_elements.count(k): 
                 node_elements.remove(k)
                 node_elements.insert(0, v)
-        return "-".join(node_elements)
+        return node_elements
