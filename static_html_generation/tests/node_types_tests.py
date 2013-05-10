@@ -11,3 +11,4 @@ class NodeTypesTest(TestCase):
 
         self.assertEqual('I-1005-3-(b)', node_string) 
         self.assertEqual("I", node_parts_after[0])
+        self.assertEqual(node_parts_before[1], "Interpretations")
