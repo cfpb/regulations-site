@@ -15,10 +15,21 @@ class Client:
         """End point for layer JSON. Return the result as a list"""
         return self._get("layer/%s/%s/%s" % (layer_name, label, version))
 
+    def notices(self):
+        """End point for notice searching. Right now, just a list"""
+        return self._get("notice")
+
+    def notice(self, document_number):
+        """End point for retrieving a single notice."""
+        return self._get("notice/%s" % document_number)
+
     def _get(self, suffix):
         """Actually make the GET request. Assume the result is JSON. Right
         now, there is no error handling"""
-        result = urlopen(self.base_url + suffix)
+        try:
+            result = urlopen(self.base_url + suffix)
+        except IOError: #   Hack to deal with local FS vs API
+            result = urlopen(self.base_url + suffix + "/index.html")
         content = result.read()
         result.close()
         return json.loads(content)

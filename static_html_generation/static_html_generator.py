@@ -2,17 +2,18 @@
 
 import codecs
 import json
-from os import path
+from os import mkdir, path
 import shutil
 
+import api_reader
 from layers.external_citation import ExternalCitationLayer
 from layers.internal_citation import InternalCitationLayer
 from layers.definitions import DefinitionsLayer
 from layers.interpretations import InterpretationsLayer
 from layers.layers_applier import LayersApplier
 from layers.toc_applier import TableOfContentsLayer
+import notices
 from html_builder import HTMLBuilder
-import api_reader
 
 import settings as app_settings
 from django.conf import settings
@@ -63,3 +64,9 @@ if __name__ == "__main__":
         if path.exists(front_end_dir):
             shutil.rmtree(front_end_dir)
         shutil.copytree('../front_end', front_end_dir)
+
+    if not path.exists('/tmp/notice'):
+        mkdir('/tmp/notice')
+    for notice in notices.fetch_all(api):
+        write_file('/tmp/notice/' + notice['document_number'] + ".html",
+                notices.markup(notice))
