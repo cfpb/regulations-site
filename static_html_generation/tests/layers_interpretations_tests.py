@@ -18,11 +18,11 @@ class InterpretationsLayerTest(TestCase):
         il = InterpretationsLayer(layer)
 
         key, value = il.apply_layer("200-2-b")
-        self.assertEqual('200-Interpretations-2-b', value)
+        self.assertEqual('I-200-2-b', value)
         self.assertEqual('interpretations', key)
 
         key, value = il.apply_layer("200-2-b-ii")
-        self.assertEqual('200-Interpretations-2-b-ii', value)
+        self.assertEqual('I-200-2-b-ii', value)
         self.assertEqual('interpretations', key)
 
         self.assertEqual(None, il.apply_layer("200-2-b-iii"))

@@ -1,4 +1,5 @@
 from django.template import loader, Context
+from node_types import NodeTypes
 
 class InterpretationsLayer(object):
     def __init__(self, layer):
@@ -9,5 +10,7 @@ class InterpretationsLayer(object):
         if text_index in self.layer and self.layer[text_index]:
             layer_element = self.layer[text_index][0]
             reference = layer_element['reference']
+            reference = reference.split('-')
+            reference = '-'.join(NodeTypes().change_type_names(reference))
 
             return 'interpretations', reference
