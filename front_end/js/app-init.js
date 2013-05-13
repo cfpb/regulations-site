@@ -42,8 +42,8 @@ define(["jquery", "underscore", "backbone", "regs-data", "definition-view", "int
                 // TODO: supports only one open definition
                 if (!RegsViews.openDefinitions[defId]) {
                     RegsViews.openDefinitions[defId] = new DefinitionView({
-                        termId: defId,
-                        termLink: e.target
+                        id: defId,
+                        $anchor: $(e.target)
                     });
                 }
                 else {
@@ -71,7 +71,7 @@ define(["jquery", "underscore", "backbone", "regs-data", "definition-view", "int
                 if (!RegsViews.openInterpretations[interpretationId]) {
                     RegsViews.openInterpretations[interpretationId] = new InterpretationView({
                         id: interpretationId,
-                        $domContext: $domContext
+                        $anchor: $domContext
                     });
                 }
                 else {
