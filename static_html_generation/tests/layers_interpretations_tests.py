@@ -5,7 +5,6 @@ from unittest import TestCase
 class InterpretationsLayerTest(TestCase):
     @patch('layers.interpretations.loader.get_template')
     def test_apply_layer(self, get_template):
-        #get_template.return_value = Mock()
         layer = {
                 "200-2-b": [{
                     "reference": "200-Interpretations-2-b",
