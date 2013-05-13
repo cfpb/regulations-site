@@ -18,7 +18,7 @@ module.exports = function(grunt) {
      */
     recess: {
       dist: {
-        src: ['front_end/css/font-awesome.css', 'front_end/css/normalize.css', 'front_end/css/fonts.css', 'front_end/css/main.less', 'front_end/css/print.css','!front_end/css/*.min.css'],
+        src: ['front_end/css/less/normalize.css', 'front_end/css/less/fonts.css', 'front_end/css/less/main.less', '!front_end/css/*.min.css'],
         dest: 'front_end/css/style.min.css',
         options: {
           compile: true,
