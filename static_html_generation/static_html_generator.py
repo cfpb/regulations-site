@@ -6,6 +6,7 @@ from os import mkdir, path
 import shutil
 
 import api_reader
+from layers.analyses import SectionBySectionLayer
 from layers.external_citation import ExternalCitationLayer
 from layers.internal_citation import InternalCitationLayer
 from layers.definitions import DefinitionsLayer
@@ -49,6 +50,9 @@ if __name__ == "__main__":
 
     intl = api.layer("interpretations", regulation, version)
     layers_applier.add_layer(InterpretationsLayer(intl))
+    
+    sxs = api.layer("analyses", regulation, version)
+    layers_applier.add_layer(SectionBySectionLayer(sxs))
     
     tl = api.layer("toc", regulation, version)
     toc_applier = TableOfContentsLayer(tl)

@@ -1,9 +1,9 @@
-<h{{ depth }}>{{ title }}</h{{ depth }}>
 {% if label %}
     <div id="{{ label }}">
 {% else %}
     <div>
 {% endif %}
+    <h{{ depth }}>{{ title }}</h{{ depth }}>
     {% for p in paragraphs %}
         <p>{{ p }}</p>
     {% endfor %}
