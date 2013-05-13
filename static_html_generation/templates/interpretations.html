@@ -8,7 +8,22 @@
                 <h3> {{level_one.markup_title}} </h3>
 
                 {% if level_one.marked_up %}
-                <p> {{level_one.marked_up|safe}}</p>
+                <p> 
+                    {% if level_one.interpretations %}
+                    <a href="#{{ level_one.interpretations }}" class="interpretation-ref">[I]</a>
+                    {% endif %}
+                    {% for doc_num, ref in level_one.analyses %}
+                    <a href="/notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+                    {% endfor %}
+                    {{level_one.marked_up|safe}}
+                </p>
+                {% else %}
+                    {% if level_one.interpretations %}
+                    <a href="#{{ level_one.interpretations }}" class="interpretation-ref">[I]</a>
+                    {% endif %}
+                    {% for doc_num, ref in level_one.analyses %}
+                    <a href="/notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+                    {% endfor %}
                 {% endif %}
 
                 {% if level_one.children %}
@@ -17,7 +32,23 @@
                             <h4 class="appendix-subheading"> {{level_two.markup_title}} </h4>
 
                             {%if level_two.marked_up %}
-                                <p> {{level_two.marked_up|safe}}</p>
+                                <p> 
+                                    {% if level_two.interpretations %}
+                                    <a href="#{{ level_two.interpretations }}" class="interpretation-ref">[I]</a>
+                                    {% endif %}
+                                    {% for doc_num, ref in level_two.analyses %}
+                                    <a href="/notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+                                    {% endfor %}
+                                    {{level_two.marked_up|safe}}
+                                </p>
+                            {% else %}
+                                {% if level_two.interpretations %}
+                                <a href="#{{ level_two.interpretations }}" class="interpretation-ref">[I]</a>
+                                {% endif %}
+                                {% for doc_num, ref in level_two.analyses %}
+                                <a href="/notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+                                {% endfor %}
+                                {{level_two.marked_up|safe}}
                             {% endif %}
 
                             {% if level_two.children %}

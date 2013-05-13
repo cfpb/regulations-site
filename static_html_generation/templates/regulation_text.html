@@ -2,7 +2,22 @@
 <section id="{{c.markup_id}}">
     <h2 class="section-title"> {{c.markup_title}} </h2>
         {% if c.marked_up %}
-        <p> {{c.marked_up|safe}} </p>
+        <p> 
+            {% if c.interpretations %}
+            <a href="#{{ c.interpretations }}" class="interpretation-ref">[I]</a>
+            {% endif %}
+            {% for doc_num, ref in c.analyses %}
+            <a href="/notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+            {% endfor %}
+        {{c.marked_up|safe}} 
+        </p>
+        {% else %}
+            {% if c.interpretations %}
+            <a href="#{{ c.interpretations }}" class="interpretation-ref">[I]</a>
+            {% endif %}
+            {% for doc_num, ref in c.analyses %}
+            <a href="/notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+            {% endfor %}
         {% endif %}
 
         <ol class="level-1" type="a">

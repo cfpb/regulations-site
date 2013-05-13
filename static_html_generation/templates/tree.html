@@ -1,6 +1,21 @@
 <li id="{{node.markup_id}}">
     {%if node.marked_up %}
-    <p> {{node.marked_up|safe}} </p>
+    <p> 
+        {% if node.interpretations %}
+        <a href="#{{ node.interpretations }}" class="interpretation-ref">[I]</a>
+        {% endif %}
+        {% for doc_num, ref in node.analyses %}
+        <a href="/notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+        {% endfor %}
+    {{node.marked_up|safe}}
+    </p>
+    {% else %}
+        {% if node.interpretations %}
+        <a href="#{{ node.interpretations }}" class="interpretation-ref">[I]</a>
+        {% endif %}
+        {% for doc_num, ref in node.analyses %}
+        <a href="/notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+        {% endfor %}
     {% endif %}
     {% if node.children %}
     {% if node.node_type == "appendix" %}
