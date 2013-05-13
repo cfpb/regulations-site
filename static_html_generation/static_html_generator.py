@@ -31,7 +31,7 @@ if __name__ == "__main__":
             TEMPLATE_DIRS = ('templates/',))
 
     api = api_reader.Client(app_settings.API_BASE)
-    regulation, version = "1005", "20111227"
+    regulation, version = "1005", "2011-31725"
     reg_json = api.regulation(regulation, version)
 
     layers_applier = LayersApplier()
