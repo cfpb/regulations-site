@@ -11,5 +11,11 @@ define(["underscore", "backbone", "jquery", "regulations", "regs-state", "interp
 
         expect(RegsState.openInterps['I-2345-10']).toBeTruthy();
     });
+
+    it("should have content", function() {
+        $('.interpretation-ref').click();
+        expect(RegsState.openInterps['I-2345-10'].model.content).toEqual("this is where we'd load the api response for I-2345-10 in json format.");
+    });
+
   });
 });
