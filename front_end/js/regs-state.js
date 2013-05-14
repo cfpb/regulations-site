@@ -1,4 +1,4 @@
-define("regs-state", function() {
+define("regs-state", [], function() {
     return {
         openDefs: {},
         openInterps: {}

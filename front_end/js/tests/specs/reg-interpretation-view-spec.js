@@ -11,6 +11,5 @@ define(["underscore", "backbone", "jquery", "regulations", "regs-state", "interp
 
         expect(RegsState.openInterps['I-2345-10']).toBeTruthy();
     });
-    
   });
 });
