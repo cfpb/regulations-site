@@ -24,7 +24,6 @@ define(["underscore", "backbone", "jquery", "definition-view", "regs-data", 'sam
     });
 
     it("should tell the state obj that its open", function() {
-        expect
     });
     
   });
