@@ -59,7 +59,7 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
 
         // stub for talking to api
         request: function(id, format) {
-            return false;
+            return "this is where we'd load the api response for " + id + " in " + format + " format.";
         },
 
         getChildren: function(id) {

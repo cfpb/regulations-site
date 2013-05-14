@@ -1,4 +1,4 @@
-define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], function($, _, Backbone, RegsData,  DefinitionView) {
+define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definition-view", "interpretation-view"], function($, _, Backbone, RegsState, RegsData, DefinitionView, InterpretationView) {
     "use strict";
     return {
         getTree: function($obj) {
@@ -40,15 +40,15 @@ define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], fun
                 // binding section gets out of hand, we should reconsider [ts]
 
                 // TODO: supports only one open definition
-                if (!RegsViews.openDefinitions[defId]) {
-                    RegsViews.openDefinitions[defId] = new DefinitionView({
-                        termId: defId,
-                        termLink: e.target
+                if (!RegsState.openDefs[defId]) {
+                    RegsState.openDefs[defId] = new DefinitionView({
+                        id: defId,
+                        $anchor: $(e.target)
                     });
                 }
                 else {
-                    RegsViews.openDefinitions[defId].remove();
-                    delete(RegsViews.openDefinitions[defId]);
+                    RegsState.openDefs[defId].remove();
+                    delete(RegsState.openDefs[defId]);
                 }
             });
 
@@ -60,6 +60,26 @@ define(["jquery", "underscore", "backbone", "regs-data", "definition-view"], fun
                 template(body, pid);
 
                 $(this).remove();
+            });
+
+            $('.interpretation-ref').on('click', function(e) {
+                e.preventDefault();
+                var $this = $(this),
+                    parent = $this.closest('li').attr('id'),
+                    interpretationId = "I-" + parent;
+
+                if ($this.data("state") === 'open') {
+                    RegsState.openInterps[interpretationId].remove();
+                    $this.removeData("state");
+                }
+                else {
+                    RegsState.openInterps[interpretationId] = new InterpretationView({
+                        id: interpretationId,
+                        $anchor: $this
+                    });
+
+                    $this.data("state", "open");
+                }
             });
         },
 
