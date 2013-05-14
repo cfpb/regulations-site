@@ -40,15 +40,15 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
                 // binding section gets out of hand, we should reconsider [ts]
 
                 // TODO: supports only one open definition
-                if (!RegsViews.openDefinitions[defId]) {
-                    RegsViews.openDefinitions[defId] = new DefinitionView({
+                if (!RegsState.openDefs[defId]) {
+                    RegsState.openDefs[defId] = new DefinitionView({
                         id: defId,
                         $anchor: $(e.target)
                     });
                 }
                 else {
-                    RegsViews.openDefinitions[defId].remove();
-                    delete(RegsViews.openDefinitions[defId]);
+                    RegsState.openDefs[defId].remove();
+                    delete(RegsState.openDefs[defId]);
                 }
             });
 
