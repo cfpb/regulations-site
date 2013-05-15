@@ -2,17 +2,20 @@
 
 import codecs
 import json
-from os import path
+from os import mkdir, path
 import shutil
 
+import api_reader
+from layers.analyses import SectionBySectionLayer
 from layers.external_citation import ExternalCitationLayer
 from layers.internal_citation import InternalCitationLayer
 from layers.definitions import DefinitionsLayer
 from layers.interpretations import InterpretationsLayer
-from layers.layers_applier import LayersApplier
+from layers.layers_applier import InlineLayersApplier
+from layers.layers_applier import ParagraphLayersApplier
 from layers.toc_applier import TableOfContentsLayer
+import notices
 from html_builder import HTMLBuilder
-import api_reader
 
 import settings as app_settings
 from django.conf import settings
@@ -31,28 +34,33 @@ if __name__ == "__main__":
             TEMPLATE_DIRS = ('templates/',))
 
     api = api_reader.Client(app_settings.API_BASE)
-    regulation, version = "1005", "20111227"
+    regulation, version = "1005", "2011-31725"
     reg_json = api.regulation(regulation, version)
 
-    layers_applier = LayersApplier()
+    inline_applier = InlineLayersApplier()
+    p_applier = ParagraphLayersApplier()
 
     el = api.layer("external-citations", regulation, version)
     reference_EFT_act = ['15', '1693'] #Title 15, Section 1693 of the United States Code
 
-    layers_applier.add_layer(ExternalCitationLayer(el, ['15', '1693']))
+    inline_applier.add_layer(ExternalCitationLayer(el, ['15', '1693']))
     il = api.layer("internal-citations", regulation, version)
-    layers_applier.add_layer(InternalCitationLayer(il))
+    inline_applier.add_layer(InternalCitationLayer(il))
 
     dl = api.layer("terms", regulation, version)
-    layers_applier.add_layer(DefinitionsLayer(dl))
+    inline_applier.add_layer(DefinitionsLayer(dl))
 
     intl = api.layer("interpretations", regulation, version)
-    layers_applier.add_layer(InterpretationsLayer(intl))
+    p_applier.add_layer(InterpretationsLayer(intl))
+    
+    sxs = api.layer("analyses", regulation, version)
+    p_applier.add_layer(SectionBySectionLayer(sxs))
     
     tl = api.layer("toc", regulation, version)
-    toc_applier = TableOfContentsLayer(tl)
+    p_applier.add_layer(TableOfContentsLayer(tl))
+    
 
-    makers_markup = HTMLBuilder(layers_applier, toc_applier)
+    makers_markup = HTMLBuilder(inline_applier, p_applier)
     makers_markup.tree = reg_json
     makers_markup.generate_html()
     markup = makers_markup.render_markup()
@@ -63,3 +71,9 @@ if __name__ == "__main__":
         if path.exists(front_end_dir):
             shutil.rmtree(front_end_dir)
         shutil.copytree('../front_end', front_end_dir)
+
+    if not path.exists('/tmp/notice'):
+        mkdir('/tmp/notice')
+    for notice in notices.fetch_all(api):
+        write_file('/tmp/notice/' + notice['document_number'] + ".html",
+                notices.markup(notice))

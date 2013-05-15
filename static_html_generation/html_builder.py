@@ -5,12 +5,12 @@ from node_types import NodeTypes
 import settings as app_settings
 
 class HTMLBuilder():
-    def __init__(self, layers_applier, toc_applier):
+    def __init__(self, inline_applier, p_applier):
         self.markup = u''
         self.sections = None
         self.tree = None
-        self.layers_applier = layers_applier
-        self.toc_applier = toc_applier
+        self.inline_applier = inline_applier
+        self.p_applier = p_applier
         self.node_types = NodeTypes()
         
     def generate_all_html(self):
@@ -45,12 +45,9 @@ class HTMLBuilder():
         node['node_type'] = self.node_type(node['tree_level'], node['label']['parts'])
 
         if len(node['text'].strip()):
-            node['marked_up'] = self.layers_applier.apply_layers(node['text'], node['markup_id'])
+            node['marked_up'] = self.inline_applier.apply_layers(node['text'], node['markup_id'])
 
-        toc = self.toc_applier.apply_layer(node['markup_id'])
-
-        if toc:
-            node[toc[0]] = toc[1]
+        node = self.p_applier.apply_layers(node)
 
         for c in node['children']:
             self.process_node(c)
