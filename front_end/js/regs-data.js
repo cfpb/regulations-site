@@ -1,6 +1,6 @@
-define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
+define("regs-data", ["underscore", "backbone", './regs-helpers'], function(_, Backbone, RegsHelpers) {
     "use strict";
-    return {
+    Backbone.RegModel = Backbone.Model.extend({
         regStructure: [],
         content: {},
 
@@ -11,7 +11,7 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
                     if (key === 'label') {
                         workingObj = jsonObj[key];
                         workingObj['content'] = jsonObj['text'];
-                        this.store(workingObj);
+                        this.set(workingObj);
                     }
 
                     if (RegsHelpers.isIterable(jsonObj[key])) {
@@ -23,10 +23,10 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
             return this;
         },
 
-        store: function(obj) {
+        set: function(obj) {
             var label = obj['text'],
                 record,
-                cached = this.isLoaded(label);
+                cached = this.has(label);
 
             if (!(cached)) {
                 this.content[label] = obj['content'];
@@ -43,17 +43,17 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
             return record; 
         },
 
-        isLoaded: function(id) {
+        has: function(id) {
             if (this.content[id]) {
                 return this.content[id];
             }
             return false;    
         },
 
-        retrieve: function(id, format, withChildren) {
+        get: function(id, format, withChildren) {
             var format = format || 'json',
                 withChildren = withChildren || false,
-                obj = this.isLoaded(id) || this.request(id, format);
+                obj = this.has(id) || this.request(id, format);
             return obj;
         },
 
@@ -87,6 +87,15 @@ define("regs-data", ['./regs-helpers'], function(RegsHelpers) {
             }
 
             return false;
+        },
+
+        // we don't have need for sync
+        sync: function() {
+            return;
         }
-    }
+    });
+
+    var reg = new Backbone.RegModel();
+
+    return reg;
 });

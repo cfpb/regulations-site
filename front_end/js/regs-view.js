@@ -9,7 +9,7 @@ define("regs-view", ["jquery", "underscore", "backbone", "regs-data"], function(
             }
 
             if (typeof this.model.id !== "undefined") {
-                this.model.content = RegsData.retrieve(this.model.id);
+                this.model.content = RegsData.get(this.model.id);
                 this.render();
             }
 
