@@ -34,7 +34,7 @@ if __name__ == "__main__":
             TEMPLATE_DIRS = ('templates/',))
 
     api = api_reader.Client(app_settings.API_BASE)
-    regulation, version = "1005", "2011-31725"
+    regulation, version = "1005", app_settings.REGULATION_VERSION
     reg_json = api.regulation(regulation, version)
 
     inline_applier = InlineLayersApplier()
@@ -65,15 +65,15 @@ if __name__ == "__main__":
     makers_markup.generate_html()
     markup = makers_markup.render_markup()
 
-    write_file('/tmp/rege.html', markup)
-    front_end_dir = '/tmp/front_end'
+    write_file(app_settings.OUTPUT_DIR + 'rege.html', markup)
+    front_end_dir = app_settings.OUTPUT_DIR + 'front_end'
     if not path.islink(front_end_dir):
         if path.exists(front_end_dir):
             shutil.rmtree(front_end_dir)
         shutil.copytree('../front_end', front_end_dir)
 
-    if not path.exists('/tmp/notice'):
-        mkdir('/tmp/notice')
+    if not path.exists(app_settings.OUTPUT_DIR + 'notice'):
+        mkdir(app_settings.OUTPUT_DIR + 'notice')
     for notice in notices.fetch_all(api):
-        write_file('/tmp/notice/' + notice['document_number'] + ".html",
-                notices.markup(notice))
+        write_file(app_settings.OUTPUT_DIR + 'notice/' + 
+                notice['document_number'] + ".html", notices.markup(notice))
