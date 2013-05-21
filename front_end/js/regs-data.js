@@ -57,6 +57,10 @@ define("regs-data", ["underscore", "backbone", './regs-helpers'], function(_, Ba
             return obj;
         },
 
+        fetch: function(id, format, withChildren) {
+            return this.get(id, format, withChildren);
+        },
+
         // stub for talking to api
         request: function(id, format) {
             return "this is where we'd load the api response for " + id + " in " + format + " format.";

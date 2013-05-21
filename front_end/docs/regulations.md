@@ -2,7 +2,7 @@
 
 ## Intro
 - App inits in js/regulations.js
-- Data module is js/regs-data.js
+- Data module is Backbone.RegModel in js/regs-data.js
 - Inline element parent controller* is js/regs-view.js
 - Inline definitions controller* is js/definition-view.js
 - Inline interpretations controller* is js/interpretation-view.js
@@ -24,7 +24,7 @@
 
 ## Current Direction
 - Management of DOM manipulation, custom event triggers/handlers and URL routing via Backbone
-- Custom data management module to replace Backbone's Model and Collection modules
+- Extends Backbone.Model to Backbone.RegModel for custom data handling with a Backbonesque API
 
 ## Goal
 To manage data on the client in a way that:
@@ -58,19 +58,17 @@ To manage data on the client in a way that:
 - $ npm install
 - $ grunt jasmine (to test that all is well, specs should run)
 
-## Overview of RegsData (5/13/13)
-RegsData keeps two objects that it uses to determine what the deal is with fetching content. *RegsData.content* is an object whose contents are key = section or paragraph ID, value = contents of the corresponding section, including children. Hierarchy is not represented in RegsData.content, meaning that RegsData['2345-10'] and RegsData['2345-10-a-i'] are both valid.
+## Diff between Backbone.Model and Backbone.RegModel
+Backbone.RegModel extends Backbone.Model, but implements its own logic and alters the API slightly in areas.
 
-It keeps an array in *RegsData.regStructure* that houses all of the sections and paragraphs that exist in the regulation that is in scope. For example, if we have section #2345 in the DOM, RegsData.regStructure will represent the full navigation. However, not all of the items might have their content loaded into the app. RegsData.content might have a value for '2345-1', which is also in RegsData.regStructure, but not for '2345-9'.
+Backbone.RegModel effectively removes Backbone.Model.sync
 
-*RegsData.parse* recurses through a JSON object to turn the generated tree into individual sections and paragraphs that the app can reference. Its currently pretty tightly coupled with the structure of the parsed tree.
+Backbone.RegModel.set will only take an object and does not accept options as a second optional parameter
 
-*RegsData.store* creates a new key: value pair in RegsData.regStructure if necessary and returns the record.
+Since Backbone.RegModel.get has similar logic to Backbone.Model.fetch, Backbone.RegModel.fetch is simply another way to call Backbone.RegModel.get.
 
-*RegsData.isLoaded* returns the requested content if it exists in RegsData.content. We should think carefully if we find ourselves calling isLoaded() outside of RegsData.
+Backbone.RegModel adds:
 
-*RegsData.retrieve* is probably going to be the most common way to interact with the module. It determines whether the requested content is loaded via .isLoaded() and requests from the server if it doesn't. It will request JSON by default, but 'markup' will also be a valid option. 
+Backbone.RegModel.request is the interface through which the app asks the server for content.
 
-*RegsData.request* predictably will ask the server for content.
-
-*RegsData.getChildren and RegsData.getParent* determines and returns the appropriate content based on the ID passed in. To avoid the complexity of preserving the full tree on the front end, we rely on formatting to determine family objects only when necessary.
+Backbone.RegModel.getChildren and Backbone.RegModel.getParent determine and return the appropriate content based on the ID passed in. To avoid the complexity of preserving the full tree on the front end, we rely on formatting to determine family objects only when necessary.
