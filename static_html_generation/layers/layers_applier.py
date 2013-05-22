@@ -36,8 +36,9 @@ class SearchReplaceLayersApplier(LayersApplier):
                 offsets = self.find_all_offsets(phrase, self.modified_text)
 
                 for l in locations:
-                    offset = offsets[l]
-                    self.modified_text = self.replace_at_offset(offset, self.modified_text, phrase_replacement)
+                    if len(offsets) > 0:
+                        offset = offsets[l]
+                        self.modified_text = self.replace_at_offset(offset, self.modified_text, phrase_replacement)
         return self.modified_text
 
 class InlineLayersApplier(LayersApplier):

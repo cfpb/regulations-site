@@ -47,7 +47,7 @@ class HTMLBuilder():
 
         if len(node['text'].strip()):
             node['marked_up'] = self.inline_applier.apply_layers(node['text'], node['markup_id'])
-            node['marked_up'] = self.search_applier.apply_layers(node['text'], node['markup_id'])
+            node['marked_up'] = self.search_applier.apply_layers(node['marked_up'], node['markup_id'])
 
         node = self.p_applier.apply_layers(node)
 
