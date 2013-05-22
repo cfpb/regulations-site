@@ -5,12 +5,13 @@ from node_types import NodeTypes
 import settings as app_settings
 
 class HTMLBuilder():
-    def __init__(self, inline_applier, p_applier):
+    def __init__(self, inline_applier, p_applier, search_applier):
         self.markup = u''
         self.sections = None
         self.tree = None
         self.inline_applier = inline_applier
         self.p_applier = p_applier
+        self.search_applier = search_applier
         self.node_types = NodeTypes()
         
     def generate_all_html(self):
@@ -46,6 +47,7 @@ class HTMLBuilder():
 
         if len(node['text'].strip()):
             node['marked_up'] = self.inline_applier.apply_layers(node['text'], node['markup_id'])
+            node['marked_up'] = self.search_applier.apply_layers(node['text'], node['markup_id'])
 
         node = self.p_applier.apply_layers(node)
 
