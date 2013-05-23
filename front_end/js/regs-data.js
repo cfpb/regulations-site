@@ -1,5 +1,7 @@
 define("regs-data", ["underscore", "backbone", './regs-helpers'], function(_, Backbone, RegsHelpers) {
     "use strict";
+
+    // represents a whole regulation
     Backbone.RegModel = Backbone.Model.extend({
         regStructure: [],
         content: {},
@@ -95,6 +97,14 @@ define("regs-data", ["underscore", "backbone", './regs-helpers'], function(_, Ba
 
         // we don't have need for sync
         sync: function() {
+            return;
+        },
+
+        save: function() {
+            return;
+        },
+
+        destroy: function() {
             return;
         }
     });
