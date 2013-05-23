@@ -26,14 +26,14 @@ class HTMLBuilder():
         need to distinguish between them. """
 
         if tree_level > 0:
-            level_two_id = parts[1]
-
-            if level_two_id == 'Interpretations':
+            if parts[0] == 'I':
                 return 'interpretation'
-            elif level_two_id.isalpha():
-                return 'appendix'
             else:
-                return 'regulation'
+                level_two_id = parts[1]
+                if level_two_id.isalpha():
+                    return 'appendix'
+                else:
+                    return 'regulation'
 
     def process_node(self, node):
         if 'title' in node['label']:
