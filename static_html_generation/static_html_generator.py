@@ -9,10 +9,12 @@ import api_reader
 from layers.analyses import SectionBySectionLayer
 from layers.external_citation import ExternalCitationLayer
 from layers.internal_citation import InternalCitationLayer
+from layers.key_terms import KeyTermsLayer
 from layers.definitions import DefinitionsLayer
 from layers.interpretations import InterpretationsLayer
 from layers.layers_applier import InlineLayersApplier
 from layers.layers_applier import ParagraphLayersApplier
+from layers.layers_applier import SearchReplaceLayersApplier
 from layers.toc_applier import TableOfContentsLayer
 import notices
 from html_builder import HTMLBuilder
@@ -39,6 +41,7 @@ if __name__ == "__main__":
 
     inline_applier = InlineLayersApplier()
     p_applier = ParagraphLayersApplier()
+    s_applier = SearchReplaceLayersApplier()
 
     el = api.layer("external-citations", regulation, version)
     reference_EFT_act = ['15', '1693'] #Title 15, Section 1693 of the United States Code
@@ -58,9 +61,11 @@ if __name__ == "__main__":
     
     tl = api.layer("toc", regulation, version)
     p_applier.add_layer(TableOfContentsLayer(tl))
-    
 
-    makers_markup = HTMLBuilder(inline_applier, p_applier)
+    kl = api.layer("keyterms", regulation, version)
+    s_applier.add_layer(KeyTermsLayer(kl))
+    
+    makers_markup = HTMLBuilder(inline_applier, p_applier, s_applier)
     makers_markup.tree = reg_json
     makers_markup.generate_html()
     markup = makers_markup.render_markup()
