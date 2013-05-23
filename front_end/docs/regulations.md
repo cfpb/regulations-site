@@ -98,3 +98,16 @@ define(module name, array of dependencies, anon function that receives dependenc
 ```
 
 jQuery, Underscore and Backbone's paths are defined globally. For other modules, you will want to specify the path to the module relative to front_end/js without appending the ".js" to the end of the filename. Example: "modules/helpful-module" would point to "front_end/js/modules/helpful-module.js".
+
+## Questions Theresa has asked herself
+Q: Why don't we create new model instances for each paragraph? Why don't we initialize Backbone Views for each of those paragraphs on load?
+A: I haven't found a way to test this, but it seems a safe assessment that its non-trivial and unecessary overhead to create, manage and destroy instances which may or may not ever be interacted with by the user.
+
+Q: Should we load all of the content into the app on load?
+A: No. The vast majority of users will only need to access a fraction of the content available in a reg. Moreover, even on shorter regs, like Reg E, before the page is cached in the browser, even scrolling can be very janky. 
+
+Q: Would we benefit from AMD modules?
+A: Yes. As more features are added to the app, chances are that any single user won't leverage all of them. Loading them only as necessary respects the user's time and resources. Additionally, it enforces decoupled and testable code.
+
+Q: Should we just use Backbone.Model as is?
+A: No. Backbone models are predicated on there being many instances in a collection, and serve to keep those instances in sync on the server. Part of the nice thing about Backbone is that it responds to certain common events and attempts this synchronization process without any intervention. The down side is that, if you have a one-way pipeline of data like we do, there are at best wasted cycles, at worst erroring code. Furthermore, given the size of the content trees we have and the likelihood that a user will touch enough pieces to warrant it, it doesn't make sense to build a nested model structure that represents the content tree as it exists. It would, afaik at this point, make content management needlessly complex.

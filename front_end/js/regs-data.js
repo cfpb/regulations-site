@@ -95,7 +95,7 @@ define("regs-data", ["underscore", "backbone", './regs-helpers'], function(_, Ba
             return false;
         },
 
-        // we don't have need for sync
+        // we don't have need for:
         sync: function() {
             return;
         },
