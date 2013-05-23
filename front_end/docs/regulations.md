@@ -77,7 +77,11 @@ Backbone.RegModel.getChildren and Backbone.RegModel.getParent determine and retu
 RegsView extends Backbone.View. Currently, DefinitionView and InterpretationView extend RegsView. RegsView sets up init and render methods that align with the inline display of these content types. It will expand to include content that is surfaced in a similar manner.
 
 ### What should/shouldn't be in Backbone Views
-Currently, all event-based, DOM-related code that lives outside of Views are jQuery event handlers that trigger the creation of Views. We should try to keep it this way as much as possible. If it becomes necessary to deviate from this, we should introduce some kind of system that makes sense for the use cases, so that we can keep things neat and maintainable.
+The only DOM-related JS that does not live within Backbone constructs are the jQuery event listeners and handlers in app-init.js. They are separate because the event handlers create Backbone Views.
+
+When possible, we should create Backbone Views to handle DOM manipulation. If cases arise where a simple event handler is not the solution and a View doesn't make sense, we should introduce another structure. 
+
+All JS files should be Require modules. All distinct pieces of functionality should be their own module. 
 
 ## Require Modules
 Each new JS file should be a Require module. Typically, you'll want to wrap the contents of your module in a call to `define()`. Anatomy of a `define` call:
