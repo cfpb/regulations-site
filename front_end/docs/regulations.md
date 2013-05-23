@@ -72,3 +72,29 @@ Backbone.RegModel adds:
 Backbone.RegModel.request is the interface through which the app asks the server for content.
 
 Backbone.RegModel.getChildren and Backbone.RegModel.getParent determine and return the appropriate content based on the ID passed in. To avoid the complexity of preserving the full tree on the front end, we rely on formatting to determine family objects only when necessary.
+
+## Backbone.View and You
+RegsView extends Backbone.View. Currently, DefinitionView and InterpretationView extend RegsView. RegsView sets up init and render methods that align with the inline display of these content types. It will expand to include content that is surfaced in a similar manner.
+
+### What should/shouldn't be in Backbone Views
+Currently, all event-based, DOM-related code that lives outside of Views are jQuery event handlers that trigger the creation of Views. We should try to keep it this way as much as possible. If it becomes necessary to deviate from this, we should introduce some kind of system that makes sense for the use cases, so that we can keep things neat and maintainable.
+
+## Require Modules
+Each new JS file should be a Require module. Typically, you'll want to wrap the contents of your module in a call to `define()`. Anatomy of a `define` call:
+```javascript
+define("module-name", ["jquery", "underscore", "backbone", "modules/helpful-module"], function($, _, Backbone, helpfulModule) {
+    var stuff = function() {
+        // do things.
+        // this could also have been an object literal
+    }
+
+    // return value is the module source
+    return stuff;
+});
+```
+or, if you prefer:
+```javascript
+define(module name, array of dependencies, anon function that receives dependencies as params)
+```
+
+jQuery, Underscore and Backbone's paths are defined globally. For other modules, you will want to specify the path to the module relative to front_end/js without appending the ".js" to the end of the filename. Example: "modules/helpful-module" would point to "front_end/js/modules/helpful-module.js".
