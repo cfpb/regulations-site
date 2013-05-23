@@ -4,6 +4,7 @@ import codecs
 import json
 from os import mkdir, path
 import shutil
+import sys
 
 import api_reader
 from layers.analyses import SectionBySectionLayer
@@ -33,8 +34,13 @@ if __name__ == "__main__":
             TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',), 
             TEMPLATE_DIRS = ('templates/',))
 
+    if len(sys.argv) == 1:
+        print "Usage: python static_html_generator.py regversion-to-build-from"
+        print " e.g.: python static_html_generator.py 2011-31725"
+        exit()
+
     api = api_reader.Client(app_settings.API_BASE)
-    regulation, version = "1005", app_settings.REGULATION_VERSION
+    regulation, version = "1005", sys.argv[1]
     reg_json = api.regulation(regulation, version)
 
     inline_applier = InlineLayersApplier()
