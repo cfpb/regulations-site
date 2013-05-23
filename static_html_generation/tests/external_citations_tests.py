@@ -24,6 +24,17 @@ class ExternalCitationsTest(TestCase):
         self.assertEqual(parameters['lawnum'], 203)
         self.assertEqual(parameters['lawtype'], 'public')
 
+    @patch('layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag')
+    def test_cfr_link(self, generate_fdsys_href_tag):
+        text = "12 CFR part 200"
+        citation = [12, 200]
+        link = ExternalCitationLayer.generate_cfr_link(text, citation)
+        parameters = generate_fdsys_href_tag.call_args[0][1]
+        self.assertEqual(parameters.keys(), ['titlenum', 'link-type', 'collection', 'partnum'])
+        self.assertEqual(parameters['titlenum'], 12)
+        self.assertEqual(parameters['link-type'], 'xml')
+        self.assertEqual(parameters['collection'], 'cfr')
+        self.assertEqual(parameters['partnum'], 200)
 
     def test_citation_type_to_generator(self):
         citation_type = 'STATUTES_AT_LARGE'
