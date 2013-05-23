@@ -10,7 +10,9 @@ class ExternalCitationLayer():
     def generate_fdsys_href_tag(text, parameters):
         """ Generate an href tag to FDSYS. """
         parameters['year'] = "mostrecent"
-        parameters['link-type'] = "html"
+
+        if 'link-type' not in parameters:
+            parameters['link-type'] = "html"
 
         fdsys_url_base = "http://api.fdsys.gov/link"
         fdsys_url = "%s?%s" % (fdsys_url_base, urllib.urlencode(parameters))
@@ -24,10 +26,11 @@ class ExternalCitationLayer():
     @staticmethod
     def generate_cfr_link(text, citation):
         """ Convert the CFR references into an HTML <a href> tag. """
-        parameters = {'title':citation[0], 'chapter':citation[1]}
+        parameters = {'titlenum':citation[0], 'partnum':citation[1]}
         if len(citation) > 2:
-            parameters['section'] = citation[2]
+            parameters['sectionnum'] = citation[2]
 
+        parameters['link-type'] = 'xml'
         parameters['collection'] = 'cfr'
         return ExternalCitationLayer.generate_fdsys_href_tag(text, parameters)
 
