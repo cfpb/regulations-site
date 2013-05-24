@@ -86,7 +86,7 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
 
             $('#menu-link').click(function(){
                 $('#table-of-contents').toggleClass('active');
-                // prevent default link behavior
+                console.log("YO");
                 return false;
             });
         },

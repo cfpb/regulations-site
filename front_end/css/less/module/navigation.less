@@ -32,3 +32,132 @@
 .appendix-nav li {
     text-indent: -30px;
 }
+
+
+/* ==========================================================================
+ table of contents
+ ========================================================================== */
+
+.regulation-nav {
+    position: fixed;
+    left: -272px; /* 250px + 20px padding + 2px border*/
+    top: 50px;
+    width: 15.625em; /* 250px */
+    height: 100%;
+    background-color: #f6f6f5;
+    z-index: 1000;
+    overflow: scroll;
+    border-right: #d0d0ce 2px solid;
+    margin: 0;
+    padding: 0;
+}
+
+/*.no-js .panel {
+    left: 0;
+}*/
+
+.panel .active{
+    position: fixed;
+    top: 50px;
+    left: 0;
+}
+
+.active {
+    left: 16em;
+}
+
+.active .toc-nav-link {
+  left: 250px;
+}
+
+/* CSS Transitions for Slide Effect */
+
+.slide,
+.panel, 
+.active,
+.regulation-nav {
+    -moz-transition: left 0.2s ease-in-out;
+    -webkit-transition: left 0.2s ease-in-out;
+    -o-transition: left 0.2s ease-in-out;
+    transition: left 0.2s ease-in-out;
+}
+
+/* TOC titles */
+
+.panel h2 {
+  padding-left: 20px
+}
+
+.toc-title-num {
+  .avenir-next-demi;
+  text-transform: uppercase;
+  color: @light_field;
+  display: block;
+  font-size: 12px;
+}
+
+.toc-part-num {
+  .avenir-next-demi;
+  display: block;
+  text-transform: uppercase;
+  font-size: 26px;
+  margin-top: 8px;
+}
+
+.toc-reg-title {
+  .avenir-next;
+  display: block;
+  text-transform: uppercase;
+  font-size: 16px;
+  margin-top: 6px;
+}
+
+/* TOC link styles */
+
+.regulation-nav {
+  margin-bottom: 20px;
+  padding: 0;
+  .avenir-next;
+  font-size: 0.875em; /*14px*/
+  border-top: 1px solid @light_field;
+}
+
+.regulation-nav a:link,
+.regulation-nav a:visited,
+.regulation-nav a:hover,
+.regulation-nav a:active,
+.toc-nav-link:link,
+.toc-nav-link:visited,
+.toc-nav-link:hover,
+.toc-nav-link:active {
+  border-bottom: none;
+  color: @black;
+}
+
+.regulation-nav li {
+  margin: 0;
+  text-indent: 0;
+}
+
+.toc-section-marker {
+  .avenir-next-bold;
+  display: block;
+  font-size: 18px;
+}
+
+.regulation-nav a:link {
+  display: block;
+  padding: 10px 20px;
+}
+
+.regulation-nav a:link,
+.regulation-nav a:visited {
+  border-bottom: 1px solid @light_field;
+}
+
+.regulation-nav a:hover,
+.regulation-nav a:active,
+.toc-nav-link:hover,
+.toc-nav-link:active {
+  background-color: #dbedd4;
+}
