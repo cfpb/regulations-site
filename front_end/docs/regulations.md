@@ -2,7 +2,7 @@
 
 ## Intro
 - App inits in js/regulations.js
-- Data module is js/regs-data.js
+- Data module is Backbone.RegModel in js/regs-data.js
 - Inline element parent controller* is js/regs-view.js
 - Inline definitions controller* is js/definition-view.js
 - Inline interpretations controller* is js/interpretation-view.js
@@ -24,7 +24,7 @@
 
 ## Current Direction
 - Management of DOM manipulation, custom event triggers/handlers and URL routing via Backbone
-- Custom data management module to replace Backbone's Model and Collection modules
+- Extends Backbone.Model to Backbone.RegModel for custom data handling with a Backbonesque API
 
 ## Goal
 To manage data on the client in a way that:
@@ -58,19 +58,60 @@ To manage data on the client in a way that:
 - $ npm install
 - $ grunt jasmine (to test that all is well, specs should run)
 
-## Overview of RegsData (5/13/13)
-RegsData keeps two objects that it uses to determine what the deal is with fetching content. *RegsData.content* is an object whose contents are key = section or paragraph ID, value = contents of the corresponding section, including children. Hierarchy is not represented in RegsData.content, meaning that RegsData['2345-10'] and RegsData['2345-10-a-i'] are both valid.
+## Diff between Backbone.Model and Backbone.RegModel
+Backbone.RegModel extends Backbone.Model, but implements its own logic and alters the API slightly in areas.
 
-It keeps an array in *RegsData.regStructure* that houses all of the sections and paragraphs that exist in the regulation that is in scope. For example, if we have section #2345 in the DOM, RegsData.regStructure will represent the full navigation. However, not all of the items might have their content loaded into the app. RegsData.content might have a value for '2345-1', which is also in RegsData.regStructure, but not for '2345-9'.
+Backbone.RegModel effectively removes Backbone.Model.sync
 
-*RegsData.parse* recurses through a JSON object to turn the generated tree into individual sections and paragraphs that the app can reference. Its currently pretty tightly coupled with the structure of the parsed tree.
+Backbone.RegModel.set will only take an object and does not accept options as a second optional parameter
 
-*RegsData.store* creates a new key: value pair in RegsData.regStructure if necessary and returns the record.
+Since Backbone.RegModel.get has similar logic to Backbone.Model.fetch, Backbone.RegModel.fetch is simply another way to call Backbone.RegModel.get.
 
-*RegsData.isLoaded* returns the requested content if it exists in RegsData.content. We should think carefully if we find ourselves calling isLoaded() outside of RegsData.
+Backbone.RegModel adds:
 
-*RegsData.retrieve* is probably going to be the most common way to interact with the module. It determines whether the requested content is loaded via .isLoaded() and requests from the server if it doesn't. It will request JSON by default, but 'markup' will also be a valid option. 
+Backbone.RegModel.request is the interface through which the app asks the server for content.
 
-*RegsData.request* predictably will ask the server for content.
+Backbone.RegModel.getChildren and Backbone.RegModel.getParent determine and return the appropriate content based on the ID passed in. To avoid the complexity of preserving the full tree on the front end, we rely on formatting to determine family objects only when necessary.
 
-*RegsData.getChildren and RegsData.getParent* determines and returns the appropriate content based on the ID passed in. To avoid the complexity of preserving the full tree on the front end, we rely on formatting to determine family objects only when necessary.
+## Backbone.View and You
+RegsView extends Backbone.View. Currently, DefinitionView and InterpretationView extend RegsView. RegsView sets up init and render methods that align with the inline display of these content types. It will expand to include content that is surfaced in a similar manner.
+
+### What should/shouldn't be in Backbone Views
+The only DOM-related JS that does not live within Backbone constructs are the jQuery event listeners and handlers in app-init.js. They are separate because the event handlers create Backbone Views.
+
+When possible, we should create Backbone Views to handle DOM manipulation. If cases arise where a simple event handler is not the solution and a View doesn't make sense, we should introduce another structure. 
+
+All JS files should be Require modules. All distinct pieces of functionality should be their own module. 
+
+## Require Modules
+Each new JS file should be a Require module. Typically, you'll want to wrap the contents of your module in a call to `define()`. Anatomy of a `define` call:
+```javascript
+define("module-name", ["jquery", "underscore", "backbone", "modules/helpful-module"], function($, _, Backbone, helpfulModule) {
+    var stuff = function() {
+        // do things.
+        // this could also have been an object literal
+    }
+
+    // return value is the module source
+    return stuff;
+});
+```
+or, if you prefer:
+```javascript
+define(module name, array of dependencies, anon function that receives dependencies as params)
+```
+
+jQuery, Underscore and Backbone's paths are defined globally. For other modules, you will want to specify the path to the module relative to front_end/js without appending the ".js" to the end of the filename. Example: "modules/helpful-module" would point to "front_end/js/modules/helpful-module.js".
+
+## Questions Theresa has asked herself
+Q: Why don't we create new model instances for each paragraph? Why don't we initialize Backbone Views for each of those paragraphs on load?
+A: I haven't found a way to test this, but it seems a safe assessment that its non-trivial and unecessary overhead to create, manage and destroy instances which may or may not ever be interacted with by the user.
+
+Q: Should we load all of the content into the app on load?
+A: No. The vast majority of users will only need to access a fraction of the content available in a reg. Moreover, even on shorter regs, like Reg E, before the page is cached in the browser, even scrolling can be very janky. 
+
+Q: Would we benefit from AMD modules?
+A: Yes. As more features are added to the app, chances are that any single user won't leverage all of them. Loading them only as necessary respects the user's time and resources. Additionally, it enforces decoupled and testable code.
+
+Q: Should we just use Backbone.Model as is?
+A: No. Backbone models are predicated on there being many instances in a collection, and serve to keep those instances in sync on the server. Part of the nice thing about Backbone is that it responds to certain common events and attempts this synchronization process without any intervention. The down side is that, if you have a one-way pipeline of data like we do, there are at best wasted cycles, at worst erroring code. Furthermore, given the size of the content trees we have and the likelihood that a user will touch enough pieces to warrant it, it doesn't make sense to build a nested model structure that represents the content tree as it exists. It would, afaik at this point, make content management needlessly complex.
