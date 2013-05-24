@@ -13,21 +13,19 @@
 
             {% if level_one.marked_up %}
             <p> 
-                {% if level_one.interpretations %}
-                <a href="#{{ level_one.interpretations }}" class="interpretation-ref">[I]</a>
-                {% endif %}
                 {% for doc_num, ref in level_one.analyses %}
                 <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
                 {% endfor %}
                 {{level_one.marked_up|safe}} 
             </p>
             {% else %}
-                {% if level_one.interpretations %}
-                <a href="#{{ level_one.interpretations }}" class="interpretation-ref">[I]</a>
-                {% endif %}
                 {% for doc_num, ref in level_one.analyses %}
                 <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
                 {% endfor %}
+            {% endif %}
+
+            {% if level_one.interpretations %}
+                {{ level_one.interpretations }}
             {% endif %}
 
             {% if level_one.children %}
