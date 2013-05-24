@@ -4,13 +4,13 @@
         {% if c.marked_up %}
         <p> 
             {% for doc_num, ref in c.analyses %}
-            <a href="/notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+            <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
             {% endfor %}
         {{c.marked_up|safe}} 
         </p>
         {% else %}
             {% for doc_num, ref in c.analyses %}
-            <a href="/notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+            <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
             {% endfor %}
         {% endif %}
 
