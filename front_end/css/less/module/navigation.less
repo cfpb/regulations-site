@@ -62,19 +62,21 @@
     left: 0;
 }
 
-.active {
+.active .panel {
     left: 16em;
 }
 
-.active .toc-nav-link {
-  left: 250px;
+@media only screen and (min-width: 1000px) {
+
+/* slide all content right on wide screens */
+    .active {
+        left: 16em;
+    }
+
 }
 
 /* CSS Transitions for Slide Effect */
-
-.slide,
-.panel, 
-.active,
+.wrap,
 .regulation-nav {
     -moz-transition: left 0.2s ease-in-out;
     -webkit-transition: left 0.2s ease-in-out;
@@ -83,43 +85,41 @@
 }
 
 /* TOC titles */
-
 .panel h2 {
-  padding-left: 20px
+    padding-left: 20px
 }
 
 .toc-title-num {
-  .avenir-next-demi;
-  text-transform: uppercase;
-  color: @light_field;
-  display: block;
-  font-size: 12px;
+    .avenir-next-demi;
+    text-transform: uppercase;
+    color: @light_field;
+    display: block;
+    font-size: 12px;
 }
 
 .toc-part-num {
-  .avenir-next-demi;
-  display: block;
-  text-transform: uppercase;
-  font-size: 26px;
-  margin-top: 8px;
+    .avenir-next-demi;
+    display: block;
+    text-transform: uppercase;
+    font-size: 26px;
+    margin-top: 8px;
 }
 
 .toc-reg-title {
-  .avenir-next;
-  display: block;
-  text-transform: uppercase;
-  font-size: 16px;
-  margin-top: 6px;
-}
+      .avenir-next;
+      display: block;
+      text-transform: uppercase;
+      font-size: 16px;
+      margin-top: 6px;
+    }
 
 /* TOC link styles */
-
 .regulation-nav {
-  margin-bottom: 20px;
-  padding: 0;
-  .avenir-next;
-  font-size: 0.875em; /*14px*/
-  border-top: 1px solid @light_field;
+    margin-bottom: 20px;
+    padding: 0;
+    .avenir-next;
+    font-size: 0.875em; /*14px*/
+    border-top: 1px solid @light_field;
 }
 
 .regulation-nav a:link,
@@ -130,34 +130,34 @@
 .toc-nav-link:visited,
 .toc-nav-link:hover,
 .toc-nav-link:active {
-  border-bottom: none;
-  color: @black;
+    border-bottom: none;
+    color: @black;
 }
 
 .regulation-nav li {
-  margin: 0;
-  text-indent: 0;
-}
-
-.toc-section-marker {
-  .avenir-next-bold;
-  display: block;
-  font-size: 18px;
+    margin: 0;
+    text-indent: 0;
 }
 
 .regulation-nav a:link {
-  display: block;
-  padding: 10px 20px;
+    display: block;
+    padding: 10px 20px;
 }
 
 .regulation-nav a:link,
 .regulation-nav a:visited {
-  border-bottom: 1px solid @light_field;
+    border-bottom: 1px solid @light_field;
 }
 
 .regulation-nav a:hover,
 .regulation-nav a:active,
 .toc-nav-link:hover,
 .toc-nav-link:active {
-  background-color: #dbedd4;
+    background-color: #dbedd4;
+}
+
+.toc-section-marker {
+    .avenir-next-bold;
+    display: block;
+    font-size: 18px;
 }

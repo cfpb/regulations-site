@@ -3,31 +3,31 @@
  ========================================================================== */
 
 body {
-  color: @black;
-  font-family: @body-font;
-  font-size: 1em;
-  line-height: 1.625; /* 26px */
-}
+    color: @black;
+    font-family: @body-font;
+    font-size: 1em;
+    line-height: 1.625; /* 26px */
+    }
 
 h1 {
-  .avenir-next;
-  font-size: 2.25em; /* 36px / 16px */
-  line-height: 1.194;
-  text-transform: uppercase;
+    .avenir-next;
+    font-size: 2.25em; /* 36px / 16px */
+    line-height: 1.194;
+    text-transform: uppercase;
 }
 
 h2,
 h3{
-  .avenir-next-bold;
+    .avenir-next-bold;
 }
 
 h4,
 h5 {
-  .avenir-next-demi;
+    .avenir-next-demi;
 }
 
 li {
-  margin-top: 1em; /*16px*/
+    margin-top: 1em; /*16px*/
 }
 
 /* ==========================================================================
@@ -38,14 +38,14 @@ li {
 
 a:link,
 a:visited {
-  color: @black;
-  text-decoration: none;
-  border-bottom: 1px solid #348dc9;
+    color: @black;
+    text-decoration: none;
+    border-bottom: 1px solid #348dc9;
 }
 
 a:hover,
 a:active {
-  background-color: #cde3f1;
+    background-color: #cde3f1;
 }
 
 
@@ -53,43 +53,44 @@ a:active {
 
 a.internal:link,
 a.internal:visited {
-  color: @black;
-  text-decoration: none;
-  border-bottom: 1px solid #348dc9;
+    color: @black;
+    text-decoration: none;
+    border-bottom: 1px solid #348dc9;
 }
 
 a.internal:hover,
 a.internal:active {
-  background-color: #cde3f1;
+    background-color: #cde3f1;
 }
 
 /* external links */
 
 a[href^="http://"]:link,
 a[href^="http://"]:visited {
-  color: @pacific;
-  text-decoration: none;
-  border: none;
+    color: @pacific;
+    text-decoration: none;
+    border: none;
 }
+
 a[href^="http://"]:hover,
 a[href^="http://"]:active {
-  border-bottom: 1px solid;
-  background: none;
+    border-bottom: 1px solid;
+    background: none;
 }
 
 /* citation links */
 
 a.definition:link,
 a.definition:visited {
-  color: @black;
-  text-decoration: none;
-  border-bottom: 1px solid #d0d0ce;
+    color: @black;
+    text-decoration: none;
+    border-bottom: 1px solid #d0d0ce;
 }
 
 a.definition:hover,
 a.definition:active {
-  border-bottom: 1px solid #babbbd;
-  background-color: #e7e7e6;
+    border-bottom: 1px solid #babbbd;
+    background-color: #e7e7e6;
 }
 
 /* ==========================================================================
@@ -99,16 +100,16 @@ a.definition:active {
 /* headings */
 
 .section-title { 
-  .avenir-next-bold;
-  font-size: 1.8125em; /* 29px / 16px = 1.8125em */
-  line-height: 1.25;
-  margin-top: 40px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+    .avenir-next-bold;
+    font-size: 1.8125em; /* 29px / 16px = 1.8125em */
+    line-height: 1.25;
+    margin-top: 40px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .level-1 > li {
-  margin-top: 1.875em; /* 30px / 16px = 1.875em */
+    margin-top: 1.875em; /* 30px / 16px = 1.875em */
 }
 
 /* section marker styles */
@@ -116,11 +117,11 @@ a.definition:active {
 /*temporary styles will list markers are sorted out */
 
 li {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 li {
- text-indent: -24px;
+    text-indent: -24px;
 }
 
 
@@ -171,24 +172,24 @@ ol.level-4 > li:before {
 /* dfn styles */
 
 dfn {
-  .avenir-next-demi;
+    .avenir-next-demi;
 }
 
 .level-1 .key-term {
-  font-size: 1.5em; /* 24px / 16px = 1.5em */
-  line-height: 1.25; /* 30px / 24px = 1.25 */
+    font-size: 1.5em; /* 24px / 16px = 1.5em */
+    line-height: 1.25; /* 30px / 24px = 1.25 */
 }
 
 .level-2 .key-term,
 .defined-term {
-  text-transform: uppercase;
-  font-size: 1em;
+    text-transform: uppercase;
+    font-size: 1em;
 }
 
 /* block text -- not ie7 friendly :( */
 .key-term:after {
-  content: "\a";
-  white-space: pre;
+    content: "\a";
+    white-space: pre;
 }
 
 /* ==========================================================================
@@ -205,32 +206,32 @@ dfn {
 
 /*match appendix title to other headings for nav demo */
 appendix-title {
-  .avenir-next-bold;
-  font-size: 1.8125em; /* 29px / 16px = 1.8125em */
-  line-height: 1.25;
-  margin-top: 40px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+    .avenir-next-bold;
+    font-size: 1.8125em; /* 29px / 16px = 1.8125em */
+    line-height: 1.25;
+    margin-top: 40px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .appendix-header, 
 h3 {
-  font-size: 24px;
-  line-height: 30px;
-  padding-top: 20px;
+    font-size: 24px;
+    line-height: 30px;
+    padding-top: 20px;
 /*ALL CAPS (except reference to section (1005.5(a)(1)(i))*/
 }
 
 h4 {
-  font-size: 24px;
-  line-height: 30px;
+    font-size: 24px;
+    line-height: 30px;
 }
 
 .model-form-content {
-  background: #f6f6f5;
-  border: 1px solid #e3e4e5;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 20px;
+    background: #f6f6f5;
+    border: 1px solid #e3e4e5;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
 }
