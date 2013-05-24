@@ -15,9 +15,13 @@
         {% endif %}
 
         {% if c.interp_markup %}
-            <ol style="border: thin solid black;">
-            {{ c.interp_markup|safe }}
-            </ol>
+            <section class="inline-interpretation reset-indent" data-interp-for="{{c.markup_id}}">
+                <h4>Supplement I - Official Interpretations</h4>
+                <a class="expand-button">Show</a>
+                <ol class="hidden">
+                    {{ c.interp_markup|safe }}
+                </ol>
+            </section>
         {% endif %}
 
         <ol class="level-1" type="a">
