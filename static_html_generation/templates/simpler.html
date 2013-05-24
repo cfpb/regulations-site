@@ -24,7 +24,9 @@
         <script data-main="regulations" src="front_end/js/lib/require-jquery.js"></script>
     </head>
     <body>
-        <div class="wrap" id="reg-content">
+        <div class="wrap group" id="reg-content">
+
+        <div class="main-content">
         <section id="{{tree.markup_id}}">
          <h1> {{tree.markup_title}} </h1>
 
@@ -43,6 +45,12 @@
                 {% endfor %}
             {% endif %}
         </section>
+        </div>
+
+        <div class="secondary-content">
+
+        </div>
+
         </div>
     {% if GOOGLE_ANALYTICS_SITE and GOOGLE_ANALYTICS_ID %}
         <script>

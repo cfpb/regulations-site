@@ -81,6 +81,14 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
                     $this.data("state", "open");
                 }
             });
+
+            // toc class toggle
+
+            $('.regulation-nav a').click(function(){
+                $('.wrap').toggleClass('active');
+                // prevent default link behavior
+                return false;
+            });
         },
 
         init: function() {
@@ -90,3 +98,5 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
         }
     }
 });
+
+console.log("chicken");
