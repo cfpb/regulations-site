@@ -24,8 +24,10 @@
                 {% endfor %}
             {% endif %}
 
-            {% if level_one.interpretations %}
-                {{ level_one.interpretations }}
+            {% if level_one.interp_markup %}
+                <ol style="border: thin solid black;">
+                {{ node.interp_markup|safe }}
+                </ol>
             {% endif %}
 
             {% if level_one.children %}

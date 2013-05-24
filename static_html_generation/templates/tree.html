@@ -11,8 +11,10 @@
         <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
         {% endfor %}
     {% endif %}
-    {% if node.interpretations %}
-        {{ node.interpretations }}
+    {% if node.interp_markup %}
+        <ol style="border: thin solid black;">
+        {{ node.interp_markup|safe }}
+        </ol>
     {% endif %}
     {% if node.children %}
     {% if node.node_type == "appendix" %}

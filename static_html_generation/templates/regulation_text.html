@@ -14,8 +14,10 @@
             {% endfor %}
         {% endif %}
 
-        {% if c.interpretations %}
-            {{ c.interpretations }}
+        {% if c.interp_markup %}
+            <ol style="border: thin solid black;">
+            {{ c.interp_markup|safe }}
+            </ol>
         {% endif %}
 
         <ol class="level-1" type="a">
