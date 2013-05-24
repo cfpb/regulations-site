@@ -30,6 +30,14 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
             /* 
             * EVENT BINDINGS 
             */
+
+            // interpretations accordion
+            $('.expand-button').on('click', function(e) {
+                var button = $(this);
+                button.toggleClass('open').next('.hidden').slideToggle();
+                button.html(button.hasClass('open') ? 'Hide' : 'Show');
+            });
+
             // click term link, open definition
             $('.definition').on('click', function(e) {
                 e.preventDefault();
