@@ -18,8 +18,10 @@ class HTMLBuilderTest(TestCase):
         inline.apply_layers.return_value = node
         par = Mock()
         par.apply_layers.return_value = node
+        sr = Mock()
+        sr.apply_layers.return_value = node
 
-        builder = HTMLBuilder(inline, par)
+        builder = HTMLBuilder(inline, par, sr)
         builder.process_node(node)
 
         self.assertTrue(inline.apply_layers.called)

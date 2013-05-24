@@ -4,7 +4,7 @@ class SectionBySectionLayer(object):
     def __init__(self, layer):
         self.layer = layer
 
-    def apply_layer(self, text_index):
+    def apply_layer(self, text_index, reg_tree):
         """Return a pair of field-name + analyses if they apply"""
         if text_index in self.layer and self.layer[text_index]:
             references = []

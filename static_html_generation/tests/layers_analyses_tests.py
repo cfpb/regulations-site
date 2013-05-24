@@ -19,12 +19,12 @@ class SectionBySectionLayerTest(TestCase):
         }
         sxs = SectionBySectionLayer(layer)
         
-        key, value = sxs.apply_layer("111-22")
+        key, value = sxs.apply_layer("111-22", None)
         self.assertEqual("analyses", key)
         self.assertEqual([["2009-22", "111-22"], ["2007-11", "111-22"]], value)
 
-        key, value = sxs.apply_layer("111-22-a")
+        key, value = sxs.apply_layer("111-22-a", None)
         self.assertEqual("analyses", key)
         self.assertEqual([["2009-22", "111-22-a"]], value)
 
-        self.assertEqual(None, sxs.apply_layer("222-22"))
+        self.assertEqual(None, sxs.apply_layer("222-22", None))

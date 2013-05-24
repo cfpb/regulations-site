@@ -46,7 +46,7 @@ if __name__ == "__main__":
     reg_json = api.regulation(regulation, version)
 
     inline_applier = InlineLayersApplier()
-    p_applier = ParagraphLayersApplier()
+    p_applier = ParagraphLayersApplier(reg_json)
     s_applier = SearchReplaceLayersApplier()
 
     el = api.layer("external-citations", regulation, version)

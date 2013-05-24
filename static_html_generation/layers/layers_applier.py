@@ -72,9 +72,15 @@ class ParagraphLayersApplier(LayersApplier):
     """ Handle layers which apply to the whole paragraph. Layers include
     interpretations, section-by-section analyses, table of contents, etc."""
 
+    def __init__(self, reg_tree):
+        """The regulation tree can be useful to layers (e.g.
+        interpretations), so we pass that along"""
+        LayersApplier.__init__(self)
+        self.reg_tree = reg_tree
+
     def apply_layers(self, node):
         for layer in self.layers:
-            pair = layer.apply_layer(node['markup_id'])
+            pair = layer.apply_layer(node['markup_id'], self.reg_tree)
             if pair:
                 node[pair[0]] = pair[1]
         return node
