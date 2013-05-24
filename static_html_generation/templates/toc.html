@@ -1,5 +1,5 @@
-<nav>
-    <ol class="{{nav_class}}">
+<nav id="menu" class="panel" role="navigation">
+    <ol class="{{nav_class}}" id="table-of-contents">
         {% for item in toc_items %}
             <li><a href="{{item.url}}">{{item.label}}</a></li>
         {% endfor %}
