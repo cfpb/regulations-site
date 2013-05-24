@@ -3,21 +3,19 @@
     <h2 class="section-title"> {{c.markup_title}} </h2>
         {% if c.marked_up %}
         <p> 
-            {% if c.interpretations %}
-            <a href="#{{ c.interpretations }}" class="interpretation-ref">[I]</a>
-            {% endif %}
             {% for doc_num, ref in c.analyses %}
             <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
             {% endfor %}
         {{c.marked_up|safe}} 
         </p>
         {% else %}
-            {% if c.interpretations %}
-            <a href="#{{ c.interpretations }}" class="interpretation-ref">[I]</a>
-            {% endif %}
             {% for doc_num, ref in c.analyses %}
             <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
             {% endfor %}
+        {% endif %}
+
+        {% if c.interpretations %}
+           <!-- stick what shows under 1005 I here -->
         {% endif %}
 
         <ol class="level-1" type="a">

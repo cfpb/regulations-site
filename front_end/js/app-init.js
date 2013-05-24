@@ -9,7 +9,7 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
                     clist = $child.find('ol'),
                     $nextChild;
 
-                RegsData.store({
+                RegsData.set({
                     'text': cid,
                     'content': $child.html()
                 }); 
