@@ -9,9 +9,7 @@
 
 .regulation-nav li,
 .appendix-nav li {
-    font-family: "Avenir Next Demi", Arial, sans-serif;
-    font-weight: 600;
-    font-style: normal;
+    .avenir-next-demi;
     margin: 0;
     font-size: 0.875em; /*14px*/
     line-height: 1.85714; /*26px*/
@@ -127,11 +125,20 @@
 .regulation-nav a:hover,
 .regulation-nav a:active,
 .toc-nav-link:link,
-.toc-nav-link:visited,
-.toc-nav-link:hover,
-.toc-nav-link:active {
+.toc-nav-link:visited {
     border-bottom: none;
     color: @black;
+}
+
+.toc-nav-link:hover,
+.toc-nav-link:active,
+.active .toc-nav-link {
+    color: @pacific;
+    background: #fff;
+}
+
+.toc-nav-link:before {
+    content: '\2630 \00a0';
 }
 
 .regulation-nav li {
@@ -150,9 +157,7 @@
 }
 
 .regulation-nav a:hover,
-.regulation-nav a:active,
-.toc-nav-link:hover,
-.toc-nav-link:active {
+.regulation-nav a:active {
     background-color: #dbedd4;
 }
 
