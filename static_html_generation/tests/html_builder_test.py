@@ -1,4 +1,5 @@
 from html_builder import *
+from layers.layers_applier import InlineLayersApplier
 from mock import Mock
 from unittest import TestCase
 
@@ -101,3 +102,20 @@ class HTMLBuilderTest(TestCase):
         result = builder.list_level(parts, node_type)
         self.assertEquals(result, (None, None))
 
+    def test_interp_node_with_citations(self):
+        inline, p, sr = Mock(), Mock(), Mock()
+        builder = HTMLBuilder(inline, p, sr)
+
+        node = {
+            'text': 'Interpretation with a link',
+            'children': [],
+            'label': {
+                'text': '999-Interpretations-5', 
+                'parts': ['999', 'Interpretations', '5']
+            }
+        }
+        p.apply_layers.return_value = node
+        builder.process_node(node)
+        layer_parameters = inline.apply_layers.call_args[0]
+        self.assertEqual('Interpretation with a link', layer_parameters[0])
+        self.assertEqual('999-Interpretations-5', layer_parameters[1])

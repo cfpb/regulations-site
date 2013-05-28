@@ -71,8 +71,11 @@ class HTMLBuilder():
         node['list_type'] = list_type
 
         if len(node['text'].strip()):
-            node['marked_up'] = self.inline_applier.apply_layers(node['text'], node['markup_id'])
-            node['marked_up'] = self.search_applier.apply_layers(node['marked_up'], node['markup_id'])
+            #   Use the Tree's ID
+            node['marked_up'] = self.inline_applier.apply_layers(
+                    node['text'], node['label']['text'])
+            node['marked_up'] = self.search_applier.apply_layers(
+                    node['marked_up'], node['label']['text'])
 
         node = self.p_applier.apply_layers(node)
 
