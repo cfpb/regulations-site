@@ -32,3 +32,72 @@ class HTMLBuilderTest(TestCase):
 
         self.assertTrue(par.apply_layers.called)
         self.assertEqual(node, par.apply_layers.call_args[0][0])
+
+    def test_list_level_interpretations(self):
+        builder = HTMLBuilder(None, None, None)
+
+        parts = ['I', '101', '12', '(a)', '1']
+        node_type = 'interpretation'
+
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (1, '1'))
+
+        parts.append('(j)')
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (2, 'i'))
+
+        parts.append('B')
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (3, 'A'))
+
+    def test_list_level_appendices(self):
+        builder = HTMLBuilder(None, None, None)
+
+        parts = ['101', 'A', '1','a']
+        node_type = 'appendix'
+
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (1, 'a'))
+
+        parts.append('2')
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (2, '1'))
+
+        parts.append('k')
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (3, 'i'))
+
+        parts.append('B')
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (4, 'A'))
+
+    def test_list_level_regulations(self):
+        builder = HTMLBuilder(None, None, None)
+
+        parts = ['101','1','a']
+        node_type = 'regulation'
+
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (1, 'a'))
+
+        parts.append('2')
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (2, '1'))
+
+        parts.append('k')
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (3, 'i'))
+
+        parts.append('B')
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (4, 'A'))
+
+    def test_list_level_regulations_no_level(self):
+        builder = HTMLBuilder(None, None, None)
+
+        parts = ['101','1']
+        node_type = 'regulation'
+
+        result = builder.list_level(parts, node_type)
+        self.assertEquals(result, (None, None))
+

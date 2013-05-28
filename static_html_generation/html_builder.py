@@ -20,11 +20,31 @@ class HTMLBuilder():
     def generate_html(self):
         self.process_node(self.tree)
 
+    def list_level(self, parts, node_type):
+        """ Return the list level and the list type. """
+        if node_type == 'interpretation':
+            level_type_map = {1:'1', 2:'i', 3:'A'}
+            prefix_length = 4
+        elif node_type == 'appendix':
+            level_type_map = {1:'a', 2:'1', 3:'i', 4:'A'}
+            prefix_length = 3
+        elif node_type == 'regulation':
+            level_type_map = {1:'a', 2:'1', 3:'i', 4:'A'}
+            prefix_length = 2
+
+        if len(parts) > prefix_length:
+            list_level = len(parts) - prefix_length
+            list_type = level_type_map[list_level]
+
+            return (list_level, list_type)
+        else:
+            return (None, None)
+
     def node_type(self, tree_level, parts):
         """ A node in the regulation can be part of the appendix, the interpretation 
         section or simply the normal regulation text. We style them differently, hence we 
         need to distinguish between them. """
-
+    
         if tree_level > 0:
             if parts[0] == 'I':
                 return 'interpretation'
@@ -34,6 +54,7 @@ class HTMLBuilder():
                     return 'appendix'
                 else:
                     return 'regulation'
+        return 'regulation'
 
     def process_node(self, node):
         if 'title' in node['label']:
@@ -44,6 +65,10 @@ class HTMLBuilder():
         node['tree_level'] = len(node['label']['parts']) - 1
 
         node['node_type'] = self.node_type(node['tree_level'], node['label']['parts'])
+        list_level, list_type = self.list_level(node['label']['parts'], node['node_type'])
+
+        node['list_level'] = list_level
+        node['list_type'] = list_type
 
         if len(node['text'].strip()):
             node['marked_up'] = self.inline_applier.apply_layers(node['text'], node['markup_id'])
