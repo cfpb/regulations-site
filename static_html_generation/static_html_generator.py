@@ -8,14 +8,15 @@ import sys
 
 import api_reader
 from layers.analyses import SectionBySectionLayer
+from layers.definitions import DefinitionsLayer
 from layers.external_citation import ExternalCitationLayer
 from layers.internal_citation import InternalCitationLayer
-from layers.key_terms import KeyTermsLayer
-from layers.definitions import DefinitionsLayer
 from layers.interpretations import InterpretationsLayer
+from layers.key_terms import KeyTermsLayer
 from layers.layers_applier import InlineLayersApplier
 from layers.layers_applier import ParagraphLayersApplier
 from layers.layers_applier import SearchReplaceLayersApplier
+from layers.paragraph_markers import ParagraphMarkersLayer
 from layers.toc_applier import TableOfContentsLayer
 import notices
 from html_builder import HTMLBuilder
@@ -70,6 +71,9 @@ if __name__ == "__main__":
 
     kl = api.layer("keyterms", regulation, version)
     s_applier.add_layer(KeyTermsLayer(kl))
+
+    pm = api.layer("paragraph-markers", regulation, version)
+    s_applier.add_layer(ParagraphMarkersLayer(pm))
     
     makers_markup = HTMLBuilder(inline_applier, p_applier, s_applier)
     makers_markup.tree = reg_json
