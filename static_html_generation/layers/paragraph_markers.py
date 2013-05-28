@@ -15,4 +15,4 @@ class ParagraphMarkersLayer(object):
                 )
                 elements.append(
                     (to_replace, replace_with, layer_element['locations']))
-            return elements
+        return elements
