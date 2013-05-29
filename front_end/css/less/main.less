@@ -8,6 +8,7 @@
 @import url(layout.less);
 @import url(module/navigation.less);
 @import url(module/interpretations.less);
+@import url(module/site-header.less);
 @import url(module/reg-header.less);
 @import url(print.less);
 
@@ -16,7 +17,7 @@
  helper classes
  ========================================================================== */
 
-.inline{
+.inline {
     display: inline;
     margin: 0;
 }
@@ -27,6 +28,21 @@
 
 .reset-indent {
     text-indent: 0;
+}
+
+.well {
+    padding: 1em 1.25em;
+    background: @grey;
+}
+
+.left {
+    float: left;
+    margin-right: 20px;
+}
+
+.right {
+    float: right;
+    margin-left: 20px;
 }
 
 /* .group class as clearfix */

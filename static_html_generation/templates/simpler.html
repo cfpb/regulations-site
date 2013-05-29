@@ -29,25 +29,28 @@
     </head>
     <body>
 
+      <header id="site-header" class="wrap group">
+        <h1 class="site-title left">eRegulations</h1>
+      </header>
+
         <div class="reg-header" id="sub-head">
-          <div class="wrap group">
+          <nav class="wrap group">
           <ul>
               <li><a href="#menu" id="menu-link" class="toc-nav-link slide">Table of Contents</a></li>
           </ul>
-          </div>
+          </nav>
+         {%if tree.TOC %}
+            {% with nav_class='regulation-nav' toc_items=tree.TOC %}
+               {% include "toc.html" %} 
+            {% endwith %}
+         {%endif%}   
         </div>
 
         <div class="wrap group" id="reg-content">
 
         <div class="main-content">
         <section id="{{tree.markup_id}}">
-         <h1> {{tree.markup_title}} </h1>
-
-         {%if tree.TOC %}
-            {% with nav_class='regulation-nav' toc_items=tree.TOC %}
-               {% include "toc.html" %} 
-            {% endwith %}
-         {%endif%}
+         <h1 class="reg-title"> {{tree.markup_title}} </h1>
 
             {% if tree.children %}
                 {% for c in tree.children %}
