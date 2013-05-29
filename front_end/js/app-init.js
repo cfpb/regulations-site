@@ -119,7 +119,7 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
         init: function() {
             this.getTree($('#reg-content')); 
             this.bindEvents();
-            console.log(RegsData);
+            //console.log(RegsData);
         }
     }
 });
