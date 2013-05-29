@@ -97,6 +97,23 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
                 $('.wrap').toggleClass('active');
                 return false;
             });
+
+             // basic highlight selected section in TOC functionality
+            $('#table-of-contents a').click(function(){
+                $('#table-of-contents a.current').removeClass('current');
+                $(this).addClass('current');
+            });
+
+            // persistent reg header on scroll
+            var menuOffset = $('#sub-head')[0].offsetTop;
+            $(document).bind('ready scroll',function() {
+                var docScroll = $(document).scrollTop();
+                if(docScroll >= menuOffset) {
+                    $('#sub-head').addClass('fixed');
+                } else {
+                    $('#sub-head').removeClass('fixed');
+                }
+            });
         },
 
         init: function() {
