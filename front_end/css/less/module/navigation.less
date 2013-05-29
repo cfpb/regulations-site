@@ -2,21 +2,15 @@
  navgation
  ========================================================================== */
 
-.regulation-nav,
 .appendix-nav {
     margin-top: 2.5em; /*40px*/
 }
 
-.regulation-nav li,
 .appendix-nav li {
     .avenir-next-demi;
     margin: 0;
     font-size: 0.875em; /*14px*/
     line-height: 1.85714; /*26px*/
-}
-
-.regulation-nav li {
-    text-indent: 0; /* for use with mock outdenting */
 }
 
 .regulation-nav {
@@ -39,7 +33,7 @@
 .regulation-nav {
     position: fixed;
     left: -272px; /* 250px + 20px padding + 2px border*/
-    top: 58px;
+    top: 0;
     width: 15.625em; /* 250px */
     height: 100%;
     background-color: #f6f6f5;
@@ -56,12 +50,8 @@
 
 .panel .active{
     position: fixed;
-    top: 58px;
+    top: 0;
     left: 0;
-}
-
-.active .panel {
-    left: 16em;
 }
 
 @media only screen and (min-width: 1000px) {
@@ -109,13 +99,13 @@
       text-transform: uppercase;
       font-size: 16px;
       margin-top: 6px;
-    }
+}
 
 /* TOC link styles */
 .regulation-nav {
     margin-bottom: 20px;
     padding: 0;
-    .avenir-next;
+    .avenir-next-demi;
     font-size: 0.875em; /*14px*/
     border-top: 1px solid @light_field;
 }
@@ -165,4 +155,8 @@
     .avenir-next-bold;
     display: block;
     font-size: 18px;
+}
+
+.current {
+    background-color: #dbedd4;
 }
