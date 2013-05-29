@@ -1,4 +1,3 @@
-import re
 import string
 from django.template import loader, Context
 
