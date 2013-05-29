@@ -19,7 +19,9 @@ define("regs-view", ["jquery", "underscore", "backbone", "regs-data"], function(
         render: function() {
             var xoff = this.model.$anchor.offset().top;
             this.$el.html(this.model.content);
-            $('#reg-content').append(this.$el.css('top', xoff + 'px').css('left', '10px').css('width', '100px').css('position', 'absolute'));
+            // remove the open definition on click
+            $('.open-definition').remove();
+            $('#reg-content').append(this.$el.css('top', xoff - 140 + 'px').css('right', '20px').css('width', '200px').css('position', 'absolute'));
 
             return this;
         }
