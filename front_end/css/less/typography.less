@@ -1,3 +1,8 @@
+/**
+* typography.less contains both global and application specific typography
+*
+*/
+
 /* ==========================================================================
  global typography
  ========================================================================== */
@@ -7,15 +12,11 @@ body {
     font-family: @body-font;
     font-size: 1em;
     line-height: 1.625; /* 26px */
-    }
-
-h1 {
-    .avenir-next;
-    font-size: 2.25em; /* 36px / 16px */
-    line-height: 1.194;
-    text-transform: uppercase;
 }
 
+/* headings */
+
+h1,
 h2,
 h3{
     .avenir-next-bold;
@@ -24,6 +25,34 @@ h3{
 h4,
 h5 {
     .avenir-next-demi;
+}
+
+h1 {
+    font-size: 2.125em;
+}
+
+h2 {
+    font-size: 1.625em;
+}
+
+h3 {
+    font-size: 1.375em;
+}
+
+h4 {
+    font-size: 1em;
+    text-transform: uppercase;
+}
+
+h5 {
+    font-size: 0.875em;
+    text-transform: uppercase;
+}
+
+/* lists */
+
+ul li {
+  list-style: none;
 }
 
 li {
@@ -99,81 +128,40 @@ a.definition:active {
 
 /* headings */
 
+.reg-title {
+    .avenir-next;
+    font-size: 2.25em; /* 36px / 16px */
+    line-height: 1.194;
+    text-transform: uppercase;
+}
+
 .section-title { 
     .avenir-next-bold;
     font-size: 1.8125em; /* 29px / 16px = 1.8125em */
     line-height: 1.25;
-    margin-top: 40px;
+    padding-top: 80px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
+/* list styles */
 
 .level-1 > li {
     margin-top: 1.875em; /* 30px / 16px = 1.875em */
 }
 
-/* section marker styles */
-
-/*temporary styles will list markers are sorted out */
-
-li {
-    list-style-type: none;
-}
-
-li {
-    text-indent: -24px;
-}
-
-
-/* actual list marker style */
-
-/*
-.section-marker {
+/* set markers & key-terms to Avenir Next Demi */
+section ol, dfn {
   .avenir-next-demi;
-  float: left;
-  margin-right: 20px;
 }
 
-section ol {
-  counter-reset: li;
+/* Set text regulation text to Georgia */
+section ol p {
+  font-family: @body-font;
+  font-weight: 400;
 }
-
-section li {
-  list-style-type: none;
-  position: relative;
-  padding-left: 4px;
-}
-
-section ol li:before {
-  counter-increment:li;
-  .avenir-next-demi;
-  position: absolute;
-  left: -20px;
-  top: 0;
-}
-
-ol.level-1 > li:before {
-  content:counter(li, lower-latin) ". ";
-};
-
-ol.level-2 > li:before {
-  content:counter(li, decimal) ". ";
-}
-
-ol.level-3 > li:before {
-  content:counter(li, lower-roman) ". ";
-}
-
-ol.level-4 > li:before {
-  content:counter(li, upper-latin) ". ";
-}
-/*
 
 /* dfn styles */
-
-dfn {
-    .avenir-next-demi;
-}
 
 .level-1 .key-term {
     font-size: 1.5em; /* 24px / 16px = 1.5em */
@@ -196,35 +184,24 @@ dfn {
   appendix stlyes
  ========================================================================== */
 
-/*.appendix-title {
-  .avenir-next;
-  font-size: 2.25em;
-  line-height: 1.194;
-  text-transform: uppercase;
-  margin: 60px 0 0 0;
-}*/
-
-/*match appendix title to other headings for nav demo */
-appendix-title {
+.appendix-title {
     .avenir-next-bold;
     font-size: 1.8125em; /* 29px / 16px = 1.8125em */
     line-height: 1.25;
-    margin-top: 40px;
+    margin-top: 80px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.appendix-header, 
-h3 {
-    font-size: 24px;
-    line-height: 30px;
+.appendix-heading {
+    font-size: 1.5em; /* 24/16=1.5 */
+    line-height: 1.25;
     padding-top: 20px;
-/*ALL CAPS (except reference to section (1005.5(a)(1)(i))*/
 }
 
-h4 {
-    font-size: 24px;
-    line-height: 30px;
+inline-interpretation h4 {
+    font-size: 1.5em; /* 24/16=1.5 */
+    line-height: 1.25;
 }
 
 .model-form-content {
@@ -232,6 +209,6 @@ h4 {
     border: 1px solid #e3e4e5;
     padding: 20px;
     font-family: Arial, sans-serif;
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 0.875em; /* 14/16 = .875 */
+    line-height: 1.4;
 }
