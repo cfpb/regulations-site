@@ -31,17 +31,21 @@
  ========================================================================== */
 
 .regulation-nav {
-    position: fixed;
+    position: absolute;
     left: -272px; /* 250px + 20px padding + 2px border*/
-    top: 0;
     width: 15.625em; /* 250px */
-    height: 100%;
     background-color: #f6f6f5;
     z-index: 1000;
     overflow: scroll;
+    height: 100%;
     border-right: #d0d0ce 2px solid;
     margin: 0;
     padding: 0;
+}
+
+#menu.fixed .regulation-nav {
+    position: fixed;
+    top: 58px; /* a magic number */
 }
 
 /*.no-js .panel {
@@ -49,23 +53,25 @@
 }*/
 
 .panel .active{
-    position: fixed;
-    top: 0;
     left: 0;
 }
 
-@media only screen and (min-width: 1000px) {
+.active {
+    left: 16em;
+}
 
-/* slide all content right on wide screens */
+@media only screen and (min-width: 1250px) {
+
+/* slide all content less on wide screens */
     .active {
-        left: 16em;
+        left: 4em;
     }
 
 }
 
 /* CSS Transitions for Slide Effect */
-.wrap,
-.regulation-nav {
+.regulation-nav,
+#reg-content {
     -webkit-transition: all 150ms cubic-bezier(1.000, 0.000, 0.000, 1.000); 
        -moz-transition: all 150 cubic-bezier(1.000, 0.000, 0.000, 1.000); 
         -ms-transition: all 150 cubic-bezier(1.000, 0.000, 0.000, 1.000); 
@@ -104,8 +110,7 @@
 
 /* TOC link styles */
 .regulation-nav {
-    margin-bottom: 20px;
-    padding: 0;
+    /*margin-bottom: 20px;*/
     .avenir-next-demi;
     font-size: 0.875em; /*14px*/
     border-top: 1px solid @light_field;

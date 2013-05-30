@@ -93,8 +93,7 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
             // toc class toggle
 
             $('#menu-link').click(function(){
-                $('#table-of-contents').toggleClass('active');
-                $('.wrap').toggleClass('active');
+                $('#table-of-contents, #reg-content').toggleClass('active');
                 return false;
             });
 
@@ -105,13 +104,13 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
             });
 
             // persistent reg header on scroll
-            var menuOffset = $('#sub-head')[0].offsetTop;
+            var menuOffset = ($('#sub-head')[0].offsetTop);
             $(document).bind('ready scroll',function() {
                 var docScroll = $(document).scrollTop();
                 if(docScroll >= menuOffset) {
-                    $('#sub-head').addClass('fixed');
+                    $('#menu, #sub-head').addClass('fixed');
                 } else {
-                    $('#sub-head').removeClass('fixed');
+                    $('#menu, #sub-head').removeClass('fixed');
                 }
             });
         },
