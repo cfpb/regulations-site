@@ -3,6 +3,7 @@ import json
 from lxml import html
 from lxml.etree import ParserError
 from Queue import PriorityQueue
+from HTMLParser import HTMLParser
 
 class LayersApplier(object):
     """ Most layers replace content. We try to do this intelligently here, 
@@ -22,30 +23,39 @@ class LayersApplier(object):
         item  = (original, replacement, locations)
         self.queue.put((-priority, item))
 
+    def replace(self, node, original, replacement):
+        """ Helper method for replace_all(), this actually does the replace. """
+        if node.text:
+            node.text = node.text.replace(original, replacement)
+
+        for c in node.getchildren():
+            self.replace(c, original, replacement)
+
+        if node.tail:
+            node.tail = node.tail.replace(original, replacement)
+
+        return node
+
+    def unescape_text(self):
+        """ 
+            Because of the way we do replace_all(), we need to 
+            unescape HTML entities. 
+        """
+        self.text = HTMLParser().unescape(self.text)
+            
     def replace_all(self, original, replacement):
         """ Replace all occurrences of original with replacement. This is HTML 
         aware. """
 
-        pre = self.text.find('<')
-        post = self.text.rfind('>')
-        
-        if pre > -1 and post > -1:
-            html_fragment = self.text[pre:post]
-            prefix = self.text[:pre]
-            postfix = self.text[post:]
-            print html_fragment
-            htmlized = html.fragment_fromstring(html_fragment)
+        htmlized = html.fragment_fromstring(self.text, create_parent='div')
+        htmlized = self.replace(htmlized, original, replacement)
+        self.text = html.tostring(htmlized)
 
-            if htmlized.text:
-                htmlized.text = htmlized.text.replace(original, replacement)
+        self.text = self.text.replace("<div>", "", 1)
+        self.text = self.text[:self.text.rfind("</div>")]
 
-            for c in htmlized.getchildren():
-                if c.text:
-                    c.text = c.text.replace(original, replacement)
-
-            self.text = prefix + html.tostring(htmlized) + postfix
-        else:
-            self.text = self.text.replace(original, replacement)
+        self.unescape_text()
+        self.text = HTMLParser().unescape(self.text)
 
     def replace_at_offset(self, offset, replacement):
         self.text = self.text[:offset[0]] + replacement + self.text[offset[1]:]
@@ -90,14 +100,6 @@ class SearchReplaceLayersApplier(LayersBase):
         self.original_text = None
         self.modified_text = None
 
-    def replace_at_offset(self, offset, text, replacement):
-        modified_text = text[:offset[0]] + replacement + text[offset[1]:]
-        return modified_text
-
-    def find_all_offsets(self, pattern, text):
-       " Return the start, end offsets for every occurrence of pattern in text. "
-       return  [(m.start(), m.end()) for m in re.finditer(re.escape(pattern), text)]
-
     def get_layer_pairs(self, text_index):
         elements = []
         for layer in self.layers:
@@ -105,23 +107,6 @@ class SearchReplaceLayersApplier(LayersBase):
             if applied:
                 elements += applied
         return elements
-
-    def apply_layers(self, original_text, text_index):
-        self.original_text = original_text
-        self.modified_text = original_text
-        self.original_text_index = text_index
-
-        for layer in self.layers:
-            elements = layer.apply_layer(self.original_text_index)
-
-            for el in elements:
-                phrase, phrase_replacement, locations = el
-                offsets = self.find_all_offsets(phrase, self.modified_text)
-
-                for l in locations:
-                    offset = offsets[l]
-                    self.modified_text = self.replace_at_offset(offset, self.modified_text, phrase_replacement)
-        return self.modified_text
 
 class InlineLayersApplier(LayersBase):
     """ Apply multiple inline layers to given text (e.g. links,
@@ -132,18 +117,6 @@ class InlineLayersApplier(LayersBase):
         self.original_text_index = None
         self.modified_text = None
 
-    def apply_layers(self, original_text, text_index):
-        self.original_text = original_text
-        self.modified_text = original_text
-        self.original_text_index = text_index
-
-        for layer in self.layers:
-            layer_pairs = layer.apply_layer(self.original_text,
-                    self.original_text_index)
-            if layer_pairs:
-                self.apply_pairs(layer_pairs)
-        return self.modified_text
-
     def get_layer_pairs(self, text_index, original_text):
         layer_pairs = []
         for layer in self.layers:
@@ -153,12 +126,6 @@ class InlineLayersApplier(LayersBase):
 
         layer_elements = [(o, r, []) for o, r in layer_pairs]
         return layer_elements 
-
-    def apply_pairs(self, pairs):
-        """ Inline Layers return pairs of (search term, replacement text).
-        Modify the text for each pair. """
-        for old, new in pairs:
-            self.modified_text = self.modified_text.replace(old, new)
 
 class ParagraphLayersApplier(LayersBase):
     """ Handle layers which apply to the whole paragraph. Layers include
