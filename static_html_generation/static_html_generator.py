@@ -72,8 +72,8 @@ if __name__ == "__main__":
     kl = api.layer("keyterms", regulation, version)
     s_applier.add_layer(KeyTermsLayer(kl))
 
-    pm = api.layer("paragraph-markers", regulation, version)
-    s_applier.add_layer(ParagraphMarkersLayer(pm))
+    #pm = api.layer("paragraph-markers", regulation, version)
+    #s_applier.add_layer(ParagraphMarkersLayer(pm))
     
     makers_markup = HTMLBuilder(inline_applier, p_applier, s_applier)
     makers_markup.tree = reg_json

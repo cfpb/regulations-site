@@ -1,5 +1,7 @@
 import re
 import json
+from lxml import html
+from lxml.etree import ParserError
 from Queue import PriorityQueue
 
 class LayersApplier(object):
@@ -10,29 +12,62 @@ class LayersApplier(object):
         self.queue = PriorityQueue()
         self.text = None
 
-    def enqueue(self, original, replacement, locations):
+    def enqueue_from_list(self, elements_list):
+        for le in elements_list:
+            self.enqueue(le)
+
+    def enqueue(self, layer_element):
+        original, replacement, locations = layer_element
         priority = len(original)
         item  = (original, replacement, locations)
         self.queue.put((-priority, item))
 
-    def replace_all(original, replacement):
-        """ Replace all occurrences of original with replacement. """
-        self.modified_text = self.text.replace(original, replacement)
+    def replace_all(self, original, replacement):
+        """ Replace all occurrences of original with replacement. This is HTML 
+        aware. """
+
+        pre = self.text.find('<')
+        post = self.text.rfind('>')
+        
+        if pre > -1 and post > -1:
+            html_fragment = self.text[pre:post]
+            prefix = self.text[:pre]
+            postfix = self.text[post:]
+            print html_fragment
+            htmlized = html.fragment_fromstring(html_fragment)
+
+            if htmlized.text:
+                htmlized.text = htmlized.text.replace(original, replacement)
+
+            for c in htmlized.getchildren():
+                if c.text:
+                    c.text = c.text.replace(original, replacement)
+
+            self.text = prefix + html.tostring(htmlized) + postfix
+        else:
+            self.text = self.text.replace(original, replacement)
+
+    def replace_at_offset(self, offset, replacement):
+        self.text = self.text[:offset[0]] + replacement + self.text[offset[1]:]
 
     def find_all_offsets(self, pattern):
         """ Return the start, end offsets for every occurrence of pattern in text. """
-        return [(m.start(), m.end()) for m in re.finditer(re.escape(pattern), text)]
+        return [(m.start(), m.end()) for m in re.finditer(re.escape(pattern), self.text)]
 
-    def replace_at(original, replacement, locations):
+    def replace_at(self, original, replacement, locations):
         """ Replace the occurrences of original at all the locations with replacement. """
-        offset = offsets[l]
-        self.modified_text = self.replace_at_offset(offset, self.modified_text, phrase_replacement)
+
+        for l in locations:
+            offsets = self.find_all_offsets(original)
+            offset = offsets[l]
+            self.replace_at_offset(offset, replacement)
 
     def apply_layers(self, original_text):
         self.text = original_text
 
         while not self.queue.empty():
-            original, replacement, locations = layer_item = self.queue.get()
+            priority, layer_element  = self.queue.get()
+            original, replacement, locations = layer_element
 
             if not locations:
                 self.replace_all(original, replacement)
@@ -63,6 +98,14 @@ class SearchReplaceLayersApplier(LayersBase):
        " Return the start, end offsets for every occurrence of pattern in text. "
        return  [(m.start(), m.end()) for m in re.finditer(re.escape(pattern), text)]
 
+    def get_layer_pairs(self, text_index):
+        elements = []
+        for layer in self.layers:
+            applied = layer.apply_layer(text_index)
+            if applied:
+                elements += applied
+        return elements
+
     def apply_layers(self, original_text, text_index):
         self.original_text = original_text
         self.modified_text = original_text
@@ -76,9 +119,6 @@ class SearchReplaceLayersApplier(LayersBase):
                 offsets = self.find_all_offsets(phrase, self.modified_text)
 
                 for l in locations:
-                    print 'PHRASE |%s|' % phrase
-                    print 'MODIFIED TEXT: %s' % self.modified_text
-                    print offsets
                     offset = offsets[l]
                     self.modified_text = self.replace_at_offset(offset, self.modified_text, phrase_replacement)
         return self.modified_text
@@ -103,6 +143,16 @@ class InlineLayersApplier(LayersBase):
             if layer_pairs:
                 self.apply_pairs(layer_pairs)
         return self.modified_text
+
+    def get_layer_pairs(self, text_index, original_text):
+        layer_pairs = []
+        for layer in self.layers:
+            applied = layer.apply_layer(original_text, text_index)
+            if applied:
+                layer_pairs += applied
+
+        layer_elements = [(o, r, []) for o, r in layer_pairs]
+        return layer_elements 
 
     def apply_pairs(self, pairs):
         """ Inline Layers return pairs of (search term, replacement text).
