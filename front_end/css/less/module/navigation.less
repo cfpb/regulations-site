@@ -45,7 +45,7 @@
 
 #menu.fixed .regulation-nav {
     position: fixed;
-    top: 58px;
+    top: 58px; /* a magic number */
 }
 
 /*.no-js .panel {
@@ -60,7 +60,7 @@
     left: 16em;
 }
 
-@media only screen and (min-width: 1100px) {
+@media only screen and (min-width: 1250px) {
 
 /* slide all content less on wide screens */
     .active {
@@ -110,8 +110,7 @@
 
 /* TOC link styles */
 .regulation-nav {
-    margin-bottom: 20px;
-    padding: 0;
+    /*margin-bottom: 20px;*/
     .avenir-next-demi;
     font-size: 0.875em; /*14px*/
     border-top: 1px solid @light_field;
