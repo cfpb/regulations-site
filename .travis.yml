@@ -6,6 +6,9 @@ install:
    - cd static_html_generation
    - pip install -r requirements.txt --use-mirrors
    - cd ../front_end
+   - sudo add-apt-repository ppa:chris-lea/node.js
+   - sudo apt-get update
+   - sudo apt-get install nodejs
    - npm install -g grunt-cli grunt-init
    - npm install
    - sudo apt-get install phantomjs
