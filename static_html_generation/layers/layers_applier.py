@@ -36,6 +36,27 @@ class LayersApplier(object):
 
         return node
 
+    def location_replace(self, node, original, replacement, locations, counter=[0]):
+        if node.text:
+            offsets = LayersApplier.find_all_offsets(original, node.text) 
+            while counter[0] < len(locations) and locations[counter[0]] < len(offsets):
+                offsets = LayersApplier.find_all_offsets(original, node.text)
+                offset = offsets[locations[counter[0]]]
+                node.text = LayersApplier.replace_at_offset(offset, replacement, node.text)
+                counter[0] += 1
+
+        for c in node.getchildren():
+            self.location_replace(c, original, replacement, locations, counter)
+
+        if node.tail:
+            offsets = LayersApplier.find_all_offsets(original, node.tail)
+
+            while counter[0] < len(locations) and locations[counter[0]] < len(offsets):
+                offsets = LayersApplier.find_all_offsets(original, node.tail)
+                offset = offsets[locations[counter[0]]]
+                node.tail = LayersApplier.replace_at_offset(offset, replacement, node.tail)
+                counter[0] += 1
+             
     def unescape_text(self):
         """ 
             Because of the way we do replace_all(), we need to 
@@ -49,28 +70,33 @@ class LayersApplier(object):
 
         htmlized = html.fragment_fromstring(self.text, create_parent='div')
         htmlized = self.replace(htmlized, original, replacement)
-        self.text = html.tostring(htmlized)
 
+        self.text = html.tostring(htmlized)
         self.text = self.text.replace("<div>", "", 1)
         self.text = self.text[:self.text.rfind("</div>")]
-
         self.unescape_text()
-        self.text = HTMLParser().unescape(self.text)
 
-    def replace_at_offset(self, offset, replacement):
-        self.text = self.text[:offset[0]] + replacement + self.text[offset[1]:]
+    @staticmethod
+    def replace_at_offset(offset, replacement, text):
+        return text[:offset[0]] + replacement + text[offset[1]:]
 
-    def find_all_offsets(self, pattern):
+    @staticmethod
+    def find_all_offsets(pattern, text):
         """ Return the start, end offsets for every occurrence of pattern in text. """
-        return [(m.start(), m.end()) for m in re.finditer(re.escape(pattern), self.text)]
+        return [(m.start(), m.end()) for m in re.finditer(re.escape(pattern), text)]
 
     def replace_at(self, original, replacement, locations):
         """ Replace the occurrences of original at all the locations with replacement. """
 
-        for l in locations:
-            offsets = self.find_all_offsets(original)
-            offset = offsets[l]
-            self.replace_at_offset(offset, replacement)
+        locations.sort()
+        htmlized = html.fragment_fromstring(self.text, create_parent='div')
+
+        self.location_replace(htmlized, original, replacement, locations, counter=[0])
+
+        self.text = html.tostring(htmlized)
+        self.text = self.text.replace("<div>", "", 1)
+        self.text = self.text[:self.text.rfind("</div>")]
+        self.unescape_text()
 
     def apply_layers(self, original_text):
         self.text = original_text
@@ -123,8 +149,14 @@ class InlineLayersApplier(LayersBase):
             applied = layer.apply_layer(original_text, text_index)
             if applied:
                 layer_pairs += applied
+    
+        #convert from offset-based to a search and replace layer. 
+        layer_elements = []
 
-        layer_elements = [(o, r, []) for o, r in layer_pairs]
+        for o, r, offset in layer_pairs:
+            offset_locations = [(m.start(), m.end()) for m in re.finditer(re.escape(o), original_text)] 
+            locations = [offset_locations.index(offset)]
+            layer_elements.append((o, r, locations))
         return layer_elements 
 
 class ParagraphLayersApplier(LayersBase):

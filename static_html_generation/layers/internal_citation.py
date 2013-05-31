@@ -24,5 +24,5 @@ class InternalCitationLayer():
                 for start, end in layer_element['offsets']:
                     ot = text[int(start):int(end)]
                     rt = InternalCitationLayer.create_link(ot, layer_element)
-                    layer_pairs.append((ot, rt))
+                    layer_pairs.append((ot, rt, (start, end)))
             return layer_pairs
