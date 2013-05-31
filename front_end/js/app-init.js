@@ -97,7 +97,7 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
             });
 
              // basic highlight selected section in TOC functionality
-            $('#table-of-contents a').click(function(){
+            $('#table-of-contents a').click(function(e) {
                 $('#table-of-contents a.current').removeClass('current');
                 $(this).addClass('current');
             });

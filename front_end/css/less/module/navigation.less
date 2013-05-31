@@ -54,26 +54,25 @@
     left: 0;
 }*/
 
-.panel .active{
+.regulation-nav.active{
     left: 0;
 }
 
-.active {
+#reg-content.active {
     left: 16em;
 }
 
 @media only screen and (min-width: 1250px) {
 
 /* slide all content less on wide screens */
-    .active {
+    #reg-content.active {
         left: 4em;
     }
 
 }
 
 /* CSS Transitions for Slide Effect */
-.regulation-nav ,
-#reg-content {
+.regulation-nav {
     transform: translate3d(0,0,0);
     -webkit-transition: left 300ms ease; 
        -moz-transition: left 300ms ease; 
