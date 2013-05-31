@@ -41,11 +41,13 @@
     border-right: #d0d0ce 2px solid;
     margin: 0;
     padding: 0;
+    .avenir-next-demi;
+    font-size: 0.875em; /*14px*/
 }
 
 #menu.fixed .regulation-nav {
     position: fixed;
-    top: 58px; /* a magic number */
+    top: 59px; /* a magic number */
 }
 
 /*.no-js .panel {
@@ -70,13 +72,13 @@
 }
 
 /* CSS Transitions for Slide Effect */
-.regulation-nav,
+.regulation-nav ,
 #reg-content {
-    -webkit-transition: all 150ms cubic-bezier(1.000, 0.000, 0.000, 1.000); 
-       -moz-transition: all 150 cubic-bezier(1.000, 0.000, 0.000, 1.000); 
-        -ms-transition: all 150 cubic-bezier(1.000, 0.000, 0.000, 1.000); 
-         -o-transition: all 150 cubic-bezier(1.000, 0.000, 0.000, 1.000); 
-            transition: all 150 cubic-bezier(1.000, 0.000, 0.000, 1.000);
+    -webkit-transition: left 200ms cubic-bezier(0.420, 0.000, 0.580, 1.000); 
+       -moz-transition: left 200ms cubic-bezier(0.420, 0.000, 0.580, 1.000); 
+        -ms-transition: left 200ms cubic-bezier(0.420, 0.000, 0.580, 1.000); 
+         -o-transition: left 200ms cubic-bezier(0.420, 0.000, 0.580, 1.000); 
+            transition: left 200ms cubic-bezier(0.420, 0.000, 0.580, 1.000);
 }
 
 /* TOC titles */
@@ -106,14 +108,6 @@
       text-transform: uppercase;
       font-size: 16px;
       margin-top: 6px;
-}
-
-/* TOC link styles */
-.regulation-nav {
-    /*margin-bottom: 20px;*/
-    .avenir-next-demi;
-    font-size: 0.875em; /*14px*/
-    border-top: 1px solid @light_field;
 }
 
 .regulation-nav a:link,
