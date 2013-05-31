@@ -1,0 +1,20 @@
+language: python
+python:
+    - "2.6"
+    - "2.7"
+install:
+   - cd static_html_generation
+   - pip install -r requirements.txt --use-mirrors
+   - cd ../front_end
+   - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
+   - sudo apt-get update
+   - sudo apt-get install nodejs
+   - npm install -g grunt-cli grunt-init
+   - npm install
+   - sudo apt-get install phantomjs
+script:
+    - export PYTHONPATH=.
+    - cd static_html_generation
+    - nosetests
+    - cd ../front_end
+    - grunt jasmine
