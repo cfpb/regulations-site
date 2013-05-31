@@ -6,7 +6,8 @@ install:
    - cd static_html_generation
    - pip install -r requirements.txt --use-mirrors
    - cd ../front_end
-   - sudo add-apt-repository ppa:chris-lea/node.js
+   - sudo echo "deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu "`lsb_release -cs`" main" >> /etc/apt/sources.list
+   - sudo echo "deb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu "`lsb_release -cs`" main" >> /etc/apt/sources.list
    - sudo apt-get update
    - sudo apt-get install nodejs
    - npm install -g grunt-cli grunt-init
