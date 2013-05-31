@@ -42,7 +42,7 @@
           </nav> 
         </div>
          {%if tree.TOC %}
-            {% with nav_class='regulation-nav' toc_items=tree.TOC %}
+            {% with nav_class='regulation-nav' toc_items=tree.TOC toc_id='menu' %}
                {% include "toc.html" %} 
             {% endwith %}
          {%endif%}  
