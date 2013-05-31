@@ -20,5 +20,5 @@ class DefinitionsLayer(object):
 
                     le  = {'citation':definition_citation}
                     rt = InternalCitationLayer.create_link(ot, le, template_name='definition_citation.html')
-                    layer_pairs.append((ot, rt))
+                    layer_pairs.append((ot, rt, (start, end)))
             return layer_pairs

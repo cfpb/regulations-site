@@ -16,20 +16,20 @@ class HTMLBuilderTest(TestCase):
         }
 
         inline = Mock()
-        inline.apply_layers.return_value = node
+        inline.get_layer_pairs.return_value = []
         par = Mock()
         par.apply_layers.return_value = node
         sr = Mock()
-        sr.apply_layers.return_value = node
+        sr.get_layer_pairs.return_value = []
 
         builder = HTMLBuilder(inline, par, sr)
         builder.process_node(node)
 
-        self.assertTrue(inline.apply_layers.called)
-        self.assertEqual("Text text text.",
-                inline.apply_layers.call_args[0][0])
+        self.assertTrue(inline.get_layer_pairs.called)
         self.assertEqual("123-aaa",
-                inline.apply_layers.call_args[0][1])
+                inline.get_layer_pairs.call_args[0][0])
+        self.assertEqual("Text text text.",
+                inline.get_layer_pairs.call_args[0][1])
 
         self.assertTrue(par.apply_layers.called)
         self.assertEqual(node, par.apply_layers.call_args[0][0])
@@ -115,7 +115,9 @@ class HTMLBuilderTest(TestCase):
             }
         }
         p.apply_layers.return_value = node
+        inline.get_layer_pairs.return_value = []
+        sr.get_layer_pairs.return_value = []
         builder.process_node(node)
-        layer_parameters = inline.apply_layers.call_args[0]
-        self.assertEqual('Interpretation with a link', layer_parameters[0])
-        self.assertEqual('999-Interpretations-5', layer_parameters[1])
+        layer_parameters = inline.get_layer_pairs.call_args[0]
+        self.assertEqual('Interpretation with a link', layer_parameters[1])
+        self.assertEqual('999-Interpretations-5', layer_parameters[0])
