@@ -42,7 +42,7 @@ class LayersApplierTest(TestCase):
         applier.text = text
 
         offsets = applier.find_all_offsets(pattern)
-        self.assertEquals(offsets, [(13, 17), (40, 44)]
+        self.assertEquals(offsets, [(13, 17), (40, 44)])
 
     def test_find_offsets_no_pattern(self):
         pattern = 'ABCD'
@@ -52,3 +52,25 @@ class LayersApplierTest(TestCase):
         applier.text = text
         offsets = applier.find_all_offsets(pattern)
         self.assertEquals(offsets, [])
+
+    def test_replace_at_offset(self):
+        pattern = 'ABCD'
+        text = 'The grey fox ABCD jumped over the fence ABCD'
+
+        applier = layers_applier.LayersApplier()
+        applier.text = text
+
+        first_offset = applier.find_all_offsets(pattern)[0]
+        applier.replace_at_offset(first_offset, 'giraffe')
+
+        self.assertEquals(applier.text, 'The grey fox giraffe jumped over the fence ABCD')
+
+    def test_replace_at(self):
+        pattern = 'ABCD'
+        text = 'The grey fox ABCD jumped ABCD over the fence ABCD'
+
+        applier = layers_applier.LayersApplier()
+        applier.text = text
+        applier.replace_at('ABCD', '<a>ABCD</a>', [0,2])
+
+        self.assertEquals(applier.text, 'The grey fox <a>ABCD</a> jumped ABCD over the fence <a>ABCD</a>')
