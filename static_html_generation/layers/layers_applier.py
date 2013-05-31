@@ -23,18 +23,19 @@ class LayersApplier(object):
         item  = (original, replacement, locations)
         self.queue.put((-priority, item))
 
-    def replace(self, node, original, replacement):
-        """ Helper method for replace_all(), this actually does the replace. """
-        if node.text:
-            node.text = node.text.replace(original, replacement)
+    def replace(self, xml_node, original, replacement):
+        """ Helper method for replace_all(), this actually does the replace. This deals 
+        with XML nodes, not nodes in the tree. """
+        if xml_node.text:
+            xml_node.text = xml_node.text.replace(original, replacement)
 
-        for c in node.getchildren():
+        for c in xml_node.getchildren():
             self.replace(c, original, replacement)
 
-        if node.tail:
-            node.tail = node.tail.replace(original, replacement)
+        if xml_node.tail:
+            xml_node.tail = xml_node.tail.replace(original, replacement)
 
-        return node
+        return xml_node
 
     def location_replace(self, node, original, replacement, locations, counter=[0]):
         if node.text:
