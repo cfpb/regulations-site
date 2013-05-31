@@ -5,16 +5,17 @@ python:
 install:
    - cd static_html_generation
    - pip install -r requirements.txt --use-mirrors
-   - cd ../front_end
+   - cd ..
    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
    - sudo apt-get update
-   - sudo apt-get install nodejs
-   - npm install -g grunt-cli grunt-init
+   - sudo apt-get install nodejs phantomjs
+   - cd front_end
+   - npm install grunt-cli grunt-init
    - npm install
-   - sudo apt-get install phantomjs
+   - cd ..
 script:
     - export PYTHONPATH=.
     - cd static_html_generation
     - nosetests
-    - cd ../front_end
+    - cd ..
     - grunt jasmine
