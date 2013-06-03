@@ -91,26 +91,26 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
             });
 
             // toc class toggle
-
-            $('#menu-link').click(function(){
+            $('#menu-link').on('click', function(e) {
                 $('#table-of-contents, #reg-content').toggleClass('active');
                 return false;
             });
 
              // basic highlight selected section in TOC functionality
-            $('#table-of-contents a').click(function(){
+            $('#table-of-contents a').click(function(e) {
                 $('#table-of-contents a.current').removeClass('current');
                 $(this).addClass('current');
             });
 
             // persistent reg header on scroll
-            var menuOffset = ($('#sub-head')[0].offsetTop);
-            $(document).bind('ready scroll',function() {
-                var docScroll = $(document).scrollTop();
+            var menuOffset = $('#sub-head').offset().top;
+            $(window).on('scroll', function(e) {
+                var navEls = $('#menu, #sub-head'),
+                    docScroll = $(this).scrollTop();
                 if(docScroll >= menuOffset) {
-                    $('#menu, #sub-head').addClass('fixed');
+                    $(navEls).addClass('fixed');
                 } else {
-                    $('#menu, #sub-head').removeClass('fixed');
+                    $(navEls).removeClass('fixed');
                 }
             });
         },

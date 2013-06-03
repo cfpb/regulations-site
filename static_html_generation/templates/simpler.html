@@ -24,7 +24,7 @@
           </nav> 
         </div>
          {%if tree.TOC %}
-            {% with nav_class='regulation-nav' toc_items=tree.TOC %}
+            {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
                {% include "toc.html" %} 
             {% endwith %}
          {%endif%}  

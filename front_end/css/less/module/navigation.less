@@ -41,42 +41,44 @@
     border-right: #d0d0ce 2px solid;
     margin: 0;
     padding: 0;
+    .avenir-next-demi;
+    font-size: 0.875em; /*14px*/
 }
 
 #menu.fixed .regulation-nav {
     position: fixed;
-    top: 58px; /* a magic number */
+    top: 59px; /* a magic number */
 }
 
 /*.no-js .panel {
     left: 0;
 }*/
 
-.panel .active{
+.regulation-nav.active{
     left: 0;
 }
 
-.active {
+#reg-content.active {
     left: 16em;
 }
 
 @media only screen and (min-width: 1250px) {
 
 /* slide all content less on wide screens */
-    .active {
+    #reg-content.active {
         left: 4em;
     }
 
 }
 
 /* CSS Transitions for Slide Effect */
-.regulation-nav,
-#reg-content {
-    -webkit-transition: all 150ms cubic-bezier(1.000, 0.000, 0.000, 1.000); 
-       -moz-transition: all 150 cubic-bezier(1.000, 0.000, 0.000, 1.000); 
-        -ms-transition: all 150 cubic-bezier(1.000, 0.000, 0.000, 1.000); 
-         -o-transition: all 150 cubic-bezier(1.000, 0.000, 0.000, 1.000); 
-            transition: all 150 cubic-bezier(1.000, 0.000, 0.000, 1.000);
+.regulation-nav {
+    transform: translate3d(0,0,0);
+    -webkit-transition: left 300ms ease; 
+       -moz-transition: left 300ms ease; 
+        -ms-transition: left 300ms ease; 
+         -o-transition: left 300ms ease; 
+            transition: left 300ms ease; 
 }
 
 /* TOC titles */
@@ -106,14 +108,6 @@
       text-transform: uppercase;
       font-size: 16px;
       margin-top: 6px;
-}
-
-/* TOC link styles */
-.regulation-nav {
-    /*margin-bottom: 20px;*/
-    .avenir-next-demi;
-    font-size: 0.875em; /*14px*/
-    border-top: 1px solid @light_field;
 }
 
 .regulation-nav a:link,
