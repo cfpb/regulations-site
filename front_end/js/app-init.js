@@ -96,12 +96,6 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
                 return false;
             });
 
-             // basic highlight selected section in TOC functionality
-            $('#table-of-contents a').click(function(e) {
-                $('#table-of-contents a.current').removeClass('current');
-                $(this).addClass('current');
-            });
-
             // persistent reg header on scroll
             var menuOffset = $('#sub-head').offset().top;
             $(window).on('scroll', function(e) {
