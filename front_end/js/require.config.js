@@ -13,11 +13,12 @@ var require = {
     },
     shim: {
         underscore: {
-        exports: '_'
-    },
-    backbone: {
-        deps: ['underscore'],
-        exports: 'Backbone'
-    }
+            deps: ['jquery'],
+            exports: '_'
+        },
+        backbone: {
+            deps: ['underscore', 'jquery'],
+            exports: 'Backbone'
+        }
     }
 };
