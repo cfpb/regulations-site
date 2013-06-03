@@ -3,6 +3,7 @@ from django.template import loader, Template, Context
 from django.conf import settings
 from node_types import NodeTypes
 import settings as app_settings
+from layers.layers_applier import LayersApplier
 
 class HTMLBuilder():
     def __init__(self, inline_applier, p_applier, search_applier):
@@ -71,11 +72,14 @@ class HTMLBuilder():
         node['list_type'] = list_type
 
         if len(node['text'].strip()):
-            #   Use the Tree's ID
-            node['marked_up'] = self.inline_applier.apply_layers(
-                    node['text'], node['label']['text'])
-            node['marked_up'] = self.search_applier.apply_layers(
-                    node['marked_up'], node['label']['text'])
+            inline_elements = self.inline_applier.get_layer_pairs(node['label']['text'], node['text'])
+            search_elements = self.search_applier.get_layer_pairs(node['label']['text'])
+
+            layers_applier = LayersApplier()
+            layers_applier.enqueue_from_list(inline_elements)
+            layers_applier.enqueue_from_list(search_elements)
+
+            node['marked_up'] = layers_applier.apply_layers(node['text'])
 
         node = self.p_applier.apply_layers(node)
 

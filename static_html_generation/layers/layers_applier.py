@@ -1,7 +1,119 @@
 import re
 import json
+from lxml import html
+from lxml.etree import ParserError
+from Queue import PriorityQueue
+from HTMLParser import HTMLParser
 
 class LayersApplier(object):
+    """ Most layers replace content. We try to do this intelligently here, 
+    so that layers don't step over each other. """
+
+    def __init__(self):
+        self.queue = PriorityQueue()
+        self.text = None
+
+    def enqueue_from_list(self, elements_list):
+        for le in elements_list:
+            self.enqueue(le)
+
+    def enqueue(self, layer_element):
+        original, replacement, locations = layer_element
+        priority = len(original)
+        item  = (original, replacement, locations)
+        self.queue.put((-priority, item))
+
+    def replace(self, xml_node, original, replacement):
+        """ Helper method for replace_all(), this actually does the replace. This deals 
+        with XML nodes, not nodes in the tree. """
+        if xml_node.text:
+            xml_node.text = xml_node.text.replace(original, replacement)
+
+        for c in xml_node.getchildren():
+            self.replace(c, original, replacement)
+
+        if xml_node.tail:
+            xml_node.tail = xml_node.tail.replace(original, replacement)
+
+        return xml_node
+
+    def location_replace(self, node, original, replacement, locations, counter=[0]):
+        if node.text:
+            offsets = LayersApplier.find_all_offsets(original, node.text) 
+            while counter[0] < len(locations) and locations[counter[0]] < len(offsets):
+                offsets = LayersApplier.find_all_offsets(original, node.text)
+                offset = offsets[locations[counter[0]]]
+                node.text = LayersApplier.replace_at_offset(offset, replacement, node.text)
+                counter[0] += 1
+
+        for c in node.getchildren():
+            self.location_replace(c, original, replacement, locations, counter)
+
+        if node.tail:
+            offsets = LayersApplier.find_all_offsets(original, node.tail)
+
+            while counter[0] < len(locations) and locations[counter[0]] < len(offsets):
+                offsets = LayersApplier.find_all_offsets(original, node.tail)
+                offset = offsets[locations[counter[0]]]
+                node.tail = LayersApplier.replace_at_offset(offset, replacement, node.tail)
+                counter[0] += 1
+             
+    def unescape_text(self):
+        """ 
+            Because of the way we do replace_all(), we need to 
+            unescape HTML entities. 
+        """
+        self.text = HTMLParser().unescape(self.text)
+            
+    def replace_all(self, original, replacement):
+        """ Replace all occurrences of original with replacement. This is HTML 
+        aware. """
+
+        htmlized = html.fragment_fromstring(self.text, create_parent='div')
+        htmlized = self.replace(htmlized, original, replacement)
+
+        self.text = html.tostring(htmlized)
+        self.text = self.text.replace("<div>", "", 1)
+        self.text = self.text[:self.text.rfind("</div>")]
+        self.unescape_text()
+
+    @staticmethod
+    def replace_at_offset(offset, replacement, text):
+        return text[:offset[0]] + replacement + text[offset[1]:]
+
+    @staticmethod
+    def find_all_offsets(pattern, text):
+        """ Return the start, end offsets for every occurrence of pattern in text. """
+        return [(m.start(), m.end()) for m in re.finditer(re.escape(pattern), text)]
+
+    def replace_at(self, original, replacement, locations):
+        """ Replace the occurrences of original at all the locations with replacement. """
+
+        locations.sort()
+        htmlized = html.fragment_fromstring(self.text, create_parent='div')
+
+        self.location_replace(htmlized, original, replacement, locations, counter=[0])
+
+        self.text = html.tostring(htmlized)
+        self.text = self.text.replace("<div>", "", 1)
+        self.text = self.text[:self.text.rfind("</div>")]
+        self.unescape_text()
+
+    def apply_layers(self, original_text):
+        self.text = original_text
+
+        while not self.queue.empty():
+            priority, layer_element  = self.queue.get()
+            original, replacement, locations = layer_element
+
+            if not locations:
+                self.replace_all(original, replacement)
+            else:
+                self.replace_at(original, replacement, locations)
+
+        return self.text
+
+class LayersBase(object):
     """ Base class which keeps track of multiple laeyrs. """
     def __init__(self):
         self.layers = []
@@ -9,73 +121,53 @@ class LayersApplier(object):
     def add_layer(self, layer):
         self.layers.append(layer)
 
-class SearchReplaceLayersApplier(LayersApplier):
+class SearchReplaceLayersApplier(LayersBase):
     def __init__(self):
-        LayersApplier.__init__(self)
+        LayersBase.__init__(self)
         self.original_text = None
         self.modified_text = None
 
-    def replace_at_offset(self, offset, text, replacement):
-        modified_text = text[:offset[0]] + replacement + text[offset[1]:]
-        return modified_text
-
-    def find_all_offsets(self, pattern, text):
-       " Return the start, end offsets for every occurrence of pattern in text. "
-       return  [(m.start(), m.end()) for m in re.finditer(re.escape(pattern), text)]
-
-    def apply_layers(self, original_text, text_index):
-        self.original_text = original_text
-        self.modified_text = original_text
-        self.original_text_index = text_index
-
+    def get_layer_pairs(self, text_index):
+        elements = []
         for layer in self.layers:
-            elements = layer.apply_layer(self.original_text_index)
+            applied = layer.apply_layer(text_index)
+            if applied:
+                elements += applied
+        return elements
 
-            for el in elements:
-                phrase, phrase_replacement, locations = el
-                offsets = self.find_all_offsets(phrase, self.modified_text)
-
-                for l in locations:
-                    if len(offsets) > 0:
-                        offset = offsets[l]
-                        self.modified_text = self.replace_at_offset(offset, self.modified_text, phrase_replacement)
-        return self.modified_text
-
-class InlineLayersApplier(LayersApplier):
+class InlineLayersApplier(LayersBase):
     """ Apply multiple inline layers to given text (e.g. links,
     highlighting, etc.) """
     def __init__(self):
-        LayersApplier.__init__(self)
+        LayersBase.__init__(self)
         self.original_text = None
         self.original_text_index = None
         self.modified_text = None
 
-    def apply_layers(self, original_text, text_index):
-        self.original_text = original_text
-        self.modified_text = original_text
-        self.original_text_index = text_index
-
+    def get_layer_pairs(self, text_index, original_text):
+        layer_pairs = []
         for layer in self.layers:
-            layer_pairs = layer.apply_layer(self.original_text,
-                    self.original_text_index)
-            if layer_pairs:
-                self.apply_pairs(layer_pairs)
-        return self.modified_text
+            applied = layer.apply_layer(original_text, text_index)
+            if applied:
+                layer_pairs += applied
+    
+        #convert from offset-based to a search and replace layer. 
+        layer_elements = []
 
-    def apply_pairs(self, pairs):
-        """ Inline Layers return pairs of (search term, replacement text).
-        Modify the text for each pair. """
-        for old, new in pairs:
-            self.modified_text = self.modified_text.replace(old, new)
+        for o, r, offset in layer_pairs:
+            offset_locations = [(m.start(), m.end()) for m in re.finditer(re.escape(o), original_text)] 
+            locations = [offset_locations.index(offset)]
+            layer_elements.append((o, r, locations))
+        return layer_elements 
 
-class ParagraphLayersApplier(LayersApplier):
+class ParagraphLayersApplier(LayersBase):
     """ Handle layers which apply to the whole paragraph. Layers include
     interpretations, section-by-section analyses, table of contents, etc."""
 
     def __init__(self, reg_tree):
         """The regulation tree can be useful to layers (e.g.
         interpretations), so we pass that along"""
-        LayersApplier.__init__(self)
+        LayersBase.__init__(self)
         self.reg_tree = reg_tree
 
     def apply_layers(self, node):
