@@ -38,6 +38,7 @@
           <nav class="wrap group">
           <ul>
               <li><a href="#menu" id="menu-link" class="toc-nav-link slide">Table of Contents</a></li>
+              <li><h1 class="reg-title"> {{tree.markup_title}} </h1></li>
           </ul>
           </nav> 
         </div>
@@ -51,8 +52,6 @@
 
         <div class="main-content">
         <section id="{{tree.markup_id}}">
-         <h1 class="reg-title"> {{tree.markup_title}} </h1>
-
             {% if tree.children %}
                 {% for c in tree.children %}
                     {%include "regulation_text.html" %}
