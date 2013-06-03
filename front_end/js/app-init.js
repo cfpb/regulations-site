@@ -1,4 +1,4 @@
-define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definition-view", "interpretation-view"], function($, _, Backbone, RegsState, RegsData, DefinitionView, InterpretationView) {
+define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definition-view", "interpretation-view", "sub-head-view", "toc-view"], function($, _, Backbone, RegsState, RegsData, DefinitionView, InterpretationView, SubHeadView, TOCView) {
     "use strict";
     return {
         getTree: function($obj) {
@@ -103,20 +103,21 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
             });
 
             // persistent reg header on scroll
-            var menuOffset = $('#sub-head').offset().top;
             $(window).on('scroll', function(e) {
-                var navEls = $('#menu, #sub-head'),
-                    docScroll = $(this).scrollTop();
-                if(docScroll >= menuOffset) {
-                    $(navEls).addClass('fixed');
+                var docScroll = $(this).scrollTop();
+                if (docScroll >= subhead.menuOffset) {
+                    Events.trigger('expand');
                 } else {
-                    $(navEls).removeClass('fixed');
+                    Events.trigger('contract');
                 }
             });
         },
 
         init: function() {
             this.getTree($('#reg-content')); 
+            window.Events = _.extend({}, Backbone.Events);
+            window.subhead = new SubHeadView({el: '#sub-head'});
+            window.toc = new TOCView({el: '#menu'});
             this.bindEvents();
         }
     }
