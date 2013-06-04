@@ -94,6 +94,11 @@ a.internal:active {
 
 /* external links */
 
+a[href^="http://"] {
+    background: url(../img/external-link.png) center right no-repeat;
+    padding-right: 16px;
+}
+
 a[href^="http://"]:link,
 a[href^="http://"]:visited {
     color: @pacific;
@@ -104,7 +109,6 @@ a[href^="http://"]:visited {
 a[href^="http://"]:hover,
 a[href^="http://"]:active {
     border-bottom: 1px solid;
-    background: none;
 }
 
 /* citation links */
