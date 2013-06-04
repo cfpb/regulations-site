@@ -1,0 +1,1 @@
+define("definition-view",["jquery","underscore","backbone","regs-view","regs-data"],function(e,t,n,r,i){var s=r.extend({className:"open-definition",events:{}});return s});
