@@ -48,6 +48,8 @@
 #menu.fixed .regulation-nav {
     position: fixed;
     top: 59px; /* a magic number */
+    overflow-y: scroll;
+    height: 100%;
 }
 
 /*.no-js .panel {
@@ -125,6 +127,11 @@
 
 .toc-nav-link:before {
     content: '\2630 \00a0';
+}
+
+#menu-link.active:link,
+#menu-link.active:visited {
+    color: @pacific;
 }
 
 .regulation-nav li {
