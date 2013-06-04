@@ -94,6 +94,20 @@ a.internal:active {
 
 /* external links */
 
+a[href^="http://"] {
+    background: url(../img/external-link.png) center right no-repeat;
+    padding-right: 16px;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    a[href^="http://"] {
+        background: url(../img/external-link@2x.png) center right no-repeat;
+        background-size: 16px 16px;
+    }
+}
+
 a[href^="http://"]:link,
 a[href^="http://"]:visited {
     color: @pacific;
@@ -104,7 +118,6 @@ a[href^="http://"]:visited {
 a[href^="http://"]:hover,
 a[href^="http://"]:active {
     border-bottom: 1px solid;
-    background: none;
 }
 
 /* citation links */
@@ -127,19 +140,24 @@ a.definition:active {
  ========================================================================== */
 
 /* headings */
+.site-title {
+    .avenir-next-demi;
+    margin: .3em 0;
+}
 
 .reg-title {
     .avenir-next;
     font-size: 2.25em; /* 36px / 16px */
     line-height: 1.194;
     text-transform: uppercase;
+    margin: 0;
 }
 
 .section-title { 
     .avenir-next-bold;
     font-size: 1.8125em; /* 29px / 16px = 1.8125em */
     line-height: 1.25;
-    padding-top: 80px;
+    padding-top: 32px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -148,6 +166,16 @@ a.definition:active {
 
 .level-1 > li {
     margin-top: 1.875em; /* 30px / 16px = 1.875em */
+    padding-bottom: 0.875em; /* subtract 1em for p margin */
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.level-1 > li:last-child {
+    border-bottom: 0px;
+}
+
+.level-2 li {
+    margin-top: 0.875em;
 }
 
 /* set markers & key-terms to Avenir Next Demi */
@@ -169,14 +197,20 @@ section ol p {
 /* dfn styles */
 
 .level-1 .key-term {
-    font-size: 1.5em; /* 24px / 16px = 1.5em */
-    line-height: 1.25; /* 30px / 24px = 1.25 */
+    font-size: 1.375em; /* 24px / 16px = 1.5em */
+    line-height: 1.5; /* 30px / 24px = 1.25 */
 }
 
 .level-2 .key-term,
 .defined-term {
     text-transform: uppercase;
     font-size: 1em;
+    .avenir-next-bold;
+}
+
+.level-3 .key-term {
+    .avenir-next-demi;
+    text-transform: none;
 }
 
 /* block text -- not ie7 friendly :( */

@@ -48,6 +48,8 @@
 #menu.fixed .regulation-nav {
     position: fixed;
     top: 59px; /* a magic number */
+    overflow-y: scroll;
+    height: 100%;
 }
 
 /*.no-js .panel {
@@ -113,15 +115,11 @@
 .regulation-nav a:link,
 .regulation-nav a:visited,
 .regulation-nav a:hover,
-.regulation-nav a:active,
-.toc-nav-link:link,
-.toc-nav-link:visited {
+.regulation-nav a:active {
     border-bottom: none;
     color: @black;
 }
 
-.toc-nav-link:hover,
-.toc-nav-link:active,
 .active .toc-nav-link {
     color: @pacific;
     background: #fff;
@@ -131,12 +129,17 @@
     content: '\2630 \00a0';
 }
 
+#menu-link.active:link,
+#menu-link.active:visited {
+    color: @pacific;
+}
+
 .regulation-nav li {
     margin: 0;
     text-indent: 0;
 }
 
-.regulation-nav a:link {
+.regulation-nav a {
     display: block;
     padding: 10px 20px;
 }

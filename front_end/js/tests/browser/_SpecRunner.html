@@ -17,7 +17,13 @@
         "underscore": "./lib/underscore",
         "backbone": "./lib/backbone",
         "jquery": "./lib/jquery-1.9.1",
-        "samplejson": "./tests/grunt/js/fixtures/sample-json"
+        "samplejson": "./tests/grunt/js/fixtures/sample-json",
+        'definition-view': './views/definition-view',
+        'interpretation-view': './views/interpretation-view',
+        'regs-fixed-el-view': './views/regs-fixed-el-view',
+        'sub-head-view': './views/sub-head-view',
+        'regs-view': './views/regs-view',
+        'toc-view': './views/toc-view'
       },
       "shim": {
         "underscore": {
@@ -32,7 +38,7 @@
       }
   });
 
-  require(['/front_end/js/tests/specs/reg-data-spec.js', '/front_end/js/tests/specs/reg-definitions-view-spec.js', '/front_end/js/tests/specs/reg-interpretation-view-spec.js'], function() {
+  require(['/front_end/js/tests/specs/reg-data-spec.js', '/front_end/js/tests/specs/reg-definitions-view-spec.js'], function() {
     $(function() {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute();
