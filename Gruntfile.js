@@ -100,7 +100,6 @@ module.exports = function(grunt) {
                 backbone: './lib/backbone',
                 jquery: './lib/jquery-1.9.1',
                 samplejson: './tests/grunt/js/fixtures/sample-json',
-
                 'definition-view': './views/definition-view',
                 'interpretation-view': './views/interpretation-view',
                 'regs-fixed-el-view': './views/regs-fixed-el-view',
@@ -134,27 +133,60 @@ module.exports = function(grunt) {
         files: ['Gruntfile.js', '<%= recess.dist.src %>', 'front_end/css/*.less','<%= uglify.dist.src %>', '<%= jasmine.options.specs %>'],
         tasks: ['default']
       }
+    },
+
+    requirejs: {
+        compile: {
+            options: {
+                baseUrl: 'front_end/js',
+                mainConfigFile: 'front_end/js/build.js',
+                dir: "front_end/js/built",
+                modules: [ {name: "regulations"} ],
+                paths: {
+                    jquery: './lib/jquery-1.9.1',
+                    underscore: './lib/underscore',
+                    backbone: './lib/backbone',
+                    'definition-view': './views/definition-view',
+                    'interpretation-view': './views/interpretation-view',
+                    'regs-fixed-el-view': './views/regs-fixed-el-view',
+                    'sub-head-view': './views/sub-head-view',
+                    'regs-view': './views/regs-view',
+                    'toc-view': './views/toc-view'
+                },
+                shim: {
+                    underscore: {
+                        deps: ['jquery'],
+                        exports: '_'
+                    },
+                    backbone: {
+                        deps: ['underscore', 'jquery'],
+                        exports: 'Backbone'
+                    }
+                },
+            }
+        }
     }
   });
 
   /**
    * The above tasks are loaded here.
    */
-  grunt.loadNpmTasks('grunt-recess');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jasmine');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-notify');
-
-  /**
-   * Create task aliases by registering new tasks
-   */
-  grunt.registerTask('test', ['jshint', 'jasmine']);
+    grunt.loadNpmTasks('grunt-recess');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
+    /**
+    * Create task aliases by registering new tasks
+    */
+    grunt.registerTask('test', ['jshint', 'jasmine']);
 
   /**
    * The 'default' task will run whenever `grunt` is run without specifying a task
    */
   grunt.registerTask('default', ['test', 'recess', 'uglify']);
+    grunt.registerTask('build', ['test', 'requirejs']);
 
 };
