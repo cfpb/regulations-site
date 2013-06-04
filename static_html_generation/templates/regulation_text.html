@@ -14,6 +14,14 @@
             {% endfor %}
         {% endif %}
 
+        <ol class="level-1" type="a">
+        {% if c.children %}
+            {% for node in c.children %}
+                {% include "tree.html"  %}
+            {% endfor %}
+        {% endif %}
+        </ol>
+
         {% if c.interp_markup %}
             <section class="inline-interpretation reset-indent" data-interp-for="{{c.markup_id}}">
                 <h4>Supplement I - Official Interpretations</h4>
@@ -23,12 +31,4 @@
                 </ol>
             </section>
         {% endif %}
-
-        <ol class="level-1" type="a">
-        {% if c.children %}
-            {% for node in c.children %}
-                {% include "tree.html"  %}
-            {% endfor %}
-        {% endif %}
-        </ol>
 {% endif %}
