@@ -1,6 +1,6 @@
 var require = {
     baseUrl: "front_end/js",
-    waitSeconds: 200,
+    waitSeconds: 1000,
     paths: {
         underscore: './lib/underscore',
         backbone: './lib/backbone',
