@@ -71,18 +71,18 @@ module.exports = function(grunt) {
      */
     jasmine: {
       all: {
-        src: 'front_end/js',
+        src: 'front_end/js/source',
         options: {
           template: require('grunt-template-jasmine-requirejs'),
           specs: 'front_end/js/tests/specs/*.js',
           templateOptions: {
             requireConfig: {
-              baseUrl: 'front_end/js',
+              baseUrl: 'front_end/js/source',
               paths: {
                 underscore: './lib/underscore',
                 backbone: './lib/backbone',
                 jquery: './lib/jquery-1.9.1',
-                samplejson: './tests/grunt/js/fixtures/sample-json',
+                samplejson: '../tests/grunt/js/fixtures/sample-json',
                 'definition-view': './views/definition-view',
                 'interpretation-view': './views/interpretation-view',
                 'regs-fixed-el-view': './views/regs-fixed-el-view',
@@ -121,8 +121,8 @@ module.exports = function(grunt) {
     requirejs: {
         compile: {
             options: {
-                baseUrl: 'front_end/js',
-                mainConfigFile: 'front_end/js/build.js',
+                baseUrl: 'front_end/js/source',
+                mainConfigFile: 'front_end/js/source/build.js',
                 dir: "front_end/js/built",
                 modules: [ {name: "regulations"} ],
                 paths: {
@@ -167,5 +167,4 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['jshint', 'jasmine']);
     grunt.registerTask('build', ['test', 'requirejs', 'recess']);
     grunt.registerTask('squish', ['requirejs', 'recess']);
-
 };

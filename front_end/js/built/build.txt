@@ -1,8 +1,4 @@
 
-tests/browser/lib/jasmine.css
-----------------
-tests/browser/lib/jasmine.css
-
 regulations.js
 ----------------
 lib/jquery-1.9.1.js
