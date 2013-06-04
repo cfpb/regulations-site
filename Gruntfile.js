@@ -28,23 +28,6 @@ module.exports = function(grunt) {
     },
 
     /**
-     * Uglify: https://github.com/gruntjs/grunt-contrib-uglify
-     * 
-     * Minify JS files.
-     * Make sure to add any other JS libraries/files you'll be using.
-     * We are excluding minified files with the final ! pattern.
-     */
-    uglify: {
-      options: {
-        banner: '<%= banner %>'
-      },
-      dist: {
-        src: ['front_end/js/jquery-1.9.1.js', 'front_end/js/<%= pkg.name %>.js', '!front_end/js/*.min.js'],
-        dest: 'front_end/js/<%= pkg.name %>.min.js'
-      }
-    },
-
-    /**
      * JSHint: https://github.com/gruntjs/grunt-contrib-jshint
      * 
      * Validate files with JSHint.
@@ -172,21 +155,17 @@ module.exports = function(grunt) {
    * The above tasks are loaded here.
    */
     grunt.loadNpmTasks('grunt-recess');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+
     /**
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('test', ['jshint', 'jasmine']);
-
-  /**
-   * The 'default' task will run whenever `grunt` is run without specifying a task
-   */
-  grunt.registerTask('default', ['test', 'recess', 'uglify']);
-    grunt.registerTask('build', ['test', 'requirejs']);
+    grunt.registerTask('build', ['test', 'requirejs', 'recess']);
+    grunt.registerTask('squish', ['requirejs', 'recess']);
 
 };
