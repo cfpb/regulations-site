@@ -1,5 +1,4 @@
-var require = {
-    baseUrl: "front_end/js/built/",
+({
     paths: {
         jquery: './lib/jquery-1.9.1',
         underscore: './lib/underscore',
@@ -20,5 +19,7 @@ var require = {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         }
-    }
-};
+    },
+    dir: "./built",
+    modules: [ {name: "regulations"} ]
+})
