@@ -5,7 +5,7 @@ class TableOfContentsLayer(object):
         self.layer = layer
         self.node_types = NodeTypes()
 
-    def apply_layer(self, text_index, reg_tree):
+    def apply_layer(self, text_index):
         if text_index in self.layer:
             layer_elements = self.layer[text_index]
 

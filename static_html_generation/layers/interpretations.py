@@ -1,37 +1,28 @@
-from django.template import loader, Context
-from html_builder import HTMLBuilder
-from layers.layers_applier import InlineLayersApplier
+import api_reader
+from html_builder import ParagraphBuilder
 from layers.layers_applier import ParagraphLayersApplier
-from layers.layers_applier import SearchReplaceLayersApplier
-from node_types import NodeTypes
+import settings as app_settings
 
 class InterpretationsLayer(object):
-    def __init__(self, layer):
+    def __init__(self, layer, version):
         self.layer = layer
-        self.template = loader.get_template('tree.html')
+        self.version = version
 
-    def apply_layer(self, text_index, reg_tree):
+    def copy_builder(self, html_builder):
+        self.builder = ParagraphBuilder(html_builder.inline_applier,
+            ParagraphLayersApplier(),
+            html_builder.search_applier)
+
+    def apply_layer(self, text_index):
         """Return a pair of field-name + interpretation if one applies."""
         if text_index in self.layer and self.layer[text_index]:
             layer_element = self.layer[text_index][0]
             reference = layer_element['reference']
-            interp_node = self.find(reg_tree, reference)
+            api = api_reader.Client(app_settings.API_BASE)
+            interp_node = api.regulation(reference, self.version)
 
             if interp_node:
-                #   When we can generate paragraphs on demand, we should use
-                #   that here
-                builder = HTMLBuilder(InlineLayersApplier(),
-                        ParagraphLayersApplier(reg_tree),
-                        SearchReplaceLayersApplier())
-                builder.process_node(interp_node)
-                markup = self.template.render(Context({'node': interp_node}))
+                self.builder.tree = interp_node
+                self.builder.generate_html()
+                markup = self.builder.render_markup()
                 return 'interp_markup', markup
-
-    def find(self, reg_tree, index):
-        """Find the matching node in the tree (if it exists)"""
-        if reg_tree['label']['text'] == index:
-            return reg_tree
-        for child in reg_tree['children']:
-            child_search = self.find(child, index)
-            if child_search:
-                return child_search
