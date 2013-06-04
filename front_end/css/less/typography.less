@@ -141,6 +141,7 @@ a.definition:active {
     font-size: 2.25em; /* 36px / 16px */
     line-height: 1.194;
     text-transform: uppercase;
+    margin: 0;
 }
 
 .section-title { 
@@ -156,6 +157,12 @@ a.definition:active {
 
 .level-1 > li {
     margin-top: 1.875em; /* 30px / 16px = 1.875em */
+    padding-bottom: 0.875em; /* subtract 1em for p margin */
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.level-2 li {
+    margin-top: 0.875em;
 }
 
 /* set markers & key-terms to Avenir Next Demi */
