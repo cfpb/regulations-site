@@ -15,14 +15,17 @@ class Client:
                 return child_search
 
     def _use_reg_cache(self, label, version):
+        """See if we've already grabbed that id. Cache results if not.
+        @todo: add a timeout"""
         if (label, version) in Client._reg_cache:
             return Client._reg_cache[(label, version)]
         for cache_label, cache_version in Client._reg_cache:
             if cache_version == version and label.startswith(cache_label):
                 matching_child = self._dfs_search(
                     Client._reg_cache[(cache_label, cache_version)], label)
-                Client._reg_cache[(label, version)] = matching_child
-                return matching_child
+                if matching_child:
+                    Client._reg_cache[(label, version)] = matching_child
+                    return matching_child
         Client._reg_cache[(label, version)] = self._get(
             "regulation/%s/%s" % (label, version))
         return Client._reg_cache[(label, version)]

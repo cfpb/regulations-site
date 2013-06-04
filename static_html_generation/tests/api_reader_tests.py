@@ -10,6 +10,7 @@ from unittest import TestCase
 class ClientTest(TestCase):
     def setUp(self):
         self.client = Client("http://example.com")
+        Client._reg_cache = {}
 
     def _fake_response(self, value):
         """Mock out a response -- a File-like object with encoded json"""
@@ -71,3 +72,24 @@ class ClientTest(TestCase):
         results = client.notices()
         shutil.rmtree(tmp_root)
         self.assertEqual(["example"], results['results'])
+
+    @patch('api_reader.urlopen')
+    def test_reg_cache(self, urlopen):
+        child = {
+            'text': 'child', 
+            'children': [], 
+            'label': {'text': '923-a', 'parts': ['923', 'a']}
+        }
+        to_return = {
+            'text': 'parent', 
+            'label': {'text': '923', 'parts': ['923']},
+            'children': [child]
+        }
+        urlopen.return_value = self._fake_response(to_return)
+        self.assertEqual(to_return, self.client.regulation('923', 'ver'))
+        self.assertEqual(to_return, self.client.regulation('923', 'ver'))
+        self.assertEqual(child, self.client.regulation('923-a', 'ver'))
+        self.assertEqual(1, urlopen.call_count)
+        urlopen.return_value = self._fake_response(to_return)
+        self.client.regulation('923-b', 'ver')
+        self.assertEqual(2, urlopen.call_count)
