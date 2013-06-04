@@ -99,6 +99,15 @@ a[href^="http://"] {
     padding-right: 16px;
 }
 
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    a[href^="http://"] {
+        background: url(../img/external-link@2x.png) center right no-repeat;
+        background-size: 16px 16px;
+    }
+}
+
 a[href^="http://"]:link,
 a[href^="http://"]:visited {
     color: @pacific;
