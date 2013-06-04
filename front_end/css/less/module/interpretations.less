@@ -1,7 +1,8 @@
 .inline-interpretation {
     background-color: @grey;
-    padding: 0 .3em;
+    padding: .3em .625em;
     position: relative;
+    margin-bottom: 40px;
 
     h4 {
         color: @dark_field;
@@ -16,19 +17,19 @@
     .expand-button {
         color: @pacific;
         position: absolute;
-        right: .3em;
+        right: .625em;
         display: inline-block;
         .avenir-next;
         padding-left: 19px;
         background: url(../img/accordion-sprite.png) no-repeat 0 11px;
         text-transform: uppercase;
-        font-weight: bold;
+        .avenir-next-bold;
         line-height: 30px; /* match h4 */
         font-size: .8em;
         cursor: pointer;
     }
 
-    /*.open {
+    .open {
         background-position: 0 -12px;
-    }*/
+    }
 }
