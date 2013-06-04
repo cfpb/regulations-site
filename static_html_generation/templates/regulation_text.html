@@ -17,7 +17,7 @@
         <ol class="level-1" type="a">
         {% if c.children %}
             {% for node in c.children %}
-                {% include "tree.html"  %}
+                {% include "tree-with-wrapper.html"  %}
             {% endfor %}
         {% endif %}
         </ol>
