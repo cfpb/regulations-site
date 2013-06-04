@@ -1,0 +1,1 @@
+define("toc-view",["jquery","underscore","backbone","regs-fixed-el-view"],function(e,t,n,r){var i=r.extend({initialize:function(){Events.on("contract",this.contract,this),Events.on("expand",this.expand,this)}});return i});
