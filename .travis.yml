@@ -18,4 +18,4 @@ script:
     - cd static_html_generation
     - nosetests
     - cd ..
-    - grunt jasmine
+    - grunt test

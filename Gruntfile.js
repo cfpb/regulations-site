@@ -28,23 +28,6 @@ module.exports = function(grunt) {
     },
 
     /**
-     * Uglify: https://github.com/gruntjs/grunt-contrib-uglify
-     * 
-     * Minify JS files.
-     * Make sure to add any other JS libraries/files you'll be using.
-     * We are excluding minified files with the final ! pattern.
-     */
-    uglify: {
-      options: {
-        banner: '<%= banner %>'
-      },
-      dist: {
-        src: ['front_end/js/jquery-1.9.1.js', 'front_end/js/<%= pkg.name %>.js', '!front_end/js/*.min.js'],
-        dest: 'front_end/js/<%= pkg.name %>.min.js'
-      }
-    },
-
-    /**
      * JSHint: https://github.com/gruntjs/grunt-contrib-jshint
      * 
      * Validate files with JSHint.
@@ -88,19 +71,18 @@ module.exports = function(grunt) {
      */
     jasmine: {
       all: {
-        src: 'front_end/js',
+        src: 'front_end/js/source',
         options: {
           template: require('grunt-template-jasmine-requirejs'),
           specs: 'front_end/js/tests/specs/*.js',
           templateOptions: {
             requireConfig: {
-              baseUrl: 'front_end/js',
+              baseUrl: 'front_end/js/source',
               paths: {
                 underscore: './lib/underscore',
                 backbone: './lib/backbone',
                 jquery: './lib/jquery-1.9.1',
-                samplejson: './tests/grunt/js/fixtures/sample-json',
-
+                samplejson: '../tests/grunt/js/fixtures/sample-json',
                 'definition-view': './views/definition-view',
                 'interpretation-view': './views/interpretation-view',
                 'regs-fixed-el-view': './views/regs-fixed-el-view',
@@ -134,27 +116,55 @@ module.exports = function(grunt) {
         files: ['Gruntfile.js', '<%= recess.dist.src %>', 'front_end/css/*.less','<%= uglify.dist.src %>', '<%= jasmine.options.specs %>'],
         tasks: ['default']
       }
+    },
+
+    requirejs: {
+        compile: {
+            options: {
+                baseUrl: 'front_end/js/source',
+                mainConfigFile: 'front_end/js/source/build.js',
+                dir: "front_end/js/built",
+                modules: [ {name: "regulations"} ],
+                paths: {
+                    jquery: './lib/jquery-1.9.1',
+                    underscore: './lib/underscore',
+                    backbone: './lib/backbone',
+                    'definition-view': './views/definition-view',
+                    'interpretation-view': './views/interpretation-view',
+                    'regs-fixed-el-view': './views/regs-fixed-el-view',
+                    'sub-head-view': './views/sub-head-view',
+                    'regs-view': './views/regs-view',
+                    'toc-view': './views/toc-view'
+                },
+                shim: {
+                    underscore: {
+                        deps: ['jquery'],
+                        exports: '_'
+                    },
+                    backbone: {
+                        deps: ['underscore', 'jquery'],
+                        exports: 'Backbone'
+                    }
+                },
+            }
+        }
     }
   });
 
   /**
    * The above tasks are loaded here.
    */
-  grunt.loadNpmTasks('grunt-recess');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jasmine');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks('grunt-recess');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
 
-  /**
-   * Create task aliases by registering new tasks
-   */
-  grunt.registerTask('test', ['jshint', 'jasmine']);
-
-  /**
-   * The 'default' task will run whenever `grunt` is run without specifying a task
-   */
-  grunt.registerTask('default', ['test', 'recess', 'uglify']);
-
+    /**
+    * Create task aliases by registering new tasks
+    */
+    grunt.registerTask('test', ['jshint', 'jasmine']);
+    grunt.registerTask('build', ['test', 'requirejs', 'recess']);
+    grunt.registerTask('squish', ['requirejs', 'recess']);
 };

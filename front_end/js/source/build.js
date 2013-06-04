@@ -20,6 +20,6 @@
             exports: 'Backbone'
         }
     },
-    dir: "./built",
+    dir: "front_end/js/built",
     modules: [ {name: "regulations"} ]
 })
