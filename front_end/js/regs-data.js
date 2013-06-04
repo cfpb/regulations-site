@@ -34,7 +34,7 @@ define("regs-data", ["underscore", "backbone", './regs-helpers'], function(_, Ba
                 this.content[label] = obj['content'];
                 record = obj['content'];
 
-                if (this.regStructure.indexOf(label) === -1) {
+                if (_.indexOf(this.regStructure, label) === -1) {
                     this.regStructure.push(label);
                 }
             }

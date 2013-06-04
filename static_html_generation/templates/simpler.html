@@ -3,29 +3,11 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="front_end/css/style.min.css"/>
-        <script>
-          var require = {
-            baseUrl: "front_end/js",
-            paths: {
-              underscore: './lib/underscore',
-              backbone: './lib/backbone'
-            },
-            shim: {
-              underscore: {
-                exports: '_'
-              },
-              backbone: {
-                deps: ['underscore'],
-                exports: 'Backbone'
-              }
-            }
-          };
-        </script>
+        <script src="front_end/js/require.config.js"></script>
         <script data-main="regulations" src="front_end/js/lib/require-jquery.js"></script>
 
         <!--[if lt IE 9]>
             <script src="front_end/js/lib/html5shiv.js"></script>
-            <script src="front_end/js/lib/polyfill.js"></script>
         <![endif]--> 
     </head>
     <body>
