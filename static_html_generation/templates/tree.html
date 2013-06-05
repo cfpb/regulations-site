@@ -1,33 +1,31 @@
-<li id="{{node.markup_id}}">
-    {%if node.marked_up %}
-    <p> 
-        {% for doc_num, ref in node.analyses %}
-        <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
-        {% endfor %}
-    {{node.marked_up|safe}}
-    </p>
-    {% else %}
-        {% for doc_num, ref in node.analyses %}
-        <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
-        {% endfor %}
-    {% endif %}
-    {% if node.children %}
-    <ol class="level-{{node.children.0.list_level}}" 
-        type="{{node.children.0.list_type}}">
-        {% for c in node.children %}
-            {%with node=c template_name="tree.html" %}
-                {% include template_name %}
-            {% endwith %}
-        {% endfor %}
-    </ol>
-    {% endif %}
-    {% if node.interp_markup %}
-        <section class="inline-interpretation reset-indent" data-interp-for="{{node.markup_id}}">
-            <h4 tabindex="0">Supplement I - Official Interpretations</h4>
-            <a class="expand-button">Show</a>
-            <ol class="hidden">
-                {{ node.interp_markup|safe }}
-            </ol>
-        </section>
-    {% endif %}
-</li>
+{%if node.marked_up %}
+<p> 
+    {% for doc_num, ref in node.analyses %}
+    <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+    {% endfor %}
+{{node.marked_up|safe}}
+</p>
+{% else %}
+    {% for doc_num, ref in node.analyses %}
+    <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+    {% endfor %}
+{% endif %}
+{% if node.children %}
+<ol class="level-{{node.children.0.list_level}}" 
+    type="{{node.children.0.list_type}}">
+    {% for c in node.children %}
+        {%with node=c template_name="tree.html" %}
+            {% include template_name %}
+        {% endwith %}
+    {% endfor %}
+</ol>
+{% endif %}
+{% if node.interp_markup %}
+    <section class="inline-interpretation reset-indent" data-interp-for="{{node.markup_id}}">
+        <h4 tabindex="0">Supplement I - Official Interpretations</h4>
+        <a class="expand-button">Show</a>
+        <ol class="hidden">
+            {{ node.interp_markup|safe }}
+        </ol>
+    </section>
+{% endif %}

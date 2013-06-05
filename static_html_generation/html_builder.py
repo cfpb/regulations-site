@@ -86,9 +86,15 @@ class HTMLBuilder():
         for c in node['children']:
             self.process_node(c)
 
-    def render_markup(self, f=None):
+    def render_markup(self):
         main_template = loader.get_template('simpler.html')
         c = Context({'tree':self.tree, 
                         'GOOGLE_ANALYTICS_SITE':app_settings.GOOGLE_ANALYTICS_SITE, 
                         'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID})
+        return main_template.render(c) 
+
+class ParagraphBuilder(HTMLBuilder):
+    def render_markup(self):
+        main_template = loader.get_template('tree.html')
+        c = Context({'node':self.tree})
         return main_template.render(c) 

@@ -27,7 +27,7 @@
             {% if level_one.children %}
                 <ol class="level-{{level_one.children.0.list_level}}" type="{{level_one.children.0.list_type}}">
                 {% for node in level_one.children  %}
-                    {% include "tree.html" %}
+                    {% include "tree-with-wrapper.html" %}
                 {% endfor %}
                 </ol>
             {% endif %}
