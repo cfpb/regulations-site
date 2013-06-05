@@ -3,13 +3,39 @@ from urllib import urlopen
 
 class Client:
     """A very simple client for accessing the regulation and meta data."""
+    _reg_cache = {}
+
+    def _dfs_search(self, reg_tree, index):
+        """Find the matching node in the tree (if it exists)"""
+        if reg_tree['label']['text'] == index:
+            return reg_tree
+        for child in reg_tree['children']:
+            child_search = self._dfs_search(child, index)
+            if child_search:
+                return child_search
+
+    def _use_reg_cache(self, label, version):
+        """See if we've already grabbed that id. Cache results if not.
+        @todo: add a timeout"""
+        if (label, version) in Client._reg_cache:
+            return Client._reg_cache[(label, version)]
+        for cache_label, cache_version in Client._reg_cache:
+            if cache_version == version and label.startswith(cache_label):
+                matching_child = self._dfs_search(
+                    Client._reg_cache[(cache_label, cache_version)], label)
+                if matching_child:
+                    Client._reg_cache[(label, version)] = matching_child
+                    return matching_child
+        Client._reg_cache[(label, version)] = self._get(
+            "regulation/%s/%s" % (label, version))
+        return Client._reg_cache[(label, version)]
 
     def __init__(self, base_url):
         self.base_url = base_url
 
     def regulation(self, label, version):
         """End point for regulation JSON. Return the result as a dict"""
-        return self._get("regulation/%s/%s" % (label, version))
+        return self._use_reg_cache(label, version)
 
     def layer(self, layer_name, label, version):
         """End point for layer JSON. Return the result as a list"""

@@ -42,7 +42,7 @@
                             {% if level_two.children %}
                                 <ol class="level-{{level_two.children.0.list_level}}" type="{{level_two.children.0.list_type}}">
                                     {% for node in level_two.children %}
-                                        {% include "tree.html" %}
+                                        {% include "tree-with-wrapper.html" %}
                                     {% endfor %}
                                 </ol>
                             {% endif %}
