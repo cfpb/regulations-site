@@ -113,8 +113,8 @@ module.exports = function(grunt) {
      */
     watch: {
       gruntfile: {
-        files: ['Gruntfile.js', '<%= recess.dist.src %>', 'front_end/css/*.less','<%= uglify.dist.src %>', '<%= jasmine.options.specs %>'],
-        tasks: ['default']
+        files: ['Gruntfile.js', '<%= recess.dist.src %>', 'front_end/css/*.less', '<%= jasmine.options.specs %>'],
+        tasks: ['build']
       }
     },
 
