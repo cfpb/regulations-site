@@ -1,5 +1,6 @@
+#vim: set encoding=utf-8
 from html_builder import *
-from layers.layers_applier import InlineLayersApplier
+from layers.layers_applier import ParagraphLayersApplier
 from mock import Mock
 from unittest import TestCase
 
@@ -121,3 +122,32 @@ class HTMLBuilderTest(TestCase):
         layer_parameters = inline.get_layer_pairs.call_args[0]
         self.assertEqual('Interpretation with a link', layer_parameters[1])
         self.assertEqual('999-Interpretations-5', layer_parameters[0])
+
+    def test_process_node_header(self):
+        builder = HTMLBuilder(None, ParagraphLayersApplier(), None)
+        node = {'text': '', 'children': [], 'label': {
+            'text': '99-22', 'parts': ['99', '22']}}
+        builder.process_node(node)
+        self.assertFalse('header' in node)
+
+        node = {'text': '', 'children': [], 'label': {
+            'text': '99-22', 'parts': ['99', '22'], 'title': 'Some Title'}}
+        builder.process_node(node)
+        self.assertTrue('header' in node)
+        self.assertEqual('Some Title', node['header'])
+        self.assertFalse('header_marker' in node)
+        self.assertFalse('header_num' in node)
+        self.assertFalse('header_title' in node)
+
+        node = {'text': '', 'children': [], 'label': {
+            'text': '99-22', 'parts': ['99', '22'], 
+            'title': u'§ 22.1 Title'}}
+        builder.process_node(node)
+        self.assertTrue('header' in node)
+        self.assertEqual(node['label']['title'], node['header'])
+        self.assertTrue('header_marker' in node)
+        self.assertEqual(u'§', node['header_marker'])
+        self.assertTrue('header_num' in node)
+        self.assertEqual(u' 22.1', node['header_num'])
+        self.assertTrue('header_title' in node)
+        self.assertEqual(u' Title', node['header_title'])
