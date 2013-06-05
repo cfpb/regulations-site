@@ -14,7 +14,7 @@
 <ol class="level-{{node.children.0.list_level}}" 
     type="{{node.children.0.list_type}}">
     {% for c in node.children %}
-        {%with node=c template_name="tree-with-wrapper.html" %}
+        {%with node=c template_name="tree.html" %}
             {% include template_name %}
         {% endwith %}
     {% endfor %}
@@ -22,7 +22,7 @@
 {% endif %}
 {% if node.interp_markup %}
     <section class="inline-interpretation reset-indent" data-interp-for="{{node.markup_id}}">
-        <h4>Supplement I - Official Interpretations</h4>
+        <h4 tabindex="0">Supplement I - Official Interpretations</h4>
         <a class="expand-button">Show</a>
         <ol class="hidden">
             {{ node.interp_markup|safe }}
