@@ -5,7 +5,7 @@
         <title>Notice: {{ document_number }}</title>
     </head>
     <body>
-        <h2>Meta</h2>
+        <h2 tabindex="0">Meta</h2>
         <ul>
             <li>Document Number: {{ document_number }}</li>
             <li>CFR Part: {{ cfr_part }}</li>
@@ -37,7 +37,7 @@
             </ul></li>
             {% endif %}
         </ul>
-        <h2>Section-by-Section Analysis</h2>
+        <h2 tabindex="0">Section-by-Section Analysis</h2>
         {% for markup in sxs_markup %}
             {{ markup | safe }}
         {% endfor %}

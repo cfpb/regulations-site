@@ -1,6 +1,6 @@
 {% if c.node_type == "appendix" %}
     <section id="{{c.markup_id}}">
-        <h2 class="appendix-title"> {{c.markup_title}} </h2>
+        <h2 class="appendix-title" tabindex="0"> {{c.markup_title}} </h2>
          {%if c.TOC %}
             {% with nav_class='appendix-nav' toc_items=c.TOC %}
                {% include "toc.html" %} 
@@ -9,7 +9,7 @@
 
     {% if c.children %}
         {% for level_one in c.children %}
-            <h3 class="appendix-heading"> {{level_one.markup_title}} </h3>
+            <h3 class="appendix-heading" tabindex="0"> {{level_one.markup_title}} </h3>
 
             {% if level_one.marked_up %}
             <p> 
@@ -34,7 +34,7 @@
 
             {% if level_one.interp_markup %}
                 <section class="inline-interpretation reset-indent" data-interp-for="{{level_one.markup_id}}">
-                    <h4>Supplement I - Official Interpretations</h4>
+                    <h4 tabindex="0">Supplement I - Official Interpretations</h4>
                     <a class="expand-button">Show</a>
                     <ol class="hidden">
                         {{ level_one.interp_markup|safe }}

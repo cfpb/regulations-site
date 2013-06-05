@@ -3,7 +3,7 @@
 {% else %}
     <div>
 {% endif %}
-    <h{{ depth }}>{{ title }}</h{{ depth }}>
+    <h{{ depth }} tabindex="0">{{ title }}</h{{ depth }}>
     {% for p in paragraphs %}
         <p>{{ p }}</p>
     {% endfor %}
