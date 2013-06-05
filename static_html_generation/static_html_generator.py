@@ -47,7 +47,7 @@ if __name__ == "__main__":
     reg_json = api.regulation(regulation, version)
 
     inline_applier = InlineLayersApplier()
-    p_applier = ParagraphLayersApplier(reg_json)
+    p_applier = ParagraphLayersApplier()
     s_applier = SearchReplaceLayersApplier()
 
     el = api.layer("external-citations", regulation, version)
@@ -61,7 +61,8 @@ if __name__ == "__main__":
     inline_applier.add_layer(DefinitionsLayer(dl))
 
     intl = api.layer("interpretations", regulation, version)
-    p_applier.add_layer(InterpretationsLayer(intl))
+    intl = InterpretationsLayer(intl, version)
+    p_applier.add_layer(intl)
     
     sxs = api.layer("analyses", regulation, version)
     p_applier.add_layer(SectionBySectionLayer(sxs))
@@ -76,6 +77,7 @@ if __name__ == "__main__":
     s_applier.add_layer(ParagraphMarkersLayer(pm))
     
     makers_markup = HTMLBuilder(inline_applier, p_applier, s_applier)
+    intl.copy_builder(makers_markup)
     makers_markup.tree = reg_json
     makers_markup.generate_html()
     markup = makers_markup.render_markup()
