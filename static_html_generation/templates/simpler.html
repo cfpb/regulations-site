@@ -26,8 +26,8 @@
             <ul id="content-header">
                 <li id="content-subhead"></li>
                 <li id="sidebar-subhead">
-                    {% if tree.titles %}
-                        {{ tree.titles.part }} ({{ tree.titles.reg_name }})
+                    {% if titles.part and titles.reg_name %}
+                        {{ titles.part }} {{ titles.reg_name }}
                     {% endif %}
                 </li>
             </ul>
