@@ -18,7 +18,9 @@
   },
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-template-jasmine-requirejs": "~0.1.1"
+    "grunt-template-jasmine-requirejs": "~0.1.1",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "phantomjs": "~1.9.0-6"
   },
   "keywords": []
 }
