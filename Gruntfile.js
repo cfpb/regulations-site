@@ -10,21 +10,18 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     /**
-     * Recess: https://github.com/sindresorhus/grunt-recess
-     * 
-     * Compile, concat and compress LESS files.
-     * Make sure to add any other CSS libraries/files you'll be using.
-     * We are excluding minified files with the final ! pattern.
+     * https://github.com/gruntjs/grunt-contrib-less
      */
-    recess: {
-      dist: {
-        src: ['front_end/css/less/normalize.css', 'front_end/css/less/fonts.css', 'front_end/css/less/main.less', '!front_end/css/*.min.css'],
-        dest: 'front_end/css/style.min.css',
-        options: {
-          compile: true,
-          compress: true
+    less: {
+        development: {
+            options: {
+                paths: ['front_end/css/less', 'front_end/css/less/module'],
+                yuicompress: true
+            },
+            files: {
+                "front_end/css/style.min.css": "front_end/css/less/main.less"
+            }
         }
-      }
     },
 
     /**
@@ -154,17 +151,17 @@ module.exports = function(grunt) {
   /**
    * The above tasks are loaded here.
    */
-    grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-less');
 
     /**
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('test', ['jshint', 'jasmine']);
-    grunt.registerTask('build', ['test', 'requirejs', 'recess']);
-    grunt.registerTask('squish', ['requirejs', 'recess']);
+    grunt.registerTask('build', ['test', 'requirejs', 'less']);
+    grunt.registerTask('squish', ['requirejs', 'less']);
 };
