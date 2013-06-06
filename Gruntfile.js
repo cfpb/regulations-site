@@ -15,7 +15,8 @@ module.exports = function(grunt) {
     less: {
         development: {
             options: {
-                paths: ['front_end/css/less', 'front_end/css/less/module']
+                paths: ['front_end/css/less', 'front_end/css/less/module'],
+                yuicompress: true
             },
             files: {
                 "front_end/css/style.min.css": "front_end/css/less/main.less"
