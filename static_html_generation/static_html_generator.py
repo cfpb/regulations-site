@@ -37,13 +37,9 @@ if __name__ == "__main__":
             TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',), 
             TEMPLATE_DIRS = ('templates/',))
 
-    if len(sys.argv) == 1:
-        print "Usage: python static_html_generator.py regversion-to-build-from"
-        print " e.g.: python static_html_generator.py 2011-31725"
-        exit()
-
     api = api_reader.Client(app_settings.API_BASE)
-    regulation, version = "1005", sys.argv[1]
+    regulation = app_settings.TITLE_PART_NUMBER if len(sys.argv) <=2 else sys.argv[2]
+    version = app_settings.REG_VERSION if len(sys.argv) <= 1 else sys.argv[1]
     reg_json = api.regulation(regulation, version)
 
     inline_applier = InlineLayersApplier()
@@ -51,7 +47,7 @@ if __name__ == "__main__":
     s_applier = SearchReplaceLayersApplier()
 
     el = api.layer("external-citations", regulation, version)
-    reference_EFT_act = ['15', '1693'] #Title 15, Section 1693 of the United States Code
+    reference_EFT_act = app_settings.EFT_ACT if len(sys.argv) <= 3 else sys.argv[3]
 
     inline_applier.add_layer(ExternalCitationLayer(el, ['15', '1693']))
     il = api.layer("internal-citations", regulation, version)
