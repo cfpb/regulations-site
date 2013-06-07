@@ -1,4 +1,4 @@
-/**
+ /**
 * layout.less contains all layout rules
 *
 */
@@ -22,11 +22,19 @@
 .secondary-content {
     width: 30.208%; /*290px;*/
     float: right;
+    border-left: 1px solid #d0d0ce;
 }
 
-.main-content,
-.secondary-content {
+.main-content {
     margin-top: 3em;
+}
+
+#reg-content {
+    .secondary-content {
+        position: absolute;
+        height: 100%;
+        right: 0;
+    }
 }
 
 /* offsets section links for the persistent header */
