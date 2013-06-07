@@ -44,9 +44,17 @@ class HTMLBuilderTest(TestCase):
                 "title": "Title (Regulation R)"
             }
         }
+        titleless_node = {
+            "label": {
+                "title": "Title"
+            }
+        }
+
         parsed_title = builder.parse_doc_title(node['label']['title'])
+        no_title = builder.parse_doc_title(titleless_node['label']['title'])
 
         self.assertEqual("(Regulation R)", parsed_title)
+        self.assertEqual(no_title, None)
 
     def test_list_level_interpretations(self):
         builder = HTMLBuilder(None, None, None)
