@@ -1,11 +1,15 @@
 #!/usr/bin/env python
+#vim: set encoding=utf-8
 from django.template import loader, Template, Context
 from django.conf import settings
-from node_types import NodeTypes
-import settings as app_settings
 from layers.layers_applier import LayersApplier
+from node_types import NodeTypes
+import re
+import settings as app_settings
 
 class HTMLBuilder():
+    header_regex = re.compile(ur'^(§)(\s*\d+\.\d+)(.*)$')
+
     def __init__(self, inline_applier, p_applier, search_applier):
         self.markup = u''
         self.sections = None
@@ -59,7 +63,12 @@ class HTMLBuilder():
 
     def process_node(self, node):
         if 'title' in node['label']:
-            node['markup_title']  = node['label']['title']
+            node['header']  = node['label']['title']
+            match = HTMLBuilder.header_regex.match(node['header'])
+            if match:
+                node['header_marker'] = match.group(1)
+                node['header_num'] = match.group(2)
+                node['header_title'] = match.group(3)
 
         node['label']['parts'] = self.node_types.change_type_names(node['label']['parts'])
         node['markup_id'] = "-".join(node['label']['parts'])
