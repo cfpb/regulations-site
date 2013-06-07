@@ -102,7 +102,7 @@ class HTMLBuilder():
         for c in node['children']:
             self.process_node(c)
 
-    def get_titles(self):
+    def get_title(self):
         titles = {
             'part': self.tree['label']['parts'][0],
             'reg_name': ''
