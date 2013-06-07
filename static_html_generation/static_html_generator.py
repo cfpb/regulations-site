@@ -49,6 +49,8 @@ if __name__ == "__main__":
     el = api.layer("external-citations", regulation, version)
     reference_EFT_act = app_settings.EFT_ACT if len(sys.argv) <= 3 else sys.argv[3]
 
+    print "python static_html_generator.py", version, regulation, reference_EFT_act
+
     inline_applier.add_layer(ExternalCitationLayer(el, ['15', '1693']))
     il = api.layer("internal-citations", regulation, version)
     inline_applier.add_layer(InternalCitationLayer(il))
