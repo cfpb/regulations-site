@@ -19,6 +19,7 @@
 
 .appendix-nav {
   padding-left: 30px;
+  list-style: none;
 }
 
 .appendix-nav li {
@@ -40,7 +41,7 @@
     height: 100%;
     border-right: #d0d0ce 2px solid;
     margin: 0;
-    padding: 0;
+    padding: 0 0 40px 0;
     .avenir-next-demi;
     font-size: 0.875em; /*14px*/
 }
@@ -49,7 +50,7 @@
     position: fixed;
     top: 59px; /* a magic number */
     overflow-y: scroll;
-    height: 100%;
+    height: 86%; /*offsets the top 59px and prevents the bottom of the nav from showing */
 }
 
 /*.no-js .panel {

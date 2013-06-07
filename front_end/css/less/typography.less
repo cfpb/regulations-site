@@ -96,7 +96,7 @@ a.internal:active {
 
 a[href^="http://"] {
     background: url(../img/external-link.png) center right no-repeat;
-    padding-right: 16px;
+    padding-right: 19px;
 }
 
 @media 
@@ -104,7 +104,7 @@ a[href^="http://"] {
 (min-resolution: 192dpi) {
     a[href^="http://"] {
         background: url(../img/external-link@2x.png) center right no-repeat;
-        background-size: 16px 16px;
+        background-size: 19px 16px;
     }
 }
 
@@ -153,13 +153,17 @@ a.definition:active {
     margin: 0;
 }
 
+.section-number {
+    display: inline;    /*  Hack for making this presentable */
+}
+
 .section-title { 
     .avenir-next-bold;
     font-size: 1.8125em; /* 29px / 16px = 1.8125em */
     line-height: 1.25;
     padding-top: 32px;
-    text-transform: uppercase;
     letter-spacing: 1px;
+    display: inline;    /*  Hack for making this presentable */
 }
 
 /* list styles */
@@ -167,7 +171,7 @@ a.definition:active {
 .level-1 > li {
     margin-top: 1.875em; /* 30px / 16px = 1.875em */
     padding-bottom: 0.875em; /* subtract 1em for p margin */
-    border-bottom: 1px solid #F2F2F2;
+    border-bottom: 1px solid @light_field;
 }
 
 .level-1 > li:last-child {
@@ -175,7 +179,7 @@ a.definition:active {
 }
 
 .level-2 li {
-    margin-top: 0.875em;
+    margin-top: 1.25em;
 }
 
 /* set markers & key-terms to Avenir Next Demi */
