@@ -40,6 +40,8 @@ Thumbs.db
 # Grunt.js #
 ############
 node_modules/
+oldphantomjs/
+.grunt/
 
 # Minified assets #
 ###############
