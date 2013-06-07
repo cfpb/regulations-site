@@ -39,6 +39,15 @@ if __name__ == "__main__":
 
     api = api_reader.Client(app_settings.API_BASE)
 
+    if (not sys.argv 
+    and not app_settings.TITLE_PART_NUMBER 
+    or not app_settings.REG_VERSION 
+    or not app_settings.ACT):
+        print "Usage: python static_html_generator.py REG_VERSION TITLE_PART_NUMBER ACT"
+        print "Ex: python static_html_generator.py 'remittances' '1005' '[\"15\", \"1643\"]'"
+        print "Please set default parameter values in local_settings.py or include them here, as above."
+        exit()
+
     if len(sys.argv) <= 2:
         regulation = app_settings.TITLE_PART_NUMBER
     else:
