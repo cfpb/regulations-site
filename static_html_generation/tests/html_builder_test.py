@@ -12,7 +12,7 @@ class HTMLBuilderTest(TestCase):
             "children": [], 
             "label": {
                 "text": "123-aaa", 
-                "parts": ["123", "aaa"]
+                "parts": ["123", "aaa"],
             }
         }
 
@@ -34,6 +34,19 @@ class HTMLBuilderTest(TestCase):
 
         self.assertTrue(par.apply_layers.called)
         self.assertEqual(node, par.apply_layers.call_args[0][0])
+
+    def test_header_parsing(self):
+        builder = HTMLBuilder(None, None, None)
+
+        node = {
+            "label": {
+                "parts": ["234", "a", "1"],
+                "title": "Title (Regulation R)"
+            }
+        }
+        parsed_title = builder.parse_doc_title(node['label']['title'])
+
+        self.assertEqual("(Regulation R)", parsed_title)
 
     def test_list_level_interpretations(self):
         builder = HTMLBuilder(None, None, None)
