@@ -29,7 +29,7 @@ class HTMLBuilder():
 
     def parse_doc_title(self, reg_title):
         match = re.search(r"[(].+[)]$", reg_title)
-        return match.group(0)
+        return None if not match else match.group(0)
 
     def list_level(self, parts, node_type):
         """ Return the list level and the list type. """
