@@ -38,8 +38,17 @@ if __name__ == "__main__":
             TEMPLATE_DIRS = ('templates/',))
 
     api = api_reader.Client(app_settings.API_BASE)
-    regulation = app_settings.TITLE_PART_NUMBER if len(sys.argv) <=2 else sys.argv[2]
-    version = app_settings.REG_VERSION if len(sys.argv) <= 1 else sys.argv[1]
+
+    if len(sys.argv) <= 2:
+        regulation = app_settings.TITLE_PART_NUMBER
+    else:
+        regulation = sys.argv[2]
+
+    if len(sys.argv) <= 1:
+        version = app_settings.REG_VERSION
+    else:
+        version = sys.argv[1]
+
     reg_json = api.regulation(regulation, version)
 
     inline_applier = InlineLayersApplier()
@@ -47,7 +56,11 @@ if __name__ == "__main__":
     s_applier = SearchReplaceLayersApplier()
 
     el = api.layer("external-citations", regulation, version)
-    reference_EFT_act = app_settings.EFT_ACT if len(sys.argv) <= 3 else sys.argv[3]
+
+    if len(sys.argv) <= 3:
+        reference_EFT_act = app_settings.ACT
+    else:
+        reference_EFT_act = sys.argv[3]
 
     print "python static_html_generator.py", version, regulation, reference_EFT_act
 
