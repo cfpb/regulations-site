@@ -12,7 +12,6 @@ class LayersApplier(object):
     def __init__(self):
         self.queue = PriorityQueue()
         self.text = None
-        self.printme = False
 
     def enqueue_from_list(self, elements_list):
         for le in elements_list:
@@ -44,22 +43,13 @@ class LayersApplier(object):
             cs = range(offset_starter[0], offset_starter[0] + len(offsets))
             d = {k:v for (k,v) in list(zip(cs, offsets))}
 
-            if self.printme:
-                print "1 node.text: %s " % node.text.encode('utf-8')
-                print "1 offset starter %s: len(offests) %s" % (offset_starter[0], len(offsets))
-                print "1 cs %s:" % cs
-
             while counter[0] < len(locations) and locations[counter[0]] in d:
                 offsets = LayersApplier.find_all_offsets(original, node.text)
                 d = {k:v for (k,v) in list(zip(cs, offsets))}
 
-                if self.printme:
-                    print d
                 offset = d[locations[counter[0]]]
                 node.text = LayersApplier.replace_at_offset(offset, replacement, node.text)
 
-                if self.printme:
-                    print "node.text: %s " % node.text.encode('utf-8')
                 counter[0] += 1
 
             if len(cs) > 0:
@@ -72,27 +62,13 @@ class LayersApplier(object):
             offsets = LayersApplier.find_all_offsets(original, node.tail)
             cs = range(offset_starter[0], offset_starter[0] + len(offsets))
             d = {k:v for (k,v) in list(zip(cs, offsets))}
-            if self.printme:
-                print "2 offset starter %s: len(offests) %s" % (offset_starter[0], len(offsets))
-                print "2 cs: %s" % cs
-                print "2 tail: %s" % d
-
-            if self.printme:
-                print "node.tail.1: %s"  % node.tail.encode('utf-8')
-                print "counter %s:"  % counter
-                print "locations %s:" %  locations
-                print "offsets %s:" % offsets
 
             while counter[0] < len(locations) and locations[counter[0]] in d:
                 offsets = LayersApplier.find_all_offsets(original, node.tail)
                 d = {k:v for (k,v) in list(zip(cs, offsets))}
                 offset = d[locations[counter[0]]]
-                if self.printme:
-                    print d
                 node.tail = LayersApplier.replace_at_offset(offset, replacement, node.tail)
                 counter[0] += 1
-                if self.printme:
-                    print "node.tail.2: %s"  % node.tail.encode('utf-8')
 
             if len(cs) > 0:
                 offset_starter[0] = cs[-1] + 1
@@ -130,12 +106,7 @@ class LayersApplier(object):
 
         locations.sort()
         htmlized = html.fragment_fromstring(self.text, create_parent='div')
-        if self.printme:
-            print '0-0000 %s:' % original
         self.location_replace(htmlized, original, replacement, locations, counter=[0], offset_starter=[0])
-        if self.printme:
-            print '0-0000'
-
         self.text = html.tostring(htmlized)
         self.text = self.text.replace("<div>", "", 1)
         self.text = self.text[:self.text.rfind("</div>")]
@@ -149,8 +120,6 @@ class LayersApplier(object):
             priority, layer_element  = self.queue.get()
             original, replacement, locations = layer_element
 
-            if 'state law or an agreement' in original_text:
-                self.printme = True
             if not locations:
                 self.replace_all(original, replacement)
             else:
