@@ -15,16 +15,19 @@
 
         <header class="reg-header">
         <div class="main-head">
-            <div class="wrap group">
-            <nav class="main" id="doc-header">
+            <ul class="wrap group">
+            <li class="main">
+            <nav id="doc-navigation">
                 <ul>
                     <li><a href="#menu" id="menu-link" class="toc-nav-link slide">Table of Contents</a></li>
-                    <li><h2 class="reg-title-header">{{tree.header|title}}</h2></li>
+                    <li><h2 class="reg-title-header"><a href="#">{{tree.header|title}}</a></h2></li>
                 </ul>
             </nav>
+            </li>
 
-            <div class="logo secondary">LOGO</div>
-            </div>
+            <li class="secondary">
+                <div class="logo">LOGO</div>
+            </li>
         </div>
 
         <div class="sub-head">
