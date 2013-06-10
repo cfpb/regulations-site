@@ -108,11 +108,11 @@
 }
 
 .toc-reg-title {
-      .avenir-next;
-      display: block;
-      text-transform: uppercase;
-      font-size: 16px;
-      margin-top: 6px;
+    .avenir-next;
+    display: block;
+    text-transform: uppercase;
+    font-size: 16px;
+    margin-top: 6px;
 }
 
 .regulation-nav a:link,
@@ -123,12 +123,17 @@
     color: @black;
 }
 
+.toc-nav-link {
+    font-size: 0px; /*hide from view but display to screen readers */
+}
+
 .active .toc-nav-link {
     color: @pacific;
     background: #fff;
 }
 
 .toc-nav-link:before {
+    font-size: 16px;
     content: '\2630 \00a0';
 }
 

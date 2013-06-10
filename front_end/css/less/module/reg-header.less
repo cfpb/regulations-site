@@ -8,6 +8,7 @@
   position: fixed;
   top: 0;
   border-bottom: 1px solid @medium_gray;
+  color: @dark_field;
   .avenir-next;
   z-index: 1000;
 }
@@ -31,10 +32,14 @@
   border-bottom: 1px solid @dark_gray;
 }
 
-.main-head nav ul{
+.main-head nav ul {
   width: 66%;
   float: left;
   text-align: left;
+
+  li {
+    margin-right: 1em;
+  }
 }
 
 .logo {
@@ -45,16 +50,14 @@
   text-align: center;
 }
 
-#sub-head.fixed{
-  position:fixed;
-  z-index: 1000;
-  top:0;
+.sub-head {
+  background: @bg_gray;
 }
 
 .reg-header a:link,
 .reg-header a:visited {
     border-bottom: none;
-    color: @black;
+    color: @dark_field;
 }
 
 .reg-header a:hover,
@@ -70,8 +73,6 @@
 }
 
 #sidebar-subhead {
-    background: @bg_gray;
-    color: @dark_field;
     .avenir-next-bold;
 
     h2 {
