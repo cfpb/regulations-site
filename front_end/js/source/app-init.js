@@ -41,12 +41,33 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
             // click term link, open definition
             $('.definition').on('click', function(e) {
                 e.preventDefault();
-                var defId = $(this).attr('data-definition');
+                if ($(this).data('active')) {
+                    RegsState.openDef.view.remove();
+                    delete(RegsState.openDef.id);
+                    $(this).removeClass('active').removeData('active');
+                    return;
+                }
 
+                var defId = $(this).attr('data-definition'),
+                    $link = $(e.target);
+                $link.addClass('active').data('active', 1);
+
+                if (!_.isEmpty(RegsState.openDef.link)) {
+                    RegsState.openDef.link.removeClass('active').removeData('active');
+                }
+
+                RegsState.openDef.link = $link;
+                if (defId === RegsState.openDef.id) {
+                    return;
+                }
+
+                if (!_.isEmpty(RegsState.openDef.view)) {
+                    RegsState.openDef.view.remove();
+                }
                 RegsState.openDef.id = defId;
                 RegsState.openDef.view = new DefinitionView({
                     id: defId,
-                    $anchor: $(e.target)
+                    $anchor: $link
                 });
             });
 

@@ -8,6 +8,14 @@ define("definition-view", ["jquery", "underscore", "backbone", "regs-view", "reg
             Dispatch.trigger('definition:render', this.$el);
 
             return this;
+        },
+
+        remove: function() {
+            this.stopListening();
+            this.$el.remove();
+            Dispatch.trigger('definition:remove');
+
+            return this;
         }
     });
 

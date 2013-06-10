@@ -134,7 +134,8 @@ module.exports = function(grunt) {
                     'sub-head-view': './views/sub-head-view',
                     'regs-view': './views/regs-view',
                     'toc-view': './views/toc-view',
-                    'sidebar-view': './views/sidebar-view'
+                    'sidebar-view': './views/sidebar-view',
+                    'sidebar-head-view': './views/sidebar-head-view'
                 },
                 shim: {
                     underscore: {

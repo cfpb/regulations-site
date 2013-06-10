@@ -4,14 +4,18 @@ define("sidebar-head-view", ["jquery", "underscore", "backbone", "regs-dispatch"
     var SidebarHeadView = Backbone.View.extend({
         initialize: function() {
             Dispatch.on('definition:render', this.openItem, this);
-
-            this.closeButton = $('.close');
+            Dispatch.on('definition:remove', this.clear, this);
             this.header = this.$el.find('h2');
+            this.defaultText = this.header.html();
         },
 
         openItem: function() {
             this.header.html("Defined Term");
-            this.$el.append(this.closeButton);
+            this.$el.append('<a class="close-button right">Close definition</a>');
+        },
+
+        clear: function() {
+            this.$el.html(this.header.html(this.defaultText));
         }
     });
 
