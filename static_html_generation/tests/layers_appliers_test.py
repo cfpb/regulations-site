@@ -1,6 +1,7 @@
 import re
 from unittest import TestCase
 from layers import layers_applier
+from layers import location_replace
 
 class LayersApplierTest(TestCase):
 
@@ -37,21 +38,21 @@ class LayersApplierTest(TestCase):
     def test_find_all_offsets(self):
         pattern = 'ABCD'
         text = 'The grey fox ABCD jumped over the fence ABCD'
-        offsets = layers_applier.LayersApplier.find_all_offsets(pattern, text)
+        offsets = location_replace.LocationReplace.find_all_offsets(pattern, text)
         self.assertEquals(offsets, [(13, 17), (40, 44)])
 
     def test_find_offsets_no_pattern(self):
         pattern = 'ABCD'
         text = 'The grey fox jumped over the fence'
-        offsets = layers_applier.LayersApplier.find_all_offsets(pattern, text)
+        offsets = location_replace.LocationReplace.find_all_offsets(pattern, text)
         self.assertEquals(offsets, [])
 
     def test_replace_at_offset(self):
         pattern = 'ABCD'
         text = 'The grey fox ABCD jumped over the fence ABCD'
 
-        first_offset = layers_applier.LayersApplier.find_all_offsets(pattern, text)[0]
-        result = layers_applier.LayersApplier.replace_at_offset(first_offset, 'giraffe', text)
+        first_offset = location_replace.LocationReplace.find_all_offsets(pattern, text)[0]
+        result = location_replace.LocationReplace.replace_at_offset(first_offset, 'giraffe', text)
 
         self.assertEquals(result, 'The grey fox giraffe jumped over the fence ABCD')
 
@@ -64,3 +65,36 @@ class LayersApplierTest(TestCase):
         applier.replace_at('ABCD', '<a>ABCD</a>', [0,2])
 
         self.assertEquals(applier.text, 'The grey fox <a>ABCD</a> jumped ABCD over the fence <a>ABCD</a>')
+
+    def test_update_offsets(self):
+        lr = location_replace.LocationReplace()
+        lr.offset_starter = 5
+
+        pattern = 'ABCD'
+        text = 'The grey <a href="link">ABCD</a> jumped over the ABCD fence on a ABCD day'
+
+        lr.update_offsets(pattern, text)
+        self.assertEquals(lr.counter, 0)
+        self.assertEqual(lr.offset_starter, 5)
+        self.assertEqual(lr.offset_counters, [5,6,7])
+        self.assertEqual(lr.offsets.keys(), [5, 6, 7])
+        self.assertEqual(lr.offsets[5], (24,28))
+
+    def test_update_offset_starter(self):
+        lr = location_replace.LocationReplace()
+        lr.offset_counters = [5,6,7]
+        lr.update_offset_starter()
+
+        self.assertEqual(lr.offset_starter, 8)
+
+    def test_replace_at(self):
+        original =  'state'
+        replacement = '<a href="link_url">state</a>'
+        locations = [0, 1, 2]
+
+        applier = layers_applier.LayersApplier()
+        applier.text = "<em>(6)</em> <dfn> Under state law. </dfn> State law."
+        applier.replace_at(original, replacement, locations)
+
+        result = u"<em>(6)</em> <dfn> Under <a href=\"link_url\">state</a> law. </dfn> <a href=\"link_url\">state</a> law."
+        self.assertEquals(applier.text, result)

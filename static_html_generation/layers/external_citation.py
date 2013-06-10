@@ -87,16 +87,3 @@ class ExternalCitationLayer():
                     rt = self.create_link(ot, layer_element)
                     layer_pairs.append((ot, rt, (start, end)))
             return layer_pairs
-
-    def apply_layer_condensed(self, text, text_index):
-        if text_index in self.layer:
-            layer_elements = self.layer[text_index]
-            layer_info = []
-
-            for layer_element in layer_elements:
-                offsets_list = [(int(start), int(end)) for start, end in layer_element['offsets']]
-                start, end = offsets_list[0]
-                ot = text[start:end]
-                rt = self.create_link(ot, layer_element)
-                layer_info.append((ot, rt, offsets_list))
-            return layer_info
