@@ -12,6 +12,7 @@ class LayersApplier(object):
     def __init__(self):
         self.queue = PriorityQueue()
         self.text = None
+        self.printme = False
 
     def enqueue_from_list(self, elements_list):
         for le in elements_list:
@@ -37,26 +38,64 @@ class LayersApplier(object):
 
         return xml_node
 
-    def location_replace(self, node, original, replacement, locations, counter=[0]):
+    def location_replace(self, node, original, replacement, locations, counter=[0], offset_starter = [0]):
         if node.text:
-            offsets = LayersApplier.find_all_offsets(original, node.text) 
-            while counter[0] < len(locations) and locations[counter[0]] < len(offsets):
+            offsets = LayersApplier.find_all_offsets(original, node.text)
+            cs = range(offset_starter[0], offset_starter[0] + len(offsets))
+            d = {k:v for (k,v) in list(zip(cs, offsets))}
+
+            if self.printme:
+                print "1 node.text: %s " % node.text.encode('utf-8')
+                print "1 offset starter %s: len(offests) %s" % (offset_starter[0], len(offsets))
+                print "1 cs %s:" % cs
+
+            while counter[0] < len(locations) and locations[counter[0]] in d:
                 offsets = LayersApplier.find_all_offsets(original, node.text)
-                offset = offsets[locations[counter[0]]]
+                d = {k:v for (k,v) in list(zip(cs, offsets))}
+
+                if self.printme:
+                    print d
+                offset = d[locations[counter[0]]]
                 node.text = LayersApplier.replace_at_offset(offset, replacement, node.text)
+
+                if self.printme:
+                    print "node.text: %s " % node.text.encode('utf-8')
                 counter[0] += 1
 
+            if len(cs) > 0:
+                offset_starter[0] = cs[-1] + 1
+
         for c in node.getchildren():
-            self.location_replace(c, original, replacement, locations, counter)
+            self.location_replace(c, original, replacement, locations, counter, offset_starter)
 
         if node.tail:
             offsets = LayersApplier.find_all_offsets(original, node.tail)
+            cs = range(offset_starter[0], offset_starter[0] + len(offsets))
+            d = {k:v for (k,v) in list(zip(cs, offsets))}
+            if self.printme:
+                print "2 offset starter %s: len(offests) %s" % (offset_starter[0], len(offsets))
+                print "2 cs: %s" % cs
+                print "2 tail: %s" % d
 
-            while counter[0] < len(locations) and locations[counter[0]] < len(offsets):
+            if self.printme:
+                print "node.tail.1: %s"  % node.tail.encode('utf-8')
+                print "counter %s:"  % counter
+                print "locations %s:" %  locations
+                print "offsets %s:" % offsets
+
+            while counter[0] < len(locations) and locations[counter[0]] in d:
                 offsets = LayersApplier.find_all_offsets(original, node.tail)
-                offset = offsets[locations[counter[0]]]
+                d = {k:v for (k,v) in list(zip(cs, offsets))}
+                offset = d[locations[counter[0]]]
+                if self.printme:
+                    print d
                 node.tail = LayersApplier.replace_at_offset(offset, replacement, node.tail)
                 counter[0] += 1
+                if self.printme:
+                    print "node.tail.2: %s"  % node.tail.encode('utf-8')
+
+            if len(cs) > 0:
+                offset_starter[0] = cs[-1] + 1
              
     def unescape_text(self):
         """ 
@@ -84,15 +123,18 @@ class LayersApplier(object):
     @staticmethod
     def find_all_offsets(pattern, text):
         """ Return the start, end offsets for every occurrence of pattern in text. """
-        return [(m.start(), m.end()) for m in re.finditer(re.escape(pattern), text)]
+        return [(m.start(), m.end()) for m in re.finditer(re.escape(pattern.lower()), text.lower())]
 
     def replace_at(self, original, replacement, locations):
         """ Replace the occurrences of original at all the locations with replacement. """
 
         locations.sort()
         htmlized = html.fragment_fromstring(self.text, create_parent='div')
-
-        self.location_replace(htmlized, original, replacement, locations, counter=[0])
+        if self.printme:
+            print '0-0000 %s:' % original
+        self.location_replace(htmlized, original, replacement, locations, counter=[0], offset_starter=[0])
+        if self.printme:
+            print '0-0000'
 
         self.text = html.tostring(htmlized)
         self.text = self.text.replace("<div>", "", 1)
@@ -102,10 +144,13 @@ class LayersApplier(object):
     def apply_layers(self, original_text):
         self.text = original_text
 
+
         while not self.queue.empty():
             priority, layer_element  = self.queue.get()
             original, replacement, locations = layer_element
 
+            if 'state law or an agreement' in original_text:
+                self.printme = True
             if not locations:
                 self.replace_all(original, replacement)
             else:
@@ -147,17 +192,27 @@ class InlineLayersApplier(LayersBase):
     def get_layer_pairs(self, text_index, original_text):
         layer_pairs = []
         for layer in self.layers:
-            applied = layer.apply_layer(original_text, text_index)
+            applied = layer.apply_layer_condensed(original_text, text_index)
             if applied:
                 layer_pairs += applied
     
         #convert from offset-based to a search and replace layer. 
         layer_elements = []
 
-        for o, r, offset in layer_pairs:
-            offset_locations = [(m.start(), m.end()) for m in re.finditer(re.escape(o), original_text)] 
-            locations = [offset_locations.index(offset)]
-            layer_elements.append((o, r, locations))
+        lower_original_text = original_text.lower()
+
+        for o, r, offsets in layer_pairs:
+            offset_locations = [(m.start(), m.end()) for m in re.finditer(re.escape(o.lower()), lower_original_text)]
+            locations = [offset_locations.index(offset) for offset in offsets]
+            layer_elements.append((o,r, locations))
+        return layer_elements
+
+        #for o, r, offsets in layer_pairs:
+        #    offset_locations = [(m.start(), m.end()) for m in re.finditer(re.escape(o), original_text)] 
+        #    locations = [offset_locations.index(offset)]
+        #    layer_elements.append((o, r, locations))
+        #if text_index == '1005-6-b-6':
+        #    print layer_elements
         return layer_elements 
 
 class ParagraphLayersApplier(LayersBase):
