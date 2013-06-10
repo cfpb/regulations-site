@@ -1,6 +1,8 @@
 define("regs-view", ["jquery", "underscore", "backbone", "regs-data", "regs-dispatch"], function($, _, Backbone, RegsData, Dispatch) {
+    "use strict";
     var RegsView = Backbone.View.extend({
         initialize: function() {
+            var field;
             this.model = {};
             for (field in this.options) {
                 if (this.options.hasOwnProperty(field)) {
@@ -8,17 +10,10 @@ define("regs-view", ["jquery", "underscore", "backbone", "regs-data", "regs-disp
                 }
             }
 
-            if (typeof this.model.id !== "undefined") {
-                this.model.content = RegsData.get(this.model.id);
-                this.render();
-            }
-
-            return this;
-        },
-
-        render: function() {
+            this.model.content = RegsData.get(this.model.id);
             this.$el.html(this.model.content);
-            Dispatch.trigger('definition:render')
+
+            this.render();
 
             return this;
         }

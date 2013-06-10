@@ -4,9 +4,14 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <link rel="stylesheet" href="front_end/css/style.min.css"/>
+    {% if env == 'dev' %}
+        <script src="front_end/js/source/require.config.js"></script>
+        <script data-main="regulations" src="front_end/js/source/lib/require.js"></script>
+    {% else %}
         <script src="front_end/js/built/require.config.js"></script>
         <script data-main="regulations" src="front_end/js/built/lib/require.js"></script>
 
+    {% endif %}
         <!--[if lt IE 9]>
             <script src="front_end/js/source/lib/html5shiv.js"></script>
         <![endif]--> 

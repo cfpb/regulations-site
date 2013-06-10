@@ -70,9 +70,9 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
             $(window).on('scroll', function(e) {
                 var docScroll = $(this).scrollTop();
                 if (docScroll >= subhead.menuOffset) {
-                    Dispatch.trigger('expand');
+                    Dispatch.trigger('header:expand');
                 } else {
-                    Dispatch.trigger('contract');
+                    Dispatch.trigger('header:contract');
                 }
             });
         },

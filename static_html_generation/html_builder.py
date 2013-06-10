@@ -114,7 +114,9 @@ class HTMLBuilder():
 
     def render_markup(self):
         main_template = loader.get_template('simpler.html')
-        c = Context({'tree':self.tree, 'titles': self.get_title(),
+        c = Context({'tree':self.tree,
+                        'titles': self.get_title(),
+                        'env': app_settings.ENV,
                         'GOOGLE_ANALYTICS_SITE':app_settings.GOOGLE_ANALYTICS_SITE, 
                         'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID})
         return main_template.render(c) 

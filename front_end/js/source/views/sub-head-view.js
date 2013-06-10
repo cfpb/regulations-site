@@ -1,4 +1,4 @@
-define("sub-head-view", ['jquery', 'underscore', 'backbone', 'regs-fixed-el-view', "regs-dispatch"], function($, _, Backbone, RegsFixedElView, Dispatch) {
+define("sub-head-view", ['jquery', 'underscore', 'backbone', 'regs-fixed-el-view', "regs-dispatch", "sidebar-head-view"], function($, _, Backbone, RegsFixedElView, Dispatch, SidebarHeadView) {
     "use strict";
     var SubHeadView = RegsFixedElView.extend({
         initialize: function() {
@@ -8,8 +8,8 @@ define("sub-head-view", ['jquery', 'underscore', 'backbone', 'regs-fixed-el-view
             }
 
             this.menuOffset = this.$el.offset().top;
-            Dispatch.on('contract', this.contract, this);
-            Dispatch.on('expand', this.expand, this);
+            Dispatch.on('header:contract', this.contract, this);
+            Dispatch.on('header:expand', this.expand, this);
         }
     });
 

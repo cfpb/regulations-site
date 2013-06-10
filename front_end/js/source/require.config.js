@@ -1,5 +1,5 @@
 var require = {
-    baseUrl: "front_end/js/built/",
+    baseUrl: "front_end/js/source/",
     paths: {
         jquery: './lib/jquery-1.9.1',
         underscore: './lib/underscore',
@@ -9,7 +9,8 @@ var require = {
         'sub-head-view': './views/sub-head-view',
         'regs-view': './views/regs-view',
         'toc-view': './views/toc-view',
-        'sidebar-view': './views/sidebar-view'
+        'sidebar-view': './views/sidebar-view',
+        'sidebar-head-view': './views/sidebar-head-view'
     },
     shim: {
         underscore: {
