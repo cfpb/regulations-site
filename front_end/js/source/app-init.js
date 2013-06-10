@@ -1,4 +1,4 @@
-define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definition-view", "interpretation-view", "sub-head-view", "toc-view"], function($, _, Backbone, RegsState, RegsData, DefinitionView, InterpretationView, SubHeadView, TOCView) {
+define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definition-view", "sub-head-view", "toc-view"], function($, _, Backbone, RegsState, RegsData, DefinitionView, SubHeadView, TOCView) {
     "use strict";
     return {
         getTree: function($obj) {
@@ -68,26 +68,6 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
                 template(body, pid);
 
                 $(this).remove();
-            });
-
-            $('.interpretation-ref').on('click', function(e) {
-                e.preventDefault();
-                var $this = $(this),
-                    parent = $this.closest('li').attr('id'),
-                    interpretationId = "I-" + parent;
-
-                if ($this.data("state") === 'open') {
-                    RegsState.openInterps[interpretationId].remove();
-                    $this.removeData("state");
-                }
-                else {
-                    RegsState.openInterps[interpretationId] = new InterpretationView({
-                        id: interpretationId,
-                        $anchor: $this
-                    });
-
-                    $this.data("state", "open");
-                }
             });
 
             // toc class toggle

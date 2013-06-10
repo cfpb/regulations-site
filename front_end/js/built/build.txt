@@ -9,7 +9,6 @@ regs-helpers.js
 regs-data.js
 views/regs-view.js
 views/definition-view.js
-views/interpretation-view.js
 views/regs-fixed-el-view.js
 views/sub-head-view.js
 views/toc-view.js
