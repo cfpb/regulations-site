@@ -7,10 +7,12 @@ lib/backbone.js
 regs-state.js
 regs-helpers.js
 regs-data.js
+regs-dispatch.js
 views/regs-view.js
 views/definition-view.js
 views/regs-fixed-el-view.js
 views/sub-head-view.js
 views/toc-view.js
+views/sidebar-view.js
 app-init.js
 regulations.js

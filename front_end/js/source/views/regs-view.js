@@ -1,4 +1,4 @@
-define("regs-view", ["jquery", "underscore", "backbone", "regs-data"], function($, _, Backbone, RegsData) {
+define("regs-view", ["jquery", "underscore", "backbone", "regs-data", "regs-dispatch"], function($, _, Backbone, RegsData, Dispatch) {
     var RegsView = Backbone.View.extend({
         initialize: function() {
             this.model = {};
@@ -17,11 +17,8 @@ define("regs-view", ["jquery", "underscore", "backbone", "regs-data"], function(
         },
 
         render: function() {
-            var xoff = this.model.$anchor.offset().top;
             this.$el.html(this.model.content);
-            // remove the open definition on click
-            $('.open-definition').remove();
-            $('#reg-content').append(this.$el.css('top', xoff - 140 + 'px').css('right', '20px').css('width', '200px').css('position', 'absolute'));
+            Dispatch.trigger('definition:render')
 
             return this;
         }

@@ -1,1 +1,1 @@
-define("toc-view",["jquery","underscore","backbone","regs-fixed-el-view"],function(e,t,n,r){var i=r.extend({initialize:function(){Events.on("contract",this.contract,this),Events.on("expand",this.expand,this)}});return i});
+define("toc-view",["jquery","underscore","backbone","regs-fixed-el-view","regs-dispatch"],function(e,t,n,r,i){var s=r.extend({initialize:function(){i.on("contract",this.contract,this),i.on("expand",this.expand,this)}});return s});

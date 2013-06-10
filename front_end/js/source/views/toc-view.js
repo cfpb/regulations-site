@@ -1,9 +1,9 @@
-define("toc-view", ['jquery', 'underscore', 'backbone', 'regs-fixed-el-view'], function($, _, Backbone, RegsFixedElView) {
+define("toc-view", ['jquery', 'underscore', 'backbone', 'regs-fixed-el-view', 'regs-dispatch'], function($, _, Backbone, RegsFixedElView, Dispatch) {
     "use strict";
     var TOCView = RegsFixedElView.extend({
         initialize: function() {
-            Events.on('contract', this.contract, this);
-            Events.on('expand', this.expand, this);
+            Dispatch.on('contract', this.contract, this);
+            Dispatch.on('expand', this.expand, this);
         }
     });
 

@@ -1,4 +1,4 @@
-define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definition-view", "sub-head-view", "toc-view"], function($, _, Backbone, RegsState, RegsData, DefinitionView, SubHeadView, TOCView) {
+define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definition-view", "sub-head-view", "toc-view", "regs-dispatch", "sidebar-view"], function($, _, Backbone, RegsState, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView) {
     "use strict";
     return {
         getTree: function($obj) {
@@ -43,21 +43,11 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
                 e.preventDefault();
                 var defId = $(this).attr('data-definition');
 
-                // briefly considered giving the term link its own view
-                // decided that it was unecessary for now. if this event
-                // binding section gets out of hand, we should reconsider [ts]
-
-                // TODO: supports only one open definition
-                if (!RegsState.openDefs[defId]) {
-                    RegsState.openDefs[defId] = new DefinitionView({
-                        id: defId,
-                        $anchor: $(e.target)
-                    });
-                }
-                else {
-                    RegsState.openDefs[defId].remove();
-                    delete(RegsState.openDefs[defId]);
-                }
+                RegsState.openDef.id = defId;
+                RegsState.openDef.view = new DefinitionView({
+                    id: defId,
+                    $anchor: $(e.target)
+                });
             });
 
             // mimics 'read more' accordion type thing
@@ -80,18 +70,19 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
             $(window).on('scroll', function(e) {
                 var docScroll = $(this).scrollTop();
                 if (docScroll >= subhead.menuOffset) {
-                    Events.trigger('expand');
+                    Dispatch.trigger('expand');
                 } else {
-                    Events.trigger('contract');
+                    Dispatch.trigger('contract');
                 }
             });
         },
 
         init: function() {
             this.getTree($('#reg-content')); 
-            window.Events = _.extend({}, Backbone.Events);
+
             window.subhead = new SubHeadView({el: '#sub-head'});
             window.toc = new TOCView({el: '#menu'});
+            window.sidebar = new SidebarView({el: '#sidebar'});
             this.bindEvents();
         }
     }
