@@ -6,7 +6,7 @@
   width: 100%;
   background: #fff;
   top: 0;
-  border-bottom: 1px solid #d0d0ce;
+  border-bottom: 1px solid @medium_gray;
   .avenir-next;
 }
 
@@ -15,8 +15,7 @@
 }
 
 .reg-header li {
-    display: inline;
-    margin-right: 1.25em;
+    margin-top: 0;
 }
 
 #sub-head.fixed{
@@ -35,4 +34,22 @@
 .reg-header a:active {
     color: @pacific;
     background: #fff;
+}
+
+#content-header {
+    li {
+        height: 1.95em;
+    }
+}
+
+#sidebar-subhead {
+    background: @bg_gray;
+    color: @dark_field;
+    .avenir-next-bold;
+
+    h2 {
+        font-size: 1em;
+        margin: .2em 0 .2em 1.5em;
+        display: inline-block;
+    }
 }
