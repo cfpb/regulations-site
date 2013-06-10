@@ -6,6 +6,8 @@ from layers.layers_applier import LayersApplier
 from node_types import NodeTypes
 import re
 import settings as app_settings
+from layers.layers_applier import LayersApplier
+import re
 
 class HTMLBuilder():
     header_regex = re.compile(ur'^(§)(\s*\d+\.\d+)(.*)$')
@@ -24,6 +26,11 @@ class HTMLBuilder():
 
     def generate_html(self):
         self.process_node(self.tree)
+
+    def parse_doc_title(self, reg_title):
+        match = re.search(r"[(].+[)]$", reg_title)
+        if match:
+            return match.group(0)
 
     def list_level(self, parts, node_type):
         """ Return the list level and the list type. """
@@ -95,9 +102,19 @@ class HTMLBuilder():
         for c in node['children']:
             self.process_node(c)
 
+    def get_title(self):
+        titles = {
+            'part': self.tree['label']['parts'][0],
+            'reg_name': ''
+        }
+        reg_title = self.parse_doc_title(self.tree['label']['title'])
+        if reg_title:
+            titles['reg_name'] = reg_title
+        return titles
+
     def render_markup(self):
         main_template = loader.get_template('simpler.html')
-        c = Context({'tree':self.tree, 
+        c = Context({'tree':self.tree, 'titles': self.get_title(),
                         'GOOGLE_ANALYTICS_SITE':app_settings.GOOGLE_ANALYTICS_SITE, 
                         'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID})
         return main_template.render(c) 

@@ -1,4 +1,4 @@
-/**
+ /**
 * layout.less contains all layout rules
 *
 */
@@ -10,23 +10,25 @@
 .wrap {
     position: relative;
     max-width: 60em; /* 960 / 16 = 60*/
-    padding: 0 .9375em 0 .9375em; /*15px*/
     margin: 0 auto;
 }
 
 .main-content {
-    width: 63.542%; /*610px;*/
+    width: 63.542%; /*643px;*/
     float: left;
+    padding-right: 2em;
+    border-right: 1px solid @dark_gray;
+
+    h1:first-child {
+        margin-top: 1em;
+    }
 }
 
 .secondary-content {
-    width: 30.208%; /*290px;*/
-    float: right;
-}
-
-.main-content,
-.secondary-content {
-    margin-top: 3em;
+    width: 33%; /*318px;*/
+    position: absolute;
+    height: 100%;
+    right: 0;
 }
 
 /* offsets section links for the persistent header */

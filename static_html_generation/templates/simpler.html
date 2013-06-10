@@ -18,11 +18,19 @@
       </header>
 
         <div class="reg-header" id="sub-head">
-          <nav class="wrap group">
-          <ul>
-              <li><a href="#menu" id="menu-link" class="toc-nav-link slide">Table of Contents</a></li>
-          </ul>
-          </nav> 
+            <nav id="doc-header" class="group">
+                <ul class="wrap">
+                    <li><a href="#menu" id="menu-link" class="toc-nav-link slide">Table of Contents</a></li>
+                </ul>
+            </nav>
+            <ul id="content-header" class="wrap group">
+                <li id="content-subhead" class="main-content"></li>
+                <li id="sidebar-subhead" class="secondary-content">
+                    {% if titles.part and titles.reg_name %}
+                        <h2>PART {{ titles.part }} {{ titles.reg_name }}</h2>
+                    {% endif %}
+                </li>
+            </ul>
         </div>
          {%if tree.TOC %}
             {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
