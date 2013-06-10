@@ -5,9 +5,11 @@
 .reg-header {
   width: 100%;
   background: #fff;
+  position: fixed;
   top: 0;
   border-bottom: 1px solid @medium_gray;
   .avenir-next;
+  z-index: 1000;
 }
 
 .reg-header ul {
@@ -16,6 +18,31 @@
 
 .reg-header li {
     margin-top: 0;
+    display: inline;
+}
+
+.reg-title-header {
+  display: inline;
+  .avenir-next;
+  font-size: 1em;
+}
+
+.main-head {
+  border-bottom: 1px solid @dark_gray;
+}
+
+.main-head nav ul{
+  width: 66%;
+  float: left;
+  text-align: left;
+}
+
+.logo {
+  float: right;
+  width: 33%;
+  background: @bg_gray;
+  margin: 1em 0;
+  text-align: center;
 }
 
 #sub-head.fixed{
