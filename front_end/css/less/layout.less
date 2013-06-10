@@ -13,10 +13,15 @@
     margin: 0 auto;
 }
 
+.main,
 .main-content {
-    width: 63.542%; /*643px;*/
+    max-width: 63.542%; /*643px;*/
     float: left;
     padding-right: 2em;
+}
+
+.main-content {
+    padding-top: 100px; /* offset the navigation bar */
     border-right: 1px solid @dark_gray;
 
     h1:first-child {
@@ -24,21 +29,25 @@
     }
 }
 
+.secondary,
 .secondary-content {
-    width: 33%; /*318px;*/
+    max-width: 33%; /*318px;*/
+}
+
+.secondary {
+    float: right;
+}
+
+.secondary-content {
     position: absolute;
     height: 100%;
     right: 0;
 }
 
 /* offsets section links for the persistent header */
-.reg-content {
-    padding-top: 1em;
-}
-
 .reg-section:before {
     display: block; 
     content: ""; 
-    height: 60px; 
-    margin: -60px 0 0; 
+    height: 120px; 
+    margin: -120px 0 0; 
 }

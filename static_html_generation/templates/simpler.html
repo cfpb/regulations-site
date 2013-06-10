@@ -13,25 +13,35 @@
     </head>
     <body>
 
-      <header id="site-header" class="wrap group">
-        <h1 class="site-title left">eRegulations</h1>
-      </header>
-
-        <div class="reg-header" id="sub-head">
-            <nav id="doc-header" class="group">
-                <ul class="wrap">
+        <header class="reg-header">
+        <div class="main-head">
+            <ul class="wrap group">
+            <li class="main">
+            <nav id="doc-navigation">
+                <ul>
                     <li><a href="#menu" id="menu-link" class="toc-nav-link slide">Table of Contents</a></li>
+                    <li><h2 class="reg-title-header"><a href="#">{{tree.header|title}}</a></h2></li>
                 </ul>
             </nav>
+            </li>
+
+            <li class="secondary">
+                <div class="logo">LOGO</div>
+            </li>
+        </div>
+
+        <div class="sub-head">
             <ul id="content-header" class="wrap group">
-                <li id="content-subhead" class="main-content"></li>
-                <li id="sidebar-subhead" class="secondary-content">
+                <li id="content-subhead" class="main"></li>
+                <li id="sidebar-subhead" class="secondary">
                     {% if titles.part and titles.reg_name %}
                         <h2>PART {{ titles.part }} {{ titles.reg_name }}</h2>
                     {% endif %}
                 </li>
             </ul>
         </div>
+        </header>
+
          {%if tree.TOC %}
             {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
                {% include "toc.html" %} 
