@@ -33,24 +33,18 @@
 
 .regulation-nav {
     position: fixed;
+    top: 100px;
     left: -272px; /* 250px + 20px padding + 2px border*/
     width: 15.625em; /* 250px */
     background-color: #f6f6f5;
     z-index: 1000;
-    overflow: scroll;
-    height: 100%;
+    overflow-y: scroll;
+    height: 84%; /* offsets the header so that nav isn't hidden at the bottom of the TOC */
     border-right: #d0d0ce 2px solid;
     margin: 0;
-    padding: 0 0 40px 0;
+    padding: 0 0 60px 0; /*add padding at the bottom of the TOC to accomodate for scrollbars */
     .avenir-next-demi;
     font-size: 0.875em; /*14px*/
-}
-
-#menu.fixed .regulation-nav {
-    position: fixed;
-    top: 59px; /* a magic number */
-    overflow-y: scroll;
-    height: 86%; /*offsets the top 59px and prevents the bottom of the nav from showing */
 }
 
 /*.no-js .panel {
