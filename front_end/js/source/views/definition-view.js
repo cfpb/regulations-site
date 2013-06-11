@@ -5,6 +5,8 @@ define("definition-view", ["jquery", "underscore", "backbone", "regs-view", "reg
         events: {},
 
         render: function() {
+            Dispatch.once('definition:callRemove', this.remove, this);
+
             var interp = this.$el.find('.inline-interpretation'),
                 interpId, interpLink, $interpLink,
                 defLink, $defLink;

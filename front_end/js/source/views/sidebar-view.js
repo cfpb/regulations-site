@@ -6,12 +6,18 @@ define("sidebar-view", ["jquery", "underscore", "backbone", "regs-state", "regs-
                 this.insertChild(el);
             }, this); 
 
+            Dispatch.on('definition:remove', this.clear, this);
+
             this.header = new SidebarHeadView({el: '#sidebar-subhead'});
         },
         render: function() {},
 
         insertChild: function(el) {
             this.$el.html(el); 
+        },
+
+        clear: function() {
+            this.$el.html('');
         }
     });
 

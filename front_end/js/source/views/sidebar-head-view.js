@@ -29,7 +29,7 @@ define("sidebar-head-view", ["jquery", "underscore", "backbone", "regs-dispatch"
         },
 
         close: function() {
-            Dispatch.trigger('definition:remove');
+            Dispatch.trigger('definition:callRemove');
         }
     });
 
