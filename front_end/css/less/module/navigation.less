@@ -60,12 +60,32 @@
     left: 16em;
 }
 
-@media only screen and (min-width: 1250px) {
+@media only screen and (min-width: 1000px) {
+
+/* slide all content less on wide screens */
+    #reg-content.active,
+    #content-header.active {
+        left: 8em;
+    }
+
+}
+
+@media only screen and (min-width: 1200px) {
 
 /* slide all content less on wide screens */
     #reg-content.active,
     #content-header.active {
         left: 4em;
+    }
+
+}
+
+@media only screen and (min-width: 1400px) {
+
+/* slide all content less on wide screens */
+    #reg-content.active,
+    #content-header.active {
+        left: 0em;
     }
 
 }
