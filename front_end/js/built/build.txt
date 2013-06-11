@@ -4,7 +4,6 @@ regulations.js
 lib/jquery-1.9.1.js
 lib/underscore.js
 lib/backbone.js
-regs-state.js
 regs-dispatch.js
 regs-helpers.js
 regs-data.js
