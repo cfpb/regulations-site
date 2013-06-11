@@ -39,14 +39,13 @@ if __name__ == "__main__":
 
     api = api_reader.Client(app_settings.API_BASE)
 
-    if (not sys.argv 
-    and not app_settings.TITLE_PART_NUMBER 
-    or not app_settings.REG_VERSION 
-    or not app_settings.ACT):
-        print "Usage: python static_html_generator.py REG_VERSION TITLE_PART_NUMBER ACT"
-        print "Ex: python static_html_generator.py 'remittances' '1005' '[\"15\", \"1643\"]'"
-        print "Please set default parameter values in local_settings.py or include them here, as above."
-        exit()
+    if (not len(sys.argv) > 1
+    and (not app_settings.TITLE_PART_NUMBER 
+    or not app_settings.REG_VERSION)):
+        sys.stderr.write("Usage: python static_html_generator.py REG_VERSION TITLE_PART_NUMBER\n")
+        sys.stderr.write("Eg: python static_html_generator.py remittances 1005\n")
+        sys.stderr.write("Please set default parameter values in local_settings.py or include them here, as above.\n")
+        exit(1)
 
     if len(sys.argv) <= 2:
         regulation = app_settings.TITLE_PART_NUMBER
@@ -66,12 +65,7 @@ if __name__ == "__main__":
 
     el = api.layer("external-citations", regulation, version)
 
-    if len(sys.argv) <= 3:
-        reference_EFT_act = app_settings.ACT
-    else:
-        reference_EFT_act = sys.argv[3]
-
-    print "python static_html_generator.py", version, regulation, reference_EFT_act
+    print "python static_html_generator.py", version, regulation
 
     inline_applier.add_layer(ExternalCitationLayer(el, ['15', '1693']))
     il = api.layer("internal-citations", regulation, version)

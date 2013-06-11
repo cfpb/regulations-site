@@ -1,4 +1,4 @@
-define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definition-view", "interpretation-view", "sub-head-view", "toc-view"], function($, _, Backbone, RegsState, RegsData, DefinitionView, InterpretationView, SubHeadView, TOCView) {
+define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definition-view", "sub-head-view", "toc-view", "regs-dispatch", "sidebar-view"], function($, _, Backbone, RegsState, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView) {
     "use strict";
     return {
         getTree: function($obj) {
@@ -41,23 +41,34 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
             // click term link, open definition
             $('.definition').on('click', function(e) {
                 e.preventDefault();
-                var defId = $(this).attr('data-definition');
-
-                // briefly considered giving the term link its own view
-                // decided that it was unecessary for now. if this event
-                // binding section gets out of hand, we should reconsider [ts]
-
-                // TODO: supports only one open definition
-                if (!RegsState.openDefs[defId]) {
-                    RegsState.openDefs[defId] = new DefinitionView({
-                        id: defId,
-                        $anchor: $(e.target)
-                    });
+                if ($(this).data('active')) {
+                    RegsState.openDef.view.remove();
+                    delete(RegsState.openDef.id);
+                    $(this).removeClass('active').removeData('active');
+                    return;
                 }
-                else {
-                    RegsState.openDefs[defId].remove();
-                    delete(RegsState.openDefs[defId]);
+
+                var defId = $(this).attr('data-definition'),
+                    $link = $(e.target);
+                $link.addClass('active').data('active', 1);
+
+                if (!_.isEmpty(RegsState.openDef.link)) {
+                    RegsState.openDef.link.removeClass('active').removeData('active');
                 }
+
+                RegsState.openDef.link = $link;
+                if (defId === RegsState.openDef.id) {
+                    return;
+                }
+
+                if (!_.isEmpty(RegsState.openDef.view)) {
+                    RegsState.openDef.view.remove();
+                }
+                RegsState.openDef.id = defId;
+                RegsState.openDef.view = new DefinitionView({
+                    id: defId,
+                    $anchor: $link
+                });
             });
 
             // mimics 'read more' accordion type thing
@@ -70,26 +81,6 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
                 $(this).remove();
             });
 
-            $('.interpretation-ref').on('click', function(e) {
-                e.preventDefault();
-                var $this = $(this),
-                    parent = $this.closest('li').attr('id'),
-                    interpretationId = "I-" + parent;
-
-                if ($this.data("state") === 'open') {
-                    RegsState.openInterps[interpretationId].remove();
-                    $this.removeData("state");
-                }
-                else {
-                    RegsState.openInterps[interpretationId] = new InterpretationView({
-                        id: interpretationId,
-                        $anchor: $this
-                    });
-
-                    $this.data("state", "open");
-                }
-            });
-
             // toc class toggle
             $('#menu-link').on('click', function(e) {
                 $('#table-of-contents, #reg-content, #menu-link, #content-header').toggleClass('active');
@@ -99,9 +90,10 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
 
         init: function() {
             this.getTree($('#reg-content')); 
-            window.Events = _.extend({}, Backbone.Events);
+
             window.subhead = new SubHeadView({el: '#sub-head'});
             window.toc = new TOCView({el: '#menu'});
+            window.sidebar = new SidebarView({el: '#sidebar'});
             this.bindEvents();
         }
     }

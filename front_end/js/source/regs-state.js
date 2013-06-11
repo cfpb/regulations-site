@@ -1,6 +1,8 @@
 define("regs-state", [], function() {
     return {
-        openDefs: {},
-        openInterps: {}
+        openDef: {
+            id: '',
+            view: {}
+        }
     };
 });
