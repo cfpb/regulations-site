@@ -92,18 +92,8 @@ define(["jquery", "underscore", "backbone", "regs-state", "regs-data", "definiti
 
             // toc class toggle
             $('#menu-link').on('click', function(e) {
-                $('#table-of-contents, #reg-content, #menu-link').toggleClass('active');
+                $('#table-of-contents, #reg-content, #menu-link, #content-header').toggleClass('active');
                 return false;
-            });
-
-            // persistent reg header on scroll
-            $(window).on('scroll', function(e) {
-                var docScroll = $(this).scrollTop();
-                if (docScroll >= subhead.menuOffset) {
-                    Events.trigger('expand');
-                } else {
-                    Events.trigger('contract');
-                }
             });
         },
 

@@ -37,13 +37,27 @@ if __name__ == "__main__":
             TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',), 
             TEMPLATE_DIRS = ('templates/',))
 
-    if len(sys.argv) == 1:
-        print "Usage: python static_html_generator.py regversion-to-build-from"
-        print " e.g.: python static_html_generator.py 2011-31725"
+    api = api_reader.Client(app_settings.API_BASE)
+
+    if (not sys.argv 
+    and not app_settings.TITLE_PART_NUMBER 
+    or not app_settings.REG_VERSION 
+    or not app_settings.ACT):
+        print "Usage: python static_html_generator.py REG_VERSION TITLE_PART_NUMBER ACT"
+        print "Ex: python static_html_generator.py 'remittances' '1005' '[\"15\", \"1643\"]'"
+        print "Please set default parameter values in local_settings.py or include them here, as above."
         exit()
 
-    api = api_reader.Client(app_settings.API_BASE)
-    regulation, version = "1005", sys.argv[1]
+    if len(sys.argv) <= 2:
+        regulation = app_settings.TITLE_PART_NUMBER
+    else:
+        regulation = sys.argv[2]
+
+    if len(sys.argv) <= 1:
+        version = app_settings.REG_VERSION
+    else:
+        version = sys.argv[1]
+
     reg_json = api.regulation(regulation, version)
 
     inline_applier = InlineLayersApplier()
@@ -51,7 +65,13 @@ if __name__ == "__main__":
     s_applier = SearchReplaceLayersApplier()
 
     el = api.layer("external-citations", regulation, version)
-    reference_EFT_act = ['15', '1693'] #Title 15, Section 1693 of the United States Code
+
+    if len(sys.argv) <= 3:
+        reference_EFT_act = app_settings.ACT
+    else:
+        reference_EFT_act = sys.argv[3]
+
+    print "python static_html_generator.py", version, regulation, reference_EFT_act
 
     inline_applier.add_layer(ExternalCitationLayer(el, ['15', '1693']))
     il = api.layer("internal-citations", regulation, version)
