@@ -1,10 +1,52 @@
-#sidebar {
+.open-definition {
     position: fixed;
-    overflow-y: scroll;
-    padding-top: 100px;
-    margin-left: 2em;
-    padding-left: 1.5em;
-    left: 63.542%;
+    top: 100px;
+    padding-left: 30px;
+    width: 271px;
+    font-size: .875em;
+    line-height: 1.5714;
+}
+
+.active .open-definition {
+    margin-left: 16em;
+}
+
+@media only screen and (min-width: 1000px) {
+
+/* slide all content less on wide screens */
+    .active .open-definition {
+        margin-left: 8em;
+    }
+
+}
+
+@media only screen and (min-width: 1250px) {
+
+/* slide all content less on wide screens */
+    .active .open-definition {
+        margin-left: 4em;
+    }
+
+}
+
+@media only screen and (min-width: 1400px) {
+
+/* slide all content less on wide screens */
+    .active .open-definition {
+        margin-left: 0em;
+    }
+
+}
+
+.open-definition > * > .definition { /* style every definition that is a child of .open-definition */
+    .avenir-next-demi;
+    text-transform: uppercase;
+}
+
+.open-definition > * > .definition ~ .definition { /* style all but the first definition as normal text */
+    font-family: @body-font;
+    text-transform: none;
+    font-weight: normal;
 }
 
 a.continue-link:link, 
