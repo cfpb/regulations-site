@@ -53,14 +53,18 @@ define("content-view", ["jquery", "underscore", "backbone", "regs-dispatch", "de
                 this.openDefinition.view.remove();
             }
 
+            this.create($link, defId);
+
+            return this;
+        },
+
+        create: function($link, defId) {
             this.openDefinition.link = $link;           
             this.openDefinition.id = defId;
             this.openDefinition.view = new DefinitionView({
                 id: defId,
                 $anchor: $link
             });
-
-            return this;
         },
 
         expandInterp: function(e) {
