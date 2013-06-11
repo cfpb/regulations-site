@@ -19,7 +19,7 @@ class LocationReplace(object):
     def update_offsets(self, original, text):
         list_offsets = LocationReplace.find_all_offsets(original, text)
         self.offset_counters = range(self.offset_starter, self.offset_starter + len(list_offsets))
-        self.offsets = {c:pair for (c, pair) in list(zip(self.offset_counters, list_offsets))}
+        self.offsets = dict(list(zip(self.offset_counters, list_offsets)))
 
     def update_offset_starter(self):
         if len(self.offset_counters) > 0:
