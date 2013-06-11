@@ -2,6 +2,10 @@ define("sidebar-head-view", ["jquery", "underscore", "backbone", "regs-dispatch"
     "use strict";
 
     var SidebarHeadView = Backbone.View.extend({
+        events: {
+            "click .close-button": "close"
+        },
+
         initialize: function() {
             Dispatch.on('definition:render', this.openItem, this);
             Dispatch.on('definition:remove', this.clear, this);
@@ -10,12 +14,22 @@ define("sidebar-head-view", ["jquery", "underscore", "backbone", "regs-dispatch"
         },
 
         openItem: function() {
+            var closeButton, $closeButton;
             this.header.html("Defined Term");
-            this.$el.append('<a class="close-button right">Close definition</a>');
+            
+            closeButton = document.createElement('a');
+            $closeButton = $(closeButton);
+            closeButton.className = "close-button right";
+            closeButton.innerHTML = "Close definition";
+            this.$el.append($closeButton);
         },
 
         clear: function() {
             this.$el.html(this.header.html(this.defaultText));
+        },
+
+        close: function() {
+            Dispatch.trigger('definition:remove');
         }
     });
 
