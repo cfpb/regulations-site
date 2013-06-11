@@ -127,12 +127,6 @@ class InlineLayersApplier(LayersBase):
         #convert from offset-based to a search and replace layer. 
         layer_elements = []
 
-        #for o, r, offsets in layer_pairs:
-        #    offset_locations = [(m.start(), m.end()) for m in re.finditer(re.escape(o.lower()), lower_original_text)]
-        #    locations = [offset_locations.index(offset) for offset in offsets]
-        #    layer_elements.append((o,r, locations))
-        #return layer_elements
-
         for o, r, offset in layer_pairs:
             offset_locations = [(m.start(), m.end()) for m in re.finditer(re.escape(o), original_text)] 
             locations = [offset_locations.index(offset)]
