@@ -119,8 +119,8 @@ class HTMLBuilder():
                         'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID})
         return main_template.render(c) 
 
-class ParagraphBuilder(HTMLBuilder):
+class SlideDownInterpBuilder(HTMLBuilder):
     def render_markup(self):
-        main_template = loader.get_template('tree.html')
+        main_template = loader.get_template('slide-down-interp.html')
         c = Context({'node':self.tree})
         return main_template.render(c) 

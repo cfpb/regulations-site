@@ -1,0 +1,20 @@
+<section class="inline-interpretation-content hidden">
+    {% if node.header %}
+    <h5>{{ node.header }}</h5>
+    {% endif %}
+    {%if node.marked_up %}
+    <p> 
+    {{node.marked_up|safe}}
+    </p>
+    {% endif %}
+    {% if node.children %}
+    <ol class="level-{{node.children.0.list_level}}" 
+        type="{{node.children.0.list_type}}">
+        {% for c in node.children %}
+            {%with node=c template_name="tree-with-wrapper.html" %}
+                {% include template_name %}
+            {% endwith %}
+        {% endfor %}
+    </ol>
+    {% endif %}
+</section>

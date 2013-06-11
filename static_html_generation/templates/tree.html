@@ -24,8 +24,6 @@
     <section class="inline-interpretation reset-indent" data-interp-for="{{node.markup_id}}">
         <h4 tabindex="0">Supplement I - Official Interpretations</h4>
         <a class="expand-button">Show</a>
-        <ol class="hidden">
-            {{ node.interp_markup|safe }}
-        </ol>
+        {{ node.interp_markup|safe }}
     </section>
 {% endif %}
