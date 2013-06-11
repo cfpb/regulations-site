@@ -19,6 +19,7 @@ define("content-view", ["jquery", "underscore", "backbone", "regs-dispatch", "de
 
         cleanupDefinition: function() {
             delete(this.openDefinition.id);
+            delete(this.openDefinition.view);
             if (this.openDefinition.link) {
                 this.openDefinition.link.removeClass('active').removeData('active');
             }
@@ -53,12 +54,12 @@ define("content-view", ["jquery", "underscore", "backbone", "regs-dispatch", "de
                 this.openDefinition.view.remove();
             }
 
-            this.create($link, defId);
+            this.storeDefinition($link, defId);
 
             return this;
         },
 
-        create: function($link, defId) {
+        storeDefinition: function($link, defId) {
             this.openDefinition.link = $link;           
             this.openDefinition.id = defId;
             this.openDefinition.view = new DefinitionView({
