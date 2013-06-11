@@ -3,7 +3,7 @@
 from django.template import loader, Template, Context
 from django.conf import settings
 from layers.layers_applier import LayersApplier
-from node_types import NodeTypes
+from node_types import to_markup_id
 import re
 import settings as app_settings
 from layers.layers_applier import LayersApplier
@@ -19,7 +19,6 @@ class HTMLBuilder():
         self.inline_applier = inline_applier
         self.p_applier = p_applier
         self.search_applier = search_applier
-        self.node_types = NodeTypes()
         
     def generate_all_html(self):
         generate_html(self.tree[''])
@@ -77,7 +76,7 @@ class HTMLBuilder():
                 node['header_num'] = match.group(2)
                 node['header_title'] = match.group(3)
 
-        node['label']['parts'] = self.node_types.change_type_names(node['label']['parts'])
+        node['label']['parts'] = to_markup_id(node['label']['parts'])
         node['markup_id'] = "-".join(node['label']['parts'])
         node['tree_level'] = len(node['label']['parts']) - 1
 
@@ -126,8 +125,8 @@ class HTMLBuilder():
                         'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID})
         return main_template.render(c) 
 
-class ParagraphBuilder(HTMLBuilder):
+class SlideDownInterpBuilder(HTMLBuilder):
     def render_markup(self):
-        main_template = loader.get_template('tree.html')
+        main_template = loader.get_template('slide-down-interp.html')
         c = Context({'node':self.tree})
         return main_template.render(c) 

@@ -1,4 +1,8 @@
+{% if ignore_id %}
+<li>
+{% else %}
 <li id="{{node.markup_id}}">
+{% endif %}
     {% include "tree.html" %}
 </li>
 

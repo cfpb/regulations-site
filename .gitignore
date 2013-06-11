@@ -51,6 +51,7 @@ oldphantomjs/
 ##########
 *.py[co]
 regulations
+front_end/ip
 *.swp
 local_settings.py
 

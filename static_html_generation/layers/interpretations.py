@@ -1,5 +1,5 @@
 import api_reader
-from html_builder import ParagraphBuilder
+from html_builder import SlideDownInterpBuilder
 from layers.layers_applier import ParagraphLayersApplier
 import settings as app_settings
 
@@ -9,7 +9,7 @@ class InterpretationsLayer(object):
         self.version = version
 
     def copy_builder(self, html_builder):
-        self.builder = ParagraphBuilder(html_builder.inline_applier,
+        self.builder = SlideDownInterpBuilder(html_builder.inline_applier,
             ParagraphLayersApplier(),
             html_builder.search_applier)
 

@@ -1,4 +1,5 @@
 from django.template import loader, Context
+from node_types import to_markup_id
 
 class InternalCitationLayer():
     def __init__(self, layer):
@@ -8,7 +9,7 @@ class InternalCitationLayer():
     def create_link(text, layer_element, template_name='internal_citation.html'):
         template =  loader.get_template(template_name)
 
-        citation_url = "-".join(layer_element['citation'])
+        citation_url = "-".join(to_markup_id(layer_element['citation']))
         citation = {'url': citation_url, 
                     'label':text}
 
