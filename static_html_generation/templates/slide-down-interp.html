@@ -11,7 +11,7 @@
     <ol class="level-{{node.children.0.list_level}}" 
         type="{{node.children.0.list_type}}">
         {% for c in node.children %}
-            {%with node=c template_name="tree-with-wrapper.html" %}
+            {%with node=c template_name="tree-with-wrapper.html" ignore_id=True%}
                 {% include template_name %}
             {% endwith %}
         {% endfor %}
