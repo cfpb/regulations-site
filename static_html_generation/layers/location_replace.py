@@ -34,6 +34,7 @@ class LocationReplace(object):
 
     def location_replace(self, xml_node, original, replacement, locations):
         """ For the xml_node, replace the locations instances of orginal with replacement."""
+
         if xml_node.text:
             self.update_offsets(original, xml_node.text)
 
@@ -50,4 +51,5 @@ class LocationReplace(object):
 
             while self.counter < len(locations) and locations[self.counter] in self.offsets:
                 xml_node.tail = self.apply_layer_to_text(original, replacement, xml_node.tail, locations)
+
             self.update_offset_starter()

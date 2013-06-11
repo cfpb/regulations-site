@@ -87,7 +87,7 @@ class LayersApplierTest(TestCase):
 
         self.assertEqual(lr.offset_starter, 8)
 
-    def test_replace_at(self):
+    def test_replace_at_case_sensitive(self):
         original =  'state'
         replacement = '<a href="link_url">state</a>'
         locations = [0, 1, 2]
@@ -96,5 +96,30 @@ class LayersApplierTest(TestCase):
         applier.text = "<em>(6)</em> <dfn> Under state law. </dfn> State law."
         applier.replace_at(original, replacement, locations)
 
-        result = u"<em>(6)</em> <dfn> Under <a href=\"link_url\">state</a> law. </dfn> <a href=\"link_url\">state</a> law."
+        result = u"<em>(6)</em> <dfn> Under <a href=\"link_url\">state</a> law. </dfn> State law."
         self.assertEquals(applier.text, result)
+
+    def test_replace_no_original(self):
+        original =  'federal'
+        replacement = '<a href="link_url">state</a>'
+        locations = [0, 1, 2]
+
+        applier = layers_applier.LayersApplier()
+        applier.text = "<em>(6)</em> <dfn> Under state law. </dfn> State law."
+        applier.replace_at(original, replacement, locations)
+
+        result = "<em>(6)</em> <dfn> Under state law. </dfn> State law."
+        self.assertEquals(applier.text, result)
+
+    def test_replace_skip_location(self):
+        original =  'state'
+        replacement = '<a href="link_url">state</a>'
+        locations = [0, 2]
+
+        applier = layers_applier.LayersApplier()
+        applier.text = "<em>(6)</em> <dfn> Under state law. </dfn> state law. <dfn> state liability. </dfn>"
+        applier.replace_at(original, replacement, locations)
+
+        result = "<em>(6)</em> <dfn> Under <a href=\"link_url\">state</a> law. </dfn> state law. <dfn> <a href=\"link_url\">state</a> liability. </dfn>"
+        self.assertEquals(applier.text, result)
+
