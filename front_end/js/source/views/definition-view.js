@@ -5,6 +5,7 @@ define("definition-view", ["jquery", "underscore", "backbone", "regs-view", "reg
         events: {},
 
         render: function() {
+            this.$el.find('.inline-interpretation').remove();
             Dispatch.trigger('definition:render', this.$el);
 
             return this;
