@@ -1,7 +1,8 @@
 import re
 
 class LocationReplace(object):
-    """ Applies location based layers to XML nodes. """
+    """ Applies location based layers to XML nodes. We use XML so that we only take into account the original 
+    text when we're doing a replacement. """
     def __init__(self):
         self.counter = 0
         self.offset_starter = 0
@@ -17,11 +18,16 @@ class LocationReplace(object):
         return text[:offset[0]] + replacement + text[offset[1]:]
 
     def update_offsets(self, original, text):
+        """ Offsets change everytime we replace the text, since we add more
+        characters. Update the offsets. """
+
         list_offsets = LocationReplace.find_all_offsets(original, text)
         self.offset_counters = range(self.offset_starter, self.offset_starter + len(list_offsets))
         self.offsets = dict(list(zip(self.offset_counters, list_offsets)))
 
     def update_offset_starter(self):
+        """ As we're navigating the XML node, we need to keep track of how many offsets we've 
+        already seen. """
         if len(self.offset_counters) > 0:
             self.offset_starter =self.offset_counters[-1] + 1
 
