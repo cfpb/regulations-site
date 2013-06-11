@@ -10,7 +10,7 @@ define("content-view", ["jquery", "underscore", "backbone", "regs-dispatch", "de
 
         events: {
             "click .definition": "definitionLink",
-            "click .expand": "expandInterp"
+            "click .expand-button": "expandInterp"
         },
 
         initialize: function() {
