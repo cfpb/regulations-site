@@ -1,6 +1,9 @@
-define("regs-view", ["jquery", "underscore", "backbone", "regs-data"], function($, _, Backbone, RegsData) {
+define("regs-view", ["jquery", "underscore", "backbone", "regs-data", "regs-dispatch"], function($, _, Backbone, RegsData, Dispatch) {
+    "use strict";
+    // should be renamed sidebar-content-view or something
     var RegsView = Backbone.View.extend({
         initialize: function() {
+            var field;
             this.model = {};
             for (field in this.options) {
                 if (this.options.hasOwnProperty(field)) {
@@ -8,20 +11,10 @@ define("regs-view", ["jquery", "underscore", "backbone", "regs-data"], function(
                 }
             }
 
-            if (typeof this.model.id !== "undefined") {
-                this.model.content = RegsData.get(this.model.id);
-                this.render();
-            }
-
-            return this;
-        },
-
-        render: function() {
-            var xoff = this.model.$anchor.offset().top;
+            this.model.content = RegsData.get(this.model.id);
             this.$el.html(this.model.content);
-            // remove the open definition on click
-            $('.open-definition').remove();
-            $('#reg-content').append(this.$el.css('top', xoff - 140 + 'px').css('right', '20px').css('width', '200px').css('position', 'absolute'));
+
+            this.render();
 
             return this;
         }

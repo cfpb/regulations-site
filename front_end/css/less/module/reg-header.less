@@ -50,6 +50,7 @@
     text-align: center;
     height: 32px;
     width: 150px;
+    float: right;
 }
 
 .sub-head {
@@ -66,7 +67,6 @@
 .reg-header a:hover,
 .reg-header a:active {
     color: @pacific;
-    background: #fff;
 }
 
 #content-header {
@@ -83,4 +83,16 @@
         margin: .2em 0 .2em 1.5em;
         display: inline-block;
     }
+
+    .close-button {
+        margin-top: .5em;
+    }
+}
+
+.close-button {
+    background: url(../img/close.png) no-repeat 0 0;
+    width: 15px;
+    height: 15px;
+    text-indent: -9999px;
+    cursor: pointer;
 }

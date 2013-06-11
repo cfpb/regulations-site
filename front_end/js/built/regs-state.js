@@ -1,1 +1,1 @@
-define("regs-state",[],function(){return{openDefs:{},openInterps:{}}});
+define("regs-state",[],function(){return{openDef:{id:"",view:{}}}});

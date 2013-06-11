@@ -1,0 +1,1 @@
+define("sidebar-view",["jquery","underscore","backbone","regs-state","regs-dispatch","sidebar-head-view"],function(e,t,n,r,i,s){var o=n.View.extend({initialize:function(){i.on("definition:render",function(e){this.insertChild(e)},this),this.header=new s({el:"#sidebar-subhead"})},render:function(){},insertChild:function(e){this.$el.html(e)}});return o});
