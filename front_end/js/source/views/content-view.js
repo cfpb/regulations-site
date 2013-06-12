@@ -22,6 +22,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             this.$sections = {};
             this.$contentHeader = $('#content-subhead');
             this.$contentContainer = this.$el.children().last().children();
+            this.activeSection;
+            this.$activeSection;
 
             len = this.$contentContainer.length;
             for (i = 0; i < len; i++) {
@@ -34,11 +36,16 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 len = this.$contentContainer.length;
             for (var i = 0; i < len; i++) {
                 if (this.$sections[i].offset().top >= headerLoc) {
-                    //console.log(this.$sections[i]);
-                    return;
+                    if (_.isEmpty(this.activeSection) || (this.activeSection !== this.$sections[i].id)) {
+                        this.activeSection = this.$sections[i][0].id;
+                        this.$activeSection = this.$sections[i][0];
+                        Dispatch.trigger('activeSection:change', this.activeSection);
+                        return;
+                    }
                 }
             }
                  
+            return this;
         },
 
         cleanupDefinition: function() {
