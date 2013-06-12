@@ -1,4 +1,4 @@
-define('content-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'definition-view'], function($, _, Backbone, Dispatch, DefinitionView) {
+define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView) {
     'use strict';
 
     var ContentView = Backbone.View.extend({
@@ -14,7 +14,31 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'de
         },
 
         initialize: function() {
+            var len, i;
+
             Dispatch.on('definition:remove', this.cleanupDefinition, this);
+            $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
+
+            this.$sections = {};
+            this.$contentHeader = $('#content-subhead');
+            this.$contentContainer = this.$el.children().last().children();
+
+            len = this.$contentContainer.length;
+            for (i = 0; i < len; i++) {
+                this.$sections[i] = $(this.$contentContainer[i]);
+            }
+        },
+
+        checkActiveSection: function() {
+            var headerLoc = this.$contentHeader.offset().top,
+                len = this.$contentContainer.length;
+            for (var i = 0; i < len; i++) {
+                if (this.$sections[i].offset().top >= headerLoc) {
+                    //console.log(this.$sections[i]);
+                    return;
+                }
+            }
+                 
         },
 
         cleanupDefinition: function() {
