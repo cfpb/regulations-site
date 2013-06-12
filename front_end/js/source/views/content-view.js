@@ -1,5 +1,5 @@
-define("content-view", ["jquery", "underscore", "backbone", "regs-dispatch", "definition-view"], function($, _, Backbone, Dispatch, DefinitionView) {
-    "use strict";
+define('content-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'definition-view'], function($, _, Backbone, Dispatch, DefinitionView) {
+    'use strict';
 
     var ContentView = Backbone.View.extend({
         openDefinition: {
@@ -9,12 +9,12 @@ define("content-view", ["jquery", "underscore", "backbone", "regs-dispatch", "de
         },
 
         events: {
-            "click .definition": "definitionLink",
-            "click .expand-button": "expandInterp"
+            'click .definition': 'definitionLink',
+            'click .expand-button': 'expandInterp'
         },
 
         initialize: function() {
-            Dispatch.on('definition:remove', this.cleanupDefinition, this)
+            Dispatch.on('definition:remove', this.cleanupDefinition, this);
         },
 
         cleanupDefinition: function() {

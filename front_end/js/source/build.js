@@ -22,6 +22,6 @@
             exports: 'Backbone'
         }
     },
-    dir: "front_end/js/built",
-    modules: [ {name: "regulations"} ]
-})
+    dir: 'front_end/js/built',
+    modules: [ {name: 'regulations'} ]
+});

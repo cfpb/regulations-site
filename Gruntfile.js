@@ -41,7 +41,6 @@ module.exports = function(grunt) {
         latedef: true,
         newcap: true,
         noarg: true,
-        plusplus: true,
         quotmark: true,
         undef: true,
         strict: true,
@@ -63,7 +62,7 @@ module.exports = function(grunt) {
           regContent: true
         }
       },
-      all: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js']
+      all: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js', '!front_end/js/source/build.js', '!front_end/js/source/require.config.js']
     },
 
     /**

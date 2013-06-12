@@ -1,3 +1,4 @@
-define("regs-dispatch", ["jquery", "underscore", "backbone",], function($, _, Backbone) {
+define('regs-dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
+    'use strict';
     return _.extend({}, Backbone.Events);   
 });

@@ -1,5 +1,5 @@
-define("regs-helpers", function() {
-    "use strict";
+define('regs-helpers', function() {
+    'use strict';
     return {
         isIterable: function(obj) {
             if (typeof obj === 'array' || typeof obj === 'object') {
@@ -12,15 +12,15 @@ define("regs-helpers", function() {
         // jquery alternatives
         // http://jsperf.com/create-dom-element/8
         fastLink: function(href, text, classStr) {
-            var link = document.createElement("a"),
+            var link = document.createElement('a'),
                 $link;
 
             $link = $(link);
             link.href = href;
             link.innerHTML = text;
-            link.className = classStr || "";
+            link.className = classStr || '';
 
             return $link;
         }
-    }
+    };
 });
