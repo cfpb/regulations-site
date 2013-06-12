@@ -15,7 +15,7 @@
 
 .main,
 .main-content {
-    max-width: 63.542%; /*643px;*/
+    width: 63.542%; /*643px;*/
     float: left;
     padding-right: 2em;
 }
@@ -47,9 +47,18 @@
 }*/
 
 /* offsets section links for the persistent header */
-.reg-section:before {
+.reg-section:before,{
     display: block; 
     content: ""; 
     height: 120px; 
     margin: -120px 0 0; 
+    visibility: hidden;
+}
+
+.reg-section li {
+    border-top: 100px solid transparent;
+    margin-top: -100px;
+    -webkit-background-clip:padding-box;
+    -moz-background-clip:padding;
+    background-clip:padding-box;
 }
