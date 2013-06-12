@@ -36,6 +36,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 len = this.$contentContainer.length;
             for (var i = 0; i < len; i++) {
                 if (this.$sections[i].offset().top >= headerLoc) {
+                    i = i - 1;
                     if (_.isEmpty(this.activeSection) || (this.activeSection !== this.$sections[i].id)) {
                         this.activeSection = this.$sections[i][0].id;
                         this.$activeSection = this.$sections[i][0];
