@@ -31,7 +31,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                 dfnTerms = dfnTerm.length;
 
                 for (var i = 0; i < dfnTerms; i++) {
-                    dfnTerm[i].remove(); 
+                    $(dfnTerm[i]).remove(); 
                 }
             }
 
