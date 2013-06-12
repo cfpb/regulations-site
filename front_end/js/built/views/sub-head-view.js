@@ -1,1 +1,1 @@
-define("sub-head-view",["jquery","underscore","backbone","regs-fixed-el-view"],function(e,t,n,r){var i=r.extend({initialize:function(){this.$el.length===0&&(this.$el=e("body").append("#sub-head"))}});return i});
+define("sub-head-view",["jquery","underscore","backbone","regs-dispatch"],function(e,t,n,r){var i=n.View.extend({initialize:function(){r.on("activeSection:change",this.changeTitle,this)},changeTitle:function(e){return this.$el.html("§"+e),this}});return i});

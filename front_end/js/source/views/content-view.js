@@ -22,8 +22,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             this.$sections = {};
             this.$contentHeader = $('#content-subhead');
             this.$contentContainer = this.$el.children().last().children();
-            this.activeSection;
-            this.$activeSection;
+            this.activeSection = '';
+            this.$activeSection = '';
 
             len = this.$contentContainer.length;
             for (i = 0; i < len; i++) {
