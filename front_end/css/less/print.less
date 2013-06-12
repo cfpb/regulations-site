@@ -33,7 +33,7 @@ p {
  hidden elements
  ========================================================================== */
 
- img, nav, #table-of-contents, #menu-link, .inline-interpretation {
+ img, nav, #table-of-contents, #menu-link, .inline-interpretation, .reg-header {
     display: none;
  }
 
@@ -41,14 +41,20 @@ p {
 single column layout
  ========================================================================== */
 
- .main-content {
+.wrap,
+.main-content,
+.secondary-content {
+    max-width: 100%;
     width: 100%;
     float: none;
+    margin: 0;
+    padding: 0;
 }
 
-.secondary-content {
-    width: 100%
-    float: none;
+.open-definition {
+    position: relative;
+    width: 100%;
+    padding: 0;
 }
 
 
@@ -56,29 +62,29 @@ single column layout
  margin/padding resets
  ========================================================================== */
 
- body, .wrap {
+body, .wrap {
     margin: 0;
     padding: 0;
- }
+}
 
  /* ==========================================================================
  heading/keyword styles
  ========================================================================== */
  
  h1 {
-  font-size: 26pt;
-  line-height: 30pt;
+    font-size: 26pt;
+    line-height: 30pt;
 }
 
  .section-title { 
-  font-size: 20pt;
-  line-height: 26pt;
-  margin-top: 15px;
+    font-size: 20pt;
+    line-height: 26pt;
+    margin-top: 15px;
 }
 
 .level-1 .key-term {
-  font-size: 16pt;
-  line-height: 23pt;
+    font-size: 16pt;
+    line-height: 23pt;
 }
 
 /* ==========================================================================
@@ -91,8 +97,40 @@ a.definition:link,
 a.definition:visited,
 a.citation:link,
 a.citation:visited {
-  border-bottom: none;
-  color: #101820;
+    border-bottom: none;
+    color: #101820;
+}
+
+a[href^="http://"] {
+    background: none;
+    padding-right: 0px;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    a[href^="http://"] {
+        background: none;
+    }
+}
+
+/* ==========================================================================
+ layout styles/resets
+ ========================================================================== */
+
+.level-1 > li {
+    border-bottom: none;
+}
+
+.main-content {
+    border-right: none;
+}
+
+.open-definition {
+    display: none;
+    position: relative;
+    padding-left: 0px;
+    width: 0px;
 }
 
 } /* /@media print */
