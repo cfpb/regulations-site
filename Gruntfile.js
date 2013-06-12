@@ -41,23 +41,29 @@ module.exports = function(grunt) {
         latedef: true,
         newcap: true,
         noarg: true,
+        plusplus: true,
         quotmark: true,
-        sub: true,
         undef: true,
+        strict: true,
         unused: true,
         boss: true,
-        eqnull: true,
         browser: true,
+        globalstrict: true,
+        sub: true,
         globals: {
           jQuery: true,
           $: true,
           Backbone: true,
           _: true,
-          module: true,
-          Highcharts: true
+          require: true,
+          define: true,
+          subhead: true,
+          toc: true,
+          sidebar: true,
+          regContent: true
         }
       },
-      all: ['front_end/js/<%= pkg.name %>.js']
+      all: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js']
     },
 
     /**
