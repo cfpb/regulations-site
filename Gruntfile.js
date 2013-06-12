@@ -42,22 +42,27 @@ module.exports = function(grunt) {
         newcap: true,
         noarg: true,
         quotmark: true,
-        sub: true,
         undef: true,
+        strict: true,
         unused: true,
         boss: true,
-        eqnull: true,
         browser: true,
+        globalstrict: true,
+        sub: true,
         globals: {
           jQuery: true,
           $: true,
           Backbone: true,
           _: true,
-          module: true,
-          Highcharts: true
+          require: true,
+          define: true,
+          subhead: true,
+          toc: true,
+          sidebar: true,
+          regContent: true
         }
       },
-      all: ['front_end/js/<%= pkg.name %>.js']
+      all: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js', '!front_end/js/source/build.js', '!front_end/js/source/require.config.js']
     },
 
     /**
@@ -87,7 +92,8 @@ module.exports = function(grunt) {
                 'regs-view': './views/regs-view',
                 'toc-view': './views/toc-view',
                 'sidebar-view': './views/sidebar-view',
-                'sidebar-head-view': './views/sidebar-head-view'
+                'sidebar-head-view': './views/sidebar-head-view',
+                'content-view': './views/content-view'
               },
               shim: {
                 underscore: {
@@ -135,7 +141,8 @@ module.exports = function(grunt) {
                     'regs-view': './views/regs-view',
                     'toc-view': './views/toc-view',
                     'sidebar-view': './views/sidebar-view',
-                    'sidebar-head-view': './views/sidebar-head-view'
+                    'sidebar-head-view': './views/sidebar-head-view',
+                    'content-view': './views/content-view'
                 },
                 shim: {
                     underscore: {

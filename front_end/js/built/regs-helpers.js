@@ -1,1 +1,1 @@
-define("regs-helpers",[],function(){return{isIterable:function(e){return typeof e=="array"||typeof e=="object"?!0:!1}}});
+define("regs-helpers",[],function(){return{isIterable:function(e){return typeof e=="array"||typeof e=="object"?!0:!1},fastLink:function(e,t,n){var r=document.createElement("a"),i;return i=$(r),r.href=e,r.innerHTML=t,r.className=n||"",i}}});

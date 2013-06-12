@@ -1,5 +1,5 @@
-define("regs-data", ["underscore", "backbone", './regs-helpers'], function(_, Backbone, RegsHelpers) {
-    "use strict";
+define('regs-data', ['underscore', 'backbone', './regs-helpers'], function(_, Backbone, RegsHelpers) {
+    'use strict';
 
     // represents a whole regulation
     Backbone.RegModel = Backbone.Model.extend({
@@ -10,14 +10,16 @@ define("regs-data", ["underscore", "backbone", './regs-helpers'], function(_, Ba
             var workingObj;
             if (typeof jsonObj === 'object') {
                 for (var key in jsonObj) {
-                    if (key === 'label') {
-                        workingObj = jsonObj[key];
-                        workingObj['content'] = jsonObj['text'];
-                        this.set(workingObj);
-                    }
+                    if (jsonObj.hasOwnProperty(key)) {
+                        if (key === 'label') {
+                            workingObj = jsonObj[key];
+                            workingObj['content'] = jsonObj['text'];
+                            this.set(workingObj);
+                        }
 
-                    if (RegsHelpers.isIterable(jsonObj[key])) {
-                        this.parse(jsonObj[key]);
+                        if (RegsHelpers.isIterable(jsonObj[key])) {
+                            this.parse(jsonObj[key]);
+                        }
                     }
                 } 
             }
@@ -53,9 +55,9 @@ define("regs-data", ["underscore", "backbone", './regs-helpers'], function(_, Ba
         },
 
         get: function(id, format, withChildren) {
-            var format = format || 'json',
-                withChildren = withChildren || false,
-                obj = this.has(id) || this.request(id, format);
+            format = format || 'json';
+            withChildren = withChildren || false;
+            var obj = this.has(id) || this.request(id, format);
             return obj;
         },
 
@@ -65,13 +67,13 @@ define("regs-data", ["underscore", "backbone", './regs-helpers'], function(_, Ba
 
         // stub for talking to api
         request: function(id, format) {
-            return "this is where we'd load the api response for " + id + " in " + format + " format.";
+            return 'this is where we\'d load the api response for ' + id + ' in ' + format + ' format.';
         },
 
         getChildren: function(id) {
             var kids = [],
                 regStructureLen = this.regStructure.length,
-                regex = new RegExp(id + "[\-,a-z,0-9]");
+                regex = new RegExp(id + '[-,a-z,0-9]');
 
             while (regStructureLen--) {
                 if (regex.test(this.regStructure[regStructureLen])) {
