@@ -12,19 +12,20 @@
   <script>
 
   require.config({
-    "baseUrl": "/front_end/js",
+    "baseUrl": "/front_end/js/source",
       "paths": {
         "underscore": "./lib/underscore",
         "backbone": "./lib/backbone",
         "jquery": "./lib/jquery-1.9.1",
-        "samplejson": "./tests/grunt/js/fixtures/sample-json",
+        "samplejson": "../tests/grunt/js/fixtures/sample-json",
         'definition-view': './views/definition-view',
         'regs-fixed-el-view': './views/regs-fixed-el-view',
         'sub-head-view': './views/sub-head-view',
         'regs-view': './views/regs-view',
         'toc-view': './views/toc-view',
         'sidebar-view': './views/sidebar-view',
-        'sidebar-head-view': './views/sidebar-head-view'
+        'sidebar-head-view': './views/sidebar-head-view',
+        'content-view': './views/content-view'
       },
       "shim": {
         "underscore": {
@@ -39,7 +40,7 @@
       }
   });
 
-  require(['/front_end/js/tests/specs/reg-data-spec.js', '/front_end/js/tests/specs/reg-definitions-view-spec.js'], function() {
+  require(['/front_end/js/tests/specs/reg-data-spec.js', '/front_end/js/tests/specs/reg-definitions-view-spec.js', '/front_end/js/tests/specs/content-view-spec.js'], function() {
     $(function() {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute();

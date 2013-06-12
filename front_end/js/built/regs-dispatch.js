@@ -1,1 +1,1 @@
-define("regs-dispatch",["jquery","underscore","backbone","regs-state"],function(e,t,n,r){return t.extend({},n.Events)});
+define("regs-dispatch",["jquery","underscore","backbone"],function(e,t,n){return t.extend({},n.Events)});

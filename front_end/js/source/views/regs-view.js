@@ -1,5 +1,5 @@
-define("regs-view", ["jquery", "underscore", "backbone", "regs-data", "regs-dispatch"], function($, _, Backbone, RegsData, Dispatch) {
-    "use strict";
+define('regs-view', ['jquery', 'underscore', 'backbone', 'regs-data'], function($, _, Backbone, RegsData) {
+    'use strict';
     // should be renamed sidebar-content-view or something
     var RegsView = Backbone.View.extend({
         initialize: function() {

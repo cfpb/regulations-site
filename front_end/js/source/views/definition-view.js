@@ -1,31 +1,29 @@
-define("definition-view", ["jquery", "underscore", "backbone", "regs-view", "regs-data", "regs-dispatch"], function($, _, Backbone, RegsView, RegsData, Dispatch) {
-    "use strict";
+define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'regs-data', 'regs-dispatch', 'regs-helpers'], function($, _, Backbone, RegsView, RegsData, Dispatch, RegsHelpers) {
+    'use strict';
     var DefinitionView = RegsView.extend({
-        className: "open-definition",
+        className: 'open-definition',
         events: {},
 
         render: function() {
-            var interp = this.$el.find('.inline-interpretation'),
-                interpId, interpLink, $interpLink,
-                defLink, $defLink;
+            Dispatch.once('definition:callRemove', this.remove, this);
 
-                defLink = document.createElement("a");
-                $defLink = $(defLink);
-                defLink.href = "#" + this.model.id;
-                defLink.innerHTML = 'Go to definition in § ' + this.model.id;
-                defLink.className = "continue-link";
-                this.$el.append($defLink);
+            var interp = this.$el.find('.inline-interpretation'),
+                dHref = '#' + this.model.id,
+                dText = 'Go to definition in § ' + this.model.id,
+                classStr = 'continue-link',
+                $dLink = RegsHelpers.fastLink(dHref, dText, classStr),
+                iHref, iText, $iLink, interpId;
+
+                this.$el.append($dLink);
 
             if (typeof interp[0] !== 'undefined') {
                 interpId = $(interp[0]).data('interpFor');
                 this.$el.find('.inline-interpretation').remove();
 
-                interpLink = document.createElement("a");
-                $interpLink = $(interpLink);
-                interpLink.href = "#" + interpId;
-                interpLink.innerHTML = "Go to related interpretations";
-                interpLink.className = "continue-link";
-                this.$el.append($interpLink);
+                iHref = '#' + interpId;
+                iText = 'Go to related interpretations';
+                $iLink = RegsHelpers.fastLink(iHref, iText, classStr);
+                this.$el.append($iLink);
             }
             Dispatch.trigger('definition:render', this.$el);
 
