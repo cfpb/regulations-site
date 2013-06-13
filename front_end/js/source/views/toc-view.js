@@ -6,8 +6,8 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-fixed-el-view', 'r
         },
 
         setActive: function(id) {
-            this.$el.find('.active').removeClass('active');
-            this.$el.find('a[href=#' + id + ']').addClass('active');
+            this.$el.find('.current').removeClass('current');
+            this.$el.find('a[href=#' + id + ']').addClass('current');
 
             return this;
         }
