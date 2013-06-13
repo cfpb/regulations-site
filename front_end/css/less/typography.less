@@ -144,7 +144,8 @@ a.definition:active {
     margin: .3em 0;
 }
 
-.reg-title {
+.reg-title,
+.appendix-title {
     .avenir-next;
     font-size: 2.25em; /* 36px / 16px */
     line-height: 1.194;
@@ -153,27 +154,25 @@ a.definition:active {
 }
 
 .section-number {
-    display: inline;    /*  Hack for making this presentable */
+    padding-top: 32px;
+    font-size: 29px;
+    .avenir-next-bold;
+    line-height: 1.25;
+    letter-spacing: 1px;
 }
 
 .section-title { 
-    .avenir-next-bold;
-    font-size: 1.8125em; /* 29px / 16px = 1.8125em */
-    line-height: 1.25;
-    padding-top: 32px;
-    letter-spacing: 1px;
-    display: inline;    /*  Hack for making this presentable */
+
 }
 /* list styles */
 
 .level-1 > li {
-    margin-top: 1.875em; /* 30px / 16px = 1.875em */
-    padding-bottom: 0.875em; /* subtract 1em for p margin */
     border-bottom: 1px solid @light_field;
 }
 
 .level-1 > li:last-child {
     border-bottom: 0px;
+    padding-bottom: 16px;
 }
 
 .level-2 li {
@@ -236,11 +235,6 @@ section ol p {
     font-size: 1.5em; /* 24/16=1.5 */
     line-height: 1.25;
     padding-top: 20px;
-}
-
-inline-interpretation h4 {
-    font-size: 1.5em; /* 24/16=1.5 */
-    line-height: 1.25;
 }
 
 .model-form-content {
