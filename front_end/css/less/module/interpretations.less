@@ -1,7 +1,8 @@
 .inline-interpretation {
     background-color: @grey;
     padding: 0.125em .625em;
-    border-bottom: none;
+    margin-bottom: 1em;
+    border-bottom: 0px;
     position: relative;
 
     h4 {
@@ -58,4 +59,8 @@
     .open {
         background-position: 0 -12px;
     }
+}
+
+.level-1 > .inline-interpretation:last-child {
+    margin-bottom: 0;
 }
