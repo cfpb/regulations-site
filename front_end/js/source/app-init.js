@@ -32,7 +32,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
         init: function() {
             this.getTree($('#reg-content')); 
 
-            window.subhead = new SubHeadView({el: '#sub-head'});
+            window.subhead = new SubHeadView({el: '#content-subhead'});
             window.toc = new TOCView({el: '#menu'});
             window.sidebar = new SidebarView({el: '#sidebar'});
             window.regContent = new ContentView({el: '.main-content'});

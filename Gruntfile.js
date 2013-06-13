@@ -85,6 +85,7 @@ module.exports = function(grunt) {
                 backbone: './lib/backbone',
                 jquery: './lib/jquery-1.9.1',
                 samplejson: '../tests/grunt/js/fixtures/sample-json',
+                'jquery-scrollstop': './lib/jquery.scrollstop',
                 'definition-view': './views/definition-view',
                 'interpretation-view': './views/interpretation-view',
                 'regs-fixed-el-view': './views/regs-fixed-el-view',
@@ -134,6 +135,7 @@ module.exports = function(grunt) {
                     jquery: './lib/jquery-1.9.1',
                     underscore: './lib/underscore',
                     backbone: './lib/backbone',
+                    'jquery-scrollstop': './lib/jquery.scrollstop',
                     'definition-view': './views/definition-view',
                     'interpretation-view': './views/interpretation-view',
                     'regs-fixed-el-view': './views/regs-fixed-el-view',
@@ -153,7 +155,7 @@ module.exports = function(grunt) {
                         deps: ['underscore', 'jquery'],
                         exports: 'Backbone'
                     }
-                },
+                }
             }
         }
     }

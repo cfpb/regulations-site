@@ -3,6 +3,7 @@ var require = {
         jquery: './lib/jquery-1.9.1',
         underscore: './lib/underscore',
         backbone: './lib/backbone',
+        'jquery-scrollstop': './lib/jquery.scrollstop',
         'definition-view': './views/definition-view',
         'regs-fixed-el-view': './views/regs-fixed-el-view',
         'sub-head-view': './views/sub-head-view',

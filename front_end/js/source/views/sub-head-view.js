@@ -1,11 +1,14 @@
-define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-fixed-el-view'], function($, _, Backbone, RegsFixedElView) {
+define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], function($, _, Backbone, Dispatch) {
     'use strict';
-    var SubHeadView = RegsFixedElView.extend({
+    var SubHeadView = Backbone.View.extend({
         initialize: function() {
-            // phantomjs workaround
-            if (this.$el.length === 0) {
-                this.$el = $('body').append('#sub-head');
-            }
+            Dispatch.on('activeSection:change', this.changeTitle, this);
+        },
+
+        changeTitle: function(id) {
+            this.$el.html('§' + id);
+
+            return this;
         }
     });
 
