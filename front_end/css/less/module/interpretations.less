@@ -1,8 +1,8 @@
 .inline-interpretation {
     background-color: @grey;
     padding: 0.125em .625em;
+    border-bottom: none;
     position: relative;
-    margin-bottom: 40px;
 
     h4 {
         color: @dark_field;
@@ -19,11 +19,22 @@
         padding-top: 0;
     }
 
-    li { /* reset borders and padding from main regulation */
-        margin: 0;
-        padding: 0px;
-        border-bottom: none;
+    li { /* reset borders & padding */
+        border: none;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-top: 0;
+        margin-bottom: 0;
     }
+
+    .level-1 > li {
+        border-bottom: none;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    } 
+
 
     p {
         font-size: 0.875em;
