@@ -10,7 +10,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
         events: {
             'click .definition': 'definitionLink',
-            'click .expand-button': 'expandInterp'
+            'click .expand-button': 'expandInterp',
+            'mouseenter p': 'showPermalink',
         },
 
         initialize: function() {
@@ -106,6 +107,20 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             button.html(button.hasClass('open') ? 'Hide' : 'Show');
 
             return this;
+        },
+
+        showPermalink: function(e) {
+
+            $('.permalink-marker').remove();
+
+            var currentLocal = $(e.currentTarget),
+                closestLi = currentLocal.parent(),
+                currentId = closestLi.attr('id'),
+                link = '<a href="' + currentId + '" title="Link to this paragraph" class="permalink-marker">&infin;</a>';
+
+            if (currentId !== undefined) {
+                $(currentLocal).one().append(link);
+            }
         }
 
     });
