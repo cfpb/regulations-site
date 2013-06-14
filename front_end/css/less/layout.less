@@ -46,13 +46,25 @@
     /*padding: 3.75em 0 2.75em 0;*/
 }
 
-p, h2 {position: relative;}
+
+p, li {
+    position: relative;
+}
 
 .permalink-marker {
     position: absolute;
     left: -60px;
-    top: 0;
+    top: 1em;
+    z-index: 1000;
 }
+
+.permalink-marker:link,
+.permalink-marker:visited,
+.permalink-marker:hover,
+.permalink-marker:active {
+    border-bottom: 0px;
+}
+
 
 
 /* offsets section links for the persistent header */
@@ -64,9 +76,10 @@ p, h2 {position: relative;}
     visibility: hidden;
 }
 
+
 .reg-section li {
-    border-top: 200px solid transparent;
-    margin-top: -200px;
+    border-top: 100px solid transparent;
+    margin-top: -100px;
     -webkit-background-clip:padding-box;
     -moz-background-clip:padding;
     background-clip:padding-box;

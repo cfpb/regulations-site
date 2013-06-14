@@ -111,18 +111,23 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
         showPermalink: function(e) {
 
-            //$('.permalink-marker').remove();
+            $('.permalink-marker').remove();
 
-            var currentLocal = $(e.currentTarget),
+            var permalink = document.createElement("a"),
+                currentLocal = $(e.currentTarget),
                 closestLi = currentLocal.parent(),
-                currentId = closestLi.attr('id'),
-                link = '<a href=#"' + currentId + '" title="Link to this paragraph" class="permalink-marker">&infin;</a>';
+                currentId = closestLi.attr('id');
+
+            permalink.href = "#" + currentId;
+            permalink.textContent = '∞';
+
+            var $permalink = $(permalink);
 
             if (currentId !== undefined) {
-                $(currentLocal).one().append(link);
+                $(currentLocal).before($permalink);
+                $permalink.addClass('permalink-marker');
             }
         }
-
     });
 
     return ContentView;
