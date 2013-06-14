@@ -111,12 +111,12 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
         showPermalink: function(e) {
 
-            $('.permalink-marker').remove();
+            //$('.permalink-marker').remove();
 
             var currentLocal = $(e.currentTarget),
                 closestLi = currentLocal.parent(),
                 currentId = closestLi.attr('id'),
-                link = '<a href="' + currentId + '" title="Link to this paragraph" class="permalink-marker">&infin;</a>';
+                link = '<a href=#"' + currentId + '" title="Link to this paragraph" class="permalink-marker">&infin;</a>';
 
             if (currentId !== undefined) {
                 $(currentLocal).one().append(link);
