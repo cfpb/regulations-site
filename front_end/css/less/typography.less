@@ -222,6 +222,32 @@ section ol p {
     display: block;
 }
 
+
+/* Permalinks */
+
+.reg-section,
+.reg-section li {
+    position: relative;
+}
+
+.permalink-marker {
+    position: absolute;
+    left: -60px;
+    top: 16px;
+    z-index: 100;
+    text-indent: 9999%;
+    white-space: nowrap;
+    overflow: hidden;
+    background: url(../img/permalink.png) no-repeat;
+}
+
+.permalink-marker:link,
+.permalink-marker:visited,
+.permalink-marker:hover,
+.permalink-marker:active {
+    border-bottom: 0px;
+}
+
 /* ==========================================================================
   appendix stlyes
  ========================================================================== */
