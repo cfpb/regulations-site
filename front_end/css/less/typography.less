@@ -160,10 +160,6 @@ a.definition:active {
     line-height: 1.25;
     letter-spacing: 1px;
 }
-
-.section-title { 
-
-}
 /* list styles */
 
 .level-1 > li {
@@ -184,12 +180,12 @@ a.definition:active {
 }
 
 /* set markers & key-terms to Avenir Next Demi */
-section ol, dfn {
+.reg-section ol, dfn {
   .avenir-next-demi;
 }
 
 /* Set text regulation text to Georgia */
-section ol p {
+.reg-section li p {
   font-family: @body-font;
   font-weight: 400;
 }
@@ -232,10 +228,12 @@ section ol p {
 
 .permalink-marker {
     position: absolute;
+    width: 16px;
+    height: 16px;
     left: -60px;
-    top: 16px;
+    top: 0px;
     z-index: 100;
-    text-indent: 9999%;
+    text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
     background: url(../img/permalink.png) no-repeat;

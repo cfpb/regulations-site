@@ -124,7 +124,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             $permalink = $(permalink);
 
             if (typeof currentId !== 'undefined') {
-                $(currentLocal).before($permalink);
+                $(currentLocal).after($permalink);
                 $permalink.addClass('permalink-marker');
             }
         }
