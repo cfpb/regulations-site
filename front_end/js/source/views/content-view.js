@@ -11,7 +11,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         events: {
             'click .definition': 'definitionLink',
             'click .expand-button': 'expandInterp',
-            'mouseenter p': 'showPermalink',
+            'mouseenter p': 'showPermalink'
         },
 
         initialize: function() {
@@ -113,12 +113,12 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             $('.permalink-marker').remove();
 
-            var permalink = document.createElement("a"),
+            var permalink = document.createElement('a'),
                 currentLocal = $(e.currentTarget),
-                closestLi = currentLocal.parent(),
-                currentId = closestLi.attr('id');
+                parent = currentLocal.closest("li"),
+                currentId = parent.attr('id');
 
-            permalink.href = "#" + currentId;
+            permalink.href = '#' + currentId;
             permalink.textContent = '∞';
 
             var $permalink = $(permalink);
