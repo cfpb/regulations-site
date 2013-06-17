@@ -22,7 +22,7 @@
 
 .main-content {
     padding-top: 100px; /* offset the navigation bar */
-    border-right: 1px solid @dark_gray;
+    border-right: 1px solid @medium_gray;
 
     h1:first-child {
         margin-top: 1em;
@@ -40,20 +40,22 @@
     position: relative;
 }
 
-/*.secondary-content {
-    position: absolute;
-    height: 100%;
-    right: 0;
-}*/
+
+.reg-text > section {
+    border-bottom: 2px solid @medium_gray;
+    /*padding: 3.75em 0 2.75em 0;*/
+}
+
 
 /* offsets section links for the persistent header */
 .reg-section:before,{
     display: block; 
     content: ""; 
-    height: 120px; 
-    margin: -120px 0 0; 
+    height: 80px; 
+    margin: -80px 0 0; 
     visibility: hidden;
 }
+
 
 .reg-section li {
     border-top: 100px solid transparent;

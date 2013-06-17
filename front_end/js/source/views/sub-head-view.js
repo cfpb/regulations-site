@@ -6,7 +6,7 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], f
         },
 
         changeTitle: function(id) {
-            this.$el.html('§' + id);
+            this.$el.html('<em class="header-label">§' + id + '</em>');
 
             return this;
         }

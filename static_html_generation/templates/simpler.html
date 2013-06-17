@@ -57,7 +57,7 @@
 
         <h1 class="reg-title" tabindex="0">{{tree.header}}</h1>
 
-        <section id="{{tree.markup_id}}">
+        <section id="{{tree.markup_id}}" class="reg-text">
             {% if tree.children %}
                 {% for c in tree.children %}
                     {%include "regulation_text.html" %}
