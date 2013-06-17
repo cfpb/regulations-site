@@ -21,8 +21,11 @@
 }
 
 .main-content {
-    padding-top: 100px; /* offset the navigation bar */
     border-right: 1px solid @medium_gray;
+    position: fixed;
+    height: 100%;
+    overflow-y: scroll;
+    top: 102px;
 
     h1:first-child {
         margin-top: 1em;
@@ -58,8 +61,6 @@
 
 
 .reg-section li {
-    border-top: 100px solid transparent;
-    margin-top: -100px;
     -webkit-background-clip:padding-box;
     -moz-background-clip:padding;
     background-clip:padding-box;
