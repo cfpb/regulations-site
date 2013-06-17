@@ -10,7 +10,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
         events: {
             'click .definition': 'definitionLink',
-            'click .expand-button': 'expandInterp'
+            'click .expand-button': 'expandInterp',
+            'mouseenter p': 'showPermalink'
         },
 
         initialize: function() {
@@ -106,8 +107,27 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             button.html(button.hasClass('open') ? 'Hide' : 'Show');
 
             return this;
-        }
+        },
 
+        showPermalink: function(e) {
+
+            $('.permalink-marker').remove();
+
+            var permalink = document.createElement('a'),
+                currentLocal = $(e.currentTarget),
+                parent = currentLocal.closest("li"),
+                currentId = parent.attr('id');
+
+            permalink.href = '#' + currentId;
+            permalink.textContent = '∞';
+
+            var $permalink = $(permalink);
+
+            if (currentId !== undefined) {
+                $(currentLocal).before($permalink);
+                $permalink.addClass('permalink-marker');
+            }
+        }
     });
 
     return ContentView;
