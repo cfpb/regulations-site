@@ -115,15 +115,15 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             var permalink = document.createElement('a'),
                 currentLocal = $(e.currentTarget),
-                parent = currentLocal.closest("li"),
-                currentId = parent.attr('id');
+                parent = currentLocal.closest('li'),
+                currentId = parent.attr('id'),
+                $permalink;
 
             permalink.href = '#' + currentId;
-            permalink.textContent = '∞';
+            permalink.innerHTML = 'Permalink';
+            $permalink = $(permalink);
 
-            var $permalink = $(permalink);
-
-            if (currentId !== undefined) {
+            if (typeof currentId !== 'undefined') {
                 $(currentLocal).before($permalink);
                 $permalink.addClass('permalink-marker');
             }
