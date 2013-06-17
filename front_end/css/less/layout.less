@@ -47,7 +47,8 @@
 }
 
 .reg-section:before,
-.appendix-heading:before {
+.appendix-section:before,
+.supplement-section:before  {
     display: block; 
     content: ""; 
     height: 100px; 
@@ -55,8 +56,9 @@
     visibility: hidden;
 }
 
-
-.reg-section li {
+.reg-section .level-1 li,
+.appendix-section .level-1 li,
+.supplement-section .level-1 li {
     border-top: 100px solid transparent;
     margin-top: -100px;
     -webkit-background-clip:padding-box;
