@@ -34,8 +34,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
         checkActiveSection: function() {
             var headerLoc = this.$contentHeader.offset().top,
-                len = this.$contentContainer.length;
-            for (var i = 0; i < len; i++) {
+                len = this.$contentContainer.length - 1;
+            for (var i = 0; i <= len; i++) {
                 if (this.$sections[i].offset().top >= headerLoc) {
                     i = i - 1;
                     if (_.isEmpty(this.activeSection) || (this.activeSection !== this.$sections[i].id)) {
