@@ -23,6 +23,7 @@ class InterpretationsLayer(object):
             interp_node = api.regulation(reference, self.version)
 
             if interp_node:
+                interp_node['interp_for_markup_id'] = text_index
                 self.builder.tree = interp_node
                 self.builder.generate_html()
                 markup = self.builder.render_markup()
