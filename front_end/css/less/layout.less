@@ -21,7 +21,6 @@
 }
 
 .main-content {
-    padding-top: 100px; /* offset the navigation bar */
     border-right: 1px solid @medium_gray;
 
     h1:first-child {
@@ -46,3 +45,19 @@
     /*padding: 3.75em 0 2.75em 0;*/
 }
 
+.reg-section:before,{
+    display: block; 
+    content: ""; 
+    height: 80px; 
+    margin: -80px 0 0; 
+    visibility: hidden;
+}
+
+
+.reg-section li {
+    border-top: 100px solid transparent;
+    margin-top: -100px;
+    -webkit-background-clip:padding-box;
+    -moz-background-clip:padding;
+    background-clip:padding-box;
+}
