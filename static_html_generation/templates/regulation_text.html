@@ -27,11 +27,11 @@
         {% endif %}
         </ol>
 
-        {% if c.interp_markup %}
+        {% if c.interp %}
             <section class="inline-interpretation reset-indent" data-interp-for="{{c.markup_id}}">
                 <h4 tabindex="0">Supplement I - Official Interpretations</h4>
                 <a class="expand-button">Show</a>
-                {{ c.interp_markup|safe }}
+                {{ c.interp.markup|safe }}
             </section>
         {% endif %}
 {% endif %}

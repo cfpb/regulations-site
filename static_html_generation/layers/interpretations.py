@@ -1,6 +1,7 @@
 import api_reader
 from html_builder import SlideDownInterpBuilder
 from layers.layers_applier import ParagraphLayersApplier
+from node_types import to_markup_id
 import settings as app_settings
 
 class InterpretationsLayer(object):
@@ -25,4 +26,7 @@ class InterpretationsLayer(object):
                 self.builder.tree = interp_node
                 self.builder.generate_html()
                 markup = self.builder.render_markup()
-                return 'interp_markup', markup
+                return 'interp', {
+                    'markup': markup,
+                    'markup_id': '-'.join(to_markup_id(reference.split('-')))
+                }

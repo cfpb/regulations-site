@@ -32,11 +32,11 @@
                 </ol>
             {% endif %}
 
-            {% if level_one.interp_markup %}
+            {% if level_one.interp %}
                 <section class="inline-interpretation reset-indent" data-interp-for="{{level_one.markup_id}}">
                     <h4 tabindex="0">Supplement I - Official Interpretations</h4>
                     <a class="expand-button">Show</a>
-                    {{ level_one.interp_markup|safe }}
+                    {{ level_one.interp.markup|safe }}
                 </section>
             {% endif %}
         {% endfor %}

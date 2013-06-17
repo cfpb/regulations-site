@@ -20,10 +20,10 @@
     {% endfor %}
 </ol>
 {% endif %}
-{% if node.interp_markup %}
+{% if node.interp %}
     <section class="inline-interpretation reset-indent" data-interp-for="{{node.markup_id}}">
         <h4 tabindex="0">Supplement I - Official Interpretations</h4>
         <a class="expand-button">Show</a>
-        {{ node.interp_markup|safe }}
+        {{ node.interp.markup|safe }}
     </section>
 {% endif %}
