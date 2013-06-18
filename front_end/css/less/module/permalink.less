@@ -5,13 +5,21 @@
     float: left;
     width: 16px;
     height: 16px;
-    z-index: 100;
     margin-left: -60px;
     margin-top: 20px;
     text-indent: -9999px;
     white-space: nowrap;
     overflow: hidden;
     background: url(../img/permalink.png) no-repeat;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .permalink-marker {
+        background: url(../img/permalink@2x.png) no-repeat;
+        background-size: 16px 16px;
+    }
 }
 
 .permalink-marker:link,
