@@ -33,13 +33,14 @@
 
 .regulation-nav {
     position: fixed;
-    top: 101px;
+    top: 60px;
     left: -272px; /* 250px + 20px padding + 2px border*/
     width: 15.625em; /* 250px */
     background-color: #f6f6f5;
-    z-index: 999;
+    z-index: 999999;
     overflow-y: scroll;
-    height: 80%; /* offsets the header so that nav isn't hidden at the bottom of the TOC */
+    height: 84%; /* offsets the header so that nav isn't hidden at the bottom of the TOC */
+    border-top: #d0d0ce 2px solid;
     border-right: #d0d0ce 2px solid;
     margin: 0;
     padding: 0 0 60px 0; /*add padding at the bottom of the TOC to accomodate for scrollbars */
@@ -55,40 +56,34 @@
     left: 0;
 }
 
-#reg-content.active,
+/*#reg-content.active,
 #content-header.active {
     left: 16em;
-}
-
-@media only screen and (min-width: 1100px) {
+}*/
 
 /* slide all content less on wide screens */
+/*@media only screen and (min-width: 1100px) {
     #reg-content.active,
     #content-header.active {
         left: 8em;
     }
-
-}
-
-@media only screen and (min-width: 1250px) {
+}*/
 
 /* slide all content less on wide screens */
+/*@media only screen and (min-width: 1250px) {
     #reg-content.active,
     #content-header.active {
         left: 4em;
     }
-
-}
-
-@media only screen and (min-width: 1400px) {
+}*/
 
 /* slide all content less on wide screens */
+/*@media only screen and (min-width: 1400px) {
     #reg-content.active,
     #content-header.active {
         left: 0em;
     }
-
-}
+}*/
 
 /* CSS Transitions for Slide Effect */
 .regulation-nav {
