@@ -16,7 +16,7 @@
 
     li {
         margin-top: 0;
-        display: inline;
+        display: inline-block;
     }
 }
 
@@ -85,21 +85,25 @@
     .avenir-next-bold;
     font-size: 1em;
     margin: .2em 0;
+    letter-spacing: 1px;
     display: inline-block;
     color: @black;
 }
 
 #sidebar-subhead {
-    .avenir-next-bold;
+    margin-top: .2em;
+    width: 33%;
 
     h2 {
-        font-size: 1em;
-        margin: .2em 0 .2em 1.6em;
-        display: inline-block;
+        padding: 1em 0 0 1.6em;
+        font-size: 0.75em;
+        text-transform: uppercase;
+        .avenir-next;
+        display: inline;
     }
 
     .close-button {
-        margin-top: .5em;
+        margin-top: .35em;
     }
 }
 
