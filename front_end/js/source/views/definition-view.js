@@ -10,8 +10,8 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
             var interp = this.$el.find('.inline-interpretation'),
                 keyTerm = this.$el.find('dfn.key-term'),
                 dHref = '#' + this.model.id,
-                dText = 'Go to definition in § ' + this.model.id,
-                classStr = 'continue-link',
+                dText = '§ ' + this.model.id,
+                classStr = 'continue-link internal',
                 $dLink = RegsHelpers.fastLink(dHref, dText, classStr),
                 clickTerm = this.model.linkText,
                 iHref, iText, $iLink, interpId, keyTerms;
@@ -31,7 +31,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                 this.$el.find('.inline-interpretation').remove();
 
                 iHref = '#' + interpId;
-                iText = 'Go to related interpretations';
+                iText = 'Related commentary';
                 $iLink = RegsHelpers.fastLink(iHref, iText, classStr);
                 this.$el.append($iLink);
             }

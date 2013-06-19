@@ -33,13 +33,14 @@
 
 .regulation-nav {
     position: fixed;
-    top: 101px;
+    top: 60px;
     left: -272px; /* 250px + 20px padding + 2px border*/
     width: 15.625em; /* 250px */
     background-color: #f6f6f5;
-    z-index: 999;
+    z-index: 999999;
     overflow-y: scroll;
     height: 84%; /* offsets the header so that nav isn't hidden at the bottom of the TOC */
+    border-top: #d0d0ce 2px solid;
     border-right: #d0d0ce 2px solid;
     margin: 0;
     padding: 0 0 60px 0; /*add padding at the bottom of the TOC to accomodate for scrollbars */
@@ -55,40 +56,34 @@
     left: 0;
 }
 
-#reg-content.active,
+/*#reg-content.active,
 #content-header.active {
     left: 16em;
-}
-
-@media only screen and (min-width: 1100px) {
+}*/
 
 /* slide all content less on wide screens */
+/*@media only screen and (min-width: 1100px) {
     #reg-content.active,
     #content-header.active {
         left: 8em;
     }
-
-}
-
-@media only screen and (min-width: 1250px) {
+}*/
 
 /* slide all content less on wide screens */
+/*@media only screen and (min-width: 1250px) {
     #reg-content.active,
     #content-header.active {
         left: 4em;
     }
-
-}
-
-@media only screen and (min-width: 1400px) {
+}*/
 
 /* slide all content less on wide screens */
+/*@media only screen and (min-width: 1400px) {
     #reg-content.active,
     #content-header.active {
         left: 0em;
     }
-
-}
+}*/
 
 /* CSS Transitions for Slide Effect */
 .regulation-nav {
@@ -140,19 +135,30 @@
 .toc-nav-link {
     text-indent: -9999px;
     display: inline-block;
-    width: 24px;
-    height: 20px;
-    background: url(../img/nav-sprite.png) no-repeat 0 2px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 60px; /* match height of main header */
+    width: 60px;
+    background: url(../img/nav-link.png) no-repeat center center;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .toc-nav-link {
+        background: url(../img/nav-link@2x.png) no-repeat center center;
+        background-size: 16px 16px;
+    }
 }
 
 .toc-nav-link:hover,
 .toc-nav-link:active {
-    background: url(../img/nav-sprite.png) no-repeat 0 -18px;
+    background-color: @light_field;
 }
 
 .toc-nav-link.active  {
-    color: @pacific;
-    background: url(../img/nav-sprite.png) no-repeat 0 -18px;
+    background-color: @light_field;
 }
 
 .regulation-nav li {
