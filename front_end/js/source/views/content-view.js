@@ -18,6 +18,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             var len, i;
 
             Dispatch.on('definition:remove', this.cleanupDefinition, this);
+            Dispatch.on('toc:click', this.changeFocus, this);
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
 
             this.$sections = {};
@@ -136,6 +137,10 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 $(currentLocal).before($permalink);
                 $permalink.addClass('permalink-marker');
             }
+        },
+
+        changeFocus: function(id) {
+            $(id).focus();
         }
     });
 
