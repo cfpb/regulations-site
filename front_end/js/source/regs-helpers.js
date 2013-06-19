@@ -29,7 +29,7 @@ define('regs-helpers', function() {
             parts = id.split('-');
             ref = parts[0];
             parts.shift();
-            ref += "." + parts[0];
+            ref += '.' + parts[0];
 
             return ref;
         }

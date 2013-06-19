@@ -38,9 +38,9 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 sectionHeader;
 
             for (var i = 0; i <= len; i++) {
-                sectionHeader = parseInt(this.$sections[i].find('h2').first().css('padding')) 
-                                + this.$sections[i].height() 
-                                + parseInt(this.$sections[i].find('h2').first().css('margin'));
+                sectionHeader = parseInt(this.$sections[i].find('h2').first().css('padding'), 10) +
+                                this.$sections[i].height() +
+                                parseInt(this.$sections[i].find('h2').first().css('margin'), 10);
 
                 // 100 = .reg-section:before negative margin
                 if (this.$sections[i].offset().top >= headerLoc + 100 - sectionHeader) {
