@@ -63,7 +63,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 this.openDefinition.link.removeClass('active').removeData('active');
             }
             delete(this.openDefinition.link);
-            delete(this.openDefinition.link_text);
+            delete(this.openDefinition.linkText);
 
             return this;
         },
@@ -83,7 +83,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             $link.addClass('active').data('active', 1);
 
              // if its the same def, diff link (with same text), we're done
-            if (defId === this.openDefinition.id && $link.text().toLowerCase() == this.openDefinition.link_text) {
+            if (defId === this.openDefinition.id && $link.text().toLowerCase() === this.openDefinition.linkText) {
                 this.openDefinition.link.removeClass('active').removeData('active');
                 this.openDefinition.link = $link;           
 
@@ -101,12 +101,12 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
         storeDefinition: function($link, defId) {
             this.openDefinition.link = $link;           
-            this.openDefinition.link_text = $link.text().toLowerCase();
+            this.openDefinition.linkText = $link.text().toLowerCase();
             this.openDefinition.id = defId;
             this.openDefinition.view = new DefinitionView({
                 id: defId,
                 $anchor: $link,
-                link_text: this.openDefinition.link_text
+                linkText: this.openDefinition.linkText
             });
         },
 

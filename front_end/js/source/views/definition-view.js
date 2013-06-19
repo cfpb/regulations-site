@@ -13,15 +13,15 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                 dText = 'Go to definition in § ' + this.model.id,
                 classStr = 'continue-link',
                 $dLink = RegsHelpers.fastLink(dHref, dText, classStr),
-                clickTerm = this.model.link_text,
+                clickTerm = this.model.linkText,
                 iHref, iText, $iLink, interpId, keyTerms;
 
                 this.$el.append($dLink);
 
             var defining = this.$el.find('.defined-term');
             defining.removeClass('active-term');
-            defining.filter(function(idx) {
-                return $(this).text().toLowerCase() == clickTerm
+            defining.filter(function() {
+                return $(this).text().toLowerCase() === clickTerm;
             }).addClass('active-term');
 
 
