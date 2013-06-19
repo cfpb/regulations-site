@@ -11,7 +11,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         events: {
             'click .definition': 'definitionLink',
             'click .expand-button': 'expandInterp',
-            'click .inline-interpretation': 'expandInterp',
+            'click .inline-interpretation:not(.open)': 'expandInterp',
             'mouseenter p': 'showPermalink'
         },
 
@@ -116,13 +116,14 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             e.stopPropagation();
             var button;
 
-            if (e.target.tagName === 'SECTION') {
+            if (e.target.tagName.toUpperCase() === 'SECTION') {
                 button = $(e.target).find('.expand-button');
             }
             else {
                 button = $(e.target);
             }
 
+            button.parent().toggleClass('open');
             button.toggleClass('open').next('.hidden').slideToggle();
             button.html(button.hasClass('open') ? 'Hide' : 'Show');
 
