@@ -32,14 +32,8 @@
 .secondary,
 .secondary-content {
     width: 33%; /*318px;*/
+    float: left;
 }
-
-.secondary,
-.secondary-content {
-    float: right;
-    position: relative;
-}
-
 
 .reg-text > section {
     border-bottom: 2px solid @medium_gray;
@@ -54,17 +48,18 @@
   *
   **/
 .reg-section:before,
-.appendix-title:before,
-.appendix-heading:before {
+.appendix-section:before,
+.supplement-section:before  {
     display: block; 
     content: ""; 
-    height: 100px; 
-    margin: -100px 0 0; 
+    height: 60px; 
+    margin: -60px 0 0; 
     visibility: hidden;
 }
 
-
-.reg-section li {
+.reg-section .level-1 li,
+.appendix-section .level-1 li,
+.supplement-section .level-1 li {
     border-top: 100px solid transparent;
     margin-top: -100px;
     -webkit-background-clip:padding-box;

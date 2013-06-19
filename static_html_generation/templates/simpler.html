@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{tree.header}}</title>
         <link rel="stylesheet" href="front_end/css/style.min.css"/>
         <script src="front_end/js/{{ env }}/require.config.js"></script>
         <script>
@@ -22,16 +23,16 @@
         <div class="main-head">
             <ul class="wrap group">
             <li class="main">
-            <nav id="doc-navigation">
+            <nav id="doc-navigation" class="header-nav">
                 <ul>
                     <li><a href="#menu" id="menu-link" class="toc-nav-link slide">Table of Contents</a></li>
-                    <li><h2 class="reg-title-header"><a href="#">{{tree.header|title}}</a></h2></li>
+                    <li><h2 class="reg-title-header"><a href="#">{{tree.header|title}}</a><span class="beta-label">Beta</span></h2></li>
                 </ul>
             </nav>
             </li>
 
             <li>
-                <div class="logo">LOGO</div>
+                <div class="logo"><img src="front_end/ip/logo.png" alt="logo" width="151px"></div>
             </li>
         </div>
 
