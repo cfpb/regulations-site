@@ -1,23 +1,17 @@
 /* Permalinks */
 
-/* necessary for permalink positioning */
-p {
-    position: relative;
-}
-
 .permalink-marker {
-    position: absolute;
+    display: block;
+    float: left;
     width: 16px;
     height: 16px;
-    overflow: visible;
-    top: 6px;
-    left: -60px;
+    margin-left: -60px;
+    margin-top: 20px;
     text-indent: -9999px;
-    /*white-space: nowrap;*/
-    overflow: hidden;
+    /*white-space: nowrap;
+    overflow: hidden;*/
+    background-color: transparent;
     background: url(../img/permalink.png) no-repeat;
-    background-size: 16px 16px;
-    z-index: 500;
 }
 
 @media 
