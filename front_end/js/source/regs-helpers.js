@@ -21,6 +21,17 @@ define('regs-helpers', function() {
             link.className = classStr || '';
 
             return $link;
+        },
+
+        idToRef: function(id) {
+            var ref, parts;
+
+            parts = id.split('-');
+            ref = parts[0];
+            parts.shift();
+            ref += "." + parts[0];
+
+            return ref;
         }
     };
 });

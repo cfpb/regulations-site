@@ -1,4 +1,4 @@
-define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], function($, _, Backbone, Dispatch) {
+define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-helpers'], function($, _, Backbone, Dispatch, RegsHelpers) {
     'use strict';
     var SubHeadView = Backbone.View.extend({
         initialize: function() {
@@ -6,7 +6,7 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], f
         },
 
         changeTitle: function(id) {
-            this.$el.html('<em class="header-label">§' + id + '</em>');
+            this.$el.html('<em class="header-label">§' + RegsHelpers.idToRef(id) + '</em>');
 
             return this;
         }
