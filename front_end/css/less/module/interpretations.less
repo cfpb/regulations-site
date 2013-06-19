@@ -1,9 +1,19 @@
 .inline-interpretation {
-    background-color: @grey;
+    background-color: @bg_gray;
     padding: 0.125em .625em;
     margin-bottom: 1em;
     border-bottom: 0px;
     position: relative;
+
+    &:hover {
+        background-color: @grey;
+        cursor: pointer;
+    }
+
+    &.open {
+        background-color: @grey;
+        cursor: auto;
+    }
 
     h4 {
         color: @dark_field;
@@ -17,6 +27,7 @@
 
     .ref-num {
         text-transform: lowercase;
+        font-weight: bold;
     }
 
     ol {
@@ -43,8 +54,8 @@
         right: .625em;
         display: inline-block;
         .avenir-next;
-        padding-left: 19px;
-        background: url(../img/accordion-sprite.png) no-repeat 0 11px;
+        padding-right: 19px;
+        background: url(../img/accordion-sprite.png) no-repeat right 11px;
         text-transform: uppercase;
         .avenir-next-bold;
         line-height: 30px; /* match h4 */
@@ -53,7 +64,7 @@
     }
 
     .open {
-        background-position: 0 -12px;
+        background-position: right -12px;
     }
 }
 
