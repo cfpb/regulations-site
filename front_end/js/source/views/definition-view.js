@@ -8,12 +8,12 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
             Dispatch.once('definition:callRemove', this.remove, this);
 
             var interp = this.$el.find('.inline-interpretation'),
-                dfnTerm = this.$el.find('dfn.key-term'),
+                keyTerm = this.$el.find('dfn.key-term'),
                 dHref = '#' + this.model.id,
                 dText = 'Go to definition in § ' + this.model.id,
                 classStr = 'continue-link',
                 $dLink = RegsHelpers.fastLink(dHref, dText, classStr),
-                iHref, iText, $iLink, interpId, dfnTerms;
+                iHref, iText, $iLink, interpId, keyTerms;
 
                 this.$el.append($dLink);
 
@@ -27,11 +27,11 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                 this.$el.append($iLink);
             }
 
-            if (typeof dfnTerm[0] !== 'undefined') {
-                dfnTerms = dfnTerm.length;
+            if (typeof keyTerm[0] !== 'undefined') {
+                keyTerms = keyTerm.length;
 
-                for (var i = 0; i < dfnTerms; i++) {
-                    $(dfnTerm[i]).remove(); 
+                for (var i = 0; i < keyTerms; i++) {
+                    $(keyTerm[i]).remove(); 
                 }
             }
 
