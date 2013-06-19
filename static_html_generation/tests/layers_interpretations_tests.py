@@ -1,29 +1,26 @@
 from layers.interpretations import InterpretationsLayer
+from mock import Mock, patch
 from unittest import TestCase
 
 class InterpretationsLayerTest(TestCase):
-    def test_apply_layer(self):
-        return #    @todo refactor this test to use the new format
+    @patch('layers.interpretations.api_reader')
+    def test_apply_layer_extra_fields(self, api_reader):
         layer = {
-                "200-2-b": [{
-                    "reference": "200-Interpretations-2-b",
-                    "text": "Some contents are here"
-                    }],
-                "200-2-b-ii": [{
-                    "reference": "200-Interpretations-2-b-ii",
-                    "text": "Inner interpretaton"
-                    }, {
-                    "reference": "200-Interpretations-2-b",
-                    "text": "Some contents are here"
-                    }]}
-        il = InterpretationsLayer(layer)
+            "200-2-b-3-i": [{
+                "reference": "200-Interpretations-2-(b)(3)(i)",
+                "text": "Some contents are here"
+            }],
+        }
+        api_reader.Client.return_value.regulation.return_value = {
+            'some': 'node'
+        }
 
-        key, value = il.apply_layer("200-2-b")
-        self.assertEqual('I-200-2-b', value)
-        self.assertEqual('interpretations', key)
+        il = InterpretationsLayer(layer, 'test-version')
+        il.builder = Mock()
 
-        key, value = il.apply_layer("200-2-b-ii")
-        self.assertEqual('I-200-2-b-ii', value)
-        self.assertEqual('interpretations', key)
-
-        self.assertEqual(None, il.apply_layer("200-2-b-iii"))
+        il.apply_layer('200-2-b-3-i')
+        self.assertEqual(il.builder.tree, {
+            'some': 'node',
+            'interp_for_markup_id': '200-2-b-3-i',
+            'interp_label': '2(b)(3)(i)'
+        })
