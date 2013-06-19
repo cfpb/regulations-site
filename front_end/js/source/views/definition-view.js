@@ -18,9 +18,10 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
 
                 this.$el.append($dLink);
 
-            var defining = this.$el.find('.defined-term');
-            defining.removeClass('active-term');
-            defining.filter(function() {
+            //  Remove any highlight
+            this.$el.find('.active-term').removeClass('active-term');
+            //  Add highlight to the clicked term
+            this.$el.find('.defined-term').filter(function() {
                 return $(this).text().toLowerCase() === clickTerm;
             }).addClass('active-term');
 
