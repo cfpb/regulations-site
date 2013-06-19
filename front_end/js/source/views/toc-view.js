@@ -1,6 +1,10 @@
 define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-fixed-el-view', 'regs-dispatch'], function($, _, Backbone, RegsFixedElView, Dispatch) {
     'use strict';
     var TOCView = RegsFixedElView.extend({
+        events: {
+            'click a': 'sendClickEvent'
+        },
+
         initialize: function() {
             Dispatch.on('activeSection:change', this.setActive, this);
         },
@@ -10,6 +14,10 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-fixed-el-view', 'r
             this.$el.find('a[href=#' + id + ']').addClass('current');
 
             return this;
+        },
+
+        sendClickEvent: function(e) {
+            Dispatch.trigger('toc:click', $(e.target).attr('href'));
         }
     });
 
