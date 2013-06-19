@@ -8,14 +8,24 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
             Dispatch.once('definition:callRemove', this.remove, this);
 
             var interp = this.$el.find('.inline-interpretation'),
-                dfnTerm = this.$el.find('dfn.key-term'),
+                keyTerm = this.$el.find('dfn.key-term'),
                 dHref = '#' + this.model.id,
                 dText = '§ ' + this.model.id,
                 classStr = 'continue-link internal',
                 $dLink = RegsHelpers.fastLink(dHref, dText, classStr),
-                iHref, iText, $iLink, interpId, dfnTerms;
+                clickTerm = this.model.linkText,
+                iHref, iText, $iLink, interpId, keyTerms;
 
                 this.$el.append($dLink);
+
+            //  Remove any highlight
+            this.$el.find('.active-term').removeClass('active-term');
+            //  Add highlight to the clicked term
+            this.$el.find('.defined-term').filter(function() {
+                return $(this).text().toLowerCase() === clickTerm;
+            }).addClass('active-term');
+
+
 
             if (typeof interp[0] !== 'undefined') {
                 interpId = $(interp[0]).data('interpFor');
@@ -27,11 +37,11 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                 this.$el.append($iLink);
             }
 
-            if (typeof dfnTerm[0] !== 'undefined') {
-                dfnTerms = dfnTerm.length;
+            if (typeof keyTerm[0] !== 'undefined') {
+                keyTerms = keyTerm.length;
 
-                for (var i = 0; i < dfnTerms; i++) {
-                    $(dfnTerm[i]).remove(); 
+                for (var i = 0; i < keyTerms; i++) {
+                    $(keyTerm[i]).remove(); 
                 }
             }
 

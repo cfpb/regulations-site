@@ -11,6 +11,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         events: {
             'click .definition': 'definitionLink',
             'click .expand-button': 'expandInterp',
+            'click .inline-interpretation:not(.open)': 'expandInterp',
             'mouseenter p': 'showPermalink'
         },
 
@@ -18,6 +19,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             var len, i;
 
             Dispatch.on('definition:remove', this.cleanupDefinition, this);
+            Dispatch.on('toc:click', this.changeFocus, this);
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
 
             this.$sections = {};
@@ -63,6 +65,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 this.openDefinition.link.removeClass('active').removeData('active');
             }
             delete(this.openDefinition.link);
+            delete(this.openDefinition.linkText);
 
             return this;
         },
@@ -81,8 +84,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             defId = $link.attr('data-definition');
             $link.addClass('active').data('active', 1);
 
-             // if its the same def, diff link, we're done
-            if (defId === this.openDefinition.id) {
+             // if its the same def, diff link (with same text), we're done
+            if (defId === this.openDefinition.id && $link.text().toLowerCase() === this.openDefinition.linkText) {
                 this.openDefinition.link.removeClass('active').removeData('active');
                 this.openDefinition.link = $link;           
 
@@ -100,15 +103,27 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
         storeDefinition: function($link, defId) {
             this.openDefinition.link = $link;           
+            this.openDefinition.linkText = $link.text().toLowerCase();
             this.openDefinition.id = defId;
             this.openDefinition.view = new DefinitionView({
                 id: defId,
-                $anchor: $link
+                $anchor: $link,
+                linkText: this.openDefinition.linkText
             });
         },
 
         expandInterp: function(e) {
-            var button = $(e.target);
+            e.stopPropagation();
+            var button;
+
+            if (e.target.tagName.toUpperCase() === 'SECTION') {
+                button = $(e.target).find('.expand-button');
+            }
+            else {
+                button = $(e.target);
+            }
+
+            button.parent().toggleClass('open');
             button.toggleClass('open').next('.hidden').slideToggle();
             button.html(button.hasClass('open') ? 'Hide' : 'Show');
 
@@ -133,6 +148,10 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 $(currentLocal).append($permalink);
                 $permalink.addClass('permalink-marker');
             }
+        },
+
+        changeFocus: function(id) {
+            $(id).focus();
         }
     });
 
