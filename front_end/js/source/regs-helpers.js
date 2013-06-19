@@ -23,14 +23,40 @@ define('regs-helpers', function() {
             return $link;
         },
 
+        // super dumb impementation. TODO
+        // recursive strategy when full spectrum is implemented
         idToRef: function(id) {
             var ref, parts;
-
             parts = id.split('-');
-            ref = parts[0];
-            parts.shift();
-            ref += '.' + parts[0];
 
+            if (!isNaN(parseInt(parts[0], 10))) {
+                // only handles two at the moment. to be made smarter.
+
+                if (parts[1]) {
+                    if (isNaN(parseInt(parts[1], 10))) {
+                        ref = "Appendix ";
+                        ref += parts[1];
+                        ref += ' to Part ';
+                        ref += parts[0];
+                    }
+                    else {
+                        ref = "§ ";
+                        ref += parts[0];
+                        parts.shift();
+                        ref += '.' + parts[0];
+
+                    }
+                }
+            }
+            else {
+                ref = 'Supplement ';
+                ref += parts[0];
+                if (parts[1]) {
+                    ref += ' to Part ';
+                    ref += parts[1]; 
+                }
+            }
+            
             return ref;
         }
     };
