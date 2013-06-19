@@ -34,13 +34,13 @@ define('regs-helpers', function() {
 
                 if (parts[1]) {
                     if (isNaN(parseInt(parts[1], 10))) {
-                        ref = "Appendix ";
+                        ref = 'Appendix ';
                         ref += parts[1];
                         ref += ' to Part ';
                         ref += parts[0];
                     }
                     else {
-                        ref = "§ ";
+                        ref = '§ ';
                         ref += parts[0];
                         parts.shift();
                         ref += '.' + parts[0];
