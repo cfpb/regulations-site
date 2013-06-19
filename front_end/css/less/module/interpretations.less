@@ -2,6 +2,7 @@
     background-color: @bg_gray;
     padding: 0.125em .625em;
     margin-bottom: 1em;
+    margin-left: -20px; /*aligns with list marker */
     border-bottom: 0px;
     position: relative;
 
@@ -22,12 +23,23 @@
         font-size: .8em;
         display: inline-block;
         margin: 0;
-        padding: 0;
+        padding: 0 0 0 20px;
+        background: url(../img/supplement.png) no-repeat 0 3px;
+    }
+
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        h4 {
+            background: url(../img/supplement@2x.png) no-repeat 0 3px;
+            background-size: 12px 15px;
+        }
     }
 
     .ref-num {
         text-transform: lowercase;
         font-weight: bold;
+        .avenir-next-demi;
     }
 
     ol {
@@ -41,6 +53,7 @@
 
     .level-1 > li {
         border-bottom: none;
+        padding: 0;
     } 
 
 
