@@ -44,15 +44,9 @@
 
 }
 
-.open-definition > * > .definition { /* style every definition that is a child of .open-definition */
+.open-definition > * > .active-term { /* style every definition that is a child of .open-definition */
     .avenir-next-demi;
     text-transform: uppercase;
-}
-
-.open-definition > * > .definition ~ .definition { /* style all but the first definition as normal text */
-    font-family: @body-font;
-    text-transform: none;
-    font-weight: normal;
 }
 
 .continue-link {
