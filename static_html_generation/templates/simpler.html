@@ -71,7 +71,18 @@
         </div>
 
         <div id="sidebar" class="secondary-content">
-
+            <h5>Contact Information:</h5>
+             {{ meta.contact_info | safe}}
+             <h5>Current Effective Law:</h5>
+             <a href="{{ meta.effective.url }}">{{ meta.effective.title }}</a>
+             Electronic Code of Federal Regulations
+             <h5>Most Recent Notice:</h5>
+             <a href="{{ meta.last_notice.url }}">{{ meta.last_notice.title }}</a>
+             <ul>
+                 <li><label>Published</label> {{ meta.last_notice.published }}</li>
+                 <li><label>Action</label> {{ meta.last_notice.action }}</li>
+                 <li><label>Effective</label> {{ meta.last_notice.effective }}</li>
+             </ul>
         </div>
 
         </div>
