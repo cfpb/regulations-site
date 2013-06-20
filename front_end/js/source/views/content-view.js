@@ -12,7 +12,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             'click .definition': 'definitionLink',
             'click .expand-button': 'expandInterp',
             'click .inline-interpretation:not(.open)': 'expandInterp',
-            'mouseenter p': 'showPermalink'
+            'mouseenter p': 'showPermalink',
+            'mouseenter h2.section-number': 'showPermalink'
         },
 
         initialize: function() {
@@ -131,15 +132,20 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         },
 
         showPermalink: function(e) {
-
             $('.permalink-marker').remove();
 
             var permalink = document.createElement('a'),
                 currentLocal = $(e.currentTarget),
-                parent = currentLocal.closest('li'),
-                currentId = parent.attr('id'),
-                $permalink;
+                currentId, $permalink, parent;
 
+            if (e.currentTarget.tagName.toUpperCase() === 'H2') {
+                parent = currentLocal.parent('.reg-section');
+            }
+            else {
+                parent = currentLocal.closest('li');
+            }
+
+            currentId = parent[0].id;
             permalink.href = '#' + currentId;
             permalink.innerHTML = 'Permalink';
             $permalink = $(permalink);
