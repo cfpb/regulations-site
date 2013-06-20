@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView) {
+define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
     'use strict';
     return {
         getTree: function($obj) {
@@ -26,6 +26,11 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             $('#menu-link, #toc-close').on('click', function() {
                 $('#menu, #reg-content, #menu-link, #content-header').toggleClass('active');
                 return false;
+            });
+
+            var yums = new Konami(function() {
+                document.getElementById('menu-link').className += ' hamburgerify';
+                $('.inline-interpretation .expand-button').addClass('carrotify');
             });
         },
 
