@@ -14,8 +14,9 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'si
 
             this.header = new SidebarHeadView({el: '#sidebar-subhead'});
 
-            this.contactInfo = this.$el.innerHTML;
+            this.contactInfo = this.el.innerHTML.toString();
         },
+
         render: function() {},
 
         insertChild: function(el) {
