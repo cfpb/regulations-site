@@ -20,24 +20,29 @@
     padding-right: 2em;
 }
 
-.main-content {
-    border-right: 1px solid @medium_gray;
-    padding-top: 100px;
-
-    h1:first-child {
-        margin-top: 1em;
-    }
+.main-content,
+.secondary-content {
+    margin-top: 100px;
+    padding-top: 1.25em;
 }
 
 .secondary,
 .secondary-content {
-    width: 33%; /*318px;*/
+    width: 30.5%;
+    padding-left: 2.5%; /*318px;*/
     float: left;
 }
 
 .reg-text > section {
     border-bottom: 2px solid @medium_gray;
     /*padding: 3.75em 0 2.75em 0;*/
+}
+
+.reg-section li > p,
+.appendix-section li > p,
+.supplement-section li > p {
+    padding-left: 90px;
+    margin-left: -90px;
 }
 
 /**
@@ -65,4 +70,10 @@
     -webkit-background-clip:padding-box;
     -moz-background-clip:padding;
     background-clip:padding-box;
+}
+
+/* reset for inline interpretations */
+.inline-interpretation-content .level-1 li {
+    border-top: 0px;
+    margin-top: 0px;
 }

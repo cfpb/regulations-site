@@ -3,10 +3,11 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'r
     var SubHeadView = Backbone.View.extend({
         initialize: function() {
             Dispatch.on('activeSection:change', this.changeTitle, this);
+            this.$activeTitle = this.$el.find('#active-title');
         },
 
         changeTitle: function(id) {
-            this.$el.html('<em class="header-label">' + RegsHelpers.idToRef(id) + '</em>');
+            this.$activeTitle.html('<em class="header-label">' + RegsHelpers.idToRef(id) + '</em>');
 
             return this;
         }
