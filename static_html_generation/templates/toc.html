@@ -1,7 +1,10 @@
-<nav {% if top_toc %}id="menu" {% endif %}class="panel" role="navigation">
+<nav {% if top_toc %}id="menu" class="panel"{% endif %} role="navigation">
     <ol class="{{nav_class}}"{% if top_toc %} id="table-of-contents"{% endif %}>
         {% for item in toc_items %}
             <li><a href="{{item.url}}">{{item.label}}</a></li>
         {% endfor %}
     </ol>
+    {% if top_toc %}
+        <div id="toc-close" class="close-button">Close</div>
+    {% endif %}
 </nav>

@@ -6,13 +6,13 @@
 
 body {
     font-size: 11pt;
-    line-height: 18pt;
+    line-height: 14pt;
 }
 
 @page {
     margin-top: .5in;
     margin-bottom: .5in;
-    margin-left: 1.5in;
+    margin-left: 1in;
     margin-right: 1in;
 }
 
@@ -29,11 +29,17 @@ p {
     orphans: 3;
 }
 
+.reg-section,
+.appendix-section,
+.supplement-section {
+    page-break-after: always;
+}
+
 /* ==========================================================================
  hidden elements
  ========================================================================== */
 
- img, nav, #table-of-contents, #menu-link, .inline-interpretation, .inline-interpretation-content, .reg-header, .main-head, .sub-head {
+ img, nav, #table-of-contents, #menu-link, .inline-interpretation, .inline-interpretation-content, .hidden, .reg-header, .main-head, .sub-head {
     display: none;
  }
 
@@ -139,6 +145,10 @@ a[href^="http://"] {
 .supplement-section:before  {
     height: 0px; 
     margin: 0px; 
+}
+
+.reg-text > section {
+    border-bottom: none;
 }
 
 /* Reset internal navigation offsets */

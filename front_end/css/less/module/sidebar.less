@@ -2,7 +2,25 @@
     font-size: .875em;
 
     .chunk {
-        margin-top: 2.214285714em; /* 14/31px*/
+        margin-top: 1em;
+        /* wha? I can't let this one go */
+        /* margin-top: 2.214285714em; */ /* 14/31px*/
+
+        a:link,
+        a:visited {
+            color: @pacific;
+            text-decoration: none;
+            border: none;
+        }
+
+        a:hover,
+        a:active {
+            border-bottom: 1px solid;
+        }
+
+        &.hidden {
+            margin-top: 0;
+        }
     }
 
     .effective,
@@ -17,6 +35,17 @@
         letter-spacing: 1px;
         color: @dark_gray;
         .avenir-next-demi;
+
+        &.expandable {
+            margin: 1.5em 0;
+            cursor: pointer;
+            padding-right: 20px;
+            background: url(../img/plus.png) no-repeat right;
+        }
+
+        &.open {
+            background: url(../img/minus.png) no-repeat right;
+        }
     }
 
     h6 {
@@ -32,18 +61,6 @@
     li {
         margin: 0;
         padding: 0;
-    }
-
-    a:link,
-    a:visited {
-        color: @pacific;
-        text-decoration: none;
-        border: none;
-    }
-
-    a:hover,
-    a:active {
-        border-bottom: 1px solid;
     }
 }
 
@@ -88,7 +105,6 @@
 
 .open-definition > * > .active-term { /* style every definition that is a child of .open-definition */
     .avenir-next-demi;
-    text-transform: uppercase;
 }
 
 .open-definition ol {
