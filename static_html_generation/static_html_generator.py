@@ -19,6 +19,7 @@ from layers.layers_applier import ParagraphLayersApplier
 from layers.layers_applier import SearchReplaceLayersApplier
 from layers.paragraph_markers import ParagraphMarkersLayer
 from layers.toc_applier import TableOfContentsLayer
+from layers.graphics import GraphicsLayer
 import notices
 from html_builder import HTMLBuilder
 
@@ -94,6 +95,9 @@ if __name__ == "__main__":
 
     meta = api.layer("meta", regulation, version)
     p_applier.add_layer(MetaLayer(meta))
+
+    g = api.layer("graphics", regulation, version)
+    s_applier.add_layer(GraphicsLayer(g))
     
     makers_markup = HTMLBuilder(inline_applier, p_applier, s_applier)
     intl.copy_builder(makers_markup)
