@@ -83,25 +83,25 @@
           </div>
           {% endif %}
 
-          {% if tree.meta.last_notice %}
-          <div class="notice chunk">
-             <h5>Most Recent FR Notice</h5>
-             <a href="{{ tree.meta.last_notice.url }}">{{ tree.meta.last_notice.title }}</a>
-             <ul>
-                 <li><strong>Published:</strong> {{ tree.meta.last_notice.published|date }}</li>
-                 <li><strong>Action:</strong> {{ tree.meta.last_notice.action }}</li>
-                 <li><strong>Effective:</strong> {{ tree.meta.last_notice.effective|date }}</li>
-             </ul>
-          </div>
-          {% endif %}
+        {% if tree.meta.last_notice %}
+        <h5 class="expandable">Most Recent FR Notice</h5>
+        <div class="notice chunk hidden">
+            <a href="{{ tree.meta.last_notice.url }}">{{ tree.meta.last_notice.title }}</a>
+            <ul>
+                <li><strong>Published:</strong> {{ tree.meta.last_notice.published|date }}</li>
+                <li><strong>Action:</strong> {{ tree.meta.last_notice.action }}</li>
+                <li><strong>Effective:</strong> {{ tree.meta.last_notice.effective|date }}</li>
+            </ul>
+        </div>
+        {% endif %}
 
-          {% if tree.meta.effective %}
-          <div class="effective chunk">
-             <h5>Current Effective Law</h5>
-             <a href="{{ tree.meta.effective.url }}">{{ tree.meta.effective.title }}</a>
-             Electronic Code of Federal Regulations
-          </div>
-          {% endif %}
+        {% if tree.meta.effective %}
+        <h5 class="expandable">Current Effective Law</h5>
+        <div class="effective chunk hidden">
+            <a href="{{ tree.meta.effective.url }}">{{ tree.meta.effective.title }}</a>
+            Electronic Code of Federal Regulations
+        </div>
+        {% endif %}
 
         </div> <!-- /.secondary-content -->
 
