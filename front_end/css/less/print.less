@@ -33,7 +33,7 @@ p {
  hidden elements
  ========================================================================== */
 
- img, nav, #table-of-contents, #menu-link, .inline-interpretation, .reg-header {
+ img, nav, #table-of-contents, #menu-link, .inline-interpretation, .inline-interpretation-content, .reg-header, .main-head, .sub-head {
     display: none;
  }
 
@@ -83,7 +83,7 @@ body, .wrap {
 }
 
 .level-1 .key-term {
-    font-size: 16pt;
+    font-size: 14pt;
     line-height: 23pt;
 }
 
@@ -120,6 +120,7 @@ a[href^="http://"] {
 
 .level-1 > li {
     border-bottom: none;
+    padding: .5em 0 .5em 0;
 }
 
 .main-content {
@@ -131,6 +132,22 @@ a[href^="http://"] {
     position: relative;
     padding-left: 0px;
     width: 0px;
+}
+
+.reg-section:before,
+.appendix-section:before,
+.supplement-section:before  {
+    height: 0px; 
+    margin: 0px; 
+}
+
+/* Reset internal navigation offsets */
+
+.reg-section .level-1 li,
+.appendix-section .level-1 li,
+.supplement-section .level-1 li {
+    border-top: 0px;
+    margin-top: 0px;
 }
 
 } /* /@media print */

@@ -20,17 +20,16 @@
     padding-right: 2em;
 }
 
-.main-content {
-    padding-top: 100px;
-
-    h1:first-child {
-        margin-top: 1em;
-    }
+.main-content,
+.secondary-content {
+    margin-top: 100px;
+    padding-top: 1.25em;
 }
 
 .secondary,
 .secondary-content {
-    width: 33%; /*318px;*/
+    width: 30.5%;
+    padding-left: 2.5%; /*318px;*/
     float: left;
 }
 
@@ -71,4 +70,10 @@
     -webkit-background-clip:padding-box;
     -moz-background-clip:padding;
     background-clip:padding-box;
+}
+
+/* reset for inline interpretations */
+.inline-interpretation-content .level-1 li {
+    border-top: 0px;
+    margin-top: 0px;
 }
