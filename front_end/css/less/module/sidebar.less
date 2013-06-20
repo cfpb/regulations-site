@@ -3,6 +3,18 @@
 
     .chunk {
         margin-top: 2.214285714em; /* 14/31px*/
+
+        a:link,
+        a:visited {
+            color: @pacific;
+            text-decoration: none;
+            border: none;
+        }
+
+        a:hover,
+        a:active {
+            border-bottom: 1px solid;
+        }
     }
 
     .effective,
@@ -32,18 +44,6 @@
     li {
         margin: 0;
         padding: 0;
-    }
-
-    a:link,
-    a:visited {
-        color: @pacific;
-        text-decoration: none;
-        border: none;
-    }
-
-    a:hover,
-    a:active {
-        border-bottom: 1px solid;
     }
 }
 
@@ -88,7 +88,6 @@
 
 .open-definition > * > .active-term { /* style every definition that is a child of .open-definition */
     .avenir-next-demi;
-    text-transform: uppercase;
 }
 
 .open-definition ol {
