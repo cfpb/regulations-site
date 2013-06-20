@@ -12,7 +12,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             'click .definition': 'definitionLink',
             'click .expand-button': 'expandInterp',
             'click .inline-interpretation:not(.open)': 'expandInterp',
-            'mouseenter p': 'showPermalink'
+            'mouseenter p': 'showPermalink',
+            'mouseenter h2.section-number': 'showPermalink'
         },
 
         initialize: function() {
@@ -23,10 +24,11 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
 
             this.$sections = {};
-            this.$contentHeader = $('#content-subhead');
-            this.$contentContainer = this.$el.children().last().children();
+            this.$contentHeader = $('header.reg-header');
+            this.$contentContainer = this.$el.find('.level-1 li[id], .reg-section, .appendix-section, .supplement-section');
             this.activeSection = '';
             this.$activeSection = '';
+            this.$window = $(window);
 
             len = this.$contentContainer.length;
             for (i = 0; i < len; i++) {
@@ -35,17 +37,10 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         },
 
         checkActiveSection: function() {
-            var headerLoc = this.$contentHeader.offset().top,
-                len = this.$contentContainer.length - 1,
-                sectionHeader;
+            var len = this.$contentContainer.length - 1;
 
             for (var i = 0; i <= len; i++) {
-                sectionHeader = parseInt(this.$sections[i].find('h2').first().css('padding'), 10) +
-                                this.$sections[i].height() +
-                                parseInt(this.$sections[i].find('h2').first().css('margin'), 10);
-
-                // 100 = .reg-section:before negative margin
-                if (this.$sections[i].offset().top >= headerLoc + 100 - sectionHeader) {
+                if (this.$sections[i].offset().top + this.$contentHeader.height() >= this.$window.scrollTop()) {
                     if (_.isEmpty(this.activeSection) || (this.activeSection !== this.$sections[i].id)) {
                         this.activeSection = this.$sections[i][0].id;
                         this.$activeSection = this.$sections[i][0];
@@ -131,20 +126,26 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         },
 
         showPermalink: function(e) {
-
             $('.permalink-marker').remove();
 
             var permalink = document.createElement('a'),
                 currentLocal = $(e.currentTarget),
-                parent = currentLocal.closest('li'),
-                currentId = parent.attr('id'),
-                $permalink;
+                currentId, $permalink, parent;
 
-            permalink.href = '#' + currentId;
-            permalink.innerHTML = 'Permalink';
-            $permalink = $(permalink);
+            if (e.currentTarget.tagName.toUpperCase() === 'H2') {
+                parent = currentLocal.parent('.reg-section');
+            }
+            else {
+                parent = currentLocal.closest('li');
+            }
 
-            if (typeof currentId !== 'undefined') {
+            if (typeof parent[0] !== 'undefined') {
+                currentId = parent[0].id;
+
+                permalink.href = '#' + currentId;
+                permalink.innerHTML = 'Permalink';
+                $permalink = $(permalink);
+
                 $(currentLocal).prepend($permalink);
                 $permalink.addClass('permalink-marker');
             }

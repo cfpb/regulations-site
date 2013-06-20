@@ -12,7 +12,6 @@ views/regs-view.js
 views/definition-view.js
 views/content-view.js
 views/sub-head-view.js
-views/regs-fixed-el-view.js
 views/toc-view.js
 views/sidebar-head-view.js
 views/sidebar-view.js
