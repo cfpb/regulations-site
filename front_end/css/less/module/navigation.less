@@ -39,7 +39,7 @@
     background-color: #f6f6f5;
     z-index: 999999;
     overflow-y: scroll;
-    height: 84%; /* offsets the header so that nav isn't hidden at the bottom of the TOC */
+    height: 93%; /* offsets the header so that nav isn't hidden at the bottom of the TOC */
     border-top: #d0d0ce 3px solid;
     border-right: #d0d0ce 2px solid;
     margin: 0;
@@ -53,7 +53,32 @@
        -moz-transition: left 300ms ease; 
         -ms-transition: left 300ms ease; 
          -o-transition: left 300ms ease; 
-            transition: left 300ms ease; 
+            transition: left 300ms ease;
+
+    .close-button {
+        padding: 10px;
+        bottom: 0px;
+        left: -272px;
+        height: 32px;
+        width: 200px;
+        /*background-color: @light_field;*/
+        background: @light_field url(../img/close.png) 91% 11px no-repeat;
+        color: @dark_gray;
+        text-transform: uppercase;
+        font-size: .857142857em; /*12px*/
+        cursor: pointer;
+
+        transform: translate3d(0,0,0);
+    -webkit-transition: left 300ms ease; 
+       -moz-transition: left 300ms ease; 
+        -ms-transition: left 300ms ease; 
+         -o-transition: left 300ms ease; 
+            transition: left 300ms ease;
+    }
+
+    ol {
+        padding-bottom: 152px; /*offset the header & close button */
+    }
 }
 
 /*.no-js .panel {
@@ -65,17 +90,7 @@
 
     .close-button {
         position: fixed;
-        padding: 10px;
-        bottom: 0px;
-        left: 0;
-        height: 40px;
-        width: 15.625em;
-        background-color: @light_field;
-        background-image: url(../img/close.png) center right no-repeat;
-        color: @dark_gray;
-        text-transform: uppercase;
-        font-size: .857142857em; /*12px*/
-        cursor: pointer;
+        left: 0px;
     }
 }
 

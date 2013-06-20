@@ -177,9 +177,11 @@ a.definition:active {
 }
 
 .appendix-subheading {
-    font-size: 1.5em; /* 24/16=1.5 */
+    font-size: 1.375em; /* 22/16=1.375 */
     line-height: 1.25;
-    padding-top: 20px;
+    padding: 0;
+    margin: 0;
+    text-transform: none;
 }
 
 /* list styles */
@@ -187,6 +189,11 @@ a.definition:active {
 .level-1 > li {
     border-bottom: 1px solid @light_field;
     padding: 1em 0 1em 0;
+}
+
+.supplement-section .level-1 > li {
+    border-bottom: none;
+    padding: 0px;
 }
 
 .level-1 > li:last-child {
@@ -202,12 +209,12 @@ a.definition:active {
 }
 
 /* set markers & key-terms to Avenir Next Demi */
-.reg-section ol, dfn {
+.reg-text ol, dfn {
   .avenir-next-demi;
 }
 
 /* Set text regulation text to Georgia */
-.reg-section li p {
+.reg-text li p {
   font-family: @body-font;
   font-weight: 400;
 }
@@ -222,6 +229,11 @@ a.definition:active {
 .level-1 .key-term {
     font-size: 1.375em; /* 24px / 16px = 1.5em */
     line-height: 1.5; /* 30px / 24px = 1.25 */
+}
+
+.supplement-section .level-1 .key-term {
+    font-size: 1em;
+    text-transform: uppercase;
 }
 
 .level-2 .key-term {
@@ -250,4 +262,8 @@ a.definition:active {
     font-family: Arial, sans-serif;
     font-size: 0.875em; /* 14/16 = .875 */
     line-height: 1.4;
+}
+
+.supplement-section section {
+    padding-bottom: 2em;
 }
