@@ -29,6 +29,12 @@ p {
     orphans: 3;
 }
 
+.reg-section,
+.appendix-section,
+.supplement-section {
+    page-break-after: always;
+}
+
 /* ==========================================================================
  hidden elements
  ========================================================================== */
@@ -139,6 +145,10 @@ a[href^="http://"] {
 .supplement-section:before  {
     height: 0px; 
     margin: 0px; 
+}
+
+.reg-text > section {
+    border-bottom: none;
 }
 
 /* Reset internal navigation offsets */
