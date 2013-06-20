@@ -25,11 +25,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                 return $(this).text().toLowerCase() === clickTerm;
             }).addClass('active-term');
 
-
-
             if (typeof interp[0] !== 'undefined') {
-                interpId = $(interp[0]).data('interpFor');
-                this.$el.find('.inline-interpretation').remove();
+                interpId = $('#' + this.model.id).data('interpId');
+                interp.remove();
 
                 iHref = '#' + interpId;
                 iText = 'Related commentary';
