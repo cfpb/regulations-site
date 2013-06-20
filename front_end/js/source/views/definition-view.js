@@ -10,7 +10,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
             var interp = this.$el.find('.inline-interpretation'),
                 keyTerm = this.$el.find('dfn.key-term'),
                 dHref = '#' + this.model.id,
-                dText = '§ ' + this.model.id,
+                dText = RegsHelpers.idToRef(this.model.id),
                 classStr = 'continue-link internal',
                 $dLink = RegsHelpers.fastLink(dHref, dText, classStr),
                 clickTerm = this.model.linkText,
