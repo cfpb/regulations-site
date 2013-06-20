@@ -77,22 +77,15 @@
 
         <div id="sidebar" class="secondary-content">
           {% if tree.meta.contact_info %}
-          <h5>Contact Information:</h5>
+          <h5>Questions</h5>
           <div class="chunk">
              {{ tree.meta.contact_info | safe}}
-          </div>
-          {% endif %}
-          {% if tree.meta.effective %}
-          <div class="effective chunk">
-             <h5>Current Effective Law:</h5>
-             <a href="{{ tree.meta.effective.url }}">{{ tree.meta.effective.title }}</a>
-             Electronic Code of Federal Regulations
           </div>
           {% endif %}
 
           {% if tree.meta.last_notice %}
           <div class="notice chunk">
-             <h5>Most Recent Notice:</h5>
+             <h5>Most Recent FR Notice</h5>
              <a href="{{ tree.meta.last_notice.url }}">{{ tree.meta.last_notice.title }}</a>
              <ul>
                  <li><strong>Published:</strong> {{ tree.meta.last_notice.published|date }}</li>
@@ -101,6 +94,15 @@
              </ul>
           </div>
           {% endif %}
+
+          {% if tree.meta.effective %}
+          <div class="effective chunk">
+             <h5>Current Effective Law</h5>
+             <a href="{{ tree.meta.effective.url }}">{{ tree.meta.effective.title }}</a>
+             Electronic Code of Federal Regulations
+          </div>
+          {% endif %}
+
         </div> <!-- /.secondary-content -->
 
         </div>
