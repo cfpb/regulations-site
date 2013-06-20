@@ -76,13 +76,18 @@
         </div> <!-- /.main-content -->
 
         <div id="sidebar" class="secondary-content">
-            <h5>Questions</h5>
+            <h5>Contact Information:</h5>
           <div class="chunk">
              {{ meta.contact_info | safe}}
           </div>
+          <div class="effective chunk">
+             <h5>Current Effective Law:</h5>
+             <a href="{{ meta.effective.url }}">{{ meta.effective.title }}</a>
+             Electronic Code of Federal Regulations
+          </div>
 
           <div class="notice chunk">
-             <h5>Most Recent FR Notice</h5>
+             <h5>Most Recent Notice:</h5>
              <a href="{{ meta.last_notice.url }}">{{ meta.last_notice.title }}</a>
              <ul>
                  <li><strong>Published:</strong> {{ meta.last_notice.published }}</li>
@@ -90,13 +95,6 @@
                  <li><strong>Effective:</strong> {{ meta.last_notice.effective }}</li>
              </ul>
           </div>
-
-          <div class="effective chunk">
-             <h5>Current Effective Law</h5>
-             <a href="{{ meta.effective.url }}">{{ meta.effective.title }}</a>
-             Electronic Code of Federal Regulations
-          </div>
-
         </div> <!-- /.secondary-content -->
 
         </div>
