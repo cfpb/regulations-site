@@ -21,11 +21,11 @@
 
         <header class="reg-header">
         <div class="main-head">
+            <a href="#menu" id="menu-link" class="toc-nav-link slide">Table of Contents</a>
             <ul class="wrap group">
             <li class="main">
             <nav id="doc-navigation" class="header-nav">
                 <ul>
-                    <li><a href="#menu" id="menu-link" class="toc-nav-link slide">Table of Contents</a></li>
                     <li><h2 class="reg-title-header"><a href="#">{{tree.header|title}}</a><span class="beta-label">Beta</span></h2></li>
                 </ul>
             </nav>
@@ -67,23 +67,30 @@
                     </section>
                 {% endfor %}
             {% endif %}
-        </section>
-        </div>
+        </section> <!-- /.reg-text -->
+        </div> <!-- /.main-content -->
 
         <div id="sidebar" class="secondary-content">
             <h5>Contact Information:</h5>
+          <div class="chunk">
              {{ meta.contact_info | safe}}
+          </div>
+          <div class="effective chunk">
              <h5>Current Effective Law:</h5>
              <a href="{{ meta.effective.url }}">{{ meta.effective.title }}</a>
              Electronic Code of Federal Regulations
+          </div>
+
+          <div class="notice chunk">
              <h5>Most Recent Notice:</h5>
              <a href="{{ meta.last_notice.url }}">{{ meta.last_notice.title }}</a>
              <ul>
-                 <li><label>Published</label> {{ meta.last_notice.published }}</li>
-                 <li><label>Action</label> {{ meta.last_notice.action }}</li>
-                 <li><label>Effective</label> {{ meta.last_notice.effective }}</li>
+                 <li><strong>Published:</strong> {{ meta.last_notice.published }}</li>
+                 <li><strong>Action:</strong> {{ meta.last_notice.action }}</li>
+                 <li><strong>Effective:</strong> {{ meta.last_notice.effective }}</li>
              </ul>
-        </div>
+          </div>
+        </div> <!-- /.secondary-content -->
 
         </div>
     {% if GOOGLE_ANALYTICS_SITE and GOOGLE_ANALYTICS_ID %}
