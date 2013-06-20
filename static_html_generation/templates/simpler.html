@@ -16,6 +16,7 @@
         <!--[if lt IE 9]>
             <script src="front_end/js/source/lib/html5shiv.js"></script>
             <script src="front_end/js/source/lib/html5shiv-printshiv.js"></script>
+            <script src="front_end/js/source/lib/respond.js"></script>
         <![endif]--> 
     </head>
     <body>
@@ -41,7 +42,7 @@
             <ul id="content-header" class="wrap group">
                 <li id="content-subhead" class="main">
                     <span id="active-title"></span>
-                    <span class="effective-date">EFFECTIVE 10/28/2013</span>
+                    <span class="effective-date">EFFECTIVE {{ tree.meta.effective.date|date }}</span>
                 </li>
                 <li id="sidebar-subhead">
                     <h2> </h2>
@@ -75,25 +76,31 @@
         </div> <!-- /.main-content -->
 
         <div id="sidebar" class="secondary-content">
-            <h5>Contact Information:</h5>
+          {% if tree.meta.contact_info %}
+          <h5>Contact Information:</h5>
           <div class="chunk">
-             {{ meta.contact_info | safe}}
+             {{ tree.meta.contact_info | safe}}
           </div>
+          {% endif %}
+          {% if tree.meta.effective %}
           <div class="effective chunk">
              <h5>Current Effective Law:</h5>
-             <a href="{{ meta.effective.url }}">{{ meta.effective.title }}</a>
+             <a href="{{ tree.meta.effective.url }}">{{ tree.meta.effective.title }}</a>
              Electronic Code of Federal Regulations
           </div>
+          {% endif %}
 
+          {% if tree.meta.last_notice %}
           <div class="notice chunk">
              <h5>Most Recent Notice:</h5>
-             <a href="{{ meta.last_notice.url }}">{{ meta.last_notice.title }}</a>
+             <a href="{{ tree.meta.last_notice.url }}">{{ tree.meta.last_notice.title }}</a>
              <ul>
-                 <li><strong>Published:</strong> {{ meta.last_notice.published }}</li>
-                 <li><strong>Action:</strong> {{ meta.last_notice.action }}</li>
-                 <li><strong>Effective:</strong> {{ meta.last_notice.effective }}</li>
+                 <li><strong>Published:</strong> {{ tree.meta.last_notice.published|date }}</li>
+                 <li><strong>Action:</strong> {{ tree.meta.last_notice.action }}</li>
+                 <li><strong>Effective:</strong> {{ tree.meta.last_notice.effective|date }}</li>
              </ul>
           </div>
+          {% endif %}
         </div> <!-- /.secondary-content -->
 
         </div>
