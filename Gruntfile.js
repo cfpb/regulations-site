@@ -105,6 +105,9 @@ module.exports = function(grunt) {
                 backbone: {
                   deps: ['underscore'],
                   exports: 'Backbone'
+                },
+                konami: {
+                    exports: 'Konami'
                 }
               }
             }
@@ -157,6 +160,9 @@ module.exports = function(grunt) {
                     backbone: {
                         deps: ['underscore', 'jquery'],
                         exports: 'Backbone'
+                    },
+                    konami: {
+                        exports: 'Konami'
                     }
                 }
             }

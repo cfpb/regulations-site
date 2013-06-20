@@ -28,9 +28,11 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
                 return false;
             });
 
-            var yums = new Konami(function() {
+            new Konami(function() {
                 document.getElementById('menu-link').className += ' hamburgerify';
                 $('.inline-interpretation .expand-button').addClass('carrotify');
+                $('#about-tool').html('Made with <span style="color: red"><3</span> by:');
+                $('#about-reg').html('Find our brilliant attorneys at:');
             });
         },
 

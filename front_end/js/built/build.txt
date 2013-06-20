@@ -15,5 +15,6 @@ views/sub-head-view.js
 views/toc-view.js
 views/sidebar-head-view.js
 views/sidebar-view.js
+lib/konami.js
 app-init.js
 regulations.js

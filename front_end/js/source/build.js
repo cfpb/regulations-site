@@ -22,6 +22,9 @@
         backbone: {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
+        },
+        konami: {
+            exports: 'Konami'
         }
     },
     dir: 'front_end/js/built',
