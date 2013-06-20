@@ -31,7 +31,7 @@
  table of contents
  ========================================================================== */
 
-.regulation-nav {
+.panel {
     position: fixed;
     top: 60px;
     left: -272px; /* 250px + 20px padding + 2px border*/
@@ -46,14 +46,37 @@
     padding: 0 0 60px 0; /*add padding at the bottom of the TOC to accomodate for scrollbars */
     .avenir-next-demi;
     font-size: 0.875em; /*14px*/
+
+    /* CSS Transitions for Slide Effect */
+    transform: translate3d(0,0,0);
+    -webkit-transition: left 300ms ease; 
+       -moz-transition: left 300ms ease; 
+        -ms-transition: left 300ms ease; 
+         -o-transition: left 300ms ease; 
+            transition: left 300ms ease; 
 }
 
 /*.no-js .panel {
     left: 0;
 }*/
 
-.regulation-nav.active{
+.panel.active{
     left: 0;
+
+    .close-button {
+        position: fixed;
+        padding: 10px;
+        bottom: 0px;
+        left: 0;
+        height: 40px;
+        width: 15.625em;
+        background-color: @light_field;
+        background-image: url(../img/close.png) center right no-repeat;
+        color: @dark_gray;
+        text-transform: uppercase;
+        font-size: .857142857em; /*12px*/
+        cursor: pointer;
+    }
 }
 
 /*#reg-content.active,
@@ -85,15 +108,7 @@
     }
 }*/
 
-/* CSS Transitions for Slide Effect */
-.regulation-nav {
-    transform: translate3d(0,0,0);
-    -webkit-transition: left 300ms ease; 
-       -moz-transition: left 300ms ease; 
-        -ms-transition: left 300ms ease; 
-         -o-transition: left 300ms ease; 
-            transition: left 300ms ease; 
-}
+
 
 /* TOC titles */
 .panel h2 {
@@ -134,7 +149,6 @@
 
 .toc-nav-link {
     text-indent: -9999px;
-    display: inline-block;
     position: absolute;
     left: 0;
     top: 0;
