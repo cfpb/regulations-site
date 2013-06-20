@@ -111,11 +111,11 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             e.stopPropagation();
             var button;
 
-            if (e.target.tagName.toUpperCase() === 'SECTION') {
-                button = $(e.target).find('.expand-button');
+            if (e.currentTarget.tagName.toUpperCase() === 'SECTION') {
+                button = $(e.currentTarget).find('.expand-button');
             }
             else {
-                button = $(e.target);
+                button = $(e.currentTarget);
             }
 
             button.parent().toggleClass('open');

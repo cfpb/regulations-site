@@ -10,7 +10,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
             var interp = this.$el.find('.inline-interpretation'),
                 keyTerm = this.$el.find('dfn.key-term'),
                 dHref = '#' + this.model.id,
-                dText = '§ ' + this.model.id,
+                dText = RegsHelpers.idToRef(this.model.id),
                 classStr = 'continue-link internal',
                 $dLink = RegsHelpers.fastLink(dHref, dText, classStr),
                 clickTerm = this.model.linkText,
@@ -25,11 +25,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                 return $(this).text().toLowerCase() === clickTerm;
             }).addClass('active-term');
 
-
-
             if (typeof interp[0] !== 'undefined') {
-                interpId = $(interp[0]).data('interpFor');
-                this.$el.find('.inline-interpretation').remove();
+                interpId = $('#' + this.model.id).data('interpId');
+                interp.remove();
 
                 iHref = '#' + interpId;
                 iText = 'Related commentary';
