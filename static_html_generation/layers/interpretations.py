@@ -24,13 +24,15 @@ class InterpretationsLayer(object):
 
             if interp_node:
                 interp_node['interp_for_markup_id'] = text_index
-                reference_parts = reference.split('-')
-                #   last two parts of the reference are section + paragraphs
-                interp_node['interp_label'] = ''.join(reference_parts[-2:])
+                ref_parts = reference.split('-')
+                if len(ref_parts) == 3:   # Part-Interpretations-Section
+                    interp_node['interp_label'] = ref_parts[2]
+                else: # Part-Interpretations-Section-Paragraphs
+                    interp_node['interp_label'] = ''.join(ref_parts[-2:])
                 self.builder.tree = interp_node
                 self.builder.generate_html()
                 markup = self.builder.render_markup()
                 return 'interp', {
                     'markup': markup,
-                    'markup_id': '-'.join(to_markup_id(reference_parts))
+                    'markup_id': '-'.join(to_markup_id(ref_parts))
                 }
