@@ -25,8 +25,10 @@ class InterpretationsLayer(object):
             if interp_node:
                 interp_node['interp_for_markup_id'] = text_index
                 ref_parts = reference.split('-')
-                if len(ref_parts) == 3:   # Part-Interpretations-Section
+                if len(ref_parts) == 3:   # Part-Interp-Section/Appendix
                     interp_node['interp_label'] = ref_parts[2]
+                elif ref_parts[2].isalpha(): # Part-Interp-Appendix-Segment
+                    interp_node['interp_label'] = '-'.join(ref_parts[-2:])
                 else: # Part-Interpretations-Section-Paragraphs
                     interp_node['interp_label'] = ''.join(ref_parts[-2:])
                 self.builder.tree = interp_node
