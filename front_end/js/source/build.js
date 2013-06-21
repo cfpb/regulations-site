@@ -11,7 +11,8 @@
         'toc-view': './views/toc-view',
         'sidebar-view': './views/sidebar-view',
         'sidebar-head-view': './views/sidebar-head-view',
-        'content-view': './views/content-view'
+        'content-view': './views/content-view',
+        'konami': './lib/konami'
     },
     shim: {
         underscore: {
@@ -21,6 +22,9 @@
         backbone: {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
+        },
+        konami: {
+            exports: 'Konami'
         }
     },
     dir: 'front_end/js/built',

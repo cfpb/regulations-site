@@ -2,7 +2,9 @@
     font-size: .875em;
 
     .chunk {
-        margin-top: 2.214285714em; /* 14/31px*/
+        margin-top: 1em;
+        /* wha? I can't let this one go */
+        /* margin-top: 2.214285714em; */ /* 14/31px*/
 
         a:link,
         a:visited {
@@ -14,6 +16,10 @@
         a:hover,
         a:active {
             border-bottom: 1px solid;
+        }
+
+        &.hidden {
+            margin-top: 0;
         }
     }
 
@@ -29,6 +35,17 @@
         letter-spacing: 1px;
         color: @dark_gray;
         .avenir-next-demi;
+
+        &.expandable {
+            margin: 1.5em 0;
+            cursor: pointer;
+            padding-right: 20px;
+            background: url(../img/plus.png) no-repeat right;
+        }
+
+        &.open {
+            background: url(../img/minus.png) no-repeat right;
+        }
     }
 
     h6 {
