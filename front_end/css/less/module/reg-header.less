@@ -116,6 +116,15 @@
     background: url(../img/exclamation.png) no-repeat right;
 }
 
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .effective-date {
+        background: url(../img/exclamation@2x.png) no-repeat right;
+        background-size: 13px 13px;
+    }
+}
+
 .header-label {
     .avenir-next-bold;
     font-size: 1em;
@@ -144,5 +153,14 @@
         width: 15px;
         height: 15px;
         cursor: pointer;
+    }
+
+     @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .close-button {
+            background: url(../img/close@2x.png) no-repeat 0 0;
+            background-size: 15px 15px;
+        }
     }
 }

@@ -75,6 +75,15 @@
             transition: left 300ms ease;
     }
 
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .close-button {
+            background: @light_field url(../img/close@2x.png) 89% 11px no-repeat;
+            background-size: 15px 15px;
+        }
+    }
+
     ol {
         margin: 0;
         padding-bottom: 152px; /*offset the header & close button */
