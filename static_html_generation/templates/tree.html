@@ -3,7 +3,7 @@
     {% for doc_num, ref in node.analyses %}
     <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
     {% endfor %}
-{{node.marked_up|safe|linebreaks}}
+{{node.marked_up|safe|linebreaksbr}}
 </p>
 {% else %}
     {% for doc_num, ref in node.analyses %}

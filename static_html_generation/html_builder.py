@@ -76,6 +76,7 @@ class HTMLBuilder():
                 node['header_num'] = match.group(2)
                 node['header_title'] = match.group(3)
 
+        node['text'] = node['text'].strip()
         node['label']['parts'] = to_markup_id(node['label']['parts'])
         node['markup_id'] = "-".join(node['label']['parts'])
         node['tree_level'] = len(node['label']['parts']) - 1
@@ -86,7 +87,7 @@ class HTMLBuilder():
         node['list_level'] = list_level
         node['list_type'] = list_type
 
-        if len(node['text'].strip()):
+        if len(node['text']):
             inline_elements = self.inline_applier.get_layer_pairs(node['label']['text'], node['text'])
             search_elements = self.search_applier.get_layer_pairs(node['label']['text'])
 

@@ -16,7 +16,7 @@
                 {% for doc_num, ref in level_one.analyses %}
                 <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
                 {% endfor %}
-                {{level_one.marked_up|safe|linebreaks}} 
+                {{level_one.marked_up|safe|linebreaksbr}} 
             </p>
             {% else %}
                 {% for doc_num, ref in level_one.analyses %}
