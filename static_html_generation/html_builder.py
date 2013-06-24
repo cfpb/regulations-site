@@ -76,6 +76,7 @@ class HTMLBuilder():
                 node['header_num'] = match.group(2)
                 node['header_title'] = match.group(3)
 
+        node['text'] = node['text'].strip()
         node['label']['parts'] = to_markup_id(node['label']['parts'])
         node['markup_id'] = "-".join(node['label']['parts'])
         node['tree_level'] = len(node['label']['parts']) - 1
@@ -86,7 +87,7 @@ class HTMLBuilder():
         node['list_level'] = list_level
         node['list_type'] = list_type
 
-        if len(node['text'].strip()):
+        if len(node['text']):
             inline_elements = self.inline_applier.get_layer_pairs(node['label']['text'], node['text'])
             search_elements = self.search_applier.get_layer_pairs(node['label']['text'])
 
@@ -123,27 +124,7 @@ class HTMLBuilder():
             'titles': self.get_title(),
             'env': self.get_env_dir(),
             'GOOGLE_ANALYTICS_SITE':app_settings.GOOGLE_ANALYTICS_SITE, 
-            'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID,
-            'meta': {
-                'contact_info': ('<h6>Questions?</h6>About interpretation '
-                    + 'or application: <a href="mailto:something@'
-                    + 'example.com">something@example.com</a><br />'
-                    + '(555) 555-5555'
-                    + '<h6>Feedback or bug report?</h5>'
-                    + 'About the eRegs tool: <a href="mailto:other@'
-                    + 'example.com">other@example.com</a>'),
-                'effective': {
-                    'url': 'http://example.com',
-                    'title': 'Part 2828 - Regulation (Regulation R)'
-                },
-                'last_notice': {
-                    'url': 'http://example.com',
-                    'title': 'Regulation Update',
-                    'published': '5/22/2013',
-                    'action': 'Final Rule; Official Interpretation',
-                    'effective': '10/28/2013'
-                },
-            },
+            'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID
         })
         return main_template.render(c) 
 

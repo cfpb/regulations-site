@@ -7,6 +7,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
 
         initialize: function() {
             Dispatch.on('activeSection:change', this.setActive, this);
+            $('#menu-link:not(.active)').on('click', this.scrollToActive);
         },
 
         setActive: function(id) {
@@ -18,6 +19,14 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
 
         sendClickEvent: function(e) {
             Dispatch.trigger('toc:click', $(e.target).attr('href'));
+        },
+
+        scrollToActive: function() {
+            var activeLink = document.querySelectorAll('#table-of-contents .current');
+
+            if (activeLink[0]) {
+                activeLink[0].scrollIntoView();
+            }
         }
     });
 

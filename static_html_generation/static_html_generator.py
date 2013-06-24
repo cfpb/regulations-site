@@ -13,11 +13,13 @@ from layers.external_citation import ExternalCitationLayer
 from layers.internal_citation import InternalCitationLayer
 from layers.interpretations import InterpretationsLayer
 from layers.key_terms import KeyTermsLayer
+from layers.meta import MetaLayer
 from layers.layers_applier import InlineLayersApplier
 from layers.layers_applier import ParagraphLayersApplier
 from layers.layers_applier import SearchReplaceLayersApplier
 from layers.paragraph_markers import ParagraphMarkersLayer
 from layers.toc_applier import TableOfContentsLayer
+from layers.graphics import GraphicsLayer
 import notices
 from html_builder import HTMLBuilder
 
@@ -35,7 +37,8 @@ if __name__ == "__main__":
     if not settings.configured:
         settings.configure(TEMPLATE_DEBUG=False, 
             TEMPLATE_LOADERS=('django.template.loaders.filesystem.Loader',), 
-            TEMPLATE_DIRS = ('templates/',))
+            TEMPLATE_DIRS = ('templates/',),
+            DATE_FORMAT = 'n/j/Y')
 
     api = api_reader.Client(app_settings.API_BASE)
 
@@ -89,6 +92,12 @@ if __name__ == "__main__":
 
     pm = api.layer("paragraph-markers", regulation, version)
     s_applier.add_layer(ParagraphMarkersLayer(pm))
+
+    meta = api.layer("meta", regulation, version)
+    p_applier.add_layer(MetaLayer(meta))
+
+    g = api.layer("graphics", regulation, version)
+    s_applier.add_layer(GraphicsLayer(g))
     
     makers_markup = HTMLBuilder(inline_applier, p_applier, s_applier)
     intl.copy_builder(makers_markup)

@@ -13,6 +13,7 @@ class ParagraphMarkersLayer(object):
                 replace_with = self.template.render(
                     Context({'paragraph': to_replace})
                 )
+                replace_with = replace_with.replace('\n', '')
                 elements.append(
                     (to_replace, replace_with, layer_element['locations']))
         return elements

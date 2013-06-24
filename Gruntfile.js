@@ -95,7 +95,8 @@ module.exports = function(grunt) {
                 'toc-view': './views/toc-view',
                 'sidebar-view': './views/sidebar-view',
                 'sidebar-head-view': './views/sidebar-head-view',
-                'content-view': './views/content-view'
+                'content-view': './views/content-view',
+                'konami': './lib/konami'
               },
               shim: {
                 underscore: {
@@ -104,6 +105,9 @@ module.exports = function(grunt) {
                 backbone: {
                   deps: ['underscore'],
                   exports: 'Backbone'
+                },
+                konami: {
+                    exports: 'Konami'
                 }
               }
             }
@@ -145,7 +149,8 @@ module.exports = function(grunt) {
                     'toc-view': './views/toc-view',
                     'sidebar-view': './views/sidebar-view',
                     'sidebar-head-view': './views/sidebar-head-view',
-                    'content-view': './views/content-view'
+                    'content-view': './views/content-view',
+                    'konami': './lib/konami'
                 },
                 shim: {
                     underscore: {
@@ -155,6 +160,9 @@ module.exports = function(grunt) {
                     backbone: {
                         deps: ['underscore', 'jquery'],
                         exports: 'Backbone'
+                    },
+                    konami: {
+                        exports: 'Konami'
                     }
                 }
             }
