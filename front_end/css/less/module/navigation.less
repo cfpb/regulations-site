@@ -37,6 +37,7 @@
     left: -272px; /* 250px + 20px padding + 2px border*/
     width: 16.875em; /* 250px */
     background-color: none;
+    /*border-top: #d0d0ce 3px solid;*/
     z-index: 999999;
     overflow-y: scroll;
     height: 93%; /* offsets the header so that nav isn't hidden at the bottom of the TOC */
@@ -97,6 +98,15 @@
             background-size: 15px 15px;
         }
     }
+}
+
+/* this creates a persistent top border in non-IE browsers */
+.panel:before {
+    content: " ";
+    display: block;
+    position: fixed;
+    width: 15.625em;
+    border-top: #d0d0ce 3px solid;
 }
 
 /*.no-js .panel {
