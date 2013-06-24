@@ -76,7 +76,7 @@ class HTMLBuilder():
                 node['header_num'] = match.group(2)
                 node['header_title'] = match.group(3)
 
-        node['text'] = node['text'].strip()
+        node['text'] = node['text'].rstrip()
         node['label']['parts'] = to_markup_id(node['label']['parts'])
         node['markup_id'] = "-".join(node['label']['parts'])
         node['tree_level'] = len(node['label']['parts']) - 1
