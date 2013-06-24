@@ -23,8 +23,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
 
         bindEvents: function() {
             // toc class toggle
-            $('#menu-link, #toc-close').on('click', function(e) {
-                e.preventDefault();
+            $('#menu-link, #toc-close').on('click', function() {
                 $('#menu, #reg-content, #menu-link, #content-header').toggleClass('active');
                 return false;
             });
