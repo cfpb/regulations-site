@@ -3,51 +3,29 @@
         <h2 class="appendix-title" tabindex="0"> {{c.header}} </h2>
 
     {% if c.children %}
-        {% for level_one in c.children %}
-            <section id="{{level_one.markup_id}}">
-                <h3 tabindex="0"> {{level_one.header}} </h3>
+        {% for child in c.children %}
+            <section id="{{child.markup_id}}">
+                <h3 tabindex="0"> {{child.header}} </h3>
 
-                {% if level_one.marked_up %}
+                {% if child.marked_up %}
                 <p> 
-                    {% for doc_num, ref in level_one.analyses %}
+                    {% for doc_num, ref in child.analyses %}
                     <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
                     {% endfor %}
-                    {{level_one.marked_up|safe}}
+                    {{child.marked_up|safe}}
                 </p>
                 {% else %}
-                    {% for doc_num, ref in level_one.analyses %}
+                    {% for doc_num, ref in child.analyses %}
                     <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
                     {% endfor %}
                 {% endif %}
 
-                {% if level_one.children %}
-                    {% for level_two in level_one.children %}
-                        <section id="{{level_two.markup_id}}">
-                            <h4 class="appendix-subheading" tabindex="0"> {{level_two.header}} </h4>
-
-                            {%if level_two.marked_up %}
-                                <p> 
-                                    {% for doc_num, ref in level_two.analyses %}
-                                    <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
-                                    {% endfor %}
-                                    {{level_two.marked_up|safe}}
-                                </p>
-                            {% else %}
-                                {% for doc_num, ref in level_two.analyses %}
-                                <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
-                                {% endfor %}
-                                {{level_two.marked_up|safe}}
-                            {% endif %}
-
-                            {% if level_two.children %}
-                                <ol class="level-{{level_two.children.0.list_level}}" type="{{level_two.children.0.list_type}}">
-                                    {% for node in level_two.children %}
-                                        {% include "tree-with-wrapper.html" %}
-                                    {% endfor %}
-                                </ol>
-                            {% endif %}
-                        </section>
-                    {% endfor %}
+                {% if child.children %}
+                    <ol class="level-1" type="1">
+                        {% for node in child.children %}
+                            {% include "tree-with-wrapper.html" %}
+                        {% endfor %}
+                    </ol>
                 {% endif %}
             </section>
         {% endfor %}
