@@ -10,7 +10,7 @@ from layers.layers_applier import LayersApplier
 
 class HTMLBuilder():
     header_regex = re.compile(ur'^(§)(\s*\d+\.\d+)(.*)$')
-    section_number_regex = re.compile(ur'(�*\s+')
+    section_number_regex = re.compile(ur"(§*)\s+") 
 
     def __init__(self, inline_applier, p_applier, search_applier):
         self.markup = u''
