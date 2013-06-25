@@ -35,7 +35,7 @@ class HTMLBuilder():
         """ Return the list level and the list type. """
         if node_type == 'interpretation':
             level_type_map = {1:'1', 2:'i', 3:'A'}
-            prefix_length = 3
+            prefix_length = 4
         elif node_type == 'appendix':
             level_type_map = {1:'a', 2:'1', 3:'i', 4:'A'}
             prefix_length = 3
