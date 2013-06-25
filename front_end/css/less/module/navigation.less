@@ -34,17 +34,18 @@
 .panel {
     position: fixed;
     top: 60px;
+    bottom: 46px; /*match height of TOC close */
     left: -272px; /* 250px + 20px padding + 2px border*/
-    width: 16.875em; /* 250px */
-    background-color: none;
-    /*border-top: #d0d0ce 3px solid;*/
+    width: 15.625em;
+    background-color: #f6f6f5;
     z-index: 999999;
     overflow-y: scroll;
-    height: 93%; /* offsets the header so that nav isn't hidden at the bottom of the TOC */
     margin: 0;
-    padding: 0 0 60px 0; /*add padding at the bottom of the TOC to accomodate for scrollbars */
+    padding: 0;
     .avenir-next-demi;
     font-size: 0.875em; /*14px*/
+    border-top: #d0d0ce 3px solid;
+    border-right: #d0d0ce 2px solid;
 
     /* CSS Transitions for Slide Effect */
     transform: translate3d(0,0,0);
@@ -56,11 +57,6 @@
 
     ol {
         margin: 0;
-        background-color: #f6f6f5;
-        border-top: #d0d0ce 3px solid;
-        border-right: #d0d0ce 2px solid;
-        width: 15.625em;
-        padding-bottom: 152px; /*offset the header & close button */
     }
 
     .close-button {
@@ -69,6 +65,7 @@
         left: -272px;
         height: 26px;
         width: 199px;
+        border-right: #d0d0ce 2px solid;
         background: @light_field url(../img/close.png) 89% 11px no-repeat;
         color: @dark_gray;
         text-transform: uppercase;
@@ -98,15 +95,6 @@
             background-size: 15px 15px;
         }
     }
-}
-
-/* this creates a persistent top border in non-IE browsers */
-.panel:before {
-    content: " ";
-    display: block;
-    position: fixed;
-    width: 15.625em;
-    border-top: #d0d0ce 3px solid;
 }
 
 /*.no-js .panel {
