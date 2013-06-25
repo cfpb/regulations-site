@@ -5,7 +5,12 @@
     {% if c.children %}
         {% for child in c.children %}
             <section id="{{child.markup_id}}">
-                <h3 tabindex="0"> {{child.header}} </h3>
+                {% comment %}This is a check if the interpretation is visually within another (though it is not in the tree){% endcomment %}
+                {% if '(' in child.label.text or '.' in child.label.text %}
+                    <h4 class="interp-subheading" tabindex="0"> {{child.header}} </h3>
+                {% else %}
+                    <h3 tabindex="0"> {{child.header}} </h3>
+                {% endif %}
 
                 {% if child.marked_up %}
                 <p> 
