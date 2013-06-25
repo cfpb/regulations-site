@@ -59,7 +59,7 @@ class HTMLBuilderTest(TestCase):
     def test_list_level_interpretations(self):
         builder = HTMLBuilder(None, None, None)
 
-        parts = ['I', '101', '12(a)', '1']
+        parts = ['I', '101', '12', '(a)', '1']
         node_type = 'interpretation'
 
         result = builder.list_level(parts, node_type)
