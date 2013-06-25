@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#vim: set encoding=utf-8
+#vim: set fileencoding=utf-8
 from django.template import loader, Template, Context
 from django.conf import settings
 from layers.layers_applier import LayersApplier
@@ -7,10 +7,10 @@ from node_types import to_markup_id
 import re
 import settings as app_settings
 from layers.layers_applier import LayersApplier
-import re
 
 class HTMLBuilder():
     header_regex = re.compile(ur'^(§)(\s*\d+\.\d+)(.*)$')
+    section_number_regex = re.compile(ur'(§*)\s+', re.UNICODE)
 
     def __init__(self, inline_applier, p_applier, search_applier):
         self.markup = u''
@@ -75,6 +75,7 @@ class HTMLBuilder():
                 node['header_marker'] = match.group(1)
                 node['header_num'] = match.group(2)
                 node['header_title'] = match.group(3)
+            node['header'] = HTMLBuilder.section_number_regex.sub(ur'\1&nbsp;', node['header'])
 
         node['text'] = node['text'].rstrip()
         node['label']['parts'] = to_markup_id(node['label']['parts'])
@@ -96,8 +97,11 @@ class HTMLBuilder():
             layers_applier.enqueue_from_list(search_elements)
 
             node['marked_up'] = layers_applier.apply_layers(node['text'])
+            node['marked_up'] = HTMLBuilder.section_number_regex.sub(ur'\1&nbsp;', node['marked_up'])
+            print node['marked_up'].encode('utf-8')
 
         node = self.p_applier.apply_layers(node)
+
 
         for c in node['children']:
             self.process_node(c)
