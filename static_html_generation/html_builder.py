@@ -74,7 +74,7 @@ class HTMLBuilder():
     def process_node(self, node):
         if 'title' in node['label']:
             node['header']  = node['label']['title']
-            node['header'] = HTMLBuilder.section_number_regex.sub(ur'\1&nbsp;', node['header'])
+            node['header'] = HTMLBuilder.section_sign_hard_space(node['header'])
             match = HTMLBuilder.header_regex.match(node['header'])
             if match:
                 node['header_marker'] = match.group(1)
@@ -101,7 +101,7 @@ class HTMLBuilder():
             layers_applier.enqueue_from_list(search_elements)
 
             node['marked_up'] = layers_applier.apply_layers(node['text'])
-            node['marked_up'] = HTMLBuilder.section_number_regex.sub(ur'\1&nbsp;', node['marked_up'])
+            node['marked_up'] = HTMLBuilder.section_sign_hard_space(node['marked_up'])
 
         node = self.p_applier.apply_layers(node)
 
