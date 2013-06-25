@@ -132,6 +132,11 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 currentLocal = $(e.currentTarget),
                 currentId, $permalink, parent;
 
+            // inline interps don't have permalinks
+            if (currentLocal.parents().hasClass('inline-interpretation')) {
+                return;
+            }
+
             if (e.currentTarget.tagName.toUpperCase() === 'H2') {
                 parent = currentLocal.parent('.reg-section');
             }
