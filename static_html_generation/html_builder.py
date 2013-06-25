@@ -9,8 +9,8 @@ import settings as app_settings
 from layers.layers_applier import LayersApplier
 
 class HTMLBuilder():
-    header_regex = re.compile(ur'^(§)(\s*\d+\.\d+)(.*)$')
-    section_number_regex = re.compile(ur"(§*)\s+") 
+    header_regex = re.compile(ur'^(§&nbsp;)(\s*\d+\.\d+)(.*)$')
+    section_number_regex = re.compile(ur"(§+)\s+") 
 
     def __init__(self, inline_applier, p_applier, search_applier):
         self.markup = u''
@@ -30,6 +30,10 @@ class HTMLBuilder():
         match = re.search(r"[(].+[)]$", reg_title)
         if match:
             return match.group(0)
+
+    @staticmethod
+    def section_sign_hard_space(text):
+        return HTMLBuilder.section_number_regex.sub(ur'\1&nbsp;', text)
 
     def list_level(self, parts, node_type):
         """ Return the list level and the list type. """
@@ -70,12 +74,12 @@ class HTMLBuilder():
     def process_node(self, node):
         if 'title' in node['label']:
             node['header']  = node['label']['title']
+            node['header'] = HTMLBuilder.section_number_regex.sub(ur'\1&nbsp;', node['header'])
             match = HTMLBuilder.header_regex.match(node['header'])
             if match:
                 node['header_marker'] = match.group(1)
                 node['header_num'] = match.group(2)
                 node['header_title'] = match.group(3)
-            node['header'] = HTMLBuilder.section_number_regex.sub(ur'\1&nbsp;', node['header'])
 
         node['text'] = node['text'].rstrip()
         node['label']['parts'] = to_markup_id(node['label']['parts'])
@@ -98,10 +102,15 @@ class HTMLBuilder():
 
             node['marked_up'] = layers_applier.apply_layers(node['text'])
             node['marked_up'] = HTMLBuilder.section_number_regex.sub(ur'\1&nbsp;', node['marked_up'])
-            print node['marked_up'].encode('utf-8')
 
         node = self.p_applier.apply_layers(node)
 
+        if 'TOC' in node:
+            for l in node['TOC']:
+                l['label'] = HTMLBuilder.section_sign_hard_space(l['label'])
+            
+        if 'interp' in node and 'markup' in node['interp']:
+            node['interp']['markup'] = HTMLBuilder.section_sign_hard_space(node['interp']['markup'])
 
         for c in node['children']:
             self.process_node(c)
