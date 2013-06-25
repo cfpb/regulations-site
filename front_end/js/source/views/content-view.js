@@ -11,6 +11,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         events: {
             'click .definition': 'definitionLink',
             'click .expand-button': 'expandInterp',
+            'click .inline-interp-header': 'expandInterp',
             'click .inline-interpretation:not(.open)': 'expandInterp',
             'mouseenter p': 'showPermalink',
             'mouseenter h2.section-number': 'showPermalink'
@@ -113,6 +114,9 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             if (e.currentTarget.tagName.toUpperCase() === 'SECTION') {
                 button = $(e.currentTarget).find('.expand-button');
+            }
+            else if (e.currentTarget.tagName.toUpperCase() === 'H4'){
+                button = $(e.currentTarget).siblings('.expand-button');
             }
             else {
                 button = $(e.currentTarget);
