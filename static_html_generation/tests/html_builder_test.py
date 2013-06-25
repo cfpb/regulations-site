@@ -165,10 +165,14 @@ class HTMLBuilderTest(TestCase):
             'title': u'§ 22.1 Title'}}
         builder.process_node(node)
         self.assertTrue('header' in node)
-        self.assertEqual(node['label']['title'], node['header'])
         self.assertTrue('header_marker' in node)
-        self.assertEqual(u'§', node['header_marker'])
+        self.assertEqual(u'§&nbsp;', node['header_marker'])
         self.assertTrue('header_num' in node)
-        self.assertEqual(u' 22.1', node['header_num'])
+        self.assertEqual(u'22.1', node['header_num'])
         self.assertTrue('header_title' in node)
         self.assertEqual(u' Title', node['header_title'])
+
+    def test_no_section_sign(self):
+        text = HTMLBuilder.section_sign_hard_space(' abc')
+        self.assertEquals(text, ' abc')
+        self.assertTrue(True)
