@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#vim: set encoding=utf-8
+#vim: set fileencoding=utf-8
 from django.template import loader, Template, Context
 from django.conf import settings
 from layers.layers_applier import LayersApplier
@@ -7,10 +7,10 @@ from node_types import to_markup_id
 import re
 import settings as app_settings
 from layers.layers_applier import LayersApplier
-import re
 
 class HTMLBuilder():
-    header_regex = re.compile(ur'^(§)(\s*\d+\.\d+)(.*)$')
+    header_regex = re.compile(ur'^(§&nbsp;)(\s*\d+\.\d+)(.*)$')
+    section_number_regex = re.compile(ur"(§+)\s+") 
 
     def __init__(self, inline_applier, p_applier, search_applier):
         self.markup = u''
@@ -30,6 +30,10 @@ class HTMLBuilder():
         match = re.search(r"[(].+[)]$", reg_title)
         if match:
             return match.group(0)
+
+    @staticmethod
+    def section_sign_hard_space(text):
+        return HTMLBuilder.section_number_regex.sub(ur'\1&nbsp;', text)
 
     def list_level(self, parts, node_type):
         """ Return the list level and the list type. """
@@ -70,6 +74,7 @@ class HTMLBuilder():
     def process_node(self, node):
         if 'title' in node['label']:
             node['header']  = node['label']['title']
+            node['header'] = HTMLBuilder.section_sign_hard_space(node['header'])
             match = HTMLBuilder.header_regex.match(node['header'])
             if match:
                 node['header_marker'] = match.group(1)
@@ -96,8 +101,16 @@ class HTMLBuilder():
             layers_applier.enqueue_from_list(search_elements)
 
             node['marked_up'] = layers_applier.apply_layers(node['text'])
+            node['marked_up'] = HTMLBuilder.section_sign_hard_space(node['marked_up'])
 
         node = self.p_applier.apply_layers(node)
+
+        if 'TOC' in node:
+            for l in node['TOC']:
+                l['label'] = HTMLBuilder.section_sign_hard_space(l['label'])
+            
+        if 'interp' in node and 'markup' in node['interp']:
+            node['interp']['markup'] = HTMLBuilder.section_sign_hard_space(node['interp']['markup'])
 
         for c in node['children']:
             self.process_node(c)

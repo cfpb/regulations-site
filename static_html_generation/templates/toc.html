@@ -1,7 +1,7 @@
 <nav {% if top_toc %}id="menu" class="panel"{% endif %} role="navigation">
     <ol class="{{nav_class}}"{% if top_toc %} id="table-of-contents"{% endif %}>
         {% for item in toc_items %}
-            <li><a href="{{item.url}}">{{item.label}}</a></li>
+            <li><a href="{{item.url}}">{{item.label|safe}}</a></li>
         {% endfor %}
     </ol>
     {% if top_toc %}
