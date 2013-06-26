@@ -34,18 +34,18 @@
 .panel {
     position: fixed;
     top: 60px;
+    bottom: 46px; /*match height of TOC close */
     left: -272px; /* 250px + 20px padding + 2px border*/
-    width: 15.625em; /* 250px */
+    width: 15.625em;
     background-color: #f6f6f5;
     z-index: 999999;
     overflow-y: scroll;
-    height: 93%; /* offsets the header so that nav isn't hidden at the bottom of the TOC */
-    border-top: #d0d0ce 3px solid;
-    border-right: #d0d0ce 2px solid;
     margin: 0;
-    padding: 0 0 60px 0; /*add padding at the bottom of the TOC to accomodate for scrollbars */
+    padding: 0;
     .avenir-next-demi;
     font-size: 0.875em; /*14px*/
+    border-top: #d0d0ce 3px solid;
+    border-right: #d0d0ce 2px solid;
 
     /* CSS Transitions for Slide Effect */
     transform: translate3d(0,0,0);
@@ -55,12 +55,17 @@
          -o-transition: left 300ms ease; 
             transition: left 300ms ease;
 
+    ol {
+        margin: 0;
+    }
+
     .close-button {
-        padding: 10px;
+        padding: 10px 10px 10px 10px;
         bottom: 0px;
         left: -272px;
-        height: 32px;
-        width: 200px;
+        height: 26px;
+        width: 199px;
+        border-right: #d0d0ce 2px solid;
         background: @light_field url(../img/close.png) 89% 11px no-repeat;
         color: @dark_gray;
         text-transform: uppercase;
@@ -73,11 +78,22 @@
         -ms-transition: left 300ms ease; 
          -o-transition: left 300ms ease; 
             transition: left 300ms ease;
+
+            em {
+                display: inline-block;
+                width: 80%;
+                text-align: right;
+                font-style: normal;
+            }
     }
 
-    ol {
-        margin: 0;
-        padding-bottom: 152px; /*offset the header & close button */
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .close-button {
+            background: @light_field url(../img/close@2x.png) 89% 11px no-repeat;
+            background-size: 15px 15px;
+        }
     }
 }
 

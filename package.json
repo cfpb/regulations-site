@@ -20,7 +20,9 @@
     "grunt": "~0.4.1",
     "grunt-template-jasmine-requirejs": "~0.1.1",
     "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-contrib-less": "~0.5.2"
+    "grunt-contrib-less": "~0.5.2",
+    "grunt-casperjs": "~1.0.6",
+    "grunt-ghost": "~1.0.12"
   },
   "keywords": []
 }

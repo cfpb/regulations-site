@@ -39,6 +39,11 @@ define('regs-helpers', function() {
             len = parts.length - 1;
             dividers = ['§ .', '', '( )', '( )', '( )', '( )'];
 
+            if (len === 0) {
+                ref = parts[0];
+                return ref;
+            }
+
             if (isNaN(parseInt(parts[0], 10)) || 
                 isNaN(parseInt(parts[1], 10))) {
                 return this.nonNumericId(parts[0], parts[1]);

@@ -99,6 +99,7 @@
 #content-header {
     li {
         height: 2.125em;
+        line-height: 2.125em;
     }
 }
 
@@ -110,16 +111,23 @@
 
 .effective-date {
     float: right;
-    font-size: .9em;
-    line-height: 2.2em;
+    font-size: .75em;
     padding-right: 20px;
-    background: url(../img/exclamation.png) no-repeat right;
+    background: url(../img/exclamation.png) no-repeat 100% 48%;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .effective-date {
+        background: url(../img/exclamation@2x.png) no-repeat 100% 48%;
+        background-size: 13px 13px;
+    }
 }
 
 .header-label {
     .avenir-next-bold;
     font-size: 1em;
-    margin: .2em 0;
     letter-spacing: 1px;
     display: inline-block;
     color: @black;
@@ -144,5 +152,30 @@
         width: 15px;
         height: 15px;
         cursor: pointer;
+    }
+
+     @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .close-button {
+            background: url(../img/close@2x.png) no-repeat 0 0;
+            background-size: 15px 15px;
+        }
+    }
+}
+
+/* ==========================================================================
+ media queries
+ ========================================================================== */
+
+ @media (max-width: 800px) {
+    .main-head {
+        height: auto;
+        padding-top: 1.25em;
+        padding-bottom: 1.25em;
+
+        li {
+            line-height: 1.2;
+        }
     }
 }

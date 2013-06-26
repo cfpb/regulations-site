@@ -1,1 +1,0 @@
-define("regs-fixed-el-view",["jquery","underscore","backbone"],function(e,t,n){var r=n.View.extend({expand:function(){this.$el.addClass("fixed")},contract:function(){this.$el.removeClass("fixed")}});return r});

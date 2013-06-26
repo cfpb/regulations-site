@@ -7,7 +7,8 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
 
         initialize: function() {
             Dispatch.on('activeSection:change', this.setActive, this);
-            $('#menu-link:not(.active)').on('click', this.scrollToActive);
+            // need to work out a bug where it scrolls the content section
+            // $('#menu-link:not(.active)').on('click', this.scrollToActive);
         },
 
         setActive: function(id) {

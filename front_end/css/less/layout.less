@@ -7,6 +7,15 @@
  layout
  ========================================================================== */
 
+.main,
+.main-content,
+.secondary,
+.secondary-content {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .wrap {
     position: relative;
     max-width: 60em; /* 960 / 16 = 60*/
@@ -60,7 +69,8 @@
   **/
 .reg-section:before,
 .appendix-section:before,
-.supplement-section:before  {
+.supplement-section:before,
+.supplement-section section:before  {
     display: block; 
     content: ""; 
     height: 60px; 
