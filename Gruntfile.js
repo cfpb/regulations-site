@@ -10,6 +10,13 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     /**
+     *
+     *  Pull in environment-specific vars
+     *
+     */
+    env: grunt.file.readJSON('config.json'),
+
+    /**
      * https://github.com/gruntjs/grunt-contrib-less
      */
     less: {
@@ -129,6 +136,27 @@ module.exports = function(grunt) {
       }
     },
 
+    /**
+     *
+     * https://npmjs.org/package/grunt-ghost
+     *
+     * Functional testing w/ Phantom, Casper
+     *
+     */
+    ghost: {
+        dist: {
+            filesSrc: ['front_end/js/tests/functional/*.js'],
+            options: {
+                args: {
+                    testUrl: '<%= env.testUrl %>'
+                },
+                direct: true,
+                verbose: true,
+                logLevel: 'debug'
+            }
+        }
+    },
+
     requirejs: {
         compile: {
             options: {
@@ -179,11 +207,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-ghost');
 
     /**
     * Create task aliases by registering new tasks
     */
-    grunt.registerTask('test', ['jshint', 'jasmine']);
-    grunt.registerTask('build', ['test', 'requirejs', 'less']);
+    grunt.registerTask('test', ['jshint', 'jasmine', 'ghost']);
+    grunt.registerTask('build', ['test', 'requirejs', 'less', 'ghost']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };
