@@ -1,4 +1,3 @@
 {
-    // URL that CasperJS should use for functional tests
-    "testUrl": "http://"
+    "testUrl": "URL that CasperJS should use for functional tests"
 }
