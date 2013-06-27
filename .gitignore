@@ -55,4 +55,5 @@ front_end/ip
 *.swp
 local_settings.py
 config.json
+_SpecRunner.html
 

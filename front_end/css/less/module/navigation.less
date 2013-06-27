@@ -31,53 +31,40 @@
  table of contents
  ========================================================================== */
 
+.panel,
+.panel .close-button {
+    .slide;
+    .border-right-light(@width: 2px);
+    left: -272px; /* 250px + 20px padding + 2px border*/
+}
+
 .panel {
+    .reset;
+    .border-top-light(@width: 3px);
+    .avenir-next-demi;
+    font-size: 0.875em; /*14px*/
     position: fixed;
     top: 60px;
     bottom: 46px; /*match height of TOC close */
-    left: -272px; /* 250px + 20px padding + 2px border*/
     width: 15.625em;
     background-color: #f6f6f5;
     z-index: 999999;
     overflow-y: scroll;
-    margin: 0;
-    padding: 0;
-    .avenir-next-demi;
-    font-size: 0.875em; /*14px*/
-    border-top: #d0d0ce 3px solid;
-    border-right: #d0d0ce 2px solid;
-
-    /* CSS Transitions for Slide Effect */
-    transform: translate3d(0,0,0);
-    -webkit-transition: left 300ms ease; 
-       -moz-transition: left 300ms ease; 
-        -ms-transition: left 300ms ease; 
-         -o-transition: left 300ms ease; 
-            transition: left 300ms ease;
 
     ol {
-        margin: 0;
+        .reset
     }
 
     .close-button {
-        padding: 10px 10px 10px 10px;
-        bottom: 0px;
-        left: -272px;
-        height: 26px;
         width: 199px;
-        border-right: #d0d0ce 2px solid;
+        height: 26px;
+        padding: 10px; /*10px*/
+        bottom: 0px;
         background: @light_field url(../img/close.png) 89% 11px no-repeat;
         color: @dark_gray;
         text-transform: uppercase;
         font-size: .857142857em; /*12px*/
         cursor: pointer;
-
-        transform: translate3d(0,0,0);
-    -webkit-transition: left 300ms ease; 
-       -moz-transition: left 300ms ease; 
-        -ms-transition: left 300ms ease; 
-         -o-transition: left 300ms ease; 
-            transition: left 300ms ease;
 
             em {
                 display: inline-block;
@@ -101,6 +88,7 @@
     left: 0;
 }*/
 
+/* panel slides to position */
 .panel.active{
     left: 0;
 
@@ -110,74 +98,8 @@
     }
 }
 
-/*#reg-content.active,
-#content-header.active {
-    left: 16em;
-}*/
 
-/* slide all content less on wide screens */
-/*@media only screen and (min-width: 1100px) {
-    #reg-content.active,
-    #content-header.active {
-        left: 8em;
-    }
-}*/
-
-/* slide all content less on wide screens */
-/*@media only screen and (min-width: 1250px) {
-    #reg-content.active,
-    #content-header.active {
-        left: 4em;
-    }
-}*/
-
-/* slide all content less on wide screens */
-/*@media only screen and (min-width: 1400px) {
-    #reg-content.active,
-    #content-header.active {
-        left: 0em;
-    }
-}*/
-
-
-
-/* TOC titles */
-.panel h2 {
-    padding-left: 20px
-}
-
-.toc-title-num {
-    .avenir-next-demi;
-    text-transform: uppercase;
-    color: @light_field;
-    display: block;
-    font-size: 12px;
-}
-
-.toc-part-num {
-    .avenir-next-demi;
-    display: block;
-    text-transform: uppercase;
-    font-size: 26px;
-    margin-top: 8px;
-}
-
-.toc-reg-title {
-    .avenir-next;
-    display: block;
-    text-transform: uppercase;
-    font-size: 16px;
-    margin-top: 6px;
-}
-
-.regulation-nav a:link,
-.regulation-nav a:visited,
-.regulation-nav a:hover,
-.regulation-nav a:active {
-    border-bottom: none;
-    color: @black;
-}
-
+/* TOC link */
 .toc-nav-link {
     text-indent: -9999px;
     position: absolute;
@@ -202,40 +124,35 @@
 }
 
 .toc-nav-link:hover,
-.toc-nav-link:active {
+.toc-nav-link:active,
+.toc-nav-link.active {
     background-color: @light_field;
 }
 
-.toc-nav-link.active  {
-    background-color: @light_field;
-}
+/* TOC link styles */
+.regulation-nav {
 
-.regulation-nav li {
-    margin: 0;
-    text-indent: 0;
-}
+    li {
+        margin: 0;
+        text-indent: 0;
+    }
 
-.regulation-nav a {
-    display: block;
-    padding: 10px 20px;
-}
+    a {
+        display: block;
+        padding: 10px 20px;
+    }
 
-.regulation-nav a:link,
-.regulation-nav a:visited {
-    border-bottom: 1px solid @light_field;
-}
+    a:link,
+    a:visited {
+        color: @black;
+        .border-bottom-light (@width: 1px)
+    }
 
-.regulation-nav a:hover,
-.regulation-nav a:active {
-    background-color: #dbedd4;
-}
+    a:hover,
+    a:active,
+    .current {
+        color: @black;
+        background-color: @green_light;
+    }
 
-.toc-section-marker {
-    .avenir-next-bold;
-    display: block;
-    font-size: 18px;
-}
-
-.current {
-    background-color: #dbedd4;
 }

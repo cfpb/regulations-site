@@ -3,8 +3,6 @@
 
     .chunk {
         margin-top: 1em;
-        /* wha? I can't let this one go */
-        /* margin-top: 2.214285714em; */ /* 14/31px*/
 
         a:link,
         a:visited {
@@ -21,6 +19,14 @@
         &.hidden {
             margin-top: 0;
         }
+
+    }
+
+    .sub-text {
+        margin-top: 0;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        .border-bottom-light(@width: 1px);
     }
 
     .effective,
@@ -42,6 +48,11 @@
             padding-right: 20px;
             background: url(../img/open_close.png) no-repeat 99% 3px;
         }
+
+        &.important {
+            color: @red_orange;
+        }
+
 
         @media 
         (-webkit-min-device-pixel-ratio: 2), 
@@ -113,31 +124,6 @@
 .continue-link:last-child {
     margin-bottom: 100px;
 }
-
-/*.active .open-definition {
-    margin-left: 16em;
-}*/
-
-/* slide all content less on wide screens */
-/*@media only screen and (min-width: 1000px) {
-    .active .open-definition {
-        margin-left: 8em;
-    }
-}*/
-
-/* slide all content less on wide screens */
-/*@media only screen and (min-width: 1250px) {
-    .active .open-definition {
-        margin-left: 4em;
-    }
-}*/
-
-/* slide all content less on wide screens */
-/*@media only screen and (min-width: 1400px) {
-    .active .open-definition {
-        margin-left: 0em;
-    }
-}*/
 
 .open-definition > * > .active-term { /* style every definition that is a child of .open-definition */
     .avenir-next-demi;
