@@ -101,6 +101,18 @@
     top: 100px;
     bottom: 0;
     overflow-y: auto;
+
+    .close-button {
+        position: absolute;
+        left: -10000px;
+        cursor: pointer;
+
+        &:active,
+        &:focus {
+            position: relative;
+            left: 0;
+        }
+    }
 }
 
 .regs-meta {

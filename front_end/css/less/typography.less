@@ -104,7 +104,8 @@ a.internal:active {
 
 /* external links */
 
-a[href^="http://"] {
+a[href^="http://"],
+a[href^="https://"] {
     background: url(../img/external-link.png) center right no-repeat;
     padding-right: 19px;
 }
@@ -112,7 +113,8 @@ a[href^="http://"] {
 @media 
 (-webkit-min-device-pixel-ratio: 2), 
 (min-resolution: 192dpi) {
-    a[href^="http://"] {
+    a[href^="http://"],
+    a[href^="https://"] {
         background: url(../img/external-link@2x.png) center right no-repeat;
         background-size: 19px 16px;
     }
