@@ -38,6 +38,23 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             });
         },
 
+        fetchModelForms: function() {
+            var insertImg = function(tag) {
+                var $tag = $(tag),
+                    url = $tag.data('imgUrl'),
+                    alt = $tag.data('imgAlt');
+
+                if (url) {
+                    $tag.parent().append('<img class="reg-image" src="' + url + '" alt="' + alt + '" />');
+                }
+            };
+
+            $('noscript').each(function() {
+                var tag = this;
+                setTimeout(function() { insertImg(tag); }, 2000, tag);
+            });
+        },
+
         init: function() {
             this.getTree($('#reg-content')); 
 
@@ -48,6 +65,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             window.Regs.regContent = new ContentView({el: '.main-content'});
             window.Regs.analytics = new AnalyticsHandler();
             this.bindEvents();
+            this.fetchModelForms();
         }
     };
 });
