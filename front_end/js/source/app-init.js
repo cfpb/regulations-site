@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
+define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami', 'analytics-handler'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami, AnalyticsHandler) {
     'use strict';
     return {
         getTree: function($obj) {
@@ -41,10 +41,12 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
         init: function() {
             this.getTree($('#reg-content')); 
 
-            window.subhead = new SubHeadView({el: '#content-subhead'});
-            window.toc = new TOCView({el: '#menu'});
-            window.sidebar = new SidebarView({el: '#sidebar'});
-            window.regContent = new ContentView({el: '.main-content'});
+            window.Regs = {};
+            window.Regs.subhead = new SubHeadView({el: '#content-subhead'});
+            window.Regs.toc = new TOCView({el: '#menu'});
+            window.Regs.sidebar = new SidebarView({el: '#sidebar'});
+            window.Regs.regContent = new ContentView({el: '.main-content'});
+            window.Regs.analytics = new AnalyticsHandler();
             this.bindEvents();
         }
     };
