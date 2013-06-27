@@ -5,7 +5,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
         initialize: function() {
             this.bindListeners();
 
-            Dispatch.on('toc:click', this.sendEvent, 'toc');
+            Dispatch.on('toc:click', this.sendEvent, 'Table of Contents');
         },
 
         sendEvent: function(e) {
@@ -28,7 +28,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
 
             // from Dispatch event
             else {
-                action = 'click-' + e;
+                action = 'clicked link to ' + e;
                 object = this; 
             }
 
@@ -36,11 +36,14 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
         },
 
         bindListeners: function() {
-            $('#menu-link').on('click', {object: 'toc', action: function() {
-                return $('#menu').hasClass('active') ? 'close' : 'open';
-            }}, this.sendEvent);
+            $('#menu-link').on('click', { 
+                object: 'Table of Contents', 
+                action: function() {
+                    return $('#menu').hasClass('active') ? 'close' : 'open';
+                }
+            }, this.sendEvent);
 
-            $('#toc-close').on('click', {object: 'toc', action: 'close-bottom'}, this.sendEvent);
+            $('#toc-close').on('click', {object: 'Table of Contents', action: 'close (bottom link)'}, this.sendEvent);
         }
     });
 
