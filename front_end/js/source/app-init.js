@@ -51,7 +51,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
 
             $('noscript').each(function() {
                 var tag = this;
-                setTimeout(function() { insertImg(tag); }, 1000, tag);
+                setTimeout(function() { insertImg(tag); }, 2000, tag);
             });
         },
 
