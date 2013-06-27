@@ -2,7 +2,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
     'use strict';
     var DefinitionView = RegsView.extend({
         className: 'open-definition',
-        events: {},
+        events: {
+            'click .close-button': 'close'
+        },
 
         render: function() {
             Dispatch.once('definition:callRemove', this.remove, this);
@@ -43,9 +45,17 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                 }
             }
 
+            this.$el.attr('tabindex', '0').append('<a class="close-button" href="#">Close definition</a>');
+
             Dispatch.trigger('definition:render', this.$el);
+            this.$el.focus();
 
             return this;
+        },
+
+        close: function(e) {
+            e.preventDefault();
+            Dispatch.trigger('definition:callRemove');
         },
 
         remove: function() {
