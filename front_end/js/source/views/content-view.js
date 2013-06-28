@@ -73,6 +73,11 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             // if already open, close it
             if ($link.data('active')) {
+                Dispatch.trigger('ga-event:definition', {
+                    action: 'clicked key term to close definition',
+                    context: this.openDefinition.id
+                });
+
                 this.openDefinition.view.remove();
                 return this;
             }
@@ -92,6 +97,10 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 this.openDefinition.view.remove();
             }
 
+            Dispatch.trigger('ga-event:definition', {
+                action: 'clicked key term to open definition',
+                context: defId
+            });
             this.storeDefinition($link, defId);
 
             return this;

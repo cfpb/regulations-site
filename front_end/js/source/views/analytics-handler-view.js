@@ -5,6 +5,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
         initialize: function() {
             this.bindListeners();
 
+            Dispatch.on('ga-event:definition', this.sendEvent, 'Inline Definition');
             Dispatch.on('toc:click', this.sendEvent, 'Table of Contents');
             Dispatch.on('interpretation:toggle', this.sendEvent, 'Inline interpretation');
         },
