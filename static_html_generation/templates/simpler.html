@@ -32,7 +32,7 @@
             <li class="main">
             <nav id="doc-navigation" class="header-nav">
                 <ul>
-                    <li><h2 class="reg-title-header"><a href="#">{{tree.header|title}}</a><span class="beta-label">Beta</span></h2></li>
+                    <li><h2 class="reg-title-header"><a href="#">{{tree.header|title}}</a></h2></li>
                 </ul>
             </nav>
             </li>
@@ -93,7 +93,7 @@
         {% if tree.meta.last_notice %}
         <h5 class="expandable">Most Recent FR Notice</h5>
         <div class="notice chunk hidden">
-            <a href="{{ tree.meta.last_notice.url }}">{{ tree.meta.last_notice.title }}</a>
+            <a href="{{ tree.meta.last_notice.url }}" class="external">{{ tree.meta.last_notice.title }}</a>
             <ul>
                 <li><strong>Published:</strong> {{ tree.meta.last_notice.published|date }}</li>
                 <li><strong>Action:</strong> {{ tree.meta.last_notice.action }}</li>
@@ -105,7 +105,7 @@
         {% if tree.meta.effective %}
         <h5 class="expandable">Current Effective Law</h5>
         <div class="effective chunk hidden">
-            <a href="{{ tree.meta.effective.url }}">{{ tree.meta.effective.title }}</a>
+            <a href="{{ tree.meta.effective.url }}" class="external">{{ tree.meta.effective.title }}</a>
             Electronic Code of Federal Regulations
         </div>
         {% endif %}
