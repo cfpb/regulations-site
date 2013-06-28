@@ -6,33 +6,42 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
             this.bindListeners();
 
             Dispatch.on('toc:click', this.sendEvent, 'Table of Contents');
+            Dispatch.on('interpretation:toggle', this.sendEvent, 'Inline interpretation');
         },
 
+        // TODO: standardize context on Dispatch events
         sendEvent: function(e) {
             var object, action, context;
 
-            // from jQ event
+            if (typeof window.ga === 'undefined') {
+                return;
+            }
+
             if (typeof e === 'object') {
-                context = e.data;
-                action = context.action;
-                object = context.object;
+                // from jQ event
+                if (typeof e.data !== 'undefined') {
+                    context = e.data;
+                    action = context.action;
+                    object = context.object;
 
-                if (typeof context.action === 'function') {
-                    action = context.action.call();
+                    if (typeof context.action === 'function') {
+                        action = context.action.call();
+                    }
                 }
-
-                if (typeof context.object === 'function') {
-                    object = context.object.call();    
+                // from Dispatch event
+                else {
+                    action = e.action + ' ' + e.context;
+                    object = this;
                 }
             }
 
-            // from Dispatch event
-            else {
-                action = 'clicked link to ' + e;
+            // also from Dispatch event
+            else if (typeof e === 'string') {
+                action = e;
                 object = this; 
             }
 
-            ga('send', 'event', object, action);
+            window.ga('send', 'event', object, action);
         },
 
         bindListeners: function() {

@@ -110,7 +110,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
         expandInterp: function(e) {
             e.stopPropagation();
-            var button;
+            var button, isBeingOpened, parent;
 
             if (e.currentTarget.tagName.toUpperCase() === 'SECTION') {
                 button = $(e.currentTarget).find('.expand-button');
@@ -122,9 +122,16 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 button = $(e.currentTarget);
             }
 
-            button.parent().toggleClass('open');
+            parent = button.parent();
             button.toggleClass('open').next('.hidden').slideToggle();
-            button.html(button.hasClass('open') ? 'Hide' : 'Show');
+            parent.toggleClass('open');
+            isBeingOpened = button.hasClass('open');
+            button.html(isBeingOpened ? 'Hide' : 'Show');
+
+            Dispatch.trigger('interpretation:toggle', {
+                context: parent.data('interpFor'),
+                action: isBeingOpened ? 'opened' : 'hid'
+            });
 
             return this;
         },
@@ -160,8 +167,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             }
         },
 
-        changeFocus: function(id) {
-            $(id).focus();
+        changeFocus: function(e) {
+            $(e.context).focus();
         }
     });
 
