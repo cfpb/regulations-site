@@ -1,6 +1,11 @@
 .secondary-content {
     font-size: .875em;
 
+    ul,
+    li {
+        .reset;
+    }
+
     .chunk {
         margin-top: 1em;
 
@@ -86,14 +91,10 @@
         margin-top: 0px;
     }
 
-    ul,
-    li {
-        margin: 0;
-        padding: 0;
-    }
 }
 
-.open-definition, .regs-meta {
+.open-definition, 
+.regs-meta {
     position: fixed;
     padding: 0 0 3.5em 0;
     width: 271px;
@@ -101,7 +102,23 @@
     top: 100px;
     bottom: 0;
     overflow-y: auto;
+}
 
+.regs-meta {
+    padding-top: 1em;   
+}
+
+.open-definition ol,
+.active-term {
+    .avenir-next-demi;
+}
+
+.open-definition p {
+    font-family: @body-font;
+    font-weight: normal;
+}
+
+.open-definition {
     .close-button {
         position: absolute;
         left: -10000px;
@@ -115,35 +132,13 @@
     }
 }
 
-.regs-meta {
-    padding-top: 1em;
-    
+/* continue links */
+.continue-link {
+    .avenir-next-demi;
+    display: inline-block;
+    margin-right: 20px;
 }
-
 
 .continue-link:last-child {
     margin-bottom: 100px;
-}
-
-.open-definition > * > .active-term { /* style every definition that is a child of .open-definition */
-    .avenir-next-demi;
-}
-
-.open-definition ol {
-    .avenir-next-demi;
-}
-
-.open-definition p {
-    font-family: @body-font;
-    font-weight: normal;
-}
-
-.continue-link {
-    .avenir-next-demi;
-}
-
-a.continue-link:link, 
-a.continue-link:visited {
-    display: inline-block;
-    margin-right: 20px;
 }
