@@ -29,6 +29,7 @@ define('sidebar-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
         },
 
         close: function() {
+            Dispatch.trigger('ga-event:definition', 'close by header button');
             Dispatch.trigger('definition:callRemove');
         }
     });

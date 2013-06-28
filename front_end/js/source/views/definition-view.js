@@ -3,7 +3,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
     var DefinitionView = RegsView.extend({
         className: 'open-definition',
         events: {
-            'click .close-button': 'close'
+            'click .close-button': 'close',
+            'click .continue-link': 'continueLinkHandler',
+            'click .definition': 'metaDefHandler'
         },
 
         render: function() {
@@ -53,8 +55,26 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
             return this;
         },
 
+        continueLinkHandler: function(e) {
+            Dispatch.trigger('ga-event:definition', {
+                action: 'clicked continue link',
+                context: $(e.target).attr('href')
+            });
+        },
+
+        metaDefHandler: function(e) {
+            Dispatch.trigger('ga-event:definition', {
+                action: 'clicked key term inside definition',
+                context: $(e.target).attr('href')
+            });
+        },
+
         close: function(e) {
             e.preventDefault();
+            Dispatch.trigger('ga-event:definition', {
+                action: 'closed definition by tab-revealed link',
+                context: this.model.id
+            });
             Dispatch.trigger('definition:callRemove');
         },
 
