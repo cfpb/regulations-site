@@ -14,7 +14,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             'click .inline-interp-header': 'expandInterp',
             'click .inline-interpretation:not(.open)': 'expandInterp',
             'mouseenter p': 'showPermalink',
-            'mouseenter h2.section-number': 'showPermalink'
+            'mouseenter h2.section-number': 'showPermalink',
+            'click .permalink-marker': 'permalinkHandler'
         },
 
         initialize: function() {
@@ -174,6 +175,10 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
                 $(currentLocal).prepend($permalink);
                 $permalink.addClass('permalink-marker');
             }
+        },
+
+        permalinkHandler: function(e) {
+            Dispatch.trigger('ga-event:permalink', $(e.target).attr('href'));
         },
 
         changeFocus: function(e) {
