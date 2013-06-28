@@ -181,8 +181,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             Dispatch.trigger('ga-event:permalink', $(e.target).attr('href'));
         },
 
-        changeFocus: function(e) {
-            $(e.context).focus();
+        changeFocus: function(id) {
+            $(id).focus();
         }
     });
 
