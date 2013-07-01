@@ -28,16 +28,6 @@
     font-size: 1em;
 }
 
-.beta-label {
-    .avenir-next-demi;
-    color: @green;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-left: 12px;
-    font-size: 0.625em;
-}
-
 .main-head {
     .border-bottom-dark(@width: 3px);
     background: #fff;
@@ -68,7 +58,7 @@
 
 .logo {
     width: 100%;
-    margin-top: 10px;
+    margin: 10px 0 0 0;
     float: right;
     text-align: right;
 }
@@ -84,6 +74,7 @@
 .reg-header a:visited {
     border-bottom: none;
     color: @dark_field;
+    text-decoration: none;
 }
 
 .reg-title-header a:link,
@@ -137,7 +128,7 @@
     width: 33%;
 
     h2 {
-        padding-left: 2em;
+        padding: 0 0 0 2em;
         margin: 0;
         font-size: 0.75em;
         text-transform: uppercase;
@@ -146,7 +137,7 @@
     }
 
     .close-button {
-        margin-top: .55em;
+        margin: .55em 0 0 0;
         text-indent: -9999px;
         background: url(../img/close.png) no-repeat 0 0;
         width: 15px;
@@ -171,8 +162,7 @@
  @media (max-width: 800px) {
     .main-head {
         height: auto;
-        padding-top: 1.25em;
-        padding-bottom: 1.25em;
+        padding: 1.25em 0;
 
         li {
             line-height: 1.2;
