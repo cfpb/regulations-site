@@ -31,6 +31,13 @@ module.exports = function(grunt) {
         }
     },
 
+    docco: {
+        src: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js'],
+        options: {
+            output: 'front_end/docs'
+        }
+    },
+
     /**
      * JSHint: https://github.com/gruntjs/grunt-contrib-jshint
      * 
@@ -208,6 +215,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-ghost');
+    grunt.loadNpmTasks('grunt-docco2'); 
 
     /**
     * Create task aliases by registering new tasks
