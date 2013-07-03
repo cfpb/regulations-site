@@ -31,10 +31,15 @@ module.exports = function(grunt) {
         }
     },
 
+    /**
+     * Docco is that nifty biz that Backbone has for its annotated source
+     *
+     * https://github.com/eliias/grunt-docco
+     */
     docco: {
         src: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js'],
         options: {
-            output: 'front_end/docs'
+            output: 'front_end/docs/v/head'
         }
     },
 
