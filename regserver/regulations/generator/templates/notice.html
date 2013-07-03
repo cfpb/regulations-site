@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Notice: {{ document_number }}</title>
+    </head>
+    <body>
+        <h2 tabindex="0">Meta</h2>
+        <ul>
+            <li>Document Number: {{ document_number }}</li>
+            <li>CFR Part: {{ cfr_part }}</li>
+            <li>Agency: {{ agency }}</li>
+            <li>Action: {{ action }}</li>
+            <li>Summary: {{ summary }}</li>
+            <li>Contact: {{ contact }}</li>
+            {% if rin %}<li>RIN: {{ rin }}</li>{% endif %}
+            {% if dates %}
+            <li>Dates: 
+                <ul>
+                    {% for key, values in dates.items %}
+                    <li>{{ key | title }}: {{ values | join:", " }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endif %}
+            {% if addresses %}
+            <li>Addresses:<ul>
+                {% if addresses.intro %}<li>{{ addresses.intro }}</li>{% endif %}
+                {% for k,v in addresses.methods %}
+                    <li>{{ k }} : {{ v }}</li>
+                {% endfor %}
+                {% if addresses.instructions %}
+                    <li>Instructions:<ul>
+                        {% for instruction in addresses.instructions %}<li>{{ instruction }}</li>{% endfor %}
+                    </ul></li>
+                {% endif %}
+            </ul></li>
+            {% endif %}
+        </ul>
+        <h2 tabindex="0">Section-by-Section Analysis</h2>
+        {% for markup in sxs_markup %}
+            {{ markup | safe }}
+        {% endfor %}
+    </body>
+</html>

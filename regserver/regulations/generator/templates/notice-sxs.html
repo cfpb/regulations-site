@@ -1,0 +1,13 @@
+{% if label %}
+    <div id="{{ label }}">
+{% else %}
+    <div>
+{% endif %}
+    <h{{ depth }} tabindex="0">{{ title }}</h{{ depth }}>
+    {% for p in paragraphs %}
+        <p>{{ p }}</p>
+    {% endfor %}
+    {% for child_html in children %}
+        {{ child_html | safe }}
+    {% endfor %}
+</div>

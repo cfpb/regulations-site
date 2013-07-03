@@ -1,0 +1,38 @@
+{% if c.node_type == "interpretation" %}
+    <section id="{{c.markup_id}}" class="supplement-section">
+        <h2 class="appendix-title" tabindex="0"> {{c.header}} </h2>
+
+    {% if c.children %}
+        {% for child in c.children %}
+            <section id="{{child.markup_id}}">
+                {% comment %}This is a check if the interpretation is visually within another (though it is not in the tree){% endcomment %}
+                {% if '(' in child.label.text or '.' in child.label.text %}
+                    <h4 class="interp-subheading" tabindex="0"> {{child.header}} </h3>
+                {% else %}
+                    <h3 tabindex="0"> {{child.header}} </h3>
+                {% endif %}
+
+                {% if child.marked_up %}
+                <p> 
+                    {% for doc_num, ref in child.analyses %}
+                    <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+                    {% endfor %}
+                    {{child.marked_up|safe}}
+                </p>
+                {% else %}
+                    {% for doc_num, ref in child.analyses %}
+                    <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+                    {% endfor %}
+                {% endif %}
+
+                {% if child.children %}
+                    <ol class="level-1" type="1">
+                        {% for node in child.children %}
+                            {% include "tree-with-wrapper.html" %}
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+            </section>
+        {% endfor %}
+    {% endif %}
+{% endif %}
