@@ -1,3 +1,11 @@
+// **Extends** RegsView
+//
+// **TODO** Determine how much sense that still makes ^^
+//
+// **Usage** ```require(['definition-view'], function(DefinitionView) {})```
+//
+// A single inline interpretation, child of the sidebar
+// As of sprint 6, the only View that is instantiated more than once
 define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'regs-data', 'regs-dispatch', 'regs-helpers'], function($, _, Backbone, RegsView, RegsData, Dispatch, RegsHelpers) {
     'use strict';
     var DefinitionView = RegsView.extend({
@@ -6,6 +14,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
             'click .close-button': 'close'
         },
 
+        // **TODO** whole lot of refactoring
         render: function() {
             Dispatch.once('definition:callRemove', this.remove, this);
 
@@ -47,6 +56,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
 
             this.$el.attr('tabindex', '0').append('<a class="close-button" href="#">Close definition</a>');
 
+            // **Event trigger** triggers definition open event
             Dispatch.trigger('definition:render', this.$el);
             this.$el.focus();
 
@@ -55,12 +65,16 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
 
         close: function(e) {
             e.preventDefault();
+            // **Event trigger** asks for definition to be closed
+            // **TODO** architectural complexity required an additional close event be created
+            // to prevent cyclical event
             Dispatch.trigger('definition:callRemove');
         },
 
         remove: function() {
             this.stopListening();
             this.$el.remove();
+            // **Event trigger** notifies app that definition is removed
             Dispatch.trigger('definition:remove');
 
             return this;

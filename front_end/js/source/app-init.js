@@ -1,6 +1,13 @@
+// Module called on app load, once doc.ready
+//
+// **TODO**: Consolidate/minimize module dependencies
+//
+// **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
 define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
     'use strict';
     return {
+        // Temporary method. Recurses DOM and builds front end representation of content.
+        // API should make this obsolete.
         getTree: function($obj) {
             var parent = this;
             $obj.children().each(function() {
@@ -21,16 +28,18 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             });
         },
 
+        // Purgatory for DOM event bindings that should happen in a View
         bindEvents: function() {
-            // toc class toggle
+            /* toc class toggle */
             $('#menu-link, #toc-close').on('click', function() {
                 $('#menu, #reg-content, #menu-link, #content-header').toggleClass('active');
                 return false;
             });
 
+            /* ssshhhhh */
             new Konami(function() {
-                // http://thenounproject.com/noun/hamburger/#icon-No17373
-                // http://thenounproject.com/noun/carrot/#icon-No7790
+                /* http://thenounproject.com/noun/hamburger/#icon-No17373 */
+                /* http://thenounproject.com/noun/carrot/#icon-No7790 */
                 document.getElementById('menu-link').className += ' hamburgerify';
                 $('.inline-interpretation .expand-button').addClass('carrotify');
                 $('#about-tool').html('Made with <span style="color: red"><3</span> by:');
@@ -38,6 +47,8 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             });
         },
 
+        // as of sprint 6, model form images are giant and block at load
+        // incrementally loads in images once rendering is complete
         fetchModelForms: function() {
             var insertImg = function(tag) {
                 var $tag = $(tag),
@@ -58,7 +69,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
         init: function() {
             this.getTree($('#reg-content')); 
 
-            window.subhead = new SubHeadView({el: '#content-subhead'});
+            // init primary Views that require only a single instance
             window.toc = new TOCView({el: '#menu'});
             window.sidebar = new SidebarView({el: '#sidebar'});
             window.regContent = new ContentView({el: '.main-content'});

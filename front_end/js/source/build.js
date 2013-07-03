@@ -1,3 +1,4 @@
+// For Grunt RequireJS Optimizer, front_end/js/source -> front_end/js/built 
 ({
     paths: {
         jquery: './lib/jquery-1.9.1',

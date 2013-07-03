@@ -1,3 +1,7 @@
+// **Usage**
+// require(['regs-helpers'], function(RegsHelpers) {});
+//
+// Defines some globally useful helper functions
 define('regs-helpers', function() {
     'use strict';
     return {
@@ -8,8 +12,15 @@ define('regs-helpers', function() {
             return false;
         },
 
-        // verbose, but much faster than the concise
-        // jquery alternatives
+        // **Params**
+        // ```href```: String, url
+        // ```text```: String, link text 
+        // ```classStr```: String, optional, class name
+        //
+        // **Returns**
+        // jQobj: new link
+        //
+        // verbose, but much faster than the concise jquery alternatives
         // http://jsperf.com/create-dom-element/8
         fastLink: function(href, text, classStr) {
             var link = document.createElement('a'),
@@ -19,10 +30,16 @@ define('regs-helpers', function() {
             link.href = href;
             link.innerHTML = text;
             link.className = classStr || '';
+            window.subhead = new SubHeadView({el: '#content-subhead'});
 
             return $link;
         },
 
+        // **Params**
+        // ```p0```: String or Number, section ID
+        // ```p1```: String or Number, reg ID
+        //
+        // **Returns** human-readable representation of the reg section
         nonNumericId: function(p0, p1) {
             if (isNaN(parseInt(p0, 10))) {
                 return 'Supplement ' + p0 + ' to Part ' + p1;
@@ -32,6 +49,9 @@ define('regs-helpers', function() {
             }
         },
 
+        // **Param** dash-delimited string representation of reg entity ID
+        //
+        // **Returns** Reg entity marker formatted for human readability
         idToRef: function(id) {
             var ref = '', 
                 parts, i, len, dividers, item;
@@ -39,16 +59,19 @@ define('regs-helpers', function() {
             len = parts.length - 1;
             dividers = ['§ .', '', '( )', '( )', '( )', '( )'];
 
+            /* if we've got only the reg part number */
             if (len === 0) {
                 ref = parts[0];
                 return ref;
             }
 
+            /* if we have an appendix or supplement */
             if (isNaN(parseInt(parts[0], 10)) || 
                 isNaN(parseInt(parts[1], 10))) {
                 return this.nonNumericId(parts[0], parts[1]);
             }
 
+            /* we have a paragraph */
             for (i = 0; i <= len; i++) {
                 if (i === 1) {
                     ref += parts[i];
@@ -62,6 +85,9 @@ define('regs-helpers', function() {
             return ref;
         },
 
+        // Finds parent-most reg paragraph
+        //
+        // **TODO** RegsData.getParent is the same?
         findBaseSection: function(id) {
             var parts = id.split('-');
 
