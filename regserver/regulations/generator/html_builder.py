@@ -136,8 +136,8 @@ class HTMLBuilder():
             'tree':self.tree,
             'titles': self.get_title(),
             'env': self.get_env_dir(),
-            'GOOGLE_ANALYTICS_SITE':app_settings.GOOGLE_ANALYTICS_SITE, 
-            'GOOGLE_ANALYTICS_ID':app_settings.GOOGLE_ANALYTICS_ID
+            'GOOGLE_ANALYTICS_SITE':settings.GOOGLE_ANALYTICS_SITE, 
+            'GOOGLE_ANALYTICS_ID':settings.GOOGLE_ANALYTICS_ID
         })
         return main_template.render(c) 
 
