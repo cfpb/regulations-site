@@ -6,7 +6,6 @@ from django.template import loader, Template, Context
 from django.conf import settings
 
 from node_types import to_markup_id
-import settings as app_settings
 from layers.layers_applier import LayersApplier
 
 class HTMLBuilder():
@@ -127,7 +126,7 @@ class HTMLBuilder():
         return titles
 
     def get_env_dir(self):
-        if app_settings.ENV == 'dev':
+        if settings.DEBUG:
             return 'source'
         return 'built'
 
