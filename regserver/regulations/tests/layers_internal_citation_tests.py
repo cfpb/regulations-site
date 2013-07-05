@@ -1,9 +1,9 @@
-from layers.internal_citation import InternalCitationLayer
+from regulations.generator.layers.internal_citation import InternalCitationLayer
 from mock import patch
 from unittest import TestCase
 
 class InternalCitationLayerTest(TestCase):
-    @patch('layers.internal_citation.loader')
+    @patch('regulations.generator.layers.internal_citation.loader')
     def test_create_link_interp(self, loader):
         InternalCitationLayer.create_link("", {
             'citation': ['2322', 'Interpretations', '3', '(z)(9)(xii)', '1'],

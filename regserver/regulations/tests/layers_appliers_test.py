@@ -1,7 +1,7 @@
 import re
 from unittest import TestCase
-from layers import layers_applier
-from layers import location_replace
+from regulations.generator.layers import layers_applier
+from regulations.generator.layers import location_replace
 
 class LayersApplierTest(TestCase):
 

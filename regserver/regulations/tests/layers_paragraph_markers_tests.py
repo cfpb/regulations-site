@@ -1,10 +1,12 @@
-from layers.paragraph_markers import *
-from mock import patch
 from unittest import TestCase
+
+from mock import patch
+
+from regulations.generator.layers.paragraph_markers import *
 
 class ParagraphMarkersLayerTest(TestCase):
 
-    @patch('layers.paragraph_markers.loader')
+    @patch('regulations.generator.layers.paragraph_markers.loader')
     def test_apply_layer(self, loader):
         pml = ParagraphMarkersLayer({
             '1001-12-a': [{'text': '(a)', 'locations': [0]}],

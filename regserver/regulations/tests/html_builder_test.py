@@ -1,8 +1,9 @@
 #vim: set encoding=utf-8
-from html_builder import *
-from layers.layers_applier import ParagraphLayersApplier
-from mock import Mock
 from unittest import TestCase
+from mock import Mock
+
+from regulations.generator.html_builder import *
+from regulations.generator.layers.layers_applier import ParagraphLayersApplier
 
 class HTMLBuilderTest(TestCase):
 

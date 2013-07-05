@@ -1,6 +1,8 @@
-from mock import Mock, patch
-from notices import *
 from unittest import TestCase
+
+from mock import Mock, patch
+
+from regulations.generator.notices import *
 
 class NoticesTest(TestCase):
 
@@ -14,8 +16,8 @@ class NoticesTest(TestCase):
 
         self.assertEqual(["12341234", "98989898"], fetch_all(api))
 
-    @patch('notices.loader.get_template')
-    @patch('notices.sxs_markup')
+    @patch('regulations.generator.notices.loader.get_template')
+    @patch('regulations.generator.notices.sxs_markup')
     def test_markup(self, sxs_markup, get_template):
         get_template.return_value.render.return_value = '[html]'
         sxs_markup.return_value = '[sxs-html]'

@@ -1,10 +1,10 @@
 from unittest import TestCase
 from mock import Mock, patch
 
-from layers.external_citation import ExternalCitationLayer
+from regulations.generator.layers.external_citation import ExternalCitationLayer
 
 class ExternalCitationsTest(TestCase):
-    @patch('layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag')
+    @patch('regulations.generator.layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag')
     def test_statues_at_large_link(self, generate_fdsys_href_tag):
         text = '124 Stat. 2859'
         citation = text.split()
@@ -12,7 +12,7 @@ class ExternalCitationsTest(TestCase):
         parameters = generate_fdsys_href_tag.call_args[0][1]
         self.assertEqual(parameters['statutecitation'], '124 stat 2859')
 
-    @patch('layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag')
+    @patch('regulations.generator.layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag')
     def test_public_law_link(self, generate_fdsys_href_tag):
         text = 'Public Law 111-203'
         citation = [111, 203]
@@ -24,7 +24,7 @@ class ExternalCitationsTest(TestCase):
         self.assertEqual(parameters['lawnum'], 203)
         self.assertEqual(parameters['lawtype'], 'public')
 
-    @patch('layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag')
+    @patch('regulations.generator.layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag')
     def test_cfr_link(self, generate_fdsys_href_tag):
         text = "12 CFR part 200"
         citation = [12, 200]

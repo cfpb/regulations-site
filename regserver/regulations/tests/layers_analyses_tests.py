@@ -1,4 +1,4 @@
-from layers.analyses import *
+from regulations.generator.layers.analyses import *
 from unittest import TestCase
 
 class SectionBySectionLayerTest(TestCase):

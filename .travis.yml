@@ -3,7 +3,7 @@ python:
     - "2.6"
     - "2.7"
 install:
-   - cd static_html_generation
+   - cd regserver 
    - pip install -r requirements.txt --use-mirrors
    - cd ..
    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
@@ -16,7 +16,7 @@ install:
    - cp example-config.json config.json
 script:
     - export PYTHONPATH=.
-    - cd static_html_generation
+    - cd regserver
     - nosetests
     - cd ..
     - grunt test

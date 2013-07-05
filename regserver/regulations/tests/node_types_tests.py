@@ -1,5 +1,6 @@
-from node_types import *
 from unittest import TestCase
+
+from regulations.generator.node_types import *
 
 class NodeTypesTest(TestCase):
     def test_change_type_names(self):

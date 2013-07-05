@@ -1,9 +1,15 @@
-from layers.interpretations import InterpretationsLayer
 from mock import Mock, patch
+from django.conf import settings
 from unittest import TestCase
 
+from regulations.generator.layers.interpretations import InterpretationsLayer
+
 class InterpretationsLayerTest(TestCase):
-    @patch('layers.interpretations.api_reader')
+    def setUp(self):
+        if not settings.configured:
+            settings.configure(TEMPLATE_DEBUG=False, API_BASE='')
+        
+    @patch('regulations.generator.layers.interpretations.api_reader')
     def test_apply_layer_extra_fields(self, api_reader):
         layer = {
             "200-2-b-3-i": [{
@@ -25,7 +31,7 @@ class InterpretationsLayerTest(TestCase):
             'interp_label': '2(b)(3)(i)'
         })
 
-    @patch('layers.interpretations.api_reader')
+    @patch('regulations.generator.layers.interpretations.api_reader')
     def test_apply_layer_section(self, api_reader):
         layer = {
             "200-2": [{
@@ -47,7 +53,7 @@ class InterpretationsLayerTest(TestCase):
             'interp_label': '2'
         })
 
-    @patch('layers.interpretations.api_reader')
+    @patch('regulations.generator.layers.interpretations.api_reader')
     def test_apply_layer_appendix(self, api_reader):
         layer = {
             "200-Q-5": [{

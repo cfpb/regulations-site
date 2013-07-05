@@ -1,6 +1,7 @@
 from datetime import datetime
-from layers.utils import *
 from unittest import TestCase
+
+from regulations.generator.layers.utils import *
 
 class LayerUtilsTest(TestCase):
     
