@@ -1,5 +1,3 @@
-from django.template import loader, Context
-
 class SectionBySectionLayer(object):
     def __init__(self, layer):
         self.layer = layer

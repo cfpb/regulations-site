@@ -139,6 +139,12 @@ INSTALLED_APPS = (
 #The base URL for the API that we use to access layers and the regulation. 
 API_BASE = ''
 
+#When we generate an full HTML version of the regulation, we want to 
+#write it out somewhere. This is where. 
+OFFLINE_OUTPUT_DIR = ''
+
+DATE_FORMAT = 'n/j/Y'
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

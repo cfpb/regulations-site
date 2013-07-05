@@ -1,4 +1,4 @@
-import regulations.generator.api_reader
+from regulations.generator import api_reader
 from regulations.generator.html_builder import SlideDownInterpBuilder
 from regulations.generator.layers.layers_applier import ParagraphLayersApplier
 from regulations.generator.node_types import to_markup_id
@@ -13,6 +13,11 @@ class InterpretationsLayer(object):
         self.builder = SlideDownInterpBuilder(html_builder.inline_applier,
             ParagraphLayersApplier(),
             html_builder.search_applier)
+
+    def copy_builder(self, inline_applier, search_applier):
+        self.builder = SlideDownInterpBuilder(inline_applier,
+            ParagraphLayersApplier(),
+            search_applier)
 
     def apply_layer(self, text_index):
         """Return a pair of field-name + interpretation if one applies."""

@@ -17,6 +17,7 @@ class DefinitionsLayer(object):
                 for start, end in layer_element['offsets']:
                     ot = text[int(start):int(end)]
                     ref_in_layer = layer_element['ref']
+
                     def_struct = self.layer['referenced'][ref_in_layer]
 
                     le = {'citation':def_struct['reference'].split('-')}

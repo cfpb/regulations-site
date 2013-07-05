@@ -1,13 +1,19 @@
 import sys
+import codecs
+from os import mkdir, path
+import shutil
+
 from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
 from optparse import make_option
 
 from regulations.generator.html_builder import HTMLBuilder
-from regulations.generator.generator import get_all_layers
+from regulations.generator import generator 
+from regulations.generator import notices
 
 class Command(BaseCommand):
     args = "--regulation <regulation part> --reg_version=<regulation version>"
-    help = 'LabelCommand related stuff'
+    help = 'Write out the full version of a regulation to disk.'
 
     option_list = BaseCommand.option_list + (
         make_option('--regulation', 
@@ -18,6 +24,12 @@ class Command(BaseCommand):
             action='store', 
             dest='regulation_version',
             help='Regulation version required.'))
+
+    def write_file(self, filename, markup):
+        """ Write out a file using the UTF-8 codec. """
+        f = codecs.open(filename, 'w', encoding='utf-8')
+        f.write(markup)
+        f.close()
 
     def get_regulation_version(self, **options):
         """ Get the regulation part and regulation version from the command line arguments. """
@@ -31,4 +43,25 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         regulation_part, regulation_version = self.get_regulation_version(**options)
-        inline_applier, p_applier, s_applier = get_all_layers(regulation_part, regulation_version)
+        inline_applier, p_applier, s_applier = generator.get_all_layers(regulation_part, regulation_version)
+
+        builder = generator.get_builder(regulation_part, regulation_version, 
+                inline_applier, p_applier, s_applier)
+        builder.generate_html()
+        markup = builder.render_markup()
+
+        self.write_file(settings.OFFLINE_OUTPUT_DIR + 'rege.html', markup)
+        front_end_dir = settings.OFFLINE_OUTPUT_DIR + 'front_end'
+
+        if not path.islink(front_end_dir):
+            if path.exists(front_end_dir):
+                shutil.rmtree(front_end_dir)
+            shutil.copytree('../front_end', front_end_dir)
+
+        if not path.exists(settings.OFFLINE_OUTPUT_DIR + 'notice'):
+            mkdir(settings.OFFLINE_OUTPUT_DIR + 'notice')
+
+        all_notices = generator.get_all_notices()
+        for notice in all_notices: #notices.fetch_all(api):
+            self.write_file(settings.OFFLINE_OUTPUT_DIR + 'notice/' + 
+                notice['document_number'] + ".html", notices.markup(notice))
