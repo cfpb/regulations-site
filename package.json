@@ -22,7 +22,8 @@
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-less": "~0.5.2",
     "grunt-casperjs": "~1.0.6",
-    "grunt-ghost": "~1.0.12"
+    "grunt-ghost": "~1.0.12",
+    "grunt-docco2": "~0.1.1"
   },
   "keywords": []
 }
