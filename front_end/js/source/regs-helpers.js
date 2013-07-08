@@ -30,7 +30,6 @@ define('regs-helpers', function() {
             link.href = href;
             link.innerHTML = text;
             link.className = classStr || '';
-            window.subhead = new SubHeadView({el: '#content-subhead'});
 
             return $link;
         },
