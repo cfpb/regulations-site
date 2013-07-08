@@ -12,6 +12,6 @@ TEMPLATE_DIRS += (root('regulations/generator/templates'), )
 OFFLINE_OUTPUT_DIR = '/tmp/'
 
 try:
-    from dev_local_settings import *
+    from local_settings import *
 except ImportError:
     pass
