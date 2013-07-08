@@ -18,6 +18,18 @@ from layers.graphics import GraphicsLayer
 from html_builder import HTMLBuilder
 import notices
 
+def add_full_toc(regulation, version, p_applier):
+    """ When we are retrieving a regulation by section, we actually want the 
+    full Table of Contents. """
+    tl = get_table_of_contents(regulation, version)
+    p_applier.add_layer(TableOfContentsLayer(tl))
+    return p_applier
+
+def get_table_of_contents(regulation, version):
+    api = api_reader.Client(settings.API_BASE)
+    tl = api.layer("toc", regulation, version)
+    return tl
+
 def get_all_layers(regulation, version):
     """ Return the three layer appliers with the available layers possible """
     api = api_reader.Client(settings.API_BASE)
@@ -60,6 +72,18 @@ def get_all_layers(regulation, version):
 
     return (inline_applier, p_applier, s_applier)
 
+def get_single_section(full_regulation, section_reference):
+    for section in full_regulation['children']:
+        if section_reference == section['label']['text']:
+            return section
+
+def get_regulation_section(regulation, version, full_reference):
+    full_regulation = get_regulation(regulation, version)
+    single_section = get_single_section(full_regulation, full_reference)
+
+    full_regulation['children'] = [single_section]
+    return full_regulation
+
 def get_regulation(regulation, version):
     """ Get the regulation JSON tree. """
     api = api_reader.Client(settings.API_BASE)
@@ -73,4 +97,3 @@ def get_builder(regulation, version, inline_applier, p_applier, s_applier):
 def get_all_notices():
     api = api_reader.Client(settings.API_BASE)
     return notices.fetch_all(api)
-    

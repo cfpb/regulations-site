@@ -4,23 +4,24 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
     <head>
+        {% load static from staticfiles %}
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>{{tree.header}}</title>
-        <link rel="shortcut icon" type="image/x-icon" href="front_end/ip/favicon.ico"/>
-        <link rel="stylesheet" href="front_end/css/style.min.css"/>
-        <script src="front_end/js/{{ env }}/require.config.js"></script>
+        <link rel="shortcut icon" type="image/x-icon" href="{%static "regulations/ip/favicon.ico" %}"/>
+        <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
+        <script src="{%static "regulations/js/"|add:env|add:"/require.config.js" %}"></script>
         <script>
             if (typeof require !== 'undefined') {
-                require.baseUrl = "front_end/js/{{ env }}/";
+                require.baseUrl = "{%static "regulations/js/"|add:env|add:"/"%}";
             }
         </script>
-        <script data-main="regulations" src="front_end/js/{{ env }}/lib/require.js"></script>
+        <script data-main="regulations" src="{%static "regulations/js/"|add:env|add:"/lib/require.js" %}"></script>
 
         <!--[if lt IE 9]>
-            <script src="front_end/js/source/lib/html5shiv.js"></script>
-            <script src="front_end/js/source/lib/html5shiv-printshiv.js"></script>
-            <script src="front_end/js/source/lib/respond.js"></script>
+            <script src="{%static "regulations/js/source/lib/html5shiv.js" %}"></script>
+            <script src="{%static "regulations/js/source/lib/html5shiv-printshiv.js" %}"></script>
+            <script src="{%static "regulations/js/source/lib/respond.js" %}"></script>
         <![endif]--> 
     </head>
     <body>
@@ -38,7 +39,7 @@
             </li>
 
             <li>
-                <div class="logo"><img src="front_end/ip/logo.png" alt="logo" width="151px"></div>
+                <div class="logo"><img src="{%static "regulations/ip/logo.png" %}" alt="logo" width="151px"></div>
             </li>
         </div>
 
