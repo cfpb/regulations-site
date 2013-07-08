@@ -7,7 +7,7 @@ from regulations.views import RegulationView
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^regulation/(?P<reg_part_section>[-\d\w]+)(?P<reg_version>[-\d\w]+)$', 
+    url(r'^regulation/(?P<reg_part_section>[-\d\w]+)/(?P<reg_version>[-\d\w]+)$', 
         RegulationView.as_view(), 
         name='regulation_view'),
     # Examples:
