@@ -30,9 +30,13 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
 
         // Purgatory for DOM event bindings that should happen in a View
         bindEvents: function() {
-            /* toc class toggle */
-            $('#menu-link, #toc-close').on('click', function() {
-                $('#menu, #reg-content, #menu-link, #content-header').toggleClass('active');
+            // TOC class toggle
+            // **TODO:** Move this into the appropriate view
+            var $activeEls = $('#menu, #menu-link'),
+            $tocToggle = $('.toc-toggle');
+
+            $tocToggle.on('click', function() {
+                $activeEls.toggleClass('active');
                 return false;
             });
 
