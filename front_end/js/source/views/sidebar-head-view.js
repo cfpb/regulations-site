@@ -49,7 +49,7 @@ define('sidebar-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
         //
         // **TODO** can only really handle definitions
         close: function() {
-            Dispatch.trigger('definition:callRemove');
+            Dispatch.remove('definition');
         }
     });
 
