@@ -68,10 +68,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
 
         close: function(e) {
             e.preventDefault();
-            // **Event trigger** asks for definition to be closed
-            // **TODO** architectural complexity required an additional close event be created
-            // to prevent cyclical event
-            Dispatch.trigger('definition:callRemove');
+            Dispatch.remove('definition');
         },
 
         remove: function() {
