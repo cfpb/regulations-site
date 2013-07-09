@@ -114,6 +114,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             Dispatch.set('definition', definition);
             this.setActiveTerm($link);
+
+            return definition;
         },
 
         // handler for when inline interpretation is clicked
