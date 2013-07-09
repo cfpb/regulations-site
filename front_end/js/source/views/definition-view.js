@@ -8,16 +8,21 @@
 // As of sprint 6, the only View that is instantiated more than once
 define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'regs-data', 'regs-dispatch', 'regs-helpers'], function($, _, Backbone, RegsView, RegsData, Dispatch, RegsHelpers) {
     'use strict';
+
+    // **Constructor**
+    // this.options:
+    // 
+    // * **id** string, dash-delimited id of definition paragraph
+    // * **$anchor** jQobj, the content-view link that opened the def
+    //
+    // this.options turns into this.model
     var DefinitionView = RegsView.extend({
         className: 'open-definition',
         events: {
             'click .close-button': 'close'
         },
 
-        // **TODO** whole lot of refactoring
         render: function() {
-            Dispatch.once('definition:callRemove', this.remove, this);
-
             var interp = this.$el.find('.inline-interpretation'),
                 keyTerm = this.$el.find('dfn.key-term'),
                 dHref = '#' + this.model.id,
@@ -29,8 +34,6 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
 
                 this.$el.append($dLink);
 
-            //  Remove any highlight
-            this.$el.find('.active-term').removeClass('active-term');
             //  Add highlight to the clicked term
             this.$el.find('.defined-term').filter(function() {
                 return $(this).text().toLowerCase() === clickTerm;
@@ -75,7 +78,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
             this.stopListening();
             this.$el.remove();
             // **Event trigger** notifies app that definition is removed
-            Dispatch.trigger('definition:remove');
+            Dispatch.trigger('definition:remove', this.model.id);
 
             return this;
         }

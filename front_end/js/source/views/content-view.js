@@ -3,20 +3,12 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['content-view'], function(ContentView) {})```
-define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView) {
+define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view', 'sidebar-view'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, SidebarView) {
     'use strict';
 
     var ContentView = Backbone.View.extend({
-
-        // caches the openDefinition so that main-content links can reflect status        
-        openDefinition: {
-            id: '',
-            view: {},
-            link: {}
-        },
-
         events: {
-            'click .definition': 'clickDefinitionLink',
+            'click .definition': 'termLinkHandler',
             'click .expand-button': 'expandInterp',
             'click .inline-interp-header': 'expandInterp',
             'click .inline-interpretation:not(.open)': 'expandInterp',
@@ -29,8 +21,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             // **Event Listeners**
             //
-            // * when a definition is removed, cleanup related data
-            Dispatch.on('definition:remove', this.cleanupDefinition, this);
+            // * when a definition is removed, update term links
+            Dispatch.on('definition:remove', this.closeDefinition, this);
 
             // * when a table of contents link is clicked, make sure browser focus updates
             Dispatch.on('toc:click', this.changeFocus, this);
@@ -54,7 +46,6 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             // new View instance for subheader
             this.header = new SubHeadView({el: '#content-subhead'});
-
         },
 
         // naive way to update the active table of contents link and wayfinding header
@@ -79,65 +70,50 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             return this;
         },
 
-        // remove cached items once a definition is closed, adjust link classes accordingly
-        cleanupDefinition: function() {
-            delete(this.openDefinition.id);
-            delete(this.openDefinition.view);
-            if (this.openDefinition.link) {
-                this.openDefinition.link.removeClass('active').removeData('active');
-            }
-            delete(this.openDefinition.link);
-            delete(this.openDefinition.linkText);
+        closeDefinition: function() {
+            this.clearActiveTerms();
+        },
+
+        toggleDefinition: function($link) {
+            this.setActiveTerm($link); 
 
             return this;
         },
 
         // content section key term link click handler
-        // **TODO** this is too long to be good
-        clickDefinitionLink: function(e) {
+        termLinkHandler: function(e) {
             e.preventDefault();
             var $link = $(e.target),
-                defId;
+                defId = $link.attr('data-definition');
 
-            // if this definition is already open, close it
+            // if this link is already active, toggle def shut
             if ($link.data('active')) {
-                this.openDefinition.view.remove();
-                return this;
+                Dispatch.remove('definition');
             }
-
-            defId = $link.attr('data-definition');
-            $link.addClass('active').data('active', 1);
-
-             // if its the same def, diff link (with same text), update the active link and we're done
-            if (defId === this.openDefinition.id && $link.text().toLowerCase() === this.openDefinition.linkText) {
-                this.openDefinition.link.removeClass('active').removeData('active');
-                this.openDefinition.link = $link;           
-
-                return this;
+            else {
+                // if its the same definition, diff term link
+                if (Dispatch.getViewId('definition') === defId) {
+                    this.toggleDefinition($link);
+                }
+                else {
+                    // close old definition, if there is one
+                    Dispatch.remove('definition');
+                    // open new definition
+                    this.openDefinition(defId, $link);
+                }
             }
-
-            // if this is a definition that is different from one already open, close the open one
-            if (!_.isEmpty(this.openDefinition.view)) {
-                this.openDefinition.view.remove();
-            }
-
-            // create a new open definition
-            this.storeDefinition($link, defId);
 
             return this;
         },
 
-        // creates a new Definition View
-        // TODO: I'm guessing this could be more concise, depend less on DOM
-        storeDefinition: function($link, defId) {
-            this.openDefinition.link = $link;           
-            this.openDefinition.linkText = $link.text().toLowerCase();
-            this.openDefinition.id = defId;
-            this.openDefinition.view = new DefinitionView({
+        openDefinition: function(defId, $link) {
+            var definition = new DefinitionView({
                 id: defId,
-                $anchor: $link,
-                linkText: this.openDefinition.linkText
+                $anchor: $link
             });
+
+            Dispatch.set('definition', definition);
+            this.setActiveTerm($link);
         },
 
         // handler for when inline interpretation is clicked
@@ -201,6 +177,17 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
         changeFocus: function(id) {
             $(id).focus();
+        },
+
+        clearActiveTerms: function() {
+            this.$el.find('.active.definition')
+                .removeClass('active')
+                .removeData('active');
+        },
+
+        setActiveTerm: function($link) {
+            this.clearActiveTerms();
+            $link.addClass('active').data('active', 1);
         }
     });
 
