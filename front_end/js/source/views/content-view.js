@@ -34,11 +34,18 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             // also cache some jQobjs that we will refer to frequently
             this.$sections = {};
             this.$contentHeader = $('header.reg-header');
+
+            // sections that are eligible for being the active section
             this.$contentContainer = this.$el.find('.level-1 li[id], .reg-section, .appendix-section, .supplement-section');
+
+            // set active section vars
             this.activeSection = '';
             this.$activeSection = '';
+
+            // this might be silly?
             this.$window = $(window);
 
+            // cache jQobjs of each reg section
             len = this.$contentContainer.length;
             for (i = 0; i < len; i++) {
                 this.$sections[i] = $(this.$contentContainer[i]);
