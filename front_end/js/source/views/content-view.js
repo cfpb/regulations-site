@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['content-view'], function(ContentView) {})```
-define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view', 'sidebar-view'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, SidebarView) {
+define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView) {
     'use strict';
 
     var ContentView = Backbone.View.extend({
