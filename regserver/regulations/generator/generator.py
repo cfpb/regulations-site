@@ -18,6 +18,17 @@ from layers.graphics import GraphicsLayer
 from html_builder import HTMLBuilder
 import notices
 
+def add_section_internal_citations(regulation, version, inline_applier):
+    """ Internal citations work differently if one is loading a section 
+    at a time. """
+    api = api_reader.Client(settings.API_BASE)
+    il = api.layer("internal-citations", regulation, version)
+    icl = InternalCitationLayer(il)
+    icl.generate_sectional = True
+    icl.reg_version = version
+    inline_applier.add_layer(icl)
+    return inline_applier
+
 def add_full_toc(regulation, version, p_applier):
     """ When we are retrieving a regulation by section, we actually want the 
     full Table of Contents. """
@@ -30,8 +41,9 @@ def get_table_of_contents(regulation, version):
     tl = api.layer("toc", regulation, version)
     return tl
 
-def get_all_layers(regulation, version):
-    """ Return the three layer appliers with the available layers possible """
+def get_all_section_layers(regulation, version):
+    """ When we're loading a regulation section at a time, we need to treat 
+    the table of contents and internal citations layers slightly differently. """
     api = api_reader.Client(settings.API_BASE)
 
     inline_applier = InlineLayersApplier()
@@ -41,17 +53,11 @@ def get_all_layers(regulation, version):
     el = api.layer("external-citations", regulation, version)
     inline_applier.add_layer(ExternalCitationLayer(el, ['15', '1693']))
 
-    il = api.layer("internal-citations", regulation, version)
-    inline_applier.add_layer(InternalCitationLayer(il))
-
     dl = api.layer("terms", regulation, version)
     inline_applier.add_layer(DefinitionsLayer(dl))
 
     sxs = api.layer("analyses", regulation, version)
     p_applier.add_layer(SectionBySectionLayer(sxs))
-
-    tl = api.layer("toc", regulation, version)
-    p_applier.add_layer(TableOfContentsLayer(tl))
 
     kl = api.layer("keyterms", regulation, version)
     s_applier.add_layer(KeyTermsLayer(kl))
@@ -69,6 +75,19 @@ def get_all_layers(regulation, version):
     intl = InterpretationsLayer(intl, version)
     intl.copy_builder(inline_applier, s_applier)
     p_applier.add_layer(intl)
+
+    return (inline_applier, p_applier, s_applier)
+
+def get_all_layers(regulation, version):
+    """ Return the three layer appliers with the available layers possible """
+    api = api_reader.Client(settings.API_BASE)
+    inline_applier, p_applier, s_applier = get_all_section_layers(regulation, version)
+
+    tl = api.layer("toc", regulation, version)
+    p_applier.add_layer(TableOfContentsLayer(tl))
+
+    il = api.layer("internal-citations", regulation, version)
+    inline_applier.add_layer(InternalCitationLayer(il))
 
     return (inline_applier, p_applier, s_applier)
 
