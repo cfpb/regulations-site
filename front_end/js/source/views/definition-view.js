@@ -22,32 +22,27 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
             'click .close-button': 'close'
         },
 
-        render: function() {
-            var interp = this.$el.find('.inline-interpretation'),
-                keyTerm = this.$el.find('dfn.key-term'),
-                dHref = '#' + this.model.id,
-                dText = RegsHelpers.idToRef(this.model.id),
-                classStr = 'continue-link internal',
-                $dLink = RegsHelpers.fastLink(dHref, dText, classStr),
-                clickTerm = this.model.linkText,
-                iHref, iText, $iLink, interpId, keyTerms;
+        formatInterpretations: function() {
+            var interpretation = this.$el.find('.inline-interpretation'),
+                interpretationId;
 
-                this.$el.append($dLink);
+            if (typeof interpretation[0] !== 'undefined') {
+                interpretationId = $('#' + this.model.id).data('interpId');
+                interpretation.remove();
 
-            //  Add highlight to the clicked term
-            this.$el.find('.defined-term').filter(function() {
-                return $(this).text().toLowerCase() === clickTerm;
-            }).addClass('active-term');
-
-            if (typeof interp[0] !== 'undefined') {
-                interpId = $('#' + this.model.id).data('interpId');
-                interp.remove();
-
-                iHref = '#' + interpId;
-                iText = 'Related commentary';
-                $iLink = RegsHelpers.fastLink(iHref, iText, classStr);
-                this.$el.append($iLink);
+                this.$el.append(
+                    RegsHelpers.fastLink(
+                        '#' + interpretationId, 
+                        'Related commentary', 
+                        'continue-link internal interp'
+                    )
+                );
             }
+        },
+
+        removeHeadings: function() {
+            var keyTerm = this.$el.find('dfn.key-term'),
+                keyTerms;
 
             if (typeof keyTerm[0] !== 'undefined') {
                 keyTerms = keyTerm.length;
@@ -56,13 +51,32 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                     $(keyTerm[i]).remove(); 
                 }
             }
+        },
 
-            this.$el.attr('tabindex', '0').append('<a class="close-button" href="#">Close definition</a>');
+        render: function() {
+            // link to definition in content body
+            this.$el.append(
+                RegsHelpers.fastLink(
+                    '#' + this.model.id, 
+                    RegsHelpers.idToRef(this.model.id),
+                    'continue-link internal'
+                )
+            );
+
+            // remove inline interpretation, add interpretation link
+            this.formatInterpretations();
+            this.removeHeadings();
+
+            // make definition tabbable
+            this.$el.attr('tabindex', '0')
+                // make tab-activeated close button at bottom of definition content
+                .append('<a class="close-button" href="#">Close definition</a>');
 
             // **Event trigger** triggers definition open event
             Dispatch.trigger('definition:render', this.$el);
-            this.$el.focus();
 
+            // set focus to the open definition
+            this.$el.focus();
             return this;
         },
 

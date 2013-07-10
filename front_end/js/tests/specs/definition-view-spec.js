@@ -3,12 +3,12 @@ define(["underscore", "backbone", "jquery", "definition-view", "regs-data", 'sam
     RegsData.parse(testjson);
 
     $('body')
-        .append('<div id="2345-6-a">sdfsd</div>')
-        .append('<a id="2345-4">sdfds</a>');
+        .append('<div id="2345-6-a" data-interp-id="111-2">sdfsd <div class="inline-interpretation"></div></div>')
+        .append('<a id="term-link" href="#2345-6-a" data-definition="2345-6-a">sdfds</a>');
 
     var view = new DefinitionView({
         id: '2345-6-a',
-        $anchor: $('#2345-4')
+        $anchor: $('#term-link')
     });
 
     it("should have the view instance", function() {
@@ -20,11 +20,11 @@ define(["underscore", "backbone", "jquery", "definition-view", "regs-data", 'sam
     });
 
     it("should store the parent link", function() {
-        expect(view.model.$anchor).toEqual($('#2345-4'));
+        expect(view.model.$anchor).toEqual($('#term-link'));
     });
 
-    it("should tell the state obj that its open", function() {
+    it("should be tabbable", function() {
+        expect(view.$el.attr('tabindex')).toEqual('0');
     });
-    
   });
 });

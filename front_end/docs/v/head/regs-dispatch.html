@@ -110,26 +110,103 @@
               </div>
               <p><strong>Extends</strong> Backbone.Events</p>
 <p><strong>Usage</strong> require([&#39;regs-dispatch&#39;], function(Dispatch) {}))</p>
+<p><strong>Dispatch:</strong>
+Verb: 
+<em> 1. Send off to a destination or for a purpose.
+</em> 2. Deal with a task quickly and efficiently</p>
+<p>Noun: The sending of someone or something to a destination or for a purpose.</p>
+<p>Dispatch is responsible, via Backbone.Events, for, appropriately, dispatching event triggers and notifying bindings
+There are entities that, at first glance, would seem to have a straightforward parent/child relationship with another module
+However, there are significant interactions that occur across two or more modules. Instead of having a complicated 
+multi-event scheme or introducing a lot of coupling between modules, Dispatch can house and serve information about these entities.</p>
+<p>Example: inline definitions. They are triggered by a link in content-view, can be closed by content-view, sidebar-head-view or sidebar-view.
+Closing a definition without introducing multiple events or causing cyclical dependencies can be tricky. If the definition View instance belongs
+to any of these modules, another module will need to as the parent module directly for information about the View instance. Instead, all
+modules can remove the open definition by calling <code>Dispatch.remove(&#39;definition&#39;);</code></p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>define(<span class="string">'regs-dispatch'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
     <span class="string">'use strict'</span>;
-    <span class="keyword">return</span> _.extend({
-        open: {},
+    <span class="keyword">return</span> _.extend({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>storage for entities
+<strong>Usage</strong> Dispatch.open.definition
+idea is that each entity will be stored according to its type so that any module can refer to it without knowing what
+instance it holds. 
+This scheme currently limits it to one value associated with each type, in theory.</p>
 
-        set: <span class="keyword">function</span>(key, val) {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        open: {},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>store a new entity in Dispatch.open
+<strong>Params</strong></p>
+<ul>
+<li><strong>key</strong>, string, entity type, ex. &#39;definition&#39;</li>
+<li><strong>val</strong>, object, new Backbone View</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        set: <span class="keyword">function</span>(key, val) {
             <span class="keyword">this</span>.open[key] = val;
-        },
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>remove a value from Dispatch.open and call its <code>remove()</code> method
+<strong>Param</strong> string, entity type, ex. &#39;definition&#39;</p>
 
-        remove: <span class="keyword">function</span>(key) {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        remove: <span class="keyword">function</span>(key) {
             <span class="keyword">if</span> (<span class="keyword">this</span>.open[key]) {
                 <span class="keyword">this</span>.open[key].remove();
                 <span class="keyword">delete</span>(<span class="keyword">this</span>.open[key]);
             }
-        },
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>retrieve the id of the stored object
+<strong>Param</strong> string, entity type, ex. &#39;definition&#39;</p>
 
-        getViewId: <span class="keyword">function</span>(type) {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        getViewId: <span class="keyword">function</span>(type) {
             <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.open[type] === <span class="string">'object'</span>) {
                 <span class="keyword">return</span> <span class="keyword">this</span>.open[type].model.id;
             }
