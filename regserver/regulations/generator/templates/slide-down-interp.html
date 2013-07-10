@@ -1,6 +1,8 @@
 <section class="inline-interpretation" data-interp-for="{{node.interp_for_markup_id}}">
-    <h4 class="inline-interp-header" tabindex="0">Supplement to <span class="ref-num">{{ node.interp_label }}</span></h4>
-    <a class="expand-button">Show</a>
+    <header class="inline-interp-header">
+        <h4 tabindex="0">Supplement to <span class="ref-num">{{ node.interp_label }}</span></h4>
+        <a class="expand-button">Show</a>
+    </header>
     <section class="inline-interpretation-content hidden">
         {% if node.header %}
         <h5>{{ node.header }}</h5>
