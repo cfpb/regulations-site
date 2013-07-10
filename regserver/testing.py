@@ -1,6 +1,6 @@
-from django.test.simple import DjangoTestSuiteRunner
+from django_nose.runner import NoseTestSuiteRunner
 
-class DatabaselessTestRunner(DjangoTestSuiteRunner):
+class DatabaselessTestRunner(NoseTestSuiteRunner):
     """ A test suite runner that does not setup and tear down a database. """
 
     def setup_databases(self):
