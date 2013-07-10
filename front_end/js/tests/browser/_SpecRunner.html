@@ -17,6 +17,7 @@
         "underscore": "./lib/underscore",
         "backbone": "./lib/backbone",
         "jquery": "./lib/jquery-1.9.1",
+        'jquery-scrollstop': './lib/jquery.scrollstop',
         "samplejson": "../tests/grunt/js/fixtures/sample-json",
         'definition-view': './views/definition-view',
         'regs-fixed-el-view': './views/regs-fixed-el-view',
@@ -40,7 +41,7 @@
       }
   });
 
-  require(['/front_end/js/tests/specs/reg-data-spec.js', '/front_end/js/tests/specs/reg-definitions-view-spec.js', '/front_end/js/tests/specs/content-view-spec.js'], function() {
+  require(['/front_end/js/tests/specs/reg-data-spec.js', '/front_end/js/tests/specs/definition-view-spec.js', '/front_end/js/tests/specs/content-view-spec.js', '/front_end/js/tests/specs/regs-helpers-spec.js', '/front_end/js/tests/specs/regs-dispatch-spec.js'], function() {
     $(function() {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute();

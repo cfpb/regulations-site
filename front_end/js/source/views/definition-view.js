@@ -34,7 +34,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                     RegsHelpers.fastLink(
                         '#' + interpretationId, 
                         'Related commentary', 
-                        'continue-link internal'
+                        'continue-link internal interp'
                     )
                 );
             }
@@ -77,7 +77,6 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
 
             // set focus to the open definition
             this.$el.focus();
-
             return this;
         },
 
