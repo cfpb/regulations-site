@@ -22,11 +22,11 @@ module.exports = function(grunt) {
     less: {
         development: {
             options: {
-                paths: ['front_end/css/less', 'front_end/css/less/module'],
+                paths: ['regserver/regulations/static/regulations/css/less', 'regserver/regulations/static/regulations/css/less/module'],
                 yuicompress: true
             },
             files: {
-                "front_end/css/style.min.css": "front_end/css/less/main.less"
+                "regserver/regulations/static/regulations/css/style.min.css": "regserver/regulations/static/regulations/css/less/main.less"
             }
         }
     },
@@ -37,9 +37,9 @@ module.exports = function(grunt) {
      * https://github.com/eliias/grunt-docco
      */
     docco: {
-        src: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js'],
+        src: ['regserver/regulations/static/regulations/js/source/*.js', 'regserver/regulations/static/regulations/js/source/views/*.js'],
         options: {
-            output: 'front_end/docs/v/head'
+            output: 'regserver/regulations/static/regulations/docs/v/head'
         }
     },
 
@@ -81,7 +81,7 @@ module.exports = function(grunt) {
           regContent: true
         }
       },
-      all: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js', '!front_end/js/source/build.js', '!front_end/js/source/require.config.js']
+      all: ['regserver/regulations/static/regulations/js/source/*.js', 'regserver/regulations/static/regulations/js/source/views/*.js', '!regserver/regulations/static/regulations/js/source/build.js', '!regserver/regulations/static/regulations/js/source/require.config.js']
     },
 
     /**
@@ -92,13 +92,13 @@ module.exports = function(grunt) {
      */
     jasmine: {
       all: {
-        src: 'front_end/js/source',
+        src: 'regserver/regulations/static/regulations/js/source',
         options: {
           template: require('grunt-template-jasmine-requirejs'),
-          specs: 'front_end/js/tests/specs/*.js',
+          specs: 'regserver/regulations/static/regulations/js/tests/specs/*.js',
           templateOptions: {
             requireConfig: {
-              baseUrl: 'front_end/js/source',
+              baseUrl: 'regserver/regulations/static/regulations/js/source',
               paths: {
                 underscore: './lib/underscore',
                 backbone: './lib/backbone',
@@ -143,7 +143,7 @@ module.exports = function(grunt) {
      */
     watch: {
       gruntfile: {
-        files: ['Gruntfile.js', '<%= recess.dist.src %>', 'front_end/css/*.less', '<%= jasmine.options.specs %>'],
+        files: ['Gruntfile.js', '<%= recess.dist.src %>', 'regserver/regulations/static/regulations/css/*.less', '<%= jasmine.options.specs %>'],
         tasks: ['build']
       }
     },
@@ -157,7 +157,7 @@ module.exports = function(grunt) {
      */
     ghost: {
         dist: {
-            filesSrc: ['front_end/js/tests/functional/*.js'],
+            filesSrc: ['regserver/regulations/static/regulations/js/tests/functional/*.js'],
             options: {
                 args: {
                     testUrl: '<%= env.testUrl %>'
@@ -172,9 +172,9 @@ module.exports = function(grunt) {
     requirejs: {
         compile: {
             options: {
-                baseUrl: 'front_end/js/source',
-                mainConfigFile: 'front_end/js/source/build.js',
-                dir: "front_end/js/built",
+                baseUrl: 'regserver/regulations/static/regulations/js/source',
+                mainConfigFile: 'regserver/regulations/static/regulations/js/source/build.js',
+                dir: "regserver/regulations/static/regulations/js/built",
                 modules: [ {name: "regulations"} ],
                 paths: {
                     jquery: './lib/jquery-1.9.1',

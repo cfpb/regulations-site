@@ -1,4 +1,4 @@
-// For Grunt RequireJS Optimizer, front_end/js/source -> front_end/js/built 
+// For Grunt RequireJS Optimizer, static/regulations/js/source -> static/regulations/js/built 
 ({
     paths: {
         jquery: './lib/jquery-1.9.1',
@@ -28,6 +28,6 @@
             exports: 'Konami'
         }
     },
-    dir: 'front_end/js/built',
+    dir: 'static/regulations/js/built',
     modules: [ {name: 'regulations'} ]
 });
