@@ -9,9 +9,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
     var ContentView = Backbone.View.extend({
         events: {
             'click .definition': 'termLinkHandler',
-            'click .expand-button': 'expandInterp',
             'click .inline-interp-header': 'expandInterp',
-            'click .inline-interpretation:not(.open)': 'expandInterp',
             'mouseenter p': 'showPermalink',
             'mouseenter h2.section-number': 'showPermalink'
         },
@@ -127,25 +125,17 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
         // handler for when inline interpretation is clicked
         expandInterp: function(e) {
-            e.stopPropagation();
-            var button;
 
-            // user can click on the gray space, "show" button or header on a closed interp
+            // user can click anywhere in the header of a closed interp
             // for an open interp, they can click "hide" button or header
-            // **TODO** markup rethink?
-            if (e.currentTarget.tagName.toUpperCase() === 'SECTION') {
-                button = $(e.currentTarget).find('.expand-button');
-            }
-            else if (e.currentTarget.tagName.toUpperCase() === 'H4'){
-                button = $(e.currentTarget).siblings('.expand-button');
-            }
-            else {
-                button = $(e.currentTarget);
-            }
+            e.stopPropagation();
+            var header = $(e.currentTarget),
+                section = header.parent(),
+                button = header.find('.expand-button');
 
-            button.parent().toggleClass('open');
-            button.toggleClass('open').next('.hidden').slideToggle();
-            button.html(button.hasClass('open') ? 'Hide' : 'Show');
+            section.toggleClass('open');
+            header.next('.hidden').slideToggle();
+            button.html(section.hasClass('open') ? 'Hide' : 'Show');
 
             return this;
         },

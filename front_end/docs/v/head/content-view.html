@@ -120,9 +120,7 @@
     <span class="keyword">var</span> ContentView = Backbone.View.extend({
         events: {
             <span class="string">'click .definition'</span>: <span class="string">'termLinkHandler'</span>,
-            <span class="string">'click .expand-button'</span>: <span class="string">'expandInterp'</span>,
             <span class="string">'click .inline-interp-header'</span>: <span class="string">'expandInterp'</span>,
-            <span class="string">'click .inline-interpretation:not(.open)'</span>: <span class="string">'expandInterp'</span>,
             <span class="string">'mouseenter p'</span>: <span class="string">'showPermalink'</span>,
             <span class="string">'mouseenter h2.section-number'</span>: <span class="string">'showPermalink'</span>
         },
@@ -450,9 +448,7 @@ for the fixed position header, is deemed the active section</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        expandInterp: <span class="keyword">function</span>(e) {
-            e.stopPropagation();
-            <span class="keyword">var</span> button;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        expandInterp: <span class="keyword">function</span>(e) {</pre></div></div>
             
         </li>
         
@@ -463,25 +459,19 @@ for the fixed position header, is deemed the active section</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
-              <p>user can click on the gray space, &quot;show&quot; button or header on a closed interp
-for an open interp, they can click &quot;hide&quot; button or header
-<strong>TODO</strong> markup rethink?</p>
+              <p>user can click anywhere in the header of a closed interp
+for an open interp, they can click &quot;hide&quot; button or header</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (e.currentTarget.tagName.toUpperCase() === <span class="string">'SECTION'</span>) {
-                button = $(e.currentTarget).find(<span class="string">'.expand-button'</span>);
-            }
-            <span class="keyword">else</span> <span class="keyword">if</span> (e.currentTarget.tagName.toUpperCase() === <span class="string">'H4'</span>){
-                button = $(e.currentTarget).siblings(<span class="string">'.expand-button'</span>);
-            }
-            <span class="keyword">else</span> {
-                button = $(e.currentTarget);
-            }
+            <div class="content"><div class='highlight'><pre>            e.stopPropagation();
+            <span class="keyword">var</span> header = $(e.currentTarget),
+                section = header.parent(),
+                button = header.find(<span class="string">'.expand-button'</span>);
 
-            button.parent().toggleClass(<span class="string">'open'</span>);
-            button.toggleClass(<span class="string">'open'</span>).next(<span class="string">'.hidden'</span>).slideToggle();
-            button.html(button.hasClass(<span class="string">'open'</span>) ? <span class="string">'Hide'</span> : <span class="string">'Show'</span>);
+            section.toggleClass(<span class="string">'open'</span>);
+            header.next(<span class="string">'.hidden'</span>).slideToggle();
+            button.html(section.hasClass(<span class="string">'open'</span>) ? <span class="string">'Hide'</span> : <span class="string">'Show'</span>);
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
         },</pre></div></div>
