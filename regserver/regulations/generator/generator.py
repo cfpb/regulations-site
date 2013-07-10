@@ -18,14 +18,20 @@ from layers.graphics import GraphicsLayer
 from html_builder import HTMLBuilder
 import notices
 
-def add_section_internal_citations(regulation, version, inline_applier):
+def create_sectional_citation_layer(layer_json, version):
+    """ Create an InternalCitationLayer that is aware that we're 
+    loading a section at a time. """
+    icl = InternalCitationLayer(layer_json)
+    icl.generate_sectional = True
+    icl.reg_version = version
+    return icl
+
+def add_section_internal_citations(regulation, reg_version, inline_applier):
     """ Internal citations work differently if one is loading a section 
     at a time. """
     api = api_reader.Client(settings.API_BASE)
-    il = api.layer("internal-citations", regulation, version)
-    icl = InternalCitationLayer(il)
-    icl.generate_sectional = True
-    icl.reg_version = version
+    il = api.layer("internal-citations", regulation, reg_version)
+    icl = create_sectional_citation_layer(il, reg_version)
     inline_applier.add_layer(icl)
     return inline_applier
 
@@ -92,11 +98,13 @@ def get_all_layers(regulation, version):
     return (inline_applier, p_applier, s_applier)
 
 def get_single_section(full_regulation, section_reference):
+    """ Given a full regulation tree, return the section requested. """
     for section in full_regulation['children']:
         if section_reference == section['label']['text']:
             return section
 
 def get_regulation_section(regulation, version, full_reference):
+    """ Get a full regulation JSON tree, return the section requested. """
     full_regulation = get_regulation(regulation, version)
     single_section = get_single_section(full_regulation, full_reference)
 
@@ -109,6 +117,7 @@ def get_regulation(regulation, version):
     return api.regulation(regulation, version)
 
 def get_builder(regulation, version, inline_applier, p_applier, s_applier):
+    """ Returns an HTML builder with the appliers, and the regulation tree. """
     builder = HTMLBuilder(inline_applier, p_applier, s_applier)
     builder.tree = get_regulation(regulation, version)
     return builder

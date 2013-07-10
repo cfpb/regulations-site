@@ -33,7 +33,6 @@ class RegulationSectionView(TemplateView):
 
         builder = HTMLBuilder(inline_applier, p_applier, s_applier)
         builder.tree = section_tree
-
         builder.generate_html()
 
         context['tree'] = builder.tree

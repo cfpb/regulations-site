@@ -18,14 +18,21 @@ class InternalCitationLayer():
         return template.render(c).strip('\n')
 
     @staticmethod
-    def create_sectional_link(text, layer_element, reg_version, template_name='internal_citation.html'):
+    def create_sectional_url_parts(layer_element):
         citation_anchor = "#" + "-".join(to_markup_id(layer_element['citation']))
         section_url = '-'.join(layer_element['citation'][0:2])
+        return (section_url, citation_anchor)
+
+    @staticmethod
+    def create_sectional_link(text, layer_element, reg_version, template_name='internal_citation.html'):
+        section_url, citation_anchor = InternalCitationLayer.create_sectional_url_parts(layer_element)
         try:
             citation_url = reverse('regulation_section_view', 
                 kwargs={'reg_part_section':section_url, 'reg_version':reg_version})
             citation_url = citation_url + citation_anchor
         except NoReverseMatch:
+            #XXX We have some errors in our layers. Once those are fixed, we need to 
+            #revisit this. 
             citation_url = ''
         return InternalCitationLayer.render_url(citation_url, text, template_name)
 

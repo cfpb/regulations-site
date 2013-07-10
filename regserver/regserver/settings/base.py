@@ -148,6 +148,11 @@ DATE_FORMAT = 'n/j/Y'
 GOOGLE_ANALYTICS_ID = ''
 GOOGLE_ANALYTICS_SITE = ''
 
+#Django by default tries to setup a databse when running 
+#tests. We don't have a database, so we override the default 
+#test runner. 
+TEST_RUNNER = 'testing.DatabaselessTestRunner'
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
