@@ -1,1 +1,1 @@
-define("regs-dispatch",["jquery","underscore","backbone"],function(e,t,n){return t.extend({},n.Events)});
+define("regs-dispatch",["jquery","underscore","backbone"],function(e,t,n){return t.extend({open:{},set:function(e,t){this.open[e]=t},remove:function(e){this.open[e]&&(this.open[e].remove(),delete this.open[e])},getViewId:function(e){return typeof this.open[e]=="object"?this.open[e].model.id:!1}},n.Events)});
