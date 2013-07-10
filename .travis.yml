@@ -15,8 +15,7 @@ install:
    - cd ..
    - cp example-config.json config.json
 script:
-    - export PYTHONPATH=.
     - cd regserver
-    - nosetests
+    - python manage.py test regulations --settings=regserver.settings.dev
     - cd ..
     - grunt test
