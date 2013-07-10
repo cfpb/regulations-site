@@ -1,10 +1,15 @@
 from django.conf.urls import patterns, include, url
 
+from regulations.views import RegulationSectionView
+
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^regulation/(?P<reg_part_section>[\d]+[-][\w]+)/(?P<reg_version>[-\d\w]+)$', 
+        RegulationSectionView.as_view(), 
+        name='regulation_section_view'),
     # Examples:
     # url(r'^$', 'regserver.views.home', name='home'),
     # url(r'^regserver/', include('regserver.foo.urls')),
