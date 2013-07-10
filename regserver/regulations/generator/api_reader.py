@@ -1,3 +1,4 @@
+import copy
 import json
 from urllib import urlopen
 
@@ -35,7 +36,9 @@ class Client:
 
     def regulation(self, label, version):
         """End point for regulation JSON. Return the result as a dict"""
-        return self._use_reg_cache(label, version)
+        return copy.deepcopy(self._use_reg_cache(label, version))
+        #return self._get("regulation/%s/%s" % (label, version))
+
 
     def layer(self, layer_name, label, version):
         """End point for layer JSON. Return the result as a list"""
