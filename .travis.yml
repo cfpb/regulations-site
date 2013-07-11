@@ -12,10 +12,8 @@ install:
    - sudo apt-get install nodejs phantomjs
    - npm install grunt-cli grunt-init
    - npm install
-   - cd ..
    - cp example-config.json config.json
 script:
     - cd regserver
     - python manage.py test regulations --settings=regserver.settings.dev
-    - cd ..
     - grunt test
