@@ -50,7 +50,7 @@ oldphantomjs/
 # Custom #
 ##########
 *.py[co]
-front_end/ip
+ip/
 *.swp
 local_settings.py
 dev_local_settings.py
