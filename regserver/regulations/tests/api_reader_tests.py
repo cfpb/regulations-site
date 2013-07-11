@@ -13,51 +13,51 @@ class ClientTest(TestCase):
         self.client = Client("http://example.com")
         Client._reg_cache = {}
 
-    def _fake_response(self, value):
-        """Mock out a response -- a File-like object with encoded json"""
-        return StringIO(json.dumps(value))
-
-    @patch('regulations.generator.api_reader.urlopen')
-    def test_regulation(self, urlopen):
+    @patch('regulations.generator.api_reader.requests')
+    def test_regulation(self, requests):
         to_return = {'example': 0}
-        urlopen.return_value = self._fake_response(to_return)
+        get = requests.get
+        get.return_value.json.return_value = to_return
         self.assertEqual(to_return,
                 self.client.regulation("label-here", "date-here"))
-        self.assertTrue(urlopen.called)
-        param = urlopen.call_args[0][0]
+        self.assertTrue(get.called)
+        param = get.call_args[0][0]
         self.assertTrue('http://example.com' in param)
         self.assertTrue('label-here' in param)
         self.assertTrue('date-here' in param)
 
-    @patch('regulations.generator.api_reader.urlopen')
-    def test_layer(self, urlopen):
+    @patch('regulations.generator.api_reader.requests')
+    def test_layer(self, requests):
         to_return = {'example': 1}
-        urlopen.return_value = self._fake_response(to_return)
+        get = requests.get
+        get.return_value.json.return_value = to_return
         self.assertEqual(to_return, 
                 self.client.layer("layer-here", "label-here", "date-here"))
-        self.assertTrue(urlopen.called)
-        param = urlopen.call_args[0][0]
+        self.assertTrue(get.called)
+        param = get.call_args[0][0]
         self.assertTrue('http://example.com' in param)
         self.assertTrue('layer-here' in param)
         self.assertTrue('label-here' in param)
         self.assertTrue('date-here' in param)
 
-    @patch('regulations.generator.api_reader.urlopen')
-    def test_notices(self, urlopen):
+    @patch('regulations.generator.api_reader.requests')
+    def test_notices(self, requests):
         to_return = {'example': 1}
-        urlopen.return_value = self._fake_response(to_return)
+        get = requests.get
+        get.return_value.json.return_value = to_return
         self.assertEqual(to_return, self.client.notices())
-        self.assertTrue(urlopen.called)
-        param = urlopen.call_args[0][0]
+        self.assertTrue(get.called)
+        param = get.call_args[0][0]
         self.assertTrue('http://example.com' in param)
 
-    @patch('regulations.generator.api_reader.urlopen')
-    def test_notice(self, urlopen):
+    @patch('regulations.generator.api_reader.requests')
+    def test_notice(self, requests):
         to_return = {'example': 1}
-        urlopen.return_value = self._fake_response(to_return)
+        get = requests.get
+        get.return_value.json.return_value = to_return
         self.assertEqual(to_return, self.client.notice("doc"))
-        self.assertTrue(urlopen.called)
-        param = urlopen.call_args[0][0]
+        self.assertTrue(get.called)
+        param = get.call_args[0][0]
         self.assertTrue('http://example.com' in param)
         self.assertTrue('doc' in param)
 
@@ -74,8 +74,8 @@ class ClientTest(TestCase):
         shutil.rmtree(tmp_root)
         self.assertEqual(["example"], results['results'])
 
-    @patch('regulations.generator.api_reader.urlopen')
-    def test_reg_cache(self, urlopen):
+    @patch('regulations.generator.api_reader.requests')
+    def test_reg_cache(self, requests):
         child = {
             'text': 'child', 
             'children': [], 
@@ -86,11 +86,12 @@ class ClientTest(TestCase):
             'label': {'text': '923', 'parts': ['923']},
             'children': [child]
         }
-        urlopen.return_value = self._fake_response(to_return)
+        get = requests.get
+        get.return_value.json.return_value = to_return
         self.assertEqual(to_return, self.client.regulation('923', 'ver'))
         self.assertEqual(to_return, self.client.regulation('923', 'ver'))
         self.assertEqual(child, self.client.regulation('923-a', 'ver'))
-        self.assertEqual(1, urlopen.call_count)
-        urlopen.return_value = self._fake_response(to_return)
+        self.assertEqual(1, get.call_count)
+        get.return_value.json.return_value = to_return
         self.client.regulation('923-b', 'ver')
-        self.assertEqual(2, urlopen.call_count)
+        self.assertEqual(2, get.call_count)
