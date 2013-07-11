@@ -10,7 +10,6 @@ install:
    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
    - sudo apt-get update
    - sudo apt-get install nodejs phantomjs
-   - cd front_end
    - npm install grunt-cli grunt-init
    - npm install
    - cd ..
