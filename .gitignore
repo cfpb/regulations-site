@@ -56,3 +56,4 @@ local_settings.py
 dev_local_settings.py
 config.json
 _SpecRunner.html
+regserver/regulations/static/regulations/docs/v/*/public/fonts/
