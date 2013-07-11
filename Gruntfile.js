@@ -22,11 +22,11 @@ module.exports = function(grunt) {
     less: {
         development: {
             options: {
-                paths: ['front_end/css/less', 'front_end/css/less/module'],
+                paths: ['<%= env.frontEndPath %>/css/less', '<%= env.frontEndPath %>/css/less/module'],
                 yuicompress: true
             },
             files: {
-                "front_end/css/style.min.css": "front_end/css/less/main.less"
+                "<%= env.frontEndPath %>/css/style.min.css": "<%= env.frontEndPath %>/css/less/main.less"
             }
         }
     },
@@ -37,9 +37,9 @@ module.exports = function(grunt) {
      * https://github.com/eliias/grunt-docco
      */
     docco: {
-        src: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js'],
+        src: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js'],
         options: {
-            output: 'front_end/docs/v/head'
+            output: '<%= env.frontEndPath %>/docs/v/head'
         }
     },
 
@@ -81,7 +81,7 @@ module.exports = function(grunt) {
           regContent: true
         }
       },
-      all: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js', '!front_end/js/source/build.js', '!front_end/js/source/require.config.js']
+      all: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js', '!<%= env.frontEndPath %>/js/source/build.js', '!<%= env.frontEndPath %>/js/source/require.config.js']
     },
 
     /**
@@ -92,13 +92,13 @@ module.exports = function(grunt) {
      */
     jasmine: {
       all: {
-        src: 'front_end/js/source',
+        src: '<%= env.frontEndPath %>/js/source',
         options: {
           template: require('grunt-template-jasmine-requirejs'),
-          specs: 'front_end/js/tests/specs/*.js',
+          specs: '<%= env.frontEndPath %>/js/tests/specs/*.js',
           templateOptions: {
             requireConfig: {
-              baseUrl: 'front_end/js/source',
+              baseUrl: '<%= env.frontEndPath %>/js/source',
               paths: {
                 underscore: './lib/underscore',
                 backbone: './lib/backbone',
@@ -143,7 +143,7 @@ module.exports = function(grunt) {
      */
     watch: {
       gruntfile: {
-        files: ['Gruntfile.js', '<%= recess.dist.src %>', 'front_end/css/*.less', '<%= jasmine.options.specs %>'],
+        files: ['Gruntfile.js', '<%= recess.dist.src %>', '<%= env.frontEndPath %>/css/*.less', '<%= jasmine.options.specs %>'],
         tasks: ['build']
       }
     },
@@ -157,7 +157,7 @@ module.exports = function(grunt) {
      */
     ghost: {
         dist: {
-            filesSrc: ['front_end/js/tests/functional/*.js'],
+            filesSrc: ['<%= env.frontEndPath %>/js/tests/functional/*.js'],
             options: {
                 args: {
                     testUrl: '<%= env.testUrl %>'
@@ -172,9 +172,9 @@ module.exports = function(grunt) {
     requirejs: {
         compile: {
             options: {
-                baseUrl: 'front_end/js/source',
-                mainConfigFile: 'front_end/js/source/build.js',
-                dir: "front_end/js/built",
+                baseUrl: '<%= env.frontEndPath %>/js/source',
+                mainConfigFile: '<%= env.frontEndPath %>/js/source/build.js',
+                dir: "<%= env.frontEndPath %>/js/built",
                 modules: [ {name: "regulations"} ],
                 paths: {
                     jquery: './lib/jquery-1.9.1',

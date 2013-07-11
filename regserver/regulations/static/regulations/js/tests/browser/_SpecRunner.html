@@ -12,7 +12,7 @@
   <script>
 
   require.config({
-    "baseUrl": "/front_end/js/source",
+    "baseUrl": "/static/regulations/js/source",
       "paths": {
         "underscore": "./lib/underscore",
         "backbone": "./lib/backbone",
@@ -41,7 +41,7 @@
       }
   });
 
-  require(['/front_end/js/tests/specs/reg-data-spec.js', '/front_end/js/tests/specs/definition-view-spec.js', '/front_end/js/tests/specs/content-view-spec.js', '/front_end/js/tests/specs/regs-helpers-spec.js', '/front_end/js/tests/specs/regs-dispatch-spec.js'], function() {
+  require(['/static/regulations/js/tests/specs/reg-data-spec.js', '/static/regulations/js/tests/specs/definition-view-spec.js', '/static/regulations/js/tests/specs/content-view-spec.js', '/static/regulations/js/tests/specs/regs-helpers-spec.js', '/static/regulations/js/tests/specs/regs-dispatch-spec.js'], function() {
     $(function() {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute();
