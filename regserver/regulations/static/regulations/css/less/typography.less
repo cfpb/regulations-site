@@ -1,11 +1,17 @@
-/**
-* typography.less contains both global and application specific typography
-*
-*/
+/*
+Typograhy styles
+=========================
+typography.less contains both global and application specific typography */
 
-/* ==========================================================================
- global typography
- ========================================================================== */
+
+/*
+ Global Typography
+======================= */
+
+/*  Body Font
+    ------------
+    <p>Georgia, 1em, black</p>
+*/
 
 body {
     color: @black;
@@ -14,7 +20,15 @@ body {
     line-height: 1.625; /* 26px */
 }
 
-/* headings */
+/*  Default Headings
+    --------
+    <h1>Heading Level 1</h1>
+    <h2>Heading Level 2</h2>
+    <h3>Heading Level 3</h3>
+    <h4>Heading Level 4</h4>
+    <h5>Heading Level 5</h5>
+    <h6>Heading Level 6</h6>
+ */
 
 h1,
 h2,
@@ -55,12 +69,23 @@ h6 {
     margin: 1em 0 0 0;
 }
 
-/* sub headings */
+/*  Sub Headings 
+    ------------
+    <h4 class="sub-heading">Sub Heading</h4>
+*/
+
 .sub-text {
     .avenir-next;
 }
 
-/* lists */
+/*  Lists
+    ------
+    <ul>
+        <li>List item</li>
+        <li>List item</li>
+        <li>List item</li>
+    </ul>
+*/
 
 ul li {
   list-style: none;
@@ -70,11 +95,14 @@ li {
     margin-top: 1em; /*16px*/
 }
 
-/* ==========================================================================
- link styles
+/* 
+ Link Styles
  ========================================================================== */
 
-/* internal links */
+/*  Internal Links
+    ---------------
+    <a href="#" class="internal">internal contents</a> 
+*/
 
 .internal:link,
 .internal:visited {
@@ -88,7 +116,10 @@ li {
     background-color: #cde3f1;
 }
 
-/* external links */
+/*  External Links 
+    --------------
+    <a href="#" class="external"">some other website</a>
+*/
 
 .external {
     background: url(../img/external-link.png) center right no-repeat;
@@ -116,7 +147,10 @@ li {
     border-bottom: 1px solid;
 }
 
-/* citation links */
+/*  Definition Links 
+    --------------
+    <a href="#" class="definition">defined term</a>
+*/
 
 .definition:link,
 .definition:visited {
@@ -135,15 +169,24 @@ li {
     background-color: #e7e7e6;
 }
 
-/* ==========================================================================
- regulation styles
+/* 
+ Regulation styles
  ========================================================================== */
 
-/* headings */
+/*  Headings
+    --------
+
+    <h1 class="site-title">Site Title</h1>
+*/
 .site-title {
     .avenir-next-demi;
     margin: .3em 0;
 }
+
+/*
+    <h2 class="reg-title">Reg Title</h2>
+    <h2 class="appendix-title">Appendix Title</h2>
+*/
 
 .reg-title,
 .appendix-title {
@@ -245,7 +288,7 @@ li {
     display: block;
 }
 
-/* ==========================================================================
+/* 
   appendix stlyes
  ========================================================================== */
 
