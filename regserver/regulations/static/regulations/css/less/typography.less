@@ -170,10 +170,10 @@ li {
 }
 
 /* 
- Regulation styles
+ Regulation Headings
  ========================================================================== */
 
-/*  Headings
+/*  Primary/Global
     --------
 
     <h1 class="site-title">Site Title</h1>
@@ -204,6 +204,11 @@ li {
     padding-top: 32px;
 }
 
+/*  Top Level
+    -----------
+    <h2 class="section-number">Top Level Reg Heading</h2>
+*/
+
 .section-number,
 .appendix-heading,
 .supplement-section h3 {
@@ -214,14 +219,24 @@ li {
     letter-spacing: 1px;
 }
 
-.appendix-subheading, .interp-subheading {
+/*  Sub Headings
+    -----------
+    <h3 class="appendix-subheading">Top Level Reg Heading</h2>
+*/
+
+.appendix-subheading, 
+.interp-subheading {
     .reset;
     font-size: 1.375em; /* 22 / 16 */
     line-height: 1.25;
     text-transform: none;
 }
 
-/* list styles */
+/*  List Styles
+    ==========================================================================
+Regulations are essentially a giant nested list.
+This attempts to define global rules for a clear hierarchical structure.  
+ */
 
 .level-1 > li {
     border-bottom: 1px solid @light_field;
@@ -245,52 +260,120 @@ li {
     margin-top: 1.25em;
 }
 
-/* set markers & key-terms to Avenir Next Demi */
+/* 
+The list & key-terms are set to Avenir Next Demi
+Paragraphs within the list items are set in the body font
+The `<ol>` tag needs to have the appropriate list type applied
+```
+<ol class="level-1" type="a">
+    <li><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor...</p>
+        <ol class="level-2" type="1">
+            <li><p>Ut enim ad minim veniam</p></li>
+            <li><p>Quis nostrud exercitation ullamco laboris nisi ut aliquip</p></li>
+        </ol>
+    </li>
+</ol>
+```
+*/
+
 .reg-text ol, dfn {
   .avenir-next-demi;
 }
 
-/* Set text regulation text to Georgia */
 .reg-text p {
   font-family: @body-font;
   font-weight: 400;
 }
 
-/* hide markers from original text */
 .paragraph-marker {
     display: none;
 }
 
-/* dfn styles */
+/*  Definition Styles
+    ==========================================================================
+
+The ```<dfn class="key-term">``` tag is used throughout the reg to reference terms as they are defined
+within the context of the regulation.
+
+See [MDN's `<dfn>` tag reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dfn) for more info.
+
+All key-terms are displayed as block elements to force a line-break.
+
+*/
+
+.key-term {
+    display: block;
+}
+
+/*  Level-1 Key-Terms
+    -----------------
+
+```
+<ol class="level-1">
+    <li>
+        <dfn class="key-term">Level 1 key-term</dfn>
+    </li>
+</ol>
+```
+*/
 
 .level-1 .key-term {
     font-size: 1.375em; /* 24px / 16px = 1.5em */
     line-height: 1.5; /* 30px / 24px = 1.25 */
 }
 
-.supplement-section .level-1 .key-term {
-    font-size: 1em;
-    text-transform: uppercase;
-}
+/*  Level-2 key-terms
+    -----------------
 
-.level-2 .key-term {
+```
+<section class="supplement-section">
+<ol class="level-2">
+    <li>
+        <dfn class="key-term">Level 2 key-term</dfn>
+    </li>
+</ol>
+</section>
+```
+*/
+
+.level-2 .key-term,
+.supplement-section .level-1 .key-term {
     text-transform: uppercase;
     font-size: 1em;
     .avenir-next-bold;
 }
+
+/*  Level-3 key-terms
+    -----------------
+
+```
+<section class="supplement-section">
+<ol class="level-3">
+    <li>
+        <dfn class="key-term">Level 3 key-term</dfn>
+    </li>
+</ol>
+</section>
+```
+*/
 
 .level-3 .key-term {
     .avenir-next-demi;
     text-transform: none;
 }
 
-.key-term {
-    display: block;
-}
-
 /* 
-  appendix stlyes
- ========================================================================== */
+  Appendix Styles
+ ==========================================================================
+
+Model Form Content
+------------------
+
+```
+<p class="model-form-content"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> 
+```
+*/
 
 .model-form-content {
     background: #f6f6f5;
