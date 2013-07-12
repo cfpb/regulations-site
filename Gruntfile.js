@@ -135,6 +135,9 @@ module.exports = function(grunt) {
       }
     },
 
+    /**
+     * https://github.com/jsoverson/grunt-plato
+     */
     plato: {
         all: {
             options: {
