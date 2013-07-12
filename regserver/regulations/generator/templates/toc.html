@@ -1,10 +1,24 @@
 {% comment %}
     For the slide-out table of contents
 {% endcomment %}
+{% if tree.meta %}
+<!-- 
+    Title {{ tree.meta.cfr_title_number }}: {{ tree.meta.cfr_title_text }}
+    Part {{ tree.label.title_clean|title }} {% if tree.label.reg_letter %}(Regulation {{ tree.label.reg_letter }}){% endif %}
+-->
+{% endif %}
 <nav {% if top_toc %}id="menu" class="panel"{% endif %} role="navigation">
     <ol class="{{nav_class}}"{% if top_toc %} id="table-of-contents"{% endif %}>
         {% for item in toc_items %}
-            <li><a href="{{item.url}}">{{item.label|safe}}</a></li>
+            {% if item.is_section %}
+                <li><a href="{{item.url}}">§&nbsp;{{item.section}} {{item.sub_label|safe}}</a></li>
+            {% elif item.is_appendix %}
+                <li><a href="{{item.url}}">{{item.label|safe}} {{item.sub_label|safe}}</a></li>
+            {% elif item.is_supplement %}
+                <li><a href="{{item.url}}">{{item.label|safe}} {{item.sub_label|safe}}</a></li>
+            {% else %}
+                <li><a href="{{item.url}}">{{item.label|safe}}</a></li>
+            {% endif %}
         {% endfor %}
     </ol>
     {% if top_toc %}
