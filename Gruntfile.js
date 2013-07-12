@@ -135,6 +135,17 @@ module.exports = function(grunt) {
       }
     },
 
+    plato: {
+        all: {
+            options: {
+                jshint : grunt.file.readJSON('.jshintrc')
+            },
+            files: {
+                'reports': ['<%= env.frontEndPath %>/*.js', '<%= env.frontEndPath %>/views/*.js'],
+            }
+        }
+    },
+
     /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      * 
@@ -221,6 +232,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-ghost');
     grunt.loadNpmTasks('grunt-docco2'); 
+    grunt.loadNpmTasks('grunt-plato');
 
     /**
     * Create task aliases by registering new tasks
