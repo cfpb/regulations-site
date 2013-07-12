@@ -141,8 +141,7 @@ module.exports = function(grunt) {
                 jshint : grunt.file.readJSON('.jshintrc')
             },
             files: {
-                src: ['<%= env.frontEndPath %>/js/*.js', '<%= env.frontEndPath %>/js/views/*.js'],
-                dest: '<%= env.frontEndPath %>/docs/complexity/'
+                src: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js'],
             }
         }
     },
