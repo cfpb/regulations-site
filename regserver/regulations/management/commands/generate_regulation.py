@@ -51,9 +51,10 @@ class Command(BaseCommand):
         markup = builder.render_markup()
 
         self.write_file(settings.OFFLINE_OUTPUT_DIR + 'rege.html', markup)
-        front_end_dir = settings.OFFLINE_OUTPUT_DIR + '/static/regulations/'
+        front_end_dir = settings.OFFLINE_OUTPUT_DIR + 'static/regulations/'
 
-        if not path.islink(front_end_dir):
+        if not (path.islink(settings.OFFLINE_OUTPUT_DIR + 'static/regulations') 
+                or path.islink(settings.OFFLINE_OUTPUT_DIR + 'static')):
             if path.exists(front_end_dir):
                 shutil.rmtree(front_end_dir)
             shutil.copytree('../regserver/regulations/static/regulations/', front_end_dir)
