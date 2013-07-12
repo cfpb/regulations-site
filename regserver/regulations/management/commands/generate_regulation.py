@@ -51,13 +51,14 @@ class Command(BaseCommand):
         markup = builder.render_markup()
 
         self.write_file(settings.OFFLINE_OUTPUT_DIR + 'rege.html', markup)
-        front_end_dir = settings.OFFLINE_OUTPUT_DIR + 'static/regulations/'
+        front_end_dir = settings.OFFLINE_OUTPUT_DIR + 'static'
 
-        if not (path.islink(settings.OFFLINE_OUTPUT_DIR + 'static/regulations') 
-                or path.islink(settings.OFFLINE_OUTPUT_DIR + 'static')):
+        #   If any dir in the path is symlinked, don't replace it
+        if not path.islink(front_end_dir):
+            #   Otherwise, copy the static dir to the output
             if path.exists(front_end_dir):
                 shutil.rmtree(front_end_dir)
-            shutil.copytree('../regserver/regulations/static/regulations/', front_end_dir)
+            shutil.copytree('../regserver/regulations/static/', front_end_dir)
 
         if not path.exists(settings.OFFLINE_OUTPUT_DIR + 'notice'):
             mkdir(settings.OFFLINE_OUTPUT_DIR + 'notice')
