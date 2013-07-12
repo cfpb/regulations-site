@@ -1,6 +1,8 @@
 import copy
 import json
-from urllib import urlopen
+import os
+
+import requests
 
 class Client:
     """A very simple client for accessing the regulation and meta data."""
@@ -55,10 +57,12 @@ class Client:
     def _get(self, suffix):
         """Actually make the GET request. Assume the result is JSON. Right
         now, there is no error handling"""
-        try:
-            result = urlopen(self.base_url + suffix)
-        except IOError: #   Hack to deal with local FS vs API
-            result = urlopen(self.base_url + suffix + "/index.html")
-        content = result.read()
-        result.close()
-        return json.loads(content)
+        if self.base_url.startswith('http'):    # API
+            return requests.get(self.base_url + suffix).json()
+        else:   # file system
+            if os.path.isdir(self.base_url + suffix):
+                suffix = suffix + "/index.html"
+            f = open(self.base_url + suffix)
+            content = f.read()
+            f.close()
+            return json.loads(content)
