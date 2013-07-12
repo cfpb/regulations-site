@@ -136,6 +136,20 @@ module.exports = function(grunt) {
     },
 
     /**
+     * https://github.com/jsoverson/grunt-plato
+     */
+    plato: {
+        all: {
+            options: {
+                jshint : grunt.file.readJSON('.jshintrc')
+            },
+            files: {
+                src: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js'],
+            }
+        }
+    },
+
+    /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      * 
      * Run predefined tasks whenever watched file patterns are added, changed or deleted.
@@ -221,6 +235,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-ghost');
     grunt.loadNpmTasks('grunt-docco2'); 
+    grunt.loadNpmTasks('grunt-plato');
 
     /**
     * Create task aliases by registering new tasks
