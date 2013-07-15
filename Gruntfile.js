@@ -242,6 +242,6 @@ module.exports = function(grunt) {
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('test', ['jshint', 'jasmine']);
-    grunt.registerTask('build', ['test', 'requirejs', 'less', 'docco']);
+    grunt.registerTask('build', ['test', 'requirejs', 'less', 'docco', 'plato']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };
