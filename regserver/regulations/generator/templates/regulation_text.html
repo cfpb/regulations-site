@@ -4,10 +4,10 @@
 {%if c.node_type == 'regulation' %}
 <section id="{{c.markup_id}}" class="reg-section" tabindex="0">
     {% if c.header_marker %}
-    <h2 class="section-number"><span class="section-marker">{{c.header_marker|safe}}</span>{{ c.header_num }}<span class="section-title" tabindex="0"
+    <h2 class="section-number" data-permalink-section><span class="section-marker">{{c.header_marker|safe}}</span>{{ c.header_num }}<span class="section-title" tabindex="0"
         >{{ c.header_title }}</span></h2>
     {% else %}
-    <h2 class="section-title" tabindex="0"> {{c.header}} </h2>
+    <h2 class="section-title" tabindex="0" data-permalink-section> {{c.header}} </h2>
     {% endif %}
         {% if c.marked_up %}
         <p> 
