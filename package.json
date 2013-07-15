@@ -24,6 +24,7 @@
     "grunt-casperjs": "~1.0.6",
     "grunt-ghost": "~1.0.12",
     "grunt-docco2": "~0.1.1",
+    "grunt-styleguide": "~0.2.6",
     "grunt-plato": "~0.2.1"
   },
   "keywords": []
