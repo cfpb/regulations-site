@@ -137,14 +137,15 @@ module.exports = function(grunt) {
 
     /**
      * https://github.com/jsoverson/grunt-plato
+     * http://jscomplexity.org/complexity
      */
     plato: {
         all: {
             options: {
-                jshint : grunt.file.readJSON('.jshintrc')
+                jshint: grunt.file.readJSON('.jshintrc')
             },
             files: {
-                src: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js'],
+                '<%= env.frontEndPath %>/docs/complexity': ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js']
             }
         }
     },
