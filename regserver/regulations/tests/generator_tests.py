@@ -49,3 +49,13 @@ class GeneratorTest(TestCase):
         self.assertEqual('Some title', r['label']['title_clean'])
         self.assertTrue('reg_letter' in r['label'])
         self.assertEqual('RR', r['label']['reg_letter'])
+
+    @patch('regulations.generator.generator.api_reader')
+    def test_get_tree_paragraph(self, api_reader):
+        node = {'some': 'text'}
+        api_reader.Client.return_value.regulation.return_value = node
+
+        p = generator.get_tree_paragraph('some-id', 'some-version')
+        self.assertEqual(node, p)
+        self.assertEqual(('some-id', 'some-version'),
+                api_reader.Client.return_value.regulation.call_args[0])

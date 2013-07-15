@@ -41,3 +41,24 @@ class RegulationSectionView(TemplateView):
         context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
 
         return context
+
+class RegulationParagraphView(TemplateView):
+    template_name = "tree.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(RegulationParagraphView,
+                self).get_context_data(**kwargs)
+
+        paragraph_id = context['paragraph_id']
+        version = context['reg_version']
+
+        appliers = generator.get_all_section_layers(paragraph_id, version)
+        paragraph_tree = generator.get_tree_paragraph(paragraph_id, version)
+
+        builder = HTMLBuilder(*appliers)
+        builder.tree = paragraph_tree
+        builder.generate_html()
+
+        context['node'] = builder.tree
+
+        return context
