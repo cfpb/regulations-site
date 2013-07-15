@@ -42,18 +42,45 @@
     font-size: 0.875em; /*14px*/
     position: fixed;
     top: 60px;
-    bottom: 46px; /*match height of TOC close */
-    width: 15.625em;
+    bottom: 46px; /*match height of TOC close button */
+    width: 260px;
     background-color: #f6f6f5;
     z-index: 999999;
     overflow-y: scroll;
 
     ol {
-        .reset
+        .reset;
+        .border-top-light (@width: 1px);
+    }
+
+    h2 {
+        padding: 0 20px;
+        line-height: 1.3;
+        .avenir-next-demi;
+        text-transform: uppercase;
+
+        .toc-title-num {
+          color: @light_field;
+          display: block;
+          font-size: 12px;
+        }
+
+        .toc-part-num {
+          display: block;
+          font-size: 26px;
+          margin: 10px 0;
+        }
+
+        .toc-reg-title {
+          .avenir-next;
+          display: block;
+          font-size: 16px;
+          margin-top: 6px;
+        }
     }
 
     .close-button {
-        width: 199px;
+        width: 240px;
         height: 26px;
         padding: 10px; /*10px*/
         bottom: 0px;
@@ -134,9 +161,16 @@
         text-indent: 0;
     }
 
+    .toc-section-marker {
+      .avenir-next-bold;
+      display: block;
+      font-size: 18px;
+    }
+
     a {
         display: block;
         padding: 10px 20px;
+        line-height: 1.3;
     }
 
     a:link,
@@ -154,3 +188,4 @@
     }
 
 }
+
