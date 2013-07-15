@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap-3.0.0-wip.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>views/definition-view.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="span6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
+      <p class="stat">69.06</p>
+    </div>
+    <div class="span6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
+      <p class="stat">91</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="span6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="span6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
+      <p class="stat">17.21</p>
+    </div>
+    <div class="span6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
+      <p class="stat">0.53</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="span6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="span12">// **Extends** RegsView
+//
+// **TODO** Determine how much sense that still makes ^^
+//
+// **Usage** ```require([&#039;definition-view&#039;], function(DefinitionView) {})```
+//
+// A single inline interpretation, child of the sidebar
+// As of sprint 6, the only View that is instantiated more than once
+define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;regs-view&#039;, &#039;regs-data&#039;, &#039;regs-dispatch&#039;, &#039;regs-helpers&#039;], function($, _, Backbone, RegsView, RegsData, Dispatch, RegsHelpers) {
+    &#039;use strict&#039;;
+
+    // **Constructor**
+    // this.options:
+    // 
+    // * **id** string, dash-delimited id of definition paragraph
+    // * **$anchor** jQobj, the content-view link that opened the def
+    //
+    // this.options turns into this.model
+    var DefinitionView = RegsView.extend({
+        className: &#039;open-definition&#039;,
+        events: {
+            &#039;click .close-button&#039;: &#039;close&#039;
+        },
+
+        formatInterpretations: function() {
+            var interpretation = this.$el.find(&#039;.inline-interpretation&#039;),
+                interpretationId;
+
+            if (typeof interpretation[0] !== &#039;undefined&#039;) {
+                interpretationId = $(&#039;#&#039; + this.model.id).data(&#039;interpId&#039;);
+                interpretation.remove();
+
+                this.$el.append(
+                    RegsHelpers.fastLink(
+                        &#039;#&#039; + interpretationId, 
+                        &#039;Related commentary&#039;, 
+                        &#039;continue-link internal interp&#039;
+                    )
+                );
+            }
+        },
+
+        removeHeadings: function() {
+            var keyTerm = this.$el.find(&#039;dfn.key-term&#039;),
+                keyTerms;
+
+            if (typeof keyTerm[0] !== &#039;undefined&#039;) {
+                keyTerms = keyTerm.length;
+
+                for (var i = 0; i &lt; keyTerms; i++) {
+                    $(keyTerm[i]).remove(); 
+                }
+            }
+        },
+
+        render: function() {
+            // link to definition in content body
+            this.$el.append(
+                RegsHelpers.fastLink(
+                    &#039;#&#039; + this.model.id, 
+                    RegsHelpers.idToRef(this.model.id),
+                    &#039;continue-link internal&#039;
+                )
+            );
+
+            // remove inline interpretation, add interpretation link
+            this.formatInterpretations();
+            this.removeHeadings();
+
+            // make definition tabbable
+            this.$el.attr(&#039;tabindex&#039;, &#039;0&#039;)
+                // make tab-activeated close button at bottom of definition content
+                .append(&#039;&lt;a class=&quot;close-button&quot; href=&quot;#&quot;&gt;Close definition&lt;/a&gt;&#039;);
+
+            // **Event trigger** triggers definition open event
+            Dispatch.trigger(&#039;definition:render&#039;, this.$el);
+
+            // set focus to the open definition
+            this.$el.focus();
+            return this;
+        },
+
+        close: function(e) {
+            e.preventDefault();
+            Dispatch.remove(&#039;definition&#039;);
+        },
+
+        remove: function() {
+            this.stopListening();
+            this.$el.remove();
+            // **Event trigger** notifies app that definition is removed
+            Dispatch.trigger(&#039;definition:remove&#039;, this.model.id);
+
+            return this;
+        }
+    });
+
+    return DefinitionView;
+});</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>
