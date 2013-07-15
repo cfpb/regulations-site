@@ -128,6 +128,11 @@ def get_regulation(regulation, version):
 
     return reg
 
+def get_tree_paragraph(paragraph_id, version):
+    """Get a single level of the regulation tree."""
+    api = api_reader.Client(settings.API_BASE)
+    return api.regulation(paragraph_id, version)
+
 def get_builder(regulation, version, inline_applier, p_applier, s_applier):
     """ Returns an HTML builder with the appliers, and the regulation tree. """
     builder = HTMLBuilder(inline_applier, p_applier, s_applier)
