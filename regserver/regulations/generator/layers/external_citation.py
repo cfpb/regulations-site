@@ -1,5 +1,6 @@
 import urllib
-from django.template import loader, Context
+from django.template import loader
+import utils
 
 class ExternalCitationLayer():
     def __init__(self, layer, the_act):
@@ -17,11 +18,10 @@ class ExternalCitationLayer():
         fdsys_url_base = "http://api.fdsys.gov/link"
         fdsys_url = "%s?%s" % (fdsys_url_base, urllib.urlencode(parameters))
 
-        template = loader.get_template('external_citation.html')
-        citation = {'url':fdsys_url,
-            'label':text}
-        c = Context({'citation':citation})
-        return template.render(c).strip('\n')
+        template = loader.get_template('layers/external_citation.html')
+        context = {'citation' : {'url':fdsys_url,
+                        'label':text}}
+        return utils.render_template(template, context)
 
     @staticmethod
     def generate_cfr_link(text, citation):

@@ -5,8 +5,8 @@ import utils
 class DefinitionsLayer(object):
     def __init__(self, layer):
         self.layer = layer
-        self.defining_template = loader.get_template('defining.html')
-        self.citations_template = loader.get_template('definition_citation.html')
+        self.defining_template = loader.get_template('layers/defining.html')
+        self.citations_template = loader.get_template('layers/definition_citation.html')
 
     @staticmethod
     def create_url(citation):
