@@ -7,11 +7,12 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
     'use strict';
 
     var ContentView = Backbone.View.extend({
+        el: '.main-content',
+
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
-            'mouseenter p': 'showPermalink',
-            'mouseenter h2.section-number': 'showPermalink'
+            'mouseenter *[data-permalink-section]': 'showPermalink'
         },
 
         initialize: function() {
@@ -145,33 +146,15 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             $('.permalink-marker').remove();
 
             var permalink = document.createElement('a'),
-                currentLocal = $(e.currentTarget),
-                currentId, $permalink, parent;
+                $section = $(e.currentTarget),
+                $permalink;
 
-            /* inline interps don't have permalinks */
-            if (currentLocal.parents().hasClass('inline-interpretation')) {
-                return;
-            }
+            permalink.href = '#' + $section[0].id;
+            permalink.innerHTML = 'Permalink';
+            permalink.className = 'permalink-marker';
+            $permalink = $(permalink);
 
-            // **TODO**: markup refactor
-            // Use data attributes instead of of tag and location to determine flow
-            if (e.currentTarget.tagName.toUpperCase() === 'H2') {
-                parent = currentLocal.parent('.reg-section');
-            }
-            else {
-                parent = currentLocal.closest('li');
-            }
-
-            if (typeof parent[0] !== 'undefined') {
-                currentId = parent[0].id;
-
-                permalink.href = '#' + currentId;
-                permalink.innerHTML = 'Permalink';
-                $permalink = $(permalink);
-
-                $(currentLocal).prepend($permalink);
-                $permalink.addClass('permalink-marker');
-            }
+            $section.children().first().prepend($permalink);
         },
 
         changeFocus: function(id) {

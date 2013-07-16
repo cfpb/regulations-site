@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>require.config.js</title>
+  <title>header-view.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -101,7 +101,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>require.config.js</h1>
+                  <h1>header-view.js</h1>
               </div>
           </li>
         
@@ -116,37 +116,29 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> require = {
-    paths: {
-        jquery: <span class="string">'./lib/jquery-1.9.1'</span>,
-        underscore: <span class="string">'./lib/underscore'</span>,
-        backbone: <span class="string">'./lib/backbone'</span>,
-        <span class="string">'jquery-scrollstop'</span>: <span class="string">'./lib/jquery.scrollstop'</span>,
-        <span class="string">'definition-view'</span>: <span class="string">'./views/definition-view'</span>,
-        <span class="string">'regs-fixed-el-view'</span>: <span class="string">'./views/regs-fixed-el-view'</span>,
-        <span class="string">'sub-head-view'</span>: <span class="string">'./views/sub-head-view'</span>,
-        <span class="string">'regs-view'</span>: <span class="string">'./views/regs-view'</span>,
-        <span class="string">'toc-view'</span>: <span class="string">'./views/toc-view'</span>,
-        <span class="string">'sidebar-view'</span>: <span class="string">'./views/sidebar-view'</span>,
-        <span class="string">'sidebar-head-view'</span>: <span class="string">'./views/sidebar-head-view'</span>,
-        <span class="string">'content-view'</span>: <span class="string">'./views/content-view'</span>,
-        <span class="string">'konami'</span>: <span class="string">'./lib/konami'</span>,
-        <span class="string">'header-view'</span>: <span class="string">'./views/header-view'</span>
-    },
-    shim: {
-        underscore: {
-            deps: [<span class="string">'jquery'</span>],
-            exports: <span class="string">'_'</span>
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'header-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
+    <span class="string">'use strict'</span>;
+    <span class="keyword">var</span> HeaderView = Backbone.View.extend({
+        el: <span class="string">'.main-head'</span>,
+
+        initialize: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.$activeEls = $(<span class="string">'#menu, #menu-link'</span>);
         },
-        backbone: {
-            deps: [<span class="string">'underscore'</span>, <span class="string">'jquery'</span>],
-            exports: <span class="string">'Backbone'</span>
+
+        events: {
+            <span class="string">'click .toc-toggle'</span>: <span class="string">'openTOC'</span>
         },
-        konami: {
-            exports: <span class="string">'Konami'</span>
+
+        openTOC: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.$activeEls !== <span class="string">'undefined'</span>) {
+                <span class="keyword">this</span>.$activeEls.toggleClass(<span class="string">'active'</span>);
+            }
         }
-    }
-};</pre></div></div>
+    });
+
+    <span class="keyword">return</span> HeaderView;
+});</pre></div></div>
             
         </li>
         
