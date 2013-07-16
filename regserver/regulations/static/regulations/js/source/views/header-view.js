@@ -1,4 +1,5 @@
-define('header-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], function($, _, Backbone, Dispatch) {
+define('header-view', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
+    'use strict';
     var HeaderView = Backbone.View.extend({
         el: '.main-head',
 

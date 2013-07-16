@@ -50,7 +50,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'definition-view'], 
         describe("clearActiveTerms", function() {
             it("should eliminate all active classes on links", function() {
                 contentView.clearActiveTerms();
-                expect($('.active').length).toEqual(0);
+                expect($('#content .active').length).toEqual(0);
             });
 
             it("should remove all active data attrs", function() {
