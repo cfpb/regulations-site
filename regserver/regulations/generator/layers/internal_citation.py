@@ -24,7 +24,7 @@ class InternalCitationLayer():
         return (section_url, citation_anchor)
 
     @staticmethod
-    def create_sectional_link(text, layer_element, reg_version, template_name='internal_citation.html'):
+    def create_sectional_link(text, layer_element, reg_version, template_name='layers/internal_citation.html'):
         section_url, citation_anchor = InternalCitationLayer.create_sectional_url_parts(layer_element)
         try:
             citation_url = reverse('regulation_section_view', 
@@ -37,7 +37,7 @@ class InternalCitationLayer():
         return InternalCitationLayer.render_url(citation_url, text, template_name)
 
     @staticmethod
-    def create_link(text, layer_element, template_name='internal_citation.html'):
+    def create_link(text, layer_element, template_name='layers/internal_citation.html'):
         citation_url = "#" + "-".join(to_markup_id(layer_element['citation']))
         return InternalCitationLayer.render_url(citation_url, text, template_name)
 
