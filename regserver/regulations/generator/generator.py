@@ -1,3 +1,4 @@
+import re
 
 from django.conf import settings 
 
@@ -112,9 +113,25 @@ def get_regulation_section(regulation, version, full_reference):
     return full_regulation
 
 def get_regulation(regulation, version):
-    """ Get the regulation JSON tree. """
+    """ Get the regulation JSON tree. Manipulate the label a bit for easier
+    access in the templates."""
     api = api_reader.Client(settings.API_BASE)
-    return api.regulation(regulation, version)
+    reg =  api.regulation(regulation, version)
+    title = reg['label']['title']
+    # up till the paren
+    match = re.search('part \d+[^\w]*([^\(]*)', title, re.I)  
+    if match:
+        reg['label']['title_clean'] = match.group(1).strip()
+    match = re.search('\(regulation (\w+)\)', title, re.I)
+    if match:
+        reg['label']['reg_letter'] = match.group(1)
+
+    return reg
+
+def get_tree_paragraph(paragraph_id, version):
+    """Get a single level of the regulation tree."""
+    api = api_reader.Client(settings.API_BASE)
+    return api.regulation(paragraph_id, version)
 
 def get_builder(regulation, version, inline_applier, p_applier, s_applier):
     """ Returns an HTML builder with the appliers, and the regulation tree. """

@@ -43,6 +43,17 @@ module.exports = function(grunt) {
         }
     },
 
+    styleguide: {
+            dist: {
+                options: {
+                    name: 'eRegs Styleguide'
+                },
+                files: {
+                    '<%= env.frontEndPath %>/docs/styleguide': '<%= env.frontEndPath %>/css/'
+                }
+            }
+        },
+
     /**
      * JSHint: https://github.com/gruntjs/grunt-contrib-jshint
      * 
@@ -136,6 +147,21 @@ module.exports = function(grunt) {
     },
 
     /**
+     * https://github.com/jsoverson/grunt-plato
+     * http://jscomplexity.org/complexity
+     */
+    plato: {
+        all: {
+            options: {
+                jshint: grunt.file.readJSON('.jshintrc')
+            },
+            files: {
+                '<%= env.frontEndPath %>/docs/complexity': ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js']
+            }
+        }
+    },
+
+    /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      * 
      * Run predefined tasks whenever watched file patterns are added, changed or deleted.
@@ -220,12 +246,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-ghost');
-    grunt.loadNpmTasks('grunt-docco2'); 
+    grunt.loadNpmTasks('grunt-docco2');
+    grunt.loadNpmTasks('grunt-styleguide');
+    grunt.loadNpmTasks('grunt-plato');
 
     /**
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('test', ['jshint', 'jasmine']);
-    grunt.registerTask('build', ['test', 'requirejs', 'less', 'docco']);
+    grunt.registerTask('build', ['test', 'requirejs', 'less', 'docco', 'plato']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };
