@@ -3,7 +3,7 @@
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
-define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
+define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami', 'header-view'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami, HeaderView) {
     'use strict';
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -30,16 +30,6 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
 
         // Purgatory for DOM event bindings that should happen in a View
         bindEvents: function() {
-            // TOC class toggle
-            // **TODO:** Move this into the appropriate view
-            var $activeEls = $('#menu, #menu-link'),
-            $tocToggle = $('.toc-toggle');
-
-            $tocToggle.on('click', function() {
-                $activeEls.toggleClass('active');
-                return false;
-            });
-
             /* ssshhhhh */
             new Konami(function() {
                 /* http://thenounproject.com/noun/hamburger/#icon-No17373 */
@@ -74,7 +64,8 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             this.getTree($('#reg-content')); 
 
             // init primary Views that require only a single instance
-            window.toc = new TOCView({el: '#menu'});
+            window.mainHeader = new HeaderView();
+            window.toc = new TOCView();
             window.sidebar = new SidebarView({el: '#sidebar'});
             window.regContent = new ContentView({el: '.main-content'});
             this.bindEvents();
