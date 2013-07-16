@@ -66,8 +66,8 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             // init primary Views that require only a single instance
             window.mainHeader = new HeaderView();
             window.toc = new TOCView();
-            window.sidebar = new SidebarView({el: '#sidebar'});
-            window.regContent = new ContentView({el: '.main-content'});
+            window.sidebar = new SidebarView();
+            window.regContent = new ContentView();
             this.bindEvents();
             this.fetchModelForms();
         }

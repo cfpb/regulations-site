@@ -6,6 +6,8 @@
 define('sidebar-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'sidebar-head-view'], function($, _, Backbone, Dispatch, SidebarHeadView) {
     'use strict';
     var SidebarView = Backbone.View.extend({
+        el: '#sidebar',
+
         events: {
             'click .expandable': 'toggleMeta'
         },

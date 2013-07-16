@@ -7,6 +7,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
     'use strict';
 
     var ContentView = Backbone.View.extend({
+        el: '.main-content',
+
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
