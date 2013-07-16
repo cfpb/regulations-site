@@ -10,7 +10,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
-            'mouseenter li[data-permalink-section]': 'showPermalink',
+            'mouseenter *[data-permalink-section]': 'showPermalink'
         },
 
         initialize: function() {

@@ -121,8 +121,7 @@
         events: {
             <span class="string">'click .definition'</span>: <span class="string">'termLinkHandler'</span>,
             <span class="string">'click .inline-interp-header'</span>: <span class="string">'expandInterp'</span>,
-            <span class="string">'mouseenter p'</span>: <span class="string">'showPermalink'</span>,
-            <span class="string">'mouseenter h2.section-number'</span>: <span class="string">'showPermalink'</span>
+            <span class="string">'mouseenter *[data-permalink-section]'</span>: <span class="string">'showPermalink'</span>
         },
 
         initialize: <span class="keyword">function</span>() {
@@ -493,45 +492,15 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
             $(<span class="string">'.permalink-marker'</span>).remove();
 
             <span class="keyword">var</span> permalink = document.createElement(<span class="string">'a'</span>),
-                currentLocal = $(e.currentTarget),
-                currentId, $permalink, parent;
+                $section = $(e.currentTarget),
+                $permalink;
 
-            <span class="comment">/* inline interps don't have permalinks */</span>
-            <span class="keyword">if</span> (currentLocal.parents().hasClass(<span class="string">'inline-interpretation'</span>)) {
-                <span class="keyword">return</span>;
-            }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-21">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
-              </div>
-              <p><strong>TODO</strong>: markup refactor
-Use data attributes instead of of tag and location to determine flow</p>
+            permalink.href = <span class="string">'#'</span> + $section[<span class="number">0</span>].id;
+            permalink.innerHTML = <span class="string">'Permalink'</span>;
+            permalink.className = <span class="string">'permalink-marker'</span>;
+            $permalink = $(permalink);
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (e.currentTarget.tagName.toUpperCase() === <span class="string">'H2'</span>) {
-                parent = currentLocal.parent(<span class="string">'.reg-section'</span>);
-            }
-            <span class="keyword">else</span> {
-                parent = currentLocal.closest(<span class="string">'li'</span>);
-            }
-
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> parent[<span class="number">0</span>] !== <span class="string">'undefined'</span>) {
-                currentId = parent[<span class="number">0</span>].id;
-
-                permalink.href = <span class="string">'#'</span> + currentId;
-                permalink.innerHTML = <span class="string">'Permalink'</span>;
-                $permalink = $(permalink);
-
-                $(currentLocal).prepend($permalink);
-                $permalink.addClass(<span class="string">'permalink-marker'</span>);
-            }
+            $section.children().first().prepend($permalink);
         },
 
         changeFocus: <span class="keyword">function</span>(id) {
