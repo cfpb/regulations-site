@@ -1,18 +1,29 @@
 from django.template import loader, Context
-from internal_citation import InternalCitationLayer
+from ..node_types import to_markup_id
+import utils
 
 class DefinitionsLayer(object):
     def __init__(self, layer):
         self.layer = layer
         self.defining_template = loader.get_template('defining.html')
+        self.citations_template = loader.get_template('definition_citation.html')
 
     @staticmethod
-    def create_definition_link(original_text, definition_reference):
+    def create_url(citation):
+        """ Create the URL for a definition. """
+        return '#' + '-'.join(to_markup_id(citation))
+
+    @staticmethod
+    def create_definition_reference(citation):
+        """ Create a reference to a definition """
+        return '-'.join(to_markup_id(citation))
+
+    def create_definition_link(self, original_text, citation):
         """ Create the link that takes you to the definition of the term. """
-        le = {'citation':definition_reference}
-        def_link = InternalCitationLayer.create_link(original_text, le, 
-                template_name='definition_citation.html')
-        return def_link
+        context = {'citation': {'url': DefinitionsLayer.create_url(citation), 
+                    'label':original_text, 
+                    'definition_reference': DefinitionsLayer.create_definition_reference(citation)}}
+        return utils.render_template(self.citations_template, context)
 
     def create_layer_pair(self, text, offset, layer_element):
         """ Create a single layer pair. """
@@ -21,7 +32,7 @@ class DefinitionsLayer(object):
         ref_in_layer = layer_element['ref']
         def_struct = self.layer['referenced'][ref_in_layer]
         definition_reference = def_struct['reference'].split('-') 
-        rt = DefinitionsLayer.create_definition_link(ot, definition_reference)
+        rt = self.create_definition_link(ot, definition_reference)
         return (ot, rt, (start, end))
 
     def defined_terms(self, text, text_index):
