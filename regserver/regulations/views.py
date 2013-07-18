@@ -16,7 +16,6 @@ class RegulationSectionView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(RegulationSectionView, self).get_context_data(**kwargs)
-        #context['message'] = 'regulation %s | version %s'  % (context['reg_part_section'], context['reg_version'])
 
         regulation_part = context['reg_part_section']
         regulation_version = context['reg_version']
