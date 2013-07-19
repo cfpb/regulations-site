@@ -1,6 +1,13 @@
-/* ==========================================================================
- color variables
- ========================================================================== */
+/*
+LESS Mixins & Variables
+========================
+mixins.less contains any mixins or variables to be used throughout the LESS files
+*/
+
+/*
+ Color Variables
+ ----------------
+ */
 
 @green: #00A34C;
 @green_midtone: #ADDC91;
@@ -20,9 +27,11 @@
 @bg_gray: #F2F2F2; /* background header */
 @medium_gray: #BABBBD; /* light border */
 
-/* ==========================================================================
- type variables/mixins
- ========================================================================== */
+/* 
+ Type Variables/Mixins
+ ----------------------
+*/
+
 @body-font: Georgia, serif;
  
 .avenir-next {
@@ -43,9 +52,10 @@
     font-style: normal;
 }
 
-/* ==========================================================================
- border styles
- ========================================================================== */
+/*
+ Border Styles
+ --------------
+*/
 
 .border-bottom-medium (@width: 1px) {
     border-bottom: @width solid @medium_gray;
@@ -67,9 +77,11 @@
     border-right: @width solid @light_field;
 }
 
-/* ==========================================================================
- animations
- ========================================================================== */
+/*
+ Animations
+ -----------
+*/
+
 .slide {
     transform: translate3d(0,0,0);
     -webkit-transition: left 300ms ease; 
@@ -79,9 +91,9 @@
             transition: left 300ms ease;
 }
 
- /* ==========================================================================
- helpers
- ========================================================================== */
+ /*
+ Helpers
+ ------------- */
 .reset {
     margin: 0;
     padding: 0;
