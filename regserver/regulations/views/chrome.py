@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.views.generic.base import TemplateView
 from regulations.generator import generator
@@ -19,6 +18,7 @@ def build_context(context, builder):
     return context
 
 class RegulationView(TemplateView):
+    """ Display the whole regulation text as one page, with all the chrome elements. """
     template_name = 'simpler.html'
 
     def get_context_data(self, **kwargs):
@@ -35,6 +35,7 @@ class RegulationView(TemplateView):
         return context
 
 class RegulationSectionView(TemplateView):
+    """ Display a single section of the regulation as one page, with all the chrome elements. """
     template_name = 'simpler.html'
 
     @staticmethod
@@ -65,6 +66,7 @@ class RegulationSectionView(TemplateView):
         return context
 
 class RegulationParagraphView(TemplateView):
+    """ Display a single paragraph of a regulation with all the chrome elements. """
     template_name = "tree.html"
 
     def get_context_data(self, **kwargs):

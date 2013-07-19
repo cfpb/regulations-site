@@ -3,10 +3,10 @@ from unittest import TestCase
 from mock import Mock, patch
 
 from regulations.generator.layers.layers_applier import *
-from regulations.views import *
+from regulations.views.chrome import *
 
 class RegulationParagraphViewTests(TestCase):
-    @patch('regulations.views.generator')
+    @patch('regulations.views.chrome.generator')
     def test_get_context_data(self, generator):
         generator.get_all_section_layers.return_value = (InlineLayersApplier(), 
                 ParagraphLayersApplier(), SearchReplaceLayersApplier())

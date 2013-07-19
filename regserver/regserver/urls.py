@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-from regulations.views import RegulationParagraphView, RegulationSectionView, RegulationView
+from regulations.views.chrome import RegulationParagraphView, RegulationSectionView, RegulationView
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -10,9 +10,9 @@ urlpatterns = patterns('',
     url(r'^regulation/(?P<reg_part_section>[\d]+[-][\w]+)/(?P<reg_version>[-\d\w]+)$', 
         RegulationSectionView.as_view(), 
         name='regulation_section_view'),
-    #url(r'^regulation/(?P<reg_part>[\d]+)/(?P<reg_version>[-\d\w]+)$', 
-    #    RegulationView.as_view(), 
-    #    name='regulation_view'),
+    url(r'^regulation/(?P<reg_part>[\d]+)/(?P<reg_version>[-\d\w]+)$', 
+        RegulationView.as_view(), 
+        name='regulation_view'),
     url(r'^regulation/(?P<paragraph_id>[-\d\w]+)/(?P<reg_version>[-\d\w]+)$',
         RegulationParagraphView.as_view(),
         name='regulation_paragraph_view'),
