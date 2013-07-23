@@ -21,3 +21,23 @@ class PartialSectionView(TemplateView):
         builder = generate_html(section_tree, (inline_applier, p_applier, s_applier))
         context = build_context(context, builder)
         return context
+        
+class PartialParagraphView(TemplateView):
+    """ Display a single paragraph of a regulation with all the chrome elements. """
+    template_name = "tree.html"
+
+    def get_context_data(self, **kwargs):
+
+        context = super(PartialParagraphView,
+                self).get_context_data(**kwargs)
+
+        paragraph_id = context['paragraph_id']
+        version = context['reg_version']
+
+        inline_applier, p_applier, s_applier = generator.get_all_section_layers(paragraph_id, version)
+        inline_applier = generator.add_section_internal_citations(paragraph_id, version, inline_applier)
+
+        paragraph_tree = generator.get_tree_paragraph(paragraph_id, version)
+        builder = generate_html(paragraph_tree, (inline_applier, p_applier, s_applier))
+        context['node'] = builder.tree
+        return context

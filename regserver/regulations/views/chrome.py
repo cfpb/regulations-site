@@ -64,22 +64,3 @@ class RegulationSectionView(TemplateView):
         builder = generate_html(section_tree, (inline_applier, p_applier, s_applier))
         context = build_context(context, builder)
         return context
-
-class RegulationParagraphView(TemplateView):
-    """ Display a single paragraph of a regulation with all the chrome elements. """
-    template_name = "tree.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(RegulationParagraphView,
-                self).get_context_data(**kwargs)
-
-        paragraph_id = context['paragraph_id']
-        version = context['reg_version']
-
-        appliers = generator.get_all_section_layers(paragraph_id, version)
-        paragraph_tree = generator.get_tree_paragraph(paragraph_id, version)
-
-        builder = generate_html(paragraph_tree, appliers)
-
-        context['node'] = builder.tree
-        return context
