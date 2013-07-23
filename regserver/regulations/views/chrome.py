@@ -19,7 +19,7 @@ def build_context(context, builder):
 
 class RegulationView(TemplateView):
     """ Display the whole regulation text as one page, with all the chrome elements. """
-    template_name = 'simpler.html'
+    template_name = 'eregs-with-chrome.html'
 
     def get_context_data(self, **kwargs):
         context = super(RegulationView, self).get_context_data(**kwargs)
@@ -36,7 +36,7 @@ class RegulationView(TemplateView):
 
 class RegulationSectionView(TemplateView):
     """ Display a single section of the regulation as one page, with all the chrome elements. """
-    template_name = 'simpler.html'
+    template_name = 'eregs-with-chrome.html'
 
     @staticmethod
     def get_regulation_part(reg_part_section):
