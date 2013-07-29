@@ -131,7 +131,7 @@ class HTMLBuilder():
         return 'built'
 
     def render_markup(self):
-        main_template = loader.get_template('simpler.html')
+        main_template = loader.get_template('eregs-with-chrome.html')
         c = Context({
             'tree':self.tree,
             'titles': self.get_title(),
