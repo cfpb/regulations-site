@@ -9,4 +9,3 @@ class RegulationSectionViewTestCase(SimpleTestCase):
     def test_get_regulation_part_single(self):
         part = RegulationSectionView.get_regulation_part('202')
         self.assertEquals(part, '202')
-

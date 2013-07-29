@@ -1,26 +1,8 @@
 from unittest import TestCase
-
 from mock import Mock, patch
 
 from regulations.generator.layers.layers_applier import *
 from regulations.views.chrome import *
-
-class RegulationParagraphViewTests(TestCase):
-    @patch('regulations.views.chrome.generator')
-    def test_get_context_data(self, generator):
-        generator.get_all_section_layers.return_value = (InlineLayersApplier(), 
-                ParagraphLayersApplier(), SearchReplaceLayersApplier())
-        generator.get_tree_paragraph.return_value = {
-            'text': 'Some Text',
-            'children': [],
-            'label': {'text': '867-53-q', 'parts': ['867', '53', 'q']}
-        }
-        rpv = RegulationParagraphView()
-        context = rpv.get_context_data(paragraph_id = '867-53-q',
-            reg_version = 'verver')
-        self.assertEqual(context['node'],
-                generator.get_tree_paragraph.return_value)
-
 
 class ViewTests(TestCase):
     def test_build_context(self):
@@ -32,7 +14,6 @@ class ViewTests(TestCase):
         new_context = build_context(context, builder)
         self.assertEquals(new_context.keys(), ['GOOGLE_ANALYTICS_ID', 'tree', 'env', 
                                                 'reg_part', 'GOOGLE_ANALYTICS_SITE'])
-
     def test_generate_html(self):
         regulation_tree = {'text': '', 'children': [], 'label': {
             'text': '8675', 
