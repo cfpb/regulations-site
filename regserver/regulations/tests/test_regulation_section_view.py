@@ -1,5 +1,5 @@
 from django.test import SimpleTestCase
-from regulations.views import RegulationSectionView
+from regulations.views.chrome import RegulationSectionView
 
 class RegulationSectionViewTestCase(SimpleTestCase):
     def test_get_regulation_part(self):
@@ -9,4 +9,3 @@ class RegulationSectionViewTestCase(SimpleTestCase):
     def test_get_regulation_part_single(self):
         part = RegulationSectionView.get_regulation_part('202')
         self.assertEquals(part, '202')
-
