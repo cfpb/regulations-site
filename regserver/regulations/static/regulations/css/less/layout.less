@@ -1,5 +1,5 @@
 /*
- layout
+ Layout
  ========================================================================== 
  layout.less defines the structural layout of the site
  */
@@ -47,7 +47,6 @@
 
 .reg-text > section {
     border-bottom: 2px solid @medium_gray;
-    /*padding: 3.75em 0 2.75em 0;*/
 }
 
 .reg-section li > p,
@@ -57,13 +56,16 @@
     margin-left: -90px;
 }
 
-/**
-  *
-  * If the height and negative margin here are adjusted,
-  * the JS must be updated to reflect that. 
-  * content-view.js, checkActiveSection()
-  *
-  **/
+/*
+Section Offsets
+===============
+*
+* Linakble content must be offset to accomodate the fixed header. 
+* If the height and negative margin here are adjusted, the JS must be updated to reflect that. 
+* content-view.js, checkActiveSection()
+*
+*/
+
 .reg-section:before,
 .appendix-section:before,
 .supplement-section:before,
@@ -85,14 +87,20 @@
     background-clip:padding-box;
 }
 
-/* permalinks */
+/*  
+Permalink Offset
+----------------
+*/
 .section-number {
     position: relative;
     margin-left: -30px;
     padding-left: 30px;
 }
 
-/* reset for inline interpretations */
+/*  
+Reset for inline interpretations
+--------------------------------
+*/
 .inline-interpretation-content .level-1 li {
     border-top: 0px;
     margin-top: 0px;

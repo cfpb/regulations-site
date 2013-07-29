@@ -1,7 +1,7 @@
 @media print {
 
-/* ==========================================================================
- typography
+/*
+ Typography
  ========================================================================== */
 
 body {
@@ -17,8 +17,8 @@ body {
 }
 
 
-/* ==========================================================================
- page breaks & orphans
+/*
+ Page Breaks & Orphans
  ========================================================================== */
 
 h1, h2, h3, h4 {
@@ -35,17 +35,28 @@ p {
     page-break-after: always;
 }
 
-/* ==========================================================================
- hidden elements
+/*
+ Hidden Elements
  ========================================================================== */
 
- img, nav, #table-of-contents, #menu-link, .inline-interpretation, .inline-interpretation-content, .hidden, .reg-header, .main-head, .sub-head {
+ img,
+ nav,
+ #table-of-contents,
+ #menu-link,
+ .inline-interpretation,
+ .inline-interpretation-content,
+ .hidden,
+ .reg-header,
+ .main-head,
+ .sub-head {
     display: none;
  }
 
- /* ==========================================================================
-single column layout
- ========================================================================== */
+ /*
+ Single Column Layout
+ ==========================================================================
+ Print only the text of the regulation
+ */
 
 .wrap,
 .main-content,
@@ -64,8 +75,8 @@ single column layout
 }
 
 
- /* ==========================================================================
- margin/padding resets
+ /*
+ Margin/Padding Resets
  ========================================================================== */
 
 body, .wrap {
@@ -73,8 +84,8 @@ body, .wrap {
     padding: 0;
 }
 
- /* ==========================================================================
- heading/keyword styles
+ /*
+ Heading/Keyword Styles
  ========================================================================== */
  
  h1 {
@@ -93,12 +104,11 @@ body, .wrap {
     line-height: 23pt;
 }
 
-/* ==========================================================================
- link styles
- ========================================================================== */
-
-
-/* removed link styles from definitions & citations */
+/*
+ Link Styles
+ ==========================================================================
+ Remove link styles from definitions & citations 
+*/
 a.definition:link,
 a.definition:visited,
 a.citation:link,
@@ -120,8 +130,8 @@ a[href^="http://"] {
     }
 }
 
-/* ==========================================================================
- layout styles/resets
+/*
+ Layout Styles/Resets
  ========================================================================== */
 
 .level-1 > li {
@@ -164,4 +174,4 @@ a[href^="http://"] {
     margin-top: 0px;
 }
 
-} /* /@media print */
+} /* end /@media print media query */

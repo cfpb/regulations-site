@@ -1,6 +1,23 @@
-/* ==========================================================================
- navgation
- ========================================================================== */
+/*
+Navigation
+=========================
+navigation.less contains styles for site and intra reg navigation 
+*/
+
+
+/*
+Appendix Navigation
+=========================
+
+```
+<ol class="appendix-nav">
+    <li><a href="#">Link</a></li>
+    <li><a href="#">Link</a></li>
+    <li><a href="#">Link</a></li>
+</ol>
+```
+
+*/
 
 .appendix-nav {
     margin-top: 2.5em; /*40px*/
@@ -24,9 +41,24 @@
 }
 
 
-/* ==========================================================================
- table of contents
- ========================================================================== */
+/*
+Regulation Table of Contents
+============================
+
+The regulation TOC is a slide out panel drawer
+It displays when the 'active' class is applied
+
+```
+<nav id="menu" class="panel active" role="navigation">
+    <ol class="regulation-nav" id="table-of-contents">
+        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.1</span> Section Title</a></li>
+        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.2</span> Section Title</a></li>
+        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.3</span> Section Title</a></li>
+    </ol>
+</nav>
+```
+
+*/
 
 .panel,
 .panel .close-button {
@@ -79,6 +111,14 @@
         }
     }
 
+/*
+TOC Close Button
+----------------
+<nav class="panel">
+    <div id="toc-close" class="close-button toc-toggle"><em>Close</em></div>
+</nav>
+*/
+
     .close-button {
         width: 240px;
         height: 26px;
@@ -108,11 +148,9 @@
     }
 }
 
-/*.no-js .panel {
-    left: 0;
-}*/
-
-/* panel slides to position */
+/* 
+When applied, the active class causes the panel navigation to slide to the right
+ */
 .panel.active{
     left: 0;
 
@@ -123,7 +161,16 @@
 }
 
 
-/* TOC link */
+/* 
+TOC Link (aka 'The Hamburger Button')
+=====================================
+
+```
+<a href="#menu" id="menu-link" class="toc-nav-link toc-toggle active">Table of Contents</a>
+```
+
+*/
+
 .toc-nav-link {
     text-indent: -9999px;
     position: absolute;

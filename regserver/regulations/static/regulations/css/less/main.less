@@ -1,6 +1,8 @@
-/**
-* main.less imports all supporting less files
-*
+/*
+Main.less
+ ========================================================================== 
+main.less imports all supporting less files
+and includes any non-semantic helper classes
 */
 
 @import url(normalize.less);
@@ -16,11 +18,12 @@
 @import url(print.less);
 
 
-/* ==========================================================================
- helper classes
+/*
+ Helper Classes
  ========================================================================== */
 
-.sxs-ref { /* hide the meta info until it has a visual treatment */
+/* hide the meta info until it has a visual treatment */
+.sxs-ref { 
     display: none;
 }
 
@@ -74,7 +77,12 @@ img.reg-image {
     display: block;
 }
 
-/* .group class as clearfix */
+/* 
+Clearfix
+--------
+* Use .group class as clearfix...  
+* It just sounds nicer!
+*/
 .group:before,
 .group:after {
     content: " "; /* 1 */
