@@ -19,6 +19,36 @@ from layers.graphics import GraphicsLayer
 from html_builder import HTMLBuilder
 import notices
 
+class LayerCreator(object):
+    INTERNAL = 'internal-citations'
+    TOC = 'toc'
+    EXTERNAL = 'external-citations'
+    TERMS = 'terms'
+    SXS = 'analyses'
+    PARAGRAPH = 'paragraph-markers'
+    META = 'meta'
+    GRAPHICS = 'graphics'
+    INTERP = 'interpretations'
+    KEY_TERMS = 'keyterms'
+
+    LAYERS = {
+        'internal': (INTERNAL,'inline'),
+        'toc': (TOC,'paragraph'),
+        'external': (EXTERNAL,'inline'),
+        'terms': (TERMS,'inline'),
+        'sxs': (SXS,'paragraph'),
+        'paragraph': (PARAGRAPH,'search_replace'),
+        'meta': (META, 'paragraph'),
+        'graphics': (GRAPHICS,'search_replace'),
+        'interp': (INTERP,'paragraph'),
+        'keyterms': (KEY_TERMS, 'search_replace'),
+    }
+
+    def __init__(self):
+        self.appliers = {'inline': InlineLayersApplier(), 
+                        'paragraph': ParagraphLayersApplier(), 
+                        'search_replace': SearchReplaceLayersApplier()}
+
 def create_sectional_citation_layer(layer_json, version):
     """ Create an InternalCitationLayer that is aware that we're 
     loading a section at a time. """
