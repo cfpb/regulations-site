@@ -1,7 +1,9 @@
 from django.conf import settings
 from django.views.generic.base import TemplateView
+
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
+from regulations.views import utils
 
 def generate_html(regulation_tree, layer_appliers):
     builder = HTMLBuilder(*layer_appliers)
@@ -52,6 +54,7 @@ class RegulationSectionView(TemplateView):
         regulation_version = context['reg_version']
 
         regulation = RegulationSectionView.get_regulation_part(context['reg_part_section'])
+
         inline_applier, p_applier, s_applier = generator.get_all_section_layers(regulation_part, regulation_version)
 
         #The table of contents layers are dealt with different for section at a time. 

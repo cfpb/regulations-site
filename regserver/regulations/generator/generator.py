@@ -20,34 +20,112 @@ from html_builder import HTMLBuilder
 import notices
 
 class LayerCreator(object):
-    INTERNAL = 'internal-citations'
+    """ This lets us dynamically load layers by name. """
+    INTERNAL = 'internal'
     TOC = 'toc'
-    EXTERNAL = 'external-citations'
+    EXTERNAL = 'external'
     TERMS = 'terms'
-    SXS = 'analyses'
-    PARAGRAPH = 'paragraph-markers'
+    SXS = 'sxs'
+    PARAGRAPH = 'paragraph'
     META = 'meta'
     GRAPHICS = 'graphics'
-    INTERP = 'interpretations'
+    INTERP = 'interp'
     KEY_TERMS = 'keyterms'
 
     LAYERS = {
-        'internal': (INTERNAL,'inline'),
-        'toc': (TOC,'paragraph'),
-        'external': (EXTERNAL,'inline'),
-        'terms': (TERMS,'inline'),
-        'sxs': (SXS,'paragraph'),
-        'paragraph': (PARAGRAPH,'search_replace'),
-        'meta': (META, 'paragraph'),
-        'graphics': (GRAPHICS,'search_replace'),
-        'interp': (INTERP,'paragraph'),
-        'keyterms': (KEY_TERMS, 'search_replace'),
+        INTERNAL: ('internal-citations','inline', InternalCitationLayer),
+        TOC: ('toc','paragraph', TableOfContentsLayer),
+        EXTERNAL: ('external-citations','inline', ExternalCitationLayer),
+        TERMS: ('terms','inline', DefinitionsLayer),
+        SXS: ('analyses','paragraph', SectionBySectionLayer),
+        PARAGRAPH: ('paragraph-markers','search_replace', ParagraphMarkersLayer),
+        META: ('meta', 'paragraph', MetaLayer),
+        GRAPHICS: ('graphics','search_replace', GraphicsLayer),
+        INTERP: ('interpretations','paragraph', InterpretationsLayer),
+        KEY_TERMS: ('keyterms', 'search_replace', KeyTermsLayer),
     }
+
+    SPECIAL_CASES = [EXTERNAL, INTERP]
 
     def __init__(self):
         self.appliers = {'inline': InlineLayersApplier(), 
                         'paragraph': ParagraphLayersApplier(), 
                         'search_replace': SearchReplaceLayersApplier()}
+
+        self.api = api_reader.Client(settings.API_BASE)
+
+    def get_layer_json(self, api_name, regulation, version):
+        """ Hit the API to retrieve the regulation JSON. """
+        return self.api.layer(api_name, regulation, version)
+
+    def add_layer(self,layer_name,regulation, version):
+        """ Add a normal layer (no special handling required) to the applier. """
+        if layer_name in LayerCreator.LAYERS:
+        #if layer_name in LayerCreator.LAYERS and (not in LayerCreator.SPECIAL_CASES):
+            api_name, applier_type, layer_class = LayerCreator.LAYERS[layer_name]
+            layer_json = self.get_layer_json(api_name, regulation, version)
+            layer = layer_class(layer_json)
+            self.appliers[applier_type].add_layer(layer)
+
+    def add_external_citation_layer(self, regulation, version):
+        """ Add the external citation layer to the appropriate applier. The
+        external citation layer needs to be initialized with the Act reference.
+        Hence it needs to be dealt with uniquely. """
+
+        api_name, applier_type, layer_class = LayerCreator.LAYERS[LayerCreator.EXTERNAL]
+
+        layer_json = self.get_layer_json(api_name, regulation, version)
+        layer = ExternalCitationLayer(layer_json, ['15', '1693'])
+        applier_type = LayerCreator.LAYERS[LayerCreator.EXTERNAL][1]
+        self.appliers[applier_type].add_layer(layer)
+    
+    def add_interpretation_layer(self, regulation, version):
+        """ Add the interpretations layer to the appropriate applier. The
+        interpretations layer needs to have the other appliers. Hence it needs
+        to be dealt with uniquely. """
+        api_name, applier_type, layer_class = LayerCreator.LAYERS[LayerCreator.INTERP]
+        layer_json = self.get_layer_json(api_name, regulation, version)
+        layer = layer_class(layer_json, version)
+        layer.copy_builder(self.appliers['inline'], self.appliers['search_replace'])
+        self.appliers[applier_type].add_layer(layer)
+    
+    @staticmethod
+    def create_sectional_citation_layer(layer_json, version):
+        """ Create an InternalCitationLayer that is aware that we're 
+        loading a section at a time. """
+        icl = InternalCitationLayer(layer_json)
+        icl.generate_sectional = True
+        icl.reg_version = version
+        return icl
+
+    def add_sectional_internal_layer(self, regulation, version):
+        api_name, applier_type, layer_class = LayerCreator.LAYERS[LayerCreator.INTERNAL]
+        layer_json = self.get_layer_json(api_name, regulation, version)
+        layer = LayerCreator.create_sectional_citation_layer(layer_json, version)
+        self.appliers[applier_type].add_layer(layer)
+
+    def add_layers(self, layer_names, regulation, version, sectional=False):
+        #This doesn't deal with sectional interpretations yet. 
+        #we'll have to do that. 
+        last = []
+        for layer_name in layer_names:
+            if layer_name == LayerCreator.INTERP:
+                last.append(LayerCreator.INTERP)
+            elif layer_name == LayerCreator.EXTERNAL:
+                self.add_external_citation_layer(regulation, version)
+            elif layer_name == LayerCreator.INTERNAL and sectional:
+                self.add_sectional_internal_layer(regulation, version)
+            else:
+                self.add_layer(layer_name, regulation, version)
+
+        if len(last) > 0:
+            self.add_interpretation_layer(regulation, version)
+
+    def get_appliers(self):
+        """ Return the appliers. """
+        return (self.appliers['inline'], 
+                self.appliers['paragraph'], 
+                self.appliers['search_replace'])
 
 def create_sectional_citation_layer(layer_json, version):
     """ Create an InternalCitationLayer that is aware that we're 
