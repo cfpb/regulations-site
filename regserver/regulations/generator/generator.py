@@ -76,7 +76,6 @@ class LayerCreator(object):
 
         layer_json = self.get_layer_json(api_name, regulation, version)
         layer = ExternalCitationLayer(layer_json, ['15', '1693'])
-        applier_type = LayerCreator.LAYERS[LayerCreator.EXTERNAL][1]
         self.appliers[applier_type].add_layer(layer)
     
     def add_interpretation_layer(self, regulation, version):
