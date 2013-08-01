@@ -4,7 +4,70 @@
  layout.less defines the structural layout of the site
  */
 
-.main,
+.wrap {
+    width: 100%;
+}
+
+.main-content {
+    float: left;
+    margin-top: 100px;
+    margin-left: 14em;
+    padding: 0 40px;
+    max-width: 58.333336%;
+    border-right: 1px solid @light_field;
+    overflow-x: none;
+}
+
+.secondary-content {
+    float: left;
+    max-width: 25%;
+    background: #fff;
+    z-index: 100;
+}
+
+.open-definition,
+.regs-meta {
+    position: fixed;
+    max-width: 25%;
+    padding: 0 40px 0 20px;
+    top: 100px;
+    bottom: 0;
+    height: 100%;
+    font-size: .875em;
+    background: #fff;
+    z-index: 100;
+}
+
+.panel {
+    border-right: 2px solid #d0d0ce;
+    border-top: 3px solid #d0d0ce;
+    .avenir-next-demi;
+    font-size: .875em;
+    position: fixed;
+    top: 60px;
+    bottom: 0px;
+    width: 260px;
+    background-color: #f6f6f5;
+    z-index: 999999;
+    overflow-y: scroll;
+}
+
+/*
+IE fixes
+--------
+*/
+
+.lt-ie9 .open-definition,
+.lt-ie9 .regs-meta {
+    right: 0px;
+}
+
+.lt-ie9 .main-content {
+    margin-right: 25%;
+}
+
+
+/*.main,
 .main-content,
 .secondary,
 .secondary-content {
@@ -15,7 +78,7 @@
 
 .wrap {
     position: relative;
-    max-width: 60em; /* 960 / 16 = 60*/
+    max-width: 60em; 
     margin: 0 auto;
 }
 
@@ -27,7 +90,7 @@
 
 .main,
 .main-content {
-    width: 63.542%; /*643px;*/
+    width: 63.542%;
     float: left;
     padding-right: 2em;
 }
@@ -41,7 +104,7 @@
 .secondary,
 .secondary-content {
     width: 30.5%;
-    padding-left: 2.5%; /*318px;*/
+    padding-left: 2.5%;
     float: left;
 }
 
@@ -54,7 +117,7 @@
 .supplement-section li > p {
     padding-left: 90px;
     margin-left: -90px;
-}
+}*/
 
 /*
 Section Offsets
