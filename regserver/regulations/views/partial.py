@@ -42,7 +42,7 @@ class PartialParagraphView(TemplateView):
 
         if 'layers' in self.request.GET.keys():
             inline_applier, p_applier, s_applier = utils.handle_specified_layers(self.request.GET['layers'], 
-                regulation, version)
+                paragraph_id, version, sectional=True)
         else:
             inline_applier, p_applier, s_applier = generator.get_all_section_layers(paragraph_id, version)
             inline_applier = generator.add_section_internal_citations(paragraph_id, version, inline_applier)
