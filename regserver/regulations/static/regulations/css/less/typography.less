@@ -176,13 +176,6 @@ li {
 /*  Primary/Global
     --------
 
-    <h1 class="site-title">Site Title</h1>
-*/
-.site-title {
-    .avenir-next-demi;
-    margin: .3em 0;
-}
-
 /*
     <h2 class="reg-title">Reg Title</h2>
     <h2 class="appendix-title">Appendix Title</h2>
@@ -239,9 +232,19 @@ This attempts to define global rules for a clear hierarchical structure.
  */
 
 .level-1 > li {
-    border-bottom: 1px solid @light_field;
-    padding: 1em 0 1em 0;
+    padding: 1em 0 0 0;
 }
+
+.level-1 > li:after {
+    padding-top: 1em;
+    height: 1px;
+    display: block;
+    width: 900px;
+    border-bottom: 1px solid @light_field;
+    content: '';
+    margin-left: -6em;
+}
+
 
 .supplement-section .level-1 > li {
     border-bottom: none;

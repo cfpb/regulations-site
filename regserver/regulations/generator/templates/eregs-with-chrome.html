@@ -8,8 +8,12 @@
 
 <header class="reg-header">
 <div class="main-head">
-    <a href="#menu" id="menu-link" class="toc-nav-link toc-toggle">Table of Contents</a>
-    <ul class="wrap group">
+    {% load static from staticfiles %}
+        <img src="{%static "regulations/ip/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151px">
+        <div class="site-title">
+            <h1>eRegulations > Regulation {{ tree.label.reg_letter }}</h1>
+        </div> <!-- /site-title -->
+    <!--<ul>
     <li class="main">
     <nav id="doc-navigation" class="header-nav">
         <ul>
@@ -19,13 +23,14 @@
     </li>
 
     <li>
-        {% load static from staticfiles %}
-        <div class="logo"><img src="{%static "regulations/ip/logo.png" %}" alt="logo" width="151px"></div>
-    </li>
+    </li>-->
 </div>
 
 <div class="sub-head">
-    <ul id="content-header" class="wrap group">
+    <div class="toc-head">
+        <a href="#menu" id="menu-link" class="toc-nav-link toc-toggle">Table of Contents</a>
+    </div> <!-- /toc-head-->
+    <ul id="content-header">
         <li id="content-subhead" class="main">
             <span id="active-title"></span>
             <span class="effective-date">EFFECTIVE {{ tree.meta.effective.date|date }}</span>

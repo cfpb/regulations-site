@@ -22,17 +22,32 @@
     }
 }
 
-.reg-title-header {
-    display: inline;
-    .avenir-next;
-    font-size: 1em;
-}
-
 .main-head {
     .border-bottom-dark(@width: 3px);
+    padding: 0 20px;
     background: #fff;
     z-index: 1000;
     height: 3.75em;
+
+    .logo {
+        display: block;
+        float: left;
+        margin-top: 13px; /* this manually centers the image based on its height and the height of the container */
+    }
+
+
+    .site-title {
+        display: block;
+        float: left;
+        line-height: 3.75em;
+        margin-left: 1em;
+
+        h1 {
+            .avenir-next;
+            font-size: 1.125em;
+            .reset;
+        }
+    }
 
     nav {
         height: 100%;
@@ -55,16 +70,8 @@
 .main-head .main-content {
     border-right: none;
 }
-
-.logo {
-    width: 100%;
-    margin: 10px 0 0 0;
-    float: right;
-    text-align: right;
-}
-
 .sub-head {
-    background: @bg_gray;
+    background: @grey;
     height: 2.125em;
     .border-bottom-medium(@width: 1px);
     z-index: 1000;

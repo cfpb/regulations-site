@@ -110,42 +110,6 @@ It displays when the 'active' class is applied
           margin-top: 6px;
         }
     }
-
-/*
-TOC Close Button
-----------------
-<nav class="panel">
-    <div id="toc-close" class="close-button toc-toggle"><em>Close</em></div>
-</nav>
-*/
-
-    .close-button {
-        width: 240px;
-        height: 26px;
-        padding: 10px; /*10px*/
-        bottom: 0px;
-        background: @light_field url(../img/close.png) 89% 11px no-repeat;
-        color: @dark_gray;
-        text-transform: uppercase;
-        font-size: .857142857em; /*12px*/
-        cursor: pointer;
-
-            em {
-                display: inline-block;
-                width: 80%;
-                text-align: right;
-                font-style: normal;
-            }
-    }
-
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
-    (min-resolution: 192dpi) {
-        .close-button {
-            background: @light_field url(../img/close@2x.png) 89% 11px no-repeat;
-            background-size: 15px 15px;
-        }
-    }
 }
 
 /* 
@@ -160,6 +124,19 @@ When applied, the active class causes the panel navigation to slide to the right
     }
 }
 
+/*
+TOC Header Navigation
+======================
+*/
+
+.toc-head {
+    display: inline-block;
+    min-width: 260px;
+    height: 34px;
+    border-right: 2px solid #d0d0ce;
+    .border-bottom-medium(@width: 1px);
+    background-color: #f6f6f5;
+}
 
 /* 
 TOC Link (aka 'The Hamburger Button')
@@ -173,11 +150,12 @@ TOC Link (aka 'The Hamburger Button')
 
 .toc-nav-link {
     text-indent: -9999px;
-    position: absolute;
+    /*position: absolute;
     left: 0;
-    top: 0;
-    height: 60px; /* match height of main header */
-    width: 60px;
+    top: 60px;*/
+    display: inline-block;
+    height: 34px; /* match height of main header */
+    width: 40px;
     background: url(../img/nav-link.png) no-repeat center center;
 
     &.hamburgerify {
@@ -194,6 +172,7 @@ TOC Link (aka 'The Hamburger Button')
     }
 }
 
+.toc-nav-link,
 .toc-nav-link:hover,
 .toc-nav-link:active,
 .toc-nav-link.active {
