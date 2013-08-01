@@ -83,14 +83,14 @@ class GeneratorTest(TestCase):
     @patch('regulations.generator.generator.LayerCreator.get_layer_json')
     def test_add_layer(self, get_layer_json):
         creator = generator.LayerCreator()
-        get_layer_json.return_value = {'layer'}
+        get_layer_json.return_value = {'layer':'layer'}
         creator.add_layer('meta', '205', 'verver')
         i,p,s = creator.get_appliers()
         self.assertEquals(len(p.layers), 1)
 
     @patch('regulations.generator.generator.LayerCreator.get_layer_json')
     def test_add_layers(self, get_layer_json):
-        get_layer_json.return_value = {'layer'}
+        get_layer_json.return_value = {'layer':'layer'}
 
         creator = generator.LayerCreator()
         creator.add_layers(['meta', 'graphics', 'internal'], '205', 'verver',

@@ -30,7 +30,7 @@ class PartialSectionViewTests(TestCase):
     @patch('regulations.views.partial.generator')
     @patch('regulations.generator.generator.LayerCreator.get_layer_json')
     def test_get_context_data(self, get_layer_json, generator):
-        get_layer_json.return_value = {'layer'}
+        get_layer_json.return_value = {'layer':'layer'}
         generator.get_tree_paragraph.return_value = {
             'text': 'Some Text',
             'children': [],
