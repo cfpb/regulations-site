@@ -87,7 +87,6 @@ class HTMLBuilder():
         node['tree_level'] = len(node['label']['parts']) - 1
 
         node['node_type'] = self.node_type(node['tree_level'], node['label']['parts'])
-        print node['node_type']
         list_level, list_type = self.list_level(node['label']['parts'], node['node_type'])
 
         node['list_level'] = list_level
