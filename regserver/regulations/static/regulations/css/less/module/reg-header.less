@@ -48,49 +48,17 @@
             .reset;
         }
     }
-
-    nav {
-        height: 100%;
-    }
-
-    ul {
-        text-align: right;
-    }
-
-    .main ul {
-        text-align: left;
-    }
-
-    li {
-        line-height: 60px;
-        padding: 0;
-    }
 }
 
-.main-head .main-content {
-    border-right: none;
-}
-.sub-head {
-    background: @grey;
-    height: 2.125em;
-    .border-bottom-medium(@width: 1px);
-    z-index: 1000;
-}
-
-.reg-header a:link,
-.reg-header a:visited {
+.site-title a:link,
+.site-title a:visited {
     border-bottom: none;
     color: @dark_field;
     text-decoration: none;
 }
 
-.reg-title-header a:link,
-.reg-title-header a:visited {
-    color: @black;
-}
-
-.reg-header a:hover,
-.reg-header a:active {
+.site-title a:hover,
+.site-title a:active {
     color: @pacific;
 }
 
@@ -102,6 +70,10 @@
 }
 
 .sub-head {
+    background: @grey;
+    height: 2.125em;
+    .border-bottom-medium(@width: 1px);
+    z-index: 1000;
     .main {
         border-right: 1px solid @medium_gray;
     }
