@@ -43,7 +43,7 @@ class HTMLBuilder():
         elif node_type == 'appendix':
             level_type_map = {1:'a', 2:'1', 3:'i', 4:'A'}
             prefix_length = 3
-        elif node_type == 'regulation':
+        else:
             level_type_map = {1:'a', 2:'1', 3:'i', 4:'A'}
             prefix_length = 2
 
@@ -87,6 +87,7 @@ class HTMLBuilder():
         node['tree_level'] = len(node['label']['parts']) - 1
 
         node['node_type'] = self.node_type(node['tree_level'], node['label']['parts'])
+        print node['node_type']
         list_level, list_type = self.list_level(node['label']['parts'], node['node_type'])
 
         node['list_level'] = list_level
