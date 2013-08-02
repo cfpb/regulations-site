@@ -39,7 +39,7 @@ class HTMLBuilder():
         """ Return the list level and the list type. """
         if node_type == 'interpretation':
             level_type_map = {1:'1', 2:'i', 3:'A'}
-            prefix_length = 3
+            prefix_length = parts.index('Interp')+1
         elif node_type == 'appendix':
             level_type_map = {1:'a', 2:'1', 3:'i', 4:'A'}
             prefix_length = 3
@@ -61,7 +61,7 @@ class HTMLBuilder():
         need to distinguish between them. """
     
         if tree_level > 0:
-            if parts[0] == 'I':
+            if 'Interp' in parts:
                 return 'interpretation'
             else:
                 level_two_id = parts[1]
@@ -72,8 +72,8 @@ class HTMLBuilder():
         return 'regulation'
 
     def process_node(self, node):
-        if 'title' in node['label']:
-            node['header']  = node['label']['title']
+        if 'title' in node:
+            node['header']  = node['title']
             node['header'] = HTMLBuilder.section_sign_hard_space(node['header'])
             match = HTMLBuilder.header_regex.match(node['header'])
             if match:
@@ -82,19 +82,22 @@ class HTMLBuilder():
                 node['header_title'] = match.group(3)
 
         node['text'] = node['text'].rstrip()
-        node['label']['parts'] = to_markup_id(node['label']['parts'])
-        node['markup_id'] = "-".join(node['label']['parts'])
-        node['tree_level'] = len(node['label']['parts']) - 1
+        node['label_id'] = '-'.join(node['label'])
+        node['html_label'] = to_markup_id(node['label'])
+        node['markup_id'] = "-".join(node['html_label'])
+        node['tree_level'] = len(node['label']) - 1
 
-        node['node_type'] = self.node_type(node['tree_level'], node['label']['parts'])
-        list_level, list_type = self.list_level(node['label']['parts'], node['node_type'])
+        node['node_type'] = self.node_type(node['tree_level'], node['label'])
+        list_level, list_type = self.list_level(node['label'], node['node_type'])
 
         node['list_level'] = list_level
         node['list_type'] = list_type
 
         if len(node['text']):
-            inline_elements = self.inline_applier.get_layer_pairs(node['label']['text'], node['text'])
-            search_elements = self.search_applier.get_layer_pairs(node['label']['text'])
+            inline_elements = self.inline_applier.get_layer_pairs(
+                node['label_id'], node['text'])
+            search_elements = self.search_applier.get_layer_pairs(
+                node['label_id'])
 
             layers_applier = LayersApplier()
             layers_applier.enqueue_from_list(inline_elements)
@@ -117,10 +120,10 @@ class HTMLBuilder():
 
     def get_title(self):
         titles = {
-            'part': self.tree['label']['parts'][0],
+            'part': self.tree['label'][0],
             'reg_name': ''
         }
-        reg_title = self.parse_doc_title(self.tree['label']['title'])
+        reg_title = self.parse_doc_title(self.tree['title'])
         if reg_title:
             titles['reg_name'] = reg_title
         return titles

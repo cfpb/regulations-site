@@ -101,7 +101,7 @@ def get_all_layers(regulation, version):
 def get_single_section(full_regulation, section_reference):
     """ Given a full regulation tree, return the section requested. """
     for section in full_regulation['children']:
-        if section_reference == section['label']['text']:
+        if section_reference == '-'.join(section['label']):
             return section
 
 def get_regulation_section(regulation, version, full_reference):
@@ -117,14 +117,14 @@ def get_regulation(regulation, version):
     access in the templates."""
     api = api_reader.Client(settings.API_BASE)
     reg =  api.regulation(regulation, version)
-    title = reg['label']['title']
+    title = reg['title']
     # up till the paren
     match = re.search('part \d+[^\w]*([^\(]*)', title, re.I)  
     if match:
-        reg['label']['title_clean'] = match.group(1).strip()
+        reg['title_clean'] = match.group(1).strip()
     match = re.search('\(regulation (\w+)\)', title, re.I)
     if match:
-        reg['label']['reg_letter'] = match.group(1)
+        reg['reg_letter'] = match.group(1)
 
     return reg
 

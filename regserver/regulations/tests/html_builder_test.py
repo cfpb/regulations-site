@@ -11,10 +11,7 @@ class HTMLBuilderTest(TestCase):
         node = {
             "text": "Text text text.", 
             "children": [], 
-            "label": {
-                "text": "123-aaa", 
-                "parts": ["123", "aaa"],
-            }
+            "label": ["123", "aaa"]
         }
 
         inline = Mock()
@@ -40,19 +37,15 @@ class HTMLBuilderTest(TestCase):
         builder = HTMLBuilder(None, None, None)
 
         node = {
-            "label": {
-                "parts": ["234", "a", "1"],
-                "title": "Title (Regulation R)"
-            }
+            "label": ["234", "a", "1"],
+            "title": "Title (Regulation R)"
         }
         titleless_node = {
-            "label": {
-                "title": "Title"
-            }
+            "title": "Title"
         }
 
-        parsed_title = builder.parse_doc_title(node['label']['title'])
-        no_title = builder.parse_doc_title(titleless_node['label']['title'])
+        parsed_title = builder.parse_doc_title(node['title'])
+        no_title = builder.parse_doc_title(titleless_node['title'])
 
         self.assertEqual("(Regulation R)", parsed_title)
         self.assertEqual(no_title, None)
@@ -132,10 +125,7 @@ class HTMLBuilderTest(TestCase):
         node = {
             'text': 'Interpretation with a link',
             'children': [],
-            'label': {
-                'text': '999-Interpretations-5', 
-                'parts': ['999', 'Interpretations', '5']
-            }
+            'label': ['999', '5', 'Interp']
         }
         p.apply_layers.return_value = node
         inline.get_layer_pairs.return_value = []
@@ -143,17 +133,16 @@ class HTMLBuilderTest(TestCase):
         builder.process_node(node)
         layer_parameters = inline.get_layer_pairs.call_args[0]
         self.assertEqual('Interpretation with a link', layer_parameters[1])
-        self.assertEqual('999-Interpretations-5', layer_parameters[0])
+        self.assertEqual('999-5-Interp', layer_parameters[0])
 
     def test_process_node_header(self):
         builder = HTMLBuilder(None, ParagraphLayersApplier(), None)
-        node = {'text': '', 'children': [], 'label': {
-            'text': '99-22', 'parts': ['99', '22']}}
+        node = {'text': '', 'children': [], 'label': ['99', '22']}
         builder.process_node(node)
         self.assertFalse('header' in node)
 
-        node = {'text': '', 'children': [], 'label': {
-            'text': '99-22', 'parts': ['99', '22'], 'title': 'Some Title'}}
+        node = {'text': '', 'children': [], 'label': ['99', '22'], 
+                'title': 'Some Title'}
         builder.process_node(node)
         self.assertTrue('header' in node)
         self.assertEqual('Some Title', node['header'])
@@ -161,9 +150,8 @@ class HTMLBuilderTest(TestCase):
         self.assertFalse('header_num' in node)
         self.assertFalse('header_title' in node)
 
-        node = {'text': '', 'children': [], 'label': {
-            'text': '99-22', 'parts': ['99', '22'], 
-            'title': u'§ 22.1 Title'}}
+        node = {'text': '', 'children': [], 'label': ['99', '22'], 
+            'title': u'§ 22.1 Title'}
         builder.process_node(node)
         self.assertTrue('header' in node)
         self.assertTrue('header_marker' in node)

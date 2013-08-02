@@ -15,11 +15,9 @@ class ViewTests(TestCase):
         self.assertEquals(new_context.keys(), ['GOOGLE_ANALYTICS_ID', 'tree', 'env', 
                                                 'reg_part', 'GOOGLE_ANALYTICS_SITE'])
     def test_generate_html(self):
-        regulation_tree = {'text': '', 'children': [], 'label': {
-            'text': '8675', 
-            'parts': ['8675'],
+        regulation_tree = {'text': '', 'children': [], 'label': ['8675'],
             'title': 'Regulation R'
-        }}
+        }
         i_applier = InlineLayersApplier()
         p_applier = ParagraphLayersApplier()
         sr_applier = SearchReplaceLayersApplier()

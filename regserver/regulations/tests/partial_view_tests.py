@@ -12,7 +12,7 @@ class PartialParagraphViewTests(TestCase):
         generator.get_tree_paragraph.return_value = {
             'text': 'Some Text',
             'children': [],
-            'label': {'text': '867-53-q', 'parts': ['867', '53', 'q']}
+            'label': ['867', '53', 'q']
         }
         rpv = PartialParagraphView()
         context = rpv.get_context_data(paragraph_id = '867-53-q',

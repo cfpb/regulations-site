@@ -12,43 +12,41 @@ class GeneratorTest(TestCase):
         self.assertEquals(icl.reg_version, '1023')
 
     def test_get_single_section(self):
-        full_regulation = {'children':[{'label':{'text': '12-2'}}, 
-                                {'label':{'text':'13-1'}}]}
+        full_regulation = {'children':[{'label':['12','2']},
+                                {'label':['13','1']}]}
         single = generator.get_single_section(full_regulation, '13-1')
-        self.assertEquals({'label':{'text':'13-1'}}, single)
+        self.assertEquals({'label':['13','1']}, single)
 
     def test_single_section_none(self):
-        full_regulation = {'children':[{'label':{'text': '12-2'}}, 
-                                {'label':{'text':'13-1'}}]}
+        full_regulation = {'children':[{'label':['12','2']},
+                                {'label':['13','1']}]}
         single = generator.get_single_section(full_regulation, '14-1')
         self.assertEquals(None, single)
 
     @patch('regulations.generator.generator.api_reader')
     def test_get_regulation_extra_fields(self, api_reader):
-        reg = {'text': '', 'children': [], 'label': {
-            'text': '8675', 
-            'parts': ['8675'],
+        reg = {'text': '', 'children': [], 'label': ['8675'],
             'title': 'Contains no part info'
-        }}
+        }
         api_reader.Client.return_value.regulation.return_value = reg
 
         r = generator.get_regulation('8675', 'ver')
-        self.assertFalse('title_clean' in r['label'])
-        self.assertFalse('reg_letter' in r['label'])
+        self.assertFalse('title_clean' in r)
+        self.assertFalse('reg_letter' in r)
 
-        reg['label']['title'] = 'part 8675 - Some title'
+        reg['title'] = 'part 8675 - Some title'
         r = generator.get_regulation('8675', 'ver')
-        self.assertTrue('title_clean' in r['label'])
-        self.assertEqual('Some title', r['label']['title_clean'])
-        self.assertFalse('reg_letter' in r['label'])
+        self.assertTrue('title_clean' in r)
+        self.assertEqual('Some title', r['title_clean'])
+        self.assertFalse('reg_letter' in r)
 
-        del reg['label']['title_clean']
-        reg['label']['title'] = 'part 8675 - Some title (RegUlation RR)'
+        del reg['title_clean']
+        reg['title'] = 'part 8675 - Some title (RegUlation RR)'
         r = generator.get_regulation('8675', 'ver')
-        self.assertTrue('title_clean' in r['label'])
-        self.assertEqual('Some title', r['label']['title_clean'])
-        self.assertTrue('reg_letter' in r['label'])
-        self.assertEqual('RR', r['label']['reg_letter'])
+        self.assertTrue('title_clean' in r)
+        self.assertEqual('Some title', r['title_clean'])
+        self.assertTrue('reg_letter' in r)
+        self.assertEqual('RR', r['reg_letter'])
 
     @patch('regulations.generator.generator.api_reader')
     def test_get_tree_paragraph(self, api_reader):

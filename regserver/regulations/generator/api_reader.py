@@ -10,7 +10,7 @@ class Client:
 
     def _dfs_search(self, reg_tree, index):
         """Find the matching node in the tree (if it exists)"""
-        if reg_tree['label']['text'] == index:
+        if '-'.join(reg_tree['label']) == index:
             return reg_tree
         for child in reg_tree['children']:
             child_search = self._dfs_search(child, index)
