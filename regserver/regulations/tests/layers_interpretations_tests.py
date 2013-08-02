@@ -13,7 +13,7 @@ class InterpretationsLayerTest(TestCase):
     def test_apply_layer_extra_fields(self, api_reader):
         layer = {
             "200-2-b-3-i": [{
-                "reference": "200-Interpretations-2-(b)(3)(i)",
+                'reference': '200-2-b-3-i-Interp',
                 "text": "Some contents are here"
             }],
         }
@@ -35,7 +35,7 @@ class InterpretationsLayerTest(TestCase):
     def test_apply_layer_section(self, api_reader):
         layer = {
             "200-2": [{
-                "reference": "200-Interpretations-2",
+                "reference": "200-2-Interp",
                 "text": "Some contents are here"
             }],
         }
@@ -57,7 +57,7 @@ class InterpretationsLayerTest(TestCase):
     def test_apply_layer_appendix(self, api_reader):
         layer = {
             "200-Q-5": [{
-                "reference": "200-Interpretations-Q-5",
+                "reference": "200-Q-5-Interp",
                 "text": "Some contents are here"
             }],
         }
