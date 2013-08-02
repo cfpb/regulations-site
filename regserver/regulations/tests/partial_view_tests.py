@@ -4,6 +4,7 @@ from mock import Mock, patch
 from django.test import RequestFactory
 
 from regulations.generator.layers.layers_applier import *
+from regulations.generator.node_types import REGTEXT
 from regulations.views.partial import *
 
 class PartialParagraphViewTests(TestCase):
@@ -15,7 +16,8 @@ class PartialParagraphViewTests(TestCase):
         generator.get_tree_paragraph.return_value = {
             'text': 'Some Text',
             'children': [],
-            'label': ['867', '53', 'q']
+            'label': ['867', '53', 'q'],
+            'node_type': REGTEXT
         }
         paragraph_id = '103-3-a'
         reg_version = '2013-10607'
@@ -34,7 +36,8 @@ class PartialSectionViewTests(TestCase):
         generator.get_tree_paragraph.return_value = {
             'text': 'Some Text',
             'children': [],
-            'label': {'text': '205', 'parts': ['205']}
+            'label': ['205'],
+            'node_type': REGTEXT
         }
 
         reg_part_section = '205'

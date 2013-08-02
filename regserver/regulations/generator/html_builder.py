@@ -5,7 +5,7 @@ import re
 from django.template import loader, Template, Context
 from django.conf import settings
 
-from node_types import to_markup_id
+from node_types import to_markup_id, APPENDIX, INTERP
 from layers.layers_applier import LayersApplier
 
 class HTMLBuilder():
@@ -37,10 +37,10 @@ class HTMLBuilder():
 
     def list_level(self, parts, node_type):
         """ Return the list level and the list type. """
-        if node_type == 'interpretation':
+        if node_type == INTERP:
             level_type_map = {1:'1', 2:'i', 3:'A'}
             prefix_length = parts.index('Interp')+1
-        elif node_type == 'appendix':
+        elif node_type == APPENDIX:
             level_type_map = {1:'a', 2:'1', 3:'i', 4:'A'}
             prefix_length = 3
         else:
@@ -54,22 +54,6 @@ class HTMLBuilder():
             return (list_level, list_type)
         else:
             return (None, None)
-
-    def node_type(self, tree_level, parts):
-        """ A node in the regulation can be part of the appendix, the interpretation 
-        section or simply the normal regulation text. We style them differently, hence we 
-        need to distinguish between them. """
-    
-        if tree_level > 0:
-            if 'Interp' in parts:
-                return 'interpretation'
-            else:
-                level_two_id = parts[1]
-                if level_two_id.isalpha():
-                    return 'appendix'
-                else:
-                    return 'regulation'
-        return 'regulation'
 
     def process_node(self, node):
         if 'title' in node:
@@ -87,7 +71,6 @@ class HTMLBuilder():
         node['markup_id'] = "-".join(node['html_label'])
         node['tree_level'] = len(node['label']) - 1
 
-        node['node_type'] = self.node_type(node['tree_level'], node['label'])
         list_level, list_type = self.list_level(node['label'], node['node_type'])
 
         node['list_level'] = list_level

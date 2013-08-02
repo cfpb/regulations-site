@@ -2,6 +2,7 @@ from unittest import TestCase
 from mock import Mock, patch
 
 from regulations.generator.layers.layers_applier import *
+from regulations.generator.node_types import REGTEXT
 from regulations.views.chrome import *
 
 class ViewTests(TestCase):
@@ -16,7 +17,7 @@ class ViewTests(TestCase):
                                                 'reg_part', 'GOOGLE_ANALYTICS_SITE'])
     def test_generate_html(self):
         regulation_tree = {'text': '', 'children': [], 'label': ['8675'],
-            'title': 'Regulation R'
+            'title': 'Regulation R', 'node_type': REGTEXT
         }
         i_applier = InlineLayersApplier()
         p_applier = ParagraphLayersApplier()

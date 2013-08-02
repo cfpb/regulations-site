@@ -4,6 +4,7 @@ from mock import Mock
 
 from regulations.generator.html_builder import *
 from regulations.generator.layers.layers_applier import ParagraphLayersApplier
+from regulations.generator.node_types import REGTEXT, APPENDIX, INTERP
 
 class HTMLBuilderTest(TestCase):
 
@@ -11,7 +12,8 @@ class HTMLBuilderTest(TestCase):
         node = {
             "text": "Text text text.", 
             "children": [], 
-            "label": ["123", "aaa"]
+            "label": ["123", "aaa"],
+            'node_type': REGTEXT
         }
 
         inline = Mock()
@@ -38,10 +40,12 @@ class HTMLBuilderTest(TestCase):
 
         node = {
             "label": ["234", "a", "1"],
-            "title": "Title (Regulation R)"
+            "title": "Title (Regulation R)",
+            'node_type': APPENDIX
         }
         titleless_node = {
-            "title": "Title"
+            "title": "Title",
+            'node_type': REGTEXT
         }
 
         parsed_title = builder.parse_doc_title(node['title'])
@@ -54,7 +58,7 @@ class HTMLBuilderTest(TestCase):
         builder = HTMLBuilder(None, None, None)
 
         parts = ['101', '12', 'a', 'Interp', '1']
-        node_type = 'interpretation'
+        node_type = INTERP
 
         result = builder.list_level(parts, node_type)
         self.assertEquals(result, (1, '1'))
@@ -71,7 +75,7 @@ class HTMLBuilderTest(TestCase):
         builder = HTMLBuilder(None, None, None)
 
         parts = ['101', 'A', '1','a']
-        node_type = 'appendix'
+        node_type = APPENDIX
 
         result = builder.list_level(parts, node_type)
         self.assertEquals(result, (1, 'a'))
@@ -92,7 +96,7 @@ class HTMLBuilderTest(TestCase):
         builder = HTMLBuilder(None, None, None)
 
         parts = ['101','1','a']
-        node_type = 'regulation'
+        node_type = REGTEXT
 
         result = builder.list_level(parts, node_type)
         self.assertEquals(result, (1, 'a'))
@@ -113,7 +117,7 @@ class HTMLBuilderTest(TestCase):
         builder = HTMLBuilder(None, None, None)
 
         parts = ['101','1']
-        node_type = 'regulation'
+        node_type = REGTEXT
 
         result = builder.list_level(parts, node_type)
         self.assertEquals(result, (None, None))
@@ -125,6 +129,7 @@ class HTMLBuilderTest(TestCase):
         node = {
             'text': 'Interpretation with a link',
             'children': [],
+            'node_type': INTERP,
             'label': ['999', '5', 'Interp']
         }
         p.apply_layers.return_value = node
@@ -137,12 +142,13 @@ class HTMLBuilderTest(TestCase):
 
     def test_process_node_header(self):
         builder = HTMLBuilder(None, ParagraphLayersApplier(), None)
-        node = {'text': '', 'children': [], 'label': ['99', '22']}
+        node = {'text': '', 'children': [], 'label': ['99', '22'],
+                'node_type': REGTEXT}
         builder.process_node(node)
         self.assertFalse('header' in node)
 
         node = {'text': '', 'children': [], 'label': ['99', '22'], 
-                'title': 'Some Title'}
+                'title': 'Some Title', 'node_type': REGTEXT}
         builder.process_node(node)
         self.assertTrue('header' in node)
         self.assertEqual('Some Title', node['header'])
@@ -151,7 +157,7 @@ class HTMLBuilderTest(TestCase):
         self.assertFalse('header_title' in node)
 
         node = {'text': '', 'children': [], 'label': ['99', '22'], 
-            'title': u'§ 22.1 Title'}
+                'title': u'§ 22.1 Title', 'node_type': REGTEXT}
         builder.process_node(node)
         self.assertTrue('header' in node)
         self.assertTrue('header_marker' in node)

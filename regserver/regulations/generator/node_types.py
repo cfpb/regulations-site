@@ -1,3 +1,7 @@
+REGTEXT = 'regtext'
+APPENDIX = 'appendix'
+INTERP = 'interp'
+
 def is_appendix(id_parts):
     """ Inspect the id_parts to determine if this is an Appendix section. """
     if len(id_parts) > 2:
