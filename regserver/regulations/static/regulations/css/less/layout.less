@@ -4,11 +4,17 @@
  layout.less defines the structural layout of the site
  */
 
+
+/*
+Main Content
+============
+*/
+
 .wrap {
     width: 100%;
 }
 
-.main-content {
+.main {
     float: left;
     margin-top: 94px;
     margin-left: 260px;
@@ -18,7 +24,7 @@
     overflow-x: none;
 }
 
-.secondary-content {
+.secondary {
     float: left;
     max-width: 25%;
     background: #fff;
@@ -65,58 +71,40 @@ IE fixes
     margin-right: 25%;
 }
 
+/*
+Header Layout
+=============
+*/
 
-/*.main,
-.main-content,
-.secondary,
-.secondary-content {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
+/*
+TOC Header Navigation
+---------------------
+*/
 
-.wrap {
-    position: relative;
-    max-width: 60em; 
-    margin: 0 auto;
-}
-
-@media (max-width: 1100px) {
-    .wrap {
-        margin: 0 0 0 60px;
-    }
-}
-
-.main,
-.main-content {
-    width: 63.542%;
+.toc-head {
     float: left;
-    padding-right: 2em;
+    width: 260px;
+    height: 34px;
+    border-right: 2px solid #d0d0ce;
+    .border-bottom-medium(@width: 1px);
+    background-color: #f6f6f5;
+    margin-right: -4px;
 }
 
-.main-content,
-.secondary-content {
-    margin-top: 100px;
-    padding-top: 1.25em;
-}
-
-.secondary,
-.secondary-content {
-    width: 30.5%;
-    padding-left: 2.5%;
+.header-main {
     float: left;
+    width: 56%;
+    margin-right: -4px;
 }
 
-.reg-text > section {
-    border-bottom: 2px solid @medium_gray;
+.header-secondary {
+    float: right;
+    padding-right: 20px;
+    margin-right: -4px;
 }
 
-.reg-section li > p,
-.appendix-section li > p,
-.supplement-section li > p {
-    padding-left: 90px;
-    margin-left: -90px;
-}*/
+
+
 
 /*
 Section Offsets

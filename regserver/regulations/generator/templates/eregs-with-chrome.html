@@ -13,32 +13,19 @@
         <div class="site-title">
             <h1>eRegulations > Regulation {{ tree.label.reg_letter }}</h1>
         </div> <!-- /site-title -->
-    <!--<ul>
-    <li class="main">
-    <nav id="doc-navigation" class="header-nav">
-        <ul>
-            <li><h2 class="reg-title-header"><a href="#">{{tree.header|title|safe}}</a></h2></li>
-        </ul>
-    </nav>
-    </li>
-
-    <li>
-    </li>-->
 </div>
 
 <div class="sub-head">
     <div class="toc-head">
         <a href="#menu" id="menu-link" class="toc-nav-link toc-toggle">Table of Contents</a>
     </div> <!-- /toc-head-->
-    <ul id="content-header">
-        <li id="content-subhead" class="main">
-            <span id="active-title"></span>
-            <span class="effective-date">EFFECTIVE {{ tree.meta.effective.date|date }}</span>
-        </li>
-        <li id="sidebar-subhead">
-            <h2> </h2>
-        </li>
-    </ul>
+    <div id="content-header" class="header-main">
+        <span id="active-title">1005.1</span>
+    </div>
+    <div id="sidebar-subhead" class="header-secondary">
+        <span class="effective-date"><strong>Effective Date:</strong> {{ tree.meta.effective.date|date }}</span>
+        <h2> </h2>
+    </div>
 </div>
 </header>
 
@@ -50,7 +37,7 @@
 
 {% include "regulation-content.html" %}
 
-<div id="sidebar" class="secondary-content">
+<div id="sidebar" class="secondary">
 <section class="regs-meta">
 <h5 class="important">Experimental Prototype</h5>
 <p class="sub-text">There may be errors, inconsistencies, and inaccuracies.</p>
