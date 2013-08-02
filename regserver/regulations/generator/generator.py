@@ -159,7 +159,7 @@ def get_all_section_layers(regulation, version):
 
 def get_all_layers(regulation, version):
     """ Return the three layer appliers with the available layers possible """
-    creator = get_creator_all_section_layers()
+    creator = get_creator_all_section_layers(regulation, version)
     creator.add_layers([LayerCreator.TOC, LayerCreator.INTERNAL], regulation, version)
     return creator.get_appliers()
 
