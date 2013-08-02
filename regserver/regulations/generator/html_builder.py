@@ -43,7 +43,7 @@ class HTMLBuilder():
         elif node_type == 'appendix':
             level_type_map = {1:'a', 2:'1', 3:'i', 4:'A'}
             prefix_length = 3
-        elif node_type == 'regulation':
+        else:
             level_type_map = {1:'a', 2:'1', 3:'i', 4:'A'}
             prefix_length = 2
 

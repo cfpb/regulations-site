@@ -3,9 +3,8 @@ from django.template import loader
 import utils
 
 class ExternalCitationLayer():
-    def __init__(self, layer, the_act):
+    def __init__(self, layer):
         self.layer = layer
-        self.the_act = the_act
 
     @staticmethod
     def generate_fdsys_href_tag(text, parameters):
@@ -57,15 +56,10 @@ class ExternalCitationLayer():
                       "section":citation[1]}
         return ExternalCitationLayer.generate_fdsys_href_tag(text, parameters)
 
-    def generate_act_link(self, text, citation):
-        citation = self.the_act
-        return ExternalCitationLayer.generate_uscode_link(text, citation)
-
     def citation_type_to_generator(self, citation_type):
         generator_map = {
             'USC': ExternalCitationLayer.generate_uscode_link,
             'CFR': ExternalCitationLayer.generate_cfr_link,
-            'ACT': self.generate_act_link,
             'PUBLIC_LAW': self.generate_public_law_link,
             'STATUTES_AT_LARGE': self.generate_statutes_at_large_link
         }
