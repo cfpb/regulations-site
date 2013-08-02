@@ -46,7 +46,7 @@ Regulation Table of Contents
 ============================
 
 The regulation TOC is a slide out panel drawer
-It displays when the 'active' class is applied
+On large displays it is on the screen by default. It can be toggled with the "active" class.
 
 ```
 <nav id="menu" class="panel active" role="navigation">
@@ -60,26 +60,9 @@ It displays when the 'active' class is applied
 
 */
 
-/*.panel,
-.panel .close-button {
-    .slide;
-    .border-right-light(@width: 2px);
-    left: -272px; 250px + 20px padding + 2px border
-}*/
-
 .panel {
-/*    .reset;
-    .border-top-light(@width: 3px);
-    .avenir-next-demi;
-    font-size: 0.875em;
-    position: fixed;
-    top: 60px;
-    bottom: 46px;
-    width: 260px;
-    background-color: #f6f6f5;
-    z-index: 999999;
-    overflow-y: scroll;
-*/
+    .slide;
+
     ol {
         .reset;
         .border-top-light (@width: 1px);
@@ -113,14 +96,19 @@ It displays when the 'active' class is applied
 }
 
 /* 
-When applied, the active class causes the panel navigation to slide to the right
+When applied at large resolutions displays, the active class causes the panel navigation to slide off screen
  */
 .panel.active{
-    left: 0;
+    left: -270px;
+}
 
-    .close-button {
-        position: fixed;
-        left: 0px;
+/*
+For now, active toggles the nav on screen when on smaller resolution displays. 
+This works by default, but can cause the nav to reverse position when already applied and the user resizes their browser.
+*/
+@media only screen and ( max-width: 1100px ) {
+    .panel.active{
+    left: 0px;
     }
 }
 
