@@ -45,7 +45,7 @@ class LayerCreator(object):
         KEY_TERMS: ('keyterms', 'search_replace', KeyTermsLayer),
     }
 
-    SPECIAL_CASES = [EXTERNAL, INTERP]
+    SPECIAL_CASES = [INTERP]
 
     def __init__(self):
         self.appliers = {'inline': InlineLayersApplier(), 
@@ -60,23 +60,12 @@ class LayerCreator(object):
 
     def add_layer(self,layer_name,regulation, version):
         """ Add a normal layer (no special handling required) to the applier. """
-        if layer_name in LayerCreator.LAYERS:
-        #if layer_name in LayerCreator.LAYERS and (not in LayerCreator.SPECIAL_CASES):
+        if layer_name.lower() in LayerCreator.LAYERS and \
+                layer_name not in LayerCreator.SPECIAL_CASES:
             api_name, applier_type, layer_class = LayerCreator.LAYERS[layer_name]
             layer_json = self.get_layer_json(api_name, regulation, version)
             layer = layer_class(layer_json)
             self.appliers[applier_type].add_layer(layer)
-
-    def add_external_citation_layer(self, regulation, version):
-        """ Add the external citation layer to the appropriate applier. The
-        external citation layer needs to be initialized with the Act reference.
-        Hence it needs to be dealt with uniquely. """
-
-        api_name, applier_type, layer_class = LayerCreator.LAYERS[LayerCreator.EXTERNAL]
-
-        layer_json = self.get_layer_json(api_name, regulation, version)
-        layer = ExternalCitationLayer(layer_json, ['15', '1693'])
-        self.appliers[applier_type].add_layer(layer)
     
     def add_interpretation_layer(self, regulation, version):
         """ Add the interpretations layer to the appropriate applier. The
@@ -110,8 +99,6 @@ class LayerCreator(object):
         for layer_name in layer_names:
             if layer_name == LayerCreator.INTERP:
                 last.append(LayerCreator.INTERP)
-            elif layer_name == LayerCreator.EXTERNAL:
-                self.add_external_citation_layer(regulation, version)
             elif layer_name == LayerCreator.INTERNAL and sectional:
                 self.add_sectional_internal_layer(regulation, version)
             else:
@@ -155,55 +142,26 @@ def get_table_of_contents(regulation, version):
     tl = api.layer("toc", regulation, version)
     return tl
 
+def get_creator_all_section_layers(regulation, version):
+    creator = LayerCreator()
+    layers = [LayerCreator.EXTERNAL, LayerCreator.TERMS, LayerCreator.SXS, 
+                LayerCreator.KEY_TERMS, LayerCreator.PARAGRAPH, 
+                LayerCreator.META, LayerCreator.GRAPHICS, 
+                LayerCreator.INTERP]
+    creator.add_layers(layers, regulation, version)
+    return creator
+
 def get_all_section_layers(regulation, version):
     """ When we're loading a regulation section at a time, we need to treat 
     the table of contents and internal citations layers slightly differently. """
-    api = api_reader.Client(settings.API_BASE)
-
-    inline_applier = InlineLayersApplier()
-    p_applier = ParagraphLayersApplier()
-    s_applier = SearchReplaceLayersApplier()
-
-    el = api.layer("external-citations", regulation, version)
-    inline_applier.add_layer(ExternalCitationLayer(el, ['15', '1693']))
-
-    dl = api.layer("terms", regulation, version)
-    inline_applier.add_layer(DefinitionsLayer(dl))
-
-    sxs = api.layer("analyses", regulation, version)
-    p_applier.add_layer(SectionBySectionLayer(sxs))
-
-    kl = api.layer("keyterms", regulation, version)
-    s_applier.add_layer(KeyTermsLayer(kl))
-
-    pm = api.layer("paragraph-markers", regulation, version)
-    s_applier.add_layer(ParagraphMarkersLayer(pm))
-
-    meta = api.layer("meta", regulation, version)
-    p_applier.add_layer(MetaLayer(meta))
-
-    g = api.layer("graphics", regulation, version)
-    s_applier.add_layer(GraphicsLayer(g))
-
-    intl = api.layer("interpretations", regulation, version)
-    intl = InterpretationsLayer(intl, version)
-    intl.copy_builder(inline_applier, s_applier)
-    p_applier.add_layer(intl)
-
-    return (inline_applier, p_applier, s_applier)
+    creator = get_creator_all_section_layers(regulation, version)
+    return creator.get_appliers()
 
 def get_all_layers(regulation, version):
     """ Return the three layer appliers with the available layers possible """
-    api = api_reader.Client(settings.API_BASE)
-    inline_applier, p_applier, s_applier = get_all_section_layers(regulation, version)
-
-    tl = api.layer("toc", regulation, version)
-    p_applier.add_layer(TableOfContentsLayer(tl))
-
-    il = api.layer("internal-citations", regulation, version)
-    inline_applier.add_layer(InternalCitationLayer(il))
-
-    return (inline_applier, p_applier, s_applier)
+    creator = get_creator_all_section_layers()
+    creator.add_layers([LayerCreator.TOC, LayerCreator.INTERNAL], regulation, version)
+    return creator.get_appliers()
 
 def get_single_section(full_regulation, section_reference):
     """ Given a full regulation tree, return the section requested. """

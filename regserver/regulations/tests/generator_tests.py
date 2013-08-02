@@ -103,3 +103,14 @@ class GeneratorTest(TestCase):
         internal_citation_layer = i.layers[0]
         self.assertTrue(internal_citation_layer.generate_sectional)
         self.assertEquals(internal_citation_layer.reg_version, 'verver')
+
+    @patch('regulations.generator.generator.LayerCreator.get_layer_json')
+    def test_get_creator_all_section_layers(self, get_layer_json):
+        get_layer_json.return_value = {'layer':'layer'}
+        creator = generator.get_creator_all_section_layers('205', 'verver')
+
+        self.assertEquals(len(creator.appliers['inline'].layers), 2)
+        self.assertEquals(len(creator.appliers['search_replace'].layers), 3)
+        self.assertEquals(len(creator.appliers['paragraph'].layers), 3)
+
+        
