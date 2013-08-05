@@ -4,6 +4,7 @@ import re
 
 from django.template import loader, Template, Context
 from django.conf import settings
+from itertools import ifilter, ifilterfalse
 
 from node_types import to_markup_id, APPENDIX, INTERP
 from layers.layers_applier import LayersApplier
@@ -98,8 +99,20 @@ class HTMLBuilder():
         if 'interp' in node and 'markup' in node['interp']:
             node['interp']['markup'] = HTMLBuilder.section_sign_hard_space(node['interp']['markup'])
 
+        if node['node_type'] == INTERP:
+            self.modify_interp_node(node)
+
         for c in node['children']:
             self.process_node(c)
+
+    def modify_interp_node(self, node):
+        """Add extra fields which only exist on interp nodes"""
+        #   ['105', '22', 'Interp'] => section header
+        node['section_header'] = len(node['label']) == 3
+
+        is_header = lambda child: child['label'][-1] == 'Interp'
+        node['header_children'] = list(ifilter(is_header, node['children']))
+        node['par_children'] = list(ifilterfalse(is_header, node['children']))
 
     def get_title(self):
         titles = {
