@@ -6,6 +6,8 @@
 define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-helpers'], function($, _, Backbone, Dispatch, RegsHelpers) {
     'use strict';
     var SubHeadView = Backbone.View.extend({
+        el: '#content-header',
+
         initialize: function() {
             // **Event listeners**
             // when the active section changes, change the contents of the header

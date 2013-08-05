@@ -122,6 +122,8 @@
             <div class="content"><div class='highlight'><pre>define(<span class="string">'sidebar-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'sidebar-head-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarHeadView) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> SidebarView = Backbone.View.extend({
+        el: <span class="string">'#sidebar'</span>,
+
         events: {
             <span class="string">'click .expandable'</span>: <span class="string">'toggleMeta'</span>
         },

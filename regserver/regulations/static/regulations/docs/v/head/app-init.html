@@ -231,8 +231,8 @@ incrementally loads in images once rendering is complete</p>
             
             <div class="content"><div class='highlight'><pre>            window.mainHeader = <span class="keyword">new</span> HeaderView();
             window.toc = <span class="keyword">new</span> TOCView();
-            window.sidebar = <span class="keyword">new</span> SidebarView({el: <span class="string">'#sidebar'</span>});
-            window.regContent = <span class="keyword">new</span> ContentView({el: <span class="string">'.main-content'</span>});
+            window.sidebar = <span class="keyword">new</span> SidebarView();
+            window.regContent = <span class="keyword">new</span> ContentView();
             <span class="keyword">this</span>.bindEvents();
             <span class="keyword">this</span>.fetchModelForms();
         }
