@@ -98,8 +98,32 @@ On large displays it is on the screen by default. It can be toggled with the "ac
 /* 
 When applied at large resolutions displays, the active class causes the panel navigation to slide off screen
  */
-.panel.active{
-    left: -270px;
+ @media only screen and ( min-width: 1100px ) {
+    .panel.active{
+        left: -220px;
+
+        /* slide content fully offscreen*/
+        ol, 
+        h2 {
+            position: absolute;
+            left: -320px;    
+        }
+}
+
+/* animate the .toc-head */
+.toc-head {
+    .slide;
+
+    a:hover,
+    a:active {
+        background-color: @light_field;
+    }
+}
+
+.active .toc-head {
+    left: -220px;
+    margin-right: 20px;
+}
 }
 
 /*
@@ -112,6 +136,7 @@ This works by default, but can cause the nav to reverse position when already ap
     }
 }
 
+
 /* 
 TOC Link (aka 'The Hamburger Button')
 =====================================
@@ -121,15 +146,25 @@ TOC Link (aka 'The Hamburger Button')
 ```
 
 */
+.panel-slide {
+    text-indent: -9999px;
+    display: block;
+    height: 34px; /* match height of main header */
+    width: 40px;
+    float: right;
+    background: url(../img/left-right-sprite.png) no-repeat 0px 4px;
+}
+
+.active .panel-slide {
+    background: url(../img/left-right-sprite.png) no-repeat 0px -22px;
+}
 
 .toc-nav-link {
     text-indent: -9999px;
-    /*position: absolute;
-    left: 0;
-    top: 60px;*/
     display: inline-block;
     height: 34px; /* match height of main header */
     width: 40px;
+    border-right: 1px solid @light_field;
     background: url(../img/nav-link.png) no-repeat center center;
 
     &.hamburgerify {
@@ -146,12 +181,7 @@ TOC Link (aka 'The Hamburger Button')
     }
 }
 
-.toc-nav-link,
-.toc-nav-link:hover,
-.toc-nav-link:active,
-.toc-nav-link.active {
-    background-color: @light_field;
-}
+
 
 /* TOC link styles */
 .regulation-nav {

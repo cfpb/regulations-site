@@ -13,11 +13,33 @@
 @media only screen and ( max-width: 1100px ) {
 
     .panel {
-        left: -280px;
+        left: -220px;
+
+        /* position content fully offscreen*/
+        ol, 
+        h2 {
+            position: absolute;
+            left: -320px;    
+        }
+    }
+
+    .panel.active {
+        ol,
+        h2 {
+            position: static;
+            left: 0;
+        }
     }
 
     .toc-head {
-        width: 40px;
+        .slide;
+        left: -220px;
+    }
+
+    .active {
+        .toc-head {
+            left: 0;
+        }
     }
 
     .main-content {
@@ -30,6 +52,11 @@
     .regs-meta {
         max-width: 25%;
     }
+
+    .regs-meta,
+    .open-definition {
+        padding: 16px 20px 0 20px; /*narrower right padding*/
+    }
 }
 
 @media only screen and ( max-width: 780px ) {
@@ -37,7 +64,6 @@
     .regs-meta {
         display: none;
     }
-
 
     .secondary-content,
     .open-definition {

@@ -4,7 +4,7 @@ define('header-view', ['jquery', 'underscore', 'backbone'], function($, _, Backb
         el: '.reg-header',
 
         initialize: function() {
-            this.$activeEls = $('#menu, #menu-link');
+            this.$activeEls = $('#menu, .reg-header');
         },
 
         events: {
