@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.template import Context
 import re
 
 def convert_to_python(data):
@@ -19,3 +20,7 @@ def convert_to_python(data):
         return list(map(convert_to_python, data))
     
     return data
+
+def render_template(template, context):
+    c = Context(context)
+    return template.render(c).strip('\n')

@@ -1,69 +1,121 @@
 /*
- layout
+ Layout
  ========================================================================== 
  layout.less defines the structural layout of the site
  */
 
-.main,
-.main-content,
-.secondary,
-.secondary-content {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
+
+/*
+Main Content
+============
+*/
 
 .wrap {
-    position: relative;
-    max-width: 60em; /* 960 / 16 = 60*/
-    margin: 0 auto;
+    width: 100%;
 }
 
-@media (max-width: 1100px) {
-    .wrap {
-        margin: 0 0 0 60px;
-    }
-}
-
-.main,
 .main-content {
-    width: 63.542%; /*643px;*/
     float: left;
-    padding-right: 2em;
+    margin-top: 94px;
+    margin-left: 260px;
+    padding: 16px 60px;
+    max-width: 58.333336%;
+    border-right: 1px solid @light_field;
+    overflow-x: none;
 }
 
-.main-content,
 .secondary-content {
-    margin-top: 100px;
-    padding-top: 1.25em;
-}
-
-.secondary,
-.secondary-content {
-    width: 30.5%;
-    padding-left: 2.5%; /*318px;*/
     float: left;
+    max-width: 25%;
+    background: #fff;
+    z-index: 100;
 }
 
-.reg-text > section {
-    border-bottom: 2px solid @medium_gray;
-    /*padding: 3.75em 0 2.75em 0;*/
+.open-definition,
+.regs-meta {
+    position: fixed;
+    max-width: 25%;
+    padding: 16px 40px 0 20px;
+    top: 94px;
+    bottom: 0;
+    height: 100%;
+    background: #fff;
+    z-index: 100;
 }
 
-.reg-section li > p,
-.appendix-section li > p,
-.supplement-section li > p {
-    padding-left: 90px;
-    margin-left: -90px;
+.panel {
+    border-right: 2px solid #d0d0ce;
+    .avenir-next-demi;
+    font-size: .875em;
+    position: fixed;
+    top: 94px;
+    bottom: 0px;
+    width: 260px;
+    padding-bottom: 60px;
+    background-color: #f6f6f5;
+    z-index: 999999;
+    overflow-y: scroll;
 }
 
-/**
-  *
-  * If the height and negative margin here are adjusted,
-  * the JS must be updated to reflect that. 
-  * content-view.js, checkActiveSection()
-  *
-  **/
+/*
+IE fixes
+--------
+*/
+
+.lt-ie9 .open-definition,
+.lt-ie9 .regs-meta {
+    right: 0px;
+}
+
+.lt-ie9 .main-content {
+    margin-right: 25%;
+}
+
+/*
+Header Layout
+=============
+*/
+
+/*
+TOC Header Navigation
+---------------------
+*/
+
+.toc-head {
+    float: left;
+    width: 260px;
+    height: 34px;
+    border-right: 2px solid #d0d0ce;
+    .border-bottom-medium(@width: 1px);
+    background-color: #f6f6f5;
+    margin-right: -4px;
+}
+
+.header-main {
+    float: left;
+    width: 56%;
+    margin-right: -4px;
+}
+
+.header-secondary {
+    float: right;
+    padding-right: 20px;
+    margin-right: -4px;
+}
+
+
+
+
+/*
+Section Offsets
+===============
+*
+* Linakble content must be offset to accomodate the fixed header. 
+* If the height and negative margin here are adjusted, the JS must be updated to reflect that. 
+* content-view.js, checkActiveSection()
+*
+*/
+
 .reg-section:before,
 .appendix-section:before,
 .supplement-section:before,
@@ -85,14 +137,20 @@
     background-clip:padding-box;
 }
 
-/* permalinks */
+/*  
+Permalink Offset
+----------------
+*/
 .section-number {
     position: relative;
     margin-left: -30px;
     padding-left: 30px;
 }
 
-/* reset for inline interpretations */
+/*  
+Reset for inline interpretations
+--------------------------------
+*/
 .inline-interpretation-content .level-1 li {
     border-top: 0px;
     margin-top: 0px;

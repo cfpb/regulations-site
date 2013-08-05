@@ -1,7 +1,7 @@
 define('header-view', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
     'use strict';
     var HeaderView = Backbone.View.extend({
-        el: '.main-head',
+        el: '.reg-header',
 
         initialize: function() {
             this.$activeEls = $('#menu, #menu-link');

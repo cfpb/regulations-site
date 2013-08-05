@@ -50,32 +50,43 @@
             margin: 1.5em 0;
             cursor: pointer;
             padding-right: 20px;
-            background: url(../img/open_close.png) no-repeat 99% 3px;
         }
 
         &.important {
             color: @red_orange;
         }
 
+        &.expandable:after {
+            content: "";
+            width: 16px;
+            height: 16px;
+            background: url(../img/open_close.png) 0px 3px no-repeat;
+            float: right; 
+        }
+
 
         @media 
         (-webkit-min-device-pixel-ratio: 2), 
         (min-resolution: 192dpi) {
-            &.expandable {
-                background: url(../img/open_close@2x.png) no-repeat 99% 3px;
+            &.expandable:after {
+                background: url(../img/open_close@2x.png) 0px 3px no-repeat;
                 background-size: 13px;
             }
         }
 
-        &.open {
-            background: url(../img/open_close.png) no-repeat 99% -14px;
+        &.open:after {
+            content: "";
+            width: 16px;
+            height: 16px;
+            background: url(../img/open_close.png) 0px 14px no-repeat;
+            float: right; 
         }
 
         @media 
         (-webkit-min-device-pixel-ratio: 2), 
         (min-resolution: 192dpi) {
-            &.open {
-                background: url(../img/open_close@2x.png) no-repeat 99% -14px;
+            &.open:after {
+                background: url(../img/open_close@2x.png) 0px -14px no-repeat ;
                 background-size: 13px;
             }
         }
@@ -90,21 +101,6 @@
         margin: 0;
     }
 
-}
-
-.open-definition, 
-.regs-meta {
-    position: fixed;
-    padding: 0 0 3.5em 0;
-    width: 271px;
-    line-height: 1.5714;
-    top: 100px;
-    bottom: 0;
-    overflow-y: auto;
-}
-
-.regs-meta {
-    padding: 1em 0 0 0;   
 }
 
 .open-definition ol,

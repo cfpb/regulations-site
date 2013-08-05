@@ -1,6 +1,23 @@
-/* ==========================================================================
- navgation
- ========================================================================== */
+/*
+Navigation
+=========================
+navigation.less contains styles for site and intra reg navigation 
+*/
+
+
+/*
+Appendix Navigation
+=========================
+
+```
+<ol class="appendix-nav">
+    <li><a href="#">Link</a></li>
+    <li><a href="#">Link</a></li>
+    <li><a href="#">Link</a></li>
+</ol>
+```
+
+*/
 
 .appendix-nav {
     margin-top: 2.5em; /*40px*/
@@ -24,29 +41,27 @@
 }
 
 
-/* ==========================================================================
- table of contents
- ========================================================================== */
+/*
+Regulation Table of Contents
+============================
 
-.panel,
-.panel .close-button {
-    .slide;
-    .border-right-light(@width: 2px);
-    left: -272px; /* 250px + 20px padding + 2px border*/
-}
+The regulation TOC is a slide out panel drawer
+On large displays it is on the screen by default. It can be toggled with the "active" class.
+
+```
+<nav id="menu" class="panel active" role="navigation">
+    <ol class="regulation-nav" id="table-of-contents">
+        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.1</span> Section Title</a></li>
+        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.2</span> Section Title</a></li>
+        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.3</span> Section Title</a></li>
+    </ol>
+</nav>
+```
+
+*/
 
 .panel {
-    .reset;
-    .border-top-light(@width: 3px);
-    .avenir-next-demi;
-    font-size: 0.875em; /*14px*/
-    position: fixed;
-    top: 60px;
-    bottom: 46px; /*match height of TOC close button */
-    width: 260px;
-    background-color: #f6f6f5;
-    z-index: 999999;
-    overflow-y: scroll;
+    .slide;
 
     ol {
         .reset;
@@ -78,59 +93,43 @@
           margin-top: 6px;
         }
     }
-
-    .close-button {
-        width: 240px;
-        height: 26px;
-        padding: 10px; /*10px*/
-        bottom: 0px;
-        background: @light_field url(../img/close.png) 89% 11px no-repeat;
-        color: @dark_gray;
-        text-transform: uppercase;
-        font-size: .857142857em; /*12px*/
-        cursor: pointer;
-
-            em {
-                display: inline-block;
-                width: 80%;
-                text-align: right;
-                font-style: normal;
-            }
-    }
-
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
-    (min-resolution: 192dpi) {
-        .close-button {
-            background: @light_field url(../img/close@2x.png) 89% 11px no-repeat;
-            background-size: 15px 15px;
-        }
-    }
 }
 
-/*.no-js .panel {
-    left: 0;
-}*/
-
-/* panel slides to position */
+/* 
+When applied at large resolutions displays, the active class causes the panel navigation to slide off screen
+ */
 .panel.active{
-    left: 0;
+    left: -270px;
+}
 
-    .close-button {
-        position: fixed;
-        left: 0px;
+/*
+For now, active toggles the nav on screen when on smaller resolution displays. 
+This works by default, but can cause the nav to reverse position when already applied and the user resizes their browser.
+*/
+@media only screen and ( max-width: 1100px ) {
+    .panel.active{
+    left: 0px;
     }
 }
 
+/* 
+TOC Link (aka 'The Hamburger Button')
+=====================================
 
-/* TOC link */
+```
+<a href="#menu" id="menu-link" class="toc-nav-link toc-toggle active">Table of Contents</a>
+```
+
+*/
+
 .toc-nav-link {
     text-indent: -9999px;
-    position: absolute;
+    /*position: absolute;
     left: 0;
-    top: 0;
-    height: 60px; /* match height of main header */
-    width: 60px;
+    top: 60px;*/
+    display: inline-block;
+    height: 34px; /* match height of main header */
+    width: 40px;
     background: url(../img/nav-link.png) no-repeat center center;
 
     &.hamburgerify {
@@ -147,6 +146,7 @@
     }
 }
 
+.toc-nav-link,
 .toc-nav-link:hover,
 .toc-nav-link:active,
 .toc-nav-link.active {

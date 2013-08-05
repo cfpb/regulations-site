@@ -1,25 +1,31 @@
 from django.conf.urls import patterns, include, url
 
-from regulations.views import RegulationParagraphView, RegulationSectionView
+from regulations.views.chrome import RegulationSectionView, RegulationView
+from regulations.views.partial import PartialSectionView, PartialParagraphView
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+#Re-usable URL patterns. 
+reg_version_pattern = r'(?P<reg_version>[-\d\w]+)'
+part_section_pattern = r'(?P<reg_part_section>[\d]+[-][\w]+)'
 
 urlpatterns = patterns('',
-    url(r'^regulation/(?P<reg_part_section>[\d]+[-][\w]+)/(?P<reg_version>[-\d\w]+)$', 
+    #A regulation section with chrome
+    #Example: http://.../regulation/201-4/2013-10704
+    url(r'^regulation/%s/%s$' % (part_section_pattern, reg_version_pattern), 
         RegulationSectionView.as_view(), 
         name='regulation_section_view'),
-    url(r'^regulation/(?P<paragraph_id>[-\d\w]+)/(?P<reg_version>[-\d\w]+)$',
-        RegulationParagraphView.as_view(),
-        name='regulation_paragraph_view'),
-    # Examples:
-    # url(r'^$', 'regserver.views.home', name='home'),
-    # url(r'^regserver/', include('regserver.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    #The whole regulation with chrome
+    #Example: http://.../regulation/201/2013-10704
+    url(r'^regulation/(?P<reg_part>[\d]+)/%s$' % reg_version_pattern, 
+        RegulationView.as_view(), 
+        name='regulation_view'),
+    #A regulation section without chrome
+    #Example: http://.../partial/201-4/2013-10704
+    url(r'^partial/%s/%s$' % (part_section_pattern, reg_version_pattern), 
+        PartialSectionView.as_view(), 
+        name='partial_section_view'),
+    #A regulation paragraph without chrome. 
+    #Example: http://.../partial/201-2-g/2013-10704
+    url(r'^partial/(?P<paragraph_id>[-\d\w]+)/%s$' % reg_version_pattern,
+        PartialParagraphView.as_view(),
+        name='partial_regulation_view'),
 )

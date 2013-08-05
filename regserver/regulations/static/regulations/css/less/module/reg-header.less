@@ -22,68 +22,43 @@
     }
 }
 
-.reg-title-header {
-    display: inline;
-    .avenir-next;
-    font-size: 1em;
-}
-
 .main-head {
     .border-bottom-dark(@width: 3px);
+    padding: 0 20px;
     background: #fff;
     z-index: 1000;
     height: 3.75em;
 
-    nav {
-        height: 100%;
+    .logo {
+        display: block;
+        float: left;
+        margin-top: 13px; /* this manually centers the image based on its height and the height of the container */
     }
 
-    ul {
-        text-align: right;
-    }
 
-    .main ul {
-        text-align: left;
-    }
+    .site-title {
+        display: block;
+        float: left;
+        line-height: 3.5625em; /*37.5em - 3px*/
+        margin-left: 1em;
 
-    li {
-        line-height: 60px;
-        padding: 0;
+        h1 {
+            .avenir-next;
+            font-size: 1.125em;
+            .reset;
+        }
     }
 }
 
-.main-head .main-content {
-    border-right: none;
-}
-
-.logo {
-    width: 100%;
-    margin: 10px 0 0 0;
-    float: right;
-    text-align: right;
-}
-
-.sub-head {
-    background: @bg_gray;
-    height: 2.125em;
-    .border-bottom-medium(@width: 1px);
-    z-index: 1000;
-}
-
-.reg-header a:link,
-.reg-header a:visited {
+.site-title a:link,
+.site-title a:visited {
     border-bottom: none;
     color: @dark_field;
     text-decoration: none;
 }
 
-.reg-title-header a:link,
-.reg-title-header a:visited {
-    color: @black;
-}
-
-.reg-header a:hover,
-.reg-header a:active {
+.site-title a:hover,
+.site-title a:active {
     color: @pacific;
 }
 
@@ -95,6 +70,10 @@
 }
 
 .sub-head {
+    background: @grey;
+    height: 2.125em;
+    .border-bottom-medium(@width: 1px);
+    z-index: 1000;
     .main {
         border-right: 1px solid @medium_gray;
     }
@@ -104,16 +83,8 @@
     float: right;
     font-size: .75em;
     padding-right: 20px;
-    background: url(../img/exclamation.png) no-repeat 100% 48%;
-}
-
-@media 
-(-webkit-min-device-pixel-ratio: 2), 
-(min-resolution: 192dpi) {
-    .effective-date {
-        background: url(../img/exclamation@2x.png) no-repeat 100% 48%;
-        background-size: 13px 13px;
-    }
+    line-height: 33px;
+    text-transform: uppercase;
 }
 
 .header-label {
@@ -125,7 +96,6 @@
 }
 
 #sidebar-subhead {
-    width: 33%;
 
     h2 {
         padding: 0 0 0 2em;

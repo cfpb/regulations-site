@@ -1,0 +1,84 @@
+/*
+ Media Queries
+ ========================================================================== 
+ media-queries.less contains layout and typographic media queries
+ media-queries that are specific to modules/functionality will be located within the appropriate .less file
+ */
+
+/*
+ Layout
+ ------
+*/
+
+@media only screen and ( max-width: 1100px ) {
+
+    .panel {
+        left: -280px;
+    }
+
+    .toc-head {
+        width: 40px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        max-width: 75%;
+    }
+
+    .secondary-content,
+    .open-definition,
+    .regs-meta {
+        max-width: 25%;
+    }
+}
+
+@media only screen and ( max-width: 700px ) {
+    
+    .regs-meta {
+        display: none;
+    }
+
+
+    .secondary-content,
+    .open-definition {
+        background: #f6f6f5;
+        .border-top-light(@width: 2px);
+        top: 80%;
+        bottom: 0;
+        left: 0;
+        padding: 0 20px 40px 20px;
+        height: 200px;
+        overflow-y: scroll;
+    }
+
+    .secondary-content {
+        max-width: 100%;
+    }
+
+    .open-definition {
+        max-width: 96%;
+        margin: 0 auto;
+        padding: 0 20px 40px 20px;
+        z-index: 9999;
+    }
+
+    .main-content {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+        .main-head {
+        padding: .875em 0;
+
+        .logo {
+            float: none;
+            margin: 0 0 0 20px
+        }
+
+        .site-title {
+        display: block;
+        float: none;
+        }
+    }
+}
+    
