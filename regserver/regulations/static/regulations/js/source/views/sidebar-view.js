@@ -23,7 +23,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'si
             Dispatch.on('definition:remove', this.clear, this);
 
             // Init a sidebar header instance
-            this.header = new SidebarHeadView({el: '#sidebar-subhead'});
+            this.header = new SidebarHeadView({el: '#sidebar-header'});
 
             // cache default content for replacement in the future
             this.contactInfo = this.el.innerHTML.toString();
