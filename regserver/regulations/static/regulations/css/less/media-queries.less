@@ -10,6 +10,20 @@
  ------
 */
 
+@media only screen and ( min-width: 1100px ) {
+    .active {
+        .main-content,
+        .header-main {
+            margin-left: 40px;
+            max-width: 73.6%;
+        }
+
+        .level-1 > li:after {
+            margin-left: -14em;
+        }
+    }
+}
+
 @media only screen and ( max-width: 1100px ) {
 
     .panel {
@@ -42,9 +56,22 @@
         }
     }
 
+    .panel-slide {
+        background: url(../img/left-right-sprite.png) no-repeat 0px -22px;
+        
+    }
+
+    .active .panel-slide {
+        background: url(../img/left-right-sprite.png) no-repeat 0px 4px;
+    }
+
     .main-content {
-        margin-left: 0;
-        max-width: 75%;
+        margin-left: 40px;
+        max-width: 70%; /*decrease percentage to offset margin-left */
+    }
+
+    .header-main {
+        margin-left: 0px;
     }
 
     .secondary-content,
@@ -90,7 +117,7 @@
 
     .main-content {
         max-width: 100%;
-        padding: 0 20px;
+        margin-right: 20px;
     }
 }
 

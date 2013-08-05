@@ -43,6 +43,8 @@ Main Content
     z-index: 100;
 }
 
+/*TODO: convert TOC drawer width to em*/
+
 .panel {
     border-right: 2px solid #d0d0ce;
     .avenir-next-demi;
@@ -90,11 +92,13 @@ TOC Header Navigation
     .border-bottom-medium(@width: 1px);
     background-color: #f6f6f5;
 }
-
-.header-main {
+ 
+.header-main { /* TODO: closely matches main content layout - should unify into single class*/
     float: left;
-    width: 56%;
+    width: 50%;
     margin-right: -4px;
+    margin-left: 260px;
+    padding-left: 20px;
 }
 
 .header-secondary {
