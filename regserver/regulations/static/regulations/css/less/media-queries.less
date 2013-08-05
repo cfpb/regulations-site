@@ -32,7 +32,7 @@
     }
 }
 
-@media only screen and ( max-width: 700px ) {
+@media only screen and ( max-width: 780px ) {
     
     .regs-meta {
         display: none;
@@ -66,10 +66,24 @@
         max-width: 100%;
         padding: 0 20px;
     }
+}
 
+@media only screen and ( max-width: 600px ) {
+
+    .header-main {
+        font-size: 0.875em;
+        width: 33%;
+    }
+
+
+
+}
+
+@media only screen and ( max-width: 480px ) {
         .main-head {
-        padding: .875em 0;
-
+            height: auto;
+            padding: 1em 0 0 0;
+            
         .logo {
             float: none;
             margin: 0 0 0 20px
@@ -80,5 +94,8 @@
         float: none;
         }
     }
+
+    .panel {
+        top: 142px; /* offset taller header height */
+    }
 }
-    
