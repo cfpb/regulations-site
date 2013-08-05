@@ -12,6 +12,12 @@
         <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
     {% endfor %}
 
+    {%if interp.marked_up %}
+        <p> 
+        {{interp.marked_up|safe}}
+        </p>
+    {% endif %}
+
     {% if interp.par_children %}
         <ol class="level-1" type="1">
             {% for par_child in interp.par_children %}
