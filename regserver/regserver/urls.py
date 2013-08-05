@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-from regulations.views.chrome import RegulationSectionView, RegulationView
+from regulations.views.chrome import ChromeView, RegulationSectionView, RegulationView
 from regulations.views.partial import *
 
 #Re-usable URL patterns. 
@@ -13,6 +13,11 @@ urlpatterns = patterns('',
     url(r'^regulation/%s/%s$' % (part_section_pattern, reg_version_pattern), 
         RegulationSectionView.as_view(), 
         name='regulation_section_view'),
+    #Interpretation of a section/paragraph or appendix
+    #Example: http://.../regulation/201-4-Interp/2013-10704
+    url(r'^regulation/(?P<label_id>[-\d\w]+[-]Interp)/%s' % reg_version_pattern,
+        ChromeView.as_view(),
+        name='chrome_interp_view'),
     #The whole regulation with chrome
     #Example: http://.../regulation/201/2013-10704
     url(r'^regulation/(?P<reg_part>[\d]+)/%s$' % reg_version_pattern, 

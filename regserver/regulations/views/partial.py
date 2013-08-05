@@ -1,9 +1,15 @@
 from django.views.generic.base import TemplateView
+
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
-
-from regulations.views.chrome import RegulationSectionView, generate_html, build_context
 from regulations.views import utils
+
+def generate_html(regulation_tree, layer_appliers):
+    builder = HTMLBuilder(*layer_appliers)
+    builder.tree = regulation_tree
+    builder.generate_html()
+    return builder
+
 
 class PartialView(TemplateView):
     """Base class of various partial markup views"""

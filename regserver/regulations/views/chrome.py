@@ -1,15 +1,12 @@
 from django.conf import settings
 from django.views.generic.base import TemplateView
+from django.template import Context, loader
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
 from regulations.views import utils
+from regulations.views.partial import *
 
-def generate_html(regulation_tree, layer_appliers):
-    builder = HTMLBuilder(*layer_appliers)
-    builder.tree = regulation_tree
-    builder.generate_html()
-    return builder
 
 def build_context(context, builder):
     """ Populate a context given an HTMLBuilder object. """
@@ -76,5 +73,39 @@ class RegulationSectionView(TemplateView):
                             reg_version, context['reg_part_section'])
 
         builder = generate_html(section_tree, (inline_applier, p_applier, s_applier))
+        context = build_context(context, builder)
+        return context
+
+class ChromeView(TemplateView):
+    """ Base class for views which wish to include chrome. """
+    template_name = 'chrome.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ChromeView, self).get_context_data(**kwargs)
+
+        label_id = context['label_id']
+        version = context['reg_version']
+
+        if 'layers' in self.request.GET.keys():
+            layer_names = self.request.GET['layers']
+            appliers = utils.handle_specified_layers(layer_names, 
+                        label_id, version)
+        else:
+            appliers = generator.get_all_layers(label_id, version)
+
+        #   Hack solution: pull in full regulation
+        #   @todo: just query the meta and toc layers
+        full_tree = generator.get_regulation(label_id.split('-')[0],
+                version)
+        relevant_tree = generator.get_tree_paragraph(label_id, version)
+        
+        partial_view = PartialInterpView()
+        partial_view.request = self.request
+        partial_context = partial_view.get_context_data(label_id=label_id,
+                reg_version=version)
+        template = loader.get_template(PartialInterpView.template_name)
+
+        context['partial_content'] = template.render(Context(partial_context))
+        builder = generate_html(full_tree, appliers)
         context = build_context(context, builder)
         return context
