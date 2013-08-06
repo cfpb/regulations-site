@@ -94,23 +94,27 @@
         display: none;
     }
 
-    .sidebar-inner {
-        background: #f6f6f5;
-        .border-top-light(@width: 2px);
+    .sidebar-header {
+        .close-button {
+            position: fixed;
+            top: 80%;
+            right: 20px;
+            z-index: 99999;
+        }
+    }
+
+    .open-definition {
+        position: fixed;
         top: 80%;
         bottom: 0;
         left: 0;
-        padding: 0 20px 40px 20px;
+        min-width: 100%; /*magic number to extend container to edge of viewport*/
         height: 200px;
+        padding: 20px 20px 80px 60px;
+        background: #f6f6f5;
+        .border-top-light(@width: 2px);
+        z-index: 99999;
         overflow-y: scroll;
-        z-index: 9999;
-        max-width: 96%;
-        margin: 0 auto;
-    }
-
-    .secondary-content {
-        max-width: 100%;
-        background-color: #fff;
     }
 
     .main-content {
