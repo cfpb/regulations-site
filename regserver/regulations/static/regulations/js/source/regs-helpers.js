@@ -35,12 +35,19 @@ define('regs-helpers', function() {
         },
 
         // **Params**
-        // ```parts```: Array of Strings or Numbers, entity ID
+        // ```interpParts```: Array of Strings or Numbers, entity that is 
+        // interpreted
         //
         // **Returns** human-readable representation of the reg section
-        interpId: function(parts) {
-            return 'Supplement I to Part ' + parts[0];
-            //  @todo: Account for section and paragraphs
+        interpId: function(interpParts) {
+            if (interpParts.length == 1) {
+                return 'Supplement I to Part ' + interpParts[0];
+            } else if (isNaN(interpParts[1])) {
+                return 'Supplement I to Appendix ' + interpParts[1];
+            } else {
+                return 'Supplement I to §' + interpParts[0] + '.' 
+                    + interpParts[1];
+            }
         },
 
         // **Params**
@@ -57,7 +64,7 @@ define('regs-helpers', function() {
         // **Returns** Reg entity marker formatted for human readability
         idToRef: function(id) {
             var ref = '', 
-                parts, i, len, dividers, item;
+                parts, i, len, dividers, item, interpIndex;
             parts = id.split('-');
             len = parts.length - 1;
             dividers = ['§ .', '', '( )', '( )', '( )', '( )'];
@@ -69,8 +76,9 @@ define('regs-helpers', function() {
             }
 
             /* if we have a supplement */
-            if ($.inArray('Interp', parts) >= 0) {
-                return this.interpId(parts);
+            interpIndex = $.inArray('Interp', parts);
+            if (interpIndex >= 0) {
+                return this.interpId(parts.slice(0, interpIndex));
             }
             /* if we have an appendix */
             if (isNaN(parseInt(parts[1], 10))) {
