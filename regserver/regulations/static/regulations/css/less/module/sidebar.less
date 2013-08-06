@@ -136,3 +136,32 @@
 .continue-link:last-child {
     margin-bottom: 100px;
 }
+
+.sidebar-header {
+
+    h2 {
+        font-size: .875em;
+        text-transform: uppercase;
+        .avenir-next;
+        padding: 0 0 0 20px;
+    }
+
+    .close-button {
+        margin: .25em 0 0 0;
+        text-indent: -9999px;
+        background: url(../img/close.png) no-repeat 0 0;
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+        float: right;
+    }
+
+     @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .close-button {
+            background: url(../img/close@2x.png) no-repeat 0 0;
+            background-size: 15px 15px;
+        }
+    }
+}
