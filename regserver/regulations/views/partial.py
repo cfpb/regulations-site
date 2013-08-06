@@ -13,7 +13,11 @@ def generate_html(regulation_tree, layer_appliers):
 
 
 class PartialView(TemplateView):
-    """Base class of various partial markup views"""
+    """Base class of various partial markup views. sectional_links indicates
+    whether this view should use section links (url to a path) or just hash
+    links (to an anchor on the page)"""
+    
+    sectional_links = True
 
     def get_context_data(self, **kwargs):
         context = super(PartialView, self).get_context_data(**kwargs)
@@ -23,11 +27,12 @@ class PartialView(TemplateView):
 
         if 'layers' in self.request.GET.keys():
             inline_applier, p_applier, s_applier = utils.handle_specified_layers(self.request.GET['layers'], 
-                    label_id, version, sectional=True)
+                    label_id, version, self.__class__.sectional_links)
         else:
-            inline_applier, p_applier, s_applier = generator.get_all_section_layers(label_id, version)
-            inline_applier = generator.add_section_internal_citations(label_id, 
-                    version, inline_applier)
+            layer_creator = generator.LayerCreator()
+            layer_creator.add_layers(generator.LayerCreator.LAYERS.keys(),
+                    label_id, version, self.__class__.sectional_links)
+            inline_applier, p_applier, s_applier = layer_creator.get_appliers()
 
         tree = generator.get_tree_paragraph(label_id, version)
         builder = generate_html(tree, (inline_applier, p_applier, s_applier))
@@ -68,6 +73,7 @@ class PartialRegulationView(PartialView):
     """ Entire regulation without chrome """
 
     template_name = 'regulation-content.html'
+    sectional_links = False
 
     def transform_context(self, context, builder):
         context['tree'] = builder.tree

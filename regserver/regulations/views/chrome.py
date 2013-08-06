@@ -35,7 +35,8 @@ class ChromeView(TemplateView):
         response.render()
         context['partial_content'] = response.content
 
-        appliers = utils.handle_specified_layers('toc,meta', part, version)
+        appliers = utils.handle_specified_layers('toc,meta', part, version,
+                self.partial_class.sectional_links)
         builder = generate_html(full_tree, appliers)
 
         context['tree'] = full_tree
