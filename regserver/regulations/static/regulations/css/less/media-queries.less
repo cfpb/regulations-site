@@ -74,14 +74,11 @@
         margin-left: 0px;
     }
 
-    .secondary-content,
-    .open-definition,
-    .regs-meta {
+    .secondary-content {
         max-width: 25%;
     }
 
-    .regs-meta,
-    .open-definition {
+    .sidebar-inner {
         padding: 16px 20px 0 20px; /*narrower right padding*/
     }
 
@@ -93,13 +90,11 @@
 
 @media only screen and ( max-width: 780px ) {
     
-    .secondary-content,
     .regs-meta {
         display: none;
     }
 
-    .secondary-content,
-    .open-definition {
+    .sidebar-inner {
         background: #f6f6f5;
         .border-top-light(@width: 2px);
         top: 80%;
@@ -108,17 +103,14 @@
         padding: 0 20px 40px 20px;
         height: 200px;
         overflow-y: scroll;
+        z-index: 9999;
+        max-width: 96%;
+        margin: 0 auto;
     }
 
     .secondary-content {
         max-width: 100%;
-    }
-
-    .open-definition {
-        max-width: 96%;
-        margin: 0 auto;
-        padding: 0 20px 40px 20px;
-        z-index: 9999;
+        background-color: #fff;
     }
 
     .main-content {
