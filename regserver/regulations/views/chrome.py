@@ -23,17 +23,10 @@ class ChromeView(TemplateView):
         label_id = context['label_id']
         version = context['version']
 
-        if 'layers' in self.request.GET.keys():
-            layer_names = self.request.GET['layers']
-            appliers = utils.handle_specified_layers(layer_names, 
-                        label_id, version)
-        else:
-            appliers = generator.get_all_layers(label_id, version)
-
         #   Hack solution: pull in full regulation, then the partial
         #   @todo: just query the meta and toc layers
-        full_tree = generator.get_regulation(label_id.split('-')[0],
-                version)
+        part = label_id.split('-')[0]
+        full_tree = generator.get_regulation(part, version)
         relevant_tree = generator.get_tree_paragraph(label_id, version)
         
         partial_view = self.partial_class.as_view()
@@ -42,6 +35,7 @@ class ChromeView(TemplateView):
         response.render()
         context['partial_content'] = response.content
 
+        appliers = utils.handle_specified_layers('toc,meta', part, version)
         builder = generate_html(full_tree, appliers)
 
         context['tree'] = full_tree
