@@ -43,8 +43,6 @@ p {
  nav,
  #table-of-contents,
  #menu-link,
- .inline-interpretation,
- .inline-interpretation-content,
  .hidden,
  .reg-header,
  .main-head,
@@ -128,6 +126,24 @@ a[href^="http://"] {
     a[href^="http://"] {
         background: none;
     }
+}
+
+/*
+ Inline Interpretations
+ ========================================================================== */
+.inline-interpretation {
+
+    background: @bg_gray;
+    border: 1px solid @bg_gray;
+
+     .hidden {
+        display: block;
+     }
+
+     .expand-button {
+        display: none;
+     }
+
 }
 
 /*

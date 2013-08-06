@@ -49,33 +49,43 @@
         &.expandable {
             margin: 1.5em 0;
             cursor: pointer;
-            padding-right: 20px;
-            background: url(../img/open_close.png) no-repeat 99% 3px;
         }
 
         &.important {
             color: @red_orange;
         }
 
+        &.expandable:after {
+            content: "";
+            width: 16px;
+            height: 16px;
+            background: url(../img/open_close.png) 0px 3px no-repeat;
+            float: right;
+        }
+
 
         @media 
         (-webkit-min-device-pixel-ratio: 2), 
         (min-resolution: 192dpi) {
-            &.expandable {
-                background: url(../img/open_close@2x.png) no-repeat 99% 3px;
+            &.expandable:after {
+                background: url(../img/open_close@2x.png) 0px 3px no-repeat;
                 background-size: 13px;
             }
         }
 
-        &.open {
-            background: url(../img/open_close.png) no-repeat 99% -14px;
+        &.open:after {
+            content: "";
+            width: 16px;
+            height: 16px;
+            background: url(../img/open_close.png) 0px 14px no-repeat;
+            float: right; 
         }
 
         @media 
         (-webkit-min-device-pixel-ratio: 2), 
         (min-resolution: 192dpi) {
-            &.open {
-                background: url(../img/open_close@2x.png) no-repeat 99% -14px;
+            &.open:after {
+                background: url(../img/open_close@2x.png) 0px -14px no-repeat ;
                 background-size: 13px;
             }
         }
@@ -90,21 +100,6 @@
         margin: 0;
     }
 
-}
-
-.open-definition, 
-.regs-meta {
-    position: fixed;
-    padding: 0 0 3.5em 0;
-    width: 271px;
-    line-height: 1.5714;
-    top: 100px;
-    bottom: 0;
-    overflow-y: auto;
-}
-
-.regs-meta {
-    padding: 1em 0 0 0;   
 }
 
 .open-definition ol,
@@ -140,4 +135,44 @@
 
 .continue-link:last-child {
     margin-bottom: 100px;
+}
+
+.sidebar-header {
+
+    position: fixed;
+    z-index: 101;
+    top: 94px;
+    width: 20%;
+    padding: 0 10px 0 20px;
+    .group;
+
+    h2 {
+        /*font-size: .875em;*/
+        font-size: 1px;
+        float: left;
+        display: inline-block;
+        text-transform: uppercase;
+        .avenir-next;
+        min-width: 95%;
+    }
+
+    .close-button {
+        margin: .8em 0 0 0;
+        text-indent: -9999px;
+        background: url(../img/close.png) no-repeat 0 0;
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+        /*float: right;*/
+        display: inline-block;
+    }
+
+     @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .close-button {
+            background: url(../img/close@2x.png) no-repeat 0 0;
+            background-size: 15px 15px;
+        }
+    }
 }

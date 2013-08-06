@@ -15,12 +15,17 @@ and includes any non-semantic helper classes
 @import url(module/reg-header.less);
 @import url(module/sidebar.less);
 @import url(module/permalink.less);
-@import url(print.less);
+@import url(media-queries.less);
 
 
 /*
  Helper Classes
  ========================================================================== */
+
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }
 
 /* hide the meta info until it has a visual treatment */
 .sxs-ref { 
@@ -102,3 +107,7 @@ Clearfix
     *zoom: 1;
 }
 
+/*
+Import Print.css at the end, since it overrides many rules
+*/
+@import url(print.less);

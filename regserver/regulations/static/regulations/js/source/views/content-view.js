@@ -51,7 +51,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             }
 
             // new View instance for subheader
-            this.header = new SubHeadView({el: '#content-subhead'});
+            this.header = new SubHeadView();
         },
 
         // naive way to update the active table of contents link and wayfinding header

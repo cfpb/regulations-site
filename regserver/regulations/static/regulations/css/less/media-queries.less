@@ -1,0 +1,158 @@
+/*
+ Media Queries
+ ========================================================================== 
+ media-queries.less contains layout and typographic media queries
+ media-queries that are specific to modules/functionality will be located within the appropriate .less file
+ */
+
+/*
+ Layout
+ ------
+*/
+
+@media only screen and ( min-width: 1100px ) {
+    .active {
+        .main-content,
+        .header-main {
+            margin-left: 40px;
+            max-width: 73.6%;
+        }
+
+        .level-1 > li:after {
+            margin-left: -14em;
+        }
+    }
+}
+
+@media only screen and ( max-width: 1100px ) {
+
+    .panel {
+        left: -220px;
+
+        /* position content fully offscreen*/
+        ol, 
+        h2 {
+            position: absolute;
+            left: -320px;    
+        }
+    }
+
+    .panel.active {
+        ol,
+        h2 {
+            position: static;
+            left: 0;
+        }
+    }
+
+    .toc-head {
+        .slide;
+        left: -220px;
+    }
+
+    .active {
+        .toc-head {
+            left: 0;
+        }
+    }
+
+    .panel-slide {
+        background: url(../img/left-right-sprite.png) no-repeat 0px -22px;
+        
+    }
+
+    .active .panel-slide {
+        background: url(../img/left-right-sprite.png) no-repeat 0px 4px;
+    }
+
+    .main-content {
+        margin-left: 40px;
+        max-width: 70%; /*decrease percentage to offset margin-left */
+    }
+
+    .header-main {
+        margin-left: 0px;
+    }
+
+    .secondary-content {
+        max-width: 25%;
+    }
+
+    .sidebar-inner {
+        padding: 16px 20px 0 20px; /*narrower right padding*/
+    }
+
+
+    .level-1 > li:after {
+        margin-left: -10em;
+    }
+}
+
+@media only screen and ( max-width: 780px ) {
+    
+    .regs-meta {
+        display: none;
+    }
+
+    .sidebar-inner {
+        background: #f6f6f5;
+        .border-top-light(@width: 2px);
+        top: 80%;
+        bottom: 0;
+        left: 0;
+        padding: 0 20px 40px 20px;
+        height: 200px;
+        overflow-y: scroll;
+        z-index: 9999;
+        max-width: 96%;
+        margin: 0 auto;
+    }
+
+    .secondary-content {
+        max-width: 100%;
+        background-color: #fff;
+    }
+
+    .main-content {
+        max-width: 98%;
+        margin: 0 auto;
+        padding-left: 100px;
+        border-right: none;
+    }
+
+    .level-1 > li:after {
+        margin-left: -5em;
+    }
+}
+
+@media only screen and ( max-width: 600px ) {
+
+    .header-main {
+        font-size: 0.875em;
+        width: 33%;
+    }
+
+
+
+}
+
+@media only screen and ( max-width: 480px ) {
+        .main-head {
+            height: auto;
+            padding: 1em 0 0 0;
+            
+        .logo {
+            float: none;
+            margin: 0 0 0 20px
+        }
+
+        .site-title {
+        display: block;
+        float: none;
+        }
+    }
+
+    .panel {
+        top: 142px; /* offset taller header height */
+    }
+}

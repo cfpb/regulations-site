@@ -80,23 +80,37 @@
         .avenir-next-demi;
     }
 
+     p {
+        font-size: 1em;
+    }
+
     ol {
         margin-top: 0;
         padding-top: 0;
     }
 
-    li { /* reset borders */
+    /* 
+    reset borders 
+    -------------
+    */
+
+    li { 
         border: none;
     }
 
     .level-1 > li {
         border-bottom: none;
         padding: 0;
-    } 
+    }
 
-
-    p {
-        font-size: 1em;
+    .level-1 > li:after {
+        padding-top: 1em;
+        height: 1px;
+        display: block;
+        width: 100%;
+        border-bottom: none;
+        content: '';
+        margin-left: 0;
     }
 
 }

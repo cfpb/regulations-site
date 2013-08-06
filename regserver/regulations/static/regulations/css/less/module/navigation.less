@@ -46,7 +46,7 @@ Regulation Table of Contents
 ============================
 
 The regulation TOC is a slide out panel drawer
-It displays when the 'active' class is applied
+On large displays it is on the screen by default. It can be toggled with the "active" class.
 
 ```
 <nav id="menu" class="panel active" role="navigation">
@@ -60,25 +60,8 @@ It displays when the 'active' class is applied
 
 */
 
-.panel,
-.panel .close-button {
-    .slide;
-    .border-right-light(@width: 2px);
-    left: -272px; /* 250px + 20px padding + 2px border*/
-}
-
 .panel {
-    .reset;
-    .border-top-light(@width: 3px);
-    .avenir-next-demi;
-    font-size: 0.875em; /*14px*/
-    position: fixed;
-    top: 60px;
-    bottom: 46px; /*match height of TOC close button */
-    width: 260px;
-    background-color: #f6f6f5;
-    z-index: 999999;
-    overflow-y: scroll;
+    .slide;
 
     ol {
         .reset;
@@ -110,53 +93,46 @@ It displays when the 'active' class is applied
           margin-top: 6px;
         }
     }
-
-/*
-TOC Close Button
-----------------
-<nav class="panel">
-    <div id="toc-close" class="close-button toc-toggle"><em>Close</em></div>
-</nav>
-*/
-
-    .close-button {
-        width: 240px;
-        height: 26px;
-        padding: 10px; /*10px*/
-        bottom: 0px;
-        background: @light_field url(../img/close.png) 89% 11px no-repeat;
-        color: @dark_gray;
-        text-transform: uppercase;
-        font-size: .857142857em; /*12px*/
-        cursor: pointer;
-
-            em {
-                display: inline-block;
-                width: 80%;
-                text-align: right;
-                font-style: normal;
-            }
-    }
-
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
-    (min-resolution: 192dpi) {
-        .close-button {
-            background: @light_field url(../img/close@2x.png) 89% 11px no-repeat;
-            background-size: 15px 15px;
-        }
-    }
 }
 
 /* 
-When applied, the active class causes the panel navigation to slide to the right
+When applied at large resolutions displays, the active class causes the panel navigation to slide off screen
  */
-.panel.active{
-    left: 0;
+ @media only screen and ( min-width: 1100px ) {
+    .panel.active{
+        left: -220px;
 
-    .close-button {
-        position: fixed;
-        left: 0px;
+        /* slide content fully offscreen*/
+        ol, 
+        h2 {
+            position: absolute;
+            left: -320px;    
+        }
+}
+
+/* animate the .toc-head */
+.toc-head {
+    .slide;
+
+    a:hover,
+    a:active {
+        background-color: @light_field;
+    }
+}
+
+.active .toc-head {
+    left: -220px;
+    margin-right: 20px;
+}
+}
+
+/*
+For now, active toggles the nav on screen when on smaller resolution displays. 
+This works by default, but can cause the nav to reverse position when already applied and the user resizes their browser.
+*/
+@media only screen and ( max-width: 1100px ) {
+    .panel.active{
+    left: 0px;
     }
 }
 
@@ -170,14 +146,31 @@ TOC Link (aka 'The Hamburger Button')
 ```
 
 */
+.panel-slide {
+    text-indent: -9999px;
+    display: block;
+    height: 34px; /* match height of main header */
+    width: 40px;
+    float: right;
+    cursor: pointer;
+    background: url(../img/left.png) no-repeat center center;
+}
+
+.panel-slide:hover,
+.panel-slide:active {
+    background-color: @light_field;
+}
+
+.active .panel-slide {
+    background: url(../img/right.png) no-repeat center center;
+}
 
 .toc-nav-link {
     text-indent: -9999px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 60px; /* match height of main header */
-    width: 60px;
+    display: inline-block;
+    height: 34px; /* match height of main header */
+    width: 40px;
+    border-right: 1px solid @light_field;
     background: url(../img/nav-link.png) no-repeat center center;
 
     &.hamburgerify {
@@ -194,11 +187,7 @@ TOC Link (aka 'The Hamburger Button')
     }
 }
 
-.toc-nav-link:hover,
-.toc-nav-link:active,
-.toc-nav-link.active {
-    background-color: @light_field;
-}
+
 
 /* TOC link styles */
 .regulation-nav {
