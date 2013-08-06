@@ -5,11 +5,13 @@ import shutil
 
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
+from django.http import HttpRequest
+from django.template import Context, loader
 from optparse import make_option
 
-from regulations.generator.html_builder import HTMLBuilder
 from regulations.generator import generator 
 from regulations.generator import notices
+from regulations.views.chrome import ChromeRegulationView
 
 class Command(BaseCommand):
     args = "--regulation <regulation part> --reg_version=<regulation version>"
@@ -42,13 +44,15 @@ class Command(BaseCommand):
         return (regulation_part, regulation_version)
 
     def handle(self, *args, **options):
-        regulation_part, regulation_version = self.get_regulation_version(**options)
-        inline_applier, p_applier, s_applier = generator.get_all_layers(regulation_part, regulation_version)
+        part, version = self.get_regulation_version(**options)
 
-        builder = generator.get_builder(regulation_part, regulation_version, 
-                inline_applier, p_applier, s_applier)
-        builder.generate_html()
-        markup = builder.render_markup()
+        view = ChromeRegulationView()
+        view.request = HttpRequest()
+        context = view.get_context_data(label_id=part, version=version)
+        template = loader.get_template(ChromeRegulationView.template_name)
+        markup = template.render(Context(context))
+
+       # markup = builder.render_markup()
 
         self.write_file(settings.OFFLINE_OUTPUT_DIR + 'rege.html', markup)
         front_end_dir = settings.OFFLINE_OUTPUT_DIR + 'static'
