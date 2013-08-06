@@ -170,8 +170,8 @@ module.exports = function(grunt) {
      */
     watch: {
       gruntfile: {
-        files: ['Gruntfile.js', '<%= recess.dist.src %>', '<%= env.frontEndPath %>/css/*.less', '<%= jasmine.options.specs %>'],
-        tasks: ['build']
+        files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/*.less', '<%= env.frontEndPath %>/css/less/module/*.less'],
+        tasks: ['less']
       }
     },
 

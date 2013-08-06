@@ -6,34 +6,27 @@
     Page-level template for everything but notices.
 {% endcomment %}
 
-<header class="reg-header">
+<header id="site-header" class="reg-header">
 <div class="main-head">
-    <a href="#menu" id="menu-link" class="toc-nav-link toc-toggle">Table of Contents</a>
-    <ul class="wrap group">
-    <li class="main">
-    <nav id="doc-navigation" class="header-nav">
-        <ul>
-            <li><h2 class="reg-title-header"><a href="#">{{tree.header|title|safe}}</a></h2></li>
-        </ul>
-    </nav>
-    </li>
-
-    <li>
-        {% load static from staticfiles %}
-        <div class="logo"><img src="{%static "regulations/ip/logo.png" %}" alt="logo" width="151px"></div>
-    </li>
+    {% load static from staticfiles %}
+        <img src="{%static "regulations/ip/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151px">
+        <div class="site-title">
+            <h1>eRegulations > Regulation {{ tree.label.reg_letter }}</h1>
+        </div> <!-- /site-title -->
 </div>
 
 <div class="sub-head">
-    <ul id="content-header" class="wrap group">
-        <li id="content-subhead" class="main">
-            <span id="active-title"></span>
-            <span class="effective-date">EFFECTIVE {{ tree.meta.effective.date|date }}</span>
-        </li>
-        <li id="sidebar-subhead">
-            <h2> </h2>
-        </li>
-    </ul>
+    <div class="toc-head">
+        <a href="#" id="panel-link" class="toc-toggle panel-slide">Navigation</a>
+        <a href="#menu" id="menu-link" class="toc-nav-link">Table of Contents</a>
+    </div> <!-- /toc-head-->
+    <div id="content-header" class="header-main">
+        <span id="active-title"></span>
+    </div>
+    <div class="header-secondary">
+        <span class="effective-date"><strong>Effective Date:</strong> {{ tree.meta.effective.date|date }}</span>
+        <h2> </h2>
+    </div>
 </div>
 </header>
 
@@ -46,37 +39,42 @@
 {% include "regulation-content.html" %}
 
 <div id="sidebar" class="secondary-content">
-<section class="regs-meta">
-<h5 class="important">Experimental Prototype</h5>
-<p class="sub-text">There may be errors, inconsistencies, and inaccuracies.</p>
-  {% if tree.meta.contact_info %}
-  <h5>Questions</h5>
-  <div class="chunk">
-     {{ tree.meta.contact_info | safe}}
-  </div>
-  {% endif %}
+    <div id="sidebar-header" class="sidebar-header">
+        <h2></h2>
+    </div>
+    <div id="sidebar-content" class="sidebar-inner">
+        <section class="regs-meta">
+            <h5 class="important">Experimental Prototype</h5>
+            <p class="sub-text">There may be errors, inconsistencies, and inaccuracies.</p>
+              {% if tree.meta.contact_info %}
+              <h5>Questions</h5>
+              <div class="chunk">
+                 {{ tree.meta.contact_info | safe}}
+              </div>
+              {% endif %}
 
-{% if tree.meta.last_notice %}
-<h5 class="expandable">Most Recent FR Notice</h5>
-<div class="notice chunk hidden">
-    <a href="{{ tree.meta.last_notice.url }}" class="external">{{ tree.meta.last_notice.title }}</a>
-    <ul>
-        <li><strong>Published:</strong> {{ tree.meta.last_notice.published|date }}</li>
-        <li><strong>Action:</strong> {{ tree.meta.last_notice.action }}</li>
-        <li><strong>Effective:</strong> {{ tree.meta.last_notice.effective|date }}</li>
-    </ul>
-</div>
-{% endif %}
+            {% if tree.meta.last_notice %}
+            <h5 class="expandable">Most Recent FR Notice</h5>
+            <div class="notice chunk hidden">
+                <a href="{{ tree.meta.last_notice.url }}" class="external">{{ tree.meta.last_notice.title }}</a>
+                <ul>
+                    <li><strong>Published:</strong> {{ tree.meta.last_notice.published|date }}</li>
+                    <li><strong>Action:</strong> {{ tree.meta.last_notice.action }}</li>
+                    <li><strong>Effective:</strong> {{ tree.meta.last_notice.effective|date }}</li>
+                </ul>
+            </div>
+            {% endif %}
 
-{% if tree.meta.effective %}
-<h5 class="expandable">Current Effective Law</h5>
-<div class="effective chunk hidden">
-    <a href="{{ tree.meta.effective.url }}" class="external">{{ tree.meta.effective.title }}</a>
-    Electronic Code of Federal Regulations
-</div>
-{% endif %}
+            {% if tree.meta.effective %}
+            <h5 class="expandable">Current Effective Law</h5>
+            <div class="effective chunk hidden">
+                <a href="{{ tree.meta.effective.url }}" class="external">{{ tree.meta.effective.title }}</a>
+                Electronic Code of Federal Regulations
+            </div>
+            {% endif %}
 
-</section> <!-- /.regs-meta -->
+        </section> <!-- /.regs-meta -->
+    </div> <!-- /#sidebar-content -->
 </div> <!-- /.secondary-content -->
 </div>
 

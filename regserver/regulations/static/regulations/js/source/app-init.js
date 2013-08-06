@@ -30,6 +30,12 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
 
         // Purgatory for DOM event bindings that should happen in a View
         bindEvents: function() {
+
+            /* prevent default link behavior on the menu button until we include all TOC icons */
+            $('#menu-link').click(function(e){
+              e.preventDefault();
+            }); 
+
             /* ssshhhhh */
             new Konami(function() {
                 /* http://thenounproject.com/noun/hamburger/#icon-No17373 */
