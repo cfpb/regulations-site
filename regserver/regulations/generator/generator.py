@@ -58,7 +58,7 @@ class LayerCreator(object):
         """ Hit the API to retrieve the regulation JSON. """
         return self.api.layer(api_name, regulation, version)
 
-    def add_layer(self,layer_name,regulation, version, sectional):
+    def add_layer(self,layer_name,regulation, version, sectional=False):
         """ Add a normal layer (no special handling required) to the applier. """
         if layer_name.lower() in LayerCreator.LAYERS and \
                 layer_name not in LayerCreator.SPECIAL_CASES:

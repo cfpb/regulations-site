@@ -9,22 +9,6 @@ from regulations.generator.layers.layers_applier import SearchReplaceLayersAppli
 
 
 class GeneratorTest(TestCase):
-    def test_create_sectional_citation_layer(self):
-        icl = generator.create_sectional_citation_layer(None, '1023')
-        self.assertTrue(icl.generate_sectional)
-        self.assertEquals(icl.reg_version, '1023')
-
-    def test_get_single_section(self):
-        full_regulation = {'children':[{'label':['12','2']},
-                                {'label':['13','1']}]}
-        single = generator.get_single_section(full_regulation, '13-1')
-        self.assertEquals({'label':['13','1']}, single)
-
-    def test_single_section_none(self):
-        full_regulation = {'children':[{'label':['12','2']},
-                                {'label':['13','1']}]}
-        single = generator.get_single_section(full_regulation, '14-1')
-        self.assertEquals(None, single)
 
     @patch('regulations.generator.generator.api_reader')
     def test_get_regulation_extra_fields(self, api_reader):
@@ -99,16 +83,5 @@ class GeneratorTest(TestCase):
         self.assertEquals(len(s.layers), 1)
 
         internal_citation_layer = i.layers[0]
-        self.assertTrue(internal_citation_layer.generate_sectional)
-        self.assertEquals(internal_citation_layer.reg_version, 'verver')
-
-    @patch('regulations.generator.generator.LayerCreator.get_layer_json')
-    def test_get_creator_all_section_layers(self, get_layer_json):
-        get_layer_json.return_value = {'layer':'layer'}
-        creator = generator.get_creator_all_section_layers('205', 'verver')
-
-        self.assertEquals(len(creator.appliers['inline'].layers), 2)
-        self.assertEquals(len(creator.appliers['search_replace'].layers), 3)
-        self.assertEquals(len(creator.appliers['paragraph'].layers), 3)
-
-        
+        self.assertTrue(internal_citation_layer.sectional)
+        self.assertEquals(internal_citation_layer.version, 'verver')

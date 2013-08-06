@@ -11,8 +11,9 @@ class PartialParagraphViewTests(TestCase):
 
     @patch('regulations.views.partial.generator')
     def test_get_context_data(self, generator):
-        generator.get_all_section_layers.return_value = (InlineLayersApplier(), 
-                ParagraphLayersApplier(), SearchReplaceLayersApplier())
+        generator.LayerCreator.return_value.get_appliers.return_value = (
+            InlineLayersApplier(), ParagraphLayersApplier(), 
+            SearchReplaceLayersApplier())
         generator.get_tree_paragraph.return_value = {
             'text': 'Some Text',
             'children': [],

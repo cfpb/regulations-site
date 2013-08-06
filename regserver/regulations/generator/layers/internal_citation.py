@@ -9,10 +9,12 @@ class InternalCitationLayer():
         self.sectional = False
         self.version = None
 
-    def render_url(self, citation_url, text, template_name='layers/internal_citation.html'):
-        citation = {'url': citation_url, 
-                    'label':text}
-        c = Context({'citation':citation})
+    def render_url(self, label, text, template_name='layers/internal_citation.html'):
+        if self.sectional:
+            url = InternalCitationLayer.sectional_url_for(label, self.version)
+        else:
+            url = InternalCitationLayer.hash_url_for(label, self.version)
+        c = Context({'citation': {'url': url, 'label': text}})
         template =  loader.get_template(template_name)
         return template.render(c).strip('\n')
 
@@ -41,14 +43,6 @@ class InternalCitationLayer():
             for layer_element in layer_elements:
                 for start, end in layer_element['offsets']:
                     ot = text[int(start):int(end)]
-                    label = layer_element['citation']
-
-                    if self.sectional:
-                        url = InternalCitationLayer.sectional_url_for(
-                                label, self.version)
-                    else:
-                        url = InternalCitationLayer.hash_url_for(label,
-                                self.version)
-                    rt = self.render_url(url, ot)
+                    rt = self.render_url(layer_element['citation'], ot)
                     layer_pairs.append((ot, rt, (start, end)))
             return layer_pairs
