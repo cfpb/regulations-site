@@ -27,8 +27,8 @@ class InternalCitationLayer():
     def create_sectional_link(text, layer_element, reg_version, template_name='layers/internal_citation.html'):
         section_url, citation_anchor = InternalCitationLayer.create_sectional_url_parts(layer_element)
         try:
-            citation_url = reverse('regulation_section_view', 
-                kwargs={'reg_part_section':section_url, 'reg_version':reg_version})
+            citation_url = reverse('chrome_section_view', 
+                kwargs={'label_id':section_url, 'version':reg_version})
             citation_url = citation_url + citation_anchor
         except NoReverseMatch:
             #XXX We have some errors in our layers. Once those are fixed, we need to 

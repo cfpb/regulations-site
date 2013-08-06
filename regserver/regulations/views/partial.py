@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
@@ -18,7 +19,7 @@ class PartialView(TemplateView):
         context = super(PartialView, self).get_context_data(**kwargs)
 
         label_id = context['label_id']
-        version = context['reg_version']
+        version = context['version']
 
         if 'layers' in self.request.GET.keys():
             inline_applier, p_applier, s_applier = utils.handle_specified_layers(self.request.GET['layers'], 
@@ -30,6 +31,7 @@ class PartialView(TemplateView):
 
         tree = generator.get_tree_paragraph(label_id, version)
         builder = generate_html(tree, (inline_applier, p_applier, s_applier))
+
         return self.transform_context(context, builder)
 
 
@@ -51,6 +53,7 @@ class PartialParagraphView(PartialView):
         context['node'] = builder.tree
         return context
 
+
 class PartialInterpView(PartialView):
     """ Interpretation of a reg text section/paragraph or appendix """
 
@@ -59,3 +62,14 @@ class PartialInterpView(PartialView):
     def transform_context(self, context, builder):
         context['interp'] = builder.tree
         return context
+
+
+class PartialRegulationView(PartialView):
+    """ Entire regulation without chrome """
+
+    template_name = 'regulation-content.html'
+
+    def transform_context(self, context, builder):
+        context['tree'] = builder.tree
+        return context
+
