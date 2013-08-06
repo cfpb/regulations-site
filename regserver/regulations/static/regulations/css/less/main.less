@@ -16,7 +16,6 @@ and includes any non-semantic helper classes
 @import url(module/sidebar.less);
 @import url(module/permalink.less);
 @import url(media-queries.less);
-@import url(print.less);
 
 
 /*
@@ -108,3 +107,7 @@ Clearfix
     *zoom: 1;
 }
 
+/*
+Import Print.css at the end, since it overrides many rules
+*/
+@import url(print.less);
