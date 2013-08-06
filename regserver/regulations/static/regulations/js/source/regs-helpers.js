@@ -35,17 +35,21 @@ define('regs-helpers', function() {
         },
 
         // **Params**
+        // ```parts```: Array of Strings or Numbers, entity ID
+        //
+        // **Returns** human-readable representation of the reg section
+        interpId: function(parts) {
+            return 'Supplement I to Part ' + parts[0];
+            //  @todo: Account for section and paragraphs
+        },
+
+        // **Params**
         // ```p0```: String or Number, section ID
         // ```p1```: String or Number, reg ID
         //
         // **Returns** human-readable representation of the reg section
-        nonNumericId: function(p0, p1) {
-            if (isNaN(parseInt(p0, 10))) {
-                return 'Supplement ' + p0 + ' to Part ' + p1;
-            }
-            else if (isNaN(parseInt(p1, 10))) {
-                return 'Appendix ' + p1 + ' to Part ' + p0;
-            }
+        appendixId: function(part, letter) {
+            return 'Appendix ' + letter  + ' to Part ' + part;
         },
 
         // **Param** dash-delimited string representation of reg entity ID
@@ -64,10 +68,13 @@ define('regs-helpers', function() {
                 return ref;
             }
 
-            /* if we have an appendix or supplement */
-            if (isNaN(parseInt(parts[0], 10)) || 
-                isNaN(parseInt(parts[1], 10))) {
-                return this.nonNumericId(parts[0], parts[1]);
+            /* if we have a supplement */
+            if ($.inArray('Interp', parts) >= 0) {
+                return this.interpId(parts);
+            }
+            /* if we have an appendix */
+            if (isNaN(parseInt(parts[1], 10))) {
+                return this.appendixId(parts[0], parts[1]);
             }
 
             /* we have a paragraph */
