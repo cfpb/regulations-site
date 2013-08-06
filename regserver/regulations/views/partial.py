@@ -57,10 +57,10 @@ class PartialParagraphView(PartialView):
 class PartialInterpView(PartialView):
     """ Interpretation of a reg text section/paragraph or appendix """
 
-    template_name = "interp-tree.html"
+    template_name = "interpretations.html"
 
     def transform_context(self, context, builder):
-        context['interp'] = builder.tree
+        context['c'] = {'node_type': 'interp', 'children': [builder.tree]}
         return context
 
 
