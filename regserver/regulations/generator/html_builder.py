@@ -124,22 +124,6 @@ class HTMLBuilder():
             titles['reg_name'] = reg_title
         return titles
 
-    def get_env_dir(self):
-        if settings.DEBUG:
-            return 'source'
-        return 'built'
-
-    def render_markup(self):
-        main_template = loader.get_template('eregs-with-chrome.html')
-        c = Context({
-            'tree':self.tree,
-            'titles': self.get_title(),
-            'env': self.get_env_dir(),
-            'GOOGLE_ANALYTICS_SITE':settings.GOOGLE_ANALYTICS_SITE, 
-            'GOOGLE_ANALYTICS_ID':settings.GOOGLE_ANALYTICS_ID
-        })
-        return main_template.render(c) 
-
 class SlideDownInterpBuilder(HTMLBuilder):
     def render_markup(self):
         main_template = loader.get_template('slide-down-interp.html')

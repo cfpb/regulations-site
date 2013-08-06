@@ -12,6 +12,12 @@ class ChromeView(TemplateView):
     """ Base class for views which wish to include chrome. """
     template_name = 'chrome.html'
 
+    def add_extras(self, context):
+        context['env'] = 'source' if settings.DEBUG else 'built'
+        context['GOOGLE_ANALYTICS_SITE'] = settings.GOOGLE_ANALYTICS_SITE
+        context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
+        return context
+
     def get_context_data(self, **kwargs):
         context = super(ChromeView, self).get_context_data(**kwargs)
 
@@ -25,7 +31,7 @@ class ChromeView(TemplateView):
         else:
             appliers = generator.get_all_layers(label_id, version)
 
-        #   Hack solution: pull in full regulation
+        #   Hack solution: pull in full regulation, then the partial
         #   @todo: just query the meta and toc layers
         full_tree = generator.get_regulation(label_id.split('-')[0],
                 version)
@@ -41,9 +47,7 @@ class ChromeView(TemplateView):
         builder = generate_html(full_tree, appliers)
 
         context['tree'] = full_tree
-        context['env'] = builder.get_env_dir()
-        context['GOOGLE_ANALYTICS_SITE'] = settings.GOOGLE_ANALYTICS_SITE
-        context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
+        self.add_extras(context)
 
         return context
 
