@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.views.generic.base import TemplateView
-from django.template import Context, loader
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
@@ -37,13 +36,12 @@ class ChromeView(TemplateView):
                 version)
         relevant_tree = generator.get_tree_paragraph(label_id, version)
         
-        partial_view = self.partial_class()
-        partial_view.request = self.request
-        partial_context = partial_view.get_context_data(label_id=label_id,
+        partial_view = self.partial_class.as_view()
+        response = partial_view(self.request, label_id=label_id,
                 version=version)
-        template = loader.get_template(self.partial_class.template_name)
+        response.render()
+        context['partial_content'] = response.content
 
-        context['partial_content'] = template.render(Context(partial_context))
         builder = generate_html(full_tree, appliers)
 
         context['tree'] = full_tree

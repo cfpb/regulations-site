@@ -48,6 +48,7 @@ class Command(BaseCommand):
 
         view = ChromeRegulationView()
         view.request = HttpRequest()
+        view.request.method = 'GET'
         context = view.get_context_data(label_id=part, version=version)
         template = loader.get_template(ChromeRegulationView.template_name)
         markup = template.render(Context(context))
