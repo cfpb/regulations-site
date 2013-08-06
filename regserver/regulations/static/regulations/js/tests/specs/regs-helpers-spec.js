@@ -7,7 +7,11 @@ define(['jquery', 'regs-helpers'], function($, RegsHelpers) {
 
             expect('Appendix X to Part 983').toEqual(RegsHelpers.idToRef('983-X-4'));
 
-            expect('Supplement F to Part 13').toEqual(RegsHelpers.idToRef('F-13'));
+            expect('Supplement I to Part 13').toEqual(RegsHelpers.idToRef('13-Interp'));
+
+            expect('Supplement I to §13.4').toEqual(RegsHelpers.idToRef('13-4-a-Interp-1'));
+
+            expect('Supplement I to Appendix G').toEqual(RegsHelpers.idToRef('13-G-Interp-1'));
 
             expect('§100').toEqual(RegsHelpers.idToRef('§100'));
         });

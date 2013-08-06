@@ -40,13 +40,12 @@ define('regs-helpers', function() {
         //
         // **Returns** human-readable representation of the reg section
         interpId: function(interpParts) {
-            if (interpParts.length == 1) {
+            if (interpParts.length === 1) {
                 return 'Supplement I to Part ' + interpParts[0];
             } else if (isNaN(interpParts[1])) {
                 return 'Supplement I to Appendix ' + interpParts[1];
             } else {
-                return 'Supplement I to §' + interpParts[0] + '.' 
-                    + interpParts[1];
+                return 'Supplement I to §' + interpParts[0] + '.' + interpParts[1];
             }
         },
 
