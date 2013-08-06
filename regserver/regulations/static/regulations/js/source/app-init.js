@@ -32,7 +32,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
         bindEvents: function() {
 
             /* prevent default link behavior on the menu button until we include all TOC icons */
-            $("#menu-link").click(function(e){
+            $('#menu-link').click(function(e){
               e.preventDefault();
             }); 
 
