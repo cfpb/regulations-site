@@ -171,6 +171,12 @@ API should make this obsolete.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        bindEvents: <span class="keyword">function</span>() {
+
+            <span class="comment">/* prevent default link behavior on the menu button until we include all TOC icons */</span>
+            $(<span class="string">'#menu-link'</span>).click(<span class="keyword">function</span>(e){
+              e.preventDefault();
+            }); 
+
             <span class="comment">/* ssshhhhh */</span>
             <span class="keyword">new</span> Konami(<span class="keyword">function</span>() {
                 <span class="comment">/* http://thenounproject.com/noun/hamburger/#icon-No17373 */</span>
