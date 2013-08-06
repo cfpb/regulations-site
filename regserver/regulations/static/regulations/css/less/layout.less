@@ -22,6 +22,9 @@ Main Content
     max-width: 58.333336%;
     border-right: 1px solid @light_field;
     overflow-x: none;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .secondary-content {
@@ -63,18 +66,13 @@ IE fixes
 --------
 */
 
-.lt-ie9 .sidebar-inner {
-    right: 0px;
-}
-
 .lt-ie9 .main-content {
-    margin-right: 25%;
+    width: 58.333336%;
 }
 
-/*
-Header Layout
-=============
-*/
+.lt-ie9 .sidebar-inner {
+    width: 25%;
+}
 
 /*
 TOC Header Navigation
