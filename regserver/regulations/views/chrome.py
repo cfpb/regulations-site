@@ -1,7 +1,9 @@
 from django.conf import settings
 from django.views.generic.base import TemplateView
+
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
+from regulations.views import utils
 
 def generate_html(regulation_tree, layer_appliers):
     builder = HTMLBuilder(*layer_appliers)
@@ -24,11 +26,17 @@ class RegulationView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(RegulationView, self).get_context_data(**kwargs)
 
-        regulation_part = context['reg_part']
-        regulation_version = context['reg_version']
+        reg_part = context['reg_part']
+        reg_version = context['reg_version']
 
-        appliers = generator.get_all_layers(regulation_part, regulation_version)
-        tree = generator.get_regulation(regulation_part, regulation_version)
+        if 'layers' in self.request.GET.keys():
+            layer_names = self.request.GET['layers']
+            appliers = utils.handle_specified_layers(layer_names, 
+                        reg_part, reg_version)
+        else:
+            appliers = generator.get_all_layers(reg_part, reg_version)
+
+        tree = generator.get_regulation(reg_part, reg_version)
 
         builder = generate_html(tree, appliers)
         context = build_context(context, builder)
@@ -48,18 +56,24 @@ class RegulationSectionView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(RegulationSectionView, self).get_context_data(**kwargs)
 
-        regulation_part = context['reg_part_section']
-        regulation_version = context['reg_version']
+        reg_part_section = context['reg_part_section']
+        reg_version = context['reg_version']
 
-        regulation = RegulationSectionView.get_regulation_part(context['reg_part_section'])
-        inline_applier, p_applier, s_applier = generator.get_all_section_layers(regulation_part, regulation_version)
+        regulation = RegulationSectionView.get_regulation_part(reg_part_section)
+
+        if 'layers' in self.request.GET.keys():
+            layer_names = self.request.GET['layers']
+            inline_applier, p_applier, s_applier = utils.handle_specified_layers(layer_names, 
+                        reg_part_section, reg_version, sectional=True)
+        else:
+            inline_applier, p_applier, s_applier = generator.get_all_section_layers(reg_part_section, reg_version)
+            inline_applier = generator.add_section_internal_citations(regulation, reg_version, inline_applier)
 
         #The table of contents layers are dealt with different for section at a time. 
-        p_applier = generator.add_full_toc(regulation, regulation_version, p_applier)
-        inline_applier = generator.add_section_internal_citations(regulation, regulation_version, inline_applier)
+        p_applier = generator.add_full_toc(regulation, reg_version, p_applier)
 
         section_tree = generator.get_regulation_section(regulation, 
-                            regulation_version, context['reg_part_section'])
+                            reg_version, context['reg_part_section'])
 
         builder = generate_html(section_tree, (inline_applier, p_applier, s_applier))
         context = build_context(context, builder)

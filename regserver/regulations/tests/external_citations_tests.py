@@ -38,7 +38,7 @@ class ExternalCitationsTest(TestCase):
 
     def test_citation_type_to_generator(self):
         citation_type = 'STATUTES_AT_LARGE'
-        layer = ExternalCitationLayer(None, None)
+        layer = ExternalCitationLayer(None)
         generator = layer.citation_type_to_generator(citation_type)
         self.assertEqual(generator, ExternalCitationLayer.generate_statutes_at_large_link)
 

@@ -23,7 +23,7 @@
     <div id="content-header" class="header-main">
         <span id="active-title">1005.1</span>
     </div>
-    <div id="sidebar-subhead" class="header-secondary">
+    <div class="header-secondary">
         <span class="effective-date"><strong>Effective Date:</strong> {{ tree.meta.effective.date|date }}</span>
         <h2> </h2>
     </div>
@@ -39,37 +39,42 @@
 {% include "regulation-content.html" %}
 
 <div id="sidebar" class="secondary-content">
-<section class="regs-meta">
-<h5 class="important">Experimental Prototype</h5>
-<p class="sub-text">There may be errors, inconsistencies, and inaccuracies.</p>
-  {% if tree.meta.contact_info %}
-  <h5>Questions</h5>
-  <div class="chunk">
-     {{ tree.meta.contact_info | safe}}
-  </div>
-  {% endif %}
+    <div id="sidebar-header" class="sidebar-header">
+        <h2></h2>
+    </div>
+    <div id="sidebar-content" class="sidebar-inner">
+        <section class="regs-meta">
+            <h5 class="important">Experimental Prototype</h5>
+            <p class="sub-text">There may be errors, inconsistencies, and inaccuracies.</p>
+              {% if tree.meta.contact_info %}
+              <h5>Questions</h5>
+              <div class="chunk">
+                 {{ tree.meta.contact_info | safe}}
+              </div>
+              {% endif %}
 
-{% if tree.meta.last_notice %}
-<h5 class="expandable">Most Recent FR Notice</h5>
-<div class="notice chunk hidden">
-    <a href="{{ tree.meta.last_notice.url }}" class="external">{{ tree.meta.last_notice.title }}</a>
-    <ul>
-        <li><strong>Published:</strong> {{ tree.meta.last_notice.published|date }}</li>
-        <li><strong>Action:</strong> {{ tree.meta.last_notice.action }}</li>
-        <li><strong>Effective:</strong> {{ tree.meta.last_notice.effective|date }}</li>
-    </ul>
-</div>
-{% endif %}
+            {% if tree.meta.last_notice %}
+            <h5 class="expandable">Most Recent FR Notice</h5>
+            <div class="notice chunk hidden">
+                <a href="{{ tree.meta.last_notice.url }}" class="external">{{ tree.meta.last_notice.title }}</a>
+                <ul>
+                    <li><strong>Published:</strong> {{ tree.meta.last_notice.published|date }}</li>
+                    <li><strong>Action:</strong> {{ tree.meta.last_notice.action }}</li>
+                    <li><strong>Effective:</strong> {{ tree.meta.last_notice.effective|date }}</li>
+                </ul>
+            </div>
+            {% endif %}
 
-{% if tree.meta.effective %}
-<h5 class="expandable">Current Effective Law</h5>
-<div class="effective chunk hidden">
-    <a href="{{ tree.meta.effective.url }}" class="external">{{ tree.meta.effective.title }}</a>
-    Electronic Code of Federal Regulations
-</div>
-{% endif %}
+            {% if tree.meta.effective %}
+            <h5 class="expandable">Current Effective Law</h5>
+            <div class="effective chunk hidden">
+                <a href="{{ tree.meta.effective.url }}" class="external">{{ tree.meta.effective.title }}</a>
+                Electronic Code of Federal Regulations
+            </div>
+            {% endif %}
 
-</section> <!-- /.regs-meta -->
+        </section> <!-- /.regs-meta -->
+    </div> <!-- /#sidebar-content -->
 </div> <!-- /.secondary-content -->
 </div>
 
