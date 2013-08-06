@@ -84,10 +84,17 @@
     .open-definition {
         padding: 16px 20px 0 20px; /*narrower right padding*/
     }
+
+
+    .level-1 > li:after {
+        margin-left: -10em;
+        width: 1000px;
+    }
 }
 
 @media only screen and ( max-width: 780px ) {
     
+    .secondary-content,
     .regs-meta {
         display: none;
     }
@@ -116,8 +123,15 @@
     }
 
     .main-content {
-        max-width: 100%;
-        margin-right: 20px;
+        max-width: 98%;
+        margin: 0 auto;
+        padding-left: 100px;
+        border-right: none;
+    }
+
+    .level-1 > li:after {
+        margin-left: -5em;
+        width: 730px;
     }
 }
 
