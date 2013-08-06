@@ -37,10 +37,10 @@ class PartialView(TemplateView):
 
 class PartialSectionView(PartialView):
     """ Single section of reg text """
-    template_name = 'regulation_text.html'
+    template_name = 'regulation-content.html'
 
     def transform_context(self, context, builder):
-        context['c'] = builder.tree
+        context['tree'] = {'children': [builder.tree]}
         return context
 
         
@@ -72,4 +72,3 @@ class PartialRegulationView(PartialView):
     def transform_context(self, context, builder):
         context['tree'] = builder.tree
         return context
-
