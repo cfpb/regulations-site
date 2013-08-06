@@ -173,13 +173,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>cache the inner h2 of this el 
-and the initial text so that we can repopulate on close</p>
+              <p>cache the actual header tag</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.header = <span class="keyword">this</span>.$el.find(<span class="string">'h2'</span>);
-            <span class="keyword">this</span>.defaultText = <span class="keyword">this</span>.header.html();
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$header = <span class="keyword">this</span>.$el.find(<span class="string">'h2'</span>);
         },</pre></div></div>
             
         </li>
@@ -198,7 +196,7 @@ and the initial text so that we can repopulate on close</p>
             
             <div class="content"><div class='highlight'><pre>        openItem: <span class="keyword">function</span>() {
             <span class="keyword">var</span> closeButton, $closeButton;
-            <span class="keyword">this</span>.header.html(<span class="string">'Defined Term'</span>);
+            <span class="keyword">this</span>.$header.html(<span class="string">'Defined Term'</span>);
             
             closeButton = document.createElement(<span class="string">'a'</span>);
             $closeButton = $(closeButton);
@@ -221,7 +219,7 @@ and the initial text so that we can repopulate on close</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        clear: <span class="keyword">function</span>() {
-            <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.header.html(<span class="keyword">this</span>.defaultText));
+            <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.$header.html(<span class="string">''</span>));
         },</pre></div></div>
             
         </li>
