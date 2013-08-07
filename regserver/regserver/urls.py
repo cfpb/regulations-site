@@ -1,7 +1,9 @@
 from django.conf.urls import patterns, include, url
 
-from regulations.views.chrome import *
-from regulations.views.partial import *
+from regulations.views.chrome import ChromeInterpView, ChromeRegulationView
+from regulations.views.chrome import ChromeParagraphView, ChromeSectionView
+from regulations.views.partial import PartialInterpView, PartialRegulationView
+from regulations.views.partial import PartialParagraphView, PartialSectionView
 
 #Re-usable URL patterns. 
 version_pattern = r'(?P<version>[-\d\w]+)'
