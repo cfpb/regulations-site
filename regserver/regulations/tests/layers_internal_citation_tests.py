@@ -11,6 +11,9 @@ class InternalCitationLayerTest(TestCase):
         self.assertEqual('/regulation/999-88-Interp/verver#999-88-e-Interp-1',
             InternalCitationLayer.sectional_url_for(['999', '88', 'e',
             'Interp', '1'], 'verver'))
+        self.assertEqual('/regulation/999-Interp/verver#999-Interp',
+            InternalCitationLayer.sectional_url_for(['999', 'Interp'],
+            'verver'))
         self.assertEqual('#999-88-e',
             InternalCitationLayer.hash_url_for(['999', '88', 'e'], 'verver'))
 
