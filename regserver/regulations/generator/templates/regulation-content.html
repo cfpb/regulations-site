@@ -1,7 +1,7 @@
 <section id="{{tree.markup_id}}" class="reg-text">
     {% if tree.children %}
         {% for c in tree.children %}
-            {%include "regulation_text.html" %}
+            {%include "subpart.html" %}
             {%include "appendix.html" %}
             {%include "interpretations.html" %}
             </section>
