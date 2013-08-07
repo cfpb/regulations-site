@@ -3,6 +3,7 @@ from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
+from regulations.generator.node_types import REGTEXT
 from regulations.views import utils
 
 def generate_html(regulation_tree, layer_appliers):
@@ -45,7 +46,11 @@ class PartialSectionView(PartialView):
     template_name = 'regulation-content.html'
 
     def transform_context(self, context, builder):
-        context['tree'] = {'children': [builder.tree]}
+        child_of_root = builder.tree
+        #   Add a layer to account for subpart if this is regtext
+        if builder.tree['node_type'] == REGTEXT:
+            child_of_root = {'node_type': 'subpart', 'children': [builder.tree]}
+        context['tree'] = {'children': [child_of_root]}
         return context
 
         
