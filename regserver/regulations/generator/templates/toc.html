@@ -6,9 +6,9 @@
     {% if top_toc %}
         <h2>
             <span class="toc-title-num">Title {{ tree.meta.cfr_title_number }}: {{ tree.meta.cfr_title_text }}</span>
-            <span class="toc-part-num">Part {{ tree.label.text }}</span>
-            <span class="toc-reg-title">{{ tree.label.title_clean|title }}
-            {% if tree.label.reg_letter %}(Regulation {{ tree.label.reg_letter }}){% endif %}</span>
+            <span class="toc-part-num">Part {{ tree.label.0 }}</span>
+            <span class="toc-reg-title">{{ tree.title_clean|title }}
+            {% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</span>
         </h2>
     {% endif %}
     <ol class="{{nav_class}}"{% if top_toc %} id="table-of-contents"{% endif %}>

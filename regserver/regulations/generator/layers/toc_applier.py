@@ -2,10 +2,13 @@
 import re
 
 from regulations.generator.node_types import to_markup_id
+from regulations.generator.layers.internal_citation import InternalCitationLayer
 
 class TableOfContentsLayer(object):
     def __init__(self, layer):
         self.layer = layer
+        self.sectional = False
+        self.version = None
 
     def apply_layer(self, text_index):
         if text_index in self.layer:
@@ -13,9 +16,14 @@ class TableOfContentsLayer(object):
 
             toc_list = []
             for data in layer_elements:
-                element_url = to_markup_id(data['index']);
+                if self.sectional:
+                    url = InternalCitationLayer.sectional_url_for(
+                            data['index'], self.version)
+                else:
+                    url = InternalCitationLayer.hash_url_for(data['index'],
+                            self.version)
                 element = {
-                    'url': "#%s" % "-".join(element_url),
+                    'url': url,
                     'label': data['title']
                 }
                 self.section(element, data)

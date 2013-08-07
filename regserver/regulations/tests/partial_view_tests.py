@@ -4,24 +4,27 @@ from mock import Mock, patch
 from django.test import RequestFactory
 
 from regulations.generator.layers.layers_applier import *
+from regulations.generator.node_types import REGTEXT
 from regulations.views.partial import *
 
 class PartialParagraphViewTests(TestCase):
 
     @patch('regulations.views.partial.generator')
     def test_get_context_data(self, generator):
-        generator.get_all_section_layers.return_value = (InlineLayersApplier(), 
-                ParagraphLayersApplier(), SearchReplaceLayersApplier())
+        generator.LayerCreator.return_value.get_appliers.return_value = (
+            InlineLayersApplier(), ParagraphLayersApplier(), 
+            SearchReplaceLayersApplier())
         generator.get_tree_paragraph.return_value = {
             'text': 'Some Text',
             'children': [],
-            'label': {'text': '867-53-q', 'parts': ['867', '53', 'q']}
+            'label': ['867', '53', 'q'],
+            'node_type': REGTEXT
         }
         paragraph_id = '103-3-a'
         reg_version = '2013-10607'
         request = RequestFactory().get('/fake-path')
         view = PartialParagraphView.as_view(template_name='tree.html')
-        response = view(request, paragraph_id=paragraph_id, reg_version=reg_version)
+        response = view(request, label_id=paragraph_id, version=reg_version)
         self.assertEqual(response.context_data['node'], 
             generator.get_tree_paragraph.return_value)
 
@@ -34,7 +37,8 @@ class PartialSectionViewTests(TestCase):
         generator.get_tree_paragraph.return_value = {
             'text': 'Some Text',
             'children': [],
-            'label': {'text': '205', 'parts': ['205']}
+            'label': ['205'],
+            'node_type': REGTEXT
         }
 
         reg_part_section = '205'
@@ -43,8 +47,23 @@ class PartialSectionViewTests(TestCase):
         request = RequestFactory().get('/fake-path/?layers=meta')
         view = PartialSectionView.as_view(template_name='regulation-content.html')
 
-        response = view(request, 
-                    reg_part_section=reg_part_section,
-                    reg_version=reg_version)
-        self.assertEqual(response.context_data['tree'], 
+        response = view(request, label_id=reg_part_section,
+                    version=reg_version)
+        self.assertEqual(response.context_data['tree']['children'][0], 
             generator.get_tree_paragraph.return_value)
+
+class PartialViewTest(TestCase):
+
+    def test_generate_html(self):
+        regulation_tree = {'text': '', 'children': [], 'label': ['8675'],
+            'title': 'Regulation R', 'node_type': REGTEXT
+        }
+        i_applier = InlineLayersApplier()
+        p_applier = ParagraphLayersApplier()
+        sr_applier = SearchReplaceLayersApplier()
+        appliers = (i_applier, p_applier, sr_applier)
+        builder = generate_html(regulation_tree, appliers)
+        self.assertEquals(builder.tree, regulation_tree)
+        self.assertEquals(builder.inline_applier, i_applier)
+        self.assertEquals(builder.p_applier, p_applier)
+        self.assertEquals(builder.search_applier, sr_applier)

@@ -3,23 +3,30 @@ from mock import patch
 from unittest import TestCase
 
 class InternalCitationLayerTest(TestCase):
-    @patch('regulations.generator.layers.internal_citation.loader')
-    def test_create_link_interp(self, loader):
-        InternalCitationLayer.create_link("", {
-            'citation': ['2322', 'Interpretations', '3', '(z)(9)(xii)', '1'],
-        })
-        context = loader.get_template.return_value.render.call_args[0][0]
-        self.assertEqual('#I-2322-3-z9xii-1', context['citation']['url'])
 
-    def test_create_sectional_url_parts(self):
-        u = InternalCitationLayer.create_sectional_url_parts({
-                'citation': ['2322',  '3', 'a', '1'],
-        })
-        self.assertEqual(('2322-3', '#2322-3-a-1'), u)
+    def test_url_for(self):
+        self.assertEqual('/regulation/999-88/verver#999-88-e',
+            InternalCitationLayer.sectional_url_for(['999', '88', 'e'],
+            'verver'))
+        self.assertEqual('/regulation/999-88-Interp/verver#999-88-e-Interp-1',
+            InternalCitationLayer.sectional_url_for(['999', '88', 'e',
+            'Interp', '1'], 'verver'))
+        self.assertEqual('#999-88-e',
+            InternalCitationLayer.hash_url_for(['999', '88', 'e'], 'verver'))
 
     @patch('regulations.generator.layers.internal_citation.loader')
     def test_render_url(self, loader):
-        InternalCitationLayer.render_url('/abcd/123', 'link', 'template.html')
+        icl = InternalCitationLayer(None)
+
+        icl.render_url(['888', '123'], 'link')
         context = loader.get_template.return_value.render.call_args[0][0]
-        self.assertEqual('/abcd/123', context['citation']['url'])
+        self.assertEqual('#888-123', context['citation']['url'])
         self.assertEqual('link', context['citation']['label'])
+
+        icl.sectional = True
+        icl.version = 'vvvv'
+        icl.render_url(['888', '123'], 'look')
+        context = loader.get_template.return_value.render.call_args[0][0]
+        self.assertEqual('/regulation/888-123/vvvv#888-123', 
+                context['citation']['url'])
+        self.assertEqual('look', context['citation']['label'])

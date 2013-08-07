@@ -29,13 +29,14 @@ class InterpretationsLayer(object):
 
             if interp_node:
                 interp_node['interp_for_markup_id'] = text_index
-                ref_parts = reference.split('-')
-                if len(ref_parts) == 3:   # Part-Interp-Section/Appendix
-                    interp_node['interp_label'] = ref_parts[2]
-                elif ref_parts[2].isalpha(): # Part-Interp-Appendix-Segment
-                    interp_node['interp_label'] = '-'.join(ref_parts[-2:])
-                else: # Part-Interpretations-Section-Paragraphs
-                    interp_node['interp_label'] = ''.join(ref_parts[-2:])
+                ref_parts = reference.split('-')[:-1]   #   exclude 'Interp'
+                if len(ref_parts) == 2:   # Part-Section/Appendix
+                    interp_node['interp_label'] = ref_parts[1]
+                elif ref_parts[1].isalpha(): # Part-Appendix-Segment
+                    interp_node['interp_label'] = '-'.join(ref_parts[1:])
+                else: # Part-Section-Paragraphs
+                    interp_node['interp_label'] = (ref_parts[1] + '(' +
+                        ')('.join(ref_parts[2:]) + ')')
                 self.builder.tree = interp_node
                 self.builder.generate_html()
                 markup = self.builder.render_markup()

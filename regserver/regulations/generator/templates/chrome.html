@@ -36,7 +36,12 @@
     {% endwith %}
  {%endif%}  
 
-{% include "regulation-content.html" %}
+<div class="wrap group" id="reg-content">
+
+<div class="main-content">
+
+{{ partial_content|safe }}
+</div> <!-- /.main-content -->
 
 <div id="sidebar" class="secondary-content">
     <div id="sidebar-header" class="sidebar-header">
@@ -79,3 +84,4 @@
 </div>
 
 {% endblock %}
+
