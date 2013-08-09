@@ -49,7 +49,9 @@ class PartialSectionViewTests(TestCase):
 
         response = view(request, label_id=reg_part_section,
                     version=reg_version)
-        self.assertEqual(response.context_data['tree']['children'][0], 
+        root = response.context_data['tree']
+        subpart = root['children'][0]
+        self.assertEqual(subpart['children'][0], 
             generator.get_tree_paragraph.return_value)
 
 class PartialViewTest(TestCase):

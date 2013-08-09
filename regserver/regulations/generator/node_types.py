@@ -1,6 +1,8 @@
-REGTEXT = 'regtext'
-APPENDIX = 'appendix'
-INTERP = 'interp'
+APPENDIX = u'appendix'
+INTERP = u'interp'
+REGTEXT = u'regtext'
+SUBPART = u'subpart'
+EMPTYPART = u'emptypart'
 
 def is_appendix(id_parts):
     """ Inspect the id_parts to determine if this is an Appendix section. """
