@@ -13,6 +13,7 @@ and includes any non-semantic helper classes
 @import url(module/navigation.less);
 @import url(module/interpretations.less);
 @import url(module/reg-header.less);
+@import url(module/footer.less);
 @import url(module/sidebar.less);
 @import url(module/permalink.less);
 @import url(media-queries.less);
@@ -103,6 +104,7 @@ Clearfix
 }
 
 /*
-Import Print.css at the end, since it overrides many rules
+Import no-js.less and print.less at the end, since they overrides other rules
 */
+@import url(module/no-js.less);
 @import url(print.less);
