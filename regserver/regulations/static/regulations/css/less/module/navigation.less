@@ -65,13 +65,13 @@ On large displays it is on the screen by default. It can be toggled with the "ac
 
     ol {
         .reset;
-        .border-top-light (@width: 1px);
     }
 
     h2 {
         margin: 0;
         padding: 10px 16px 14px 16px;
         line-height: 1.2;
+        .border-bottom-light (@width: 2px);
 
         .toc-type {
             color: @dark_gray;
@@ -83,7 +83,7 @@ On large displays it is on the screen by default. It can be toggled with the "ac
         .toc-part-num {
           display: block;
           font-size: 20px; /*18px / (26px * .875em) */
-          margin: 6px 0 10px 0;
+          margin: 10px 0 7px 0;
           color: @dark_gray;
           .avenir-next-bold;
           text-transform: uppercase;
