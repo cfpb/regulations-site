@@ -57,12 +57,26 @@
     }
 
     .panel-slide {
-        background: url(../img/left-right-sprite.png) no-repeat 0px -22px;
+        background: url(../img/right.png) no-repeat center center;
         
     }
 
     .active .panel-slide {
-        background: url(../img/left-right-sprite.png) no-repeat 0px 4px;
+        background: url(../img/left.png) no-repeat center center;
+    }
+
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .panel-slide {
+            background: url(../img/right@2x.png) no-repeat center center;
+            background-size: 16px 13px;
+        }
+
+        .active .panel-slide {
+            background: url(../img/left@2x.png) no-repeat center center;
+            background-size: 16px 13px;
+        }
     }
 
     .main-content {
