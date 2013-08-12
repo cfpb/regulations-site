@@ -22,7 +22,7 @@ class InternalCitationLayer():
     def sectional_url_for(label, version):
         section_url = '-'.join(to_markup_id(label[:2]))
         try:
-            if 'Interp' in label:
+            if 'Interp' in label and len(label) > 2:
                 url = reverse('chrome_interp_view',
                         kwargs={'label_id':section_url + '-Interp', 
                             'version': version})
