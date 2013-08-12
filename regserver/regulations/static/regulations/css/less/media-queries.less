@@ -81,21 +81,11 @@
 
     .main-content {
         margin-left: 40px;
-        max-width: 70%; /*decrease percentage to offset margin-left */
     }
 
     .header-main {
         margin-left: 0px;
     }
-
-    .secondary-content {
-        max-width: 25%;
-    }
-
-    .sidebar-inner {
-        padding: 16px 20px 0 20px; /*narrower right padding*/
-    }
-
 
     .level-1 > li:after {
         margin-left: -10em;
@@ -119,8 +109,13 @@
 
 @media only screen and ( max-width: 780px ) {
     
-    .regs-meta {
-        display: none;
+    .secondary-content {
+        position: static;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        border-left: none;
+        padding-left: 100px;
     }
 
     .sidebar-header {
@@ -134,11 +129,11 @@
 
     .open-definition {
         position: fixed;
-        top: 80%;
+        top: 70%;
         bottom: 0;
         left: 0;
         min-width: 100%; /*magic number to extend container to edge of viewport*/
-        height: 200px;
+        min-height: 200px;
         padding: 20px 20px 80px 60px;
         background: #f6f6f5;
         .border-top-light(@width: 2px);
