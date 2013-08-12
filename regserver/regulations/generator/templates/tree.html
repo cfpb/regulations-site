@@ -1,0 +1,26 @@
+{% comment %}
+    Template for inner paragraphs of a reg section
+{% endcomment %}
+{%if node.marked_up %}
+<p> 
+    {% for doc_num, ref in node.analyses %}
+    <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+    {% endfor %}
+{{node.marked_up|safe|linebreaksbr}}
+</p>
+{% else %}
+    {% for doc_num, ref in node.analyses %}
+    <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+    {% endfor %}
+{% endif %}
+{% if node.children %}
+<ol class="level-{{node.children.0.list_level}}" 
+    type="{{node.children.0.list_type}}">
+    {% for c in node.children %}
+        {%with node=c template_name="tree-with-wrapper.html" %}
+            {% include template_name %}
+        {% endwith %}
+    {% endfor %}
+</ol>
+{% endif %}
+{{ node.interp.markup | safe }}

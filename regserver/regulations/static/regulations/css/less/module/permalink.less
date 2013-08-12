@@ -1,0 +1,58 @@
+/*
+Permalinks
+=========================
+permalink.less contains styles for the permalink markers that appear on hover
+
+    <a class="permalink-marker" href="#">Permalink</a>
+
+*/
+
+p {
+    position: relative;
+}
+
+.reg-section li > p, 
+.appendix-section li > p, 
+.supplement-section li > p {
+    padding-left: 90px;
+    margin-left: -90px;
+}
+
+.permalink-marker {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 6px;
+    right: 93.5%;
+    text-indent: -9999px;
+    overflow: hidden;
+    background: url(../img/permalink.png) no-repeat;
+    background-color: transparent;
+    background-size: 16px 16px;
+    z-index: 100;
+}
+
+/* 
+<h2> Specific Markers
+---------------------
+ */
+.section-number .permalink-marker {
+    top: 43px;
+    right: 97%;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .permalink-marker {
+        background: url(../img/permalink@2x.png) no-repeat;
+        background-size: 16px 16px;
+    }
+}
+
+.permalink-marker:link,
+.permalink-marker:visited,
+.permalink-marker:hover,
+.permalink-marker:active {
+    border-bottom: 0px;
+}

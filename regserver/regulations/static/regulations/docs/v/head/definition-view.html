@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>definition-view.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app-init.html">
+                app-init.js
+              </a>
+            
+              
+              <a class="source" href="build.html">
+                build.js
+              </a>
+            
+              
+              <a class="source" href="regs-data.html">
+                regs-data.js
+              </a>
+            
+              
+              <a class="source" href="regs-dispatch.html">
+                regs-dispatch.js
+              </a>
+            
+              
+              <a class="source" href="regs-helpers.html">
+                regs-helpers.js
+              </a>
+            
+              
+              <a class="source" href="regulations.html">
+                regulations.js
+              </a>
+            
+              
+              <a class="source" href="require.config.html">
+                require.config.js
+              </a>
+            
+              
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
+              <a class="source" href="content-view.html">
+                content-view.js
+              </a>
+            
+              
+              <a class="source" href="definition-view.html">
+                definition-view.js
+              </a>
+            
+              
+              <a class="source" href="header-view.html">
+                header-view.js
+              </a>
+            
+              
+              <a class="source" href="regs-view.html">
+                regs-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-head-view.html">
+                sidebar-head-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-view.html">
+                sidebar-view.js
+              </a>
+            
+              
+              <a class="source" href="sub-head-view.html">
+                sub-head-view.js
+              </a>
+            
+              
+              <a class="source" href="toc-view.html">
+                toc-view.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>definition-view.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p><strong>Extends</strong> RegsView</p>
+<p><strong>TODO</strong> Determine how much sense that still makes ^^</p>
+<p><strong>Usage</strong> <code>require([&#39;definition-view&#39;], function(DefinitionView) {})</code></p>
+<p>A single inline interpretation, child of the sidebar
+As of sprint 6, the only View that is instantiated more than once</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'definition-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-view'</span>, <span class="string">'regs-data'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, RegsView, RegsData, Dispatch, RegsHelpers) {
+    <span class="string">'use strict'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><strong>Constructor</strong>
+this.options:</p>
+<ul>
+<li><strong>id</strong> string, dash-delimited id of definition paragraph</li>
+<li><strong>$anchor</strong> jQobj, the content-view link that opened the def</li>
+</ul>
+<p>this.options turns into this.model</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> DefinitionView = RegsView.extend({
+        className: <span class="string">'open-definition'</span>,
+        events: {
+            <span class="string">'click .close-button'</span>: <span class="string">'close'</span>,
+            <span class="string">'click .definition'</span>: <span class="string">'sendDefinitionLinkEvent'</span>,
+            <span class="string">'click .continue-link'</span>: <span class="string">'sendContinueLinkEvent'</span>
+        },
+
+        formatInterpretations: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> interpretation = <span class="keyword">this</span>.$el.find(<span class="string">'.inline-interpretation'</span>),
+                interpretationId;
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> interpretation[<span class="number">0</span>] !== <span class="string">'undefined'</span>) {
+                interpretationId = $(<span class="string">'#'</span> + <span class="keyword">this</span>.model.id).data(<span class="string">'interpId'</span>);
+                interpretation.remove();
+
+                <span class="keyword">this</span>.$el.append(
+                    RegsHelpers.fastLink(
+                        <span class="string">'#'</span> + interpretationId, 
+                        <span class="string">'Related commentary'</span>, 
+                        <span class="string">'continue-link internal interp'</span>
+                    )
+                );
+            }
+        },
+
+        removeHeadings: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> keyTerm = <span class="keyword">this</span>.$el.find(<span class="string">'dfn.key-term'</span>),
+                keyTerms;
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> keyTerm[<span class="number">0</span>] !== <span class="string">'undefined'</span>) {
+                keyTerms = keyTerm.length;
+
+                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; keyTerms; i++) {
+                    $(keyTerm[i]).remove(); 
+                }
+            }
+        },
+
+        sendContinueLinkEvent: <span class="keyword">function</span>(e) {
+            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, {
+                action: <span class="string">'clicked continue link'</span>,
+                context: $(e.target).attr(<span class="string">'href'</span>)
+            });
+        },
+
+        sendDefinitionLinkEvent: <span class="keyword">function</span>(e) {
+            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, {
+                action: <span class="string">'clicked key term inside definition'</span>,
+                context: $(e.target).attr(<span class="string">'href'</span>)
+            });
+        },
+
+        render: <span class="keyword">function</span>() {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>link to definition in content body</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.append(
+                RegsHelpers.fastLink(
+                    <span class="string">'#'</span> + <span class="keyword">this</span>.model.id, 
+                    RegsHelpers.idToRef(<span class="keyword">this</span>.model.id),
+                    <span class="string">'continue-link internal'</span>
+                )
+            );</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>remove inline interpretation, add interpretation link</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.formatInterpretations();
+            <span class="keyword">this</span>.removeHeadings();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>make definition tabbable</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.attr(<span class="string">'tabindex'</span>, <span class="string">'0'</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>make tab-activeated close button at bottom of definition content</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                .append(<span class="string">'&lt;a class="close-button" href="#"&gt;Close definition&lt;/a&gt;'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p><strong>Event trigger</strong> triggers definition open event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'definition:render'</span>, <span class="keyword">this</span>.$el);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>set focus to the open definition</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.focus();
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+
+        close: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+            Dispatch.remove(<span class="string">'definition'</span>);
+            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, {
+                action: <span class="string">'closed definition by tab-revealed link'</span>,
+                context: <span class="keyword">this</span>.model.id
+            });
+        },
+
+        remove: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.stopListening();
+            <span class="keyword">this</span>.$el.remove();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p><strong>Event trigger</strong> notifies app that definition is removed</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'definition:remove'</span>, <span class="keyword">this</span>.model.id);
+
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        }
+    });
+
+    <span class="keyword">return</span> DefinitionView;
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

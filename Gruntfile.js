@@ -22,14 +22,37 @@ module.exports = function(grunt) {
     less: {
         development: {
             options: {
-                paths: ['front_end/css/less', 'front_end/css/less/module'],
+                paths: ['<%= env.frontEndPath %>/css/less', '<%= env.frontEndPath %>/css/less/module'],
                 yuicompress: true
             },
             files: {
-                "front_end/css/style.min.css": "front_end/css/less/main.less"
+                "<%= env.frontEndPath %>/css/style.min.css": "<%= env.frontEndPath %>/css/less/main.less"
             }
         }
     },
+
+    /**
+     * Docco is that nifty biz that Backbone has for its annotated source
+     *
+     * https://github.com/eliias/grunt-docco
+     */
+    docco: {
+        src: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js'],
+        options: {
+            output: '<%= env.frontEndPath %>/docs/v/head'
+        }
+    },
+
+    styleguide: {
+            dist: {
+                options: {
+                    name: 'eRegs Styleguide'
+                },
+                files: {
+                    '<%= env.frontEndPath %>/docs/styleguide': '<%= env.frontEndPath %>/css/'
+                }
+            }
+        },
 
     /**
      * JSHint: https://github.com/gruntjs/grunt-contrib-jshint
@@ -69,7 +92,7 @@ module.exports = function(grunt) {
           regContent: true
         }
       },
-      all: ['front_end/js/source/*.js', 'front_end/js/source/views/*.js', '!front_end/js/source/build.js', '!front_end/js/source/require.config.js']
+      all: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js', '!<%= env.frontEndPath %>/js/source/build.js', '!<%= env.frontEndPath %>/js/source/require.config.js']
     },
 
     /**
@@ -80,13 +103,13 @@ module.exports = function(grunt) {
      */
     jasmine: {
       all: {
-        src: 'front_end/js/source',
+        src: '<%= env.frontEndPath %>/js/source',
         options: {
           template: require('grunt-template-jasmine-requirejs'),
-          specs: 'front_end/js/tests/specs/*.js',
+          specs: '<%= env.frontEndPath %>/js/tests/specs/*.js',
           templateOptions: {
             requireConfig: {
-              baseUrl: 'front_end/js/source',
+              baseUrl: '<%= env.frontEndPath %>/js/source',
               paths: {
                 underscore: './lib/underscore',
                 backbone: './lib/backbone',
@@ -104,7 +127,8 @@ module.exports = function(grunt) {
                 'sidebar-head-view': './views/sidebar-head-view',
                 'content-view': './views/content-view',
                 'konami': './lib/konami',
-                'analytics-handler': './views/analytics-handler-view'
+                'analytics-handler': './views/analytics-handler-view',
+                'header-view': './views/header-view'
               },
               shim: {
                 underscore: {
@@ -125,6 +149,21 @@ module.exports = function(grunt) {
     },
 
     /**
+     * https://github.com/jsoverson/grunt-plato
+     * http://jscomplexity.org/complexity
+     */
+    plato: {
+        all: {
+            options: {
+                jshint: grunt.file.readJSON('.jshintrc')
+            },
+            files: {
+                '<%= env.frontEndPath %>/docs/complexity': ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js']
+            }
+        }
+    },
+
+    /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      * 
      * Run predefined tasks whenever watched file patterns are added, changed or deleted.
@@ -132,8 +171,8 @@ module.exports = function(grunt) {
      */
     watch: {
       gruntfile: {
-        files: ['Gruntfile.js', '<%= recess.dist.src %>', 'front_end/css/*.less', '<%= jasmine.options.specs %>'],
-        tasks: ['build']
+        files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/*.less', '<%= env.frontEndPath %>/css/less/module/*.less'],
+        tasks: ['less']
       }
     },
 
@@ -146,7 +185,7 @@ module.exports = function(grunt) {
      */
     ghost: {
         dist: {
-            filesSrc: ['front_end/js/tests/functional/*.js'],
+            filesSrc: ['<%= env.frontEndPath %>/js/tests/functional/*.js'],
             options: {
                 args: {
                     testUrl: '<%= env.testUrl %>'
@@ -161,9 +200,9 @@ module.exports = function(grunt) {
     requirejs: {
         compile: {
             options: {
-                baseUrl: 'front_end/js/source',
-                mainConfigFile: 'front_end/js/source/build.js',
-                dir: "front_end/js/built",
+                baseUrl: '<%= env.frontEndPath %>/js/source',
+                mainConfigFile: '<%= env.frontEndPath %>/js/source/build.js',
+                dir: "<%= env.frontEndPath %>/js/built",
                 modules: [ {name: "regulations"} ],
                 paths: {
                     jquery: './lib/jquery-1.9.1',
@@ -180,7 +219,8 @@ module.exports = function(grunt) {
                     'sidebar-head-view': './views/sidebar-head-view',
                     'content-view': './views/content-view',
                     'konami': './lib/konami',
-                    'analytics-handler': './views/analytics-handler-view'
+                    'analytics-handler': './views/analytics-handler-view',
+                    'header-view': './views/header-view'
                 },
                 shim: {
                     underscore: {
@@ -210,11 +250,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-ghost');
+    grunt.loadNpmTasks('grunt-docco2');
+    grunt.loadNpmTasks('grunt-styleguide');
+    grunt.loadNpmTasks('grunt-plato');
 
     /**
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('test', ['jshint', 'jasmine']);
-    grunt.registerTask('build', ['test', 'ghost', 'requirejs', 'less']);
+    grunt.registerTask('build', ['test', 'requirejs', 'less', 'docco', 'plato']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };

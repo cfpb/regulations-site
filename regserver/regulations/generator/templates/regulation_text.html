@@ -1,0 +1,35 @@
+{% comment %}
+    Used once per section. Contained by subparts at the top level.
+{% endcomment %}
+
+{%if c.node_type == 'regtext' %}
+<section id="{{c.markup_id}}" class="reg-section" tabindex="0" data-permalink-section>
+    {% if c.header_marker %}
+    <h2 class="section-number"><span class="section-marker">{{c.header_marker|safe}}</span>{{ c.header_num }}<span class="section-title" tabindex="0"
+        >{{ c.header_title }}</span></h2>
+    {% else %}
+    <h2 class="section-title" tabindex="0"> {{c.header}} </h2>
+    {% endif %}
+        {% if c.marked_up %}
+        <p> 
+            {% for doc_num, ref in c.analyses %}
+            <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref internal">Section by Section Analysis</a>
+            {% endfor %}
+        {{c.marked_up|safe}} 
+        </p>
+        {% else %}
+            {% for doc_num, ref in c.analyses %}
+            <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref internal">Section by Section Analysis</a>
+            {% endfor %}
+        {% endif %}
+
+        <ol class="level-1" type="a">
+        {% if c.children %}
+            {% for node in c.children %}
+                {% include "tree-with-wrapper.html"  %}
+            {% endfor %}
+        {% endif %}
+        </ol>
+
+        {{ c.interp.markup | safe }}
+{% endif %}

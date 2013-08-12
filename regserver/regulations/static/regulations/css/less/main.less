@@ -1,0 +1,110 @@
+/*
+Main.less
+ ========================================================================== 
+main.less imports all supporting less files
+and includes any non-semantic helper classes
+*/
+
+@import url(normalize.less);
+@import url(mixins.less);
+@import url(fonts.less);
+@import url(typography.less);
+@import url(layout.less);
+@import url(module/navigation.less);
+@import url(module/interpretations.less);
+@import url(module/reg-header.less);
+@import url(module/footer.less);
+@import url(module/sidebar.less);
+@import url(module/permalink.less);
+@import url(media-queries.less);
+
+
+/*
+ Helper Classes
+ ========================================================================== */
+
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box;-webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+
+.inline {
+    display: inline;
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.important {
+    color: @red_orange;
+}
+
+.reset-indent {
+    text-indent: 0;
+}
+
+.well {
+    padding: 1em 1.25em;
+    background: @grey;
+}
+
+.left {
+    float: left;
+    margin-right: 20px;
+}
+
+.right {
+    float: right;
+    margin-left: 20px;
+}
+
+.full-right {
+    float: right;
+    text-align: right;
+}
+
+/* focus styles need to be defined */
+section:focus,
+.open-definition {
+    outline: none;
+}
+
+img.reg-image {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+/* 
+Clearfix
+--------
+* Use .group class as clearfix...  
+* It just sounds nicer!
+*/
+.group:before,
+.group:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.group:after {
+    clear: both;
+}
+
+/*
+* For IE 6/7 only
+* Include this rule to trigger hasLayout and contain floats.
+*/
+
+.group {
+    *zoom: 1;
+}
+
+/*
+Import no-js.less and print.less at the end, since they overrides other rules
+*/
+@import url(module/no-js.less);
+@import url(print.less);

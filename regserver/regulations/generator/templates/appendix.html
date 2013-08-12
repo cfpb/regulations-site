@@ -1,0 +1,45 @@
+{% comment %}
+    Display an appendix section. 
+{% endcomment %}
+
+{% if c.node_type == "appendix" %}
+    <section id="{{c.markup_id}}" class="appendix-section">
+        <h2 class="appendix-title" tabindex="0"> {{c.header|safe}} </h2>
+         {%if c.TOC %}
+            {% with nav_class='appendix-nav' toc_items=c.TOC %}
+               {% include "toc.html" %} 
+            {% endwith %}
+         {%endif%}
+
+    {% if c.children %}
+        {% for level_one in c.children %}
+            <section id="{{level_one.markup_id}}" class="appendix-section">
+            <h3 class="appendix-heading" tabindex="0"> {{level_one.header|safe}} </h3>
+
+            {% if level_one.marked_up %}
+            <p> 
+                {% for doc_num, ref in level_one.analyses %}
+                <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+                {% endfor %}
+                {{level_one.marked_up|safe|linebreaksbr}} 
+            </p>
+            {% else %}
+                {% for doc_num, ref in level_one.analyses %}
+                <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+                {% endfor %}
+            {% endif %}
+
+            {% if level_one.children %}
+                <ol class="level-{{level_one.children.0.list_level}}" type="{{level_one.children.0.list_type}}">
+                {% for node in level_one.children  %}
+                    {% include "tree-with-wrapper.html" %}
+                {% endfor %}
+                </ol>
+            {% endif %}
+
+            {{ level_one.interp.markup | safe }}
+            </section>
+        {% endfor %}
+    {% endif %}
+{% endif %}
+

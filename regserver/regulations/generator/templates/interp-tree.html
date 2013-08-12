@@ -1,0 +1,38 @@
+{% comment %}
+    Template for each level of the interpretation tree
+{% endcomment %}
+<section id="{{interp.markup_id}}">
+    {% if interp.section_header %}
+        <h3 tabindex="0"> {{ interp.header }}</h3>
+    {% else %}
+        <h4 class='interp-subheading' tabindex="0"> {{ interp.header }} </h4>
+    {% endif %}
+
+    {% for doc_num, ref in interp.analyses %}
+        <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
+    {% endfor %}
+
+    {%if interp.marked_up %}
+        <p> 
+        {{interp.marked_up|safe}}
+        </p>
+    {% endif %}
+
+    {% if interp.par_children %}
+        <ol class="level-1" type="1">
+            {% for par_child in interp.par_children %}
+                {% with node=par_child %}
+                    {% include "tree-with-wrapper.html" %}
+                {% endwith %}
+            {% endfor %}
+        </ol>
+    {% endif %}
+
+    {% if interp.header_children %}
+        {% for header_child in interp.header_children %}
+            {% with interp=header_child template_name="interp-tree.html" %}
+                {% include template_name %}
+            {% endwith %}
+        {% endfor %}
+    {% endif %}
+</section>

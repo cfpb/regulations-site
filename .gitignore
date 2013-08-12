@@ -50,10 +50,12 @@ oldphantomjs/
 # Custom #
 ##########
 *.py[co]
-regulations
-front_end/ip
+ip/
 *.swp
 local_settings.py
+dev_local_settings.py
 config.json
+src/
 _SpecRunner.html
-
+head/public/fonts
+regserver/regulations/static/regulations/docs/v/*/public/fonts/

@@ -1,0 +1,396 @@
+/*
+Typograhy styles
+ ========================================================================== 
+typography.less contains both global and application specific typography */
+
+
+/*
+ Global Typography
+ ========================================================================== */
+
+/*  Body Font
+    ------------
+    <p>Georgia, 1em, black</p>
+*/
+
+body {
+    color: @black;
+    font-family: @body-font;
+    font-size: 1em;
+    line-height: 1.625; /* 26px */
+}
+
+strong {
+    .avenir-next-demi;
+}
+
+/*  Default Headings
+    --------
+    <h1>Heading Level 1</h1>
+    <h2>Heading Level 2</h2>
+    <h3>Heading Level 3</h3>
+    <h4>Heading Level 4</h4>
+    <h5>Heading Level 5</h5>
+    <h6>Heading Level 6</h6>
+ */
+
+h1,
+h2,
+h3{
+    .avenir-next-bold;
+}
+
+h4,
+h5,
+h6 {
+    .avenir-next-demi;
+}
+
+h1 {
+    font-size: 2.125em;
+}
+
+h2 {
+    font-size: 1.625em;
+}
+
+h3 {
+    font-size: 1.375em;
+}
+
+h4 {
+    font-size: 1em;
+    text-transform: uppercase;
+}
+
+h5 {
+    font-size: 0.875em;
+    text-transform: uppercase;
+}
+
+h6 {
+    font-size: 0.875em;
+    margin: 1em 0 0 0;
+}
+
+/*  Sub Headings 
+    ------------
+    <h4 class="sub-heading">Sub Heading</h4>
+*/
+
+.sub-text {
+    .avenir-next;
+}
+
+/*  Lists
+    ------
+    <ul>
+        <li>List item</li>
+        <li>List item</li>
+        <li>List item</li>
+    </ul>
+*/
+
+ul li {
+  list-style: none;
+}
+
+li {
+    margin-top: 1em; /*16px*/
+}
+
+/* 
+ Link Styles
+ ========================================================================== */
+
+/*  Internal Links
+    ---------------
+    <a href="#" class="internal">internal contents</a> 
+*/
+
+.internal:link,
+.internal:visited {
+    color: @black;
+    text-decoration: none;
+    border-bottom: 1px solid #348dc9;
+}
+
+.internal:hover,
+.internal:active {
+    background-color: #cde3f1;
+}
+
+/*  External Links 
+    --------------
+    <a href="#" class="external"">some other website</a>
+*/
+
+.external {
+    background: url(../img/external-link.png) center right no-repeat;
+    padding: 0 19px 0 0;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .external {
+        background: url(../img/external-link@2x.png) center right no-repeat;
+        background-size: 19px 16px;
+    }
+}
+
+.external:link,
+.external:visited {
+    color: @pacific;
+    text-decoration: none;
+    border: none;
+}
+
+.external:hover,
+.external:active {
+    border-bottom: 1px solid;
+}
+
+/*  Definition Links 
+    --------------
+    <a href="#" class="definition">defined term</a>
+*/
+
+.definition:link,
+.definition:visited {
+    color: @black;
+    text-decoration: none;
+    border-bottom: 1px solid #d0d0ce;
+}
+
+.definition:hover,
+.definition:active {
+    border-bottom: 1px solid #babbbd;
+    background-color: #e7e7e6;
+}
+
+.definition.active {
+    background-color: #e7e7e6;
+}
+
+/* 
+ Regulation Headings
+ ========================================================================== */
+
+/*  Primary/Global
+    --------
+
+/*
+    <h2 class="reg-title">Reg Title</h2>
+    <h2 class="appendix-title">Appendix Title</h2>
+*/
+
+.reg-title,
+.appendix-title {
+    .avenir-next;
+    font-size: 2.25em; /* 36px / 16 */
+    line-height: 1.194;
+    text-transform: uppercase;
+}
+
+.reg-title {
+    margin-top: 0px;
+}
+
+.appendix-title {
+    padding-top: 32px;
+}
+
+/*  Top Level
+    -----------
+    <h2 class="section-number">Top Level Reg Heading</h2>
+*/
+
+.section-number,
+.appendix-heading,
+.supplement-section h3 {
+    padding-top: 32px;
+    font-size: 1.8125em; /* 29px / 16 */
+    .avenir-next-bold;
+    line-height: 1.25;
+    letter-spacing: 1px;
+}
+
+/*  Sub Headings
+    -----------
+    <h3 class="appendix-subheading">Top Level Reg Heading</h2>
+*/
+
+.appendix-subheading, 
+.interp-subheading {
+    .reset;
+    font-size: 1.375em; /* 22 / 16 */
+    line-height: 1.25;
+    text-transform: none;
+}
+
+/*  List Styles
+    ==========================================================================
+Regulations are essentially a giant nested list.
+This attempts to define global rules for a clear hierarchical structure.  
+ */
+
+.level-1 > li {
+    padding: 1em 0 0 0;
+}
+
+.level-1 > li:after {
+    padding-top: 1em;
+    height: 1px;
+    display: block;
+    border-bottom: 1px solid @light_field;
+    content: '';
+    margin-left: -14em;
+    margin-right: -60px;
+}
+
+
+.supplement-section .level-1 > li {
+    border-bottom: none;
+    padding: 0;
+}
+
+.level-1 > li:last-child {
+    border-bottom: 0;
+}
+
+.level-1 > li:first-child {
+    padding-top: 0;
+}
+
+.level-2 li {
+    margin-top: 1.25em;
+}
+
+/* 
+The list & key-terms are set to Avenir Next Demi
+Paragraphs within the list items are set in the body font
+The `<ol>` tag needs to have the appropriate list type applied
+```
+<ol class="level-1" type="a">
+    <li><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor...</p>
+        <ol class="level-2" type="1">
+            <li><p>Ut enim ad minim veniam</p></li>
+            <li><p>Quis nostrud exercitation ullamco laboris nisi ut aliquip</p></li>
+        </ol>
+    </li>
+</ol>
+```
+*/
+
+.reg-text ol, dfn {
+  .avenir-next-demi;
+}
+
+.reg-text p {
+  font-family: @body-font;
+  font-weight: 400;
+}
+
+.paragraph-marker {
+    display: none;
+}
+
+/*  Definition Styles
+    ==========================================================================
+
+The ```<dfn class="key-term">``` tag is used throughout the reg to reference terms as they are defined
+within the context of the regulation.
+
+See [MDN's `<dfn>` tag reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dfn) for more info.
+
+All key-terms are displayed as block elements to force a line-break.
+
+*/
+
+.key-term {
+    display: block;
+}
+
+/*  Level-1 Key-Terms
+    -----------------
+
+```
+<ol class="level-1">
+    <li>
+        <dfn class="key-term">Level 1 key-term</dfn>
+    </li>
+</ol>
+```
+*/
+
+.level-1 .key-term {
+    font-size: 1.375em; /* 24px / 16px = 1.5em */
+    line-height: 1.5; /* 30px / 24px = 1.25 */
+}
+
+/*  Level-2 key-terms
+    -----------------
+
+```
+<section class="supplement-section">
+<ol class="level-2">
+    <li>
+        <dfn class="key-term">Level 2 key-term</dfn>
+    </li>
+</ol>
+</section>
+```
+*/
+
+.level-2 .key-term,
+.supplement-section .level-1 .key-term {
+    text-transform: uppercase;
+    font-size: 1em;
+    .avenir-next-bold;
+}
+
+/*  Level-3 key-terms
+    -----------------
+
+```
+<section class="supplement-section">
+<ol class="level-3">
+    <li>
+        <dfn class="key-term">Level 3 key-term</dfn>
+    </li>
+</ol>
+</section>
+```
+*/
+
+.level-3 .key-term {
+    .avenir-next-demi;
+    text-transform: none;
+}
+
+/* 
+  Appendix Styles
+ ==========================================================================
+
+Model Form Content
+------------------
+
+```
+<div class="model-form-content"> <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> </div>
+```
+*/
+
+.model-form-content {
+    background: #f6f6f5;
+    border: 1px solid #e3e4e5;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 0.875em; /* 14/16 = .875 */
+    line-height: 1.4;
+}
+
+.supplement-section section {
+    padding-bottom: 2em;
+}

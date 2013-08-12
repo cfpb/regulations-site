@@ -1,0 +1,193 @@
+@media print {
+
+/*
+ Typography
+ ========================================================================== */
+
+body {
+    font-size: 11pt;
+    line-height: 14pt;
+}
+
+@page {
+    margin-top: .5in;
+    margin-bottom: .5in;
+    margin-left: 1in;
+    margin-right: 1in;
+}
+
+
+/*
+ Page Breaks & Orphans
+ ========================================================================== */
+
+h1, h2, h3, h4 {
+    page-break-after: avoid;
+}
+
+p {
+    orphans: 3;
+}
+
+.reg-section,
+.appendix-section,
+.supplement-section {
+    page-break-after: always;
+}
+
+/*
+ Hidden Elements
+ ========================================================================== */
+
+ img,
+ nav,
+ #table-of-contents,
+ #menu-link,
+ .hidden,
+ .reg-header,
+ .main-head,
+ .sub-head {
+    display: none;
+ }
+
+ /*
+ Single Column Layout
+ ==========================================================================
+ Print only the text of the regulation
+ */
+
+.wrap,
+.main-content,
+.secondary-content {
+    max-width: 100%;
+    width: 100%;
+    float: none;
+    margin: 0;
+    padding: 0;
+}
+
+.open-definition {
+    position: relative;
+    width: 100%;
+    padding: 0;
+}
+
+
+ /*
+ Margin/Padding Resets
+ ========================================================================== */
+
+body, .wrap {
+    margin: 0;
+    padding: 0;
+}
+
+ /*
+ Heading/Keyword Styles
+ ========================================================================== */
+ 
+ h1 {
+    font-size: 26pt;
+    line-height: 30pt;
+}
+
+ .section-title { 
+    font-size: 20pt;
+    line-height: 26pt;
+    margin-top: 15px;
+}
+
+.level-1 .key-term {
+    font-size: 14pt;
+    line-height: 23pt;
+}
+
+/*
+ Link Styles
+ ==========================================================================
+ Remove link styles from definitions & citations 
+*/
+a.definition:link,
+a.definition:visited,
+a.citation:link,
+a.citation:visited {
+    border-bottom: none;
+    color: #101820;
+}
+
+a[href^="http://"] {
+    background: none;
+    padding-right: 0px;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    a[href^="http://"] {
+        background: none;
+    }
+}
+
+/*
+ Inline Interpretations
+ ========================================================================== */
+.inline-interpretation {
+
+    background: @bg_gray;
+    border: 1px solid @bg_gray;
+
+     .hidden {
+        display: block;
+     }
+
+     .expand-button {
+        display: none;
+     }
+
+}
+
+/*
+ Layout Styles/Resets
+ ========================================================================== */
+
+.level-1 > li {
+    border-bottom: none;
+    padding: .5em 0 .5em 0;
+}
+
+.main-content {
+    border-right: none;
+}
+
+.open-definition {
+    display: none;
+    position: relative;
+    padding-left: 0px;
+    width: 0px;
+}
+
+.regs-meta {
+    position: relative;
+}
+
+.reg-section:before,
+.appendix-section:before,
+.supplement-section:before  {
+    height: 0px; 
+    margin: 0px; 
+}
+
+.reg-text > section {
+    border-bottom: none;
+}
+
+/* Reset internal navigation offsets */
+
+.reg-section .level-1 li,
+.appendix-section .level-1 li,
+.supplement-section .level-1 li {
+    border-top: 0px;
+    margin-top: 0px;
+}
+
+} /* end /@media print media query */

@@ -1,0 +1,132 @@
+.inline-interpretation {
+    background-color: @bg_gray;
+    padding: 0.125em .625em;
+    margin-bottom: 1em;
+    margin-left: -20px; /*aligns with list marker */
+    border-bottom: 0px;
+    position: relative;
+
+    &:hover {
+        background-color: @grey;
+        cursor: pointer;
+    }
+
+    &.open {
+        background-color: @grey;
+        cursor: auto;
+    }
+
+    h4 {
+        color: @dark_field;
+        text-transform: uppercase;
+        .avenir-next;
+        display: inline-block;
+        font-size: .8em;
+        margin: 0;
+        padding: 0 0 0 20px;
+        background: url(../img/supplement.png) no-repeat 0 3px;
+    }
+
+    .expand-button {
+        color: @pacific;
+        .avenir-next-bold;
+        position: absolute;
+        display: inline-block;
+        right: .625em;
+        padding-right: 19px;
+        background: url(../img/accordion-sprite.png) no-repeat right 11px;
+        text-transform: uppercase;
+        line-height: 30px; /* match h4 */
+        font-size: .8em;
+        cursor: pointer;
+
+        &.carrotify {
+            background: url(../img/carrotdown.png) no-repeat right 0;
+        }
+    }
+
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .expand-button {
+            background: url(../img/accordian-sprite@2x.png) no-repeat right 11px;
+            background-size: 13px;
+        }
+    }
+
+    h5 {
+        text-transform: none;
+        font-size: 1.375em;
+        margin: 0.875em 0 0 0;
+        line-height: 1.272727273;
+    }
+
+    .level-1 .key-term {
+        font-size: 1em;
+        text-transform: uppercase;
+    }
+
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        h4 {
+            background: url(../img/supplement@2x.png) no-repeat 0 3px;
+            background-size: 12px 15px;
+        }
+    }
+
+    .ref-num {
+        text-transform: none;
+        .avenir-next-demi;
+    }
+
+     p {
+        font-size: 1em;
+    }
+
+    ol {
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    /* 
+    reset borders 
+    -------------
+    */
+
+    li { 
+        border: none;
+    }
+
+    .level-1 > li {
+        border-bottom: none;
+        padding: 0;
+    }
+
+    .level-1 > li:after {
+        padding-top: 1em;
+        height: 1px;
+        display: block;
+        width: 100%;
+        border-bottom: none;
+        content: '';
+        margin-left: 0;
+    }
+
+}
+
+.open .expand-button {
+        background-position: right -12px;
+
+        &.carrotify {
+            background: url(../img/carrotup.png) no-repeat right 0;
+        }
+    }
+
+.level-1 > .inline-interpretation:last-child {
+    margin-bottom: 0;
+}
+
+.inline-interpretation-content {
+    padding: 0 10px 0 10px;
+}
