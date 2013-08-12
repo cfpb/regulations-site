@@ -118,13 +118,11 @@
         padding-left: 100px;
     }
 
-    .sidebar-header {
-        .close-button {
-            position: fixed;
-            top: 80%;
-            right: 20px;
-            z-index: 99999;
-        }
+    .close-button {
+        float: none;
+        position: fixed;
+        top: 70%;
+        right: 0px;
     }
 
     .open-definition {
@@ -132,12 +130,12 @@
         top: 70%;
         bottom: 0;
         left: 0;
-        min-width: 100%; /*magic number to extend container to edge of viewport*/
+        min-width: 100%;
         min-height: 200px;
         padding: 20px 20px 80px 60px;
         background: #f6f6f5;
         .border-top-light(@width: 2px);
-        z-index: 99999;
+        z-index: 200;
         overflow-y: scroll;
     }
 
