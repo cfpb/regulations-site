@@ -121,7 +121,9 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     root("templates"),
+    root('regulations/generator/templates'),
 )
+
 
 INSTALLED_APPS = (
     #'django.contrib.auth',
@@ -162,6 +164,10 @@ CACHES = {
         'LOCATION': '/tmp/eregs_cache',
     }
 }
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
+CACHE_MIDDLEWARE_SECONDS = 600
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
