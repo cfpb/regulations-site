@@ -5,7 +5,7 @@ ALLOWED_HOSTS=['locahost', '127.0.0.1']
 
 #In production, this needs to be set to the directory where the static files
 #should end up:
-STATIC_ROOT = ''
+#STATIC_ROOT = ''
 
 OFFLINE_OUTPUT_DIR = '/tmp/'
 
