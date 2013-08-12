@@ -17,33 +17,27 @@ Main Content
 .main-content {
     float: left;
     margin-top: 50px;
-    margin-left: 260px;
-    padding: 16px 60px;
-    max-width: 58.333336%;
+    margin-left: 260px; /* offset .panel */
+    margin-right: 25%; /* offset .secondary-content */
+    padding: 15px 60px;
     overflow-x: none;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
 }
 
 .secondary-content {
-    float: left;
-    max-width: 25%;
+    position: fixed;
+    border-left: 1px solid @light_field;
+    top: 94px;
+    right: 0px;
+    bottom: 0;
+    height: 100%;
+    width: 25%;
     background: #fff;
     z-index: 100;
+    margin-left: 15px;
 }
 
 .sidebar-inner {
-    position: fixed;
-    max-width: 25%;
     padding: 16px 40px 120px 20px;
-    top: 94px;
-    border-left: 1px solid @light_field;
-    bottom: 0;
-    height: 100%;
-    background: #fff;
-    z-index: 100;
-    overflow-y: scroll;
 }
 
 /*TODO: convert TOC drawer width to em*/
@@ -66,14 +60,14 @@ IE fixes
 --------
 */
 
-.lt-ie9 .main-content {
+/*.lt-ie9 .main-content {
     width: 60%
-}
+}*/
 
-.lt-ie9 .sidebar-inner {
+/*.lt-ie9 .sidebar-inner {
     width: 25%;
     margin-right: 20px;
-}
+}*/
 
 /*
 TOC Header Navigation
