@@ -71,10 +71,10 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
 
             // init primary Views that require only a single instance
             window.Regs = {};
-            window.Regs.subhead = new SubHeadView({el: '#content-subhead'});
-            window.Regs.toc = new TOCView({el: '#menu'});
-            window.Regs.sidebar = new SidebarView({el: '#sidebar'});
-            window.Regs.regContent = new ContentView({el: '.main-content'});
+            window.Regs.subhead = new SubHeadView();
+            window.Regs.toc = new TOCView();
+            window.Regs.sidebar = new SidebarView();
+            window.Regs.regContent = new ContentView();
             window.Regs.analytics = new AnalyticsHandler();
             window.Regs.mainHeader = new HeaderView();
 
