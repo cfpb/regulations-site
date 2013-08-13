@@ -12,7 +12,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
-            'mouseenter *[data-permalink-section]': 'showPermalink'
+            'mouseenter *[data-permalink-section]': 'showPermalink',
+            'click .permalink-marker': 'permalinkMarkerHandler'
         },
 
         initialize: function() {
@@ -164,6 +165,9 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             $permalink = $(permalink);
 
             $section.children().first().prepend($permalink);
+        },
+
+        permalinkMarkerHandler: function(e) {
             Dispatch.trigger('ga-event:permalink', $(e.target).attr('href'));
         },
 
