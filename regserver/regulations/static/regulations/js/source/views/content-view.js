@@ -13,7 +13,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
             'mouseenter *[data-permalink-section]': 'showPermalink',
-            'click .permalink-marker': 'permalinkMarkerHandler'
+            'click .permalink-marker': 'permalinkMarkerHandler',
+            'click .definition.active': 'openDefinitionLinkHandler'
         },
 
         initialize: function() {
@@ -77,12 +78,18 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             return this;
         },
 
+        // only concerned with resetting DOM, no matter
+        // what way the definition was closed
         closeDefinition: function() {
             this.clearActiveTerms();
+        },
 
+        // only concerned with sending GA event if the definition
+        // is closed via active term link
+        openDefinitionLinkHandler: function(e) {
             Dispatch.trigger('ga-event:definition', {
                 action: 'clicked key term to close definition',
-                context: this.openDefinition.id
+                context: $(e.target).data('definition')
             });
         },
 
@@ -167,6 +174,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             $section.children().first().prepend($permalink);
         },
 
+        // send GA event when permalink is clicked
         permalinkMarkerHandler: function(e) {
             Dispatch.trigger('ga-event:permalink', $(e.target).attr('href'));
         },
@@ -175,6 +183,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             $(id).focus();
         },
 
+        // Sets DOM back to neutral state
         clearActiveTerms: function() {
             this.$el.find('.active.definition')
                 .removeClass('active')

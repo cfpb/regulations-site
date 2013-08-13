@@ -134,7 +134,8 @@
             <span class="string">'click .definition'</span>: <span class="string">'termLinkHandler'</span>,
             <span class="string">'click .inline-interp-header'</span>: <span class="string">'expandInterp'</span>,
             <span class="string">'mouseenter *[data-permalink-section]'</span>: <span class="string">'showPermalink'</span>,
-            <span class="string">'click .permalink-marker'</span>: <span class="string">'permalinkMarkerHandler'</span>
+            <span class="string">'click .permalink-marker'</span>: <span class="string">'permalinkMarkerHandler'</span>,
+            <span class="string">'click .definition.active'</span>: <span class="string">'openDefinitionLinkHandler'</span>
         },
 
         initialize: <span class="keyword">function</span>() {
@@ -334,14 +335,44 @@ for the fixed position header, is deemed the active section</p>
             }
                  
             <span class="keyword">return</span> <span class="keyword">this</span>;
-        },
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>only concerned with resetting DOM, no matter
+what way the definition was closed</p>
 
-        closeDefinition: <span class="keyword">function</span>() {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        closeDefinition: <span class="keyword">function</span>() {
             <span class="keyword">this</span>.clearActiveTerms();
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>only concerned with sending GA event if the definition
+is closed via active term link</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        openDefinitionLinkHandler: <span class="keyword">function</span>(e) {
             Dispatch.trigger(<span class="string">'ga-event:definition'</span>, {
                 action: <span class="string">'clicked key term to close definition'</span>,
-                context: <span class="keyword">this</span>.openDefinition.id
+                context: $(e.target).data(<span class="string">'definition'</span>)
             });
         },
 
@@ -354,11 +385,11 @@ for the fixed position header, is deemed the active section</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>content section key term link click handler</p>
 
@@ -372,11 +403,11 @@ for the fixed position header, is deemed the active section</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>if this link is already active, toggle def shut</p>
 
@@ -390,11 +421,11 @@ for the fixed position header, is deemed the active section</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>if its the same definition, diff term link</p>
 
@@ -408,11 +439,11 @@ for the fixed position header, is deemed the active section</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>close old definition, if there is one</p>
 
@@ -423,11 +454,11 @@ for the fixed position header, is deemed the active section</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>open new definition</p>
 
@@ -459,11 +490,11 @@ for the fixed position header, is deemed the active section</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>handler for when inline interpretation is clicked</p>
 
@@ -474,11 +505,11 @@ for the fixed position header, is deemed the active section</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>user can click anywhere in the header of a closed interp
 for an open interp, they can click &quot;hide&quot; button or header</p>
@@ -500,11 +531,11 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>handler for when a permalink icon should be shown</p>
 
@@ -523,17 +554,43 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
             $permalink = $(permalink);
 
             $section.children().first().prepend($permalink);
-        },
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>send GA event when permalink is clicked</p>
 
-        permalinkMarkerHandler: <span class="keyword">function</span>(e) {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        permalinkMarkerHandler: <span class="keyword">function</span>(e) {
             Dispatch.trigger(<span class="string">'ga-event:permalink'</span>, $(e.target).attr(<span class="string">'href'</span>));
         },
 
         changeFocus: <span class="keyword">function</span>(id) {
             $(id).focus();
-        },
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Sets DOM back to neutral state</p>
 
-        clearActiveTerms: <span class="keyword">function</span>() {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        clearActiveTerms: <span class="keyword">function</span>() {
             <span class="keyword">this</span>.$el.find(<span class="string">'.active.definition'</span>)
                 .removeClass(<span class="string">'active'</span>)
                 .removeData(<span class="string">'active'</span>);
