@@ -133,7 +133,8 @@
         events: {
             <span class="string">'click .definition'</span>: <span class="string">'termLinkHandler'</span>,
             <span class="string">'click .inline-interp-header'</span>: <span class="string">'expandInterp'</span>,
-            <span class="string">'mouseenter *[data-permalink-section]'</span>: <span class="string">'showPermalink'</span>
+            <span class="string">'mouseenter *[data-permalink-section]'</span>: <span class="string">'showPermalink'</span>,
+            <span class="string">'click .permalink-marker'</span>: <span class="string">'permalinkMarkerHandler'</span>
         },
 
         initialize: <span class="keyword">function</span>() {
@@ -522,6 +523,9 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
             $permalink = $(permalink);
 
             $section.children().first().prepend($permalink);
+        },
+
+        permalinkMarkerHandler: <span class="keyword">function</span>(e) {
             Dispatch.trigger(<span class="string">'ga-event:permalink'</span>, $(e.target).attr(<span class="string">'href'</span>));
         },
 

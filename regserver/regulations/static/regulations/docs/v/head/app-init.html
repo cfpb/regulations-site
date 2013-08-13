@@ -241,10 +241,10 @@ incrementally loads in images once rendering is complete</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            window.Regs = {};
-            window.Regs.subhead = <span class="keyword">new</span> SubHeadView({el: <span class="string">'#content-subhead'</span>});
-            window.Regs.toc = <span class="keyword">new</span> TOCView({el: <span class="string">'#menu'</span>});
-            window.Regs.sidebar = <span class="keyword">new</span> SidebarView({el: <span class="string">'#sidebar'</span>});
-            window.Regs.regContent = <span class="keyword">new</span> ContentView({el: <span class="string">'.main-content'</span>});
+            window.Regs.subhead = <span class="keyword">new</span> SubHeadView();
+            window.Regs.toc = <span class="keyword">new</span> TOCView();
+            window.Regs.sidebar = <span class="keyword">new</span> SidebarView();
+            window.Regs.regContent = <span class="keyword">new</span> ContentView();
             window.Regs.analytics = <span class="keyword">new</span> AnalyticsHandler();
             window.Regs.mainHeader = <span class="keyword">new</span> HeaderView();
 
