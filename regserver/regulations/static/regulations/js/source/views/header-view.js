@@ -5,7 +5,9 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], fun
 
         initialize: function() {
             this.$activeEls = $('#menu, #site-header, #reg-content');
-            this.$panel = $('.panel');
+
+            // view switcher buttons - TOC, calendar, search
+            this.$tocLinks = $('.toc-nav-link');
         },
 
         events: {
@@ -29,21 +31,12 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], fun
         toggleDrawer: function(e) {
             e.preventDefault();
 
-            var $target = $(e.target),
-                $targetLink = $(e.target).attr('href'),
-                $tocLinks = $('.toc-nav-link'),
-                $panelClass = this.$panel.attr('class'),
-                $newActive = $('.' + $panelClass + ' ' + $targetLink),
-                $currentActive = $('.' + $panelClass + ' .current');
+            var $target = $(e.target);
 
-                $tocLinks.removeClass('current');
-                $target.addClass('current');
+            this.$tocLinks.removeClass('current');
+            $target.addClass('current');
 
-                if ($newActive.hasClass('hidden')) {
-                    $currentActive.toggleClass('hidden current');
-                    $newActive.toggleClass('hidden current');
-                }
-
+            Dispatch.trigger('toc:stateChange', $target.attr('href'));
         }
     });
 
