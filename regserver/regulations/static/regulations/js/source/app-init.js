@@ -31,27 +31,6 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
         // Purgatory for DOM event bindings that should happen in a View
         bindEvents: function() {
 
-            var $tocLinks = $('.drawer-toggles a');
-
-            $tocLinks.on('click', function(e){
-                var $this = $(this),
-                    $currentLink = $(this).attr('href'),
-                    $newActive = $('.panel ' + $currentLink),
-                    $currentActive = $('.panel .current');
-
-                $tocLinks.removeClass('current');
-                $this.addClass('current');
-
-                if ($newActive.hasClass('hidden')) {
-                    $currentActive.addClass('hidden')
-                        .removeClass('current');
-                    $newActive.removeClass('hidden')
-                        .addClass('current');
-                }
-
-                e.preventDefault();
-            }); 
-
             /* ssshhhhh */
             new Konami(function() {
                 /* http://thenounproject.com/noun/hamburger/#icon-No17373 */
