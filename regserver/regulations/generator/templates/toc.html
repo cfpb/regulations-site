@@ -24,4 +24,12 @@
             {% endif %}
         {% endfor %}
     </ol>
+    {% if top_toc %}
+        <div id="history" class="toc-container hidden">
+            <p>History Here</p>
+        </div>
+        <div id="search" class="toc-container hidden">
+            <p>Search Here</p>
+        </div>
+    {% endif %}
 </nav>

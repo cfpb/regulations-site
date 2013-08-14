@@ -184,25 +184,62 @@ TOC Link (aka 'The Hamburger Button')
 .toc-nav-link {
     text-indent: -9999px;
     display: inline-block;
+    margin-left: -0.25em; /*accomodate inline-block spacing */
     height: 34px; /* match height of main header */
     width: 40px;
     border-right: 1px solid @light_field;
-    background: url(../img/nav-link.png) no-repeat center center;
+    //background: url(../img/nav-link.png) no-repeat center center;
 
     &.hamburgerify {
         background: url(../img/hamburger.png) no-repeat center center;
     }
 }
 
+
+.drawer-toggles li:first-child {
+    margin-left: 0; /*remove negative margin from first list item*/
+}
+
+#menu-link {
+    background: url(../img/nav-link.png) no-repeat center center;
+}
+
+#history-link {
+    background: url(../img/history.png) no-repeat center center;
+}
+
+#search-link {
+    background: url(../img/search.png) no-repeat center center;
+}
+
+
 @media 
 (-webkit-min-device-pixel-ratio: 2), 
 (min-resolution: 192dpi) {
-    .toc-nav-link {
+    #menu-link {
         background: url(../img/nav-link@2x.png) no-repeat center center;
-        background-size: 16px 16px;
+        background-size: 20px 16px;
+    }
+
+    #history-link {
+        background: url(../img/history@2x.png) no-repeat center center;
+        background-size: 20px 16px;
+    }
+
+    #search-link {
+        background: url(../img/search@2x.png) no-repeat center center;
+        background-size: 20px 16px;
     }
 }
 
+#menu-link:hover,
+#menu-link:active,
+#history-link:hover,
+#history-link:active,
+#search-link:hover,
+#search-link:active {
+        background-color: @light_field;
+}
 
 
 /* TOC link styles */
