@@ -149,7 +149,17 @@ when the active section changes, highlight it in the TOC</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'activeSection:change'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'activeSection:change'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);
+
+            
+            Dispatch.on(<span class="string">'toc:stateChange'</span>, <span class="keyword">this</span>.changeContents, <span class="keyword">this</span>);
+
+            <span class="keyword">this</span>.$children = $(<span class="string">'.toc-container'</span>);
+            <span class="keyword">this</span>.childViews = {
+                <span class="string">'#table-of-contents'</span>: $(<span class="string">'#table-of-contents'</span>),
+                <span class="string">'#history'</span>: $(<span class="string">'#history'</span>),
+                <span class="string">'#search'</span>: $(<span class="string">'#search'</span>)
+            };</pre></div></div>
             
         </li>
         
@@ -203,6 +213,11 @@ when a TOC link is clicked, send an event along with the href of the clicked lin
             
             <div class="content"><div class='highlight'><pre>        sendClickEvent: <span class="keyword">function</span>(e) {
             Dispatch.trigger(<span class="string">'toc:click'</span>, $(e.target).attr(<span class="string">'href'</span>));
+        },
+
+        changeContents: <span class="keyword">function</span>(activeId) {
+            <span class="keyword">this</span>.$children.addClass(<span class="string">'hidden'</span>);
+            <span class="keyword">this</span>.childViews[activeId].removeClass(<span class="string">'hidden'</span>);
         },</pre></div></div>
             
         </li>
