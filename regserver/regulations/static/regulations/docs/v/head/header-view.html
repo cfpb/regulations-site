@@ -128,10 +128,12 @@
 
         initialize: <span class="keyword">function</span>() {
             <span class="keyword">this</span>.$activeEls = $(<span class="string">'#menu, #site-header, #reg-content'</span>);
+            <span class="keyword">this</span>.$panel = $(<span class="string">'.panel'</span>);
         },
 
         events: {
-            <span class="string">'click .toc-toggle'</span>: <span class="string">'openTOC'</span>
+            <span class="string">'click .toc-toggle'</span>: <span class="string">'openTOC'</span>,
+            <span class="string">'click .toc-nav-link'</span>: <span class="string">'toggleDrawer'</span>
         },
 
         openTOC: <span class="keyword">function</span>(e) {
@@ -145,6 +147,26 @@
                 $target.toggleClass(<span class="string">'open'</span>);
                 <span class="keyword">this</span>.$activeEls.toggleClass(<span class="string">'active'</span>);
             }
+        },
+
+        toggleDrawer: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+
+            <span class="keyword">var</span> $target = $(e.target),
+                $targetLink = $(e.target).attr(<span class="string">'href'</span>),
+                $tocLinks = $(<span class="string">'.toc-nav-link'</span>),
+                $panelClass = <span class="keyword">this</span>.$panel.attr(<span class="string">'class'</span>),
+                $newActive = $(<span class="string">'.'</span> + $panelClass + <span class="string">' '</span> + $targetLink),
+                $currentActive = $(<span class="string">'.'</span> + $panelClass + <span class="string">' .current'</span>);
+
+                $tocLinks.removeClass(<span class="string">'current'</span>);
+                $target.addClass(<span class="string">'current'</span>);
+
+                <span class="keyword">if</span> ($newActive.hasClass(<span class="string">'hidden'</span>)) {
+                    $currentActive.toggleClass(<span class="string">'hidden current'</span>);
+                    $newActive.toggleClass(<span class="string">'hidden current'</span>);
+                }
+
         }
     });
 
