@@ -34,11 +34,7 @@
 </div>
 </header>
 
- {%if tree.TOC %}
-    {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
-       {% include "toc.html" %} 
-    {% endwith %}
- {%endif%}  
+{% include "drawer.html" %} 
 
 <div class="wrap group" id="reg-content">
 

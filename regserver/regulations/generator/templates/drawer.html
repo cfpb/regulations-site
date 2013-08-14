@@ -1,0 +1,19 @@
+<div id="menu" class="panel">
+    <h2>
+        <span class="toc-type">Table of contents for</span>
+        <span class="toc-part-num">{{ tree.meta.cfr_title_number }} CFR Part {{ tree.label.0 }}</span>
+        <span class="toc-reg-title">{{ tree.title_clean|title }}
+        {% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</span>
+    </h2>
+ {%if tree.TOC %}
+    {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
+       {% include "toc.html" %} 
+    {% endwith %}
+ {%endif%}
+    <div id="history" class="toc-container hidden">
+        <p>History Here</p>
+    </div> <!--/#history-->
+    <div id="search" class="toc-container hidden">
+        <p>Search Here</p>
+    </div> <!--/#search-->
+</div> <!-- /.panel -->
