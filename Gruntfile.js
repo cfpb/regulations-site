@@ -127,6 +127,7 @@ module.exports = function(grunt) {
                 'sidebar-head-view': './views/sidebar-head-view',
                 'content-view': './views/content-view',
                 'konami': './lib/konami',
+                'analytics-handler': './views/analytics-handler-view',
                 'header-view': './views/header-view'
               },
               shim: {
@@ -218,6 +219,7 @@ module.exports = function(grunt) {
                     'sidebar-head-view': './views/sidebar-head-view',
                     'content-view': './views/content-view',
                     'konami': './lib/konami',
+                    'analytics-handler': './views/analytics-handler-view',
                     'header-view': './views/header-view'
                 },
                 shim: {

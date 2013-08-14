@@ -48,6 +48,7 @@ define('sidebar-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
         // **TODO** can only really handle definitions
         close: function() {
             Dispatch.remove('definition');
+            Dispatch.trigger('ga-event:definition', 'close by header button');
         }
     });
 

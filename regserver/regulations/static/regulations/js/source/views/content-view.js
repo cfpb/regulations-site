@@ -12,7 +12,9 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
-            'mouseenter *[data-permalink-section]': 'showPermalink'
+            'mouseenter *[data-permalink-section]': 'showPermalink',
+            'click .permalink-marker': 'permalinkMarkerHandler',
+            'click .definition.active': 'openDefinitionLinkHandler'
         },
 
         initialize: function() {
@@ -76,8 +78,19 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             return this;
         },
 
+        // only concerned with resetting DOM, no matter
+        // what way the definition was closed
         closeDefinition: function() {
             this.clearActiveTerms();
+        },
+
+        // only concerned with sending GA event if the definition
+        // is closed via active term link
+        openDefinitionLinkHandler: function(e) {
+            Dispatch.trigger('ga-event:definition', {
+                action: 'clicked key term to close definition',
+                context: $(e.target).data('definition')
+            });
         },
 
         toggleDefinition: function($link) {
@@ -119,6 +132,10 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             });
 
             Dispatch.set('definition', definition);
+            Dispatch.trigger('ga-event:definition', {
+                action: 'clicked key term to open definition',
+                context: defId
+            });
             this.setActiveTerm($link);
 
             return definition;
@@ -157,10 +174,16 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             $section.children().first().prepend($permalink);
         },
 
+        // send GA event when permalink is clicked
+        permalinkMarkerHandler: function(e) {
+            Dispatch.trigger('ga-event:permalink', $(e.target).attr('href'));
+        },
+
         changeFocus: function(id) {
             $(id).focus();
         },
 
+        // Sets DOM back to neutral state
         clearActiveTerms: function() {
             this.$el.find('.active.definition')
                 .removeClass('active')

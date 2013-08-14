@@ -54,6 +54,11 @@
               </a>
             
               
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
               <a class="source" href="content-view.html">
                 content-view.js
               </a>
@@ -146,7 +151,9 @@ this.options:</p>
             <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> DefinitionView = RegsView.extend({
         className: <span class="string">'open-definition'</span>,
         events: {
-            <span class="string">'click .close-button'</span>: <span class="string">'close'</span>
+            <span class="string">'click .close-button'</span>: <span class="string">'close'</span>,
+            <span class="string">'click .definition'</span>: <span class="string">'sendDefinitionLinkEvent'</span>,
+            <span class="string">'click .continue-link'</span>: <span class="string">'sendContinueLinkEvent'</span>
         },
 
         formatInterpretations: <span class="keyword">function</span>() {
@@ -178,6 +185,20 @@ this.options:</p>
                     $(keyTerm[i]).remove(); 
                 }
             }
+        },
+
+        sendContinueLinkEvent: <span class="keyword">function</span>(e) {
+            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, {
+                action: <span class="string">'clicked continue link'</span>,
+                context: $(e.target).attr(<span class="string">'href'</span>)
+            });
+        },
+
+        sendDefinitionLinkEvent: <span class="keyword">function</span>(e) {
+            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, {
+                action: <span class="string">'clicked key term inside definition'</span>,
+                context: $(e.target).attr(<span class="string">'href'</span>)
+            });
         },
 
         render: <span class="keyword">function</span>() {</pre></div></div>
@@ -284,6 +305,10 @@ this.options:</p>
         close: <span class="keyword">function</span>(e) {
             e.preventDefault();
             Dispatch.remove(<span class="string">'definition'</span>);
+            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, {
+                action: <span class="string">'closed definition by tab-revealed link'</span>,
+                context: <span class="keyword">this</span>.model.id
+            });
         },
 
         remove: <span class="keyword">function</span>() {

@@ -3,7 +3,7 @@
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
-define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami', 'header-view'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami, HeaderView) {
+define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler) {
     'use strict';
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -70,10 +70,14 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             this.getTree($('#reg-content')); 
 
             // init primary Views that require only a single instance
-            window.mainHeader = new HeaderView();
-            window.toc = new TOCView();
-            window.sidebar = new SidebarView();
-            window.regContent = new ContentView();
+            window.Regs = {};
+            window.Regs.subhead = new SubHeadView();
+            window.Regs.toc = new TOCView();
+            window.Regs.sidebar = new SidebarView();
+            window.Regs.regContent = new ContentView();
+            window.Regs.analytics = new AnalyticsHandler();
+            window.Regs.mainHeader = new HeaderView();
+
             this.bindEvents();
             this.fetchModelForms();
         }
