@@ -8,5 +8,5 @@ class SectionBySectionLayer(object):
             references = []
             for layer_element in self.layer[text_index]:
                 references.append(layer_element['reference'])
-            
+
             return 'analyses', references
