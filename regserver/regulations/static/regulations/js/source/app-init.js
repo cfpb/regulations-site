@@ -31,9 +31,25 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
         // Purgatory for DOM event bindings that should happen in a View
         bindEvents: function() {
 
-            /* prevent default link behavior on the menu button until we include all TOC icons */
-            $('#menu-link').click(function(e){
-              e.preventDefault();
+            var $tocLinks = $('.drawer-toggles a');
+
+            $tocLinks.on('click', function(e){
+                var $this = $(this),
+                    $currentLink = $(this).attr('href'),
+                    $newActive = $('.panel ' + $currentLink),
+                    $currentActive = $('.panel .current');
+
+                $tocLinks.removeClass('current');
+                $this.addClass('current');
+
+                if ($newActive.hasClass('hidden')) {
+                    $currentActive.addClass('hidden')
+                        .removeClass('current');
+                    $newActive.removeClass('hidden')
+                        .addClass('current');
+                }
+
+                e.preventDefault();
             }); 
 
             /* ssshhhhh */

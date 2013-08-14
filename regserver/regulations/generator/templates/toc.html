@@ -11,7 +11,7 @@
             {% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</span>
         </h2>
     {% endif %}
-    <ol class="{{nav_class}}"{% if top_toc %} id="table-of-contents"{% endif %}>
+    <ol class="{{nav_class}} toc-container current"{% if top_toc %} id="table-of-contents"{% endif %}>
         {% for item in toc_items %}
             {% if item.is_section %}
                 <li><a href="{{item.url}}"><span class="toc-section-marker">§&nbsp;{{item.section}}</span> {{item.sub_label|safe}}</a></li>
