@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['content-view'], function(ContentView) {})```
-define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView) {
+define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view', 'regs-data'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegsData) {
     'use strict';
 
     var ContentView = Backbone.View.extend({
@@ -25,8 +25,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             // * when a definition is removed, update term links
             Dispatch.on('definition:remove', this.closeDefinition, this);
 
-            // * when a table of contents link is clicked, make sure browser focus updates
-            Dispatch.on('toc:click', this.changeFocus, this);
+            Dispatch.on('toc:click', this.loadSection, this);
 
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
@@ -40,6 +39,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             this.$contentContainer = this.$el.find('.level-1 li[id], .reg-section, .appendix-section, .supplement-section');
 
             // set active section vars
+            // @TODO: how do activeSection and Dispatch.get('section') live together?
             this.activeSection = '';
             this.$activeSection = '';
 
@@ -76,6 +76,23 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             }
                  
             return this;
+        },
+
+        // ask for section data, when promise is completed,
+        // re-render view
+        loadSection: function(sectionId) {
+            var returned = RegsData.get(sectionId);
+
+            returned.done(function(section, sectionId) {
+                this.$el.html(section);
+                Dispatch.trigger('section:open', sectionId);
+                Dispatch.set('section', sectionId);
+            }.bind(this));
+        },
+
+        // for a consistent API
+        render: function() {
+            this.loadSection(Dispatch.getOpenSection());
         },
 
         // only concerned with resetting DOM, no matter

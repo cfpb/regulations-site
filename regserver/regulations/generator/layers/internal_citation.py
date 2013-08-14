@@ -33,7 +33,7 @@ class InternalCitationLayer():
             #XXX We have some errors in our layers. Once those are fixed, we 
             #need to revisit this. 
             url = ''
-        return url + InternalCitationLayer.hash_url_for(label, version)
+        return url
 
     @staticmethod
     def hash_url_for(label, version):

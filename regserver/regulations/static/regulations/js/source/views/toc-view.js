@@ -16,7 +16,6 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
             // **Event Listeners**
             // when the active section changes, highlight it in the TOC
             Dispatch.on('activeSection:change', this.setActive, this);
-
             
             Dispatch.on('toc:stateChange', this.changeContents, this);
 
@@ -42,7 +41,8 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
         // **Event trigger**
         // when a TOC link is clicked, send an event along with the href of the clicked link
         sendClickEvent: function(e) {
-            Dispatch.trigger('toc:click', $(e.target).attr('href'));
+            e.preventDefault();
+            Dispatch.trigger('toc:click', $(e.currentTarget).data('section-id'));
         },
 
         changeContents: function(activeId) {

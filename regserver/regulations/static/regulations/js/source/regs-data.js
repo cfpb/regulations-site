@@ -89,18 +89,10 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers'], function(_, Ba
         // **Params**
         // 
         // * ```id```: string, dash-delimited reg entity id
-        // * ```format```: optional, string, options: 'json' (default) or 'html'
-        // * ```withChildren```: optional, boolean, default = false
         //
         // **Returns** representation of the reg entity requested in the format requested,
-        // with or without child entities.
-        //
-        // If 'html' is requested, child entities will be included regardless of the value
-        // of ```withChildren```
-        get: function(id, format, withChildren) {
-            format = format || 'json';
-            withChildren = withChildren || false;
-            var obj = this.has(id) || this.request(id, format);
+        get: function(id) {
+            var obj = this.has(id) || this.request(id);
             return obj;
         },
 
@@ -109,9 +101,16 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers'], function(_, Ba
             return this.get(id, format, withChildren);
         },
 
-        // will be the interface for requesting content from server
-        request: function(id, format) {
-            return 'this is where we\'d load the api response for ' + id + ' in ' + format + ' format.';
+        request: function(id) {
+            var url = '/partial/' + id + '/2013-10604-eregs',
+                promise;
+
+            promise = $.ajax({
+                url: url,
+                success: function(data) { this.set(data); }.bind(this)
+            });
+
+            return promise;
         },
 
         // **Param**

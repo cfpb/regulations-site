@@ -53,6 +53,11 @@ define('regs-dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Bac
                 return this.open[type].model.id;
             }
             return false;
+        },
+
+        // return open section ex. 1005-3
+        getOpenSection: function() {
+            return this.open['section'];                
         }
 
     }, Backbone.Events);   

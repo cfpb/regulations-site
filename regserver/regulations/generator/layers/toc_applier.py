@@ -36,6 +36,7 @@ class TableOfContentsLayer(object):
         if len(data['index']) == 2 and data['index'][1].isdigit():
             element['is_section'] = True
             element['section'] = '.'.join(data['index'])
+            element['markup_section_id'] = '-'.join(data['index'])
             element['sub_label'] = re.search(element['section'] 
                     + r'[^\w]*(.*)', data['title']).group(1)
     
