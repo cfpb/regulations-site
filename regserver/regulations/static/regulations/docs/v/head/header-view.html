@@ -54,6 +54,11 @@
               </a>
             
               
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
               <a class="source" href="content-view.html">
                 content-view.js
               </a>
@@ -116,7 +121,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'header-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'header-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> HeaderView = Backbone.View.extend({
         el: <span class="string">'.reg-header'</span>,
@@ -131,7 +136,13 @@
 
         openTOC: <span class="keyword">function</span>(e) {
             e.preventDefault();
+
+            <span class="keyword">var</span> $target = $(e.target),
+                state = ($target.hasClass(<span class="string">'open'</span>)) ? <span class="string">'close'</span> : <span class="string">'open'</span>;
+
             <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.$activeEls !== <span class="string">'undefined'</span>) {
+                Dispatch.trigger(<span class="string">'toc:click'</span>, state + <span class="string">' toc'</span>);
+                $target.toggleClass(<span class="string">'open'</span>);
                 <span class="keyword">this</span>.$activeEls.toggleClass(<span class="string">'active'</span>);
             }
         }

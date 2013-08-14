@@ -54,6 +54,11 @@
               </a>
             
               
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
               <a class="source" href="content-view.html">
                 content-view.js
               </a>
@@ -238,6 +243,7 @@
             
             <div class="content"><div class='highlight'><pre>        close: <span class="keyword">function</span>() {
             Dispatch.remove(<span class="string">'definition'</span>);
+            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, <span class="string">'close by header button'</span>);
         }
     });
 
