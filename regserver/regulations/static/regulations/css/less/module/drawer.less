@@ -10,62 +10,28 @@ Regulation Drawer
 
 The regulation drawer is a slide out panel
 On large displays it is on the screen by default. It can be toggled with the "active" class.
-
-```
-<nav id="menu" class="panel active" role="navigation">
-    <ol class="regulation-nav" id="table-of-contents">
-        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.1</span> Section Title</a></li>
-        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.2</span> Section Title</a></li>
-        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.3</span> Section Title</a></li>
-    </ol>
-</nav>
-```
-
 */
 
+/*
+Generic drawer styles
+--------------------- */
+
 .panel {
-
-    /* animate the panel opening */
-    .slide;
-
-    ol {
-        .reset;
-    }
-
-    h2 {
-        margin: 0;
-        padding: 10px 15px 14px 15px;
-        line-height: 1.2;
-        .border-bottom-light (@width: 2px);
-
-        .toc-type {
-            color: @dark_gray;
-            font-size: 0.527472527em; /* 12px / (26px * .875em) */
-            .avenir-next;
-            text-transform: uppercase;
-        }
-
-        .toc-part-num {
-          display: block;
-          font-size: 20px; /*18px / (26px * .875em) */
-          margin: 10px 0 7px 0;
-          color: @dark_gray;
-          .avenir-next-bold;
-          text-transform: uppercase;
-        }
-
-        .toc-reg-title {
-          .avenir-next;
-          display: block;
-          font-size: 0.615384615em; /* 14px / (26px * .875em)  */
-        }
-    }
+    background-color: #f6f6f5;
+    border-right: 2px solid #d0d0ce;
+    .avenir-next-demi;
+    font-size: .875em;
+    .slide; /* animate the panel opening */
 }
+
+/*
+Drawer Behavior
+--------------- */
 
 /* 
 When applied at large resolutions displays, the active class causes the panel navigation to slide off screen
- */
- @media only screen and ( min-width: 1100px ) {
+*/
+@media only screen and ( min-width: 1100px ) {
     .panel.active{
         left: -200px;
 
@@ -99,20 +65,66 @@ This works by default, but can cause the nav to reverse position when already ap
 */
 @media only screen and ( max-width: 1100px ) {
     .panel.active{
-    left: 0px;
+        left: 0px;
     }
 }
 
 
+/*
+Panel Header
+------------ */
+
+.drawer-header {
+    width: 17.142857143em;
+    position: fixed;
+    background-color: #f6f6f5;
+    border-right: 2px solid #d0d0ce;
+
+    h2 {
+        margin: 0;
+        padding: 10px 15px 14px 15px;
+        line-height: 1.2;
+        .border-bottom-light (@width: 2px);
+
+        .toc-type {
+            color: @dark_gray;
+            font-size: 0.527472527em; /* 12px / (26px * .875em) */
+            .avenir-next;
+            text-transform: uppercase;
+        }
+
+        .toc-part-num {
+          display: block;
+          font-size: 20px; /*18px / (26px * .875em) */
+          margin: 10px 0 7px 0;
+          color: @dark_gray;
+          .avenir-next-bold;
+          text-transform: uppercase;
+        }
+
+        .toc-reg-title {
+          .avenir-next;
+          display: block;
+          font-size: 0.615384615em; /* 14px / (26px * .875em)  */
+        }
+    }
+}
+
+.toc-container {
+    margin-top: 120px;
+}
+
 /* 
 Drawer Links
 ============
-
-```
-<a href="#menu" id="menu-link" class="toc-nav-link toc-toggle active">Table of Contents</a>
-```
-
 */
+
+/*
+Panel Slide Button
+------------------
+.panel-slide toggles the drawer open and closed 
+*/
+
 .panel-slide {
     text-indent: -9999px;
     display: block;
@@ -146,6 +158,12 @@ Drawer Links
     }
 }
 
+/* 
+TOC Nav Links
+-------------
+.toc-nav-links toggle between the types of drawer content
+currently these are TOC, History, and Search
+*/
 .toc-nav-link {
     text-indent: -9999px;
     display: inline-block;
@@ -174,7 +192,6 @@ Drawer Links
 #search-link {
     background: url(../img/search.png) no-repeat center center;
 }
-
 
 @media 
 (-webkit-min-device-pixel-ratio: 2), 
@@ -205,8 +222,16 @@ Drawer Links
 }
 
 
-/* TOC link styles */
+/* 
+Table of Contents Drawer
+========================
+This contains all of the styles specific to the TOC
+*/
 .regulation-nav {
+
+    ol {
+        padding: 0;
+    }
 
     li {
         margin: 0;
@@ -240,3 +265,15 @@ Drawer Links
     }
 
 }
+
+/* 
+History Drawer
+==============
+This contains all of the styles specific to the history
+*/
+
+/* 
+Search Drawer
+=============
+This contains all of the styles specific to the search
+*/
