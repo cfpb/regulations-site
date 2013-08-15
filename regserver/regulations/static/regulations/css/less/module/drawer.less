@@ -5,10 +5,10 @@ drawer.less contains and imports styles for the left-hand navigation drawer
 */
 
 /*
-Regulation Table of Contents
+Regulation Drawer
 ============================
 
-The regulation TOC is a slide out panel drawer
+The regulation drawer is a slide out panel
 On large displays it is on the screen by default. It can be toggled with the "active" class.
 
 ```
@@ -24,6 +24,8 @@ On large displays it is on the screen by default. It can be toggled with the "ac
 */
 
 .panel {
+
+    /* animate the panel opening */
     .slide;
 
     ol {
@@ -103,8 +105,8 @@ This works by default, but can cause the nav to reverse position when already ap
 
 
 /* 
-TOC Link (aka 'The Hamburger Button')
-=====================================
+Drawer Links
+============
 
 ```
 <a href="#menu" id="menu-link" class="toc-nav-link toc-toggle active">Table of Contents</a>
@@ -151,13 +153,7 @@ TOC Link (aka 'The Hamburger Button')
     height: 34px; /* match height of main header */
     width: 40px;
     border-right: 1px solid @light_field;
-    //background: url(../img/nav-link.png) no-repeat center center;
-
-    &.hamburgerify {
-        background: url(../img/hamburger.png) no-repeat center center;
-    }
 }
-
 
 .drawer-toggles li:first-child {
     margin-left: 0; /*remove negative margin from first list item*/
@@ -165,6 +161,10 @@ TOC Link (aka 'The Hamburger Button')
 
 #menu-link {
     background: url(../img/nav-link.png) no-repeat center center;
+
+    &.hamburgerify {
+        background: url(../img/hamburger.png) no-repeat center center;
+    }
 }
 
 #history-link {
