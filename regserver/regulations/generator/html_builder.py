@@ -126,10 +126,3 @@ class HTMLBuilder():
         if reg_title:
             titles['reg_name'] = reg_title
         return titles
-
-
-class SlideDownInterpBuilder(HTMLBuilder):
-    def render_markup(self):
-        main_template = loader.get_template('slide-down-interp.html')
-        c = Context({'node': self.tree})
-        return main_template.render(c)
