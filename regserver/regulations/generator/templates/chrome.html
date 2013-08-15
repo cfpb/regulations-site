@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% comment %}
+    Page-level template for everything but notices.
+{% endcomment %}
+
+<header id="site-header" class="reg-header">
+<div class="main-head">
+    {% load static from staticfiles %}
+        <img src="{%static "regulations/ip/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151px">
+        <div class="site-title">
+            <h1>eRegulations > Regulation {{ tree.label.reg_letter }}</h1>
+        </div> <!-- /site-title -->
+</div>
+
+<div class="sub-head">
+    <div class="toc-head">
+        <a href="#" id="panel-link" class="toc-toggle panel-slide">Navigation</a>
+        <a href="#menu" id="menu-link" class="toc-nav-link">Table of Contents</a>
+    </div> <!-- /toc-head-->
+    <div id="content-header" class="header-main">
+        <span id="active-title"></span>
+    </div>
+    <div class="header-secondary">
+        <span class="effective-date"><strong>Effective Date:</strong> {{ tree.meta.effective.date|date }}</span>
+        <h2> </h2>
+    </div>
+</div>
+</header>
+
+ {%if tree.TOC %}
+    {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
+       {% include "toc.html" %} 
+    {% endwith %}
+ {%endif%}  
+
+<div class="wrap group" id="reg-content">
+
+<div class="main-content">
+
+{{ partial_content|safe }}
+</div> <!-- /.main-content -->
+
+<div id="sidebar" class="secondary-content">
+    <div id="sidebar-header" class="sidebar-header">
+        <h2></h2>
+    </div>
+    <div id="sidebar-content" class="sidebar-inner">
+        <section class="regs-meta">
+            <h5 class="important">Experimental Prototype</h5>
+            <p class="sub-text">There may be errors, inconsistencies, and inaccuracies.</p>
+              {% if tree.meta.contact_info %}
+              <h5>Questions</h5>
+              <div class="chunk">
+                 {{ tree.meta.contact_info | safe}}
+              </div>
+              {% endif %}
+
+            {% if tree.meta.last_notice %}
+            <h5 class="expandable">Most Recent FR Notice</h5>
+            <div class="notice chunk hidden">
+                <a href="{{ tree.meta.last_notice.url }}" class="external">{{ tree.meta.last_notice.title }}</a>
+                <ul>
+                    <li><strong>Published:</strong> {{ tree.meta.last_notice.published|date }}</li>
+                    <li><strong>Action:</strong> {{ tree.meta.last_notice.action }}</li>
+                    <li><strong>Effective:</strong> {{ tree.meta.last_notice.effective|date }}</li>
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if tree.meta.effective %}
+            <h5 class="expandable">Current Effective Law</h5>
+            <div class="effective chunk hidden">
+                <a href="{{ tree.meta.effective.url }}" class="external">{{ tree.meta.effective.title }}</a>
+                Electronic Code of Federal Regulations
+            </div>
+            {% endif %}
+
+        </section> <!-- /.regs-meta -->
+    </div> <!-- /#sidebar-content -->
+</div> <!-- /.secondary-content -->
+</div> <!-- /.wrap -->
+
+<footer>
+    <small>Brought to you by the <abbr title="Consumer Financial Protection Buereau">CFPB</abbr> Technology &amp; Innovation Team</small>
+</footer>
+
+{% endblock %}
+

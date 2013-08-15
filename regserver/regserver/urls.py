@@ -1,25 +1,59 @@
 from django.conf.urls import patterns, include, url
 
-from regulations.views import RegulationParagraphView, RegulationSectionView
+from regulations.views.chrome import ChromeInterpView, ChromeRegulationView
+from regulations.views.chrome import ChromeParagraphView, ChromeSectionView
+from regulations.views.partial import PartialInterpView, PartialRegulationView
+from regulations.views.partial import PartialParagraphView, PartialSectionView
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+#Re-usable URL patterns. 
+version_pattern = r'(?P<version>[-\d\w]+)'
+
+reg_pattern = r'(?P<label_id>[\d]+)'
+section_pattern = r'(?P<label_id>[\d]+[-][\w]+)'
+interp_pattern = r'(?P<label_id>[-\d\w]+[-]Interp)'
+paragraph_pattern = r'(?P<label_id>[-\d\w]+)'
+
 
 urlpatterns = patterns('',
-    url(r'^regulation/(?P<reg_part_section>[\d]+[-][\w]+)/(?P<reg_version>[-\d\w]+)$', 
-        RegulationSectionView.as_view(), 
-        name='regulation_section_view'),
-    url(r'^regulation/(?P<paragraph_id>[-\d\w]+)/(?P<reg_version>[-\d\w]+)$',
-        RegulationParagraphView.as_view(),
-        name='regulation_paragraph_view'),
-    # Examples:
-    # url(r'^$', 'regserver.views.home', name='home'),
-    # url(r'^regserver/', include('regserver.foo.urls')),
+    #A regulation section with chrome
+    #Example: http://.../regulation/201-4/2013-10704
+    url(r'^regulation/%s/%s$' % (section_pattern, version_pattern),
+        ChromeSectionView.as_view(), 
+        name='chrome_section_view'),
+    #Interpretation of a section/paragraph or appendix
+    #Example: http://.../regulation/201-4-Interp/2013-10704
+    url(r'^regulation/%s/%s$' % (interp_pattern, version_pattern),
+        ChromeInterpView.as_view(),
+        name='chrome_interp_view'),
+    #The whole regulation with chrome
+    #Example: http://.../regulation/201/2013-10704
+    url(r'^regulation/%s/%s$' % (reg_pattern, version_pattern), 
+        ChromeRegulationView.as_view(),
+        name='chrome_regulation_view'),
+    #A regulation paragraph with chrome
+    #Example: http://.../regulation/201-2-g/2013-10704
+    url(r'^regulation/%s/%s$' % (paragraph_pattern, version_pattern),
+        ChromeParagraphView.as_view(),
+        name='chrome_paragraph_view'),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    #A regulation section without chrome
+    #Example: http://.../partial/201-4/2013-10704
+    url(r'^partial/%s/%s$' % (section_pattern, version_pattern),
+        PartialSectionView.as_view(), 
+        name='partial_section_view'),
+    #An interpretation of a section/paragraph or appendix without chrome.
+    #Example: http://.../partial/201-2-Interp/2013-10704
+    url(r'^partial/%s/%s$' % (interp_pattern, version_pattern),
+        PartialInterpView.as_view(),
+        name='partial_interp_view'),
+    #The whole regulation without chrome; not too useful; added for symmetry
+    #Example: http://.../partial/201/2013-10704
+    url(r'^partial/%s/%s$' % (reg_pattern, version_pattern), 
+        PartialRegulationView.as_view(),
+        name='partial_regulation_view'),
+    #A regulation paragraph without chrome. 
+    #Example: http://.../partial/201-2-g/2013-10704
+    url(r'^partial/%s/%s$' % (paragraph_pattern, version_pattern),
+        PartialParagraphView.as_view(),
+        name='partial_paragraph_view'),
 )

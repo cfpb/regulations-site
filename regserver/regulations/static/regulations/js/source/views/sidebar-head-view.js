@@ -20,10 +20,8 @@ define('sidebar-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
             // * when an inline definition is closed, remove the header
             Dispatch.on('definition:remove', this.clear, this);
 
-            // cache the inner h2 of this el 
-            // and the initial text so that we can repopulate on close
-            this.header = this.$el.find('h2');
-            this.defaultText = this.header.html();
+            // cache the actual header tag
+            this.$header = this.$el.find('h2');
         },
 
         // Handler for a new sidebar child
@@ -31,7 +29,7 @@ define('sidebar-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
         // **TODO** Only really knows how to handle definitions right now
         openItem: function() {
             var closeButton, $closeButton;
-            this.header.html('Defined Term');
+            this.$header.html('Defined Term');
             
             closeButton = document.createElement('a');
             $closeButton = $(closeButton);
@@ -42,7 +40,7 @@ define('sidebar-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
 
         // reset contents
         clear: function() {
-            this.$el.html(this.header.html(this.defaultText));
+            this.$el.html(this.$header.html(''));
         },
 
         // if the close "x" is clicked, ask app to set about removing sidebar child
@@ -50,6 +48,7 @@ define('sidebar-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'
         // **TODO** can only really handle definitions
         close: function() {
             Dispatch.remove('definition');
+            Dispatch.trigger('ga-event:definition', 'close by header button');
         }
     });
 

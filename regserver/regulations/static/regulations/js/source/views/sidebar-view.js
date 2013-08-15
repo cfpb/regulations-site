@@ -2,10 +2,12 @@
 //
 // **Usage** ```require(['sidebar-view'], function(SidebarView) {})```
 //
-// **Jurisdiction** Right sidebar
+// **Jurisdiction** Right sidebar content section
 define('sidebar-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'sidebar-head-view'], function($, _, Backbone, Dispatch, SidebarHeadView) {
     'use strict';
     var SidebarView = Backbone.View.extend({
+        el: '#sidebar-content',
+
         events: {
             'click .expandable': 'toggleMeta'
         },
@@ -21,7 +23,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'si
             Dispatch.on('definition:remove', this.clear, this);
 
             // Init a sidebar header instance
-            this.header = new SidebarHeadView({el: '#sidebar-subhead'});
+            this.header = new SidebarHeadView({el: '#sidebar-header'});
 
             // cache default content for replacement in the future
             this.contactInfo = this.el.innerHTML.toString();

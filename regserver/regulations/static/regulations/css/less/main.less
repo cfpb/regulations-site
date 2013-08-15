@@ -1,6 +1,8 @@
-/**
-* main.less imports all supporting less files
-*
+/*
+Main.less
+ ========================================================================== 
+main.less imports all supporting less files
+and includes any non-semantic helper classes
 */
 
 @import url(normalize.less);
@@ -11,18 +13,20 @@
 @import url(module/navigation.less);
 @import url(module/interpretations.less);
 @import url(module/reg-header.less);
+@import url(module/footer.less);
 @import url(module/sidebar.less);
 @import url(module/permalink.less);
-@import url(print.less);
+@import url(media-queries.less);
 
 
-/* ==========================================================================
- helper classes
+/*
+ Helper Classes
  ========================================================================== */
 
-.sxs-ref { /* hide the meta info until it has a visual treatment */
-    display: none;
-}
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box;-webkit-box-sizing: border-box; box-sizing: border-box;
+ }
 
 .inline {
     display: inline;
@@ -74,7 +78,12 @@ img.reg-image {
     display: block;
 }
 
-/* .group class as clearfix */
+/* 
+Clearfix
+--------
+* Use .group class as clearfix...  
+* It just sounds nicer!
+*/
 .group:before,
 .group:after {
     content: " "; /* 1 */
@@ -94,3 +103,8 @@ img.reg-image {
     *zoom: 1;
 }
 
+/*
+Import no-js.less and print.less at the end, since they overrides other rules
+*/
+@import url(module/no-js.less);
+@import url(print.less);

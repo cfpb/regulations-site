@@ -4,27 +4,25 @@
 
 <section class="inline-interpretation" data-interp-for="{{node.interp_for_markup_id}}">
     <header class="inline-interp-header">
-        <h4 tabindex="0">Supplement to <span class="ref-num">{{ node.interp_label }}</span></h4>
+        <h4 tabindex="0">Official Commentary to <span class="ref-num">{{ node.interp_label }}</span></h4>
         <a class="expand-button">Show</a>
     </header>
     <section class="inline-interpretation-content hidden">
-        {% if node.header %}
         <h5>{{ node.header }}</h5>
-        {% endif %}
         {%if node.marked_up %}
-        <p> 
-        {{node.marked_up|safe}}
-        </p>
+            <p> 
+            {{node.marked_up|safe}}
+            </p>
         {% endif %}
-        {% if node.children %}
-        <ol class="level-{{node.children.0.list_level}}" 
-            type="{{node.children.0.list_type}}">
-            {% for c in node.children %}
-                {%with node=c template_name="tree-with-wrapper.html" ignore_id=True%}
-                    {% include template_name %}
-                {% endwith %}
-            {% endfor %}
-        </ol>
+
+        {% if node.par_children %}
+            <ol class="level-1" type="1">
+                {% for par_child in node.par_children %}
+                    {% with node=par_child template_name="tree-with-wrapper.html" ignore_id=True%}
+                        {% include template_name %}
+                    {% endwith %}
+                {% endfor %}
+            </ol>
         {% endif %}
     </section>
 </section>

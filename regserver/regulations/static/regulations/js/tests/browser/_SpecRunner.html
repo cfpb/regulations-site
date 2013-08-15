@@ -12,7 +12,7 @@
   <script>
 
   require.config({
-    "baseUrl": "/static/regulations/js/source",
+    "baseUrl": "/regulations/static/regulations/js/source",
       "paths": {
         "underscore": "./lib/underscore",
         "backbone": "./lib/backbone",
@@ -26,7 +26,8 @@
         'toc-view': './views/toc-view',
         'sidebar-view': './views/sidebar-view',
         'sidebar-head-view': './views/sidebar-head-view',
-        'content-view': './views/content-view'
+        'content-view': './views/content-view',
+        'header-view': './views/header-view'
       },
       "shim": {
         "underscore": {
@@ -41,7 +42,7 @@
       }
   });
 
-  require(['/static/regulations/js/tests/specs/reg-data-spec.js', '/static/regulations/js/tests/specs/definition-view-spec.js', '/static/regulations/js/tests/specs/content-view-spec.js', '/static/regulations/js/tests/specs/regs-helpers-spec.js', '/static/regulations/js/tests/specs/regs-dispatch-spec.js'], function() {
+  require(['/regulations/static/regulations/js/tests/specs/reg-data-spec.js', '/regulations/static/regulations/js/tests/specs/definition-view-spec.js', '/regulations/static/regulations/js/tests/specs/content-view-spec.js', '/regulations/static/regulations/js/tests/specs/regs-helpers-spec.js', '/regulations/static/regulations/js/tests/specs/regs-dispatch-spec.js', '/regulations/static/regulations/js/tests/specs/header-view-spec.js'], function() {
     $(function() {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute();

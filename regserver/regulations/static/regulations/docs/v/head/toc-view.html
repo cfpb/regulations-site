@@ -54,6 +54,11 @@
               </a>
             
               
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
               <a class="source" href="content-view.html">
                 content-view.js
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="definition-view.html">
                 definition-view.js
+              </a>
+            
+              
+              <a class="source" href="header-view.html">
+                header-view.js
               </a>
             
               
@@ -117,6 +127,8 @@
             <div class="content"><div class='highlight'><pre>define(<span class="string">'toc-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, RegsHelpers) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> TOCView = Backbone.View.extend({
+        el: <span class="string">'#menu'</span>,
+
         events: {
             <span class="string">'click a'</span>: <span class="string">'sendClickEvent'</span>
         },

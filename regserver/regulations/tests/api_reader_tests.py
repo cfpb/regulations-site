@@ -1,7 +1,5 @@
-import json
 from mock import patch
 import os
-from StringIO import StringIO
 import shutil
 import tempfile
 from unittest import TestCase
@@ -79,11 +77,11 @@ class ClientTest(TestCase):
         child = {
             'text': 'child', 
             'children': [], 
-            'label': {'text': '923-a', 'parts': ['923', 'a']}
+            'label': ['923', 'a']
         }
         to_return = {
             'text': 'parent', 
-            'label': {'text': '923', 'parts': ['923']},
+            'label': ['923'],
             'children': [child]
         }
         get = requests.get

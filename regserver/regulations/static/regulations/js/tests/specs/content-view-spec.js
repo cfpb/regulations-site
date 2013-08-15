@@ -50,7 +50,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'definition-view'], 
         describe("clearActiveTerms", function() {
             it("should eliminate all active classes on links", function() {
                 contentView.clearActiveTerms();
-                expect($('.active').length).toEqual(0);
+                expect($('#content .active').length).toEqual(0);
             });
 
             it("should remove all active data attrs", function() {
@@ -60,5 +60,20 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'definition-view'], 
             });
         });
 
+        describe("showPermalink", function() {
+            $('body').append('<div class="reg-paragraph">aasdfasdf<p id="inner-reg-p"></p></div>');
+            var eventStub = { currentTarget: $('.reg-paragraph')};
+            $('body').append('<div id="old-active-permalink" class="permalink-marker"></div>');
+
+            contentView.showPermalink(eventStub);
+
+            it("should remove old permalinks in DOM", function() {
+                expect($('#old-active-permalink').hasClass('permalink-marker')).toBeFalsy();
+            });
+
+            it("should attach permalink to <p>", function() {
+                expect($('#inner-reg-p').find('.permalink-marker').length).toEqual(1);
+            });
+        });
     });
 });

@@ -3,7 +3,7 @@
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
-define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
+define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler) {
     'use strict';
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -30,15 +30,11 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
 
         // Purgatory for DOM event bindings that should happen in a View
         bindEvents: function() {
-            // TOC class toggle
-            // **TODO:** Move this into the appropriate view
-            var $activeEls = $('#menu, #menu-link'),
-            $tocToggle = $('.toc-toggle');
 
-            $tocToggle.on('click', function() {
-                $activeEls.toggleClass('active');
-                return false;
-            });
+            /* prevent default link behavior on the menu button until we include all TOC icons */
+            $('#menu-link').click(function(e){
+              e.preventDefault();
+            }); 
 
             /* ssshhhhh */
             new Konami(function() {
@@ -74,9 +70,14 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             this.getTree($('#reg-content')); 
 
             // init primary Views that require only a single instance
-            window.toc = new TOCView({el: '#menu'});
-            window.sidebar = new SidebarView({el: '#sidebar'});
-            window.regContent = new ContentView({el: '.main-content'});
+            window.Regs = {};
+            window.Regs.subhead = new SubHeadView();
+            window.Regs.toc = new TOCView();
+            window.Regs.sidebar = new SidebarView();
+            window.Regs.regContent = new ContentView();
+            window.Regs.analytics = new AnalyticsHandler();
+            window.Regs.mainHeader = new HeaderView();
+
             this.bindEvents();
             this.fetchModelForms();
         }

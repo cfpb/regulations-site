@@ -54,6 +54,11 @@
               </a>
             
               
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
               <a class="source" href="content-view.html">
                 content-view.js
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="definition-view.html">
                 definition-view.js
+              </a>
+            
+              
+              <a class="source" href="header-view.html">
+                header-view.js
               </a>
             
               
@@ -116,8 +126,51 @@
     <span class="string">'use strict'</span>;
     $(document).ready(<span class="keyword">function</span>() {
         app.init();
-    });
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>tests for some accessibility misses
+use in browser console with AccessibilityTest()</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    window.AccessibilityTest = <span class="keyword">function</span>() {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>I think this will keep IE from crying?</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">var</span> console = console || {error: <span class="keyword">function</span>() {}};
+
+        $(<span class="string">'img'</span>).each(<span class="keyword">function</span>() {
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.attributes.alt === <span class="string">'undefined'</span>) {
+                console.error(<span class="string">'Image does not have alt text'</span>, <span class="keyword">this</span>);
+            }
+        });
+
+        $(<span class="string">'p, h1, h2, h3, h4, h5, h6, div, span'</span>).each(<span class="keyword">function</span>() {
+            <span class="keyword">if</span> ($(<span class="keyword">this</span>).css(<span class="string">'font-size'</span>).indexOf(<span class="string">'em'</span>) === -<span class="number">1</span> &amp;&amp; $(<span class="keyword">this</span>).css(<span class="string">'font-size'</span>).indexOf(<span class="string">'px'</span>) &gt; <span class="number">0</span>) {
+                console.error(<span class="string">'Font size is set in px, not ems'</span>, <span class="keyword">this</span>);
+            }
+        });
+    };
 });</pre></div></div>
             
         </li>

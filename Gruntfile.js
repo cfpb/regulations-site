@@ -126,7 +126,9 @@ module.exports = function(grunt) {
                 'sidebar-view': './views/sidebar-view',
                 'sidebar-head-view': './views/sidebar-head-view',
                 'content-view': './views/content-view',
-                'konami': './lib/konami'
+                'konami': './lib/konami',
+                'analytics-handler': './views/analytics-handler-view',
+                'header-view': './views/header-view'
               },
               shim: {
                 underscore: {
@@ -169,8 +171,8 @@ module.exports = function(grunt) {
      */
     watch: {
       gruntfile: {
-        files: ['Gruntfile.js', '<%= recess.dist.src %>', '<%= env.frontEndPath %>/css/*.less', '<%= jasmine.options.specs %>'],
-        tasks: ['build']
+        files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/*.less', '<%= env.frontEndPath %>/css/less/module/*.less'],
+        tasks: ['less']
       }
     },
 
@@ -216,7 +218,9 @@ module.exports = function(grunt) {
                     'sidebar-view': './views/sidebar-view',
                     'sidebar-head-view': './views/sidebar-head-view',
                     'content-view': './views/content-view',
-                    'konami': './lib/konami'
+                    'konami': './lib/konami',
+                    'analytics-handler': './views/analytics-handler-view',
+                    'header-view': './views/header-view'
                 },
                 shim: {
                     underscore: {

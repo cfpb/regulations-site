@@ -54,6 +54,11 @@
               </a>
             
               
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
               <a class="source" href="content-view.html">
                 content-view.js
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="definition-view.html">
                 definition-view.js
+              </a>
+            
+              
+              <a class="source" href="header-view.html">
+                header-view.js
               </a>
             
               
@@ -166,18 +176,19 @@ jQobj: new link</p>
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p><strong>Params</strong>
-<code>p0</code>: String or Number, section ID
-<code>p1</code>: String or Number, reg ID</p>
+<code>interpParts</code>: Array of Strings or Numbers, entity that is 
+interpreted</p>
 <p><strong>Returns</strong> human-readable representation of the reg section</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        nonNumericId: <span class="keyword">function</span>(p0, p1) {
-            <span class="keyword">if</span> (isNaN(parseInt(p0, <span class="number">10</span>))) {
-                <span class="keyword">return</span> <span class="string">'Supplement '</span> + p0 + <span class="string">' to Part '</span> + p1;
-            }
-            <span class="keyword">else</span> <span class="keyword">if</span> (isNaN(parseInt(p1, <span class="number">10</span>))) {
-                <span class="keyword">return</span> <span class="string">'Appendix '</span> + p1 + <span class="string">' to Part '</span> + p0;
+            <div class="content"><div class='highlight'><pre>        interpId: <span class="keyword">function</span>(interpParts) {
+            <span class="keyword">if</span> (interpParts.length === <span class="number">1</span>) {
+                <span class="keyword">return</span> <span class="string">'Supplement I to Part '</span> + interpParts[<span class="number">0</span>];
+            } <span class="keyword">else</span> <span class="keyword">if</span> (isNaN(interpParts[<span class="number">1</span>])) {
+                <span class="keyword">return</span> <span class="string">'Supplement I to Appendix '</span> + interpParts[<span class="number">1</span>];
+            } <span class="keyword">else</span> {
+                <span class="keyword">return</span> <span class="string">'Supplement I to §'</span> + interpParts[<span class="number">0</span>] + <span class="string">'.'</span> + interpParts[<span class="number">1</span>];
             }
         },</pre></div></div>
             
@@ -190,6 +201,26 @@ jQobj: new link</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
+              <p><strong>Params</strong>
+<code>p0</code>: String or Number, section ID
+<code>p1</code>: String or Number, reg ID</p>
+<p><strong>Returns</strong> human-readable representation of the reg section</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        appendixId: <span class="keyword">function</span>(part, letter) {
+            <span class="keyword">return</span> <span class="string">'Appendix '</span> + letter  + <span class="string">' to Part '</span> + part;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
               <p><strong>Param</strong> dash-delimited string representation of reg entity ID</p>
 <p><strong>Returns</strong> Reg entity marker formatted for human readability</p>
 
@@ -197,7 +228,7 @@ jQobj: new link</p>
             
             <div class="content"><div class='highlight'><pre>        idToRef: <span class="keyword">function</span>(id) {
             <span class="keyword">var</span> ref = <span class="string">''</span>, 
-                parts, i, len, dividers, item;
+                parts, i, len, dividers, item, interpIndex;
             parts = id.split(<span class="string">'-'</span>);
             len = parts.length - <span class="number">1</span>;
             dividers = [<span class="string">'§ .'</span>, <span class="string">''</span>, <span class="string">'( )'</span>, <span class="string">'( )'</span>, <span class="string">'( )'</span>, <span class="string">'( )'</span>];
@@ -208,10 +239,14 @@ jQobj: new link</p>
                 <span class="keyword">return</span> ref;
             }
 
-            <span class="comment">/* if we have an appendix or supplement */</span>
-            <span class="keyword">if</span> (isNaN(parseInt(parts[<span class="number">0</span>], <span class="number">10</span>)) || 
-                isNaN(parseInt(parts[<span class="number">1</span>], <span class="number">10</span>))) {
-                <span class="keyword">return</span> <span class="keyword">this</span>.nonNumericId(parts[<span class="number">0</span>], parts[<span class="number">1</span>]);
+            <span class="comment">/* if we have a supplement */</span>
+            interpIndex = $.inArray(<span class="string">'Interp'</span>, parts);
+            <span class="keyword">if</span> (interpIndex &gt;= <span class="number">0</span>) {
+                <span class="keyword">return</span> <span class="keyword">this</span>.interpId(parts.slice(<span class="number">0</span>, interpIndex));
+            }
+            <span class="comment">/* if we have an appendix */</span>
+            <span class="keyword">if</span> (isNaN(parseInt(parts[<span class="number">1</span>], <span class="number">10</span>))) {
+                <span class="keyword">return</span> <span class="keyword">this</span>.appendixId(parts[<span class="number">0</span>], parts[<span class="number">1</span>]);
             }
 
             <span class="comment">/* we have a paragraph */</span>
@@ -231,11 +266,11 @@ jQobj: new link</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Finds parent-most reg paragraph</p>
 <p><strong>TODO</strong> RegsData.getParent is the same?</p>

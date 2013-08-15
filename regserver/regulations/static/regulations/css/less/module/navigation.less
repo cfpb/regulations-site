@@ -1,6 +1,23 @@
-/* ==========================================================================
- navgation
- ========================================================================== */
+/*
+Navigation
+=========================
+navigation.less contains styles for site and intra reg navigation 
+*/
+
+
+/*
+Appendix Navigation
+=========================
+
+```
+<ol class="appendix-nav">
+    <li><a href="#">Link</a></li>
+    <li><a href="#">Link</a></li>
+    <li><a href="#">Link</a></li>
+</ol>
+```
+
+*/
 
 .appendix-nav {
     margin-top: 2.5em; /*40px*/
@@ -24,113 +41,152 @@
 }
 
 
-/* ==========================================================================
- table of contents
- ========================================================================== */
+/*
+Regulation Table of Contents
+============================
 
-.panel,
-.panel .close-button {
-    .slide;
-    .border-right-light(@width: 2px);
-    left: -272px; /* 250px + 20px padding + 2px border*/
-}
+The regulation TOC is a slide out panel drawer
+On large displays it is on the screen by default. It can be toggled with the "active" class.
+
+```
+<nav id="menu" class="panel active" role="navigation">
+    <ol class="regulation-nav" id="table-of-contents">
+        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.1</span> Section Title</a></li>
+        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.2</span> Section Title</a></li>
+        <li><a href="#"><span class="toc-section-marker">§&nbsp;xxx.3</span> Section Title</a></li>
+    </ol>
+</nav>
+```
+
+*/
 
 .panel {
-    .reset;
-    .border-top-light(@width: 3px);
-    .avenir-next-demi;
-    font-size: 0.875em; /*14px*/
-    position: fixed;
-    top: 60px;
-    bottom: 46px; /*match height of TOC close button */
-    width: 260px;
-    background-color: #f6f6f5;
-    z-index: 999999;
-    overflow-y: scroll;
+    .slide;
 
     ol {
         .reset;
-        .border-top-light (@width: 1px);
     }
 
     h2 {
-        padding: 0 20px;
-        line-height: 1.3;
-        .avenir-next-demi;
-        text-transform: uppercase;
+        margin: 0;
+        padding: 10px 16px 14px 16px;
+        line-height: 1.2;
+        .border-bottom-light (@width: 2px);
 
-        .toc-title-num {
-          color: @light_field;
-          display: block;
-          font-size: 12px;
+        .toc-type {
+            color: @dark_gray;
+            font-size: 0.527472527em; /* 12px / (26px * .875em) */
+            .avenir-next;
+            text-transform: uppercase;
         }
 
         .toc-part-num {
           display: block;
-          font-size: 26px;
-          margin: 10px 0;
+          font-size: 20px; /*18px / (26px * .875em) */
+          margin: 10px 0 7px 0;
+          color: @dark_gray;
+          .avenir-next-bold;
+          text-transform: uppercase;
         }
 
         .toc-reg-title {
           .avenir-next;
           display: block;
-          font-size: 16px;
-          margin-top: 6px;
-        }
-    }
-
-    .close-button {
-        width: 240px;
-        height: 26px;
-        padding: 10px; /*10px*/
-        bottom: 0px;
-        background: @light_field url(../img/close.png) 89% 11px no-repeat;
-        color: @dark_gray;
-        text-transform: uppercase;
-        font-size: .857142857em; /*12px*/
-        cursor: pointer;
-
-            em {
-                display: inline-block;
-                width: 80%;
-                text-align: right;
-                font-style: normal;
-            }
-    }
-
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
-    (min-resolution: 192dpi) {
-        .close-button {
-            background: @light_field url(../img/close@2x.png) 89% 11px no-repeat;
-            background-size: 15px 15px;
+          font-size: 0.615384615em; /* 14px / (26px * .875em)  */
         }
     }
 }
 
-/*.no-js .panel {
-    left: 0;
-}*/
+/* 
+When applied at large resolutions displays, the active class causes the panel navigation to slide off screen
+ */
+ @media only screen and ( min-width: 1100px ) {
+    .panel.active{
+        left: -220px;
 
-/* panel slides to position */
-.panel.active{
-    left: 0;
+        /* slide content fully offscreen*/
+        ol, 
+        h2 {
+            position: absolute;
+            left: -320px;    
+        }
+}
 
-    .close-button {
-        position: fixed;
-        left: 0px;
+/* animate the .toc-head */
+.toc-head {
+    .slide;
+
+    a:hover,
+    a:active {
+        background-color: @light_field;
+    }
+}
+
+.active .toc-head {
+    left: -220px;
+    margin-right: 20px;
+}
+}
+
+/*
+For now, active toggles the nav on screen when on smaller resolution displays. 
+This works by default, but can cause the nav to reverse position when already applied and the user resizes their browser.
+*/
+@media only screen and ( max-width: 1100px ) {
+    .panel.active{
+    left: 0px;
     }
 }
 
 
-/* TOC link */
+/* 
+TOC Link (aka 'The Hamburger Button')
+=====================================
+
+```
+<a href="#menu" id="menu-link" class="toc-nav-link toc-toggle active">Table of Contents</a>
+```
+
+*/
+.panel-slide {
+    text-indent: -9999px;
+    display: block;
+    height: 34px; /* match height of main header */
+    width: 40px;
+    float: right;
+    cursor: pointer;
+    background: url(../img/left.png) no-repeat center center;
+}
+
+.panel-slide:hover,
+.panel-slide:active {
+    background-color: @light_field;
+}
+
+.active .panel-slide {
+    background: url(../img/right.png) no-repeat center center;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .panel-slide {
+        background: url(../img/left@2x.png) no-repeat center center;
+        background-size: 16px 13px;
+    }
+
+    .active .panel-slide {
+        background: url(../img/right@2x.png) no-repeat center center;
+        background-size: 16px 13px;
+    }
+}
+
 .toc-nav-link {
     text-indent: -9999px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 60px; /* match height of main header */
-    width: 60px;
+    display: inline-block;
+    height: 34px; /* match height of main header */
+    width: 40px;
+    border-right: 1px solid @light_field;
     background: url(../img/nav-link.png) no-repeat center center;
 
     &.hamburgerify {
@@ -147,11 +203,7 @@
     }
 }
 
-.toc-nav-link:hover,
-.toc-nav-link:active,
-.toc-nav-link.active {
-    background-color: @light_field;
-}
+
 
 /* TOC link styles */
 .regulation-nav {

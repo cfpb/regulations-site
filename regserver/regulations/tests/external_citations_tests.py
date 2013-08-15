@@ -1,5 +1,5 @@
 from unittest import TestCase
-from mock import Mock, patch
+from mock import patch
 
 from regulations.generator.layers.external_citation import ExternalCitationLayer
 
@@ -8,7 +8,7 @@ class ExternalCitationsTest(TestCase):
     def test_statues_at_large_link(self, generate_fdsys_href_tag):
         text = '124 Stat. 2859'
         citation = text.split()
-        link = ExternalCitationLayer.generate_statutes_at_large_link(text, citation)
+        ExternalCitationLayer.generate_statutes_at_large_link(text, citation)
         parameters = generate_fdsys_href_tag.call_args[0][1]
         self.assertEqual(parameters['statutecitation'], '124 stat 2859')
 
@@ -16,7 +16,7 @@ class ExternalCitationsTest(TestCase):
     def test_public_law_link(self, generate_fdsys_href_tag):
         text = 'Public Law 111-203'
         citation = [111, 203]
-        link = ExternalCitationLayer.generate_public_law_link(text, citation)
+        ExternalCitationLayer.generate_public_law_link(text, citation)
         parameters = generate_fdsys_href_tag.call_args[0][1]
         self.assertEqual(parameters.keys(), ['collection', 'lawnum', 'congress', 'lawtype'])
         self.assertEqual(parameters['collection'], 'plaw')
@@ -28,7 +28,7 @@ class ExternalCitationsTest(TestCase):
     def test_cfr_link(self, generate_fdsys_href_tag):
         text = "12 CFR part 200"
         citation = [12, 200]
-        link = ExternalCitationLayer.generate_cfr_link(text, citation)
+        ExternalCitationLayer.generate_cfr_link(text, citation)
         parameters = generate_fdsys_href_tag.call_args[0][1]
         self.assertEqual(parameters.keys(), ['titlenum', 'link-type', 'collection', 'partnum'])
         self.assertEqual(parameters['titlenum'], 12)
@@ -38,7 +38,7 @@ class ExternalCitationsTest(TestCase):
 
     def test_citation_type_to_generator(self):
         citation_type = 'STATUTES_AT_LARGE'
-        layer = ExternalCitationLayer(None, None)
+        layer = ExternalCitationLayer(None)
         generator = layer.citation_type_to_generator(citation_type)
         self.assertEqual(generator, ExternalCitationLayer.generate_statutes_at_large_link)
 

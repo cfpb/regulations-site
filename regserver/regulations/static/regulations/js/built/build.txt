@@ -16,5 +16,7 @@ views/toc-view.js
 views/sidebar-head-view.js
 views/sidebar-view.js
 lib/konami.js
+views/header-view.js
+views/analytics-handler-view.js
 app-init.js
 regulations.js

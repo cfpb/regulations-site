@@ -54,6 +54,11 @@
               </a>
             
               
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
               <a class="source" href="content-view.html">
                 content-view.js
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="definition-view.html">
                 definition-view.js
+              </a>
+            
+              
+              <a class="source" href="header-view.html">
+                header-view.js
               </a>
             
               
@@ -114,7 +124,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'regs-data'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'toc-view'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'regs-data'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'toc-view'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler) {
     <span class="string">'use strict'</span>;
     <span class="keyword">return</span> {</pre></div></div>
             
@@ -165,29 +175,12 @@ API should make this obsolete.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        bindEvents: <span class="keyword">function</span>() {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>TOC class toggle
-<strong>TODO:</strong> Move this into the appropriate view</p>
+            <div class="content"><div class='highlight'><pre>        bindEvents: <span class="keyword">function</span>() {
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">var</span> $activeEls = $(<span class="string">'#menu, #menu-link'</span>),
-            $tocToggle = $(<span class="string">'.toc-toggle'</span>);
-
-            $tocToggle.on(<span class="string">'click'</span>, <span class="keyword">function</span>() {
-                $activeEls.toggleClass(<span class="string">'active'</span>);
-                <span class="keyword">return</span> <span class="literal">false</span>;
-            });
+            <span class="comment">/* prevent default link behavior on the menu button until we include all TOC icons */</span>
+            $(<span class="string">'#menu-link'</span>).click(<span class="keyword">function</span>(e){
+              e.preventDefault();
+            }); 
 
             <span class="comment">/* ssshhhhh */</span>
             <span class="keyword">new</span> Konami(<span class="keyword">function</span>() {
@@ -203,11 +196,11 @@ API should make this obsolete.</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>as of sprint 6, model form images are giant and block at load
 incrementally loads in images once rendering is complete</p>
@@ -237,19 +230,24 @@ incrementally loads in images once rendering is complete</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>init primary Views that require only a single instance</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            window.toc = <span class="keyword">new</span> TOCView({el: <span class="string">'#menu'</span>});
-            window.sidebar = <span class="keyword">new</span> SidebarView({el: <span class="string">'#sidebar'</span>});
-            window.regContent = <span class="keyword">new</span> ContentView({el: <span class="string">'.main-content'</span>});
+            <div class="content"><div class='highlight'><pre>            window.Regs = {};
+            window.Regs.subhead = <span class="keyword">new</span> SubHeadView();
+            window.Regs.toc = <span class="keyword">new</span> TOCView();
+            window.Regs.sidebar = <span class="keyword">new</span> SidebarView();
+            window.Regs.regContent = <span class="keyword">new</span> ContentView();
+            window.Regs.analytics = <span class="keyword">new</span> AnalyticsHandler();
+            window.Regs.mainHeader = <span class="keyword">new</span> HeaderView();
+
             <span class="keyword">this</span>.bindEvents();
             <span class="keyword">this</span>.fetchModelForms();
         }

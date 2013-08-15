@@ -54,6 +54,11 @@
               </a>
             
               
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
               <a class="source" href="content-view.html">
                 content-view.js
               </a>
@@ -61,6 +66,11 @@
               
               <a class="source" href="definition-view.html">
                 definition-view.js
+              </a>
+            
+              
+              <a class="source" href="header-view.html">
+                header-view.js
               </a>
             
               
@@ -110,13 +120,15 @@
               </div>
               <p><strong>Extends</strong> Backbone.View</p>
 <p><strong>Usage</strong> <code>require([&#39;sidebar-view&#39;], function(SidebarView) {})</code></p>
-<p><strong>Jurisdiction</strong> Right sidebar</p>
+<p><strong>Jurisdiction</strong> Right sidebar content section</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>define(<span class="string">'sidebar-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'sidebar-head-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarHeadView) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> SidebarView = Backbone.View.extend({
+        el: <span class="string">'#sidebar-content'</span>,
+
         events: {
             <span class="string">'click .expandable'</span>: <span class="string">'toggleMeta'</span>
         },
@@ -169,7 +181,7 @@ when a new inline definition is opened, populate the sidebar with it</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.header = <span class="keyword">new</span> SidebarHeadView({el: <span class="string">'#sidebar-subhead'</span>});</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.header = <span class="keyword">new</span> SidebarHeadView({el: <span class="string">'#sidebar-header'</span>});</pre></div></div>
             
         </li>
         

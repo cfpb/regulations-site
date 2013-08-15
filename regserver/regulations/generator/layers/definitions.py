@@ -2,11 +2,13 @@ from django.template import loader, Context
 from ..node_types import to_markup_id
 import utils
 
+
 class DefinitionsLayer(object):
     def __init__(self, layer):
         self.layer = layer
         self.defining_template = loader.get_template('layers/defining.html')
-        self.citations_template = loader.get_template('layers/definition_citation.html')
+        self.citations_template =\
+            loader.get_template('layers/definition_citation.html')
 
     @staticmethod
     def create_url(citation):
@@ -20,9 +22,13 @@ class DefinitionsLayer(object):
 
     def create_definition_link(self, original_text, citation):
         """ Create the link that takes you to the definition of the term. """
-        context = {'citation': {'url': DefinitionsLayer.create_url(citation), 
-                    'label':original_text, 
-                    'definition_reference': DefinitionsLayer.create_definition_reference(citation)}}
+
+        context = {
+            'citation': {
+                'url': DefinitionsLayer.create_url(citation),
+                'label': original_text,
+                'definition_reference':
+                DefinitionsLayer.create_definition_reference(citation)}}
         return utils.render_template(self.citations_template, context)
 
     def create_layer_pair(self, text, offset, layer_element):
@@ -31,7 +37,7 @@ class DefinitionsLayer(object):
         ot = text[int(start):int(end)]
         ref_in_layer = layer_element['ref']
         def_struct = self.layer['referenced'][ref_in_layer]
-        definition_reference = def_struct['reference'].split('-') 
+        definition_reference = def_struct['reference'].split('-')
         rt = self.create_definition_link(ot, definition_reference)
         return (ot, rt, (start, end))
 
@@ -44,7 +50,8 @@ class DefinitionsLayer(object):
 
             for layer_element in layer_elements:
                 for offset in layer_element['offsets']:
-                    layer_pair = self.create_layer_pair(text, offset, layer_element)
+                    layer_pair = self.create_layer_pair(
+                        text, offset, layer_element)
                     layer_pairs.append(layer_pair)
         return layer_pairs
 
@@ -63,5 +70,5 @@ class DefinitionsLayer(object):
         return layer_pairs
 
     def apply_layer(self, text, text_index):
-        return (self.defined_terms(text, text_index) 
+        return (self.defined_terms(text, text_index)
                 + self.defining_terms(text, text_index))
