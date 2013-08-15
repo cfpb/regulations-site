@@ -6,7 +6,9 @@ define(['jquery', 'underscore', 'backbone', 'header-view'], function($, _, Backb
             .append('<a href="#history" id="history-link" class="toc-nav-link">History</a>');
 
         var header = new HeaderView(),
-            eventStub = { preventDefault: new Function() };
+            eventStub = { preventDefault: new Function(),
+            target: document.getElementById('history-link')
+        };
 
         it("should have an initialized instance", function() {
             expect(header).toBeDefined();
@@ -37,7 +39,9 @@ define(['jquery', 'underscore', 'backbone', 'header-view'], function($, _, Backb
         });
 
         it("should have the current class when clicked", function() {
-            // test for the current class
+            header.toggleDrawer(eventStub);
+
+            expect($('a').hasClass('current')).toBeTruthy();
         });
     }); 
 });
