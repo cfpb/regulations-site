@@ -2,6 +2,7 @@ import urllib
 from django.template import loader
 import utils
 
+
 class ExternalCitationLayer():
     def __init__(self, layer):
         self.layer = layer
@@ -18,14 +19,16 @@ class ExternalCitationLayer():
         fdsys_url = "%s?%s" % (fdsys_url_base, urllib.urlencode(parameters))
 
         template = loader.get_template('layers/external_citation.html')
-        context = {'citation' : {'url':fdsys_url,
-                        'label':text}}
+        context = {
+            'citation': {
+                'url': fdsys_url,
+                'label': text}}
         return utils.render_template(template, context)
 
     @staticmethod
     def generate_cfr_link(text, citation):
         """ Convert the CFR references into an HTML <a href> tag. """
-        parameters = {'titlenum':citation[0], 'partnum':citation[1]}
+        parameters = {'titlenum': citation[0], 'partnum': citation[1]}
         if len(citation) > 2:
             parameters['sectionnum'] = citation[2]
 
@@ -36,24 +39,27 @@ class ExternalCitationLayer():
     @staticmethod
     def generate_public_law_link(text, citation):
         """ Convert the Public Law references into an HTML <a href> tag. """
-        parameters = {'congress':citation[0], 
-                'lawnum':citation[1], 
-                'collection':'plaw', 
-                'lawtype':'public'}
+        parameters = {
+            'congress': citation[0],
+            'lawnum': citation[1],
+            'collection': 'plaw',
+            'lawtype': 'public'}
         return ExternalCitationLayer.generate_fdsys_href_tag(text, parameters)
 
     @staticmethod
     def generate_statutes_at_large_link(text, citation):
-        parameters = {'statutecitation':'%s stat %s' % (citation[0], citation[2]), 
-                    'collection':'plaw'}
+        parameters = {
+            'statutecitation': '%s stat %s' % (citation[0], citation[2]),
+            'collection': 'plaw'}
         return ExternalCitationLayer.generate_fdsys_href_tag(text, parameters)
 
     @staticmethod
     def generate_uscode_link(text, citation):
         """ Convert the US Code references into an HTML <a href> tag. """
-        parameters = {"collection":"uscode", 
-                      "title":citation[0],
-                      "section":citation[1]}
+        parameters = {
+            "collection": "uscode",
+            "title": citation[0],
+            "section": citation[1]}
         return ExternalCitationLayer.generate_fdsys_href_tag(text, parameters)
 
     def citation_type_to_generator(self, citation_type):
@@ -67,7 +73,8 @@ class ExternalCitationLayer():
         return generator
 
     def create_link(self, text, layer_element):
-        generator = self.citation_type_to_generator(layer_element['citation_type'])
+        generator = self.citation_type_to_generator(
+            layer_element['citation_type'])
         return generator(text, layer_element['citation'])
 
     def apply_layer(self, text, text_index):

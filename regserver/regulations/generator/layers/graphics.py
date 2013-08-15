@@ -1,5 +1,6 @@
-from django.template import loader, Context
+from django.template import loader
 import utils
+
 
 class GraphicsLayer(object):
     def __init__(self, layer_data):
@@ -17,6 +18,7 @@ class GraphicsLayer(object):
                     'alt': graphic_info['alt']
                 }
                 replacement = utils.render_template(self.template, context)
-                layer_pairs.append((graphic_info['text'], replacement,
+                layer_pairs.append((
+                    graphic_info['text'], replacement,
                     graphic_info['locations']))
         return layer_pairs

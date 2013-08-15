@@ -1,7 +1,5 @@
 import re
-import json
 from lxml import html
-from lxml.etree import ParserError
 from Queue import PriorityQueue
 from HTMLParser import HTMLParser
 

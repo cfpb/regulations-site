@@ -1,5 +1,5 @@
 from unittest import TestCase
-from mock import Mock, patch
+from mock import patch
 
 from regulations.views.utils import *
 

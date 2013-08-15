@@ -1,4 +1,3 @@
-import re
 from unittest import TestCase
 from regulations.generator.layers import layers_applier
 from regulations.generator.layers import location_replace
@@ -57,7 +56,6 @@ class LayersApplierTest(TestCase):
         self.assertEquals(result, 'The grey fox giraffe jumped over the fence ABCD')
 
     def test_replace_at(self):
-        pattern = 'ABCD'
         text = 'The grey fox ABCD jumped ABCD over the fence ABCD'
 
         applier = layers_applier.LayersApplier()

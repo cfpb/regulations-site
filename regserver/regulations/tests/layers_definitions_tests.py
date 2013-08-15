@@ -1,5 +1,4 @@
 from regulations.generator.layers.definitions import DefinitionsLayer
-from mock import patch
 from unittest import TestCase
 
 class DefinitionsLayerTest(TestCase):

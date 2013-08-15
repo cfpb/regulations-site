@@ -1,10 +1,10 @@
-from django.conf import settings
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
 from regulations.generator.node_types import EMPTYPART, REGTEXT
 from regulations.views import utils
+
 
 def generate_html(regulation_tree, layer_appliers):
     builder = HTMLBuilder(*layer_appliers)
@@ -17,7 +17,7 @@ class PartialView(TemplateView):
     """Base class of various partial markup views. sectional_links indicates
     whether this view should use section links (url to a path) or just hash
     links (to an anchor on the page)"""
-    
+
     sectional_links = True
 
     def get_context_data(self, **kwargs):
@@ -27,12 +27,15 @@ class PartialView(TemplateView):
         version = context['version']
 
         if 'layers' in self.request.GET.keys():
-            inline_applier, p_applier, s_applier = utils.handle_specified_layers(self.request.GET['layers'], 
-                    label_id, version, self.__class__.sectional_links)
+            appliers = utils.handle_specified_layers(
+                self.request.GET['layers'],
+                label_id, version, self.__class__.sectional_links)
+            inline_applier, p_applier, s_applier = appliers
         else:
             layer_creator = generator.LayerCreator()
-            layer_creator.add_layers(generator.LayerCreator.LAYERS.keys(),
-                    label_id, version, self.__class__.sectional_links)
+            layer_creator.add_layers(
+                generator.LayerCreator.LAYERS.keys(),
+                label_id, version, self.__class__.sectional_links)
             inline_applier, p_applier, s_applier = layer_creator.get_appliers()
 
         tree = generator.get_tree_paragraph(label_id, version)
@@ -49,11 +52,13 @@ class PartialSectionView(PartialView):
         child_of_root = builder.tree
         #   Add a layer to account for subpart if this is regtext
         if builder.tree['node_type'] == REGTEXT:
-            child_of_root = {'node_type': EMPTYPART, 'children': [builder.tree]}
+            child_of_root = {
+                'node_type': EMPTYPART,
+                'children': [builder.tree]}
         context['tree'] = {'children': [child_of_root]}
         return context
 
-        
+
 class PartialParagraphView(PartialView):
     """ Single paragraph of a regtext """
 

@@ -1,21 +1,25 @@
-from urlparse import urljoin
 from django.template import loader, Context
 from django.core.urlresolvers import reverse, NoReverseMatch
 from ..node_types import to_markup_id
 
+
 class InternalCitationLayer():
+
     def __init__(self, layer):
         self.layer = layer
         self.sectional = False
         self.version = None
 
-    def render_url(self, label, text, template_name='layers/internal_citation.html'):
+    def render_url(
+        self, label, text,
+            template_name='layers/internal_citation.html'):
+
         if self.sectional:
             url = InternalCitationLayer.sectional_url_for(label, self.version)
         else:
             url = InternalCitationLayer.hash_url_for(label, self.version)
         c = Context({'citation': {'url': url, 'label': text}})
-        template =  loader.get_template(template_name)
+        template = loader.get_template(template_name)
         return template.render(c).strip('\n')
 
     @staticmethod
@@ -23,15 +27,18 @@ class InternalCitationLayer():
         section_url = '-'.join(to_markup_id(label[:2]))
         try:
             if 'Interp' in label and len(label) > 2:
-                url = reverse('chrome_interp_view',
-                        kwargs={'label_id':section_url + '-Interp', 
-                            'version': version})
+                url = reverse(
+                    'chrome_interp_view',
+                    kwargs={
+                        'label_id': section_url + '-Interp',
+                        'version': version})
             else:
-                url = reverse('chrome_section_view',
-                        kwargs={'label_id':section_url, 'version': version})
+                url = reverse(
+                    'chrome_section_view',
+                    kwargs={'label_id': section_url, 'version': version})
         except NoReverseMatch:
-            #XXX We have some errors in our layers. Once those are fixed, we 
-            #need to revisit this. 
+            #XXX We have some errors in our layers. Once those are fixed, we
+            #need to revisit this.
             url = ''
         return url + InternalCitationLayer.hash_url_for(label, version)
 
@@ -39,8 +46,7 @@ class InternalCitationLayer():
     def hash_url_for(label, version):
         return '#' + '-'.join(to_markup_id(label))
 
-
-    def apply_layer(self, text, text_index):    
+    def apply_layer(self, text, text_index):
         if text_index in self.layer:
             layer_elements = self.layer[text_index]
 
