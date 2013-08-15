@@ -121,14 +121,13 @@ class HTMLBuilder():
             node['header_markup'] = node['header']
             citation = list(takewhile(lambda p: p != 'Interp',
                                       node['label']))
-            icl = [l for l in self.inline_applier.layers 
-                     if isinstance(l, InternalCitationLayer)]
+            icl = [l for l in self.inline_applier.layers
+                   if isinstance(l, InternalCitationLayer)]
             if icl and len(citation) > 2:
                 icl = icl[0]
                 text = '%s(%s)' % (citation[1], ')('.join(citation[2:]))
                 node['header_markup'] = node['header_markup'].replace(
                     text, icl.render_url(citation, text))
-
 
     def get_title(self):
         titles = {
