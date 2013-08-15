@@ -1,10 +1,12 @@
-from mock import patch
 import os
 import shutil
 import tempfile
 from unittest import TestCase
 
+from mock import patch
+
 from regulations.generator.api_reader import Client
+
 
 class ClientTest(TestCase):
     def setUp(self):
@@ -18,7 +20,7 @@ class ClientTest(TestCase):
         get = requests.get
         get.return_value.json.return_value = to_return
         self.assertEqual(to_return,
-                self.client.regulation("label-here", "date-here"))
+                         self.client.regulation("label-here", "date-here"))
         self.assertTrue(get.called)
         param = get.call_args[0][0]
         self.assertTrue('http://example.com' in param)
@@ -30,8 +32,9 @@ class ClientTest(TestCase):
         to_return = {'example': 1}
         get = requests.get
         get.return_value.json.return_value = to_return
-        self.assertEqual(to_return, 
-                self.client.layer("layer-here", "label-here", "date-here"))
+        self.assertEqual(to_return,
+                         self.client.layer("layer-here", "label-here",
+                                           "date-here"))
         self.assertEqual(1, get.call_count)
         param = get.call_args[0][0]
         self.assertTrue('http://example.com' in param)
@@ -40,12 +43,14 @@ class ClientTest(TestCase):
         self.assertTrue('date-here' in param)
 
         #   Cache
-        self.assertEqual(to_return, 
-                self.client.layer("layer-here", "label-abc", "date-here"))
+        self.assertEqual(to_return,
+                         self.client.layer("layer-here", "label-abc",
+                                           "date-here"))
         self.assertEqual(1, get.call_count)
 
-        self.assertEqual(to_return, 
-                self.client.layer("layer-here", "lablab", "date-here"))
+        self.assertEqual(to_return,
+                         self.client.layer("layer-here", "lablab",
+                                           "date-here"))
         self.assertEqual(2, get.call_count)
         param = get.call_args[0][0]
         self.assertTrue('http://example.com' in param)
@@ -90,12 +95,12 @@ class ClientTest(TestCase):
     @patch('regulations.generator.api_reader.requests')
     def test_reg_cache(self, requests):
         child = {
-            'text': 'child', 
-            'children': [], 
+            'text': 'child',
+            'children': [],
             'label': ['923', 'a']
         }
         to_return = {
-            'text': 'parent', 
+            'text': 'parent',
             'label': ['923'],
             'children': [child]
         }

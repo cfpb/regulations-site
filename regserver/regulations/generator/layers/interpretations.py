@@ -21,7 +21,7 @@ class InterpretationsLayer(object):
             request = HttpRequest()
             request.method = 'GET'
             response = partial_view(request, label_id=reference,
-                    version=self.version)
+                                    version=self.version)
             response.render()
 
             context = {
@@ -29,13 +29,18 @@ class InterpretationsLayer(object):
                 'for_markup_id': text_index
             }
 
-            ref_parts = reference.split('-')[:-1]   #   exclude 'Interp'
-            if len(ref_parts) == 2:   # Part-Section/Appendix
+            #  exclude 'Interp'
+            ref_parts = reference.split('-')[:-1]
+
+            if len(ref_parts) == 2:
+                #  Part-Section/Appendix
                 context['label'] = ref_parts[1]
-            elif ref_parts[1].isalpha(): # Part-Appendix-Segment
+            elif ref_parts[1].isalpha():
+                #  Part-Appendix-Segment
                 context['label'] = '-'.join(ref_parts[1:])
-            else: # Part-Section-Paragraphs
-                context['label'] = (ref_parts[1] + '(' +
-                    ')('.join(ref_parts[2:]) + ')')
+            else:
+                #  Part-Section-Paragraphs
+                context['label'] = (ref_parts[1] + '('
+                                    + ')('.join(ref_parts[2:]) + ')')
 
             return 'interp', context

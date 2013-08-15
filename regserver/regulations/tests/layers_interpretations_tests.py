@@ -4,11 +4,12 @@ from unittest import TestCase
 
 from regulations.generator.layers.interpretations import InterpretationsLayer
 
+
 class InterpretationsLayerTest(TestCase):
     def setUp(self):
         if not settings.configured:
             settings.configure(TEMPLATE_DEBUG=False, API_BASE='')
-        
+
     @patch('regulations.generator.layers.interpretations.views'
            + '.partial.PartialInterpView')
     def test_apply_layer_extra_fields(self, piv):
