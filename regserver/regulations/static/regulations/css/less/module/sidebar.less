@@ -146,7 +146,6 @@
     h2 {
         font-size: .875em;
         float: left;
-        display: inline-block;
         text-transform: uppercase;
         .avenir-next;
         width: 60%;
@@ -154,15 +153,15 @@
     }
 
     .close-button {
-        margin: .8em 0 0 0;
+        margin: .8em -4px 0 0; /*negative right padding accomodates extra space in image file */
         text-indent: -9999px;
         background: url(../img/close.png) no-repeat 0 0;
         cursor: pointer;
-        float: right;
         z-index: 99999;
+        float: right;
     }
 
-     @media 
+    @media 
     (-webkit-min-device-pixel-ratio: 2), 
     (min-resolution: 192dpi) {
         .close-button {
