@@ -10,6 +10,7 @@ class ClientTest(TestCase):
     def setUp(self):
         self.client = Client("http://example.com")
         Client._reg_cache = {}
+        Client._layer_cache = {}
 
     @patch('regulations.generator.api_reader.requests')
     def test_regulation(self, requests):
@@ -31,11 +32,25 @@ class ClientTest(TestCase):
         get.return_value.json.return_value = to_return
         self.assertEqual(to_return, 
                 self.client.layer("layer-here", "label-here", "date-here"))
-        self.assertTrue(get.called)
+        self.assertEqual(1, get.call_count)
         param = get.call_args[0][0]
         self.assertTrue('http://example.com' in param)
         self.assertTrue('layer-here' in param)
-        self.assertTrue('label-here' in param)
+        self.assertTrue('label' in param)   # grabs the root
+        self.assertTrue('date-here' in param)
+
+        #   Cache
+        self.assertEqual(to_return, 
+                self.client.layer("layer-here", "label-abc", "date-here"))
+        self.assertEqual(1, get.call_count)
+
+        self.assertEqual(to_return, 
+                self.client.layer("layer-here", "lablab", "date-here"))
+        self.assertEqual(2, get.call_count)
+        param = get.call_args[0][0]
+        self.assertTrue('http://example.com' in param)
+        self.assertTrue('layer-here' in param)
+        self.assertTrue('lablab' in param)
         self.assertTrue('date-here' in param)
 
     @patch('regulations.generator.api_reader.requests')
