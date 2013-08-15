@@ -154,11 +154,21 @@ when the active section changes, highlight it in the TOC</p>
             
             Dispatch.on(<span class="string">'toc:stateChange'</span>, <span class="keyword">this</span>.changeContents, <span class="keyword">this</span>);
 
+            <span class="keyword">this</span>.$label = $(<span class="string">'.toc-type'</span>);
             <span class="keyword">this</span>.$children = $(<span class="string">'.toc-container'</span>);
             <span class="keyword">this</span>.childViews = {
-                <span class="string">'#table-of-contents'</span>: $(<span class="string">'#table-of-contents'</span>),
-                <span class="string">'#history'</span>: $(<span class="string">'#history'</span>),
-                <span class="string">'#search'</span>: $(<span class="string">'#search'</span>)
+                <span class="string">'#table-of-contents'</span>: {
+                    <span class="string">'selector'</span>: $(<span class="string">'#table-of-contents'</span>),
+                    <span class="string">'title'</span>:(<span class="string">'Table of contents for'</span>)
+                },
+                <span class="string">'#history'</span>: {
+                    <span class="string">'selector'</span>: $(<span class="string">'#history'</span>),
+                    <span class="string">'title'</span>:(<span class="string">'Switch between versions of'</span>)
+                },
+                <span class="string">'#search'</span>: {
+                    <span class="string">'selector'</span>: $(<span class="string">'#search'</span>),
+                    <span class="string">'title'</span>:(<span class="string">'Search'</span>)
+                }
             };</pre></div></div>
             
         </li>
@@ -217,7 +227,9 @@ when a TOC link is clicked, send an event along with the href of the clicked lin
 
         changeContents: <span class="keyword">function</span>(activeId) {
             <span class="keyword">this</span>.$children.addClass(<span class="string">'hidden'</span>);
-            <span class="keyword">this</span>.childViews[activeId].removeClass(<span class="string">'hidden'</span>);
+            <span class="keyword">this</span>.childViews[activeId][<span class="string">'selector'</span>].removeClass(<span class="string">'hidden'</span>);
+
+            <span class="keyword">this</span>.$label.html(<span class="keyword">this</span>.childViews[activeId][<span class="string">'title'</span>]);
         },</pre></div></div>
             
         </li>
