@@ -5,10 +5,14 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], fun
 
         initialize: function() {
             this.$activeEls = $('#menu, #site-header, #reg-content');
+
+            // view switcher buttons - TOC, calendar, search
+            this.$tocLinks = $('.toc-nav-link');
         },
 
         events: {
-            'click .toc-toggle': 'openTOC'
+            'click .toc-toggle': 'openTOC',
+            'click .toc-nav-link': 'toggleDrawer'
         },
 
         openTOC: function(e) {
@@ -22,6 +26,17 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], fun
                 $target.toggleClass('open');
                 this.$activeEls.toggleClass('active');
             }
+        },
+
+        toggleDrawer: function(e) {
+            e.preventDefault();
+
+            var $target = $(e.target);
+
+            this.$tocLinks.removeClass('current');
+            $target.addClass('current');
+
+            Dispatch.trigger('toc:stateChange', $target.attr('href'));
         }
     });
 

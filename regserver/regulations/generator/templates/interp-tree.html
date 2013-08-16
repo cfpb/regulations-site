@@ -1,8 +1,10 @@
 {% comment %}
     Template for each level of the interpretation tree
 {% endcomment %}
-<section id="{{interp.markup_id}}">
-    {% if interp.section_header %}
+<section {% if not inline %}id="{{interp.markup_id}}"{% endif %}>
+    {% if inline %}
+        <h5> {{ interp.header }}</h3>
+    {% elif interp.section_header %}
         <h3 tabindex="0"> {{ interp.header }}</h3>
     {% else %}
         <h4 class='interp-subheading' tabindex="0"> {{ interp.header_markup|safe }} </h4>
@@ -28,7 +30,7 @@
         </ol>
     {% endif %}
 
-    {% if interp.header_children %}
+    {% if not inline and interp.header_children %}
         {% for header_child in interp.header_children %}
             {% with interp=header_child template_name="interp-tree.html" %}
                 {% include template_name %}
