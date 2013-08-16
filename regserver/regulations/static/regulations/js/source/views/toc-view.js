@@ -16,6 +16,8 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
             // **Event Listeners**
             // when the active section changes, highlight it in the TOC
             Dispatch.on('activeSection:change', this.setActive, this);
+
+            Dispatch.on('openSection:set', this.setActive, this);
             
             Dispatch.on('toc:stateChange', this.changeContents, this);
 
@@ -26,8 +28,6 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
                 '#search': $('#search')
             };
 
-            this.setActive(Dispatch.getOpenSection());
-
             // **TODO** need to work out a bug where it scrolls the content section
             // $('#menu-link:not(.active)').on('click', this.scrollToActive);
         },
@@ -35,7 +35,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
         // update active classes, find new active based on the reg entity id in the anchor
         setActive: function(id) {
             this.$el.find('.current').removeClass('current');
-            this.$el.find('a[href=#' + RegsHelpers.findBaseSection(id) + ']').addClass('current');
+            this.$el.find('a[data-section-id=' + RegsHelpers.findBaseSection(id) + ']').addClass('current');
 
             return this;
         },

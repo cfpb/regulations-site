@@ -62,7 +62,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
         },
 
         init: function() {
-            this.getTree($('#reg-content')); 
+            var openSection;
 
             // init primary Views that require only a single instance
             window.Regs = {};
@@ -72,6 +72,10 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             window.Regs.regContent = new ContentView();
             window.Regs.analytics = new AnalyticsHandler();
             window.Regs.mainHeader = new HeaderView();
+
+            openSection = $('.main-content .reg-section').attr('id');
+            Dispatch.set('section', openSection);
+            Dispatch.trigger('openSection:set', openSection);
 
             this.bindEvents();
             this.fetchModelForms();
