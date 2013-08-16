@@ -1,9 +1,11 @@
+#vim: set encoding=utf-8
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
 from regulations.generator.node_types import EMPTYPART, REGTEXT
 from regulations.views import utils
+from regulations.generator import navigation
 
 
 def generate_html(regulation_tree, layer_appliers):
@@ -48,6 +50,18 @@ class PartialSectionView(PartialView):
     """ Single section of reg text """
     template_name = 'regulation-content.html'
 
+    def section_navigation(self, label, version):
+        nav_sections = navigation.nav_sections(label, version)
+        if nav_sections:
+            p_sect, n_sect = nav_sections
+
+            nav = {}
+            if p_sect:
+                nav['previous'] = navigation.section_title(p_sect)
+            if n_sect:
+                nav['next'] = navigation.section_title(n_sect)
+            return nav
+
     def transform_context(self, context, builder):
         child_of_root = builder.tree
         #   Add a layer to account for subpart if this is regtext
@@ -56,6 +70,9 @@ class PartialSectionView(PartialView):
                 'node_type': EMPTYPART,
                 'children': [builder.tree]}
         context['tree'] = {'children': [child_of_root]}
+        context['navigation'] = self.section_navigation(
+            context['label_id'], context['version'])
+
         return context
 
 
@@ -73,8 +90,10 @@ class PartialInterpView(PartialView):
     """ Interpretation of a reg text section/paragraph or appendix """
 
     template_name = "interpretations.html"
+    inline = False
 
     def transform_context(self, context, builder):
+        context['inline'] = self.inline
         context['c'] = {'node_type': 'interp', 'children': [builder.tree]}
         return context
 

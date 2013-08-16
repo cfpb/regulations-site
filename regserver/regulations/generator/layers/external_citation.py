@@ -4,6 +4,8 @@ import utils
 
 
 class ExternalCitationLayer():
+    shorthand = 'external'
+
     def __init__(self, layer):
         self.layer = layer
 

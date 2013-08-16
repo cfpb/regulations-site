@@ -2,7 +2,7 @@
     Wrap tree.html in a list item. 
 {% endcomment %}
 <li
-    {% if not ignore_id %}id="{{node.markup_id}}" data-permalink-section{% endif %}
+    {% if not inline %}id="{{node.markup_id}}" data-permalink-section{% endif %}
     {% if node.interp %}data-interp-id="{{node.interp.markup_id}}"{% endif %}
 >
     {% include "tree.html" %}

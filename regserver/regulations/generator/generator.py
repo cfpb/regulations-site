@@ -21,17 +21,17 @@ import notices
 
 
 class LayerCreator(object):
-    """ This lets us dynamically load layers by name. """
-    INTERNAL = 'internal'
-    TOC = 'toc'
-    EXTERNAL = 'external'
-    TERMS = 'terms'
-    SXS = 'sxs'
-    PARAGRAPH = 'paragraph'
-    META = 'meta'
-    GRAPHICS = 'graphics'
-    INTERP = 'interp'
-    KEY_TERMS = 'keyterms'
+    """ This lets us dynamically load layers by shorthand. """
+    INTERNAL = InternalCitationLayer.shorthand
+    TOC = TableOfContentsLayer.shorthand
+    EXTERNAL = ExternalCitationLayer.shorthand
+    TERMS = DefinitionsLayer.shorthand
+    SXS = SectionBySectionLayer.shorthand
+    PARAGRAPH = ParagraphMarkersLayer.shorthand
+    META = MetaLayer.shorthand
+    GRAPHICS = GraphicsLayer.shorthand
+    INTERP = InterpretationsLayer.shorthand
+    KEY_TERMS = KeyTermsLayer.shorthand
 
     LAYERS = {
         INTERNAL: ('internal-citations', 'inline', InternalCitationLayer),
@@ -46,8 +46,6 @@ class LayerCreator(object):
         INTERP: ('interpretations', 'paragraph', InterpretationsLayer),
         KEY_TERMS: ('keyterms', 'search_replace', KeyTermsLayer),
     }
-
-    SPECIAL_CASES = [INTERP]
 
     def __init__(self):
         self.appliers = {
@@ -65,8 +63,7 @@ class LayerCreator(object):
         """ Add a normal layer (no special handling required) to the applier.
         """
 
-        if layer_name.lower() in LayerCreator.LAYERS and \
-                layer_name not in LayerCreator.SPECIAL_CASES:
+        if layer_name.lower() in LayerCreator.LAYERS:
             api_name, applier_type,\
                 layer_class = LayerCreator.LAYERS[layer_name]
             layer_json = self.get_layer_json(api_name, regulation, version)
@@ -79,32 +76,12 @@ class LayerCreator(object):
 
             self.appliers[applier_type].add_layer(layer)
 
-    def add_interpretation_layer(self, regulation, version):
-        """ Add the interpretations layer to the appropriate applier. The
-        interpretations layer needs to have the other appliers. Hence it needs
-        to be dealt with uniquely. """
-
-        api_name, applier_type,\
-            layer_class = LayerCreator.LAYERS[LayerCreator.INTERP]
-        layer_json = self.get_layer_json(api_name, regulation, version)
-        layer = layer_class(layer_json, version)
-        layer.copy_builder(
-            self.appliers['inline'], self.appliers['search_replace'])
-        self.appliers[applier_type].add_layer(layer)
-
     def add_layers(self, layer_names, regulation, version, sectional=False):
         #This doesn't deal with sectional interpretations yet.
         #we'll have to do that.
 
-        last = []
         for layer_name in layer_names:
-            if layer_name == LayerCreator.INTERP:
-                last.append(LayerCreator.INTERP)
-            else:
-                self.add_layer(layer_name, regulation, version, sectional)
-
-        if len(last) > 0:
-            self.add_interpretation_layer(regulation, version)
+            self.add_layer(layer_name, regulation, version, sectional)
 
     def get_appliers(self):
         """ Return the appliers. """

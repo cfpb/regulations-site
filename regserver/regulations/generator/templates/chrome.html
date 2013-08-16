@@ -28,17 +28,13 @@
         <span id="active-title"></span>
     </div>
     <div class="header-secondary">
-        <span class="effective-date"><strong>Effective Date:</strong> {{ tree.meta.effective.date|date }}</span>
+        <span class="effective-date"><strong>Effective Date:</strong> {{ tree.meta.effective_date|date }}</span>
         <h2> </h2>
     </div>
 </div>
 </header>
 
- {%if tree.TOC %}
-    {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
-       {% include "toc.html" %} 
-    {% endwith %}
- {%endif%}  
+{% include "drawer.html" %} 
 
 <div class="wrap group" id="reg-content">
 
@@ -87,9 +83,7 @@
 </div> <!-- /.secondary-content -->
 </div> <!-- /.wrap -->
 
-<footer>
-    <small>Brought to you by the <abbr title="Consumer Financial Protection Buereau">CFPB</abbr> Technology &amp; Innovation Team</small>
-</footer>
+{% include "footer.html" %}
 
 {% endblock %}
 

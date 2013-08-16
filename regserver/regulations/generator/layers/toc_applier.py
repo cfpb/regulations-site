@@ -4,6 +4,8 @@ import re
 from regulations.generator.layers.internal_citation import InternalCitationLayer
 
 class TableOfContentsLayer(object):
+    shorthand = 'toc'
+
     def __init__(self, layer):
         self.layer = layer
         self.sectional = False

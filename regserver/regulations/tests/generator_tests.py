@@ -82,6 +82,6 @@ class GeneratorTest(TestCase):
         self.assertEquals(len(i.layers), 1)
         self.assertEquals(len(s.layers), 1)
 
-        internal_citation_layer = i.layers[0]
+        internal_citation_layer = i.layers['internal']
         self.assertTrue(internal_citation_layer.sectional)
         self.assertEquals(internal_citation_layer.version, 'verver')

@@ -4,6 +4,7 @@ from ..node_types import to_markup_id
 
 
 class InternalCitationLayer():
+    shorthand = 'internal'
 
     def __init__(self, layer):
         self.layer = layer

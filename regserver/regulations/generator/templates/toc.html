@@ -1,17 +1,8 @@
 {% comment %}
     Display a table of contents. 
 {% endcomment %}
-
-<nav {% if top_toc %}id="menu" class="panel"{% endif %} role="navigation">
-    {% if top_toc %}
-        <h2>
-            <span class="toc-type">Table of contents for</span>
-            <span class="toc-part-num">{{ tree.meta.cfr_title_number }} CFR Part {{ tree.label.0 }}</span>
-            <span class="toc-reg-title">{{ tree.title_clean|title }}
-            {% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</span>
-        </h2>
-    {% endif %}
-    <ol class="{{nav_class}} toc-container current"{% if top_toc %} id="table-of-contents"{% endif %}>
+<nav class="{{nav_class}}" role="navigation">
+    <ol {% if top_toc %}class="toc-container current" id="table-of-contents"{% endif %}>
         {% for item in toc_items %}
             {% if item.is_section %}
                 <li><a href="{{item.url}}" data-section-id="{{item.markup_section_id}}"><span class="toc-section-marker">§&nbsp;{{item.section}}</span> {{item.sub_label|safe}}</a></li>
@@ -24,12 +15,4 @@
             {% endif %}
         {% endfor %}
     </ol>
-    {% if top_toc %}
-        <div id="history" class="toc-container hidden">
-            <p>History Here</p>
-        </div>
-        <div id="search" class="toc-container hidden">
-            <p>Search Here</p>
-        </div>
-    {% endif %}
 </nav>

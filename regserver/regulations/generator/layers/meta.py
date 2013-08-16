@@ -1,6 +1,8 @@
 from regulations.generator.layers.utils import convert_to_python
 
 class MetaLayer(object):
+    shorthand = 'meta'
+
     def __init__(self, layer_data):
         self.layer_data = convert_to_python(layer_data)
 

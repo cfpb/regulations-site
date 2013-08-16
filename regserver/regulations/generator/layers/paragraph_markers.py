@@ -2,6 +2,8 @@ from django.template import loader
 import utils
 
 class ParagraphMarkersLayer(object):
+    shorthand = 'paragraph'
+
     def __init__(self, layer):
         self.layer = layer
         self.template = loader.get_template('layers/paragraph_markers.html')

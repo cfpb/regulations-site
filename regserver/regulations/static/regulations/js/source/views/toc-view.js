@@ -21,11 +21,21 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
             
             Dispatch.on('toc:stateChange', this.changeContents, this);
 
+            this.$label = $('.toc-type');
             this.$children = $('.toc-container');
             this.childViews = {
-                '#table-of-contents': $('#table-of-contents'),
-                '#history': $('#history'),
-                '#search': $('#search')
+                '#table-of-contents': {
+                    'selector': $('#table-of-contents'),
+                    'title':('Table of contents for')
+                },
+                '#history': {
+                    'selector': $('#history'),
+                    'title':('Switch between versions of')
+                },
+                '#search': {
+                    'selector': $('#search'),
+                    'title':('Search')
+                }
             };
 
             // **TODO** need to work out a bug where it scrolls the content section
@@ -49,7 +59,9 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
 
         changeContents: function(activeId) {
             this.$children.addClass('hidden');
-            this.childViews[activeId].removeClass('hidden');
+            this.childViews[activeId]['selector'].removeClass('hidden');
+
+            this.$label.html(this.childViews[activeId]['title']);
         },
 
         // **Inactive** 

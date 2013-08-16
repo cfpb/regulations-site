@@ -1,0 +1,43 @@
+@media only screen and ( max-width: 780px ) {
+    
+    .secondary-content {
+        position: static;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        border-left: none;
+        padding-left: 100px;
+    }
+
+    .close-button {
+        float: none;
+        position: fixed;
+        top: 70%;
+        right: 0px;
+    }
+
+    .open-definition {
+        position: fixed;
+        top: 70%;
+        bottom: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 200px;
+        padding: 20px 20px 80px 60px;
+        background: #f6f6f5;
+        .border-top-light(@width: 2px);
+        z-index: 200;
+        overflow-y: scroll;
+    }
+
+    .main-content {
+        width: 100%;
+        margin: 0 auto;
+        padding-top: 94px;
+        padding-left: 100px;
+    }
+
+    .level-1 > li:after {
+        margin-left: -5em;
+    }
+}
