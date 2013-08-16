@@ -122,7 +122,7 @@ class HTMLBuilder():
             citation = list(takewhile(lambda p: p != 'Interp',
                                       node['label']))
             icl = self.inline_applier.layers.get(
-                    InternalCitationLayer.shorthand)
+                InternalCitationLayer.shorthand)
             if icl and len(citation) > 2:
                 text = '%s(%s)' % (citation[1], ')('.join(citation[2:]))
                 node['header_markup'] = node['header_markup'].replace(
