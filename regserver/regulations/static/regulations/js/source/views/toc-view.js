@@ -26,6 +26,8 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
                 '#search': $('#search')
             };
 
+            this.setActive(Dispatch.getOpenSection());
+
             // **TODO** need to work out a bug where it scrolls the content section
             // $('#menu-link:not(.active)').on('click', this.scrollToActive);
         },
