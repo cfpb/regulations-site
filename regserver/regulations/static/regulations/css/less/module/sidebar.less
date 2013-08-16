@@ -28,8 +28,8 @@
     }
 
     .sub-text {
-        margin-top: 0 0 20px 0; 
-        padding: 0 0 20px 0;
+        margin-top: 0 0 15px 0; 
+        padding: 0 0 15px 0;
         .border-bottom-light(@width: 1px);
     }
 
@@ -47,7 +47,7 @@
         .avenir-next-demi;
 
         &.expandable {
-            margin: 1.5em 0;
+            margin: 1.5em 15px 1.5em 0;
             cursor: pointer;
         }
 
@@ -130,7 +130,7 @@
 .continue-link {
     .avenir-next-demi;
     display: inline-block;
-    margin: 0 20px 0 0;
+    margin: 0 15px 0 0;
 }
 
 .continue-link:last-child {
@@ -138,7 +138,7 @@
 }
 
 .sidebar-header {
-    margin: 0 10px 0 20px;
+    margin: 0 10px 0 15px;
     height: 20px;
     width: 100%;
     .group;
@@ -146,7 +146,6 @@
     h2 {
         font-size: .875em;
         float: left;
-        display: inline-block;
         text-transform: uppercase;
         .avenir-next;
         width: 60%;
@@ -154,15 +153,15 @@
     }
 
     .close-button {
-        margin: .8em 0 0 0;
+        margin: .8em -4px 0 0; /*negative right padding accomodates extra space in image file */
         text-indent: -9999px;
         background: url(../img/close.png) no-repeat 0 0;
         cursor: pointer;
-        float: right;
         z-index: 99999;
+        float: right;
     }
 
-     @media 
+    @media 
     (-webkit-min-device-pixel-ratio: 2), 
     (min-resolution: 192dpi) {
         .close-button {
