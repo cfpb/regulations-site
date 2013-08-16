@@ -21,17 +21,17 @@ import notices
 
 
 class LayerCreator(object):
-    """ This lets us dynamically load layers by name. """
-    INTERNAL = 'internal'
-    TOC = 'toc'
-    EXTERNAL = 'external'
-    TERMS = 'terms'
-    SXS = 'sxs'
-    PARAGRAPH = 'paragraph'
-    META = 'meta'
-    GRAPHICS = 'graphics'
-    INTERP = 'interp'
-    KEY_TERMS = 'keyterms'
+    """ This lets us dynamically load layers by shorthand. """
+    INTERNAL = InternalCitationLayer.shorthand
+    TOC = TableOfContentsLayer.shorthand
+    EXTERNAL = ExternalCitationLayer.shorthand
+    TERMS = DefinitionsLayer.shorthand
+    SXS = SectionBySectionLayer.shorthand
+    PARAGRAPH = ParagraphMarkersLayer.shorthand
+    META = MetaLayer.shorthand
+    GRAPHICS = GraphicsLayer.shorthand
+    INTERP = InterpretationsLayer.shorthand
+    KEY_TERMS = KeyTermsLayer.shorthand
 
     LAYERS = {
         INTERNAL: ('internal-citations', 'inline', InternalCitationLayer),

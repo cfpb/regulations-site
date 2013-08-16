@@ -4,6 +4,8 @@ import utils
 
 
 class DefinitionsLayer(object):
+    shorthand = 'terms'
+
     def __init__(self, layer):
         self.layer = layer
         self.defining_template = loader.get_template('layers/defining.html')

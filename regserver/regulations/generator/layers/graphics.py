@@ -3,6 +3,8 @@ import utils
 
 
 class GraphicsLayer(object):
+    shorthand = 'graphics'
+
     def __init__(self, layer_data):
         self.layer_data = layer_data
         self.template = loader.get_template('layers/graphics.html')

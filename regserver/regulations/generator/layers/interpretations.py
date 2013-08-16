@@ -7,6 +7,8 @@ from regulations.generator.node_types import to_markup_id
 
 class InterpretationsLayer(object):
     """Fetches the (rendered) interpretation for this node, if available"""
+    shorthand = 'interp'
+
     def __init__(self, layer, version=None):
         self.layer = layer
         self.version = version

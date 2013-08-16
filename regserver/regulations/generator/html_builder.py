@@ -3,10 +3,11 @@
 import re
 
 from django.template import loader, Context
-from itertools import ifilter, ifilterfalse
+from itertools import ifilter, ifilterfalse, takewhile
 
 from node_types import to_markup_id, APPENDIX, INTERP
 from layers.layers_applier import LayersApplier
+from layers.internal_citation import InternalCitationLayer
 
 
 class HTMLBuilder():
@@ -116,6 +117,16 @@ class HTMLBuilder():
         is_header = lambda child: child['label'][-1] == 'Interp'
         node['header_children'] = list(ifilter(is_header, node['children']))
         node['par_children'] = list(ifilterfalse(is_header, node['children']))
+        if 'header' in node:
+            node['header_markup'] = node['header']
+            citation = list(takewhile(lambda p: p != 'Interp',
+                                      node['label']))
+            icl = self.inline_applier.layers.get(
+                InternalCitationLayer.shorthand)
+            if icl and len(citation) > 2:
+                text = '%s(%s)' % (citation[1], ')('.join(citation[2:]))
+                node['header_markup'] = node['header_markup'].replace(
+                    text, icl.render_url(citation, text))
 
     def get_title(self):
         titles = {

@@ -7,7 +7,7 @@
     {% elif interp.section_header %}
         <h3 tabindex="0"> {{ interp.header }}</h3>
     {% else %}
-        <h4 class='interp-subheading' tabindex="0"> {{ interp.header }} </h4>
+        <h4 class='interp-subheading' tabindex="0"> {{ interp.header_markup|safe }} </h4>
     {% endif %}
 
     {% for doc_num, ref in interp.analyses %}
