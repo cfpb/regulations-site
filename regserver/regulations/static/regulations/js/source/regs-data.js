@@ -17,7 +17,7 @@
 // be reused to aim for the effect of a native Backbone experience, but shouldn't try so hard
 // as to be confusing. Ex. the return value of Model.fetch should be the same as in core Backbone,
 // even if the internals are different
-define('regs-data', ['underscore', 'backbone', './regs-helpers'], function(_, Backbone, RegsHelpers) {
+define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatch'], function(_, Backbone, RegsHelpers, Dispatch) {
     'use strict';
 
     // represents a whole regulation
@@ -102,7 +102,7 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers'], function(_, Ba
         },
 
         request: function(id) {
-            var url = '/partial/' + id + '/2013-10604-eregs',
+            var url = '/partial/' + id + '/' + Dispatch.getVersion(),
                 promise;
 
             promise = $.ajax({
