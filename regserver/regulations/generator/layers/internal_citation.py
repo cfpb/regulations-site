@@ -40,7 +40,7 @@ class InternalCitationLayer():
             #XXX We have some errors in our layers. Once those are fixed, we
             #need to revisit this.
             url = ''
-        return url
+        return url + InternalCitationLayer.hash_url_for(label, version)
 
     @staticmethod
     def hash_url_for(label, version):
