@@ -5,6 +5,8 @@ from regulations.generator.node_types import to_markup_id
 from django.conf import settings
 
 class InterpretationsLayer(object):
+    shorthand = 'interp'
+
     def __init__(self, layer, version):
         self.layer = layer
         self.version = version
