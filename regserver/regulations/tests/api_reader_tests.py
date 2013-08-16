@@ -1,7 +1,5 @@
-import json
 from mock import patch
 import os
-from StringIO import StringIO
 import shutil
 import tempfile
 from unittest import TestCase

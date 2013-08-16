@@ -1,9 +1,13 @@
 from regulations.generator import generator
 
-def get_layer_list(names):
-    return set(l.lower() for l in names.split(',') if l.lower() in generator.LayerCreator.LAYERS)
 
-def handle_specified_layers(layer_names, regulation_id, version, sectional=False):
+def get_layer_list(names):
+    layer_names = generator.LayerCreator.LAYERS
+    return set(l.lower() for l in names.split(',') if l.lower() in layer_names)
+
+
+def handle_specified_layers(
+        layer_names, regulation_id, version, sectional=False):
 
     layer_list = get_layer_list(layer_names)
     layer_creator = generator.LayerCreator()

@@ -4,6 +4,7 @@ import os
 
 import requests
 
+
 class Client:
     """A very simple client for accessing the regulation and meta data."""
     _reg_cache = {}
@@ -40,7 +41,6 @@ class Client:
         """End point for regulation JSON. Return the result as a dict"""
         return copy.deepcopy(self._use_reg_cache(label, version))
         #return self._get("regulation/%s/%s" % (label, version))
-
 
     def layer(self, layer_name, label, version):
         """End point for layer JSON. Return the result as a list"""

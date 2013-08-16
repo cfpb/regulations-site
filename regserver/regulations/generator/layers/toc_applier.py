@@ -1,7 +1,6 @@
 #vim: set fileencoding=utf-8
 import re
 
-from regulations.generator.node_types import to_markup_id
 from regulations.generator.layers.internal_citation import InternalCitationLayer
 
 class TableOfContentsLayer(object):

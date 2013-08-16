@@ -2,7 +2,6 @@ from django.conf import settings
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
-from regulations.generator.html_builder import HTMLBuilder
 from regulations.views import utils
 from regulations.views.partial import *
 
@@ -28,15 +27,15 @@ class ChromeView(TemplateView):
         part = label_id.split('-')[0]
         full_tree = generator.get_regulation(part, version)
         relevant_tree = generator.get_tree_paragraph(label_id, version)
-        
+
         partial_view = self.partial_class.as_view()
-        response = partial_view(self.request, label_id=label_id,
-                version=version)
+        response = partial_view(
+            self.request, label_id=label_id, version=version)
         response.render()
         context['partial_content'] = response.content
 
-        appliers = utils.handle_specified_layers('toc,meta', part, version,
-                self.partial_class.sectional_links)
+        appliers = utils.handle_specified_layers(
+            'toc,meta', part, version, self.partial_class.sectional_links)
         builder = generate_html(full_tree, appliers)
 
         context['tree'] = full_tree
@@ -58,6 +57,7 @@ class ChromeSectionView(ChromeView):
 class ChromeParagraphView(ChromeView):
     """Regtext paragraph with chrome"""
     partial_class = PartialParagraphView
+
 
 class ChromeRegulationView(ChromeView):
     """Entire regulation with chrome"""

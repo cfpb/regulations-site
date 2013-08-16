@@ -168,6 +168,6 @@ class HTMLBuilderTest(TestCase):
         self.assertEqual(u' Title', node['header_title'])
 
     def test_no_section_sign(self):
-        text = HTMLBuilder.section_sign_hard_space(' abc')
+        text = HTMLBuilder.section_space(' abc')
         self.assertEquals(text, ' abc')
         self.assertTrue(True)
