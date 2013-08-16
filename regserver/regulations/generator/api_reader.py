@@ -8,6 +8,7 @@ import requests
 class Client:
     """A very simple client for accessing the regulation and meta data."""
     _reg_cache = {}
+    _layer_cache = {}
 
     def _dfs_search(self, reg_tree, index):
         """Find the matching node in the tree (if it exists)"""
@@ -43,8 +44,12 @@ class Client:
         #return self._get("regulation/%s/%s" % (label, version))
 
     def layer(self, layer_name, label, version):
-        """End point for layer JSON. Return the result as a list"""
-        return self._get("layer/%s/%s/%s" % (layer_name, label, version))
+        """Check the layer cache to see if we've already requested this
+        version+layer. We just grab once for the entire regulation."""
+        ident = (layer_name, label.split('-')[0], version)
+        if ident not in Client._layer_cache:
+            Client._layer_cache[ident] = self._get("layer/%s/%s/%s" % ident)
+        return Client._layer_cache[ident]
 
     def notices(self):
         """End point for notice searching. Right now, just a list"""

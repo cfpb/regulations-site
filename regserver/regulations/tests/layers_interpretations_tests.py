@@ -4,73 +4,55 @@ from unittest import TestCase
 
 from regulations.generator.layers.interpretations import InterpretationsLayer
 
+
 class InterpretationsLayerTest(TestCase):
     def setUp(self):
         if not settings.configured:
             settings.configure(TEMPLATE_DEBUG=False, API_BASE='')
-        
-    @patch('regulations.generator.layers.interpretations.api_reader')
-    def test_apply_layer_extra_fields(self, api_reader):
+
+    @patch('regulations.generator.layers.interpretations.views'
+           + '.partial.PartialInterpView')
+    def test_apply_layer_extra_fields(self, piv):
         layer = {
             "200-2-b-3-i": [{
                 'reference': '200-2-b-3-i-Interp',
                 "text": "Some contents are here"
             }],
         }
-        api_reader.Client.return_value.regulation.return_value = {
-            'some': 'node'
-        }
+        piv.as_view.return_value.return_value.content = 'content'
 
-        il = InterpretationsLayer(layer, 'test-version')
-        il.builder = Mock()
+        il = InterpretationsLayer(layer)
 
-        il.apply_layer('200-2-b-3-i')
-        self.assertEqual(il.builder.tree, {
-            'some': 'node',
-            'interp_for_markup_id': '200-2-b-3-i',
-            'interp_label': '2(b)(3)(i)'
-        })
+        self.assertEqual(il.apply_layer('200-2-b-3-i'), ('interp', {
+            'markup': 'content',
+            'for_markup_id': '200-2-b-3-i',
+            'label': '2(b)(3)(i)'
+        }))
 
-    @patch('regulations.generator.layers.interpretations.api_reader')
-    def test_apply_layer_section(self, api_reader):
+    @patch('regulations.generator.layers.interpretations.views'
+           + '.partial.PartialInterpView')
+    def test_apply_layer_section(self, piv):
         layer = {
             "200-2": [{
                 "reference": "200-2-Interp",
                 "text": "Some contents are here"
             }],
         }
-        api_reader.Client.return_value.regulation.return_value = {
-            'some': 'node'
-        }
+        piv.as_view.return_value.return_value.content = 'content'
+        il = InterpretationsLayer(layer)
 
-        il = InterpretationsLayer(layer, 'test-version')
-        il.builder = Mock()
+        self.assertEqual('2', il.apply_layer('200-2')[1]['label'])
 
-        il.apply_layer('200-2')
-        self.assertEqual(il.builder.tree, {
-            'some': 'node',
-            'interp_for_markup_id': '200-2',
-            'interp_label': '2'
-        })
-
-    @patch('regulations.generator.layers.interpretations.api_reader')
-    def test_apply_layer_appendix(self, api_reader):
+    @patch('regulations.generator.layers.interpretations.views'
+           + '.partial.PartialInterpView')
+    def test_apply_layer_appendix(self, piv):
         layer = {
             "200-Q-5": [{
                 "reference": "200-Q-5-Interp",
                 "text": "Some contents are here"
             }],
         }
-        api_reader.Client.return_value.regulation.return_value = {
-            'some': 'node'
-        }
+        piv.as_view.return_value.return_value.content = 'content'
+        il = InterpretationsLayer(layer)
 
-        il = InterpretationsLayer(layer, 'test-version')
-        il.builder = Mock()
-
-        il.apply_layer('200-Q-5')
-        self.assertEqual(il.builder.tree, {
-            'some': 'node',
-            'interp_for_markup_id': '200-Q-5',
-            'interp_label': 'Q-5'
-        })
+        self.assertEqual('Q-5', il.apply_layer('200-Q-5')[1]['label'])
