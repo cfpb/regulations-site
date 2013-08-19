@@ -68,6 +68,21 @@ class ClientTest(TestCase):
         param = get.call_args[0][0]
         self.assertTrue('http://example.com' in param)
 
+        self.assertEqual(to_return, self.client.notices('p'))
+        self.assertTrue(get.called)
+        self.assertEqual({'part': 'p'}, get.call_args[1]['params'])
+
+    @patch('regulations.generator.api_reader.requests')
+    def test_regversion(self, requests):
+        to_return = {}
+        get = requests.get
+        get.return_value.json.return_value = to_return
+        self.assertEqual(to_return, self.client.regversions('765'))
+        self.assertTrue(get.called)
+        param = get.call_args[0][0]
+        self.assertTrue('http://example.com' in param)
+        self.assertTrue('765' in param)
+
     @patch('regulations.generator.api_reader.requests')
     def test_notice(self, requests):
         to_return = {'example': 1}
