@@ -7,6 +7,7 @@ from itertools import ifilter, ifilterfalse
 
 from node_types import to_markup_id, APPENDIX, INTERP
 from layers.layers_applier import LayersApplier
+from layers.diff_applier import DiffApplier
 
 
 class HTMLBuilder():
@@ -85,11 +86,14 @@ class HTMLBuilder():
             search_elements = self.search_applier.get_layer_pairs(
                 node['label_id'])
 
+            diff_applier = DiffApplier()
+            node['marked_up'] = diff_applier.apply_diff(node['text'], node['label_id'])
+
             layers_applier = LayersApplier()
             layers_applier.enqueue_from_list(inline_elements)
             layers_applier.enqueue_from_list(search_elements)
 
-            node['marked_up'] = layers_applier.apply_layers(node['text'])
+            node['marked_up'] = layers_applier.apply_layers(node['marked_up'])
             node['marked_up'] = HTMLBuilder.section_space(node['marked_up'])
 
         node = self.p_applier.apply_layers(node)
