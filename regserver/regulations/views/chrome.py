@@ -2,6 +2,7 @@ from django.conf import settings
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
+from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
 from regulations.views.partial import *
 
@@ -40,6 +41,9 @@ class ChromeView(TemplateView):
 
         context['tree'] = full_tree
         self.add_extras(context)
+
+        context['part'] = part
+        context['history'] = fetch_grouped_history(part)
 
         return context
 
