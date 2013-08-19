@@ -33,7 +33,7 @@ class VersionsTest(TestCase):
         history = fetch_grouped_history('111')
         self.assertEqual(3, len(history))
         v1, v2, v3 = history
-        
+
         self.assertEqual('Final Rule', v1['status'])
         self.assertEqual('future', v1['timeline'])
         self.assertEqual('Current Law', v2['status'])
