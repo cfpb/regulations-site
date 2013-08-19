@@ -11,9 +11,6 @@
 {% endif %}
 
 {% if navigation.next %}
-    {% if navigation.previous %}    
-        <!--|-->
-    {% endif %}
     <div class="next next-prev">
         <a class="next-prev-link" href="{% url 'chrome_section_view' navigation.next.section version %}">Next section - &sect;&nbsp;{{navigation.next.title.0}} <i class="minicon-right"></i></a> <span class="next-prev-title">{{navigation.next.title.1}}</span>
     </div>
