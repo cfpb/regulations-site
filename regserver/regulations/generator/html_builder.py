@@ -68,7 +68,6 @@ class HTMLBuilder():
                 node['header_num'] = match.group(2)
                 node['header_title'] = match.group(3)
 
-        node['text'] = node['text'].rstrip()
         node['label_id'] = '-'.join(node['label'])
         node['html_label'] = to_markup_id(node['label'])
         node['markup_id'] = "-".join(node['html_label'])
