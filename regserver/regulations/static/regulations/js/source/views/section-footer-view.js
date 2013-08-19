@@ -11,7 +11,8 @@ define('section-footer-view', ['jquery', 'underscore', 'backbone', 'regs-dispatc
 
         sendNavEvent: function(e) {
             e.preventDefault();
-            Dispatch.trigger('openSection:set', $(e.target).data('linked-section'));
+            var sectionId = $(e.target).data('linked-section');
+            Dispatch.trigger('openSection:set', sectionId);
         }
     });
 

@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['content-view'], function(ContentView) {})```
-define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view', 'regs-data', 'section-footer-view'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegsData, SectionFooterView) {
+define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view', 'regs-data', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegsData, SectionFooterView, Router) {
     'use strict';
 
     var ContentView = Backbone.View.extend({
@@ -86,13 +86,16 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         loadSection: function(sectionId) {
             var returned = RegsData.get(sectionId);
 
-            returned.done(function(section, sectionId) {
+            // @TODO: error handling
+            returned.done(function(section) {
                 this.$el.html(section);
                 window.scrollTo(0, 0);
                 Dispatch.trigger('section:open', sectionId);
                 Dispatch.set('section', sectionId);
 
                 Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
+                Router.navigate('regulation/' + sectionId + '/' + Dispatch.getVersion());
+
             }.bind(this));
         },
 
