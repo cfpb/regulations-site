@@ -6,7 +6,11 @@
     {% for doc_num, ref in node.analyses %}
     <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
     {% endfor %}
-{{node.marked_up|safe|linebreaksbr}}
+{% if node.node_type == "appendix" %}
+    {{node.marked_up|safe|linebreaksbr}}
+{% else  %}
+    {{node.marked_up|safe}}
+{% endif %}
 </p>
 {% else %}
     {% for doc_num, ref in node.analyses %}
