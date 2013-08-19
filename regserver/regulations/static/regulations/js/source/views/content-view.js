@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['content-view'], function(ContentView) {})```
-define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view', 'regs-data'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegsData) {
+define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view', 'regs-data', 'section-footer-view'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegsData, SectionFooterView) {
     'use strict';
 
     var ContentView = Backbone.View.extend({
@@ -26,6 +26,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             Dispatch.on('definition:remove', this.closeDefinition, this);
 
             Dispatch.on('toc:click', this.loadSection, this);
+            Dispatch.on('openSection:set', this.loadSection, this);
 
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
@@ -54,6 +55,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             // new View instance for subheader
             this.header = new SubHeadView();
+            Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
+
         },
 
         // naive way to update the active table of contents link and wayfinding header
@@ -85,8 +88,11 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             returned.done(function(section, sectionId) {
                 this.$el.html(section);
+                window.scrollTo(0, 0);
                 Dispatch.trigger('section:open', sectionId);
                 Dispatch.set('section', sectionId);
+
+                Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
             }.bind(this));
         },
 

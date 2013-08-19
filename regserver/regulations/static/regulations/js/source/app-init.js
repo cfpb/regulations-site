@@ -77,7 +77,6 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
 
             openSection = regSection.attr('id');
             Dispatch.set('section', openSection);
-            Dispatch.trigger('openSection:set', openSection);
 
             regVersion = regSection.data('base-version');
             Dispatch.set('version', regVersion);
