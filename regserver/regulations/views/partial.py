@@ -57,9 +57,9 @@ class PartialSectionView(PartialView):
 
             nav = {}
             if p_sect:
-                nav['previous'] = navigation.section_title(p_sect)
+                nav['previous'] = navigation.parse_section_title(p_sect)
             if n_sect:
-                nav['next'] = navigation.section_title(n_sect)
+                nav['next'] = navigation.parse_section_title(n_sect)
             return nav
 
     def transform_context(self, context, builder):

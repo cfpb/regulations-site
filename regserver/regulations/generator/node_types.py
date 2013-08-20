@@ -7,7 +7,7 @@ EMPTYPART = u'emptypart'
 
 def is_appendix(id_parts):
     """ Inspect the id_parts to determine if this is an Appendix section. """
-    if len(id_parts) > 2:
+    if len(id_parts) > 1:
         return id_parts[1].isalpha()
     return False
 

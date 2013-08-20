@@ -169,7 +169,7 @@ currently these are TOC, History, and Search
     display: inline-block;
     margin-left: -0.25em; /*accomodate inline-block spacing */
     height: 34px; /* match height of main header */
-    width: 40px;
+    width: 56px;
     border-right: 1px solid @light_field;
 }
 
@@ -271,6 +271,65 @@ History Drawer
 ==============
 This contains all of the styles specific to the history
 */
+
+#history {
+
+    .avenir-next;
+
+    ul, 
+    li {
+        .reset;
+    }
+
+    .status-list {
+        padding: 10px 15px;
+        border-bottom: 1px solid @light_field;
+    }
+
+    a:link,
+    a:visited {
+        color: @pacific;
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+        text-decoration: underline;
+    }
+
+    h3 {
+        margin: 6px 0;
+        font-size: 1em;
+        .avenir-next-demi;
+    }
+
+    h4 {
+        .reset;
+        font-size: 0.875em;
+        text-transform: uppercase;
+        .avenir-next-demi;
+        color: @dark_text;
+    }
+
+    .rule-status {
+        color: @dark_text;
+        text-transform: lowercase;
+        .avenir-next;
+        display: block;
+        float: right;
+    }
+
+    .rule-list li {
+        margin: .5em 0;
+        font-size: 0.875em;
+    }
+
+    .fr-notice:after {
+        .minicon;
+        font-size: 0.875em;
+        content: " \e007";
+    }
+}
 
 /* 
 Search Drawer
