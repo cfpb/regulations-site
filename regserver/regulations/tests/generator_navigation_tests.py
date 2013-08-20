@@ -57,7 +57,7 @@ class NavigationTest(TestCase):
             'index': ['204', 'A'],
             'title': 'Appendix A to Part 204 - Model Forms'}, n)
 
-        e = navigation.section_title(n)
+        e = navigation.parse_section_title(n)
         self.assertEquals('204-A', e['section'])
         self.assertEquals(
             ('Appendix A to Part 204', 'Model Forms'),
