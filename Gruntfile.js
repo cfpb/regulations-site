@@ -141,9 +141,6 @@ module.exports = function(grunt) {
                 },
                 konami: {
                     exports: 'Konami'
-                },
-                'mock-ajax': {
-                    exports: 'jasmine.Ajax'
                 }
               }
             }
