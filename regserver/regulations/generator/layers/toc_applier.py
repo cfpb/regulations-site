@@ -2,6 +2,7 @@
 import re
 
 from regulations.generator.layers.internal_citation import InternalCitationLayer
+from regulations.generator import reg
 
 class TableOfContentsLayer(object):
     shorthand = 'toc'
@@ -41,22 +42,7 @@ class TableOfContentsLayer(object):
                     + r'[^\w]*(.*)', data['title']).group(1)
     
     def appendix_supplement(self, element, data):
-        """Handle items pointing to an appendix or supplement"""
-        if len(data['index']) == 2 and data['index'][1].isalpha():
-            if data['index'][1] == 'Interpretations':
-                element['is_supplement'] = True
-            else:
-                element['is_appendix'] = True
-            
-            segments = self.try_split(data['title'], (u'—', '-'))
-            if segments:
-                element['label'], element['sub_label'] = segments
-
-
-    def try_split(self, text, chars):
-        """Utility method for splitting a string by one of multiple chars"""
-        for c in chars:
-            segments = text.split(c)
-            if len(segments) > 1:
-                return [s.strip() for s in segments]
+        as_data = reg.appendix_supplement(data)
+        if as_data:
+            element.update(as_data)
 

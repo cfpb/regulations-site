@@ -1,5 +1,7 @@
 import re
 from regulations.generator import generator
+from regulations.generator import node_types
+from regulations.generator.reg import appendix_supplement
 
 
 def get_labels(current):
@@ -45,13 +47,23 @@ def nav_sections(current, version):
 
                 return (previous_section, next_section)
 
-
-def section_title(data):
-    sect_number = '.'.join(data['index'])
-    sect_text = re.search(sect_number + r'[^\w]*(.*)', data['title']).group(1)
-
+def appendix_title(data):
+    title_data = appendix_supplement(data)
     element = {
         'section': '-'.join(data['index']),
-        'title': (sect_number, sect_text)
+        'title': (title_data['label'], title_data['sub_label'])
     }
     return element
+    
+def section_title(data):
+    if node_types.is_appendix(data['index']):
+        return appendix_title(data)
+    else:
+        sect_number = '.'.join(data['index'])
+        sect_text = re.search(sect_number + r'[^\w]*(.*)', data['title']).group(1)
+
+        element = {
+            'section': '-'.join(data['index']),
+            'title': (sect_number, sect_text)
+        }
+        return element

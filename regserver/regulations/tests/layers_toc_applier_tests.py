@@ -65,9 +65,6 @@ class TableOfContentsLayerTest(TestCase):
             'sub_label': 'I am Iron Man'
         })
 
-    def test_try_split(self):
-        toc = TableOfContentsLayer(None)
-        self.assertEqual(['a', 'xb'], toc.try_split('a:xb', ('|', ':', 'x')))
 
     def test_apply_layer_url(self):
         toc = TableOfContentsLayer({'100': [

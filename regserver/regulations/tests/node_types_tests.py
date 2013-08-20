@@ -23,6 +23,10 @@ class NodeTypesTest(TestCase):
         node_parts = ['250', '5', 'A']
         self.assertFalse(is_appendix(node_parts))
 
+    def test_is_appendix(self):
+        node_parts = ['250', 'A']
+        self.assertTrue(is_appendix(node_parts))
+
     def test_transform_part_none(self):
         part = '30'
         self.assertEqual('30', transform_part(part))
