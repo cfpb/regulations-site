@@ -75,11 +75,15 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             window.Regs.analytics = new AnalyticsHandler();
             window.Regs.mainHeader = new HeaderView();
 
+            // set open section and version for ajax calls
             openSection = regSection.attr('id');
             Dispatch.set('section', openSection);
 
             regVersion = regSection.data('base-version');
             Dispatch.set('version', regVersion);
+
+            // cache open section content
+            RegsData.set(openSection, regSection.html());
 
             this.bindEvents();
             this.fetchModelForms();

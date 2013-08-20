@@ -253,13 +253,41 @@ incrementally loads in images once rendering is complete</p>
             window.Regs.sidebar = <span class="keyword">new</span> SidebarView();
             window.Regs.regContent = <span class="keyword">new</span> ContentView();
             window.Regs.analytics = <span class="keyword">new</span> AnalyticsHandler();
-            window.Regs.mainHeader = <span class="keyword">new</span> HeaderView();
+            window.Regs.mainHeader = <span class="keyword">new</span> HeaderView();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>set open section and version for ajax calls</p>
 
-            openSection = regSection.attr(<span class="string">'id'</span>);
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            openSection = regSection.attr(<span class="string">'id'</span>);
             Dispatch.set(<span class="string">'section'</span>, openSection);
 
             regVersion = regSection.data(<span class="string">'base-version'</span>);
-            Dispatch.set(<span class="string">'version'</span>, regVersion);
+            Dispatch.set(<span class="string">'version'</span>, regVersion);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>cache open section content</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            RegsData.set(openSection, regSection.html());
 
             <span class="keyword">this</span>.bindEvents();
             <span class="keyword">this</span>.fetchModelForms();

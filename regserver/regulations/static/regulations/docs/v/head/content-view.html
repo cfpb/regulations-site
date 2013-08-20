@@ -351,7 +351,9 @@ re-render view</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        loadSection: <span class="keyword">function</span>(sectionId) {
-            <span class="keyword">var</span> returned = RegsData.get(sectionId);</pre></div></div>
+            <span class="keyword">var</span> returned = RegsData.get(sectionId);
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> returned.done !== <span class="string">'undefined'</span>) {</pre></div></div>
             
         </li>
         
@@ -366,16 +368,23 @@ re-render view</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            returned.done(<span class="keyword">function</span>(section) {
-                <span class="keyword">this</span>.$el.html(section);
-                window.scrollTo(<span class="number">0</span>, <span class="number">0</span>);
-                Dispatch.trigger(<span class="string">'section:open'</span>, sectionId);
-                Dispatch.set(<span class="string">'section'</span>, sectionId);
+            <div class="content"><div class='highlight'><pre>                returned.done(<span class="keyword">function</span>(section) {
+                    <span class="keyword">this</span>.openSection(section, sectionId);
+                }.bind(<span class="keyword">this</span>));
+            }
+            <span class="keyword">else</span> {
+               <span class="keyword">this</span>.openSection(returned, sectionId); 
+            }
+        },
 
-                Dispatch.set(<span class="string">'sectionNav'</span>, <span class="keyword">new</span> SectionFooterView({el: <span class="keyword">this</span>.$el.find(<span class="string">'.section-nav'</span>)}));
-                Router.navigate(<span class="string">'regulation/'</span> + sectionId + <span class="string">'/'</span> + Dispatch.getVersion());
+        openSection: <span class="keyword">function</span>(section, sectionId) {
+            <span class="keyword">this</span>.$el.html(section);
+            window.scrollTo(<span class="number">0</span>, <span class="number">0</span>);
+            Dispatch.trigger(<span class="string">'section:open'</span>, sectionId);
+            Dispatch.set(<span class="string">'section'</span>, sectionId);
 
-            }.bind(<span class="keyword">this</span>));
+            Dispatch.set(<span class="string">'sectionNav'</span>, <span class="keyword">new</span> SectionFooterView({el: <span class="keyword">this</span>.$el.find(<span class="string">'.section-nav'</span>)}));
+            Router.navigate(<span class="string">'regulation/'</span> + sectionId + <span class="string">'/'</span> + Dispatch.getVersion());
         },</pre></div></div>
             
         </li>

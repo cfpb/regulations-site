@@ -86,17 +86,25 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         loadSection: function(sectionId) {
             var returned = RegsData.get(sectionId);
 
-            // @TODO: error handling
-            returned.done(function(section) {
-                this.$el.html(section);
-                window.scrollTo(0, 0);
-                Dispatch.trigger('section:open', sectionId);
-                Dispatch.set('section', sectionId);
+            if (typeof returned.done !== 'undefined') {
+                // @TODO: error handling
+                returned.done(function(section) {
+                    this.openSection(section, sectionId);
+                }.bind(this));
+            }
+            else {
+               this.openSection(returned, sectionId); 
+            }
+        },
 
-                Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
-                Router.navigate('regulation/' + sectionId + '/' + Dispatch.getVersion());
+        openSection: function(section, sectionId) {
+            this.$el.html(section);
+            window.scrollTo(0, 0);
+            Dispatch.trigger('section:open', sectionId);
+            Dispatch.set('section', sectionId);
 
-            }.bind(this));
+            Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
+            Router.navigate('regulation/' + sectionId + '/' + Dispatch.getVersion());
         },
 
         // for a consistent API
