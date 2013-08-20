@@ -16,13 +16,17 @@
         <ul>
         {% for version in history %}
             {% if part == label_id %}
-            <li class="{{version.timeline}}">{{ version.status }} <a href="{% url 'chrome_regulation_view' part version.version %}">{{ version.by_date|date }}</a>
+            <li class="{{version.timeline}} status-list">
+                <h4>{{ version.status }}</h4>
+                <h3><a href="{% url 'chrome_regulation_view' part version.version %}">{{ version.by_date|date }}</a></h3>
             {% else %}
-            <li class="{{version.timeline}}">{{ version.status }} <a href="{% url 'chrome_section_view' label_id version.version %}">{{ version.by_date|date }}</a>
+            <li class="{{version.timeline}} status-list">
+                <h4>{{ version.status }}</h4>
+                <h3><a href="{% url 'chrome_section_view' label_id version.version %}">{{ version.by_date|date }}</a></h3>
             {% endif %}
-                <ul>
+                <ul class="rule-list">
                 {% for notice in version.notices %}
-                    <li><a href="{{notice.fr_url}}">Final Rule {{notice.publication_date|date}}</a></li>
+                    <li><a class="fr-notice" href="{{notice.fr_url}}">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
                 {% endfor %}
                 </ul>
             </li>
