@@ -7,6 +7,20 @@ define("samplejson", function() {
                   "children": [
                     {
                       "label": {
+                        "text": "2345-6-a"
+                      },
+                      "text": "definition body"
+                    },
+
+                    {
+                      "label": {
+                        "text": "123-2"
+                      },
+                      "text": "definition body"
+                    },
+
+                    {
+                      "label": {
                         "text": "2345-9-a-1"
                       },
                       "text": "<dfn>odio vitae</dfn> Integer eleifend, magna nec rutrum rhoncus, dolor tellus pellentesque nunc, et laoreet augue augue elementum neque. Praesent et metus elementum ipsum ultricies condimentum."

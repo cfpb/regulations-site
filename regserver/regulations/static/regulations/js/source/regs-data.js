@@ -29,6 +29,28 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatc
         // loaded into the browser (rendered or not)
         content: {},
 
+        // recurses over the parsed reg tree and creates an in-browser representation
+        // of a reg. may or may not be functional based on current tree.
+        // only in use for tests right now...
+        // refactor to parse just out of the DOM
+        parse: function(jsonObj) {
+            if (typeof jsonObj === 'object') {
+                for (var key in jsonObj) {
+                    if (jsonObj.hasOwnProperty(key)) {
+                        if (key === 'label') {
+                            this.set(jsonObj[key]['text'], jsonObj['text']);
+                        }
+
+                        if (RegsHelpers.isIterable(jsonObj[key])) {
+                            this.parse(jsonObj[key]);
+                        }
+                    }
+                } 
+            }
+
+            return this;
+        },
+
         // store a new reg entity
         set: function(sectionId, sectionText) {
             var cached = this.has(sectionId),

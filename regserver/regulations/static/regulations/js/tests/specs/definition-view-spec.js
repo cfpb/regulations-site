@@ -1,4 +1,4 @@
-define(["underscore", "backbone", "jquery", "definition-view", "regs-data", 'samplejson'], function(_, Backbone, $, DefinitionView, RegsData, testjson) {
+define(["underscore", "backbone", "jquery", "definition-view", "regs-data", 'samplejson', 'regs-dispatch'], function(_, Backbone, $, DefinitionView, RegsData, testjson, Dispatch) {
   describe("Definitions views", function() {
     RegsData.parse(testjson);
 
@@ -16,7 +16,7 @@ define(["underscore", "backbone", "jquery", "definition-view", "regs-data", 'sam
     });
 
     it("should store the definition content", function() {
-        expect(view.model.content).toEqual("definition for 2345-6-a");
+        expect(view.model.content).toEqual("definition body");
     });
 
     it("should store the parent link", function() {

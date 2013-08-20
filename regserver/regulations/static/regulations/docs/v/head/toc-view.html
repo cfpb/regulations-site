@@ -44,6 +44,11 @@
               </a>
             
               
+              <a class="source" href="regs-router.html">
+                regs-router.js
+              </a>
+            
+              
               <a class="source" href="regulations.html">
                 regulations.js
               </a>
@@ -76,6 +81,11 @@
               
               <a class="source" href="regs-view.html">
                 regs-view.js
+              </a>
+            
+              
+              <a class="source" href="section-footer-view.html">
+                section-footer-view.js
               </a>
             
               
@@ -151,6 +161,7 @@ when the active section changes, highlight it in the TOC</p>
             
             <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'activeSection:change'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);
 
+            Dispatch.on(<span class="string">'openSection:set'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);
             
             Dispatch.on(<span class="string">'toc:stateChange'</span>, <span class="keyword">this</span>.changeContents, <span class="keyword">this</span>);
 
@@ -202,7 +213,7 @@ $(&#39;#menu-link:not(.active)&#39;).on(&#39;click&#39;, this.scrollToActive);</
             
             <div class="content"><div class='highlight'><pre>        setActive: <span class="keyword">function</span>(id) {
             <span class="keyword">this</span>.$el.find(<span class="string">'.current'</span>).removeClass(<span class="string">'current'</span>);
-            <span class="keyword">this</span>.$el.find(<span class="string">'a[href=#'</span> + RegsHelpers.findBaseSection(id) + <span class="string">']'</span>).addClass(<span class="string">'current'</span>);
+            <span class="keyword">this</span>.$el.find(<span class="string">'a[data-section-id='</span> + RegsHelpers.findBaseSection(id) + <span class="string">']'</span>).addClass(<span class="string">'current'</span>);
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
         },</pre></div></div>
@@ -222,7 +233,8 @@ when a TOC link is clicked, send an event along with the href of the clicked lin
             </div>
             
             <div class="content"><div class='highlight'><pre>        sendClickEvent: <span class="keyword">function</span>(e) {
-            Dispatch.trigger(<span class="string">'toc:click'</span>, $(e.target).attr(<span class="string">'href'</span>));
+            e.preventDefault();
+            Dispatch.trigger(<span class="string">'toc:click'</span>, $(e.currentTarget).data(<span class="string">'section-id'</span>));
         },
 
         changeContents: <span class="keyword">function</span>(activeId) {

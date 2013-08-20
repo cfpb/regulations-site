@@ -44,6 +44,11 @@
               </a>
             
               
+              <a class="source" href="regs-router.html">
+                regs-router.js
+              </a>
+            
+              
               <a class="source" href="regulations.html">
                 regulations.js
               </a>
@@ -76,6 +81,11 @@
               
               <a class="source" href="regs-view.html">
                 regs-view.js
+              </a>
+            
+              
+              <a class="source" href="section-footer-view.html">
+                section-footer-view.js
               </a>
             
               
@@ -137,7 +147,7 @@ even if the internals are different</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'regs-data'</span>, [<span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'./regs-helpers'</span>], <span class="keyword">function</span>(_, Backbone, RegsHelpers) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'regs-data'</span>, [<span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'./regs-helpers'</span>, <span class="string">'./regs-dispatch'</span>], <span class="keyword">function</span>(_, Backbone, RegsHelpers, Dispatch) {
     <span class="string">'use strict'</span>;</pre></div></div>
             
         </li>
@@ -197,19 +207,17 @@ loaded into the browser (rendered or not)</p>
               </div>
               <p>recurses over the parsed reg tree and creates an in-browser representation
 of a reg. may or may not be functional based on current tree.
-<strong>TODO</strong> was only useful for development. refactor into something useful or kill </p>
+only in use for tests right now...
+refactor to parse just out of the DOM</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>        parse: <span class="keyword">function</span>(jsonObj) {
-            <span class="keyword">var</span> workingObj;
             <span class="keyword">if</span> (<span class="keyword">typeof</span> jsonObj === <span class="string">'object'</span>) {
                 <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> jsonObj) {
                     <span class="keyword">if</span> (jsonObj.hasOwnProperty(key)) {
                         <span class="keyword">if</span> (key === <span class="string">'label'</span>) {
-                            workingObj = jsonObj[key];
-                            workingObj[<span class="string">'content'</span>] = jsonObj[<span class="string">'text'</span>];
-                            <span class="keyword">this</span>.set(workingObj);
+                            <span class="keyword">this</span>.set(jsonObj[key][<span class="string">'text'</span>], jsonObj[<span class="string">'text'</span>]);
                         }
 
                         <span class="keyword">if</span> (RegsHelpers.isIterable(jsonObj[key])) {
@@ -235,24 +243,23 @@ of a reg. may or may not be functional based on current tree.
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        set: <span class="keyword">function</span>(obj) {
-            <span class="keyword">var</span> label = obj[<span class="string">'text'</span>],
-                record,
-                cached = <span class="keyword">this</span>.has(label);
+            <div class="content"><div class='highlight'><pre>        set: <span class="keyword">function</span>(sectionId, sectionText) {
+            <span class="keyword">var</span> cached = <span class="keyword">this</span>.has(sectionId),
+                section;
 
             <span class="keyword">if</span> (!(cached)) {
-                <span class="keyword">this</span>.content[label] = obj[<span class="string">'content'</span>];
-                record = obj[<span class="string">'content'</span>];
+                <span class="keyword">this</span>.content[sectionId] = sectionText;
+                section = sectionText;
 
-                <span class="keyword">if</span> (_.indexOf(<span class="keyword">this</span>.regStructure, label) === -<span class="number">1</span>) {
-                    <span class="keyword">this</span>.regStructure.push(label);
+                <span class="keyword">if</span> (_.indexOf(<span class="keyword">this</span>.regStructure, sectionId) === -<span class="number">1</span>) {
+                    <span class="keyword">this</span>.regStructure.push(sectionId);
                 }
             }
             <span class="keyword">else</span> {
-                record = cached;
+                section = cached;
             }
 
-            <span class="keyword">return</span> record; 
+            <span class="keyword">return</span> section; 
         },</pre></div></div>
             
         </li>
@@ -290,20 +297,13 @@ false if the entity hasn&#39;t been loaded</p>
               <p><strong>Params</strong></p>
 <ul>
 <li><code>id</code>: string, dash-delimited reg entity id</li>
-<li><code>format</code>: optional, string, options: &#39;json&#39; (default) or &#39;html&#39;</li>
-<li><code>withChildren</code>: optional, boolean, default = false</li>
 </ul>
-<p><strong>Returns</strong> representation of the reg entity requested in the format requested,
-with or without child entities.</p>
-<p>If &#39;html&#39; is requested, child entities will be included regardless of the value
-of <code>withChildren</code></p>
+<p><strong>Returns</strong> representation of the reg entity requested in the format requested,</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        get: <span class="keyword">function</span>(id, format, withChildren) {
-            format = format || <span class="string">'json'</span>;
-            withChildren = withChildren || <span class="literal">false</span>;
-            <span class="keyword">var</span> obj = <span class="keyword">this</span>.has(id) || <span class="keyword">this</span>.request(id, format);
+            <div class="content"><div class='highlight'><pre>        get: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> obj = <span class="keyword">this</span>.has(id) || <span class="keyword">this</span>.request(id);
             <span class="keyword">return</span> obj;
         },</pre></div></div>
             
@@ -320,8 +320,20 @@ of <code>withChildren</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        fetch: <span class="keyword">function</span>(id, format, withChildren) {
-            <span class="keyword">return</span> <span class="keyword">this</span>.get(id, format, withChildren);
+            <div class="content"><div class='highlight'><pre>        fetch: <span class="keyword">function</span>(id) {
+            <span class="keyword">return</span> <span class="keyword">this</span>.get(id);
+        },
+
+        request: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> url = <span class="string">'/partial/'</span> + id + <span class="string">'/'</span> + Dispatch.getVersion(),
+                promise;
+
+            promise = $.ajax({
+                url: url,
+                success: <span class="keyword">function</span>(data) { <span class="keyword">this</span>.set(id, data); }.bind(<span class="keyword">this</span>)
+            });
+
+            <span class="keyword">return</span> promise;
         },</pre></div></div>
             
         </li>
@@ -332,23 +344,6 @@ of <code>withChildren</code></p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              <p>will be the interface for requesting content from server</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        request: <span class="keyword">function</span>(id, format) {
-            <span class="keyword">return</span> <span class="string">'this is where we\'d load the api response for '</span> + id + <span class="string">' in '</span> + format + <span class="string">' format.'</span>;
-        },</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-11">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p><strong>Param</strong>
 <code>id</code>: string, dash-delimited reg entity id</p>
@@ -376,11 +371,11 @@ what exactly we&#39;re dealing with. We just rely on a set of rules.</p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p><strong>Param</strong>
 <code>id</code>: string, dash-delimited reg entity id</p>
@@ -406,11 +401,11 @@ the id passed in or boolean false if the requested id has no parent</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>We don&#39;t have need for the following methods.
 This is my half-baked way of overriding them so that they
