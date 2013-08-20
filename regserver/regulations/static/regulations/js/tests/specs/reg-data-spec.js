@@ -6,8 +6,8 @@ define(['regs-data', 'samplejson'], function(RegsData, testjson) {
       expect(RegsData.regStructure).toBeTruthy();
     });
 
-    it("should have a regStructure array with 8 values", function() {
-      expect(RegsData.regStructure.length).toEqual( 8 );
+    it("should have a regStructure array with 10 values", function() {
+      expect(RegsData.regStructure.length).toEqual( 10 );
     });
 
     it("should have content", function() {

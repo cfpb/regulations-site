@@ -23,6 +23,7 @@ class TableOfContentsLayerTest(TestCase):
         toc.section(el, {'index': ['1', '2'], 'title': '1.2 - Awesome'})
         self.assertEqual(el, {
             'is_section': True,
+            'section_id': '1-2',
             'section': '1.2',
             'sub_label': 'Awesome'
         })
@@ -30,6 +31,7 @@ class TableOfContentsLayerTest(TestCase):
         toc.section(el, {'index': ['2', '1'], 'title': '2.1Sauce'})
         self.assertEqual(el, {
             'is_section': True,
+            'section_id': '2-1',
             'section': '2.1',
             'sub_label': 'Sauce'
         })

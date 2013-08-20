@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['content-view'], function(ContentView) {})```
-define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView) {
+define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view', 'regs-data', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegsData, SectionFooterView, Router) {
     'use strict';
 
     var ContentView = Backbone.View.extend({
@@ -25,8 +25,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             // * when a definition is removed, update term links
             Dispatch.on('definition:remove', this.closeDefinition, this);
 
-            // * when a table of contents link is clicked, make sure browser focus updates
-            Dispatch.on('toc:click', this.changeFocus, this);
+            Dispatch.on('toc:click', this.loadSection, this);
+            Dispatch.on('openSection:set', this.loadSection, this);
 
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
@@ -40,6 +40,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             this.$contentContainer = this.$el.find('.level-1 li[id], .reg-section, .appendix-section, .supplement-section');
 
             // set active section vars
+            // @TODO: how do activeSection and Dispatch.get('section') live together?
             this.activeSection = '';
             this.$activeSection = '';
 
@@ -54,6 +55,8 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             // new View instance for subheader
             this.header = new SubHeadView();
+            Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
+
         },
 
         // naive way to update the active table of contents link and wayfinding header
@@ -76,6 +79,37 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             }
                  
             return this;
+        },
+
+        // ask for section data, when promise is completed,
+        // re-render view
+        loadSection: function(sectionId) {
+            var returned = RegsData.get(sectionId);
+
+            if (typeof returned.done !== 'undefined') {
+                // @TODO: error handling
+                returned.done(function(section) {
+                    this.openSection(section, sectionId);
+                }.bind(this));
+            }
+            else {
+               this.openSection(returned, sectionId); 
+            }
+        },
+
+        openSection: function(section, sectionId) {
+            this.$el.html(section);
+            window.scrollTo(0, 0);
+            Dispatch.trigger('section:open', sectionId);
+            Dispatch.set('section', sectionId);
+
+            Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
+            Router.navigate('regulation/' + sectionId + '/' + Dispatch.getVersion());
+        },
+
+        // for a consistent API
+        render: function() {
+            this.loadSection(Dispatch.getOpenSection());
         },
 
         // only concerned with resetting DOM, no matter

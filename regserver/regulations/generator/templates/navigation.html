@@ -3,17 +3,19 @@
 {% endcomment %}
 
 {% if navigation %}
-
+<nav class="section-nav">
+    <ul>
 {% if navigation.previous %}
-    <div class="previous next-prev">
-        <a class="next-prev-link" href="{% url 'chrome_section_view' navigation.previous.section version %}"><i class="minicon-left"> </i>Previous section - &sect;&nbsp;{{navigation.previous.title.0}} </a> <span class="next-prev-title">{{navigation.previous.title.1}}</span>
-    </div>
+        <li class="previous next-prev">
+            <a href="{% url 'chrome_section_view' navigation.previous.section version %}" class="navigation-link backward next-prev-link" data-linked-section="{{navigation.previous.section}}"><i class="minicon-left"> </i>Previous section - &sect;&nbsp;{{navigation.previous.title.0}} </a> <span class="next-prev-title">{{navigation.previous.title.1}}</span>
+        </li>
 {% endif %}
 
 {% if navigation.next %}
-    <div class="next next-prev">
-        <a class="next-prev-link" href="{% url 'chrome_section_view' navigation.next.section version %}">Next section - &sect;&nbsp;{{navigation.next.title.0}} <i class="minicon-right"></i></a> <span class="next-prev-title">{{navigation.next.title.1}}</span>
-    </div>
+        <li class="next next-prev">
+            <a href="{% url 'chrome_section_view' navigation.next.section version %}" class="navigation-link forward next-prev-link" data-linked-section="{{navigation.next.section}}">Next section - &sect;&nbsp;{{navigation.next.title.0}} <i class="minicon-right"></i></a> <span class="next-prev-title">{{navigation.next.title.1}}</span>
+        </li>
 {% endif %}
-
+    </ul>
+</nav>
 {% endif %}

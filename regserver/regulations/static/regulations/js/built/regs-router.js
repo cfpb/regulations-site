@@ -1,0 +1,1 @@
+define("regs-router",["underscore","backbone"],function(e,t){var n=t.Router.extend({}),r=new n;return t.history.start({pushState:!0,silent:!0}),r});

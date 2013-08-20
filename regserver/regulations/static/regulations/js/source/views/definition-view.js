@@ -70,6 +70,23 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
         },
 
         render: function() {
+            var defHTML = RegsData.get(this.model.id);
+
+            if (typeof defHTML.done !== 'undefined') {
+                defHTML.done(function(res) {
+                    this.template(res);
+                }.bind(this));
+            }
+            else {
+                this.template(defHTML);
+            }
+
+            return this;
+        },
+
+        template: function(res) {
+            this.$el.html(res);
+
             // link to definition in content body
             this.$el.append(
                 RegsHelpers.fastLink(
@@ -93,6 +110,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
 
             // set focus to the open definition
             this.$el.focus();
+
             return this;
         },
 

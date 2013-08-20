@@ -17,6 +17,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
             // when the active section changes, highlight it in the TOC
             Dispatch.on('activeSection:change', this.setActive, this);
 
+            Dispatch.on('openSection:set', this.setActive, this);
             
             Dispatch.on('toc:stateChange', this.changeContents, this);
 
@@ -44,7 +45,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
         // update active classes, find new active based on the reg entity id in the anchor
         setActive: function(id) {
             this.$el.find('.current').removeClass('current');
-            this.$el.find('a[href=#' + RegsHelpers.findBaseSection(id) + ']').addClass('current');
+            this.$el.find('a[data-section-id=' + RegsHelpers.findBaseSection(id) + ']').addClass('current');
 
             return this;
         },
@@ -52,7 +53,8 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
         // **Event trigger**
         // when a TOC link is clicked, send an event along with the href of the clicked link
         sendClickEvent: function(e) {
-            Dispatch.trigger('toc:click', $(e.target).attr('href'));
+            e.preventDefault();
+            Dispatch.trigger('toc:click', $(e.currentTarget).data('section-id'));
         },
 
         changeContents: function(activeId) {

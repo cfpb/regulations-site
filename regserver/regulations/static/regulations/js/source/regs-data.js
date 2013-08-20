@@ -17,7 +17,7 @@
 // be reused to aim for the effect of a native Backbone experience, but shouldn't try so hard
 // as to be confusing. Ex. the return value of Model.fetch should be the same as in core Backbone,
 // even if the internals are different
-define('regs-data', ['underscore', 'backbone', './regs-helpers'], function(_, Backbone, RegsHelpers) {
+define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatch'], function(_, Backbone, RegsHelpers, Dispatch) {
     'use strict';
 
     // represents a whole regulation
@@ -31,16 +31,14 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers'], function(_, Ba
 
         // recurses over the parsed reg tree and creates an in-browser representation
         // of a reg. may or may not be functional based on current tree.
-        // **TODO** was only useful for development. refactor into something useful or kill 
+        // only in use for tests right now...
+        // refactor to parse just out of the DOM
         parse: function(jsonObj) {
-            var workingObj;
             if (typeof jsonObj === 'object') {
                 for (var key in jsonObj) {
                     if (jsonObj.hasOwnProperty(key)) {
                         if (key === 'label') {
-                            workingObj = jsonObj[key];
-                            workingObj['content'] = jsonObj['text'];
-                            this.set(workingObj);
+                            this.set(jsonObj[key]['text'], jsonObj['text']);
                         }
 
                         if (RegsHelpers.isIterable(jsonObj[key])) {
@@ -54,24 +52,23 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers'], function(_, Ba
         },
 
         // store a new reg entity
-        set: function(obj) {
-            var label = obj['text'],
-                record,
-                cached = this.has(label);
+        set: function(sectionId, sectionText) {
+            var cached = this.has(sectionId),
+                section;
 
             if (!(cached)) {
-                this.content[label] = obj['content'];
-                record = obj['content'];
+                this.content[sectionId] = sectionText;
+                section = sectionText;
 
-                if (_.indexOf(this.regStructure, label) === -1) {
-                    this.regStructure.push(label);
+                if (_.indexOf(this.regStructure, sectionId) === -1) {
+                    this.regStructure.push(sectionId);
                 }
             }
             else {
-                record = cached;
+                section = cached;
             }
 
-            return record; 
+            return section; 
         },
 
         // **Param**
@@ -89,29 +86,28 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers'], function(_, Ba
         // **Params**
         // 
         // * ```id```: string, dash-delimited reg entity id
-        // * ```format```: optional, string, options: 'json' (default) or 'html'
-        // * ```withChildren```: optional, boolean, default = false
         //
         // **Returns** representation of the reg entity requested in the format requested,
-        // with or without child entities.
-        //
-        // If 'html' is requested, child entities will be included regardless of the value
-        // of ```withChildren```
-        get: function(id, format, withChildren) {
-            format = format || 'json';
-            withChildren = withChildren || false;
-            var obj = this.has(id) || this.request(id, format);
+        get: function(id) {
+            var obj = this.has(id) || this.request(id);
             return obj;
         },
 
         // Basically an alias for ```this.get```, included for API continuity
-        fetch: function(id, format, withChildren) {
-            return this.get(id, format, withChildren);
+        fetch: function(id) {
+            return this.get(id);
         },
 
-        // will be the interface for requesting content from server
-        request: function(id, format) {
-            return 'this is where we\'d load the api response for ' + id + ' in ' + format + ' format.';
+        request: function(id) {
+            var url = '/partial/' + id + '/' + Dispatch.getVersion(),
+                promise;
+
+            promise = $.ajax({
+                url: url,
+                success: function(data) { this.set(id, data); }.bind(this)
+            });
+
+            return promise;
         },
 
         // **Param**

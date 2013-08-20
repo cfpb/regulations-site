@@ -14,7 +14,8 @@ var require = {
         'content-view': './views/content-view',
         'konami': './lib/konami',
         'analytics-handler': './views/analytics-handler-view',
-        'header-view': './views/header-view'
+        'header-view': './views/header-view',
+        'section-footer-view': './views/section-footer-view'
     },
     shim: {
         underscore: {

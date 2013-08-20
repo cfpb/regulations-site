@@ -22,7 +22,7 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], fun
                 state = ($target.hasClass('open')) ? 'close' : 'open';
 
             if (typeof this.$activeEls !== 'undefined') {
-                Dispatch.trigger('toc:click', state + ' toc');
+                Dispatch.trigger('toc:toggle', state + ' toc');
                 $target.toggleClass('open');
                 this.$activeEls.toggleClass('active');
             }

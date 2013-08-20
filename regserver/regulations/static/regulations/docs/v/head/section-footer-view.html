@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>require.config.js</title>
+  <title>section-footer-view.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -116,7 +116,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>require.config.js</h1>
+                  <h1>section-footer-view.js</h1>
               </div>
           </li>
         
@@ -128,42 +128,28 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              
+              <p>**Extends Backbone.View</p>
+<p><strong>Jurisdiction</strong> .section-nav, regulation section navigation footer</p>
+
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> require = {
-    paths: {
-        jquery: <span class="string">'./lib/jquery-1.9.1'</span>,
-        underscore: <span class="string">'./lib/underscore'</span>,
-        backbone: <span class="string">'./lib/backbone'</span>,
-        <span class="string">'jquery-scrollstop'</span>: <span class="string">'./lib/jquery.scrollstop'</span>,
-        <span class="string">'definition-view'</span>: <span class="string">'./views/definition-view'</span>,
-        <span class="string">'regs-fixed-el-view'</span>: <span class="string">'./views/regs-fixed-el-view'</span>,
-        <span class="string">'sub-head-view'</span>: <span class="string">'./views/sub-head-view'</span>,
-        <span class="string">'regs-view'</span>: <span class="string">'./views/regs-view'</span>,
-        <span class="string">'toc-view'</span>: <span class="string">'./views/toc-view'</span>,
-        <span class="string">'sidebar-view'</span>: <span class="string">'./views/sidebar-view'</span>,
-        <span class="string">'sidebar-head-view'</span>: <span class="string">'./views/sidebar-head-view'</span>,
-        <span class="string">'content-view'</span>: <span class="string">'./views/content-view'</span>,
-        <span class="string">'konami'</span>: <span class="string">'./lib/konami'</span>,
-        <span class="string">'analytics-handler'</span>: <span class="string">'./views/analytics-handler-view'</span>,
-        <span class="string">'header-view'</span>: <span class="string">'./views/header-view'</span>,
-        <span class="string">'section-footer-view'</span>: <span class="string">'./views/section-footer-view'</span>
-    },
-    shim: {
-        underscore: {
-            deps: [<span class="string">'jquery'</span>],
-            exports: <span class="string">'_'</span>
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'section-footer-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
+    <span class="string">'use strict'</span>;
+
+    <span class="keyword">var</span> SectionFooterView = Backbone.View.extend({
+        events: {
+            <span class="string">'click .navigation-link'</span>: <span class="string">'sendNavEvent'</span>
         },
-        backbone: {
-            deps: [<span class="string">'underscore'</span>, <span class="string">'jquery'</span>],
-            exports: <span class="string">'Backbone'</span>
-        },
-        konami: {
-            exports: <span class="string">'Konami'</span>
+
+        sendNavEvent: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+            <span class="keyword">var</span> sectionId = $(e.target).data(<span class="string">'linked-section'</span>);
+            Dispatch.trigger(<span class="string">'openSection:set'</span>, sectionId);
         }
-    }
-};</pre></div></div>
+    });
+
+    <span class="keyword">return</span> SectionFooterView;
+});</pre></div></div>
             
         </li>
         
