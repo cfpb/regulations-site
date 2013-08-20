@@ -72,33 +72,44 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
         render: function() {
             var defHTML = RegsData.get(this.model.id);
 
-            defHTML.done(function(res) {
-                this.$el.html(res);
+            if (typeof defHTML.done !== 'undefined') {
+                defHTML.done(function(res) {
+                    this.template(res);
+                }.bind(this));
+            }
+            else {
+                this.template(defHTML);
+            }
 
-                // link to definition in content body
-                this.$el.append(
-                    RegsHelpers.fastLink(
-                        '#' + this.model.id, 
-                        RegsHelpers.idToRef(this.model.id),
-                        'continue-link internal'
-                    )
-                );
+            return this;
+        },
 
-                // remove inline interpretation, add interpretation link
-                this.formatInterpretations();
-                this.removeHeadings();
+        template: function(res) {
+            this.$el.html(res);
 
-                // make definition tabbable
-                this.$el.attr('tabindex', '0')
-                    // make tab-activeated close button at bottom of definition content
-                    .append('<a class="close-button" href="#">Close definition</a>');
+            // link to definition in content body
+            this.$el.append(
+                RegsHelpers.fastLink(
+                    '#' + this.model.id, 
+                    RegsHelpers.idToRef(this.model.id),
+                    'continue-link internal'
+                )
+            );
 
-                // **Event trigger** triggers definition open event
-                Dispatch.trigger('definition:render', this.$el);
+            // remove inline interpretation, add interpretation link
+            this.formatInterpretations();
+            this.removeHeadings();
 
-                // set focus to the open definition
-                this.$el.focus();
-            }.bind(this));
+            // make definition tabbable
+            this.$el.attr('tabindex', '0')
+                // make tab-activeated close button at bottom of definition content
+                .append('<a class="close-button" href="#">Close definition</a>');
+
+            // **Event trigger** triggers definition open event
+            Dispatch.trigger('definition:render', this.$el);
+
+            // set focus to the open definition
+            this.$el.focus();
 
             return this;
         },

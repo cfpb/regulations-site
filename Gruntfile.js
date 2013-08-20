@@ -115,6 +115,8 @@ module.exports = function(grunt) {
                 backbone: './lib/backbone',
                 jquery: './lib/jquery-1.9.1',
                 samplejson: '../tests/grunt/js/fixtures/sample-json',
+                'mock-ajax': '../tests/grunt/js/helpers/mock-ajax',
+                'ajax-responses': '../tests/grunt/js/helpers/ajax-responses',
                 'jquery-scrollstop': './lib/jquery.scrollstop',
                 'jquery-hoverIntent': './lib/jquery.hoverIntent',
                 'definition-view': './views/definition-view',
@@ -141,6 +143,9 @@ module.exports = function(grunt) {
                 },
                 konami: {
                     exports: 'Konami'
+                },
+                'mock-ajax': {
+                    exports: 'jasmine.Ajax'
                 }
               }
             }

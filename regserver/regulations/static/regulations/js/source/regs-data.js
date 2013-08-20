@@ -29,49 +29,24 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatc
         // loaded into the browser (rendered or not)
         content: {},
 
-        // recurses over the parsed reg tree and creates an in-browser representation
-        // of a reg. may or may not be functional based on current tree.
-        // **TODO** was only useful for development. refactor into something useful or kill 
-        parse: function(jsonObj) {
-            var workingObj;
-            if (typeof jsonObj === 'object') {
-                for (var key in jsonObj) {
-                    if (jsonObj.hasOwnProperty(key)) {
-                        if (key === 'label') {
-                            workingObj = jsonObj[key];
-                            workingObj['content'] = jsonObj['text'];
-                            this.set(workingObj);
-                        }
-
-                        if (RegsHelpers.isIterable(jsonObj[key])) {
-                            this.parse(jsonObj[key]);
-                        }
-                    }
-                } 
-            }
-
-            return this;
-        },
-
         // store a new reg entity
-        set: function(obj) {
-            var label = obj['text'],
-                record,
-                cached = this.has(label);
+        set: function(sectionId, sectionText) {
+            var cached = this.has(sectionId),
+                section;
 
             if (!(cached)) {
-                this.content[label] = obj['content'];
-                record = obj['content'];
+                this.content[sectionId] = sectionText;
+                section = sectionText;
 
-                if (_.indexOf(this.regStructure, label) === -1) {
-                    this.regStructure.push(label);
+                if (_.indexOf(this.regStructure, sectionId) === -1) {
+                    this.regStructure.push(sectionId);
                 }
             }
             else {
-                record = cached;
+                section = cached;
             }
 
-            return record; 
+            return section; 
         },
 
         // **Param**
@@ -97,8 +72,8 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatc
         },
 
         // Basically an alias for ```this.get```, included for API continuity
-        fetch: function(id, format, withChildren) {
-            return this.get(id, format, withChildren);
+        fetch: function(id) {
+            return this.get(id);
         },
 
         request: function(id) {
@@ -107,7 +82,7 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatc
 
             promise = $.ajax({
                 url: url,
-                success: function(data) { this.set(data); }.bind(this)
+                success: function(data) { this.set(id, data); }.bind(this)
             });
 
             return promise;

@@ -16,7 +16,7 @@ define(["underscore", "backbone", "jquery", "definition-view", "regs-data", 'sam
     });
 
     it("should store the definition content", function() {
-        expect(view.model.content).toEqual("this is where we'd load the api response for 2345-6-a in json format.");
+        expect(view.model.content).toEqual("definition for 2345-6-a");
     });
 
     it("should store the parent link", function() {
