@@ -16,6 +16,7 @@ from layers.layers_applier import SearchReplaceLayersApplier
 from layers.paragraph_markers import ParagraphMarkersLayer
 from layers.toc_applier import TableOfContentsLayer
 from layers.graphics import GraphicsLayer
+from layers.diff_applier import DiffApplier
 from html_builder import HTMLBuilder
 import notices
 
@@ -123,3 +124,13 @@ def get_builder(regulation, version, inline_applier, p_applier, s_applier):
 def get_all_notices():
     api = api_reader.Client(settings.API_BASE)
     return notices.fetch_all(api)
+
+
+def get_diff_json(regulation, older, newer):
+    api = api_reader.Client(settings.API_BASE)
+    return api.diff(regulation, older, newer)
+
+
+def get_diff_applier(regulation, older, newer):
+    diff_json = get_diff_json(regulation, older, newer)
+    return DiffApplier(diff_json)

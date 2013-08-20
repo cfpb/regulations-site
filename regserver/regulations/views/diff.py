@@ -6,13 +6,16 @@ from regulations.generator.html_builder import HTMLBuilder
 from regulations.generator.node_types import EMPTYPART, REGTEXT
 from regulations.views import utils
 from regulations.views.partial import generate_html
+from regulations.generator.layers.diff_applier import DiffApplier
+
 
 class PartialSectionDiffView(TemplateView):
     """ A diff view of a partial section. """
     template_name = 'regulation-content.html'
 
     def get_context_data(self, **kwargs):
-        context = super(PartialSectionDiffView, self).get_context_data(**kwargs)
+        context = super(
+            PartialSectionDiffView, self).get_context_data(**kwargs)
 
         label_id = context['label_id']
         older = context['version']
@@ -20,10 +23,12 @@ class PartialSectionDiffView(TemplateView):
 
         tree = generator.get_tree_paragraph(label_id, older)
 
-        # Apply no layers
         appliers = utils.handle_specified_layers('', label_id, older)
 
-        builder =  HTMLBuilder(*appliers)
+        reg = label_id.split('-')[0]
+        appliers += (generator.get_diff_applier(reg, older, newer),)
+
+        builder = HTMLBuilder(*appliers)
         builder.tree = tree
         builder.generate_html()
 
