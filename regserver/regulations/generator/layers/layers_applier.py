@@ -87,10 +87,10 @@ class LayersApplier(object):
 class LayersBase(object):
     """ Base class which keeps track of multiple laeyrs. """
     def __init__(self):
-        self.layers = []
+        self.layers = {}
 
     def add_layer(self, layer):
-        self.layers.append(layer)
+        self.layers[layer.__class__.shorthand] = layer
 
 class SearchReplaceLayersApplier(LayersBase):
     def __init__(self):
@@ -100,7 +100,7 @@ class SearchReplaceLayersApplier(LayersBase):
 
     def get_layer_pairs(self, text_index):
         elements = []
-        for layer in self.layers:
+        for layer in self.layers.values():
             applied = layer.apply_layer(text_index)
             if applied:
                 elements += applied
@@ -117,7 +117,7 @@ class InlineLayersApplier(LayersBase):
 
     def get_layer_pairs(self, text_index, original_text):
         layer_pairs = []
-        for layer in self.layers:
+        for layer in self.layers.values():
             applied = layer.apply_layer(original_text, text_index)
             if applied:
                 layer_pairs += applied
@@ -136,7 +136,7 @@ class ParagraphLayersApplier(LayersBase):
     interpretations, section-by-section analyses, table of contents, etc."""
 
     def apply_layers(self, node):
-        for layer in self.layers:
+        for layer in self.layers.values():
             pair = layer.apply_layer(node['markup_id'])
             if pair:
                 node[pair[0]] = pair[1]

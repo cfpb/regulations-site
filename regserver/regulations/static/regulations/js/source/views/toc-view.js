@@ -16,6 +16,27 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
             // **Event Listeners**
             // when the active section changes, highlight it in the TOC
             Dispatch.on('activeSection:change', this.setActive, this);
+
+            
+            Dispatch.on('toc:stateChange', this.changeContents, this);
+
+            this.$label = $('.toc-type');
+            this.$children = $('.toc-container');
+            this.childViews = {
+                '#table-of-contents': {
+                    'selector': $('#table-of-contents'),
+                    'title':('Table of contents for')
+                },
+                '#history': {
+                    'selector': $('#history'),
+                    'title':('Switch between versions of')
+                },
+                '#search': {
+                    'selector': $('#search'),
+                    'title':('Search')
+                }
+            };
+
             // **TODO** need to work out a bug where it scrolls the content section
             // $('#menu-link:not(.active)').on('click', this.scrollToActive);
         },
@@ -32,6 +53,13 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
         // when a TOC link is clicked, send an event along with the href of the clicked link
         sendClickEvent: function(e) {
             Dispatch.trigger('toc:click', $(e.target).attr('href'));
+        },
+
+        changeContents: function(activeId) {
+            this.$children.addClass('hidden');
+            this.childViews[activeId]['selector'].removeClass('hidden');
+
+            this.$label.html(this.childViews[activeId]['title']);
         },
 
         // **Inactive** 

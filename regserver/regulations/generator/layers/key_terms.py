@@ -3,6 +3,8 @@ import utils
 from django.template import loader, Context
 
 class KeyTermsLayer(object):
+    shorthand = 'keyterms'
+
     def __init__(self, layer):
         self.layer = layer
         self.template = loader.get_template('layers/key_term.html')

@@ -1,6 +1,11 @@
+/*
+Global Footer
+============
+*/
+
 footer {
     width: 100%;
-    padding: 20px;
+    padding: 15px;
     text-align: center;
     .avenir-next;
     color: @dark_gray;
@@ -8,4 +13,54 @@ footer {
     abbr[title] {
         border-bottom: none;
     }
+}
+
+/*
+Next/Previous Links
+===================
+*/
+
+/* styles for both the next and previous blocks */
+.next-prev {
+    border-top: 2px solid @medium_gray;
+    width: 45%;
+    .avenir-next-demi;
+}
+
+.previous {
+    float: left;
+    padding: 0 15px 0 30px;
+
+    .minicon-left {
+        font-size: 0.875em;
+        margin-left: -15px;
+    }
+}
+
+.next {
+    float: right;
+    text-align: right;
+    padding: 0 30px 0 15px;
+
+    .minicon-right {
+        font-size: 0.875em;
+        margin-right: -15px;
+    }
+}
+
+/*
+Link Styles
+-----------
+*/
+
+.next-prev-link {
+    display: block;
+    font-size: 0.875em;
+    margin: 16px 0 0 0;
+}
+
+.next-prev-link:link,
+.next-prev-link:visited {
+    color: @pacific;
+    text-decoration: none;
 }

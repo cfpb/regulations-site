@@ -2,27 +2,12 @@
     For expand/contractable inline interpretations.
 {% endcomment %}
 
-<section class="inline-interpretation" data-interp-for="{{node.interp_for_markup_id}}">
+<section class="inline-interpretation" data-interp-for="{{interp.for_markup_id}}">
     <header class="inline-interp-header">
-        <h4 tabindex="0">Official Commentary to <span class="ref-num">{{ node.interp_label }}</span></h4>
+        <h4 tabindex="0">Official Interpretation to <span class="ref-num">{{ interp.label }}</span></h4>
         <a class="expand-button">Show</a>
     </header>
     <section class="inline-interpretation-content hidden">
-        <h5>{{ node.header }}</h5>
-        {%if node.marked_up %}
-            <p> 
-            {{node.marked_up|safe}}
-            </p>
-        {% endif %}
-
-        {% if node.par_children %}
-            <ol class="level-1" type="1">
-                {% for par_child in node.par_children %}
-                    {% with node=par_child template_name="tree-with-wrapper.html" ignore_id=True%}
-                        {% include template_name %}
-                    {% endwith %}
-                {% endfor %}
-            </ol>
-        {% endif %}
+        {{ interp.markup | safe }}
     </section>
 </section>

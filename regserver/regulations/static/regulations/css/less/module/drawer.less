@@ -1,0 +1,338 @@
+/*
+Drawer
+=========================
+drawer.less contains and imports styles for the left-hand navigation drawer
+*/
+
+/*
+Regulation Drawer
+============================
+
+The regulation drawer is a slide out panel
+On large displays it is on the screen by default. It can be toggled with the "active" class.
+*/
+
+/*
+Generic drawer styles
+--------------------- */
+
+.panel {
+    background-color: #f6f6f5;
+    border-right: 2px solid #d0d0ce;
+    .avenir-next-demi;
+    font-size: .875em;
+    .slide; /* animate the panel opening */
+}
+
+/*
+Drawer Behavior
+--------------- */
+
+/* 
+When applied at large resolutions displays, the active class causes the panel navigation to slide off screen
+*/
+@media only screen and ( min-width: 1100px ) {
+    .panel.active{
+        left: -200px;
+
+        /* slide content fully offscreen*/
+        ol, 
+        h2 {
+            position: absolute;
+            left: -320px;    
+        }
+}
+
+/* animate the .toc-head */
+.toc-head {
+    .slide;
+
+    a:hover,
+    a:active {
+        background-color: @light_field;
+    }
+}
+
+    .active .toc-head {
+        left: -200px;
+        margin-right: 15px;
+    }
+}
+
+/*
+For now, active toggles the nav on screen when on smaller resolution displays. 
+This works by default, but can cause the nav to reverse position when already applied and the user resizes their browser.
+*/
+@media only screen and ( max-width: 1100px ) {
+    .panel.active{
+        left: 0px;
+    }
+}
+
+
+/*
+Panel Header
+------------ */
+
+.drawer-header {
+    width: 17.142857143em;
+    position: fixed;
+    background-color: #f6f6f5;
+    border-right: 2px solid #d0d0ce;
+
+    h2 {
+        margin: 0;
+        padding: 10px 15px 14px 15px;
+        line-height: 1.2;
+        .border-bottom-light (@width: 2px);
+
+        .toc-type {
+            color: @dark_gray;
+            font-size: 0.527472527em; /* 12px / (26px * .875em) */
+            .avenir-next;
+            text-transform: uppercase;
+        }
+
+        .toc-part-num {
+          display: block;
+          font-size: 20px; /*18px / (26px * .875em) */
+          margin: 10px 0 7px 0;
+          color: @dark_gray;
+          .avenir-next-bold;
+          text-transform: uppercase;
+        }
+
+        .toc-reg-title {
+          .avenir-next;
+          display: block;
+          font-size: 0.615384615em; /* 14px / (26px * .875em)  */
+        }
+    }
+}
+
+.toc-container {
+    margin-top: 120px;
+}
+
+/* 
+Drawer Links
+============
+*/
+
+/*
+Panel Slide Button
+------------------
+.panel-slide toggles the drawer open and closed 
+*/
+
+.panel-slide {
+    text-indent: -9999px;
+    display: block;
+    height: 34px; /* match height of main header */
+    width: 40px;
+    float: right;
+    cursor: pointer;
+    background: url(../img/left.png) no-repeat center center;
+}
+
+.panel-slide:hover,
+.panel-slide:active {
+    background-color: @light_field;
+}
+
+.active .panel-slide {
+    background: url(../img/right.png) no-repeat center center;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .panel-slide {
+        background: url(../img/left@2x.png) no-repeat center center;
+        background-size: 16px 13px;
+    }
+
+    .active .panel-slide {
+        background: url(../img/right@2x.png) no-repeat center center;
+        background-size: 16px 13px;
+    }
+}
+
+/* 
+TOC Nav Links
+-------------
+.toc-nav-links toggle between the types of drawer content
+currently these are TOC, History, and Search
+*/
+.toc-nav-link {
+    text-indent: -9999px;
+    display: inline-block;
+    margin-left: -0.25em; /*accomodate inline-block spacing */
+    height: 34px; /* match height of main header */
+    width: 56px;
+    border-right: 1px solid @light_field;
+}
+
+.drawer-toggles li:first-child {
+    margin-left: 0; /*remove negative margin from first list item*/
+}
+
+#menu-link {
+    background: url(../img/nav-link.png) no-repeat center center;
+
+    &.hamburgerify {
+        background: url(../img/hamburger.png) no-repeat center center;
+    }
+}
+
+#history-link {
+    background: url(../img/history.png) no-repeat center center;
+}
+
+#search-link {
+    background: url(../img/search.png) no-repeat center center;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    #menu-link {
+        background: url(../img/nav-link@2x.png) no-repeat center center;
+        background-size: 20px 16px;
+    }
+
+    #history-link {
+        background: url(../img/history@2x.png) no-repeat center center;
+        background-size: 20px 16px;
+    }
+
+    #search-link {
+        background: url(../img/search@2x.png) no-repeat center center;
+        background-size: 20px 16px;
+    }
+}
+
+#menu-link:hover,
+#menu-link:active,
+#history-link:hover,
+#history-link:active,
+#search-link:hover,
+#search-link:active {
+        background-color: @light_field;
+}
+
+
+/* 
+Table of Contents Drawer
+========================
+This contains all of the styles specific to the TOC
+*/
+.regulation-nav {
+
+    ol {
+        padding: 0;
+    }
+
+    li {
+        margin: 0;
+        text-indent: 0;
+    }
+
+    .toc-section-marker {
+      .avenir-next-bold;
+      display: block;
+      font-size: 18px;
+    }
+
+    a {
+        display: block;
+        padding: 10px 15px;
+        line-height: 1.3;
+    }
+
+    a:link,
+    a:visited {
+        color: @black;
+        .border-bottom-light (@width: 1px);
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:active,
+    li .current {
+        color: @black;
+        background-color: @green_light;
+    }
+
+}
+
+/* 
+History Drawer
+==============
+This contains all of the styles specific to the history
+*/
+
+#history {
+
+    .avenir-next;
+
+    ul, 
+    li {
+        .reset;
+    }
+
+    .status-list {
+        padding: 10px 15px;
+        border-bottom: 1px solid @light_field;
+    }
+
+    a:link,
+    a:visited {
+        color: @pacific;
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+        text-decoration: underline;
+    }
+
+    h3 {
+        margin: 6px 0;
+        font-size: 1em;
+        .avenir-next-demi;
+    }
+
+    h4 {
+        .reset;
+        font-size: 0.875em;
+        text-transform: uppercase;
+        .avenir-next-demi;
+        color: @dark_text;
+    }
+
+    .rule-status {
+        color: @dark_text;
+        text-transform: lowercase;
+        .avenir-next;
+        display: block;
+        float: right;
+    }
+
+    .rule-list li {
+        margin: .5em 0;
+        font-size: 0.875em;
+    }
+
+    .fr-notice:after {
+        .minicon;
+        font-size: 0.875em;
+        content: " \e007";
+    }
+}
+
+/* 
+Search Drawer
+=============
+This contains all of the styles specific to the search
+*/

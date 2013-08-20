@@ -18,23 +18,23 @@
 <div class="sub-head">
     <div class="toc-head">
         <a href="#" id="panel-link" class="toc-toggle panel-slide">Navigation</a>
-        <a href="#menu" id="menu-link" class="toc-nav-link">Table of Contents</a>
+        <ul class="drawer-toggles">
+            <li><a href="#table-of-contents" id="menu-link" class="toc-nav-link">Table of Contents</a></li>
+            <li><a href="#history" id="history-link" class="toc-nav-link">History</a></li>
+            <li><a href="#search" id="search-link" class="toc-nav-link">Search</a></li>
+        </ul>
     </div> <!-- /toc-head-->
     <div id="content-header" class="header-main">
         <span id="active-title"></span>
     </div>
     <div class="header-secondary">
-        <span class="effective-date"><strong>Effective Date:</strong> {{ tree.meta.effective.date|date }}</span>
+        <span class="effective-date"><strong>Effective Date:</strong> {{ tree.meta.effective_date|date }}</span>
         <h2> </h2>
     </div>
 </div>
 </header>
 
- {%if tree.TOC %}
-    {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
-       {% include "toc.html" %} 
-    {% endwith %}
- {%endif%}  
+{% include "drawer.html" %} 
 
 <div class="wrap group" id="reg-content">
 
@@ -83,9 +83,7 @@
 </div> <!-- /.secondary-content -->
 </div> <!-- /.wrap -->
 
-<footer>
-    <small>Brought to you by the <abbr title="Consumer Financial Protection Buereau">CFPB</abbr> Technology &amp; Innovation Team</small>
-</footer>
+{% include "footer.html" %}
 
 {% endblock %}
 

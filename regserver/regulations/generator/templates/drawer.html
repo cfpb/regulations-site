@@ -1,0 +1,39 @@
+<div id="menu" class="panel">
+    <div class="drawer-header">
+    <h2>
+        <span class="toc-type">Table of contents for</span>
+        <span class="toc-part-num">{{ tree.meta.cfr_title_number }} CFR Part {{ tree.label.0 }}</span>
+        <span class="toc-reg-title">{{ tree.title_clean|title }}
+        {% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</span>
+    </h2>
+    </div> <!--/.drawer-header-->
+ {%if tree.TOC %}
+    {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
+       {% include "toc.html" %} 
+    {% endwith %}
+ {%endif%}
+    <div id="history" class="toc-container hidden">
+        <ul>
+        {% for version in history %}
+            {% if part == label_id %}
+            <li class="{{version.timeline}} status-list">
+                <h4>{{ version.status }}</h4>
+                <h3><a href="{% url 'chrome_regulation_view' part version.version %}">{{ version.by_date|date }}</a></h3>
+            {% else %}
+            <li class="{{version.timeline}} status-list">
+                <h4>{{ version.status }}</h4>
+                <h3><a href="{% url 'chrome_section_view' label_id version.version %}">{{ version.by_date|date }}</a></h3>
+            {% endif %}
+                <ul class="rule-list">
+                {% for notice in version.notices %}
+                    <li><a class="fr-notice" href="{{notice.fr_url}}">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
+                {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+        </ul>
+    </div> <!--/#history-->
+    <div id="search" class="toc-container hidden">
+        <p>Search Here</p>
+    </div> <!--/#search-->
+</div> <!-- /.panel -->

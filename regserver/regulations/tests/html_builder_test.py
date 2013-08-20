@@ -3,15 +3,17 @@ from unittest import TestCase
 from mock import Mock
 
 from regulations.generator.html_builder import *
+from regulations.generator.layers.layers_applier import InlineLayersApplier
 from regulations.generator.layers.layers_applier import ParagraphLayersApplier
 from regulations.generator.node_types import REGTEXT, APPENDIX, INTERP
+
 
 class HTMLBuilderTest(TestCase):
 
     def test_process_node_appliers(self):
         node = {
-            "text": "Text text text.", 
-            "children": [], 
+            "text": "Text text text.",
+            "children": [],
             "label": ["123", "aaa"],
             'node_type': REGTEXT
         }
@@ -28,9 +30,9 @@ class HTMLBuilderTest(TestCase):
 
         self.assertTrue(inline.get_layer_pairs.called)
         self.assertEqual("123-aaa",
-                inline.get_layer_pairs.call_args[0][0])
+                         inline.get_layer_pairs.call_args[0][0])
         self.assertEqual("Text text text.",
-                inline.get_layer_pairs.call_args[0][1])
+                         inline.get_layer_pairs.call_args[0][1])
 
         self.assertTrue(par.apply_layers.called)
         self.assertEqual(node, par.apply_layers.call_args[0][0])
@@ -74,7 +76,7 @@ class HTMLBuilderTest(TestCase):
     def test_list_level_appendices(self):
         builder = HTMLBuilder(None, None, None)
 
-        parts = ['101', 'A', '1','a']
+        parts = ['101', 'A', '1', 'a']
         node_type = APPENDIX
 
         result = builder.list_level(parts, node_type)
@@ -95,7 +97,7 @@ class HTMLBuilderTest(TestCase):
     def test_list_level_regulations(self):
         builder = HTMLBuilder(None, None, None)
 
-        parts = ['101','1','a']
+        parts = ['101', '1', 'a']
         node_type = REGTEXT
 
         result = builder.list_level(parts, node_type)
@@ -116,7 +118,7 @@ class HTMLBuilderTest(TestCase):
     def test_list_level_regulations_no_level(self):
         builder = HTMLBuilder(None, None, None)
 
-        parts = ['101','1']
+        parts = ['101', '1']
         node_type = REGTEXT
 
         result = builder.list_level(parts, node_type)
@@ -147,7 +149,7 @@ class HTMLBuilderTest(TestCase):
         builder.process_node(node)
         self.assertFalse('header' in node)
 
-        node = {'text': '', 'children': [], 'label': ['99', '22'], 
+        node = {'text': '', 'children': [], 'label': ['99', '22'],
                 'title': 'Some Title', 'node_type': REGTEXT}
         builder.process_node(node)
         self.assertTrue('header' in node)
@@ -156,7 +158,7 @@ class HTMLBuilderTest(TestCase):
         self.assertFalse('header_num' in node)
         self.assertFalse('header_title' in node)
 
-        node = {'text': '', 'children': [], 'label': ['99', '22'], 
+        node = {'text': '', 'children': [], 'label': ['99', '22'],
                 'title': u'§ 22.1 Title', 'node_type': REGTEXT}
         builder.process_node(node)
         self.assertTrue('header' in node)
@@ -171,3 +173,46 @@ class HTMLBuilderTest(TestCase):
         text = HTMLBuilder.section_space(' abc')
         self.assertEquals(text, ' abc')
         self.assertTrue(True)
+
+    def test_modify_interp_node(self):
+        node = {
+            'node_type': INTERP,
+            'label': ['872', '22', 'Interp'],
+            'children': [{'label': ['872', '22', 'Interp', '1']},
+                         {'label': ['872', '22', 'a', 'Interp']},
+                         {'label': ['872', '22', 'b', 'Interp']}]
+        }
+        builder = HTMLBuilder(None, None, None)
+        builder.modify_interp_node(node)
+        self.assertTrue(node['section_header'])
+        self.assertEqual(node['header_children'],
+                         [{'label': ['872', '22', 'a', 'Interp']},
+                          {'label': ['872', '22', 'b', 'Interp']}])
+        self.assertEqual(node['par_children'],
+                         [{'label': ['872', '22', 'Interp', '1']}])
+
+        node['label'] = ['872', '222', 'a', 'Interp']
+        builder.modify_interp_node(node)
+        self.assertFalse(node['section_header'])
+
+    def test_modify_interp_node_header(self):
+        node = {
+            'children': [],
+            'header': 'This interprets 22(a), a paragraph',
+            'label': ['872', '22', 'a', 'Interp'],
+            'node_type': INTERP,
+        }
+        icl = InternalCitationLayer(None)
+        icl.sectional = True
+        ila = InlineLayersApplier()
+        ila.add_layer(icl)
+        builder = HTMLBuilder(ila, None, None)
+
+        builder.modify_interp_node(node)
+        self.assertEqual('This interprets '
+                         + icl.render_url(['872', '22', 'a'], '22(a)')
+                         + ', a paragraph', node['header_markup'])
+
+        node['label'] = ['872', '22']
+        builder.modify_interp_node(node)
+        self.assertEqual(node['header'], node['header_markup'])
