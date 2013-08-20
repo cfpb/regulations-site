@@ -43,6 +43,10 @@ class Client:
         return copy.deepcopy(self._use_reg_cache(label, version))
         #return self._get("regulation/%s/%s" % (label, version))
 
+    def regversions(self, label):
+        """End point for getting a list of regulation versions."""
+        return self._get("regulation/%s" % label)
+
     def layer(self, layer_name, label, version):
         """Check the layer cache to see if we've already requested this
         version+layer. We just grab once for the entire regulation."""
@@ -51,19 +55,25 @@ class Client:
             Client._layer_cache[ident] = self._get("layer/%s/%s/%s" % ident)
         return Client._layer_cache[ident]
 
-    def notices(self):
+    def notices(self, part=None):
         """End point for notice searching. Right now, just a list"""
-        return self._get("notice")
+        if part:
+            return self._get("notice", {'part': part})
+        else:
+            return self._get("notice")
 
     def notice(self, document_number):
         """End point for retrieving a single notice."""
         return self._get("notice/%s" % document_number)
 
-    def _get(self, suffix):
+    def _get(self, suffix, params=None):
         """Actually make the GET request. Assume the result is JSON. Right
         now, there is no error handling"""
+        if not params:
+            params = {}
+        print self.base_url + suffix
         if self.base_url.startswith('http'):    # API
-            return requests.get(self.base_url + suffix).json()
+            return requests.get(self.base_url + suffix, params=params).json()
         else:   # file system
             if os.path.isdir(self.base_url + suffix):
                 suffix = suffix + "/index.html"
