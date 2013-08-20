@@ -1,0 +1,1 @@
+define("section-footer-view",["jquery","underscore","backbone","regs-dispatch"],function(e,t,n,r){var i=n.View.extend({events:{"click .navigation-link":"sendNavEvent"},sendNavEvent:function(t){t.preventDefault();var n=e(t.target).data("linked-section");r.trigger("openSection:set",n)}});return i});
