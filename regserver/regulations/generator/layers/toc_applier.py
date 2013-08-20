@@ -1,7 +1,10 @@
 #vim: set fileencoding=utf-8
 import re
 
-from regulations.generator.layers.internal_citation import InternalCitationLayer
+from regulations.generator.layers.internal_citation\
+    import InternalCitationLayer
+from regulations.generator import title_parsing
+
 
 class TableOfContentsLayer(object):
     shorthand = 'toc'
@@ -19,10 +22,10 @@ class TableOfContentsLayer(object):
             for data in layer_elements:
                 if self.sectional:
                     url = InternalCitationLayer.sectional_url_for(
-                            data['index'], self.version)
+                        data['index'], self.version)
                 else:
-                    url = InternalCitationLayer.hash_url_for(data['index'],
-                            self.version)
+                    url = InternalCitationLayer.hash_url_for(
+                        data['index'], self.version)
                 element = {
                     'url': url,
                     'label': data['title']
@@ -33,30 +36,11 @@ class TableOfContentsLayer(object):
             return ('TOC', toc_list)
 
     def section(self, element, data):
-        """Try to manipulate a section TOC item"""
-        if len(data['index']) == 2 and data['index'][1].isdigit():
-            element['is_section'] = True
-            element['section'] = '.'.join(data['index'])
-            element['sub_label'] = re.search(element['section'] 
-                    + r'[^\w]*(.*)', data['title']).group(1)
-    
+        title_data = title_parsing.section(data)
+        if title_data:
+            element.update(title_data)
+
     def appendix_supplement(self, element, data):
-        """Handle items pointing to an appendix or supplement"""
-        if len(data['index']) == 2 and data['index'][1].isalpha():
-            if data['index'][1] == 'Interpretations':
-                element['is_supplement'] = True
-            else:
-                element['is_appendix'] = True
-            
-            segments = self.try_split(data['title'], (u'—', '-'))
-            if segments:
-                element['label'], element['sub_label'] = segments
-
-
-    def try_split(self, text, chars):
-        """Utility method for splitting a string by one of multiple chars"""
-        for c in chars:
-            segments = text.split(c)
-            if len(segments) > 1:
-                return [s.strip() for s in segments]
-
+        as_data = title_parsing.appendix_supplement(data)
+        if as_data:
+            element.update(as_data)
