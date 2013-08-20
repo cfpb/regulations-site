@@ -105,14 +105,14 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatc
                 pathLen,
                 promise;
 
-            sitePath = _.compact(document.location.pathname.split('/'));
+            sitePath = document.location.pathname.split('/');
             pathLen = sitePath.length;
 
             for (i=0; i<=pathLen; i++) {
                 if (sitePath[i] === 'regulation') {
                     break;
                 }
-                else {
+                else if (sitePath[i] !== '') {
                     url.push(sitePath[i]);
                 }
             }
@@ -121,7 +121,7 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatc
             url.push(id);
             url.push(Dispatch.getVersion());
 
-            url = '/' + url.join('/');
+            url = '/' + _.compact(url).join('/');
 
             promise = $.ajax({
                 url: url,
