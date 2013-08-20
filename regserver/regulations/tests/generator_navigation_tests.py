@@ -3,6 +3,7 @@ from unittest import TestCase
 from mock import patch
 from regulations.generator import navigation
 
+
 class NavigationTest(TestCase):
 
     def test_get_labels(self):
@@ -11,7 +12,7 @@ class NavigationTest(TestCase):
             ['204', '1', 'a'], navigation.get_labels(label))
 
     def test_up_level(self):
-        label =  ['204', '1', 'a']
+        label = ['204', '1', 'a']
         self.assertEquals('204-1', navigation.up_level(label))
 
     def test_is_last(self):
@@ -33,25 +34,31 @@ class NavigationTest(TestCase):
     @patch('regulations.generator.navigation.get_toc')
     def test_nav_sections(self, get_toc):
         get_toc.return_value = {
-            '204':[
-                {'index':['204', '1'], 'title':'§ 204.1 First'}, 
-                {'index':['204', '3'], 'title':'§ 204.3 Third'}]}
+            '204': [
+                {'index': ['204', '1'], 'title': '§ 204.1 First'},
+                {'index': ['204', '3'], 'title': '§ 204.3 Third'}]}
         nav = navigation.nav_sections('204-1', 'ver')
         p, n = nav
         self.assertEquals(None, p)
-        self.assertEquals({'index':['204', '3'], 'title':'§ 204.3 Third'}, n)
+        self.assertEquals({'index': ['204', '3'], 'title': '§ 204.3 Third'}, n)
 
     @patch('regulations.generator.navigation.get_toc')
     def test_nav_sections_appendix(self, get_toc):
         get_toc.return_value = {
-            '204':[
-                {'index':['204', '1'], 'title':'§ 204.1 First'}, 
-                {'index':['204', 'A'], 'title':'Appendix A to Part 204 - Model Forms'}]}
+            '204': [
+                {'index': ['204', '1'], 'title': '§ 204.1 First'},
+                {
+                    'index': ['204', 'A'],
+                    'title': 'Appendix A to Part 204 - Model Forms'}]}
         nav = navigation.nav_sections('204-1', 'ver')
         p, n = nav
         self.assertEquals(None, p)
-        self.assertEquals({'index':['204', 'A'], 'title':'Appendix A to Part 204 - Model Forms'}, n)
+        self.assertEquals({
+            'index': ['204', 'A'],
+            'title': 'Appendix A to Part 204 - Model Forms'}, n)
 
         e = navigation.section_title(n)
         self.assertEquals('204-A', e['section'])
-        self.assertEquals(('Appendix A to Part 204', 'Model Forms'), e['title'])
+        self.assertEquals(
+            ('Appendix A to Part 204', 'Model Forms'),
+            e['title'])

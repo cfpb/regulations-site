@@ -7,7 +7,7 @@ def appendix_supplement(data):
             element['is_supplement'] = True
         else:
             element['is_appendix'] = True
-        
+
         segments = try_split(data['title'], (u'—', '-'))
         if segments:
             element['label'], element['sub_label'] = segments

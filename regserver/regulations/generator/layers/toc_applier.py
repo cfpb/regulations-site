@@ -1,8 +1,10 @@
 #vim: set fileencoding=utf-8
 import re
 
-from regulations.generator.layers.internal_citation import InternalCitationLayer
+from regulations.generator.layers.internal_citation\
+    import InternalCitationLayer
 from regulations.generator import reg
+
 
 class TableOfContentsLayer(object):
     shorthand = 'toc'
@@ -20,10 +22,10 @@ class TableOfContentsLayer(object):
             for data in layer_elements:
                 if self.sectional:
                     url = InternalCitationLayer.sectional_url_for(
-                            data['index'], self.version)
+                        data['index'], self.version)
                 else:
-                    url = InternalCitationLayer.hash_url_for(data['index'],
-                            self.version)
+                    url = InternalCitationLayer.hash_url_for(
+                        data['index'], self.version)
                 element = {
                     'url': url,
                     'label': data['title']
@@ -38,11 +40,10 @@ class TableOfContentsLayer(object):
         if len(data['index']) == 2 and data['index'][1].isdigit():
             element['is_section'] = True
             element['section'] = '.'.join(data['index'])
-            element['sub_label'] = re.search(element['section'] 
-                    + r'[^\w]*(.*)', data['title']).group(1)
-    
+            element['sub_label'] = re.search(
+                element['section'] + r'[^\w]*(.*)', data['title']).group(1)
+
     def appendix_supplement(self, element, data):
         as_data = reg.appendix_supplement(data)
         if as_data:
             element.update(as_data)
-
