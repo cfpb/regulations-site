@@ -9,7 +9,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
         el: '#menu',
 
         events: {
-            'click a': 'sendClickEvent'
+            'click .regulation-nav a': 'sendClickEvent'
         },
 
         initialize: function() {

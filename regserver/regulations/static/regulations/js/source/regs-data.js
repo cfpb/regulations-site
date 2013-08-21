@@ -99,8 +99,29 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatc
         },
 
         request: function(id) {
-            var url = '/partial/' + id + '/' + Dispatch.getVersion(),
+            var url = [],
+                sitePath,
+                i,
+                pathLen,
                 promise;
+
+            sitePath = document.location.pathname.split('/');
+            pathLen = sitePath.length;
+
+            for (i=0; i<=pathLen; i++) {
+                if (sitePath[i] === 'regulation') {
+                    break;
+                }
+                else if (sitePath[i] !== '') {
+                    url.push(sitePath[i]);
+                }
+            }
+
+            url.push('partial');
+            url.push(id);
+            url.push(Dispatch.getVersion());
+
+            url = '/' + _.compact(url).join('/');
 
             promise = $.ajax({
                 url: url,
