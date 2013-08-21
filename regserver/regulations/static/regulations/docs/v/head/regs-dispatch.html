@@ -252,6 +252,15 @@ This scheme currently limits it to one value associated with each type, in theor
 
         getVersion: <span class="keyword">function</span>() {
             <span class="keyword">return</span> <span class="keyword">this</span>.open[<span class="string">'version'</span>];
+        },
+
+        getURLPrefix: <span class="keyword">function</span>() {
+            <span class="keyword">if</span> (<span class="keyword">this</span>.open[<span class="string">'urlprefix'</span>]) {
+                <span class="keyword">return</span> <span class="keyword">this</span>.open[<span class="string">'urlprefix'</span>];
+            }
+            <span class="keyword">else</span> {
+                <span class="keyword">return</span> <span class="literal">false</span>;
+            }
         }
 
     }, Backbone.Events);   

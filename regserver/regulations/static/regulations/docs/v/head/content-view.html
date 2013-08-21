@@ -378,13 +378,20 @@ re-render view</p>
         },
 
         openSection: <span class="keyword">function</span>(section, sectionId) {
+            <span class="keyword">var</span> urlPrefix = Dispatch.getURLPrefix();
+
             <span class="keyword">this</span>.$el.html(section);
             window.scrollTo(<span class="number">0</span>, <span class="number">0</span>);
             Dispatch.trigger(<span class="string">'section:open'</span>, sectionId);
             Dispatch.set(<span class="string">'section'</span>, sectionId);
 
             Dispatch.set(<span class="string">'sectionNav'</span>, <span class="keyword">new</span> SectionFooterView({el: <span class="keyword">this</span>.$el.find(<span class="string">'.section-nav'</span>)}));
-            Router.navigate(<span class="string">'regulation/'</span> + sectionId + <span class="string">'/'</span> + Dispatch.getVersion());
+            <span class="keyword">if</span> (urlPrefix) {
+                Router.navigate(<span class="string">'/'</span> + urlPrefix + <span class="string">'/regulation/'</span> + sectionId + <span class="string">'/'</span> + Dispatch.getVersion());
+            }
+            <span class="keyword">else</span> {
+                Router.navigate(<span class="string">'/regulation/'</span> + sectionId + <span class="string">'/'</span> + Dispatch.getVersion());
+            }
         },</pre></div></div>
             
         </li>

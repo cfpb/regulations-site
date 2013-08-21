@@ -98,13 +98,20 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         },
 
         openSection: function(section, sectionId) {
+            var urlPrefix = Dispatch.getURLPrefix();
+
             this.$el.html(section);
             window.scrollTo(0, 0);
             Dispatch.trigger('section:open', sectionId);
             Dispatch.set('section', sectionId);
 
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
-            Router.navigate('regulation/' + sectionId + '/' + Dispatch.getVersion());
+            if (urlPrefix) {
+                Router.navigate('/' + urlPrefix + '/regulation/' + sectionId + '/' + Dispatch.getVersion());
+            }
+            else {
+                Router.navigate('/regulation/' + sectionId + '/' + Dispatch.getVersion());
+            }
         },
 
         // for a consistent API

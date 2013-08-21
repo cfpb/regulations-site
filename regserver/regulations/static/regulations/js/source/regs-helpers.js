@@ -110,6 +110,30 @@ define('regs-helpers', function() {
             else {
                 return id;
             }
+        },
+
+        findURLPrefix: function() {
+            var i, pathLen, sitePath,
+                url = [];
+
+            sitePath = document.location.pathname.split('/');
+            pathLen = sitePath.length;
+
+            for (i=0; i<=pathLen; i++) {
+                if (sitePath[i] === 'regulation') {
+                    break;
+                }
+                else if (sitePath[i] !== '') {
+                    url.push(sitePath[i]);
+                }
+            }
+
+            if (url.length === 0) {
+                return false;
+            }
+            else {
+                return url = _.compact(url).join('/');
+            }
         }
     };
 });

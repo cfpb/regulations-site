@@ -325,29 +325,8 @@ false if the entity hasn&#39;t been loaded</p>
         },
 
         request: <span class="keyword">function</span>(id) {
-            <span class="keyword">var</span> url = [],
-                sitePath,
-                i,
-                pathLen,
+            <span class="keyword">var</span> url = <span class="keyword">this</span>.getAJAXUrl(id),
                 promise;
-
-            sitePath = _.compact(document.location.pathname.split(<span class="string">'/'</span>));
-            pathLen = sitePath.length;
-
-            <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;=pathLen; i++) {
-                <span class="keyword">if</span> (sitePath[i] === <span class="string">'regulation'</span>) {
-                    <span class="keyword">break</span>;
-                }
-                <span class="keyword">else</span> {
-                    url.push(sitePath[i]);
-                }
-            }
-
-            url.push(<span class="string">'partial'</span>);
-            url.push(id);
-            url.push(Dispatch.getVersion());
-
-            url = <span class="string">'/'</span> + url.join(<span class="string">'/'</span>);
 
             promise = $.ajax({
                 url: url,
@@ -355,6 +334,22 @@ false if the entity hasn&#39;t been loaded</p>
             });
 
             <span class="keyword">return</span> promise;
+        },
+
+        getAJAXUrl: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> url,
+                urlPrefix = Dispatch.getURLPrefix();
+
+            <span class="keyword">if</span> (urlPrefix) {
+                url = <span class="string">'/'</span> + urlPrefix + <span class="string">'/partial/'</span>;
+            }
+            <span class="keyword">else</span> {
+                url = <span class="string">'/partial/'</span>;
+            }
+
+            url += id + <span class="string">'/'</span> + Dispatch.getVersion(); 
+
+            <span class="keyword">return</span> url;
         },</pre></div></div>
             
         </li>

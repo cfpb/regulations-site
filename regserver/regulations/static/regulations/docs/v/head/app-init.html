@@ -134,7 +134,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'regs-data'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'toc-view'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler) {
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'regs-data'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'toc-view'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers) {
     <span class="string">'use strict'</span>;
     <span class="keyword">return</span> {</pre></div></div>
             
@@ -231,6 +231,7 @@ incrementally loads in images once rendering is complete</p>
 
         init: <span class="keyword">function</span>() {
             <span class="keyword">var</span> openSection,
+                urlPrefix,
                 regVersion,
                 regSection = $(<span class="string">'.main-content .reg-section'</span>);</pre></div></div>
             
@@ -287,7 +288,25 @@ incrementally loads in images once rendering is complete</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            RegsData.set(openSection, regSection.html());
+            <div class="content"><div class='highlight'><pre>            RegsData.set(openSection, regSection.html());</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>cache URL prefix</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            urlPrefix = RegsHelpers.findURLPrefix();
+            <span class="keyword">if</span> (urlPrefix) {
+                Dispatch.set(<span class="string">'urlprefix'</span>, urlPrefix);
+            }
 
             <span class="keyword">this</span>.bindEvents();
             <span class="keyword">this</span>.fetchModelForms();

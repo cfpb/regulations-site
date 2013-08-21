@@ -99,29 +99,8 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatc
         },
 
         request: function(id) {
-            var url = [],
-                sitePath,
-                i,
-                pathLen,
+            var url = this.getAJAXUrl(id),
                 promise;
-
-            sitePath = document.location.pathname.split('/');
-            pathLen = sitePath.length;
-
-            for (i=0; i<=pathLen; i++) {
-                if (sitePath[i] === 'regulation') {
-                    break;
-                }
-                else if (sitePath[i] !== '') {
-                    url.push(sitePath[i]);
-                }
-            }
-
-            url.push('partial');
-            url.push(id);
-            url.push(Dispatch.getVersion());
-
-            url = '/' + _.compact(url).join('/');
 
             promise = $.ajax({
                 url: url,
@@ -129,6 +108,22 @@ define('regs-data', ['underscore', 'backbone', './regs-helpers', './regs-dispatc
             });
 
             return promise;
+        },
+
+        getAJAXUrl: function(id) {
+            var url,
+                urlPrefix = Dispatch.getURLPrefix();
+
+            if (urlPrefix) {
+                url = '/' + urlPrefix + '/partial/';
+            }
+            else {
+                url = '/partial/';
+            }
+
+            url += id + '/' + Dispatch.getVersion(); 
+
+            return url;
         },
 
         // **Param**
