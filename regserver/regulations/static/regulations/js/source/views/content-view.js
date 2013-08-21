@@ -33,7 +33,9 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             // @TODO: how do activeSection and Dispatch.get('section') live together?
             this.activeSection = '';
             this.$activeSection = '';
+            this.$sections = {};
 
+            this.updateWayfinding();
             // this might be silly?
             this.$window = $(window);
 
@@ -41,7 +43,6 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             this.header = new SubHeadView();
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
 
-            this.updateWayfinding();
         },
 
         // naive way to update the active table of contents link and wayfinding header
@@ -106,7 +107,6 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             // cache all sections in the DOM eligible to be the active section
             // also cache some jQobjs that we will refer to frequently
-            this.$sections = this.$sections || {};
             this.$contentHeader = this.$contentHeader || $('header.reg-header');
 
             // sections that are eligible for being the active section
