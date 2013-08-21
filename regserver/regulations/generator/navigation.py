@@ -47,33 +47,11 @@ def nav_sections(current, version):
                 return (previous_section, next_section)
 
 
-def appendix_title(data):
-    """ Appendix sections are labeled differently, we separate the
-    section name from it's title here. """
-
-    title_data = appendix_supplement(data)
-    element = {
-        'section': '-'.join(data['index']),
-        'title': (title_data['label'], title_data['sub_label'])
-    }
-    return element
-
-
-def section_title(data):
-    """ Parse the section name from the title. """
-    title_data = section(data)
-    element = {
-        'section': '-'.join(data['index']),
-        'title': (title_data['section'], title_data['sub_label'])
-    }
-    return element
-
-
 def parse_section_title(data):
     """ Separate the section number from the section title (this works for
     both appendix and section text. """
 
     if node_types.is_appendix(data['index']):
-        return appendix_title(data)
+        return appendix_supplement(data)
     else:
-        return section_title(data)
+        return section(data)

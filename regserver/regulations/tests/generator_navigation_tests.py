@@ -58,7 +58,6 @@ class NavigationTest(TestCase):
             'title': 'Appendix A to Part 204 - Model Forms'}, n)
 
         e = navigation.parse_section_title(n)
-        self.assertEquals('204-A', e['section'])
-        self.assertEquals(
-            ('Appendix A to Part 204', 'Model Forms'),
-            e['title'])
+        self.assertEquals('204-A', e['section_id'])
+        self.assertEquals('Appendix A to Part 204', e['label'])
+        self.assertEquals('Model Forms', e['sub_label'])

@@ -6,7 +6,7 @@ def appendix_supplement(data):
     """Handle items pointing to an appendix or supplement"""
     if len(data['index']) == 2 and data['index'][1].isalpha():
         element = {}
-        if data['index'][1] == 'Interpretations':
+        if data['index'][1] == 'Interp':
             element['is_supplement'] = True
         else:
             element['is_appendix'] = True
@@ -14,6 +14,7 @@ def appendix_supplement(data):
         segments = try_split(data['title'], (u'—', '-'))
         if segments:
             element['label'], element['sub_label'] = segments
+        element['section_id'] = '-'.join(data['index'])
         return element
 
 
@@ -30,8 +31,8 @@ def section(data):
     if len(data['index']) == 2 and data['index'][1].isdigit():
         element = {}
         element['is_section'] = True
-        element['section'] = '.'.join(data['index'])
+        element['label'] = '.'.join(data['index'])
         element['section_id'] = '-'.join(data['index'])
         element['sub_label'] = re.search(
-            element['section'] + r'[^\w]*(.*)', data['title']).group(1)
+            element['label'] + r'[^\w]*(.*)', data['title']).group(1)
         return element
