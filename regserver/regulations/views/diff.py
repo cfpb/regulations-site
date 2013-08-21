@@ -38,6 +38,4 @@ class PartialSectionDiffView(TemplateView):
                 'node_type': EMPTYPART,
                 'children': [builder.tree]}
         context['tree'] = {'children': [child_of_root]}
-        #context['navigation'] = self.section_navigation(
-        #    context['label_id'], context['version'])
         return context
