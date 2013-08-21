@@ -18,8 +18,6 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         },
 
         initialize: function() {
-            var len, i;
-
             // **Event Listeners**
             //
             // * when a definition is removed, update term links
@@ -31,14 +29,6 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
 
-            // cache all sections in the DOM eligible to be the active section
-            // also cache some jQobjs that we will refer to frequently
-            this.$sections = {};
-            this.$contentHeader = $('header.reg-header');
-
-            // sections that are eligible for being the active section
-            this.$contentContainer = this.$el.find('.level-1 li[id], .reg-section, .appendix-section, .supplement-section');
-
             // set active section vars
             // @TODO: how do activeSection and Dispatch.get('section') live together?
             this.activeSection = '';
@@ -47,16 +37,11 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             // this might be silly?
             this.$window = $(window);
 
-            // cache jQobjs of each reg section
-            len = this.$contentContainer.length;
-            for (i = 0; i < len; i++) {
-                this.$sections[i] = $(this.$contentContainer[i]);
-            }
-
             // new View instance for subheader
             this.header = new SubHeadView();
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
 
+            this.updateWayfinding();
         },
 
         // naive way to update the active table of contents link and wayfinding header
@@ -111,6 +96,26 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             }
             else {
                 Router.navigate('/regulation/' + sectionId + '/' + Dispatch.getVersion());
+            }
+
+            this.updateWayfinding();
+        },
+
+        updateWayfinding: function() {
+            var i, len;
+
+            // cache all sections in the DOM eligible to be the active section
+            // also cache some jQobjs that we will refer to frequently
+            this.$sections = this.$sections || {};
+            this.$contentHeader = this.$contentHeader || $('header.reg-header');
+
+            // sections that are eligible for being the active section
+            this.$contentContainer = this.$el.find('.level-1 li[id], .reg-section, .appendix-section, .supplement-section');
+
+            // cache jQobjs of each reg section
+            len = this.$contentContainer.length;
+            for (i = 0; i < len; i++) {
+                this.$sections[i] = $(this.$contentContainer[i]);
             }
         },
 
