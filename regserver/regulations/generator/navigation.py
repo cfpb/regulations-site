@@ -54,7 +54,7 @@ def appendix_title(data):
     title_data = appendix_supplement(data)
     element = {
         'section': '-'.join(data['index']),
-        'title': (title_data['label'], title_data['sub_label'])
+        'title': ('', title_data['label'], title_data['sub_label'])
     }
     return element
 
@@ -64,7 +64,9 @@ def section_title(data):
     title_data = section(data)
     element = {
         'section': '-'.join(data['index']),
-        'title': (title_data['section'], title_data['sub_label'])
+        'title': ('&sect;&nbsp;',
+                  title_data['section'],
+                  title_data['sub_label'])
     }
     return element
 
