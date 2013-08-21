@@ -34,11 +34,8 @@ class VersionsTest(TestCase):
         self.assertEqual(3, len(history))
         v1, v2, v3 = history
 
-        self.assertEqual('Final Rule', v1['status'])
         self.assertEqual('future', v1['timeline'])
-        self.assertEqual('Current Law', v2['status'])
         self.assertEqual('current', v2['timeline'])
-        self.assertEqual('Final Rule', v3['status'])
         self.assertEqual('past', v3['timeline'])
 
         self.assertEqual(convert_to_python([n6, n5, n4]), v1['notices'])

@@ -19,13 +19,11 @@ def fetch_grouped_history(part):
     seen_current = False
 
     for version in versions:
-        version['status'] = 'Final Rule'
         if version['by_date'] > today:
             version['timeline'] = 'future'
         elif not seen_current:
             seen_current = True
             version['timeline'] = 'current'
-            version['status'] = 'Current Law'
         else:
             version['timeline'] = 'past'
 

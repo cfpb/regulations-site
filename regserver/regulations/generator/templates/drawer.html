@@ -15,13 +15,13 @@
     <div id="history" class="toc-container hidden">
         <ul>
         {% for version in history %}
-            {% if part == label_id %}
             <li class="{{version.timeline}} status-list">
-                <h4>{{ version.status }}</h4>
+                {% if version.timeline == 'current' %}
+                <h4>Current Law</h4>
+                {% endif %}
+            {% if part == label_id %}
                 <h3><a href="{% url 'chrome_regulation_view' part version.version %}">{{ version.by_date|date }}</a></h3>
             {% else %}
-            <li class="{{version.timeline}} status-list">
-                <h4>{{ version.status }}</h4>
                 <h3><a href="{% url 'chrome_section_view' label_id version.version %}">{{ version.by_date|date }}</a></h3>
             {% endif %}
                 <ul class="rule-list">
