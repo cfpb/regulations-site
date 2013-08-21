@@ -7,11 +7,11 @@
             {% if item.is_section %}
                 <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">§&nbsp;{{item.section}}</span> {{item.sub_label|safe}}</a></li>
             {% elif item.is_appendix %}
-                <li><a href="{{item.url}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
+                <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
             {% elif item.is_supplement %}
-                <li><a href="{{item.url}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
+                <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
             {% else %}
-                <li><a href="{{item.url}}">{{item.label|safe}}</a></li>
+                <li><a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>
             {% endif %}
         {% endfor %}
     </ol>
