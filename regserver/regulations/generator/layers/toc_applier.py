@@ -28,7 +28,8 @@ class TableOfContentsLayer(object):
                         data['index'], self.version)
                 element = {
                     'url': url,
-                    'label': data['title']
+                    'label': data['title'],
+                    'section_id': '-'.join(data['index'])
                 }
                 self.section(element, data)
                 self.appendix_supplement(element, data)
