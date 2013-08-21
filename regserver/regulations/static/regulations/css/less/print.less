@@ -42,11 +42,13 @@ p {
  img,
  nav,
  #table-of-contents,
+ .panel,
  #menu-link,
  .hidden,
  .reg-header,
  .main-head,
- .sub-head {
+ .sub-head,
+ .next-prev {
     display: none;
  }
 
@@ -59,6 +61,7 @@ p {
 .wrap,
 .main-content,
 .secondary-content {
+    position: static;
     max-width: 100%;
     width: 100%;
     float: none;
@@ -70,6 +73,10 @@ p {
     position: relative;
     width: 100%;
     padding: 0;
+}
+
+.secondary-content {
+    border-left: none;
 }
 
 
