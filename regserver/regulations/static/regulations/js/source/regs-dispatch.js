@@ -62,6 +62,15 @@ define('regs-dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Bac
 
         getVersion: function() {
             return this.open['version'];
+        },
+
+        getURLPrefix: function() {
+            if (this.open['urlprefix']) {
+                return this.open['urlprefix'];
+            }
+            else {
+                return false;
+            }
         }
 
     }, Backbone.Events);   
