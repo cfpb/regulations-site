@@ -288,7 +288,7 @@ interpreted</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        findBaseSection: <span class="keyword">function</span>(id) {
-            <span class="keyword">if</span> (id.indexOf(<span class="string">'-'</span>) === -<span class="number">1</span>) {
+            <span class="keyword">if</span> (id.indexOf(<span class="string">'-'</span>) !== -<span class="number">1</span>) {
                 <span class="keyword">var</span> parts = id.split(<span class="string">'-'</span>);
 
                 <span class="keyword">return</span> parts[<span class="number">0</span>] + <span class="string">'-'</span> + parts[<span class="number">1</span>];

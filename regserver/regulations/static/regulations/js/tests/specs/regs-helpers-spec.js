@@ -15,5 +15,13 @@ define(['jquery', 'regs-helpers'], function($, RegsHelpers) {
 
             expect('§100').toEqual(RegsHelpers.idToRef('§100'));
         });
+
+        it("should find base sections of any id", function() {
+            expect(RegsHelpers.findBaseSection('1234-2-a-1')).toEqual('1234-2');
+
+            expect(RegsHelpers.findBaseSection('I-1234-5')).toEqual('I-1234');
+
+            expect(RegsHelpers.findBaseSection('1234-C-1')).toEqual('1234-C');
+        });
     });
 });
