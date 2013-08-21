@@ -6,7 +6,7 @@ def appendix_supplement(data):
     """Handle items pointing to an appendix or supplement"""
     if len(data['index']) == 2 and data['index'][1].isalpha():
         element = {}
-        if data['index'][1] == 'Interpretations':
+        if data['index'][1] == 'Interp':
             element['is_supplement'] = True
         else:
             element['is_appendix'] = True
