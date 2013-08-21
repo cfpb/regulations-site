@@ -33,6 +33,7 @@ class PartialSectionDiffView(TemplateView):
         builder.generate_html()
 
         # Add a tree layer to account for subpart if this is regtext
+        child_of_root = builder.tree
         if builder.tree['node_type'] == REGTEXT:
             child_of_root = {
                 'node_type': EMPTYPART,
