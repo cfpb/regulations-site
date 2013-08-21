@@ -71,7 +71,6 @@ class Client:
         now, there is no error handling"""
         if not params:
             params = {}
-        print self.base_url + suffix
         if self.base_url.startswith('http'):    # API
             return requests.get(self.base_url + suffix, params=params).json()
         else:   # file system
