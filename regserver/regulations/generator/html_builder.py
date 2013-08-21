@@ -2,7 +2,6 @@
 #vim: set fileencoding=utf-8
 import re
 
-from django.template import loader, Context
 from itertools import ifilter, ifilterfalse, takewhile
 
 from node_types import to_markup_id, APPENDIX, INTERP
@@ -14,22 +13,15 @@ class HTMLBuilder():
     header_regex = re.compile(ur'^(§&nbsp;)(\s*\d+\.\d+)(.*)$')
     section_number_regex = re.compile(ur"(§+)\s+")
 
-    def initialize(self, inline_applier, p_applier, search_applier):
+    def __init__(
+            self, inline_applier, p_applier,
+            search_applier, diff_applier=None):
         self.markup = u''
         self.sections = None
         self.tree = None
         self.inline_applier = inline_applier
         self.p_applier = p_applier
         self.search_applier = search_applier
-        self.diff_applier = None
-
-    def __init__(self, inline_applier, p_applier, search_applier):
-        self.initialize(inline_applier, p_applier, search_applier)
-
-    def __init__(
-            self, inline_applier, p_applier, search_applier, diff_applier):
-
-        self.initialize(inline_applier, p_applier, search_applier)
         self.diff_applier = diff_applier
 
     def generate_all_html(self):
