@@ -147,7 +147,7 @@ even if the internals are different</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'regs-data'</span>, [<span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'./regs-helpers'</span>, <span class="string">'./regs-dispatch'</span>], <span class="keyword">function</span>(_, Backbone, RegsHelpers, Dispatch) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'regs-data'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'./regs-helpers'</span>, <span class="string">'./regs-dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, RegsHelpers, Dispatch) {
     <span class="string">'use strict'</span>;</pre></div></div>
             
         </li>
@@ -326,14 +326,14 @@ false if the entity hasn&#39;t been loaded</p>
 
         request: <span class="keyword">function</span>(id) {
             <span class="keyword">var</span> url = <span class="keyword">this</span>.getAJAXUrl(id),
-                promise;
+                $promise;
 
-            promise = $.ajax({
+            $promise = $.ajax({
                 url: url,
                 success: <span class="keyword">function</span>(data) { <span class="keyword">this</span>.set(id, data); }.bind(<span class="keyword">this</span>)
             });
 
-            <span class="keyword">return</span> promise;
+            <span class="keyword">return</span> $promise;
         },
 
         getAJAXUrl: <span class="keyword">function</span>(id) {
