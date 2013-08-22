@@ -7,7 +7,6 @@ from mock import patch
 
 from regulations.generator.api_reader import Client
 
-
 class ClientTest(TestCase):
     def setUp(self):
         self.client = Client("http://example.com")
@@ -93,6 +92,18 @@ class ClientTest(TestCase):
         param = get.call_args[0][0]
         self.assertTrue('http://example.com' in param)
         self.assertTrue('doc' in param)
+
+    @patch('regulations.generator.api_reader.requests')
+    def test_diff(self, requests):
+        to_return = {'example': 1}
+        get = requests.get
+        get.return_value.json.return_value = to_return
+        self.assertEqual(to_return, self.client.diff("204", "old", "new"))
+        self.assertTrue(get.called)
+        param = get.call_args[0][0]
+        self.assertTrue('204' in param)
+        self.assertTrue('old' in param)
+        self.assertTrue('new' in param)
 
     def test_local_fs(self):
         """Verify that it's possible to host the files locally, where

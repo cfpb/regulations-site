@@ -4,9 +4,11 @@ from regulations.views.chrome import ChromeInterpView, ChromeRegulationView
 from regulations.views.chrome import ChromeParagraphView, ChromeSectionView
 from regulations.views.partial import PartialInterpView, PartialRegulationView
 from regulations.views.partial import PartialParagraphView, PartialSectionView
+from regulations.views.diff import PartialSectionDiffView
 
 #Re-usable URL patterns. 
 version_pattern = r'(?P<version>[-\d\w]+)'
+newer_version_pattern = r'(?P<newer_version>[-\d\w]+)'
 
 reg_pattern = r'(?P<label_id>[\d]+)'
 section_pattern = r'(?P<label_id>[\d]+[-][\w]+)'
@@ -56,4 +58,8 @@ urlpatterns = patterns('',
     url(r'^partial/%s/%s$' % (paragraph_pattern, version_pattern),
         PartialParagraphView.as_view(),
         name='partial_paragraph_view'),
+    #A diff view of a section (without chrome)
+    url(r'^partial/diff/%s/%s/%s' % (section_pattern, version_pattern, newer_version_pattern), 
+        PartialSectionDiffView.as_view(), 
+        name='partial_section_diff_view'), 
 )

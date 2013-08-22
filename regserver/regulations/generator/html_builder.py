@@ -2,7 +2,6 @@
 #vim: set fileencoding=utf-8
 import re
 
-from django.template import loader, Context
 from itertools import ifilter, ifilterfalse, takewhile
 
 from node_types import to_markup_id, APPENDIX, INTERP
@@ -14,13 +13,16 @@ class HTMLBuilder():
     header_regex = re.compile(ur'^(§&nbsp;)(\s*\d+\.\d+)(.*)$')
     section_number_regex = re.compile(ur"(§+)\s+")
 
-    def __init__(self, inline_applier, p_applier, search_applier):
+    def __init__(
+            self, inline_applier, p_applier,
+            search_applier, diff_applier=None):
         self.markup = u''
         self.sections = None
         self.tree = None
         self.inline_applier = inline_applier
         self.p_applier = p_applier
         self.search_applier = search_applier
+        self.diff_applier = diff_applier
 
     def generate_all_html(self):
         self.generate_html(self.tree[''])
@@ -68,7 +70,6 @@ class HTMLBuilder():
                 node['header_num'] = match.group(2)
                 node['header_title'] = match.group(3)
 
-        node['text'] = node['text'].rstrip()
         node['label_id'] = '-'.join(node['label'])
         node['html_label'] = to_markup_id(node['label'])
         node['markup_id'] = "-".join(node['html_label'])
@@ -86,11 +87,19 @@ class HTMLBuilder():
             search_elements = self.search_applier.get_layer_pairs(
                 node['label_id'])
 
+            if self.diff_applier:
+                node['marked_up'] = self.diff_applier.apply_diff(
+                    node['text'], node['label_id'])
+
             layers_applier = LayersApplier()
             layers_applier.enqueue_from_list(inline_elements)
             layers_applier.enqueue_from_list(search_elements)
 
-            node['marked_up'] = layers_applier.apply_layers(node['text'])
+            if 'marked_up' in node:
+                node['marked_up'] = layers_applier.apply_layers(
+                    node['marked_up'])
+            else:
+                node['marked_up'] = layers_applier.apply_layers(node['text'])
             node['marked_up'] = HTMLBuilder.section_space(node['marked_up'])
 
         node = self.p_applier.apply_layers(node)

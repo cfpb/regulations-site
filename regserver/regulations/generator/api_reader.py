@@ -43,6 +43,10 @@ class Client:
         return copy.deepcopy(self._use_reg_cache(label, version))
         #return self._get("regulation/%s/%s" % (label, version))
 
+    def diff(self, label, older, newer):
+        """ End point for diff JSON. """
+        return self._get("diff/%s/%s/%s" % (label, older, newer))
+
     def regversions(self, label):
         """End point for getting a list of regulation versions."""
         return self._get("regulation/%s" % label)
