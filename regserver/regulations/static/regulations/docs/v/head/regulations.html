@@ -133,10 +133,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>require([<span class="string">'jquery'</span>, <span class="string">'app-init'</span>], <span class="keyword">function</span>($, app) {
-    <span class="string">'use strict'</span>;
-    $(document).ready(<span class="keyword">function</span>() {
-        app.init();
-    });</pre></div></div>
+    <span class="string">'use strict'</span>;</pre></div></div>
             
         </li>
         
@@ -146,6 +143,57 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>A <code>bind()</code> polyfill</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (!Function.prototype.bind) {
+        Function.prototype.bind = <span class="function"><span class="keyword">function</span> <span class="params">(oThis)</span> {</span>
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'function'</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>closest thing possible to the ECMAScript 5 internal IsCallable function</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="keyword">throw</span> <span class="keyword">new</span> TypeError(<span class="string">'Function.prototype.bind - what is trying to be bound is not callable'</span>);
+            }
+
+          <span class="keyword">var</span> aArgs = Array.prototype.slice.call(arguments, <span class="number">1</span>),
+              fToBind = <span class="keyword">this</span>,
+              FNOP = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>},
+              fBound = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+                <span class="keyword">return</span> fToBind.apply(<span class="keyword">this</span> <span class="keyword">instanceof</span> FNOP &amp;&amp; oThis ? <span class="keyword">this</span> : oThis, aArgs.concat(Array.prototype.slice.call(arguments)));
+              };
+
+          FNOP.prototype = <span class="keyword">this</span>.prototype;
+          fBound.prototype = <span class="keyword">new</span> FNOP();
+
+          <span class="keyword">return</span> fBound;
+        };
+    }
+
+    $(document).ready(<span class="keyword">function</span>() {
+        app.init();
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>tests for some accessibility misses
 use in browser console with AccessibilityTest()</p>
@@ -157,11 +205,11 @@ use in browser console with AccessibilityTest()</p>
         </li>
         
         
-        <li id="section-3">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>I think this will keep IE from crying?</p>
 
