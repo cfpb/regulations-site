@@ -196,37 +196,6 @@ API should make this obsolete.</p>
                 $(<span class="string">'#about-tool'</span>).html(<span class="string">'Made with &lt;span style="color: red"&gt;&lt;3&lt;/span&gt; by:'</span>);
                 $(<span class="string">'#about-reg'</span>).html(<span class="string">'Find our brilliant attorneys at:'</span>);
             });
-        },</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>as of sprint 6, model form images are giant and block at load
-incrementally loads in images once rendering is complete</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        fetchModelForms: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> insertImg = <span class="keyword">function</span>(tag) {
-                <span class="keyword">var</span> $tag = $(tag),
-                    url = $tag.data(<span class="string">'imgUrl'</span>),
-                    alt = $tag.data(<span class="string">'imgAlt'</span>);
-
-                <span class="keyword">if</span> (url) {
-                    $tag.parent().append(<span class="string">'&lt;img class="reg-image" src="'</span> + url + <span class="string">'" alt="'</span> + alt + <span class="string">'" /&gt;'</span>);
-                }
-            };
-
-            $(<span class="string">'noscript'</span>).each(<span class="keyword">function</span>() {
-                <span class="keyword">var</span> tag = <span class="keyword">this</span>;
-                setTimeout(<span class="keyword">function</span>() { insertImg(tag); }, <span class="number">2000</span>, tag);
-            });
         },
 
         init: <span class="keyword">function</span>() {
@@ -238,11 +207,11 @@ incrementally loads in images once rendering is complete</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>init primary Views that require only a single instance</p>
 
@@ -259,11 +228,11 @@ incrementally loads in images once rendering is complete</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>set open section and version for ajax calls</p>
 
@@ -278,11 +247,11 @@ incrementally loads in images once rendering is complete</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>cache open section content</p>
 
@@ -293,11 +262,11 @@ incrementally loads in images once rendering is complete</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>cache URL prefix</p>
 
@@ -309,7 +278,6 @@ incrementally loads in images once rendering is complete</p>
             }
 
             <span class="keyword">this</span>.bindEvents();
-            <span class="keyword">this</span>.fetchModelForms();
         }
     };
 });</pre></div></div>
