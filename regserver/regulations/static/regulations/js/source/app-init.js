@@ -46,7 +46,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             var openSection,
                 urlPrefix,
                 regVersion,
-                regSection = $('.main-content .reg-section');
+                regSection = $('.main-content section[data-base-version]');
 
             // init primary Views that require only a single instance
             window.Regs = {};
