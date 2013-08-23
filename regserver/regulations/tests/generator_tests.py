@@ -5,14 +5,16 @@ from mock import patch
 from regulations.generator import generator
 from regulations.generator.layers.layers_applier import InlineLayersApplier
 from regulations.generator.layers.layers_applier import ParagraphLayersApplier
-from regulations.generator.layers.layers_applier import SearchReplaceLayersApplier
+from regulations.generator.layers.layers_applier\
+    import SearchReplaceLayersApplier
 
 
 class GeneratorTest(TestCase):
 
     @patch('regulations.generator.generator.api_reader')
     def test_get_regulation_extra_fields(self, api_reader):
-        reg = {'text': '', 'children': [], 'label': ['8675'],
+        reg = {
+            'text': '', 'children': [], 'label': ['8675'],
             'title': 'Contains no part info'
         }
         api_reader.Client.return_value.regulation.return_value = reg
@@ -42,13 +44,34 @@ class GeneratorTest(TestCase):
 
         p = generator.get_tree_paragraph('some-id', 'some-version')
         self.assertEqual(node, p)
-        self.assertEqual(('some-id', 'some-version'),
-                api_reader.Client.return_value.regulation.call_args[0])
+        self.assertEqual(
+            ('some-id', 'some-version'),
+            api_reader.Client.return_value.regulation.call_args[0])
+
+    @patch('regulations.generator.generator.api_reader')
+    def test_get_diff_json(self, api_reader):
+        diff = {'some': 'diff'}
+        api_reader.Client.return_value.diff.return_value = diff
+        d = generator.get_diff_json('204', 'old', 'new')
+        self.assertEqual(diff, d)
+        self.assertEqual(
+            ('204', 'old', 'new'),
+            api_reader.Client.return_value.diff.call_args[0])
+
+    @patch('regulations.generator.generator.get_diff_json')
+    def test_get_diff_applier(self, get_diff_json):
+        diff = {'some': 'diff'}
+        get_diff_json.return_value = diff
+        da = generator.get_diff_applier('204', 'old', 'new')
+        self.assertEqual(da.diff, diff)
+        self.assertEqual(
+            ('204', 'old', 'new'),
+            get_diff_json.call_args[0])
 
     def test_layercreator_layers(self):
         """ A LAYER entry must have three pieces of information specified. """
 
-        for l,v in generator.LayerCreator.LAYERS.items():
+        for l, v in generator.LayerCreator.LAYERS.items():
             self.assertEqual(len(v), 3)
 
     def test_layercreator_getappliers(self):
@@ -65,19 +88,20 @@ class GeneratorTest(TestCase):
     @patch('regulations.generator.generator.LayerCreator.get_layer_json')
     def test_add_layer(self, get_layer_json):
         creator = generator.LayerCreator()
-        get_layer_json.return_value = {'layer':'layer'}
+        get_layer_json.return_value = {'layer': 'layer'}
         creator.add_layer('meta', '205', 'verver')
-        i,p,s = creator.get_appliers()
+        i, p, s = creator.get_appliers()
         self.assertEquals(len(p.layers), 1)
 
     @patch('regulations.generator.generator.LayerCreator.get_layer_json')
     def test_add_layers(self, get_layer_json):
-        get_layer_json.return_value = {'layer':'layer'}
+        get_layer_json.return_value = {'layer': 'layer'}
 
         creator = generator.LayerCreator()
-        creator.add_layers(['meta', 'graphics', 'internal'], '205', 'verver',
-                sectional=True)
-        i,p,s =  creator.get_appliers()
+        creator.add_layers(
+            ['meta', 'graphics', 'internal'], '205', 'verver',
+            sectional=True)
+        i, p, s = creator.get_appliers()
         self.assertEquals(len(p.layers), 1)
         self.assertEquals(len(i.layers), 1)
         self.assertEquals(len(s.layers), 1)
