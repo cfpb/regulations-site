@@ -136,7 +136,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'drawer-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'drawer-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'toc-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, TOCView) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> DrawerView = Backbone.View.extend({
@@ -161,6 +161,9 @@
                     <span class="string">'title'</span>:(<span class="string">'Search'</span>)
                 }
             };
+
+            <span class="keyword">this</span>.childViews[<span class="string">'#table-of-contents'</span>].view = <span class="keyword">new</span> TOCView({el: <span class="string">'#toc'</span>}); 
+
         },
 
         changeContents: <span class="keyword">function</span>(activeId) {
@@ -168,6 +171,9 @@
             <span class="keyword">this</span>.childViews[activeId][<span class="string">'selector'</span>].removeClass(<span class="string">'hidden'</span>);
 
             <span class="keyword">this</span>.$label.html(<span class="keyword">this</span>.childViews[activeId][<span class="string">'title'</span>]);
+            Dispatch.set(<span class="string">'drawerState'</span>, activeId);
+
+            
         }
 
     });

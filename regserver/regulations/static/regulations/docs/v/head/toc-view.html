@@ -142,10 +142,10 @@
             <div class="content"><div class='highlight'><pre>define(<span class="string">'toc-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, RegsHelpers) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> TOCView = Backbone.View.extend({
-        el: <span class="string">'#toc'</span>,
+        el: <span class="string">'#table-of-contents'</span>,
 
         events: {
-            <span class="string">'click .regulation-nav a'</span>: <span class="string">'sendClickEvent'</span>
+            <span class="string">'click a'</span>: <span class="string">'sendClickEvent'</span>
         },
 
         initialize: <span class="keyword">function</span>() {</pre></div></div>

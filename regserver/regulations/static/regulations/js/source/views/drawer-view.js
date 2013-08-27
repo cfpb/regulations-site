@@ -33,7 +33,7 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'toc
             this.childViews[activeId]['selector'].removeClass('hidden');
 
             this.$label.html(this.childViews[activeId]['title']);
-            Dispatch.set('drawerState', $target.attr('href'));
+            Dispatch.set('drawerState', activeId);
 
             
         }
