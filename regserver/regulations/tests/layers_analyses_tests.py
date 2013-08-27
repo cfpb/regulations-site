@@ -32,3 +32,13 @@ class SectionBySectionLayerTest(TestCase):
                            'text': '111.22(a)'}], value)
 
         self.assertEqual(None, sxs.apply_layer("222-22"))
+
+    def test_to_template_dict(self):
+        layer = {'555-22-Interp': [{'reference': ['aaa', '555-22-Interp']},
+                                   {'reference': ['bbb', '555-22-Interp']},
+                                   {'reference': ['ccc', '555-22-Interp']}]}
+        sxs = SectionBySectionLayer(layer)
+
+        self.assertEqual(sxs.to_template_dict('555-22-Interp'), [{
+            'doc_number': 'ccc', 'label_id': '555-22-Interp',
+            'text': 'Comment for 555.22'}])

@@ -1,3 +1,5 @@
+from itertools import takewhile
+
 APPENDIX = u'appendix'
 INTERP = u'interp'
 REGTEXT = u'regtext'
@@ -45,7 +47,7 @@ def label_to_text(label):
         if len(label) == 2: # e.g. 225-B
             return 'Appendix ' + label[1]
         elif len(label) == 3: # e.g. 225-B-3
-            return 'Appendix %s-%s' % label[1:]
+            return 'Appendix %s-%s' % tuple(label[1:])
         else: # e.g. 225-B-3-a-4-i
             return 'Appendix %s-%s(%s)' % (label[1], label[2],
                                            ')('.join(label[3:]))
