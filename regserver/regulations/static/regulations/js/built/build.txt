@@ -16,6 +16,8 @@ regs-router.js
 views/content-view.js
 lib/jquery.cookie.js
 views/toc-view.js
+views/history-view.js
+views/search-view.js
 views/drawer-view.js
 views/sidebar-head-view.js
 views/sidebar-view.js
