@@ -214,7 +214,10 @@ li {
     .avenir-next-bold;
     line-height: 1.25;
     letter-spacing: 1px;
-    text-indent: -.94em;
+}
+
+.section-number {
+    text-indent: -.94em; /* outdent the § symbol */
 }
 
 /*  Sub Headings
@@ -240,6 +243,11 @@ This attempts to define global rules for a clear hierarchical structure.
     padding: 1em 0 0 0;
 }
 
+.level-1 > li > p:after{
+    content:"\A"; 
+    white-space:pre;
+}
+
 .level-1 > li:after {
     padding-top: 1em;
     height: 1px;
@@ -248,10 +256,6 @@ This attempts to define global rules for a clear hierarchical structure.
     content: '';
     margin-left: -14em;
     margin-right: -60px;
-}
-
-.level-1 > li:last-child:after {
-    border-bottom: none;
 }
 
 .supplement-section .level-1 > li {
@@ -287,7 +291,7 @@ The `<ol>` tag needs to have the appropriate list type applied
 ```
 */
 
-.reg-text ol, dfn {
+.main-content ol, dfn {
   .avenir-next-demi;
 }
 
@@ -393,8 +397,4 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
     font-family: Arial, sans-serif;
     font-size: 0.875em; /* 14/16 = .875 */
     line-height: 1.4;
-}
-
-.supplement-section section {
-    padding-bottom: 2em;
 }

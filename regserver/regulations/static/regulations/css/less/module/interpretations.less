@@ -96,11 +96,19 @@
 
     li { 
         border: none;
+        margin-left: 5px; /* inline interp lists are hanging into the margin, this accomodates to align content TODO: clean up all alignment in interps*/
     }
 
     .level-1 > li {
         border-bottom: none;
         padding: 0;
+    }
+
+    /* reset padding used to accomodate permalink marker in main content */
+    .reg-section li > p {
+        padding-left: 0;
+        margin-left: 0;
+        color: pink;
     }
 
     .level-1 > li:after {

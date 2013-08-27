@@ -42,30 +42,11 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             });
         },
 
-        // as of sprint 6, model form images are giant and block at load
-        // incrementally loads in images once rendering is complete
-        fetchModelForms: function() {
-            var insertImg = function(tag) {
-                var $tag = $(tag),
-                    url = $tag.data('imgUrl'),
-                    alt = $tag.data('imgAlt');
-
-                if (url) {
-                    $tag.parent().append('<img class="reg-image" src="' + url + '" alt="' + alt + '" />');
-                }
-            };
-
-            $('noscript').each(function() {
-                var tag = this;
-                setTimeout(function() { insertImg(tag); }, 2000, tag);
-            });
-        },
-
         init: function() {
             var openSection,
                 urlPrefix,
                 regVersion,
-                regSection = $('.main-content .reg-section');
+                regSection = $('.main-content section[data-base-version]');
 
             // init primary Views that require only a single instance
             window.Regs = {};
@@ -93,7 +74,6 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             }
 
             this.bindEvents();
-            this.fetchModelForms();
         }
     };
 });

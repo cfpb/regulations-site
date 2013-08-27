@@ -22,6 +22,7 @@ Generic drawer styles
     .avenir-next-demi;
     font-size: .875em;
     .slide; /* animate the panel opening */
+    overflow-y: scroll; /* allow content to be scrollable */
 }
 
 /*
@@ -34,12 +35,14 @@ When applied at large resolutions displays, the active class causes the panel na
 @media only screen and ( min-width: 1100px ) {
     .panel.active{
         left: -200px;
+        top: 200px;
+        overflow-y: hidden;
 
         /* slide content fully offscreen*/
         ol, 
         h2 {
             position: absolute;
-            left: -320px;    
+            left: -999px;    
         }
 }
 
@@ -56,6 +59,7 @@ When applied at large resolutions displays, the active class causes the panel na
     .active .toc-head {
         left: -200px;
         margin-right: 15px;
+        height: 150px; /* extra height for TOC toggle buttons */
     }
 }
 
@@ -111,7 +115,8 @@ Panel Header
 }
 
 .toc-container {
-    margin-top: 120px;
+    margin-top: 126px; /* put drawer content below persistent header*/
+    overflow-y: scroll;
 }
 
 /* 
@@ -164,10 +169,15 @@ TOC Nav Links
 .toc-nav-links toggle between the types of drawer content
 currently these are TOC, History, and Search
 */
+
+.drawer-toggles li {
+    display: inline-block;
+}
+
 .toc-nav-link {
     text-indent: -9999px;
     display: inline-block;
-    margin-left: -0.25em; /*accomodate inline-block spacing */
+    margin-left: -4px;; /*accomodate inline-block spacing */
     height: 34px; /* match height of main header */
     width: 56px;
     border-right: 1px solid @light_field;
@@ -221,6 +231,25 @@ currently these are TOC, History, and Search
         background-color: @light_field;
 }
 
+@media only screen and ( min-width: 1100px ) {
+    .active .toc-nav-link {
+        border-right: none;
+    }
+
+    .active .drawer-toggles {
+        position: absolute;
+        top: 34px;
+        right: 0px;
+    }
+
+     .active .drawer-toggles li {
+        display: list-item;
+    }
+
+    .active .toc-nav-link {
+        width: 40px;
+    }
+}
 
 /* 
 Table of Contents Drawer

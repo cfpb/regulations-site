@@ -20,7 +20,7 @@
         <li class="next next-prev">
             <a href="{% url 'chrome_section_view' next.section_id version %}" class="navigation-link forward next-prev-link"
                 data-linked-section="{{next.section_id}}"
-                >Next section - {% if next.is_section %}&sect;&nbsp;{% endif %}{{next.label}} <i class="minicon-right"></i></a> <span class="next-prev-title">{{next.sub_label}}</span>
+                ><i class="minicon-right"></i>Next section - {% if next.is_section %}&sect;&nbsp;{% endif %}{{next.label}}</a> <span class="next-prev-title">{{next.sub_label}}</span>
         </li>
 {% endwith %}
 {% endif %}

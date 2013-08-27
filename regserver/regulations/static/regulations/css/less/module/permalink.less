@@ -11,11 +11,16 @@ p {
     position: relative;
 }
 
-.reg-section li > p, 
-.appendix-section li > p, 
-.supplement-section li > p {
+.main-content li > p {
     padding-left: 90px;
     margin-left: -90px;
+}
+
+/* temporarily reset the padding on inline interps
+    this will be changed when permalink behavior changes */
+.inline-interpretation li > p {
+    padding-left: 0px;
+    margin-left: 0;
 }
 
 .permalink-marker {
