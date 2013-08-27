@@ -217,6 +217,10 @@ li {
     text-indent: -.94em;
 }
 
+.supplement-section h3 {
+    text-indent: 0; /* supplements lack the § symbol */
+}
+
 /*  Sub Headings
     -----------
     <h3 class="appendix-subheading">Top Level Reg Heading</h2>
@@ -283,7 +287,7 @@ The `<ol>` tag needs to have the appropriate list type applied
 ```
 */
 
-.reg-text ol, dfn {
+.main-content ol, dfn {
   .avenir-next-demi;
 }
 
