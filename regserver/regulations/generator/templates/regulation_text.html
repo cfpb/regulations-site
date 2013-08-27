@@ -12,15 +12,8 @@
     {% endif %}
         {% if c.marked_up %}
         <p> 
-            {% for doc_num, ref in c.analyses %}
-            <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref internal">Section by Section Analysis</a>
-            {% endfor %}
         {{c.marked_up|safe}} 
         </p>
-        {% else %}
-            {% for doc_num, ref in c.analyses %}
-            <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref internal">Section by Section Analysis</a>
-            {% endfor %}
         {% endif %}
 
         <ol class="level-1" type="a">

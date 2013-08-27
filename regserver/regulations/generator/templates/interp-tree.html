@@ -10,10 +10,6 @@
         <h4 class='interp-subheading' tabindex="0"> {{ interp.header_markup|safe }} </h4>
     {% endif %}
 
-    {% for doc_num, ref in interp.analyses %}
-        <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
-    {% endfor %}
-
     {%if interp.marked_up %}
         <p> 
         {{interp.marked_up|safe}}

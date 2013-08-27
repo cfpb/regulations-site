@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 
 from regulations.views.chrome import ChromeInterpView, ChromeRegulationView
 from regulations.views.chrome import ChromeParagraphView, ChromeSectionView
+from regulations.views.sidebar import SideBarView
 from regulations.views.partial import PartialInterpView, PartialRegulationView
 from regulations.views.partial import PartialParagraphView, PartialSectionView
 
@@ -35,6 +36,10 @@ urlpatterns = patterns('',
     url(r'^regulation/%s/%s$' % (paragraph_pattern, version_pattern),
         ChromeParagraphView.as_view(),
         name='chrome_paragraph_view'),
+
+    url(r'^partial/sidebar/%s/%s$' % (paragraph_pattern, version_pattern),
+        SideBarView.as_view(),
+        name='sidebar'),
 
     #A regulation section without chrome
     #Example: http://.../partial/201-4/2013-10704
