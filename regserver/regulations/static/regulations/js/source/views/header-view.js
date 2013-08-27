@@ -36,7 +36,8 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], fun
             this.$tocLinks.removeClass('current');
             $target.addClass('current');
 
-            Dispatch.trigger('toc:stateChange', $target.attr('href'));
+            Dispatch.trigger('drawer:stateChange', $target.attr('href'));
+
         }
     });
 

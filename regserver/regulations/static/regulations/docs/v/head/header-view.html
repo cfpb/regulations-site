@@ -74,6 +74,11 @@
               </a>
             
               
+              <a class="source" href="drawer-view.html">
+                drawer-view.js
+              </a>
+            
+              
               <a class="source" href="header-view.html">
                 header-view.js
               </a>
@@ -181,7 +186,8 @@
             <span class="keyword">this</span>.$tocLinks.removeClass(<span class="string">'current'</span>);
             $target.addClass(<span class="string">'current'</span>);
 
-            Dispatch.trigger(<span class="string">'toc:stateChange'</span>, $target.attr(<span class="string">'href'</span>));
+            Dispatch.trigger(<span class="string">'drawer:stateChange'</span>, $target.attr(<span class="string">'href'</span>));
+
         }
     });
 

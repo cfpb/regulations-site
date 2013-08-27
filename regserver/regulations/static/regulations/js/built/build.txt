@@ -15,6 +15,7 @@ views/section-footer-view.js
 regs-router.js
 views/content-view.js
 views/toc-view.js
+views/drawer-view.js
 views/sidebar-head-view.js
 views/sidebar-view.js
 lib/konami.js
