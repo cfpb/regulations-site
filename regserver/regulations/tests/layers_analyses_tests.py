@@ -1,6 +1,7 @@
 from regulations.generator.layers.analyses import *
 from unittest import TestCase
 
+
 class SectionBySectionLayerTest(TestCase):
 
     def test_apply_layer(self):
@@ -18,7 +19,7 @@ class SectionBySectionLayerTest(TestCase):
             }]
         }
         sxs = SectionBySectionLayer(layer)
-        
+
         key, value = sxs.apply_layer("111-22")
         self.assertEqual("analyses", key)
         self.assertEqual([

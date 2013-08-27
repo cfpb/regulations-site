@@ -2,6 +2,7 @@ from itertools import takewhile
 
 from regulations.generator.node_types import label_to_text
 
+
 class SectionBySectionLayer(object):
     shorthand = 'sxs'
 
@@ -36,4 +37,4 @@ class SectionBySectionLayer(object):
                 analyses.extend(self.to_template_dict(key))
 
         if analyses:
-            return 'analyses', sorted(analyses, key=lambda a:a['label_id'])
+            return 'analyses', sorted(analyses, key=lambda a: a['label_id'])

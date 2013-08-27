@@ -19,7 +19,8 @@ paragraph_pattern = r'(?P<label_id>[-\d\w]+)'
 notice_pattern = r'(?P<notice_id>[\d]+[-][\d]+)'
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     #A regulation section with chrome
     #Example: http://.../regulation/201-4/2013-10704
     url(r'^regulation/%s/%s$' % (section_pattern, version_pattern),

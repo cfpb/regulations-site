@@ -38,7 +38,7 @@ class ChromeView(TemplateView):
 
         sidebar_view = SideBarView.as_view()
         response = sidebar_view(self.request, label_id=label_id,
-                version=version)
+                                version=version)
         response.render()
         context['sidebar_content'] = response.content
 

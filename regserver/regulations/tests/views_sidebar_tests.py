@@ -5,6 +5,7 @@ from mock import patch
 
 from django.test.client import Client
 
+
 class ViewsSideBarViewTest(TestCase):
     """Integration tests for the sidebar"""
 
