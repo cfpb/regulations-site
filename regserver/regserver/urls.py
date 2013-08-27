@@ -41,6 +41,8 @@ urlpatterns = patterns('',
         ChromeParagraphView.as_view(),
         name='chrome_paragraph_view'),
 
+    # Load just the sidebar
+    # Example: http://.../partial/sidebar/201-2/2013-10704
     url(r'^partial/sidebar/%s/%s$' % (paragraph_pattern, version_pattern),
         SideBarView.as_view(),
         name='sidebar'),
