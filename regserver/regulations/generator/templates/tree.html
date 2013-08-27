@@ -12,6 +12,11 @@
     {{node.marked_up|safe}}
 {% endif %}
 </p>
+{% if node.interp %}
+    {% with interp=node.interp %}
+        {% include "slide-down-interp.html" %}
+    {% endwith %}
+{% endif %}
 {% else %}
     {% for doc_num, ref in node.analyses %}
     <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
@@ -26,9 +31,4 @@
         {% endwith %}
     {% endfor %}
 </ol>
-{% endif %}
-{% if node.interp %}
-    {% with interp=node.interp %}
-        {% include "slide-down-interp.html" %}
-    {% endwith %}
 {% endif %}
