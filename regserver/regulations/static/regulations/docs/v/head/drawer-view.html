@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>sub-head-view.js</title>
+  <title>drawer-view.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -121,7 +121,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>sub-head-view.js</h1>
+                  <h1>drawer-view.js</h1>
               </div>
           </li>
         
@@ -133,72 +133,52 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p><strong>Extends</strong> Backbone.View</p>
-<p><strong>Usage</strong> <code>require([&#39;sub-head-view&#39;], function(SubHeadView) {})</code></p>
-<p><strong>Jurisdiction</strong> The gray subheader above the main content section</p>
-
+              
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'sub-head-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, RegsHelpers) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'drawer-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'toc-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, TOCView) {
     <span class="string">'use strict'</span>;
-    <span class="keyword">var</span> SubHeadView = Backbone.View.extend({
-        el: <span class="string">'#content-header'</span>,
 
-        initialize: <span class="keyword">function</span>() {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p><strong>Event listeners</strong>
-when the active section changes, change the contents of the header</p>
+    <span class="keyword">var</span> DrawerView = Backbone.View.extend({
+        el: <span class="string">'#menu'</span>,
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'activeSection:change'</span>, <span class="keyword">this</span>.changeTitle, <span class="keyword">this</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>cache inner title DOM node for frequent reference</p>
+        initialize: <span class="keyword">function</span>() {
+            Dispatch.on(<span class="string">'drawer:stateChange'</span>, <span class="keyword">this</span>.changeContents, <span class="keyword">this</span>);
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$activeTitle = <span class="keyword">this</span>.$el.find(<span class="string">'#active-title'</span>);
-        },</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>populates subhead with new title</p>
+            <span class="keyword">this</span>.$label = $(<span class="string">'.toc-type'</span>);
+            <span class="keyword">this</span>.$children = $(<span class="string">'.toc-container'</span>);
+            <span class="keyword">this</span>.childViews = {
+                <span class="string">'#table-of-contents'</span>: {
+                    <span class="string">'selector'</span>: $(<span class="string">'#table-of-contents'</span>),
+                    <span class="string">'title'</span>:(<span class="string">'Table of contents for'</span>)
+                },
+                <span class="string">'#history'</span>: {
+                    <span class="string">'selector'</span>: $(<span class="string">'#history'</span>),
+                    <span class="string">'title'</span>:(<span class="string">'Switch between versions of'</span>)
+                },
+                <span class="string">'#search'</span>: {
+                    <span class="string">'selector'</span>: $(<span class="string">'#search'</span>),
+                    <span class="string">'title'</span>:(<span class="string">'Search'</span>)
+                }
+            };
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        changeTitle: <span class="keyword">function</span>(id) {
-            <span class="keyword">this</span>.$activeTitle.html(<span class="string">'&lt;em class="header-label"&gt;'</span> + RegsHelpers.idToRef(id) + <span class="string">'&lt;/em&gt;'</span>);
+            <span class="keyword">this</span>.childViews[<span class="string">'#table-of-contents'</span>].view = <span class="keyword">new</span> TOCView({el: <span class="string">'#toc'</span>}); 
 
-            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+
+        changeContents: <span class="keyword">function</span>(activeId) {
+            <span class="keyword">this</span>.$children.addClass(<span class="string">'hidden'</span>);
+            <span class="keyword">this</span>.childViews[activeId][<span class="string">'selector'</span>].removeClass(<span class="string">'hidden'</span>);
+
+            <span class="keyword">this</span>.$label.html(<span class="keyword">this</span>.childViews[activeId][<span class="string">'title'</span>]);
+            Dispatch.set(<span class="string">'drawerState'</span>, activeId);
+
+            
         }
+
     });
 
-    <span class="keyword">return</span> SubHeadView;
+    <span class="keyword">return</span> DrawerView;
 });</pre></div></div>
             
         </li>

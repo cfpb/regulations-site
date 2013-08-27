@@ -3,7 +3,7 @@
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
-define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'toc-view', 'regs-dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers) {
+define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'definition-view', 'sub-head-view', 'drawer-view', 'regs-dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers'], function($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers) {
     'use strict';
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -51,7 +51,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'regs-data', 'defini
             // init primary Views that require only a single instance
             window.Regs = {};
             window.Regs.subhead = new SubHeadView();
-            window.Regs.toc = new TOCView();
+            window.Regs.drawer = new DrawerView();
             window.Regs.sidebar = new SidebarView();
             window.Regs.regContent = new ContentView();
             window.Regs.analytics = new AnalyticsHandler();

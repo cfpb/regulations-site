@@ -6,10 +6,10 @@
 define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-helpers'], function($, _, Backbone, Dispatch, RegsHelpers) {
     'use strict';
     var TOCView = Backbone.View.extend({
-        el: '#menu',
+        el: '#table-of-contents',
 
         events: {
-            'click .regulation-nav a': 'sendClickEvent'
+            'click a': 'sendClickEvent'
         },
 
         initialize: function() {
@@ -18,25 +18,6 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
             Dispatch.on('activeSection:change', this.setActive, this);
 
             Dispatch.on('openSection:set', this.setActive, this);
-            
-            Dispatch.on('toc:stateChange', this.changeContents, this);
-
-            this.$label = $('.toc-type');
-            this.$children = $('.toc-container');
-            this.childViews = {
-                '#table-of-contents': {
-                    'selector': $('#table-of-contents'),
-                    'title':('Table of contents for')
-                },
-                '#history': {
-                    'selector': $('#history'),
-                    'title':('Switch between versions of')
-                },
-                '#search': {
-                    'selector': $('#search'),
-                    'title':('Search')
-                }
-            };
 
             // **TODO** need to work out a bug where it scrolls the content section
             // $('#menu-link:not(.active)').on('click', this.scrollToActive);
@@ -55,13 +36,6 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-h
         sendClickEvent: function(e) {
             e.preventDefault();
             Dispatch.trigger('toc:click', $(e.currentTarget).data('section-id'));
-        },
-
-        changeContents: function(activeId) {
-            this.$children.addClass('hidden');
-            this.childViews[activeId]['selector'].removeClass('hidden');
-
-            this.$label.html(this.childViews[activeId]['title']);
         },
 
         // **Inactive** 
