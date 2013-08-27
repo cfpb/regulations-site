@@ -116,6 +116,7 @@ module.exports = function(grunt) {
                 jquery: './lib/jquery-1.9.1',
                 samplejson: '../tests/grunt/js/fixtures/sample-json',
                 'jquery-scrollstop': './lib/jquery.scrollstop',
+                'jquery-cookie': './lib/jquery.cookie',
                 'jquery-hoverIntent': './lib/jquery.hoverIntent',
                 'definition-view': './views/definition-view',
                 'interpretation-view': './views/interpretation-view',
@@ -130,7 +131,9 @@ module.exports = function(grunt) {
                 'analytics-handler': './views/analytics-handler-view',
                 'header-view': './views/header-view',
                 'section-footer-view': './views/section-footer-view',
-                'drawer-view': './views/drawer-view'
+                'drawer-view': './views/drawer-view',
+                'history-view': './views/history-view',
+                'search-view': './views/search-view'
               },
               shim: {
                 underscore: {
@@ -211,6 +214,7 @@ module.exports = function(grunt) {
                     underscore: './lib/underscore',
                     backbone: './lib/backbone',
                     'jquery-scrollstop': './lib/jquery.scrollstop',
+                    'jquery-cookie': './lib/jquery.cookie',
                     'definition-view': './views/definition-view',
                     'interpretation-view': './views/interpretation-view',
                     'regs-fixed-el-view': './views/regs-fixed-el-view',
@@ -224,7 +228,9 @@ module.exports = function(grunt) {
                     'analytics-handler': './views/analytics-handler-view',
                     'header-view': './views/header-view',
                     'section-footer-view': './views/section-footer-view',
-                    'drawer-view': './views/drawer-view'
+                    'drawer-view': './views/drawer-view',
+                    'history-view': './views/history-view',
+                    'search-view': './views/search-view'
                 },
                 shim: {
                     underscore: {

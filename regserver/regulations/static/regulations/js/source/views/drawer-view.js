@@ -1,4 +1,4 @@
-define('drawer-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'toc-view'], function($, _, Backbone, Dispatch, TOCView) {
+define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'regs-dispatch', 'toc-view', 'history-view', 'search-view'], function($, _, Backbone, jQCookie, Dispatch, TOCView, HistoryView, SearchView) {
     'use strict';
 
     var DrawerView = Backbone.View.extend({
@@ -10,22 +10,29 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'toc
             this.$label = $('.toc-type');
             this.$children = $('.toc-container');
             this.childViews = {
-                '#table-of-contents': {
+                'table-of-contents': {
                     'selector': $('#table-of-contents'),
-                    'title':('Table of contents for')
+                    'title':('Table of contents for'),
+                    'constuctor': TOCView
                 },
-                '#history': {
+                'history': {
                     'selector': $('#history'),
-                    'title':('Switch between versions of')
+                    'title':('Switch between versions of'),
+                    'constuctor': HistoryView
                 },
-                '#search': {
+                'search': {
                     'selector': $('#search'),
-                    'title':('Search')
+                    'title':('Search'),
+                    'constuctor': SearchView
                 }
             };
 
-            this.childViews['#table-of-contents'].view = new TOCView({el: '#toc'}); 
-
+            if ($.cookie('Drawer_State') === undefined) {
+                this.childViews['table-of-contents'].view = new TOCView({el: '#toc'}); 
+            } else {
+                this.childViews[$.cookie('Drawer_State')].view = new this.childViews[$.cookie('Drawer_State')].constructor();
+                this.changeContents($.cookie('Drawer_State')); 
+            }
         },
 
         changeContents: function(activeId) {
@@ -35,7 +42,8 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'toc
             this.$label.html(this.childViews[activeId]['title']);
             Dispatch.set('drawerState', activeId);
 
-            
+            $.cookie('Drawer_State', activeId);
+
         }
 
     });
