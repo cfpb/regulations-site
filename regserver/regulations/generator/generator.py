@@ -126,6 +126,26 @@ def get_all_notices():
     return notices.fetch_all(api)
 
 
+def get_notice(document_number):
+    """ Get a the data from a particular notice, given the Federal Register
+    document number. """
+
+    api = api_reader.Client(settings.API_BASE)
+    return api.notice(document_number)
+
+
+def get_sxs(label_id, notice_doc_number):
+    """ Given a paragraph label_id, find the sxs analysis for that paragraph if
+    it exists and has content. The analysis comes from the Federal REgister
+    notice_doc_number. """
+
+    notice = get_notice(notice_doc_number)
+    all_sxs = notice['section_by_section']
+
+    relevant_sxs = notices.find_label_in_sxs(all_sxs, label_id)
+    return relevant_sxs
+
+
 def get_diff_json(regulation, older, newer):
     api = api_reader.Client(settings.API_BASE)
     return api.diff(regulation, older, newer)
