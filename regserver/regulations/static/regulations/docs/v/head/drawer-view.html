@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>require.config.js</title>
+  <title>drawer-view.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -131,7 +131,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>require.config.js</h1>
+                  <h1>drawer-view.js</h1>
               </div>
           </li>
         
@@ -146,43 +146,58 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> require = {
-    paths: {
-        jquery: <span class="string">'./lib/jquery-1.9.1'</span>,
-        underscore: <span class="string">'./lib/underscore'</span>,
-        backbone: <span class="string">'./lib/backbone'</span>,
-        <span class="string">'jquery-scrollstop'</span>: <span class="string">'./lib/jquery.scrollstop'</span>,
-        <span class="string">'jquery-cookie'</span>: <span class="string">'./lib/jquery.cookie'</span>,
-        <span class="string">'definition-view'</span>: <span class="string">'./views/definition-view'</span>,
-        <span class="string">'regs-fixed-el-view'</span>: <span class="string">'./views/regs-fixed-el-view'</span>,
-        <span class="string">'sub-head-view'</span>: <span class="string">'./views/sub-head-view'</span>,
-        <span class="string">'regs-view'</span>: <span class="string">'./views/regs-view'</span>,
-        <span class="string">'toc-view'</span>: <span class="string">'./views/toc-view'</span>,
-        <span class="string">'sidebar-view'</span>: <span class="string">'./views/sidebar-view'</span>,
-        <span class="string">'sidebar-head-view'</span>: <span class="string">'./views/sidebar-head-view'</span>,
-        <span class="string">'content-view'</span>: <span class="string">'./views/content-view'</span>,
-        <span class="string">'konami'</span>: <span class="string">'./lib/konami'</span>,
-        <span class="string">'analytics-handler'</span>: <span class="string">'./views/analytics-handler-view'</span>,
-        <span class="string">'header-view'</span>: <span class="string">'./views/header-view'</span>,
-        <span class="string">'section-footer-view'</span>: <span class="string">'./views/section-footer-view'</span>,
-        <span class="string">'drawer-view'</span>: <span class="string">'./views/drawer-view'</span>,
-        <span class="string">'history-view'</span>: <span class="string">'./views/history-view'</span>,
-        <span class="string">'search-view'</span>: <span class="string">'./views/search-view'</span>
-    },
-    shim: {
-        underscore: {
-            deps: [<span class="string">'jquery'</span>],
-            exports: <span class="string">'_'</span>
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'drawer-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'jquery-cookie'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'toc-view'</span>, <span class="string">'history-view'</span>, <span class="string">'search-view'</span>], <span class="keyword">function</span>($, _, Backbone, jQCookie, Dispatch, TOCView, HistoryView, SearchView) {
+    <span class="string">'use strict'</span>;
+
+    <span class="keyword">var</span> DrawerView = Backbone.View.extend({
+        el: <span class="string">'#menu'</span>,
+
+        initialize: <span class="keyword">function</span>() {
+            Dispatch.on(<span class="string">'drawer:stateChange'</span>, <span class="keyword">this</span>.changeContents, <span class="keyword">this</span>);
+
+            <span class="keyword">this</span>.$label = $(<span class="string">'.toc-type'</span>);
+            <span class="keyword">this</span>.$children = $(<span class="string">'.toc-container'</span>);
+            <span class="keyword">this</span>.childViews = {
+                <span class="string">'table-of-contents'</span>: {
+                    <span class="string">'selector'</span>: $(<span class="string">'#table-of-contents'</span>),
+                    <span class="string">'title'</span>:(<span class="string">'Table of contents for'</span>),
+                    <span class="string">'constuctor'</span>: TOCView
+                },
+                <span class="string">'history'</span>: {
+                    <span class="string">'selector'</span>: $(<span class="string">'#history'</span>),
+                    <span class="string">'title'</span>:(<span class="string">'Switch between versions of'</span>),
+                    <span class="string">'constuctor'</span>: HistoryView
+                },
+                <span class="string">'search'</span>: {
+                    <span class="string">'selector'</span>: $(<span class="string">'#search'</span>),
+                    <span class="string">'title'</span>:(<span class="string">'Search'</span>),
+                    <span class="string">'constuctor'</span>: SearchView
+                }
+            };
+
+            <span class="keyword">if</span> ($.cookie(<span class="string">'Drawer_State'</span>) === <span class="literal">undefined</span>) {
+                <span class="keyword">this</span>.childViews[<span class="string">'table-of-contents'</span>].view = <span class="keyword">new</span> TOCView({el: <span class="string">'#toc'</span>}); 
+            } <span class="keyword">else</span> {
+                <span class="keyword">this</span>.childViews[$.cookie(<span class="string">'Drawer_State'</span>)].view = <span class="keyword">new</span> <span class="keyword">this</span>.childViews[$.cookie(<span class="string">'Drawer_State'</span>)].constructor();
+                <span class="keyword">this</span>.changeContents($.cookie(<span class="string">'Drawer_State'</span>)); 
+            }
         },
-        backbone: {
-            deps: [<span class="string">'underscore'</span>, <span class="string">'jquery'</span>],
-            exports: <span class="string">'Backbone'</span>
-        },
-        konami: {
-            exports: <span class="string">'Konami'</span>
+
+        changeContents: <span class="keyword">function</span>(activeId) {
+            <span class="keyword">this</span>.$children.addClass(<span class="string">'hidden'</span>);
+            <span class="keyword">this</span>.childViews[activeId][<span class="string">'selector'</span>].removeClass(<span class="string">'hidden'</span>);
+
+            <span class="keyword">this</span>.$label.html(<span class="keyword">this</span>.childViews[activeId][<span class="string">'title'</span>]);
+            Dispatch.set(<span class="string">'drawerState'</span>, activeId);
+
+            $.cookie(<span class="string">'Drawer_State'</span>, activeId);
+
         }
-    }
-};</pre></div></div>
+
+    });
+
+    <span class="keyword">return</span> DrawerView;
+});</pre></div></div>
             
         </li>
         

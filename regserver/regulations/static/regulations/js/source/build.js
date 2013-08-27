@@ -5,6 +5,7 @@
         underscore: './lib/underscore',
         backbone: './lib/backbone',
         'jquery-scrollstop': './lib/jquery.scrollstop',
+        'jquery-cookie': './lib/jquery.cookie',
         'definition-view': './views/definition-view',
         'regs-fixed-el-view': './views/regs-fixed-el-view',
         'sub-head-view': './views/sub-head-view',
@@ -16,7 +17,10 @@
         'konami': './lib/konami',
         'analytics-handler': './views/analytics-handler-view',
         'header-view': './views/header-view',
-        'section-footer-view': './views/section-footer-view'
+        'section-footer-view': './views/section-footer-view',
+        'drawer-view': './views/drawer-view',
+        'history-view': './views/history-view',
+        'search-view': './views/search-view'
     },
     shim: {
         underscore: {

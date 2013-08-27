@@ -31,12 +31,14 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], fun
         toggleDrawer: function(e) {
             e.preventDefault();
 
-            var $target = $(e.target);
+            var $target = $(e.target),
+                linkValue = _.last($target.attr('href').split('#'));
 
             this.$tocLinks.removeClass('current');
             $target.addClass('current');
 
-            Dispatch.trigger('toc:stateChange', $target.attr('href'));
+            Dispatch.trigger('drawer:stateChange', linkValue);
+
         }
     });
 
