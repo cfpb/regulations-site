@@ -129,7 +129,8 @@ module.exports = function(grunt) {
                 'konami': './lib/konami',
                 'analytics-handler': './views/analytics-handler-view',
                 'header-view': './views/header-view',
-                'section-footer-view': './views/section-footer-view'
+                'section-footer-view': './views/section-footer-view',
+                'drawer-view': './views/drawer-view'
               },
               shim: {
                 underscore: {
@@ -222,7 +223,8 @@ module.exports = function(grunt) {
                     'konami': './lib/konami',
                     'analytics-handler': './views/analytics-handler-view',
                     'header-view': './views/header-view',
-                    'section-footer-view': './views/section-footer-view'
+                    'section-footer-view': './views/section-footer-view',
+                    'drawer-view': './views/drawer-view'
                 },
                 shim: {
                     underscore: {

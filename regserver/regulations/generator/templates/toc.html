@@ -1,7 +1,7 @@
 {% comment %}
     Display a table of contents. 
 {% endcomment %}
-<nav class="{{nav_class}}" role="navigation">
+<nav {% if top_toc %}id="toc" {% endif %}class="{{nav_class}}" role="navigation">
     <ol {% if top_toc %}class="toc-container current" id="table-of-contents"{% endif %}>
         {% for item in toc_items %}
             {% if item.is_section %}

@@ -74,6 +74,11 @@
               </a>
             
               
+              <a class="source" href="drawer-view.html">
+                drawer-view.js
+              </a>
+            
+              
               <a class="source" href="header-view.html">
                 header-view.js
               </a>
@@ -137,7 +142,7 @@
             <div class="content"><div class='highlight'><pre>define(<span class="string">'toc-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, RegsHelpers) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> TOCView = Backbone.View.extend({
-        el: <span class="string">'#menu'</span>,
+        el: <span class="string">'#toc'</span>,
 
         events: {
             <span class="string">'click .regulation-nav a'</span>: <span class="string">'sendClickEvent'</span>
@@ -161,26 +166,7 @@ when the active section changes, highlight it in the TOC</p>
             
             <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'activeSection:change'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);
 
-            Dispatch.on(<span class="string">'openSection:set'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);
-            
-            Dispatch.on(<span class="string">'toc:stateChange'</span>, <span class="keyword">this</span>.changeContents, <span class="keyword">this</span>);
-
-            <span class="keyword">this</span>.$label = $(<span class="string">'.toc-type'</span>);
-            <span class="keyword">this</span>.$children = $(<span class="string">'.toc-container'</span>);
-            <span class="keyword">this</span>.childViews = {
-                <span class="string">'#table-of-contents'</span>: {
-                    <span class="string">'selector'</span>: $(<span class="string">'#table-of-contents'</span>),
-                    <span class="string">'title'</span>:(<span class="string">'Table of contents for'</span>)
-                },
-                <span class="string">'#history'</span>: {
-                    <span class="string">'selector'</span>: $(<span class="string">'#history'</span>),
-                    <span class="string">'title'</span>:(<span class="string">'Switch between versions of'</span>)
-                },
-                <span class="string">'#search'</span>: {
-                    <span class="string">'selector'</span>: $(<span class="string">'#search'</span>),
-                    <span class="string">'title'</span>:(<span class="string">'Search'</span>)
-                }
-            };</pre></div></div>
+            Dispatch.on(<span class="string">'openSection:set'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);</pre></div></div>
             
         </li>
         
@@ -235,13 +221,6 @@ when a TOC link is clicked, send an event along with the href of the clicked lin
             <div class="content"><div class='highlight'><pre>        sendClickEvent: <span class="keyword">function</span>(e) {
             e.preventDefault();
             Dispatch.trigger(<span class="string">'toc:click'</span>, $(e.currentTarget).data(<span class="string">'section-id'</span>));
-        },
-
-        changeContents: <span class="keyword">function</span>(activeId) {
-            <span class="keyword">this</span>.$children.addClass(<span class="string">'hidden'</span>);
-            <span class="keyword">this</span>.childViews[activeId][<span class="string">'selector'</span>].removeClass(<span class="string">'hidden'</span>);
-
-            <span class="keyword">this</span>.$label.html(<span class="keyword">this</span>.childViews[activeId][<span class="string">'title'</span>]);
         },</pre></div></div>
             
         </li>

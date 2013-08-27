@@ -74,6 +74,11 @@
               </a>
             
               
+              <a class="source" href="drawer-view.html">
+                drawer-view.js
+              </a>
+            
+              
               <a class="source" href="header-view.html">
                 header-view.js
               </a>
@@ -134,7 +139,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'regs-data'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'toc-view'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers) {
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'regs-data'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'drawer-view'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers) {
     <span class="string">'use strict'</span>;
     <span class="keyword">return</span> {</pre></div></div>
             
@@ -219,7 +224,7 @@ API should make this obsolete.</p>
             
             <div class="content"><div class='highlight'><pre>            window.Regs = {};
             window.Regs.subhead = <span class="keyword">new</span> SubHeadView();
-            window.Regs.toc = <span class="keyword">new</span> TOCView();
+            window.Regs.drawer = <span class="keyword">new</span> DrawerView();
             window.Regs.sidebar = <span class="keyword">new</span> SidebarView();
             window.Regs.regContent = <span class="keyword">new</span> ContentView();
             window.Regs.analytics = <span class="keyword">new</span> AnalyticsHandler();
