@@ -1,0 +1,19 @@
+
+{% if sxs.label %}
+    <div id="{{sxs.label}}">
+{% else %}
+    <div>
+{% endif %}
+
+<h{{sxs.depth}}> {{sxs.title}} </h{{sxs.depth}}>
+
+{% for p in sxs.paragraphs %}
+    <p> {{p|safe}} </p>
+{% endfor %}
+
+{% for c in sxs.children %}
+    {% with sxs=c template_name='paragraph-sxs.html' %}
+        {%include template_name  %}
+    {% endwith %}
+{% endfor %}
+</div>
