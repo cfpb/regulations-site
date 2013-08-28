@@ -58,6 +58,16 @@ class GeneratorTest(TestCase):
             ('204', 'old', 'new'),
             api_reader.Client.return_value.diff.call_args[0])
 
+    @patch('regulations.generator.generator.api_reader')
+    def test_get_notice(self, api_reader):
+        notice = {'some':'notice'}
+        api_reader.Client.return_value.notice.return_value = notice
+        n = generator.get_notice('204-1234')
+        self.assertEqual(notice, n)
+        self.assertEqual(
+            ('204-1234',),
+            api_reader.Client.return_value.notice.call_args[0])
+
     @patch('regulations.generator.generator.get_diff_json')
     def test_get_diff_applier(self, get_diff_json):
         diff = {'some': 'diff'}

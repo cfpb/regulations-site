@@ -1,4 +1,7 @@
+from datetime import datetime
 from django.template import loader, Context
+
+from regulations.generator.layers.utils import convert_to_python
 
 
 def fetch_all(api_client):
@@ -56,6 +59,25 @@ def add_depths(sxs, starting_depth):
     sxs['depth'] = starting_depth
     for s in sxs['children']:
         add_depths(s, starting_depth+1)
+
+
+def extract_notice_metadata(notice):
+    """ From a notice, extract the data that we're interested in
+    displaying for the section by section analysis. """
+
+    data_list = [
+        'action', 'document_number', 'fr_url', 'publication_date',
+        'effective_on', 'regulation_id_numbers']
+
+    metadata = {}
+    for d in data_list:
+        metadata[d] = notice[d]
+
+    metadata['effective_on'] = convert_to_python(metadata['effective_on'])
+
+    pub_date = metadata['publication_date']
+    metadata['publication_date'] = convert_to_python(pub_date)
+    return metadata
 
 
 def find_label_in_sxs(sxs_list, label_id):
