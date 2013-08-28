@@ -21,8 +21,20 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         },
 
         getAnalyses: function(sectionId) {
-debugger;
-            this.model.get(sectionId);
+            var partial = this.model.get(sectionId);
+
+            if (typeof partial.done !== 'undefined') {
+                partial.done(function(sxs) {
+                    this.render(sxs);
+                }.bind(this));
+            }
+            else {
+                this.render(partial);
+            }
+        },
+
+        render: function(html) {
+            this.$el.html(html);
         }
     });
 
