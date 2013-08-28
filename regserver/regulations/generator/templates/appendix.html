@@ -18,15 +18,8 @@
 
             {% if level_one.marked_up %}
             <p> 
-                {% for doc_num, ref in level_one.analyses %}
-                <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
-                {% endfor %}
                 {{level_one.marked_up|safe|linebreaksbr}} 
             </p>
-            {% else %}
-                {% for doc_num, ref in level_one.analyses %}
-                <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
-                {% endfor %}
             {% endif %}
 
             {% if level_one.children %}
