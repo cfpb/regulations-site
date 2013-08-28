@@ -72,6 +72,9 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         loadSection: function(sectionId) {
             var returned = RegModel.get(sectionId);
 
+            // visually indicate that a new section is loading
+            $('.reg-text').addClass('loading');
+
             if (typeof returned.done !== 'undefined') {
                 // @TODO: error handling
                 returned.done(function(section) {
