@@ -28,7 +28,8 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'reg
             };
 
             if ($.cookie('Drawer_State') === undefined) {
-                this.childViews['table-of-contents'].view = new TOCView({el: '#toc'}); 
+                this.childViews['table-of-contents'].view = new TOCView({el: '#toc'});
+                this.changeContents('table-of-contents');
             } else {
                 this.childViews[$.cookie('Drawer_State')].view = new this.childViews[$.cookie('Drawer_State')].constructor();
                 this.changeContents($.cookie('Drawer_State')); 
