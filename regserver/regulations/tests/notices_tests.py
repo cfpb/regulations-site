@@ -1,4 +1,5 @@
 from unittest import TestCase
+from datetime import datetime
 
 from mock import Mock, patch
 
@@ -146,3 +147,25 @@ class NoticesTest(TestCase):
                 'children': [],
                 'paragraphs': ['abc']}]}
         self.assertEqual(depth_sxs, sxs)
+
+    def test_extract_metdata(self):
+        notice = {
+            'action':'final rule', 
+            'document_number':'204-1234',
+            'fr_url': 'http://example.com', 
+            'publication_date':'2013-09-12', 
+            'effective_on':'2013-10-28', 
+            'regulation_id_numbers': ['205', '204'], 
+            'section_by_section':{'paragraphs':[]}
+            }
+        extracted = notices.extract_notice_metadata(notice)
+
+        self.assertEqual(extracted['action'], 'final rule')
+        self.assertEqual(extracted['document_number'], '204-1234')
+        self.assertEqual(extracted['fr_url'], 'http://example.com')
+        self.assertEqual(extracted['regulation_id_numbers'], ['205', '204'])
+
+        pub_date = datetime.strptime('2013-09-12', "%Y-%m-%d") 
+        effective_date = datetime.strptime('2013-10-28', "%Y-%m-%d")
+        self.assertEqual(extracted['publication_date'], pub_date)
+        self.assertEqual(extracted['effective_on'], effective_date)
