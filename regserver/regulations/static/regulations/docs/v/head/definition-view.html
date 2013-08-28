@@ -196,7 +196,8 @@ this.options:</p>
             <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> DefinitionView = SidebarModuleView.extend({
         className: <span class="string">'open-definition'</span>,
         events: {
-            <span class="string">'click .close-button'</span>: <span class="string">'close'</span>,
+            <span class="string">'click .close-button.tab-activated'</span>: <span class="string">'close'</span>,
+            <span class="string">'click .close-button'</span>: <span class="string">'headerButtonClose'</span>,
             <span class="string">'click .definition'</span>: <span class="string">'sendDefinitionLinkEvent'</span>,
             <span class="string">'click .continue-link'</span>: <span class="string">'sendContinueLinkEvent'</span>
         },
@@ -262,7 +263,9 @@ this.options:</p>
         },
 
         template: <span class="keyword">function</span>(res) {
-            <span class="keyword">this</span>.$el.html(res);</pre></div></div>
+            <span class="keyword">this</span>.$el.html(res);
+
+            <span class="keyword">this</span>.$el.prepend(<span class="string">'&lt;div class="sidebar-header"&gt;&lt;h2&gt;Defined Term&lt;/h2&gt;&lt;a class="right close-button" href="#"&gt;Close definition&lt;/a&gt;&lt;/div&gt;'</span>);</pre></div></div>
             
         </li>
         
@@ -329,7 +332,7 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                .append(<span class="string">'&lt;a class="close-button" href="#"&gt;Close definition&lt;/a&gt;'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                .append(<span class="string">'&lt;a class="close-button tab-activated" href="#"&gt;Close definition&lt;/a&gt;'</span>);</pre></div></div>
             
         </li>
         
@@ -344,7 +347,7 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'definition:render'</span>, <span class="keyword">this</span>.$el);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'sidebarModule:render'</span>, <span class="keyword">this</span>.$el);</pre></div></div>
             
         </li>
         
@@ -371,6 +374,14 @@ this.options:</p>
                 action: <span class="string">'closed definition by tab-revealed link'</span>,
                 context: <span class="keyword">this</span>.model.id
             });
+            Dispatch.trigger(<span class="string">'definition:remove'</span>, <span class="keyword">this</span>.model.id);
+        },
+
+        headerButtonClose: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+            Dispatch.remove(<span class="string">'definition'</span>);
+            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, <span class="string">'close by header button'</span>);
+            Dispatch.trigger(<span class="string">'definition:remove'</span>, <span class="keyword">this</span>.model.id);
         },
 
         remove: <span class="keyword">function</span>() {
@@ -390,7 +401,7 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'definition:remove'</span>, <span class="keyword">this</span>.model.id);
+            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'sidebarModule:remove'</span>, <span class="keyword">this</span>.model.id);
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
         }
