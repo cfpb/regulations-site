@@ -1,23 +1,25 @@
 define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbone, Dispatch) {
     'use strict';
     var MetaModel = Backbone.Model.extend({
-        // in the case of reg-model
-        // an index of all of the entities in the reg, whether or not they've been loaded
-
-        // in the case of reg-model
-        // content = markup to string representations of each reg paragraph/entity
-        // loaded into the browser (rendered or not)
 
         constructor: function(properties) {
             var k;
 
             if (typeof properties !== 'undefined') {
                 for (k in properties) {
-                    this[k] = properties[k];
+                    if (properties.hasOwnProperty(k)) {
+                        this[k] = properties[k];
+                    }
                 }
             }
 
+            // in the case of reg-model
+            // an index of all of the entities in the reg, whether or not they've been loaded
             this.content = this.content || {};
+
+            // in the case of reg-model
+            // content = markup to string representations of each reg paragraph/entity
+            // loaded into the browser (rendered or not)
             this.structure = this.structure || [];
 
             Backbone.Model.apply(this, arguments);

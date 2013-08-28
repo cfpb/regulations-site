@@ -2,12 +2,12 @@ define(['reg-model', 'samplejson'], function(RegModel, testjson) {
   describe("RegModel module", function() {
     RegModel.parse(testjson);
 
-    it("should have a regStructure array", function() {
-      expect(RegModel.regStructure).toBeTruthy();
+    it("should have a structure array", function() {
+      expect(RegModel.structure).toBeTruthy();
     });
 
-    it("should have a regStructure array with 10 values", function() {
-      expect(RegModel.regStructure.length).toEqual( 10 );
+    it("should have a structure array with 10 values", function() {
+      expect(RegModel.structure.length).toEqual( 10 );
     });
 
     it("should have content", function() {
@@ -37,7 +37,7 @@ define(['reg-model', 'samplejson'], function(RegModel, testjson) {
       expect(RegModel.getParent('2345-9-b')).toEqual("asdfksjflksjdf");
     });
 
-    it("should differentiate between regStructure presence and being loaded", function() {
+    it("should differentiate between structure presence and being loaded", function() {
       expect(RegModel.has("2345-9-b-1")).toEqual(false);
     });
 

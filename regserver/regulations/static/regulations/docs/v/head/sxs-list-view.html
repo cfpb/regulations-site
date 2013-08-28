@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="folder-model.html">
+                folder-model.js
+              </a>
+            
+              
               <a class="source" href="meta-model.html">
                 meta-model.js
               </a>
@@ -161,7 +166,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-list-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'sidebar-list-view'</span>], <span class="keyword">function</span>($, _, Backbone, SidebarListView) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-list-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-list-view'</span>, <span class="string">'./folder-model'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarListView, FolderModel) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> SxSListView = SidebarListView.extend({
         el: <span class="string">'#sxs-list'</span>,
@@ -170,8 +175,34 @@
             <span class="string">'click a'</span>: <span class="string">'openSxS'</span>
         },
 
+        initialize: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> analyses = <span class="keyword">this</span>.$el.find(<span class="string">'.chunk'</span>);
+            <span class="keyword">this</span>.model = <span class="keyword">new</span> FolderModel({supplementalPath: <span class="string">'sidebar'</span>});
+
+            <span class="keyword">this</span>.model.set(Dispatch.getOpenSection(), analyses);
+
+            Dispatch.on(<span class="string">'section:open'</span>, <span class="keyword">this</span>.getAnalyses, <span class="keyword">this</span>);
+        },
+
         openSxS: <span class="keyword">function</span>(e) {
             e.preventDefault();
+        },
+
+        getAnalyses: <span class="keyword">function</span>(sectionId) {
+            <span class="keyword">var</span> partial = <span class="keyword">this</span>.model.get(sectionId);
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> partial.done !== <span class="string">'undefined'</span>) {
+                partial.done(<span class="keyword">function</span>(sxs) {
+                    <span class="keyword">this</span>.render(sxs);
+                }.bind(<span class="keyword">this</span>));
+            }
+            <span class="keyword">else</span> {
+                <span class="keyword">this</span>.render(partial);
+            }
+        },
+
+        render: <span class="keyword">function</span>(html) {
+            <span class="keyword">this</span>.$el.html(html);
         }
     });
 

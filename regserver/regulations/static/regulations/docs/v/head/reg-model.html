@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="folder-model.html">
+                folder-model.js
+              </a>
+            
+              
               <a class="source" href="meta-model.html">
                 meta-model.js
               </a>
@@ -204,37 +209,6 @@ even if the internals are different</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>an index of all of the entities in the reg, whether or not they&#39;ve been loaded</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        regStructure: [],</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>content = markup to string representations of each reg paragraph/entity
-loaded into the browser (rendered or not)</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        content: {},</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
               <p>recurses over the parsed reg tree and creates an in-browser representation
 of a reg. may or may not be functional based on current tree.
 only in use for tests right now...
@@ -263,11 +237,11 @@ refactor to parse just out of the DOM</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p><strong>Param</strong>
 <code>id</code>: string, dash-delimited reg entity id</p>
@@ -280,12 +254,12 @@ what exactly we&#39;re dealing with. We just rely on a set of rules.</p>
             
             <div class="content"><div class='highlight'><pre>        getChildren: <span class="keyword">function</span>(id) {
             <span class="keyword">var</span> kids = [],
-                regStructureLen = <span class="keyword">this</span>.regStructure.length,
+                structureLen = <span class="keyword">this</span>.structure.length,
                 regex = <span class="keyword">new</span> RegExp(id + <span class="string">'[-,a-z,0-9]'</span>);
 
-            <span class="keyword">while</span> (regStructureLen--) {
-                <span class="keyword">if</span> (regex.test(<span class="keyword">this</span>.regStructure[regStructureLen])) {
-                    kids.push(<span class="keyword">this</span>.regStructure[regStructureLen]);
+            <span class="keyword">while</span> (structureLen--) {
+                <span class="keyword">if</span> (regex.test(<span class="keyword">this</span>.structure[structureLen])) {
+                    kids.push(<span class="keyword">this</span>.structure[structureLen]);
                 } 
             }
 
@@ -295,11 +269,11 @@ what exactly we&#39;re dealing with. We just rely on a set of rules.</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p><strong>Param</strong>
 <code>id</code>: string, dash-delimited reg entity id</p>
@@ -315,7 +289,7 @@ the id passed in or boolean false if the requested id has no parent</p>
             z.pop();
             parent = z.join(<span class="string">'-'</span>);
 
-            <span class="keyword">if</span> (<span class="keyword">this</span>.regStructure.indexOf(parent) !== -<span class="number">1</span>) {
+            <span class="keyword">if</span> (<span class="keyword">this</span>.structure.indexOf(parent) !== -<span class="number">1</span>) {
                 <span class="keyword">return</span> <span class="keyword">this</span>.content[parent];
             }
 
