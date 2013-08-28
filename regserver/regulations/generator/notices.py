@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.template import loader, Context
 
 
@@ -56,6 +57,27 @@ def add_depths(sxs, starting_depth):
     sxs['depth'] = starting_depth
     for s in sxs['children']:
         add_depths(s, starting_depth+1)
+
+
+def extract_notice_metadata(notice):
+    """ From a notice, extract the data that we're interested in 
+    displaying for the section by section analysis. """
+
+    data_list = [
+        'action', 'document_number', 'fr_url', 'publication_date',
+        'effective_on', 'regulation_id_numbers']
+
+    metadata = {}
+    for d in data_list:
+        metadata[d] = notice[d]
+
+    metadata['effective_on'] = datetime.strptime(
+        metadata['effective_on'], "%Y-%m-%d")
+
+    metadata['publication_date'] = datetime.strptime(
+        metadata['publication_date'], "%Y-%m-%d")
+
+    return metadata
 
 
 def find_label_in_sxs(sxs_list, label_id):

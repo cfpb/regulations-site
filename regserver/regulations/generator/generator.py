@@ -141,8 +141,11 @@ def get_sxs(label_id, notice_doc_number):
 
     notice = get_notice(notice_doc_number)
     all_sxs = notice['section_by_section']
-
     relevant_sxs = notices.find_label_in_sxs(all_sxs, label_id)
+
+    metadata = notices.extract_notice_metadata(notice)
+    relevant_sxs['metadata'] = metadata
+
     return relevant_sxs
 
 
