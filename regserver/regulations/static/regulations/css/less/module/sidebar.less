@@ -118,8 +118,6 @@
 
 .open-definition {
     .close-button {
-        position: absolute;
-        left: -10000px;
         cursor: pointer;
 
         &:active,
@@ -127,6 +125,15 @@
             position: relative;
             left: 0;
         }
+
+        &.tab-activated {
+            position: absolute;
+            left: -10000px;
+        }
+    }
+
+    & > p {
+        clear: left;
     }
 }
 

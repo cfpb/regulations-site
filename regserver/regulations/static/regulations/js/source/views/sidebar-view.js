@@ -24,9 +24,6 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
 
             this.childViews = {};
 
-            // Init a sidebar header instance
-            this.childViews.header = new SidebarHeadView({el: '#sidebar-header'});
-
             this.childViews.sxs = new SxSListView();
         },
 

@@ -19,7 +19,8 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
     var DefinitionView = SidebarModuleView.extend({
         className: 'open-definition',
         events: {
-            'click .close-button': 'close',
+            'click .close-button.tab-activated': 'close',
+            'click .close-button': 'headerButtonClose',
             'click .definition': 'sendDefinitionLinkEvent',
             'click .continue-link': 'sendContinueLinkEvent'
         },
@@ -87,6 +88,8 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         template: function(res) {
             this.$el.html(res);
 
+            this.$el.prepend('<div class="sidebar-header"><h2>Defined Term</h2><a class="right close-button" href="#">Close definition</a></div>');
+
             // link to definition in content body
             this.$el.append(
                 RegsHelpers.fastLink(
@@ -103,10 +106,10 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             // make definition tabbable
             this.$el.attr('tabindex', '0')
                 // make tab-activeated close button at bottom of definition content
-                .append('<a class="close-button" href="#">Close definition</a>');
+                .append('<a class="close-button tab-activated" href="#">Close definition</a>');
 
             // **Event trigger** triggers definition open event
-            Dispatch.trigger('definition:render', this.$el);
+            Dispatch.trigger('sidebarModule:render', this.$el);
 
             // set focus to the open definition
             this.$el.focus();
@@ -121,13 +124,21 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 action: 'closed definition by tab-revealed link',
                 context: this.model.id
             });
+            Dispatch.trigger('definition:remove', this.model.id);
+        },
+
+        headerButtonClose: function(e) {
+            e.preventDefault();
+            Dispatch.remove('definition');
+            Dispatch.trigger('ga-event:definition', 'close by header button');
+            Dispatch.trigger('definition:remove', this.model.id);
         },
 
         remove: function() {
             this.stopListening();
             this.$el.remove();
             // **Event trigger** notifies app that definition is removed
-            Dispatch.trigger('definition:remove', this.model.id);
+            Dispatch.trigger('sidebarModule:remove', this.model.id);
 
             return this;
         }
