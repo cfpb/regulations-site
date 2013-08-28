@@ -1,3 +1,5 @@
+from itertools import takewhile
+
 APPENDIX = u'appendix'
 INTERP = u'interp'
 REGTEXT = u'regtext'
@@ -28,3 +30,31 @@ def to_markup_id(id_parts):
     elif is_appendix(id_parts):
         return [transform_part(part) for part in new_id]
     return new_id
+
+
+def label_to_text(label):
+    """Convert a label:list[string] into a human-readable string"""
+    if 'Interp' in label:
+        # Interpretation
+        prefix = list(takewhile(lambda l: l != 'Interp', label))
+        suffix = label[label.index('Interp')+1:]
+        if suffix:
+            return 'Comment for %s-%s' % (label_to_text(prefix),
+                                          '.'.join(suffix))
+        else:
+            return 'Comment for %s' % label_to_text(prefix)
+    elif label[1].isalpha():
+        # Appendix
+        if len(label) == 2:  # e.g. 225-B
+            return 'Appendix ' + label[1]
+        elif len(label) == 3:  # e.g. 225-B-3
+            return 'Appendix %s-%s' % tuple(label[1:])
+        else:  # e.g. 225-B-3-a-4-i
+            return 'Appendix %s-%s(%s)' % (label[1], label[2],
+                                           ')('.join(label[3:]))
+    else:
+        # Regulation Text
+        if len(label) == 2:  # e.g. 225-2
+            return '.'.join(label)
+        else:  # e.g. 225-2-b-4-i-A
+            return '%s.%s(%s)' % (label[0], label[1], ')('.join(label[2:]))

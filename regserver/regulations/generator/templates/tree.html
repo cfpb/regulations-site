@@ -3,9 +3,6 @@
 {% endcomment %}
 {%if node.marked_up %}
 <p> 
-    {% for doc_num, ref in node.analyses %}
-    <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
-    {% endfor %}
 {% if node.node_type == "appendix" %}
     {{node.marked_up|safe|linebreaksbr}}
 {% else  %}
@@ -17,10 +14,6 @@
         {% include "slide-down-interp.html" %}
     {% endwith %}
 {% endif %}
-{% else %}
-    {% for doc_num, ref in node.analyses %}
-    <a href="notice/{{ doc_num }}.html#{{ ref }}" class="sxs-ref">[S]</a>
-    {% endfor %}
 {% endif %}
 {% if node.children %}
 <ol class="level-{{node.children.0.list_level}}" 

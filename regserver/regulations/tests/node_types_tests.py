@@ -31,3 +31,18 @@ class NodeTypesTest(TestCase):
     def test_transform_part_none(self):
         part = '30'
         self.assertEqual('30', transform_part(part))
+
+    def test_label_to_text(self):
+        self.assertEqual('2323.4', label_to_text(['2323', '4']))
+        self.assertEqual('2323.5(r)(3)',
+                         label_to_text(['2323', '5', 'r', '3']))
+        self.assertEqual('Appendix A', label_to_text(['2323', 'A']))
+        self.assertEqual('Appendix A-4', label_to_text(['2323', 'A', '4']))
+        self.assertEqual('Appendix A-4(b)(2)',
+                         label_to_text(['2323', 'A', '4', 'b', '2']))
+        self.assertEqual('Comment for 2323.5',
+                         label_to_text(['2323', '5', 'Interp']))
+        self.assertEqual('Comment for 2323.7(b)-1.v',
+                         label_to_text(['2323', '7', 'b', 'Interp', '1', 'v']))
+        self.assertEqual('Comment for Appendix Z',
+                         label_to_text(['2323', 'Z', 'Interp']))
