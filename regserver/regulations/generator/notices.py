@@ -60,7 +60,7 @@ def add_depths(sxs, starting_depth):
 
 
 def extract_notice_metadata(notice):
-    """ From a notice, extract the data that we're interested in 
+    """ From a notice, extract the data that we're interested in
     displaying for the section by section analysis. """
 
     data_list = [
