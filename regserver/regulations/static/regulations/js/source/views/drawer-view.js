@@ -1,3 +1,8 @@
+// **Extends** Backbone.View
+//
+// **Usage** ```require(['drawer-view'], function(DrawerView) {})```
+//
+// **Jurisdiction** Left panel drawer container
 define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'regs-dispatch', 'toc-view', 'history-view', 'search-view'], function($, _, Backbone, jQCookie, Dispatch, TOCView, HistoryView, SearchView) {
     'use strict';
 
@@ -5,6 +10,9 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'reg
         el: '#menu',
 
         initialize: function() {
+            // the cookieValue defaults to the table of contents, else the value of the cookie set within changeContents
+            var cookieValue = $.cookie('Drawer_State') || 'table-of-contents';
+
             Dispatch.on('drawer:stateChange', this.changeContents, this);
 
             this.$label = $('.toc-type');
@@ -13,38 +21,37 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'reg
                 'table-of-contents': {
                     'selector': $('#table-of-contents'),
                     'title':('Table of contents for'),
-                    'constuctor': TOCView
+                    'constructor': TOCView
                 },
                 'history': {
                     'selector': $('#history'),
                     'title':('Switch between versions of'),
-                    'constuctor': HistoryView
+                    'constructor': HistoryView
                 },
                 'search': {
                     'selector': $('#search'),
                     'title':('Search'),
-                    'constuctor': SearchView
+                    'constructor': SearchView
                 }
             };
-
-            if ($.cookie('Drawer_State') === undefined) {
-                this.childViews['table-of-contents'].view = new TOCView({el: '#toc'});
-                this.changeContents('table-of-contents');
-            } else {
-                this.childViews[$.cookie('Drawer_State')].view = new this.childViews[$.cookie('Drawer_State')].constructor();
-                this.changeContents($.cookie('Drawer_State')); 
-            }
+            
+            // initialize child view to populate drawer
+            this.changeContents(cookieValue); 
         },
 
         changeContents: function(activeId) {
+            // hide the content of all drawer sections
             this.$children.addClass('hidden');
+            // remove the 'hidden' class from the active drawer section
             this.childViews[activeId]['selector'].removeClass('hidden');
-
+            // update the title of the drawer section
             this.$label.html(this.childViews[activeId]['title']);
+            // create a new childView if a view doesn't already exist
+            this.childViews[activeId].view = this.childViews[activeId].view || new this.childViews[activeId].constructor();
             Dispatch.set('drawerState', activeId);
 
+            // set a cookie value equal to the active drawer id
             $.cookie('Drawer_State', activeId);
-
         }
 
     });
