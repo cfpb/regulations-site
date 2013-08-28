@@ -1,6 +1,8 @@
 from datetime import datetime
 from django.template import loader, Context
 
+from regulations.generator.layers.utils import convert_to_python
+
 
 def fetch_all(api_client):
     """Pull down all known notices from the API"""
@@ -71,12 +73,10 @@ def extract_notice_metadata(notice):
     for d in data_list:
         metadata[d] = notice[d]
 
-    metadata['effective_on'] = datetime.strptime(
-        metadata['effective_on'], "%Y-%m-%d")
+    metadata['effective_on'] = convert_to_python(metadata['effective_on'])
 
-    metadata['publication_date'] = datetime.strptime(
-        metadata['publication_date'], "%Y-%m-%d")
-
+    pub_date = metadata['publication_date']
+    metadata['publication_date'] = convert_to_python(pub_date)
     return metadata
 
 
