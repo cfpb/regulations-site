@@ -3,7 +3,7 @@
 // **Usage** ```require(['sidebar-view'], function(SidebarView) {})```
 //
 // **Jurisdiction** Right sidebar content section
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'sidebar-head-view'], function($, _, Backbone, Dispatch, SidebarHeadView) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar-head-view', 'sxs-list-view'], function($, _, Backbone, Dispatch, SidebarHeadView, SxSListView) {
     'use strict';
     var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',
@@ -14,34 +14,33 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'si
 
         initialize: function() {
             // **Event Listeners**
-            // when a new inline definition is opened, populate the sidebar with it
-            Dispatch.on('definition:render', function(el) {
+            Dispatch.on('sidebarModule:render', function(el) {
                 this.insertChild(el);
             }, this); 
 
-            // When an inline definition is closed, reset sidebar content
-            Dispatch.on('definition:remove', this.clear, this);
+            Dispatch.on('sidebarModule:close', function(el) {
+                this.removeChild(el);
+            }, this);
+
+            this.childViews = {};
 
             // Init a sidebar header instance
-            this.header = new SidebarHeadView({el: '#sidebar-header'});
+            this.childViews.header = new SidebarHeadView({el: '#sidebar-header'});
 
-            // cache default content for replacement in the future
-            this.contactInfo = this.el.innerHTML.toString();
+            this.childViews.sxs = new SxSListView();
         },
 
         render: function() {},
 
         // open whatever content should populate the sidebar
         insertChild: function(el) {
-            this.$el.html(el); 
+            this.$el.append(el); 
         },
 
-        // resets content of the sidebar
-        clear: function() {
-            this.$el.html(this.contactInfo);
+        removeChild: function(el) {
+            $(el).remove();
         },
 
-        // expands the meta info content drop downs
         toggleMeta: function(e) {
             e.stopPropagation();
             $(e.currentTarget)

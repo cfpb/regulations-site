@@ -100,7 +100,7 @@ define('regs-helpers', function() {
 
         // Finds parent-most reg paragraph
         //
-        // **TODO** RegsData.getParent is the same?
+        // **TODO** RegModel.getParent is the same?
         findBaseSection: function(id) {
             if (id.indexOf('-') !== -1) {
                 var parts = id.split('-');

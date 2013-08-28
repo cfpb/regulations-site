@@ -9,7 +9,7 @@
         'definition-view': './views/definition-view',
         'regs-fixed-el-view': './views/regs-fixed-el-view',
         'sub-head-view': './views/sub-head-view',
-        'regs-view': './views/regs-view',
+        'sidebar-module-view': './views/sidebar-module-view',
         'toc-view': './views/toc-view',
         'sidebar-view': './views/sidebar-view',
         'sidebar-head-view': './views/sidebar-head-view',
@@ -20,7 +20,9 @@
         'section-footer-view': './views/section-footer-view',
         'drawer-view': './views/drawer-view',
         'history-view': './views/history-view',
-        'search-view': './views/search-view'
+        'search-view': './views/search-view',
+        'sxs-list-view': './views/sxs-list-view',
+        'sidebar-list-view': './views/sidebar-list-view'
     },
     shim: {
         underscore: {

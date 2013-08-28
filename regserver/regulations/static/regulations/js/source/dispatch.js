@@ -1,6 +1,6 @@
 // **Extends** Backbone.Events
 //
-// **Usage** require(['regs-dispatch'], function(Dispatch) {}))
+// **Usage** require(['dispatch'], function(Dispatch) {}))
 //
 // **Dispatch:**
 // Verb: 
@@ -18,7 +18,7 @@
 // Closing a definition without introducing multiple events or causing cyclical dependencies can be tricky. If the definition View instance belongs
 // to any of these modules, another module will need to as the parent module directly for information about the View instance. Instead, all
 // modules can remove the open definition by calling `Dispatch.remove('definition');`
-define('regs-dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
+define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
     'use strict';
     return _.extend({
         // storage for entities

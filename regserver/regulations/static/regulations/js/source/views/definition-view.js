@@ -1,4 +1,4 @@
-// **Extends** RegsView
+// **Extends** SidebarModuleView
 //
 // **TODO** Determine how much sense that still makes ^^
 //
@@ -6,7 +6,7 @@
 //
 // A single inline interpretation, child of the sidebar
 // As of sprint 6, the only View that is instantiated more than once
-define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'regs-data', 'regs-dispatch', 'regs-helpers'], function($, _, Backbone, RegsView, RegsData, Dispatch, RegsHelpers) {
+define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'dispatch', 'regs-helpers'], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers) {
     'use strict';
 
     // **Constructor**
@@ -16,7 +16,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
     // * **$anchor** jQobj, the content-view link that opened the def
     //
     // this.options turns into this.model
-    var DefinitionView = RegsView.extend({
+    var DefinitionView = SidebarModuleView.extend({
         className: 'open-definition',
         events: {
             'click .close-button': 'close',
@@ -70,7 +70,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
         },
 
         render: function() {
-            var defHTML = RegsData.get(this.model.id);
+            var defHTML = RegModel.get(this.model.id);
 
             if (typeof defHTML.done !== 'undefined') {
                 defHTML.done(function(res) {

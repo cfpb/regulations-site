@@ -29,13 +29,13 @@
               </a>
             
               
-              <a class="source" href="regs-data.html">
-                regs-data.js
+              <a class="source" href="reg-model.html">
+                reg-model.js
               </a>
             
               
-              <a class="source" href="regs-dispatch.html">
-                regs-dispatch.js
+              <a class="source" href="dispatch.html">
+                dispatch.js
               </a>
             
               
@@ -89,8 +89,8 @@
               </a>
             
               
-              <a class="source" href="regs-view.html">
-                regs-view.js
+              <a class="source" href="sidebar-module-view.html">
+                sidebar-module-view.js
               </a>
             
               
@@ -149,7 +149,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'regs-data'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'drawer-view'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegsData, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers) {
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'drawer-view'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers) {
     <span class="string">'use strict'</span>;
     <span class="keyword">return</span> {</pre></div></div>
             
@@ -175,7 +175,7 @@ API should make this obsolete.</p>
                     clist = $child.find(<span class="string">'ol'</span>),
                     $nextChild;
 
-                RegsData.set({
+                RegModel.set({
                     <span class="string">'text'</span>: cid,
                     <span class="string">'content'</span>: $child.html()
                 }); 
@@ -272,7 +272,7 @@ API should make this obsolete.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            RegsData.set(openSection, regSection.html());</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            RegModel.set(openSection, regSection.html());</pre></div></div>
             
         </li>
         

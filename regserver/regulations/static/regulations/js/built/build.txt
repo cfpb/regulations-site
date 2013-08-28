@@ -5,10 +5,10 @@ lib/jquery-1.9.1.js
 lib/underscore.js
 lib/backbone.js
 lib/jquery.scrollstop.js
-regs-dispatch.js
+dispatch.js
 regs-helpers.js
-regs-data.js
-views/regs-view.js
+reg-model.js
+views/sidebar-module-view.js
 views/definition-view.js
 views/sub-head-view.js
 views/section-footer-view.js

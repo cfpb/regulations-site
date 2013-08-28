@@ -1,4 +1,4 @@
-define('analytics-handler', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], function($, _, Backbone, Dispatch) {
+define('analytics-handler', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
     'use strict';
 
     var AnalyticsHandler = Backbone.View.extend({
