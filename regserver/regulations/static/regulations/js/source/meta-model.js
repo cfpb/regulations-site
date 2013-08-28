@@ -1,16 +1,38 @@
 define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbone, Dispatch) {
     'use strict';
     var MetaModel = Backbone.Model.extend({
-        set: function(sectionId, sectionText) {
+        // in the case of reg-model
+        // an index of all of the entities in the reg, whether or not they've been loaded
+
+        // in the case of reg-model
+        // content = markup to string representations of each reg paragraph/entity
+        // loaded into the browser (rendered or not)
+
+        constructor: function(properties) {
+            var k;
+
+            if (typeof properties !== 'undefined') {
+                for (k in properties) {
+                    this[k] = properties[k];
+                }
+            }
+
+            this.content = this.content || {};
+            this.structure = this.structure || [];
+
+            Backbone.Model.apply(this, arguments);
+        },
+
+        set: function(sectionId, sectionValue) {
             var cached = this.has(sectionId),
                 section;
 
             if (!(cached)) {
-                this.content[sectionId] = sectionText;
-                section = sectionText;
+                this.content[sectionId] = sectionValue;
+                section = sectionValue;
 
-                if (_.indexOf(this.regStructure, sectionId) === -1) {
-                    this.regStructure.push(sectionId);
+                if (_.indexOf(this.structure, sectionId) === -1) {
+                    this.structure.push(sectionId);
                 }
             }
             else {
@@ -68,6 +90,10 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
             }
             else {
                 url = '/partial/';
+            }
+
+            if (typeof this.supplementalPath !== 'undefined') {
+                url += this.supplementalPath + '/';
             }
 
             url += id + '/' + Dispatch.getVersion(); 

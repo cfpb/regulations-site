@@ -22,13 +22,6 @@ define('reg-model', ['jquery', 'underscore', 'backbone', './regs-helpers', './di
 
     // represents a whole regulation
     Backbone.RegModel = MetaModel.extend({
-        // an index of all of the entities in the reg, whether or not they've been loaded
-        regStructure: [],
-
-        // content = markup to string representations of each reg paragraph/entity
-        // loaded into the browser (rendered or not)
-        content: {},
-
         // recurses over the parsed reg tree and creates an in-browser representation
         // of a reg. may or may not be functional based on current tree.
         // only in use for tests right now...
@@ -60,12 +53,12 @@ define('reg-model', ['jquery', 'underscore', 'backbone', './regs-helpers', './di
         // what exactly we're dealing with. We just rely on a set of rules.
         getChildren: function(id) {
             var kids = [],
-                regStructureLen = this.regStructure.length,
+                structureLen = this.structure.length,
                 regex = new RegExp(id + '[-,a-z,0-9]');
 
-            while (regStructureLen--) {
-                if (regex.test(this.regStructure[regStructureLen])) {
-                    kids.push(this.regStructure[regStructureLen]);
+            while (structureLen--) {
+                if (regex.test(this.structure[structureLen])) {
+                    kids.push(this.structure[structureLen]);
                 } 
             }
 
@@ -85,7 +78,7 @@ define('reg-model', ['jquery', 'underscore', 'backbone', './regs-helpers', './di
             z.pop();
             parent = z.join('-');
 
-            if (this.regStructure.indexOf(parent) !== -1) {
+            if (this.structure.indexOf(parent) !== -1) {
                 return this.content[parent];
             }
 
