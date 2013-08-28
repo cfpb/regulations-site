@@ -20,9 +20,9 @@
                 <h4>Current Law</h4>
                 {% endif %}
             {% if part == label_id %}
-                <h3><a href="{% url 'chrome_regulation_view' part version.version %}">{{ version.by_date|date }}</a></h3>
+                <h3><a href="{% url 'chrome_regulation_view' part version.version %}" class="version-link">{{ version.by_date|date }}</a></h3>
             {% else %}
-                <h3><a href="{% url 'chrome_section_view' label_id version.version %}">{{ version.by_date|date }}</a></h3>
+                <h3><a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link">{{ version.by_date|date }}</a></h3>
             {% endif %}
                 <ul class="rule-list">
                 {% for notice in version.notices %}
