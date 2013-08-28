@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>analytics-handler-view.js</title>
+  <title>meta-model.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -146,7 +146,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>analytics-handler-view.js</h1>
+                  <h1>meta-model.js</h1>
               </div>
           </li>
         
@@ -161,17 +161,26 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'analytics-handler'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'meta-model'</span>, [<span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>(_, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
+    <span class="keyword">var</span> MetaModel = Backbone.Model.extend({
+        set: <span class="keyword">function</span>(sectionId, sectionText) {
+            <span class="keyword">var</span> cached = <span class="keyword">this</span>.has(sectionId),
+                section;
 
-    <span class="keyword">var</span> AnalyticsHandler = Backbone.View.extend({
-        initialize: <span class="keyword">function</span>() {
-            <span class="keyword">this</span>.bindListeners();
+            <span class="keyword">if</span> (!(cached)) {
+                <span class="keyword">this</span>.content[sectionId] = sectionText;
+                section = sectionText;
 
-            Dispatch.on(<span class="string">'ga-event:definition'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Inline Definition'</span>);
-            Dispatch.on(<span class="string">'toc:click'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Table of Contents'</span>);
-            Dispatch.on(<span class="string">'interpretation:toggle'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Inline interpretation'</span>);
-            Dispatch.on(<span class="string">'ga-event:permalink'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Permalink'</span>);
+                <span class="keyword">if</span> (_.indexOf(<span class="keyword">this</span>.regStructure, sectionId) === -<span class="number">1</span>) {
+                    <span class="keyword">this</span>.regStructure.push(sectionId);
+                }
+            }
+            <span class="keyword">else</span> {
+                section = cached;
+            }
+
+            <span class="keyword">return</span> section; 
         },</pre></div></div>
             
         </li>
@@ -183,18 +192,19 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>TODO: standardize context on Dispatch events</p>
+              <p><strong>Param</strong>
+id, string, dash-delimited reg entity id</p>
+<p><strong>Returns</strong> the markup string to render an entity or
+false if the entity hasn&#39;t been loaded</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        sendEvent: <span class="keyword">function</span>(e) {
-            <span class="keyword">var</span> object, action, context;
-
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> window.ga === <span class="string">'undefined'</span>) {
-                <span class="keyword">return</span>;
+            <div class="content"><div class='highlight'><pre>        has: <span class="keyword">function</span>(id) {
+            <span class="keyword">if</span> (<span class="keyword">this</span>.content[id]) {
+                <span class="keyword">return</span> <span class="keyword">this</span>.content[id];
             }
-
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> e === <span class="string">'object'</span>) {</pre></div></div>
+            <span class="keyword">return</span> <span class="literal">false</span>;    
+        },</pre></div></div>
             
         </li>
         
@@ -205,19 +215,18 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>from jQ event</p>
+              <p><strong>Params</strong></p>
+<ul>
+<li><code>id</code>: string, dash-delimited reg entity id</li>
+</ul>
+<p><strong>Returns</strong> representation of the reg entity requested in the format requested,</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="keyword">if</span> (<span class="keyword">typeof</span> e.data !== <span class="string">'undefined'</span>) {
-                    context = e.data;
-                    action = context.action;
-                    object = context.object;
-
-                    <span class="keyword">if</span> (<span class="keyword">typeof</span> context.action === <span class="string">'function'</span>) {
-                        action = context.action.call();
-                    }
-                }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        get: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> obj = <span class="keyword">this</span>.has(id) || <span class="keyword">this</span>.request(id);
+            <span class="keyword">return</span> obj;
+        },</pre></div></div>
             
         </li>
         
@@ -228,15 +237,41 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>from Dispatch event</p>
+              <p>Basically an alias for <code>this.get</code>, included for API continuity</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="keyword">else</span> {
-                    action = e.action + <span class="string">' '</span> + e.context;
-                    object = <span class="keyword">this</span>;
-                }
-            }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        fetch: <span class="keyword">function</span>(id) {
+            <span class="keyword">return</span> <span class="keyword">this</span>.get(id);
+        },
+
+        request: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> url = <span class="keyword">this</span>.getAJAXUrl(id),
+                $promise;
+
+            $promise = $.ajax({
+                url: url,
+                success: <span class="keyword">function</span>(data) { <span class="keyword">this</span>.set(id, data); }.bind(<span class="keyword">this</span>)
+            });
+
+            <span class="keyword">return</span> $promise;
+        },
+
+        getAJAXUrl: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> url,
+                urlPrefix = Dispatch.getURLPrefix();
+
+            <span class="keyword">if</span> (urlPrefix) {
+                url = <span class="string">'/'</span> + urlPrefix + <span class="string">'/partial/'</span>;
+            }
+            <span class="keyword">else</span> {
+                url = <span class="string">'/partial/'</span>;
+            }
+
+            url += id + <span class="string">'/'</span> + Dispatch.getVersion(); 
+
+            <span class="keyword">return</span> url;
+        },</pre></div></div>
             
         </li>
         
@@ -247,31 +282,27 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>also from Dispatch event</p>
+              <p>We don&#39;t have need for the following methods.
+This is my half-baked way of overriding them so that they
+can be legally called as Backbone runs its course, but have
+no effect.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> e === <span class="string">'string'</span>) {
-                action = e;
-                object = <span class="keyword">this</span>; 
-            }
-
-            window.ga(<span class="string">'send'</span>, <span class="string">'event'</span>, object, action);
+            <div class="content"><div class='highlight'><pre>        sync: <span class="keyword">function</span>() {
+            <span class="keyword">return</span>;
         },
 
-        bindListeners: <span class="keyword">function</span>() {
-            $(<span class="string">'#menu-link'</span>).on(<span class="string">'click'</span>, { 
-                object: <span class="string">'Table of Contents'</span>, 
-                action: <span class="keyword">function</span>() {
-                    <span class="keyword">return</span> $(<span class="string">'#menu'</span>).hasClass(<span class="string">'active'</span>) ? <span class="string">'close'</span> : <span class="string">'open'</span>;
-                }
-            }, <span class="keyword">this</span>.sendEvent);
+        save: <span class="keyword">function</span>() {
+            <span class="keyword">return</span>;
+        },
 
-            $(<span class="string">'#toc-close'</span>).on(<span class="string">'click'</span>, {object: <span class="string">'Table of Contents'</span>, action: <span class="string">'close (bottom link)'</span>}, <span class="keyword">this</span>.sendEvent);
+        destroy: <span class="keyword">function</span>() {
+            <span class="keyword">return</span>;
         }
     });
 
-    <span class="keyword">return</span> AnalyticsHandler;
+    <span class="keyword">return</span> MetaModel;
 });</pre></div></div>
             
         </li>

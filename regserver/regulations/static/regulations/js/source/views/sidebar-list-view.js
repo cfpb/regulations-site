@@ -4,6 +4,9 @@
 define('sidebar-list-view', ['jquery', 'underscore', 'backbone', 'reg-model'], function($, _, Backbone, RegModel) {
     'use strict';
     var SidebarListView = Backbone.View.extend({
+        initialize: function() {
+            new RegModel();
+        }
     });
 
     return SidebarListView;

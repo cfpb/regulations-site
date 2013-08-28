@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>search-view.js</title>
+  <title>sxs-list-view.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -146,7 +146,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>search-view.js</h1>
+                  <h1>sxs-list-view.js</h1>
               </div>
           </li>
         
@@ -161,14 +161,21 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-list-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'sidebar-list-view'</span>], <span class="keyword">function</span>($, _, Backbone, SidebarListView) {
     <span class="string">'use strict'</span>;
+    <span class="keyword">var</span> SxSListView = SidebarListView.extend({
+        el: <span class="string">'#sxs-list'</span>,
 
-    <span class="keyword">var</span> SearchView = Backbone.View.extend({
+        events: {
+            <span class="string">'click a'</span>: <span class="string">'openSxS'</span>
+        },
 
+        openSxS: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+        }
     });
 
-    <span class="keyword">return</span> SearchView;
+    <span class="keyword">return</span> SxSListView;
 });</pre></div></div>
             
         </li>

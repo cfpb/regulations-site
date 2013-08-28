@@ -1,0 +1,1 @@
+define("sxs-list-view",["jquery","underscore","backbone","sidebar-list-view"],function(e,t,n,r){var i=r.extend({el:"#sxs-list",events:{"click a":"openSxS"},openSxS:function(e){e.preventDefault()}});return i});

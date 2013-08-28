@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>analytics-handler-view.js</title>
+  <title>dispatch.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -146,7 +146,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>analytics-handler-view.js</h1>
+                  <h1>dispatch.js</h1>
               </div>
           </li>
         
@@ -158,21 +158,27 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              
+              <p><strong>Extends</strong> Backbone.Events</p>
+<p><strong>Usage</strong> require([&#39;dispatch&#39;], function(Dispatch) {}))</p>
+<p><strong>Dispatch:</strong>
+Verb: 
+<em> 1. Send off to a destination or for a purpose.
+</em> 2. Deal with a task quickly and efficiently</p>
+<p>Noun: The sending of someone or something to a destination or for a purpose.</p>
+<p>Dispatch is responsible, via Backbone.Events, for, appropriately, dispatching event triggers and notifying bindings
+There are entities that, at first glance, would seem to have a straightforward parent/child relationship with another module
+However, there are significant interactions that occur across two or more modules. Instead of having a complicated 
+multi-event scheme or introducing a lot of coupling between modules, Dispatch can house and serve information about these entities.</p>
+<p>Example: inline definitions. They are triggered by a link in content-view, can be closed by content-view, sidebar-head-view or sidebar-view.
+Closing a definition without introducing multiple events or causing cyclical dependencies can be tricky. If the definition View instance belongs
+to any of these modules, another module will need to as the parent module directly for information about the View instance. Instead, all
+modules can remove the open definition by calling <code>Dispatch.remove(&#39;definition&#39;);</code></p>
+
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'analytics-handler'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'dispatch'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
     <span class="string">'use strict'</span>;
-
-    <span class="keyword">var</span> AnalyticsHandler = Backbone.View.extend({
-        initialize: <span class="keyword">function</span>() {
-            <span class="keyword">this</span>.bindListeners();
-
-            Dispatch.on(<span class="string">'ga-event:definition'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Inline Definition'</span>);
-            Dispatch.on(<span class="string">'toc:click'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Table of Contents'</span>);
-            Dispatch.on(<span class="string">'interpretation:toggle'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Inline interpretation'</span>);
-            Dispatch.on(<span class="string">'ga-event:permalink'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Permalink'</span>);
-        },</pre></div></div>
+    <span class="keyword">return</span> _.extend({</pre></div></div>
             
         </li>
         
@@ -183,18 +189,15 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>TODO: standardize context on Dispatch events</p>
+              <p>storage for entities
+<strong>Usage</strong> Dispatch.open.definition
+idea is that each entity will be stored according to its type so that any module can refer to it without knowing what
+instance it holds. 
+This scheme currently limits it to one value associated with each type, in theory.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        sendEvent: <span class="keyword">function</span>(e) {
-            <span class="keyword">var</span> object, action, context;
-
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> window.ga === <span class="string">'undefined'</span>) {
-                <span class="keyword">return</span>;
-            }
-
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> e === <span class="string">'object'</span>) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        open: {},</pre></div></div>
             
         </li>
         
@@ -205,19 +208,18 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>from jQ event</p>
+              <p>store a new entity in Dispatch.open
+<strong>Params</strong></p>
+<ul>
+<li><strong>key</strong>, string, entity type, ex. &#39;definition&#39;</li>
+<li><strong>val</strong>, object, new Backbone View</li>
+</ul>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="keyword">if</span> (<span class="keyword">typeof</span> e.data !== <span class="string">'undefined'</span>) {
-                    context = e.data;
-                    action = context.action;
-                    object = context.object;
-
-                    <span class="keyword">if</span> (<span class="keyword">typeof</span> context.action === <span class="string">'function'</span>) {
-                        action = context.action.call();
-                    }
-                }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        set: <span class="keyword">function</span>(key, val) {
+            <span class="keyword">this</span>.open[key] = val;
+        },</pre></div></div>
             
         </li>
         
@@ -228,15 +230,17 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>from Dispatch event</p>
+              <p>remove a value from Dispatch.open and call its <code>remove()</code> method
+<strong>Param</strong> string, entity type, ex. &#39;definition&#39;</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="keyword">else</span> {
-                    action = e.action + <span class="string">' '</span> + e.context;
-                    object = <span class="keyword">this</span>;
-                }
-            }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        remove: <span class="keyword">function</span>(key) {
+            <span class="keyword">if</span> (<span class="keyword">this</span>.open[key]) {
+                <span class="keyword">this</span>.open[key].remove();
+                <span class="keyword">delete</span>(<span class="keyword">this</span>.open[key]);
+            }
+        },</pre></div></div>
             
         </li>
         
@@ -247,31 +251,49 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>also from Dispatch event</p>
+              <p>retrieve the id of the stored object
+<strong>Param</strong> string, entity type, ex. &#39;definition&#39;</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> e === <span class="string">'string'</span>) {
-                action = e;
-                object = <span class="keyword">this</span>; 
+            <div class="content"><div class='highlight'><pre>        getViewId: <span class="keyword">function</span>(type) {
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.open[type] === <span class="string">'object'</span>) {
+                <span class="keyword">return</span> <span class="keyword">this</span>.open[type].model.id;
             }
+            <span class="keyword">return</span> <span class="literal">false</span>;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>return open section ex. 1005-3</p>
 
-            window.ga(<span class="string">'send'</span>, <span class="string">'event'</span>, object, action);
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        getOpenSection: <span class="keyword">function</span>() {
+            <span class="keyword">return</span> <span class="keyword">this</span>.open[<span class="string">'section'</span>]; 
         },
 
-        bindListeners: <span class="keyword">function</span>() {
-            $(<span class="string">'#menu-link'</span>).on(<span class="string">'click'</span>, { 
-                object: <span class="string">'Table of Contents'</span>, 
-                action: <span class="keyword">function</span>() {
-                    <span class="keyword">return</span> $(<span class="string">'#menu'</span>).hasClass(<span class="string">'active'</span>) ? <span class="string">'close'</span> : <span class="string">'open'</span>;
-                }
-            }, <span class="keyword">this</span>.sendEvent);
+        getVersion: <span class="keyword">function</span>() {
+            <span class="keyword">return</span> <span class="keyword">this</span>.open[<span class="string">'version'</span>];
+        },
 
-            $(<span class="string">'#toc-close'</span>).on(<span class="string">'click'</span>, {object: <span class="string">'Table of Contents'</span>, action: <span class="string">'close (bottom link)'</span>}, <span class="keyword">this</span>.sendEvent);
+        getURLPrefix: <span class="keyword">function</span>() {
+            <span class="keyword">if</span> (<span class="keyword">this</span>.open[<span class="string">'urlprefix'</span>]) {
+                <span class="keyword">return</span> <span class="keyword">this</span>.open[<span class="string">'urlprefix'</span>];
+            }
+            <span class="keyword">else</span> {
+                <span class="keyword">return</span> <span class="literal">false</span>;
+            }
         }
-    });
 
-    <span class="keyword">return</span> AnalyticsHandler;
+    }, Backbone.Events);   
 });</pre></div></div>
             
         </li>

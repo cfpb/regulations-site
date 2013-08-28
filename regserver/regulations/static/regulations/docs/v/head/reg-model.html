@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>app-init.js</title>
+  <title>reg-model.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -146,7 +146,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>app-init.js</h1>
+                  <h1>reg-model.js</h1>
               </div>
           </li>
         
@@ -158,15 +158,27 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>Module called on app load, once doc.ready</p>
-<p><strong>TODO</strong>: Consolidate/minimize module dependencies</p>
-<p><strong>Usage</strong>: require([&#39;app-init&#39;], function(app) { $(document).ready(function() { app.init(); }) })</p>
+              <p><strong>Extends</strong> MetaModel</p>
+<p><strong>Usage</strong> <code>require([&#39;reg-model&#39;], function(RegModel) {})</code></p>
+<p>Currently represents the whole of a regulation.
+Not really in use until there&#39;s an API.</p>
+<p>The idea here is that Backbone Models are created with a certain type of content in mind.
+Content that:</p>
+<ul>
+<li>there are many instances of with the same general properties (hence Collections)</li>
+<li>that will be updated both on the server and client, frequently</li>
+</ul>
+<p>This is not the case with our content and so this module is intended as a replacement of 
+Backbone&#39;s Model scheme
+The Backbone Model API should be kept as much as makes sense. Existing entities should
+be reused to aim for the effect of a native Backbone experience, but shouldn&#39;t try so hard
+as to be confusing. Ex. the return value of Model.fetch should be the same as in core Backbone,
+even if the internals are different</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'drawer-view'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers) {
-    <span class="string">'use strict'</span>;
-    <span class="keyword">return</span> {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'reg-model'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'./regs-helpers'</span>, <span class="string">'./dispatch'</span>, <span class="string">'./meta-model'</span>], <span class="keyword">function</span>($, _, Backbone, RegsHelpers, Dispatch, MetaModel) {
+    <span class="string">'use strict'</span>;</pre></div></div>
             
         </li>
         
@@ -177,30 +189,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Temporary method. Recurses DOM and builds front end representation of content.
-API should make this obsolete.</p>
+              <p>represents a whole regulation</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        getTree: <span class="keyword">function</span>($obj) {
-            <span class="keyword">var</span> parent = <span class="keyword">this</span>;
-            $obj.children().each(<span class="keyword">function</span>() {
-                <span class="keyword">var</span> $child = $(<span class="keyword">this</span>),
-                    cid = $child.attr(<span class="string">'id'</span>),
-                    clist = $child.find(<span class="string">'ol'</span>),
-                    $nextChild;
-
-                RegModel.set({
-                    <span class="string">'text'</span>: cid,
-                    <span class="string">'content'</span>: $child.html()
-                }); 
-
-                <span class="keyword">if</span> (<span class="keyword">typeof</span> (cid, clist) !== <span class="string">'undefined'</span>) {
-                    $nextChild = clist ? $(clist) : $child;
-                    parent.getTree($nextChild);
-                }
-            });
-        },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    Backbone.RegModel = MetaModel.extend({</pre></div></div>
             
         </li>
         
@@ -211,28 +204,11 @@ API should make this obsolete.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Purgatory for DOM event bindings that should happen in a View</p>
+              <p>an index of all of the entities in the reg, whether or not they&#39;ve been loaded</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        bindEvents: <span class="keyword">function</span>() {
-
-            <span class="comment">/* ssshhhhh */</span>
-            <span class="keyword">new</span> Konami(<span class="keyword">function</span>() {
-                <span class="comment">/* http://thenounproject.com/noun/hamburger/#icon-No17373 */</span>
-                <span class="comment">/* http://thenounproject.com/noun/carrot/#icon-No7790 */</span>
-                document.getElementById(<span class="string">'menu-link'</span>).className += <span class="string">' hamburgerify'</span>;
-                $(<span class="string">'.inline-interpretation .expand-button'</span>).addClass(<span class="string">'carrotify'</span>);
-                $(<span class="string">'#about-tool'</span>).html(<span class="string">'Made with &lt;span style="color: red"&gt;&lt;3&lt;/span&gt; by:'</span>);
-                $(<span class="string">'#about-reg'</span>).html(<span class="string">'Find our brilliant attorneys at:'</span>);
-            });
-        },
-
-        init: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> openSection,
-                urlPrefix,
-                regVersion,
-                regSection = $(<span class="string">'.main-content section[data-base-version]'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        regStructure: [],</pre></div></div>
             
         </li>
         
@@ -243,17 +219,12 @@ API should make this obsolete.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>init primary Views that require only a single instance</p>
+              <p>content = markup to string representations of each reg paragraph/entity
+loaded into the browser (rendered or not)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            window.Regs = {};
-            window.Regs.subhead = <span class="keyword">new</span> SubHeadView();
-            window.Regs.drawer = <span class="keyword">new</span> DrawerView();
-            window.Regs.sidebar = <span class="keyword">new</span> SidebarView();
-            window.Regs.regContent = <span class="keyword">new</span> ContentView();
-            window.Regs.analytics = <span class="keyword">new</span> AnalyticsHandler();
-            window.Regs.mainHeader = <span class="keyword">new</span> HeaderView();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        content: {},</pre></div></div>
             
         </li>
         
@@ -264,15 +235,30 @@ API should make this obsolete.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>set open section and version for ajax calls</p>
+              <p>recurses over the parsed reg tree and creates an in-browser representation
+of a reg. may or may not be functional based on current tree.
+only in use for tests right now...
+refactor to parse just out of the DOM</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            openSection = regSection.attr(<span class="string">'id'</span>);
-            Dispatch.set(<span class="string">'section'</span>, openSection);
+            <div class="content"><div class='highlight'><pre>        parse: <span class="keyword">function</span>(jsonObj) {
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> jsonObj === <span class="string">'object'</span>) {
+                <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> jsonObj) {
+                    <span class="keyword">if</span> (jsonObj.hasOwnProperty(key)) {
+                        <span class="keyword">if</span> (key === <span class="string">'label'</span>) {
+                            <span class="keyword">this</span>.set(jsonObj[key][<span class="string">'text'</span>], jsonObj[<span class="string">'text'</span>]);
+                        }
 
-            regVersion = regSection.data(<span class="string">'base-version'</span>);
-            Dispatch.set(<span class="string">'version'</span>, regVersion);</pre></div></div>
+                        <span class="keyword">if</span> (RegsHelpers.isIterable(jsonObj[key])) {
+                            <span class="keyword">this</span>.parse(jsonObj[key]);
+                        }
+                    }
+                } 
+            }
+
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },</pre></div></div>
             
         </li>
         
@@ -283,11 +269,28 @@ API should make this obsolete.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>cache open section content</p>
+              <p><strong>Param</strong>
+<code>id</code>: string, dash-delimited reg entity id</p>
+<p><strong>Returns</strong> an array of strings, dash-delimited reg entity ids of children</p>
+<p>The magic of the flexibility of the app is that we can pass around these 
+dash-delimited ids and get the job done pretty seamlessly w/o worrying about
+what exactly we&#39;re dealing with. We just rely on a set of rules.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            RegModel.set(openSection, regSection.html());</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        getChildren: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> kids = [],
+                regStructureLen = <span class="keyword">this</span>.regStructure.length,
+                regex = <span class="keyword">new</span> RegExp(id + <span class="string">'[-,a-z,0-9]'</span>);
+
+            <span class="keyword">while</span> (regStructureLen--) {
+                <span class="keyword">if</span> (regex.test(<span class="keyword">this</span>.regStructure[regStructureLen])) {
+                    kids.push(<span class="keyword">this</span>.regStructure[regStructureLen]);
+                } 
+            }
+
+            <span class="keyword">return</span> kids;
+        },</pre></div></div>
             
         </li>
         
@@ -298,18 +301,31 @@ API should make this obsolete.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>cache URL prefix</p>
+              <p><strong>Param</strong>
+<code>id</code>: string, dash-delimited reg entity id</p>
+<p><strong>Returns</strong> string, dash-delimited reg entity id of parent to
+the id passed in or boolean false if the requested id has no parent</p>
+<p>The converse of <code>this.getChildren</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            urlPrefix = RegsHelpers.findURLPrefix();
-            <span class="keyword">if</span> (urlPrefix) {
-                Dispatch.set(<span class="string">'urlprefix'</span>, urlPrefix);
+            <div class="content"><div class='highlight'><pre>        getParent: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> parent, z;
+            z  = id.split(<span class="string">'-'</span>);
+            z.pop();
+            parent = z.join(<span class="string">'-'</span>);
+
+            <span class="keyword">if</span> (<span class="keyword">this</span>.regStructure.indexOf(parent) !== -<span class="number">1</span>) {
+                <span class="keyword">return</span> <span class="keyword">this</span>.content[parent];
             }
 
-            <span class="keyword">this</span>.bindEvents();
+            <span class="keyword">return</span> <span class="literal">false</span>;
         }
-    };
+    });
+
+    <span class="keyword">var</span> reg = <span class="keyword">new</span> Backbone.RegModel();
+
+    <span class="keyword">return</span> reg;
 });</pre></div></div>
             
         </li>
