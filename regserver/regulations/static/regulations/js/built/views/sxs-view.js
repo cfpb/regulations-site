@@ -1,0 +1,1 @@
+define("sxs-view",["jquery","underscore","backbone","dispatch","./sxs-model"],function(e,t,n,r,i){var s=n.View.extend({el:"#breakaway-view",initialize:function(){var e=i.get(this.options.regParagraph+"/"+this.options.version);typeof e.done!="undefined"?e.done(function(e){this.render(e)}.bind(this)):this.render(e)},render:function(e){this.$el.html(e)}});return s});

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>header-view.js</title>
+  <title>sxs-view.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -161,7 +161,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>header-view.js</h1>
+                  <h1>sxs-view.js</h1>
               </div>
           </li>
         
@@ -176,63 +176,31 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'header-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'./sxs-model'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SxSModel) {
     <span class="string">'use strict'</span>;
-    <span class="keyword">var</span> HeaderView = Backbone.View.extend({
-        el: <span class="string">'.reg-header'</span>,
+
+    <span class="keyword">var</span> SxSView = Backbone.View.extend({
+        el: <span class="string">'#breakaway-view'</span>,
 
         initialize: <span class="keyword">function</span>() {
-            <span class="keyword">this</span>.$activeEls = $(<span class="string">'#menu, #site-header, #reg-content'</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>view switcher buttons - TOC, calendar, search</p>
+            <span class="keyword">var</span> analysis = SxSModel.get(<span class="keyword">this</span>.options.regParagraph + <span class="string">'/'</span> + <span class="keyword">this</span>.options.version);
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$tocLinks = $(<span class="string">'.toc-nav-link'</span>);
-        },
-
-        events: {
-            <span class="string">'click .toc-toggle'</span>: <span class="string">'openTOC'</span>,
-            <span class="string">'click .toc-nav-link'</span>: <span class="string">'toggleDrawer'</span>
-        },
-
-        openTOC: <span class="keyword">function</span>(e) {
-            e.preventDefault();
-
-            <span class="keyword">var</span> $target = $(e.target),
-                state = ($target.hasClass(<span class="string">'open'</span>)) ? <span class="string">'close'</span> : <span class="string">'open'</span>;
-
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.$activeEls !== <span class="string">'undefined'</span>) {
-                Dispatch.trigger(<span class="string">'toc:toggle'</span>, state + <span class="string">' toc'</span>);
-                $target.toggleClass(<span class="string">'open'</span>);
-                <span class="keyword">this</span>.$activeEls.toggleClass(<span class="string">'active'</span>);
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> analysis.done !== <span class="string">'undefined'</span>) {
+                analysis.done(<span class="keyword">function</span>(res) {
+                    <span class="keyword">this</span>.render(res);                    
+                }.bind(<span class="keyword">this</span>));
+            }
+            <span class="keyword">else</span> {
+                <span class="keyword">this</span>.render(analysis);
             }
         },
 
-        toggleDrawer: <span class="keyword">function</span>(e) {
-            e.preventDefault();
-
-            <span class="keyword">var</span> $target = $(e.target),
-                linkValue = _.last($target.attr(<span class="string">'href'</span>).split(<span class="string">'#'</span>));
-
-            <span class="keyword">this</span>.$tocLinks.removeClass(<span class="string">'current'</span>);
-            $target.addClass(<span class="string">'current'</span>);
-
-            Dispatch.trigger(<span class="string">'drawer:stateChange'</span>, linkValue);
-
-        }
+        render: <span class="keyword">function</span>(analysis) {
+            <span class="keyword">this</span>.$el.html(analysis);
+        } 
     });
 
-    <span class="keyword">return</span> HeaderView;
+    <span class="keyword">return</span> SxSView;
 });</pre></div></div>
             
         </li>
