@@ -9,7 +9,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
         el: '#sidebar-content',
 
         events: {
-            'click .expandable': 'toggleMeta'
+            'click .expandable': 'toggleExpandable'
         },
 
         initialize: function() {
@@ -22,12 +22,13 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
                 this.removeChild(el);
             }, this);
 
+            Dispatch.on('definition:open', this.closeExpandables, this);
+            Dispatch.on('definition:render', this.insertDefinition, this);
+
             this.childViews = {};
 
             this.childViews.sxs = new SxSListView();
         },
-
-        render: function() {},
 
         // open whatever content should populate the sidebar
         insertChild: function(el) {
@@ -38,10 +39,27 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
             $(el).remove();
         },
 
-        toggleMeta: function(e) {
-            e.stopPropagation();
-            $(e.currentTarget)
-                .toggleClass('open')
+        insertDefinition: function(el) {
+            this.$el.prepend(el);
+        },
+
+        closeExpandables: function() {
+            this.$el.find('.expandable').each(function(i, folder) {
+                this.toggleExpandable($(folder));
+            }.bind(this));
+        },
+
+        toggleExpandable: function(e) {
+            var $expandable;
+            if (typeof e.stopPropagation !== 'undefined') {
+                e.stopPropagation();
+                $expandable = $(e.currentTarget);
+            }
+            else {
+                $expandable = e;
+            }
+
+            $expandable.toggleClass('open')
                 .next('.chunk').slideToggle();
         }
     });

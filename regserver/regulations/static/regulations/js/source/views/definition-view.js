@@ -109,7 +109,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 .append('<a class="close-button tab-activated" href="#">Close definition</a>');
 
             // **Event trigger** triggers definition open event
-            Dispatch.trigger('sidebarModule:render', this.$el);
+            Dispatch.trigger('definition:render', this.$el);
 
             // set focus to the open definition
             this.$el.focus();

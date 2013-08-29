@@ -111,11 +111,6 @@
     .avenir-next-demi;
 }
 
-.open-definition p {
-    font-family: @body-font;
-    font-weight: normal;
-}
-
 .open-definition {
     .close-button {
         cursor: pointer;
@@ -132,9 +127,18 @@
         }
     }
 
+    p {
+        font-family: @body-font;
+        font-weight: normal;
+    }
+
     & > p {
         clear: left;
     }
+}
+
+html.js .expand-drawer {
+    display: none;
 }
 
 /* continue links */
@@ -149,9 +153,6 @@
 }
 
 .sidebar-header {
-    margin: 0 10px 0 15px;
-    height: 20px;
-    width: 100%;
     .group;
 
     h2 {

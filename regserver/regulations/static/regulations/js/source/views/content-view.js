@@ -157,6 +157,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             // if this link is already active, toggle def shut
             if ($link.data('active')) {
                 Dispatch.remove('definition');
+                this.clearActiveTerms();
             }
             else {
                 // if its the same definition, diff term link
@@ -181,6 +182,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             });
 
             Dispatch.set('definition', definition);
+            Dispatch.trigger('definition:open');
             Dispatch.trigger('ga-event:definition', {
                 action: 'clicked key term to open definition',
                 context: defId
