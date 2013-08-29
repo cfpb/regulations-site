@@ -1,1 +1,1 @@
-define("history-view",["jquery","underscore","backbone"],function(e,t,n){var r=n.View.extend({});return r});
+define("history-view",["jquery","underscore","backbone","dispatch"],function(e,t,n,r){var i=n.View.extend({el:"#history",initialize:function(){var t=e(".status-list");t.each(function(){e(this).data("base-version")===r.getVersion()&&(t.removeClass("current"),e(this).addClass("current"))})}});return i});

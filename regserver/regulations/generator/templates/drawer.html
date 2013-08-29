@@ -15,18 +15,25 @@
     <div id="history" class="toc-container hidden">
         <ul>
         {% for version in history %}
-            <li class="{{version.timeline}} status-list">
-                {% if version.timeline == 'current' %}
-                <h4>Current Law</h4>
-                {% endif %}
+            <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
             {% if part == label_id %}
-                <h3><a href="{% url 'chrome_regulation_view' part version.version %}" class="version-link">{{ version.by_date|date }}</a></h3>
+                <a href="{% url 'chrome_regulation_view' part version.version %}" class="version-link">
+                    {% if version.timeline == 'current' %}
+                        <h4>Current Law</h4>
+                    {% endif %}
+                    {{ version.by_date|date }}
+                </a>
             {% else %}
-                <h3><a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link">{{ version.by_date|date }}</a></h3>
+                <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link">
+                    {% if version.timeline == 'current' %}
+                        <h4>Current Law</h4>
+                    {% endif %}
+                    {{ version.by_date|date }}
+                </a>
             {% endif %}
                 <ul class="rule-list">
                 {% for notice in version.notices %}
-                    <li><a class="fr-notice" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
+                    <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
                 {% endfor %}
                 </ul>
             </li>
