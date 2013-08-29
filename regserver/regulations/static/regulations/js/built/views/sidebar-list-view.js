@@ -1,0 +1,1 @@
+define("sidebar-list-view",["jquery","underscore","backbone"],function(e,t,n){var r=n.View.extend({initialize:function(){}});return r});

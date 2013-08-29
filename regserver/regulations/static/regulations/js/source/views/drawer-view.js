@@ -3,7 +3,7 @@
 // **Usage** ```require(['drawer-view'], function(DrawerView) {})```
 //
 // **Jurisdiction** Left panel drawer container
-define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'regs-dispatch', 'toc-view', 'history-view', 'search-view'], function($, _, Backbone, jQCookie, Dispatch, TOCView, HistoryView, SearchView) {
+define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'dispatch', 'toc-view', 'history-view', 'search-view'], function($, _, Backbone, jQCookie, Dispatch, TOCView, HistoryView, SearchView) {
     'use strict';
 
     var DrawerView = Backbone.View.extend({

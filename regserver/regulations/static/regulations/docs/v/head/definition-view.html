@@ -29,13 +29,23 @@
               </a>
             
               
-              <a class="source" href="regs-data.html">
-                regs-data.js
+              <a class="source" href="dispatch.html">
+                dispatch.js
               </a>
             
               
-              <a class="source" href="regs-dispatch.html">
-                regs-dispatch.js
+              <a class="source" href="folder-model.html">
+                folder-model.js
+              </a>
+            
+              
+              <a class="source" href="meta-model.html">
+                meta-model.js
+              </a>
+            
+              
+              <a class="source" href="reg-model.html">
+                reg-model.js
               </a>
             
               
@@ -89,11 +99,6 @@
               </a>
             
               
-              <a class="source" href="regs-view.html">
-                regs-view.js
-              </a>
-            
-              
               <a class="source" href="search-view.html">
                 search-view.js
               </a>
@@ -109,6 +114,16 @@
               </a>
             
               
+              <a class="source" href="sidebar-list-view.html">
+                sidebar-list-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-module-view.html">
+                sidebar-module-view.js
+              </a>
+            
+              
               <a class="source" href="sidebar-view.html">
                 sidebar-view.js
               </a>
@@ -116,6 +131,11 @@
               
               <a class="source" href="sub-head-view.html">
                 sub-head-view.js
+              </a>
+            
+              
+              <a class="source" href="sxs-list-view.html">
+                sxs-list-view.js
               </a>
             
               
@@ -143,7 +163,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p><strong>Extends</strong> RegsView</p>
+              <p><strong>Extends</strong> SidebarModuleView</p>
 <p><strong>TODO</strong> Determine how much sense that still makes ^^</p>
 <p><strong>Usage</strong> <code>require([&#39;definition-view&#39;], function(DefinitionView) {})</code></p>
 <p>A single inline interpretation, child of the sidebar
@@ -151,7 +171,7 @@ As of sprint 6, the only View that is instantiated more than once</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'definition-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-view'</span>, <span class="string">'regs-data'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, RegsView, RegsData, Dispatch, RegsHelpers) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'definition-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'sidebar-module-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'dispatch'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers) {
     <span class="string">'use strict'</span>;</pre></div></div>
             
         </li>
@@ -173,10 +193,11 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> DefinitionView = RegsView.extend({
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> DefinitionView = SidebarModuleView.extend({
         className: <span class="string">'open-definition'</span>,
         events: {
-            <span class="string">'click .close-button'</span>: <span class="string">'close'</span>,
+            <span class="string">'click .close-button.tab-activated'</span>: <span class="string">'close'</span>,
+            <span class="string">'click .close-button'</span>: <span class="string">'headerButtonClose'</span>,
             <span class="string">'click .definition'</span>: <span class="string">'sendDefinitionLinkEvent'</span>,
             <span class="string">'click .continue-link'</span>: <span class="string">'sendContinueLinkEvent'</span>
         },
@@ -227,7 +248,7 @@ this.options:</p>
         },
 
         render: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> defHTML = RegsData.get(<span class="keyword">this</span>.model.id);
+            <span class="keyword">var</span> defHTML = RegModel.get(<span class="keyword">this</span>.model.id);
 
             <span class="keyword">if</span> (<span class="keyword">typeof</span> defHTML.done !== <span class="string">'undefined'</span>) {
                 defHTML.done(<span class="keyword">function</span>(res) {
@@ -242,7 +263,9 @@ this.options:</p>
         },
 
         template: <span class="keyword">function</span>(res) {
-            <span class="keyword">this</span>.$el.html(res);</pre></div></div>
+            <span class="keyword">this</span>.$el.html(res);
+
+            <span class="keyword">this</span>.$el.prepend(<span class="string">'&lt;div class="sidebar-header"&gt;&lt;h2&gt;Defined Term&lt;/h2&gt;&lt;a class="right close-button" href="#"&gt;Close definition&lt;/a&gt;&lt;/div&gt;'</span>);</pre></div></div>
             
         </li>
         
@@ -309,7 +332,7 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                .append(<span class="string">'&lt;a class="close-button" href="#"&gt;Close definition&lt;/a&gt;'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                .append(<span class="string">'&lt;a class="close-button tab-activated" href="#"&gt;Close definition&lt;/a&gt;'</span>);</pre></div></div>
             
         </li>
         
@@ -324,7 +347,7 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'definition:render'</span>, <span class="keyword">this</span>.$el);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'sidebarModule:render'</span>, <span class="keyword">this</span>.$el);</pre></div></div>
             
         </li>
         
@@ -351,6 +374,14 @@ this.options:</p>
                 action: <span class="string">'closed definition by tab-revealed link'</span>,
                 context: <span class="keyword">this</span>.model.id
             });
+            Dispatch.trigger(<span class="string">'definition:remove'</span>, <span class="keyword">this</span>.model.id);
+        },
+
+        headerButtonClose: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+            Dispatch.remove(<span class="string">'definition'</span>);
+            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, <span class="string">'close by header button'</span>);
+            Dispatch.trigger(<span class="string">'definition:remove'</span>, <span class="keyword">this</span>.model.id);
         },
 
         remove: <span class="keyword">function</span>() {
@@ -370,7 +401,7 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'definition:remove'</span>, <span class="keyword">this</span>.model.id);
+            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'sidebarModule:remove'</span>, <span class="keyword">this</span>.model.id);
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
         }

@@ -1,6 +1,6 @@
-define(["underscore", "backbone", "jquery", "definition-view", "regs-data", 'samplejson', 'regs-dispatch'], function(_, Backbone, $, DefinitionView, RegsData, testjson, Dispatch) {
+define(["underscore", "backbone", "jquery", "definition-view", "reg-model", 'samplejson', 'dispatch'], function(_, Backbone, $, DefinitionView, RegModel, testjson, Dispatch) {
   describe("Definitions views", function() {
-    RegsData.parse(testjson);
+    RegModel.parse(testjson);
 
     $('body')
         .append('<div id="2345-6-a" data-interp-id="111-2">sdfsd <div class="inline-interpretation"></div></div>')

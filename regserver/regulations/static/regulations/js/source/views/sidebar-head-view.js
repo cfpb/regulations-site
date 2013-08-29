@@ -3,7 +3,7 @@
 // **Usage** ```require(['sidebar-head-view'], function(SidebarHeadView) {})```
 //
 // **Jurisdiction** gray background sub-header above right sidebar
-define('sidebar-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], function($, _, Backbone, Dispatch) {
+define('sidebar-head-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
     'use strict';
 
     var SidebarHeadView = Backbone.View.extend({

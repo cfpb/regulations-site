@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['content-view'], function(ContentView) {})```
-define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'regs-dispatch', 'definition-view', 'sub-head-view', 'regs-data', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegsData, SectionFooterView, Router) {
+define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'dispatch', 'definition-view', 'sub-head-view', 'reg-model', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegModel, SectionFooterView, Router) {
     'use strict';
 
     var ContentView = Backbone.View.extend({
@@ -70,7 +70,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         // ask for section data, when promise is completed,
         // re-render view
         loadSection: function(sectionId) {
-            var returned = RegsData.get(sectionId);
+            var returned = RegModel.get(sectionId);
 
             // visually indicate that a new section is loading
             $('.reg-text').addClass('loading');

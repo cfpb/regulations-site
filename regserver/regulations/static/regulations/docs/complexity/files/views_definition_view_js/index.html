@@ -90,7 +90,7 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="span12">// **Extends** RegsView
+    <textarea id="file-source" class="span12">// **Extends** SidebarModuleView
 //
 // **TODO** Determine how much sense that still makes ^^
 //
@@ -98,7 +98,7 @@
 //
 // A single inline interpretation, child of the sidebar
 // As of sprint 6, the only View that is instantiated more than once
-define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;regs-view&#039;, &#039;regs-data&#039;, &#039;regs-dispatch&#039;, &#039;regs-helpers&#039;], function($, _, Backbone, RegsView, RegsData, Dispatch, RegsHelpers) {
+define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;sidebar-module-view&#039;, &#039;reg-model&#039;, &#039;dispatch&#039;, &#039;regs-helpers&#039;], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers) {
     &#039;use strict&#039;;
 
     // **Constructor**
@@ -108,7 +108,7 @@ define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;,
     // * **$anchor** jQobj, the content-view link that opened the def
     //
     // this.options turns into this.model
-    var DefinitionView = RegsView.extend({
+    var DefinitionView = SidebarModuleView.extend({
         className: &#039;open-definition&#039;,
         events: {
             &#039;click .close-button&#039;: &#039;close&#039;

@@ -5,10 +5,11 @@ lib/jquery-1.9.1.js
 lib/underscore.js
 lib/backbone.js
 lib/jquery.scrollstop.js
-regs-dispatch.js
+dispatch.js
 regs-helpers.js
-regs-data.js
-views/regs-view.js
+meta-model.js
+reg-model.js
+views/sidebar-module-view.js
 views/definition-view.js
 views/sub-head-view.js
 views/section-footer-view.js
@@ -20,6 +21,9 @@ views/history-view.js
 views/search-view.js
 views/drawer-view.js
 views/sidebar-head-view.js
+views/sidebar-list-view.js
+folder-model.js
+views/sxs-list-view.js
 views/sidebar-view.js
 lib/konami.js
 views/header-view.js

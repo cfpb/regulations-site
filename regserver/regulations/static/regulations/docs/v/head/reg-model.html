@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>reg-model.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app-init.html">
+                app-init.js
+              </a>
+            
+              
+              <a class="source" href="build.html">
+                build.js
+              </a>
+            
+              
+              <a class="source" href="dispatch.html">
+                dispatch.js
+              </a>
+            
+              
+              <a class="source" href="folder-model.html">
+                folder-model.js
+              </a>
+            
+              
+              <a class="source" href="meta-model.html">
+                meta-model.js
+              </a>
+            
+              
+              <a class="source" href="reg-model.html">
+                reg-model.js
+              </a>
+            
+              
+              <a class="source" href="regs-helpers.html">
+                regs-helpers.js
+              </a>
+            
+              
+              <a class="source" href="regs-router.html">
+                regs-router.js
+              </a>
+            
+              
+              <a class="source" href="regulations.html">
+                regulations.js
+              </a>
+            
+              
+              <a class="source" href="require.config.html">
+                require.config.js
+              </a>
+            
+              
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
+              <a class="source" href="content-view.html">
+                content-view.js
+              </a>
+            
+              
+              <a class="source" href="definition-view.html">
+                definition-view.js
+              </a>
+            
+              
+              <a class="source" href="drawer-view.html">
+                drawer-view.js
+              </a>
+            
+              
+              <a class="source" href="header-view.html">
+                header-view.js
+              </a>
+            
+              
+              <a class="source" href="history-view.html">
+                history-view.js
+              </a>
+            
+              
+              <a class="source" href="search-view.html">
+                search-view.js
+              </a>
+            
+              
+              <a class="source" href="section-footer-view.html">
+                section-footer-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-head-view.html">
+                sidebar-head-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-list-view.html">
+                sidebar-list-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-module-view.html">
+                sidebar-module-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-view.html">
+                sidebar-view.js
+              </a>
+            
+              
+              <a class="source" href="sub-head-view.html">
+                sub-head-view.js
+              </a>
+            
+              
+              <a class="source" href="sxs-list-view.html">
+                sxs-list-view.js
+              </a>
+            
+              
+              <a class="source" href="toc-view.html">
+                toc-view.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>reg-model.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p><strong>Extends</strong> MetaModel</p>
+<p><strong>Usage</strong> <code>require([&#39;reg-model&#39;], function(RegModel) {})</code></p>
+<p>Currently represents the whole of a regulation.
+Not really in use until there&#39;s an API.</p>
+<p>The idea here is that Backbone Models are created with a certain type of content in mind.
+Content that:</p>
+<ul>
+<li>there are many instances of with the same general properties (hence Collections)</li>
+<li>that will be updated both on the server and client, frequently</li>
+</ul>
+<p>This is not the case with our content and so this module is intended as a replacement of 
+Backbone&#39;s Model scheme
+The Backbone Model API should be kept as much as makes sense. Existing entities should
+be reused to aim for the effect of a native Backbone experience, but shouldn&#39;t try so hard
+as to be confusing. Ex. the return value of Model.fetch should be the same as in core Backbone,
+even if the internals are different</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'reg-model'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'./regs-helpers'</span>, <span class="string">'./dispatch'</span>, <span class="string">'./meta-model'</span>], <span class="keyword">function</span>($, _, Backbone, RegsHelpers, Dispatch, MetaModel) {
+    <span class="string">'use strict'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>represents a whole regulation</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Backbone.RegModel = MetaModel.extend({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>recurses over the parsed reg tree and creates an in-browser representation
+of a reg. may or may not be functional based on current tree.
+only in use for tests right now...
+refactor to parse just out of the DOM</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        parse: <span class="keyword">function</span>(jsonObj) {
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> jsonObj === <span class="string">'object'</span>) {
+                <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> jsonObj) {
+                    <span class="keyword">if</span> (jsonObj.hasOwnProperty(key)) {
+                        <span class="keyword">if</span> (key === <span class="string">'label'</span>) {
+                            <span class="keyword">this</span>.set(jsonObj[key][<span class="string">'text'</span>], jsonObj[<span class="string">'text'</span>]);
+                        }
+
+                        <span class="keyword">if</span> (RegsHelpers.isIterable(jsonObj[key])) {
+                            <span class="keyword">this</span>.parse(jsonObj[key]);
+                        }
+                    }
+                } 
+            }
+
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p><strong>Param</strong>
+<code>id</code>: string, dash-delimited reg entity id</p>
+<p><strong>Returns</strong> an array of strings, dash-delimited reg entity ids of children</p>
+<p>The magic of the flexibility of the app is that we can pass around these 
+dash-delimited ids and get the job done pretty seamlessly w/o worrying about
+what exactly we&#39;re dealing with. We just rely on a set of rules.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        getChildren: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> kids = [],
+                structureLen = <span class="keyword">this</span>.structure.length,
+                regex = <span class="keyword">new</span> RegExp(id + <span class="string">'[-,a-z,0-9]'</span>);
+
+            <span class="keyword">while</span> (structureLen--) {
+                <span class="keyword">if</span> (regex.test(<span class="keyword">this</span>.structure[structureLen])) {
+                    kids.push(<span class="keyword">this</span>.structure[structureLen]);
+                } 
+            }
+
+            <span class="keyword">return</span> kids;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p><strong>Param</strong>
+<code>id</code>: string, dash-delimited reg entity id</p>
+<p><strong>Returns</strong> string, dash-delimited reg entity id of parent to
+the id passed in or boolean false if the requested id has no parent</p>
+<p>The converse of <code>this.getChildren</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        getParent: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> parent, z;
+            z  = id.split(<span class="string">'-'</span>);
+            z.pop();
+            parent = z.join(<span class="string">'-'</span>);
+
+            <span class="keyword">if</span> (<span class="keyword">this</span>.structure.indexOf(parent) !== -<span class="number">1</span>) {
+                <span class="keyword">return</span> <span class="keyword">this</span>.content[parent];
+            }
+
+            <span class="keyword">return</span> <span class="literal">false</span>;
+        }
+    });
+
+    <span class="keyword">var</span> reg = <span class="keyword">new</span> Backbone.RegModel();
+
+    <span class="keyword">return</span> reg;
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
