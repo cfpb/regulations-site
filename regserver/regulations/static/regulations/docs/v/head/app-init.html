@@ -248,6 +248,25 @@ API should make this obsolete.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
+              <p>set open section and version for ajax calls</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            openSection = regSection.attr(<span class="string">'id'</span>);
+            Dispatch.set(<span class="string">'section'</span>, openSection);
+
+            regVersion = regSection.data(<span class="string">'base-version'</span>);
+            Dispatch.set(<span class="string">'version'</span>, regVersion);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
               <p>init primary Views that require only a single instance</p>
 
             </div>
@@ -259,25 +278,6 @@ API should make this obsolete.</p>
             window.Regs.regContent = <span class="keyword">new</span> ContentView();
             window.Regs.analytics = <span class="keyword">new</span> AnalyticsHandler();
             window.Regs.mainHeader = <span class="keyword">new</span> HeaderView();</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>set open section and version for ajax calls</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            openSection = regSection.attr(<span class="string">'id'</span>);
-            Dispatch.set(<span class="string">'section'</span>, openSection);
-
-            regVersion = regSection.data(<span class="string">'base-version'</span>);
-            Dispatch.set(<span class="string">'version'</span>, regVersion);</pre></div></div>
             
         </li>
         

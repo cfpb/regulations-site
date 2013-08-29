@@ -166,10 +166,46 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'history-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'history-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> HistoryView = Backbone.View.extend({
+
+        el: <span class="string">'#history'</span>,
+
+       initialize: <span class="keyword">function</span>() {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>remove the current class from all .status-list items</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            $(<span class="string">'.status-list'</span>).removeClass(<span class="string">'current'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>check the data-base-version attribute of each <li> against the document</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.find(<span class="string">'.status-list[data-base-version='</span> + Dispatch.getVersion() + <span class="string">']'</span>).addClass(<span class="string">'current'</span>);
+        }
+
 
     });
 

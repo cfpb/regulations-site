@@ -48,6 +48,13 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'reg-model', 'defini
                 regVersion,
                 regSection = $('.main-content section[data-base-version]');
 
+            // set open section and version for ajax calls
+            openSection = regSection.attr('id');
+            Dispatch.set('section', openSection);
+
+            regVersion = regSection.data('base-version');
+            Dispatch.set('version', regVersion);
+
             // init primary Views that require only a single instance
             window.Regs = {};
             window.Regs.subhead = new SubHeadView();
@@ -56,13 +63,6 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'reg-model', 'defini
             window.Regs.regContent = new ContentView();
             window.Regs.analytics = new AnalyticsHandler();
             window.Regs.mainHeader = new HeaderView();
-
-            // set open section and version for ajax calls
-            openSection = regSection.attr('id');
-            Dispatch.set('section', openSection);
-
-            regVersion = regSection.data('base-version');
-            Dispatch.set('version', regVersion);
 
             // cache open section content
             RegModel.set(openSection, regSection.html());
