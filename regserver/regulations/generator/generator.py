@@ -54,7 +54,7 @@ class LayerCreator(object):
             'paragraph': ParagraphLayersApplier(),
             'search_replace': SearchReplaceLayersApplier()}
 
-        self.api = api_reader.Client(settings.API_BASE)
+        self.api = api_reader.ApiReader()
 
     def get_layer_json(self, api_name, regulation, version):
         """ Hit the API to retrieve the regulation JSON. """
@@ -94,7 +94,7 @@ class LayerCreator(object):
 def get_regulation(regulation, version):
     """ Get the regulation JSON tree. Manipulate the label a bit for easier
     access in the templates."""
-    api = api_reader.Client(settings.API_BASE)
+    api = api_reader.ApiReader()
     reg = api.regulation(regulation, version)
     title = reg['title']
     # up till the paren
@@ -110,7 +110,7 @@ def get_regulation(regulation, version):
 
 def get_tree_paragraph(paragraph_id, version):
     """Get a single level of the regulation tree."""
-    api = api_reader.Client(settings.API_BASE)
+    api = api_reader.ApiReader()
     return api.regulation(paragraph_id, version)
 
 
@@ -122,7 +122,7 @@ def get_builder(regulation, version, inline_applier, p_applier, s_applier):
 
 
 def get_all_notices():
-    api = api_reader.Client(settings.API_BASE)
+    api = api_reader.ApiReader()
     return notices.fetch_all(api)
 
 
@@ -130,7 +130,7 @@ def get_notice(document_number):
     """ Get a the data from a particular notice, given the Federal Register
     document number. """
 
-    api = api_reader.Client(settings.API_BASE)
+    api = api_reader.ApiReader()
     return api.notice(document_number)
 
 
@@ -150,7 +150,7 @@ def get_sxs(label_id, notice_doc_number):
 
 
 def get_diff_json(regulation, older, newer):
-    api = api_reader.Client(settings.API_BASE)
+    api = api_reader.ApiReader()
     return api.diff(regulation, older, newer)
 
 

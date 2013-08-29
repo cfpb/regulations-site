@@ -17,7 +17,7 @@ class GeneratorTest(TestCase):
             'text': '', 'children': [], 'label': ['8675'],
             'title': 'Contains no part info'
         }
-        api_reader.Client.return_value.regulation.return_value = reg
+        api_reader.ApiReader.return_value.regulation.return_value = reg
 
         r = generator.get_regulation('8675', 'ver')
         self.assertFalse('title_clean' in r)
@@ -40,33 +40,33 @@ class GeneratorTest(TestCase):
     @patch('regulations.generator.generator.api_reader')
     def test_get_tree_paragraph(self, api_reader):
         node = {'some': 'text'}
-        api_reader.Client.return_value.regulation.return_value = node
+        api_reader.ApiReader.return_value.regulation.return_value = node
 
         p = generator.get_tree_paragraph('some-id', 'some-version')
         self.assertEqual(node, p)
         self.assertEqual(
             ('some-id', 'some-version'),
-            api_reader.Client.return_value.regulation.call_args[0])
+            api_reader.ApiReader.return_value.regulation.call_args[0])
 
     @patch('regulations.generator.generator.api_reader')
     def test_get_diff_json(self, api_reader):
         diff = {'some': 'diff'}
-        api_reader.Client.return_value.diff.return_value = diff
+        api_reader.ApiReader.return_value.diff.return_value = diff
         d = generator.get_diff_json('204', 'old', 'new')
         self.assertEqual(diff, d)
         self.assertEqual(
             ('204', 'old', 'new'),
-            api_reader.Client.return_value.diff.call_args[0])
+            api_reader.ApiReader.return_value.diff.call_args[0])
 
     @patch('regulations.generator.generator.api_reader')
     def test_get_notice(self, api_reader):
         notice = {'some':'notice'}
-        api_reader.Client.return_value.notice.return_value = notice
+        api_reader.ApiReader.return_value.notice.return_value = notice
         n = generator.get_notice('204-1234')
         self.assertEqual(notice, n)
         self.assertEqual(
             ('204-1234',),
-            api_reader.Client.return_value.notice.call_args[0])
+            api_reader.ApiReader.return_value.notice.call_args[0])
 
     @patch('regulations.generator.generator.get_diff_json')
     def test_get_diff_applier(self, get_diff_json):

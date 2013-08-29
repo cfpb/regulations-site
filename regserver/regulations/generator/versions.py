@@ -7,7 +7,7 @@ from regulations.generator.layers.utils import convert_to_python
 
 
 def fetch_grouped_history(part):
-    client = api_reader.Client(settings.API_BASE)
+    client = api_reader.Client()
     versions = filter(lambda v: 'by_date' in v,
                       client.regversions(part)['versions'])
     for version in versions:
