@@ -166,10 +166,51 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'history-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'history-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> HistoryView = Backbone.View.extend({
+
+        el: <span class="string">'#history'</span>,
+
+       initialize: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> $statusList = $(<span class="string">'.status-list'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>check the data-base-version attribute of each <li> against the document</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            $statusList.each(<span class="keyword">function</span>() {
+                <span class="keyword">if</span> ($(<span class="keyword">this</span>).data(<span class="string">'base-version'</span>) === Dispatch.getVersion()) {
+                    $statusList.removeClass(<span class="string">'current'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>for the matching <li> add a class of &#39;current&#39;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    $(<span class="keyword">this</span>).addClass(<span class="string">'current'</span>);
+                }
+            });
+        }
+
 
     });
 
