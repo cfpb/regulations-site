@@ -26,7 +26,7 @@
             {% endif %}
                 <ul class="rule-list">
                 {% for notice in version.notices %}
-                    <li><a class="fr-notice" href="{{notice.fr_url}}">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
+                    <li><a class="fr-notice" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
                 {% endfor %}
                 </ul>
             </li>
