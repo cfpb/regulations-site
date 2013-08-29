@@ -201,7 +201,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>            <span class="keyword">var</span> cookieValue = $.cookie(<span class="string">'Drawer_State'</span>) || <span class="string">'table-of-contents'</span>;
-
+            
             Dispatch.on(<span class="string">'drawer:stateChange'</span>, <span class="keyword">this</span>.changeContents, <span class="keyword">this</span>);
 
             <span class="keyword">this</span>.$label = $(<span class="string">'.toc-type'</span>);
@@ -240,7 +240,9 @@
             <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.changeContents(cookieValue); 
         },
 
-        changeContents: <span class="keyword">function</span>(activeId) {</pre></div></div>
+        changeContents: <span class="keyword">function</span>(activeId) {
+            <span class="keyword">var</span> $expiration = <span class="keyword">new</span> Date(),
+                minutes = <span class="number">60</span>;</pre></div></div>
             
         </li>
         
@@ -251,11 +253,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>hide the content of all drawer sections</p>
+              <p>set date to 60 minutes for cookie expiration    </p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$children.addClass(<span class="string">'hidden'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            $expiration.setTime($expiration.getTime() + (minutes * <span class="number">60</span> * <span class="number">1000</span>));</pre></div></div>
             
         </li>
         
@@ -266,11 +268,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>remove the &#39;hidden&#39; class from the active drawer section</p>
+              <p>hide the content of all drawer sections</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.childViews[activeId][<span class="string">'selector'</span>].removeClass(<span class="string">'hidden'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$children.addClass(<span class="string">'hidden'</span>);</pre></div></div>
             
         </li>
         
@@ -281,11 +283,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>update the title of the drawer section</p>
+              <p>remove the &#39;hidden&#39; class from the active drawer section</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$label.html(<span class="keyword">this</span>.childViews[activeId][<span class="string">'title'</span>]);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.childViews[activeId][<span class="string">'selector'</span>].removeClass(<span class="string">'hidden'</span>);</pre></div></div>
             
         </li>
         
@@ -295,6 +297,21 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>update the title of the drawer section</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$label.html(<span class="keyword">this</span>.childViews[activeId][<span class="string">'title'</span>]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>create a new childView if a view doesn&#39;t already exist</p>
 
@@ -306,17 +323,17 @@
         </li>
         
         
-        <li id="section-8">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>set a cookie value equal to the active drawer id</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            $.cookie(<span class="string">'Drawer_State'</span>, activeId);
+            <div class="content"><div class='highlight'><pre>            $.cookie(<span class="string">'Drawer_State'</span>, activeId, { expires: $expiration });
         }
 
     });

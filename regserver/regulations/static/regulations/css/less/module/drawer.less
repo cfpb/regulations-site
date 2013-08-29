@@ -287,7 +287,7 @@ This contains all of the styles specific to the TOC
     }
 
     a:hover,
-    a:active,
+    a:active
     li .current {
         color: @black;
         background-color: @green_light;
@@ -303,40 +303,55 @@ This contains all of the styles specific to the history
 
 #history {
 
-    .avenir-next;
+    .avenir-next-demi;
 
     ul, 
     li {
         .reset;
     }
 
+    /*.status-list {
+        
+    }*/
+
+    /*TODO: unify link styles with TOC*/
+
     .status-list {
-        padding: 10px 15px;
         border-bottom: 1px solid @light_field;
     }
 
-    a:link,
-    a:visited {
-        color: @pacific;
+    .version-link {
+        display: block;
+        margin: 0;
+        padding: 10px 15px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .version-link:link,
+    .version-link:visited {
+        color: @black;
         text-decoration: none;
     }
 
-    a:hover,
-    a:active {
-        text-decoration: underline;
+    .version-link:hover,
+    .version-link:active,
+    .version-link:target,
+    .current {
+        color: @black;
+        background-color: @green_light;
     }
 
     h3 {
-        margin: 6px 0;
+        margin: 0;
         font-size: 1em;
         .avenir-next-demi;
     }
 
     h4 {
         .reset;
-        font-size: 0.875em;
+        font-size: 0.75em;
         text-transform: uppercase;
-        .avenir-next-demi;
         color: @dark_text;
     }
 
@@ -348,17 +363,26 @@ This contains all of the styles specific to the history
         float: right;
     }
 
-    .rule-list li {
-        margin: .5em 0;
-        font-size: 0.875em;
+    .rule-list {
+        margin: 0 15px;
+        .avenir-next;
     }
 
-    .fr-notice:after {
-        .minicon;
-        font-size: 0.875em;
-        content: " \e007";
+    .rule-list li {
+        margin: .5em 0;
     }
+
 }
+.js {
+   .rule-list {
+    display: none;
+   } 
+
+   .current .rule-list {
+    display: block;
+   }
+}
+
 
 /* 
 Search Drawer
