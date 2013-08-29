@@ -3,7 +3,7 @@
 // **Usage** ```require(['sub-head-view'], function(SubHeadView) {})```
 //
 // **Jurisdiction** The gray subheader above the main content section
-define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch', 'regs-helpers'], function($, _, Backbone, Dispatch, RegsHelpers) {
+define('sub-head-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helpers'], function($, _, Backbone, Dispatch, RegsHelpers) {
     'use strict';
     var SubHeadView = Backbone.View.extend({
         el: '#content-header',

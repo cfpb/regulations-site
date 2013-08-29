@@ -29,13 +29,23 @@
               </a>
             
               
-              <a class="source" href="regs-data.html">
-                regs-data.js
+              <a class="source" href="dispatch.html">
+                dispatch.js
               </a>
             
               
-              <a class="source" href="regs-dispatch.html">
-                regs-dispatch.js
+              <a class="source" href="folder-model.html">
+                folder-model.js
+              </a>
+            
+              
+              <a class="source" href="meta-model.html">
+                meta-model.js
+              </a>
+            
+              
+              <a class="source" href="reg-model.html">
+                reg-model.js
               </a>
             
               
@@ -89,11 +99,6 @@
               </a>
             
               
-              <a class="source" href="regs-view.html">
-                regs-view.js
-              </a>
-            
-              
               <a class="source" href="search-view.html">
                 search-view.js
               </a>
@@ -109,6 +114,16 @@
               </a>
             
               
+              <a class="source" href="sidebar-list-view.html">
+                sidebar-list-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-module-view.html">
+                sidebar-module-view.js
+              </a>
+            
+              
               <a class="source" href="sidebar-view.html">
                 sidebar-view.js
               </a>
@@ -116,6 +131,11 @@
               
               <a class="source" href="sub-head-view.html">
                 sub-head-view.js
+              </a>
+            
+              
+              <a class="source" href="sxs-list-view.html">
+                sxs-list-view.js
               </a>
             
               
@@ -149,7 +169,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'sidebar-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'regs-dispatch'</span>, <span class="string">'sidebar-head-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarHeadView) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'sidebar-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-head-view'</span>, <span class="string">'sxs-list-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarHeadView, SxSListView) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> SidebarView = Backbone.View.extend({
         el: <span class="string">'#sidebar-content'</span>,
@@ -169,14 +189,24 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p><strong>Event Listeners</strong>
-when a new inline definition is opened, populate the sidebar with it</p>
+              <p><strong>Event Listeners</strong></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'definition:render'</span>, <span class="keyword">function</span>(el) {
+            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'sidebarModule:render'</span>, <span class="keyword">function</span>(el) {
                 <span class="keyword">this</span>.insertChild(el);
-            }, <span class="keyword">this</span>);</pre></div></div>
+            }, <span class="keyword">this</span>); 
+
+            Dispatch.on(<span class="string">'sidebarModule:close'</span>, <span class="keyword">function</span>(el) {
+                <span class="keyword">this</span>.removeChild(el);
+            }, <span class="keyword">this</span>);
+
+            <span class="keyword">this</span>.childViews = {};
+
+            <span class="keyword">this</span>.childViews.sxs = <span class="keyword">new</span> SxSListView();
+        },
+
+        render: <span class="keyword">function</span>() {},</pre></div></div>
             
         </li>
         
@@ -187,93 +217,19 @@ when a new inline definition is opened, populate the sidebar with it</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>When an inline definition is closed, reset sidebar content</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'definition:remove'</span>, <span class="keyword">this</span>.clear, <span class="keyword">this</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Init a sidebar header instance</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.header = <span class="keyword">new</span> SidebarHeadView({el: <span class="string">'#sidebar-header'</span>});</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>cache default content for replacement in the future</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.contactInfo = <span class="keyword">this</span>.el.innerHTML.toString();
-        },
-
-        render: <span class="keyword">function</span>() {},</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
               <p>open whatever content should populate the sidebar</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>        insertChild: <span class="keyword">function</span>(el) {
-            <span class="keyword">this</span>.$el.html(el); 
-        },</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>resets content of the sidebar</p>
+            <span class="keyword">this</span>.$el.append(el); 
+        },
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        clear: <span class="keyword">function</span>() {
-            <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.contactInfo);
-        },</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
-              <p>expands the meta info content drop downs</p>
+        removeChild: <span class="keyword">function</span>(el) {
+            $(el).remove();
+        },
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        toggleMeta: <span class="keyword">function</span>(e) {
+        toggleMeta: <span class="keyword">function</span>(e) {
             e.stopPropagation();
             $(e.currentTarget)
                 .toggleClass(<span class="string">'open'</span>)

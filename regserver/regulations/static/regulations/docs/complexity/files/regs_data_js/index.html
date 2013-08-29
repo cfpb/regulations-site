@@ -37,7 +37,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>regs-data.js</h1>
+    <h1>reg-model.js</h1>
   </div>
 </div>
 
@@ -92,7 +92,7 @@
   <div class="row">
     <textarea id="file-source" class="span12">// **Extends** Backbone.Model
 //
-// **Usage** ```require([&#039;regs-data&#039;], function(RegModel) {})```
+// **Usage** ```require([&#039;reg-model&#039;], function(RegModel) {})```
 //
 // Currently represents the whole of a regulation.
 // Not really in use until there&#039;s an API.
@@ -109,7 +109,7 @@
 // be reused to aim for the effect of a native Backbone experience, but shouldn&#039;t try so hard
 // as to be confusing. Ex. the return value of Model.fetch should be the same as in core Backbone,
 // even if the internals are different
-define(&#039;regs-data&#039;, [&#039;underscore&#039;, &#039;backbone&#039;, &#039;./regs-helpers&#039;], function(_, Backbone, RegsHelpers) {
+define(&#039;reg-model&#039;, [&#039;underscore&#039;, &#039;backbone&#039;, &#039;./regs-helpers&#039;], function(_, Backbone, RegsHelpers) {
     &#039;use strict&#039;;
 
     // represents a whole regulation

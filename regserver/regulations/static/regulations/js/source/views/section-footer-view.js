@@ -1,7 +1,7 @@
 // **Extends Backbone.View
 //
 // **Jurisdiction** .section-nav, regulation section navigation footer
-define('section-footer-view', ['jquery', 'underscore', 'backbone', 'regs-dispatch'], function($, _, Backbone, Dispatch) {
+define('section-footer-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
     'use strict';
 
     var SectionFooterView = Backbone.View.extend({

@@ -1,0 +1,1 @@
+define("folder-model",["underscore","backbone","meta-model"],function(e,t,n){var r=n.extend({});return r});

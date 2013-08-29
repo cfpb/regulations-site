@@ -1,4 +1,4 @@
-// **Extends** RegsView
+// **Extends** SidebarModuleView
 //
 // **TODO** Determine how much sense that still makes ^^
 //
@@ -6,7 +6,7 @@
 //
 // A single inline interpretation, child of the sidebar
 // As of sprint 6, the only View that is instantiated more than once
-define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'regs-data', 'regs-dispatch', 'regs-helpers'], function($, _, Backbone, RegsView, RegsData, Dispatch, RegsHelpers) {
+define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'dispatch', 'regs-helpers'], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers) {
     'use strict';
 
     // **Constructor**
@@ -16,10 +16,11 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
     // * **$anchor** jQobj, the content-view link that opened the def
     //
     // this.options turns into this.model
-    var DefinitionView = RegsView.extend({
+    var DefinitionView = SidebarModuleView.extend({
         className: 'open-definition',
         events: {
-            'click .close-button': 'close',
+            'click .close-button.tab-activated': 'close',
+            'click .close-button': 'headerButtonClose',
             'click .definition': 'sendDefinitionLinkEvent',
             'click .continue-link': 'sendContinueLinkEvent'
         },
@@ -70,7 +71,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
         },
 
         render: function() {
-            var defHTML = RegsData.get(this.model.id);
+            var defHTML = RegModel.get(this.model.id);
 
             if (typeof defHTML.done !== 'undefined') {
                 defHTML.done(function(res) {
@@ -86,6 +87,8 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
 
         template: function(res) {
             this.$el.html(res);
+
+            this.$el.prepend('<div class="sidebar-header"><h2>Defined Term</h2><a class="right close-button" href="#">Close definition</a></div>');
 
             // link to definition in content body
             this.$el.append(
@@ -103,10 +106,10 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
             // make definition tabbable
             this.$el.attr('tabindex', '0')
                 // make tab-activeated close button at bottom of definition content
-                .append('<a class="close-button" href="#">Close definition</a>');
+                .append('<a class="close-button tab-activated" href="#">Close definition</a>');
 
             // **Event trigger** triggers definition open event
-            Dispatch.trigger('definition:render', this.$el);
+            Dispatch.trigger('sidebarModule:render', this.$el);
 
             // set focus to the open definition
             this.$el.focus();
@@ -121,13 +124,21 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'regs-view', 'reg
                 action: 'closed definition by tab-revealed link',
                 context: this.model.id
             });
+            Dispatch.trigger('definition:remove', this.model.id);
+        },
+
+        headerButtonClose: function(e) {
+            e.preventDefault();
+            Dispatch.remove('definition');
+            Dispatch.trigger('ga-event:definition', 'close by header button');
+            Dispatch.trigger('definition:remove', this.model.id);
         },
 
         remove: function() {
             this.stopListening();
             this.$el.remove();
             // **Event trigger** notifies app that definition is removed
-            Dispatch.trigger('definition:remove', this.model.id);
+            Dispatch.trigger('sidebarModule:remove', this.model.id);
 
             return this;
         }

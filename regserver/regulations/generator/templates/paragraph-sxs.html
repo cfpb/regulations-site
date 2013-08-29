@@ -17,3 +17,29 @@
     {% endwith %}
 {% endfor %}
 </div>
+
+<div id="metadata-{{sxs.label}}">
+
+    <h3> ANALYSIS TAKEN FROM: </h3>
+
+    <p> 
+        Document Number:  <br />
+        <a href="{{sxs.metadata.fr_url}}">{{sxs.metadata.document_number}}</a>
+    </p>
+
+    <p>
+        Action:
+        {{sxs.metadata.action}}
+    </p>
+
+    <p> 
+        Dates: <br />
+        Publication: {{sxs.metadata.publication_date|date:"F j, Y"}} <br />
+        Effective:  {{sxs.metadata.effective_on|date:"F j, Y"}}
+    </p>
+
+    <p> 
+        RIN: {{sxs.metadata.regulation_id_numbers|join:", "}} <br />
+    </p>
+
+</div>

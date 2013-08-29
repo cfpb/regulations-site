@@ -1,11 +1,9 @@
 // **Extends** Backbone.View
 //
-// **Usage** ```require(['regs-view'], function(RegsView) { var thing = RegsView.extend({}); })```
-//
-// should be renamed sidebar-content-view or something
-define('regs-view', ['jquery', 'underscore', 'backbone', 'regs-data'], function($, _, Backbone, RegsData) {
+// **Usage** ```require(['sidebar-module-view'], function(SidebarModuleView) { var thing = SidebarModuleView.extend({}); })```
+define('sidebar-module-view', ['jquery', 'underscore', 'backbone', 'reg-model'], function($, _, Backbone, RegModel) {
     'use strict';
-    var RegsView = Backbone.View.extend({
+    var SidebarModuleView = Backbone.View.extend({
         initialize: function() {
             var field;
             this.model = {};
@@ -18,7 +16,7 @@ define('regs-view', ['jquery', 'underscore', 'backbone', 'regs-data'], function(
                 }
             }
 
-            this.model.content = RegsData.get(this.model.id);
+            this.model.content = RegModel.get(this.model.id);
             this.$el.html(this.model.content);
 
             this.render();
@@ -27,5 +25,5 @@ define('regs-view', ['jquery', 'underscore', 'backbone', 'regs-data'], function(
         }
     });
 
-    return RegsView;
+    return SidebarModuleView;
 });

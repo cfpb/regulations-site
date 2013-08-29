@@ -22,7 +22,7 @@
         'definition-view': './views/definition-view',
         'regs-fixed-el-view': './views/regs-fixed-el-view',
         'sub-head-view': './views/sub-head-view',
-        'regs-view': './views/regs-view',
+        'sidebar-module-view': './views/sidebar-module-view',
         'toc-view': './views/toc-view',
         'sidebar-view': './views/sidebar-view',
         'sidebar-head-view': './views/sidebar-head-view',
@@ -42,7 +42,7 @@
       }
   });
 
-  require(['/regulations/static/regulations/js/tests/specs/reg-data-spec.js', '/regulations/static/regulations/js/tests/specs/definition-view-spec.js', '/regulations/static/regulations/js/tests/specs/content-view-spec.js', '/regulations/static/regulations/js/tests/specs/regs-helpers-spec.js', '/regulations/static/regulations/js/tests/specs/regs-dispatch-spec.js', '/regulations/static/regulations/js/tests/specs/header-view-spec.js'], function() {
+  require(['/regulations/static/regulations/js/tests/specs/reg-data-spec.js', '/regulations/static/regulations/js/tests/specs/definition-view-spec.js', '/regulations/static/regulations/js/tests/specs/content-view-spec.js', '/regulations/static/regulations/js/tests/specs/regs-helpers-spec.js', '/regulations/static/regulations/js/tests/specs/dispatch-spec.js', '/regulations/static/regulations/js/tests/specs/header-view-spec.js'], function() {
     $(function() {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute();

@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'regs-dispatch'], function($, _, Backbone, Dispatch) {
+define(['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
     describe("Dispatch", function() {
         it("should house view instances that need to be accessed cross-module", function() {
             var view = {model: {id: 3}};
