@@ -1,4 +1,4 @@
-define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar-list-view', './folder-model'], function($, _, Backbone, Dispatch, SidebarListView, FolderModel) {
+define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar-list-view', './folder-model', 'sxs-view'], function($, _, Backbone, Dispatch, SidebarListView, FolderModel, SxSView) {
     'use strict';
     var SxSListView = SidebarListView.extend({
         el: '#sxs-list',
@@ -18,6 +18,16 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
 
         openSxS: function(e) {
             e.preventDefault();
+
+            var $sxsLink = $(e.target),
+                paragraphId = $sxsLink.data('sxs-paragraph-id'),
+                version = $sxsLink.data('doc-number');
+
+            Dispatch.set('sxs-analysis', new SxSView({
+                    regParagraph: paragraphId,
+                    version: version
+                })
+            );
         },
 
         getAnalyses: function(sectionId) {
