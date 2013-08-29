@@ -173,8 +173,7 @@
 
         el: <span class="string">'#history'</span>,
 
-       initialize: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> $statusList = $(<span class="string">'.status-list'</span>);</pre></div></div>
+       initialize: <span class="keyword">function</span>() {</pre></div></div>
             
         </li>
         
@@ -185,13 +184,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>check the data-base-version attribute of each <li> against the document</p>
+              <p>remove the current class from all .status-list items</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            $statusList.each(<span class="keyword">function</span>() {
-                <span class="keyword">if</span> ($(<span class="keyword">this</span>).data(<span class="string">'base-version'</span>) === Dispatch.getVersion()) {
-                    $statusList.removeClass(<span class="string">'current'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            $(<span class="string">'.status-list'</span>).removeClass(<span class="string">'current'</span>);</pre></div></div>
             
         </li>
         
@@ -202,13 +199,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>for the matching <li> add a class of &#39;current&#39;</p>
+              <p>check the data-base-version attribute of each <li> against the document</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    $(<span class="keyword">this</span>).addClass(<span class="string">'current'</span>);
-                }
-            });
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.find(<span class="string">'.status-list[data-base-version='</span> + Dispatch.getVersion() + <span class="string">']'</span>).addClass(<span class="string">'current'</span>);
         }
 
 
