@@ -29,5 +29,6 @@ class ViewsSideBarViewTest(TestCase):
     @patch('regulations.views.sidebar.api_reader')
     def test_get_404(self, api_reader):
         api_reader.ApiReader.return_value.layer.return_value = None
-        response = Client().get('/partial/sidebar/1111-1/verver')
+        response = Client().get('/partial/sidebar/1111-2/verver')
         self.assertEqual(response.status_code, 404)
+        self.assertTrue(api_reader.ApiReader.return_value.layer.called)

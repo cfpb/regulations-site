@@ -34,13 +34,13 @@ class ViewTests(TestCase):
         view.add_extras(context)
         self.assertEqual('built', context['env'])
 
-    @patch('regulations.generator.generator')
+    @patch('regulations.views.chrome.generator')
     def test_get_404(self, generator):
         generator.get_regulation.return_value = None
         response = Client().get('/regulation/111/222')
         self.assertEqual(404, response.status_code)
 
-    @patch('regulations.generator.generator')
+    @patch('regulations.views.chrome.generator')
     def test_get_404_tree(self, generator):
         generator.get_regulation.return_value = {'regulation':'tree'}
         generator.get_tree_paragraph.return_value = None
