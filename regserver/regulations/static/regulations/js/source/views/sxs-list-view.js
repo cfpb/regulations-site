@@ -44,7 +44,8 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         },
 
         render: function(html) {
-            this.$el.html(html);
+            var list = $(html).find('#sxs-list').html();
+            this.$el.html(list);
         }
     });
 
