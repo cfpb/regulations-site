@@ -15,10 +15,12 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
             else {
                 this.render(analysis);
             }
+
         },
 
         render: function(analysis) {
             this.$el.html(analysis);
+            this.$el.addClass('open-sxs');
         } 
     });
 

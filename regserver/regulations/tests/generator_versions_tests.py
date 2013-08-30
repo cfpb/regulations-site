@@ -9,7 +9,7 @@ from regulations.generator.versions import *
 class VersionsTest(TestCase):
     @patch('regulations.generator.versions.api_reader')
     def test_fetch_grouped_history(self, reader):
-        client = reader.Client.return_value
+        client = reader.ApiReader.return_value
 
         future = datetime.today() + timedelta(days=5)
         future = future.strftime('%Y-%m-%d')
