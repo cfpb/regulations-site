@@ -222,7 +222,8 @@
         },
 
         render: <span class="keyword">function</span>(html) {
-            <span class="keyword">this</span>.$el.html(html);
+            <span class="keyword">var</span> list = $(html).find(<span class="string">'#sxs-list'</span>).html();
+            <span class="keyword">this</span>.$el.html(list);
         }
     });
 
