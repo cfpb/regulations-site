@@ -163,7 +163,12 @@ CACHES = {
     'default' : {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/eregs_cache',
+    },
+    'api_cache':{
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'api_cache_memory',
     }
+
 }
 
 CACHE_MIDDLEWARE_ALIAS = 'default'
