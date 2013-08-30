@@ -30,8 +30,8 @@ class PartialSearchTest(TestCase):
         print response.content[:100]
         self.assertTrue('3333' in response.content)
 
-    def test_get_404(self):
+    def test_get_400(self):
         response = Client().get('/partial/search?version=vvv')
-        self.assertEqual(404, response.status_code)
+        self.assertEqual(400, response.status_code)
         response = Client().get('/partial/search?q=vvv')
-        self.assertEqual(404, response.status_code)
+        self.assertEqual(400, response.status_code)
