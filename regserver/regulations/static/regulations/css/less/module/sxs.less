@@ -6,8 +6,7 @@ sxs.less contains styles for the SxS overlay
 
 #breakaway-view {
     position: fixed;
-    top: -1000px;
-    .slide (@direction: top);
+    top: -9999px;
 }
 
 /*
@@ -28,31 +27,60 @@ SxS window
     .slide (@direction: top)
 }
 /*
-SxS content wrapper
--------------------
+SxS header
+===================
 */
 .sxs-header {
     position: fixed;
     width: 100%;
     height: 2.125em;
     background-color: @light_orange;
+    border-bottom: 1px solid @orange;
     z-index: 100;
 }
 
 /*
+Back link
+---------
+*/
+
+.sxs-back-button,
+.sxs-back-button:link,
+.sxs-back-button:visited {
+    display: inline-block;
+    padding: 0 15px;
+    min-width: 5em;
+    background-color: @bg_gray;
+    color: @dark_gray;
+    border-right: 2px solid @medium_gray;
+    text-decoration: none;
+    line-height: 2.0625; /* match height of the .sxs-header - 1px */
+
+    .minicon-left {
+        font-size: .75em;
+    }
+}
+
+.sxs-back-button:hover,
+.sxs-back-button:active {
+    color: @pacific;
+}
+
+
+/*
 SxS content wrapper
--------------------
+===================
 */
 .sxs-content {
     margin: 0 auto;
-    max-width: 1000px;
+    max-width: 1100px;
     margin-bottom: 60px;
     padding: 30px 15px;
 }
 
 /* 
 Main content of the SxS Analysis
--------------------------------
+================================
 */
 .sxs-main-content {
     float: left;
@@ -61,7 +89,7 @@ Main content of the SxS Analysis
 
 /* 
 Metadata info for the SxS Analysis
-----------------------------------
+==================================
 */
 .sxs-metadata {
     float: right;
