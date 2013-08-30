@@ -11,8 +11,6 @@
     }
 
     .chunk {
-        margin: 1em 0 0 0;
-
         a:link,
         a:visited {
             color: @pacific;
@@ -51,7 +49,6 @@
         .avenir-next-demi;
 
         &.expandable {
-            margin: 1.5em 15px 1.5em 0;
             cursor: pointer;
         }
 
@@ -180,5 +177,19 @@ html.js .expand-drawer {
             background: url(../img/close@2x.png) no-repeat 0 0;
             background-size: 15px 15px;
         }
+    }
+}
+
+.regs-meta {
+    h5 {
+        background-color: @bg_gray;
+        color: @dark_gray;
+        padding: .5em 1em;
+        .avenir-next;
+    }
+
+    .chunk {
+        padding: 1em;
+        border-bottom: 1px solid @medium_gray;
     }
 }
