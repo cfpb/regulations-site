@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.views.generic.base import TemplateView
 
 from regulations.generator import api_reader
@@ -15,7 +14,7 @@ class SideBarView(TemplateView):
         label_id = context['label_id']
         version = context['version']
 
-        client = api_reader.Client(settings.API_BASE)
+        client = api_reader.ApiReader()
         sxs_layer_data = client.layer('analyses', label_id, version)
         sxs_layer = SectionBySectionLayer(sxs_layer_data)
         result = sxs_layer.apply_layer(label_id)

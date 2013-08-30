@@ -11,7 +11,7 @@ class ViewsSideBarViewTest(TestCase):
 
     @patch('regulations.views.sidebar.api_reader')
     def test_get(self, api_reader):
-        api_reader.Client.return_value.layer.return_value = {
+        api_reader.ApiReader.return_value.layer.return_value = {
             '1111-1': [
                 {'reference': ['1992-1', '1111-1']},
                 {'reference': ['1992-2', '1111-1']},
