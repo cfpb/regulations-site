@@ -23,6 +23,8 @@ views/drawer-view.js
 views/sidebar-head-view.js
 views/sidebar-list-view.js
 folder-model.js
+sxs-model.js
+views/sxs-view.js
 views/sxs-list-view.js
 views/sidebar-view.js
 lib/konami.js

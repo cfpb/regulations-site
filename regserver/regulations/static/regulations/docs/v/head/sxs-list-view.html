@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="sxs-model.html">
+                sxs-model.js
+              </a>
+            
+              
               <a class="source" href="analytics-handler-view.html">
                 analytics-handler-view.js
               </a>
@@ -139,6 +144,11 @@
               </a>
             
               
+              <a class="source" href="sxs-view.html">
+                sxs-view.js
+              </a>
+            
+              
               <a class="source" href="toc-view.html">
                 toc-view.js
               </a>
@@ -166,7 +176,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-list-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-list-view'</span>, <span class="string">'./folder-model'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarListView, FolderModel) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-list-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-list-view'</span>, <span class="string">'./folder-model'</span>, <span class="string">'sxs-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarListView, FolderModel, SxSView) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> SxSListView = SidebarListView.extend({
         el: <span class="string">'#sxs-list'</span>,
@@ -186,6 +196,16 @@
 
         openSxS: <span class="keyword">function</span>(e) {
             e.preventDefault();
+
+            <span class="keyword">var</span> $sxsLink = $(e.target),
+                paragraphId = $sxsLink.data(<span class="string">'sxs-paragraph-id'</span>),
+                version = $sxsLink.data(<span class="string">'doc-number'</span>);
+
+            Dispatch.set(<span class="string">'sxs-analysis'</span>, <span class="keyword">new</span> SxSView({
+                    regParagraph: paragraphId,
+                    version: version
+                })
+            );
         },
 
         getAnalyses: <span class="keyword">function</span>(sectionId) {

@@ -21,7 +21,8 @@ var require = {
         'history-view': './views/history-view',
         'search-view': './views/search-view',
         'sxs-list-view': './views/sxs-list-view',
-        'sidebar-list-view': './views/sidebar-list-view'
+        'sidebar-list-view': './views/sidebar-list-view',
+        'sxs-view': './views/sxs-view'
     },
     shim: {
         underscore: {

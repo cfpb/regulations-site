@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="sxs-model.html">
+                sxs-model.js
+              </a>
+            
+              
               <a class="source" href="analytics-handler-view.html">
                 analytics-handler-view.js
               </a>
@@ -136,6 +141,11 @@
               
               <a class="source" href="sxs-list-view.html">
                 sxs-list-view.js
+              </a>
+            
+              
+              <a class="source" href="sxs-view.html">
+                sxs-view.js
               </a>
             
               
@@ -325,7 +335,11 @@ false if the entity hasn&#39;t been loaded</p>
                 url += <span class="keyword">this</span>.supplementalPath + <span class="string">'/'</span>;
             }
 
-            url += id + <span class="string">'/'</span> + Dispatch.getVersion(); 
+            url += id;
+
+            <span class="keyword">if</span> (id.indexOf(<span class="string">'/'</span>) === -<span class="number">1</span>) {
+                url += <span class="string">'/'</span> + Dispatch.getVersion(); 
+            }
 
             <span class="keyword">return</span> url;
         },</pre></div></div>

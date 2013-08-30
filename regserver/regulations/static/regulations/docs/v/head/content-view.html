@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="sxs-model.html">
+                sxs-model.js
+              </a>
+            
+              
               <a class="source" href="analytics-handler-view.html">
                 analytics-handler-view.js
               </a>
@@ -136,6 +141,11 @@
               
               <a class="source" href="sxs-list-view.html">
                 sxs-list-view.js
+              </a>
+            
+              
+              <a class="source" href="sxs-view.html">
+                sxs-view.js
               </a>
             
               
@@ -546,6 +556,7 @@ is closed via active term link</p>
             
             <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> ($link.data(<span class="string">'active'</span>)) {
                 Dispatch.remove(<span class="string">'definition'</span>);
+                <span class="keyword">this</span>.clearActiveTerms();
             }
             <span class="keyword">else</span> {</pre></div></div>
             
@@ -609,6 +620,7 @@ is closed via active term link</p>
             });
 
             Dispatch.set(<span class="string">'definition'</span>, definition);
+            Dispatch.trigger(<span class="string">'definition:open'</span>);
             Dispatch.trigger(<span class="string">'ga-event:definition'</span>, {
                 action: <span class="string">'clicked key term to open definition'</span>,
                 context: defId

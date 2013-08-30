@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="sxs-model.html">
+                sxs-model.js
+              </a>
+            
+              
               <a class="source" href="analytics-handler-view.html">
                 analytics-handler-view.js
               </a>
@@ -139,6 +144,11 @@
               </a>
             
               
+              <a class="source" href="sxs-view.html">
+                sxs-view.js
+              </a>
+            
+              
               <a class="source" href="toc-view.html">
                 toc-view.js
               </a>
@@ -175,7 +185,7 @@
         el: <span class="string">'#sidebar-content'</span>,
 
         events: {
-            <span class="string">'click .expandable'</span>: <span class="string">'toggleMeta'</span>
+            <span class="string">'click .expandable'</span>: <span class="string">'toggleExpandable'</span>
         },
 
         initialize: <span class="keyword">function</span>() {</pre></div></div>
@@ -201,12 +211,13 @@
                 <span class="keyword">this</span>.removeChild(el);
             }, <span class="keyword">this</span>);
 
+            Dispatch.on(<span class="string">'definition:open'</span>, <span class="keyword">this</span>.closeExpandables, <span class="keyword">this</span>);
+            Dispatch.on(<span class="string">'definition:render'</span>, <span class="keyword">this</span>.insertDefinition, <span class="keyword">this</span>);
+
             <span class="keyword">this</span>.childViews = {};
 
             <span class="keyword">this</span>.childViews.sxs = <span class="keyword">new</span> SxSListView();
-        },
-
-        render: <span class="keyword">function</span>() {},</pre></div></div>
+        },</pre></div></div>
             
         </li>
         
@@ -229,10 +240,27 @@
             $(el).remove();
         },
 
-        toggleMeta: <span class="keyword">function</span>(e) {
-            e.stopPropagation();
-            $(e.currentTarget)
-                .toggleClass(<span class="string">'open'</span>)
+        insertDefinition: <span class="keyword">function</span>(el) {
+            <span class="keyword">this</span>.$el.prepend(el);
+        },
+
+        closeExpandables: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.$el.find(<span class="string">'.expandable'</span>).each(<span class="keyword">function</span>(i, folder) {
+                <span class="keyword">this</span>.toggleExpandable($(folder));
+            }.bind(<span class="keyword">this</span>));
+        },
+
+        toggleExpandable: <span class="keyword">function</span>(e) {
+            <span class="keyword">var</span> $expandable;
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> e.stopPropagation !== <span class="string">'undefined'</span>) {
+                e.stopPropagation();
+                $expandable = $(e.currentTarget);
+            }
+            <span class="keyword">else</span> {
+                $expandable = e;
+            }
+
+            $expandable.toggleClass(<span class="string">'open'</span>)
                 .next(<span class="string">'.chunk'</span>).slideToggle();
         }
     });

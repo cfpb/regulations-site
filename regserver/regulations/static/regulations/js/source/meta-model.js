@@ -98,7 +98,11 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
                 url += this.supplementalPath + '/';
             }
 
-            url += id + '/' + Dispatch.getVersion(); 
+            url += id;
+
+            if (id.indexOf('/') === -1) {
+                url += '/' + Dispatch.getVersion(); 
+            }
 
             return url;
         },
