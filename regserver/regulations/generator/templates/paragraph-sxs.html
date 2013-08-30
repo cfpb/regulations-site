@@ -1,6 +1,8 @@
 
 {% if sxs.label %}
-    <div id="{{sxs.label}}">
+    <div class="sxs-header"> </div>
+    <div class="sxs-content">
+        <div id="{{sxs.label}}" class="sxs-main-content group">
 {% else %}
     <div>
 {% endif %}
@@ -18,7 +20,7 @@
 {% endfor %}
 </div>
 
-<div id="metadata-{{sxs.label}}">
+<div id="metadata-{{sxs.label}}" class="sxs-metadata">
 
     <h3> ANALYSIS TAKEN FROM: </h3>
 
@@ -41,5 +43,7 @@
     <p> 
         RIN: {{sxs.metadata.regulation_id_numbers|join:", "}} <br />
     </p>
-
+{% if sxs.label %}
+    </div>
+{% endif %}
 </div>
