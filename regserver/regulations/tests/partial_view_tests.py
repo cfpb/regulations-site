@@ -2,6 +2,7 @@ from unittest import TestCase
 from mock import patch
 
 from django.test import RequestFactory
+from django.test.client import Client
 
 from regulations.generator.layers.layers_applier import *
 from regulations.generator.node_types import INTERP, REGTEXT
@@ -28,6 +29,12 @@ class PartialParagraphViewTests(TestCase):
         response = view(request, label_id=paragraph_id, version=reg_version)
         self.assertEqual(response.context_data['node'],
                          generator.get_tree_paragraph.return_value)
+
+    @patch('regulations.views.partial.generator')
+    def test_get_404(self, generator):
+        generator.get_tree_paragraph.return_value = None
+        response = Client().get('/partial/202-4/ver')
+        self.assertEqual(404, response.status_code)
 
 
 class PartialSectionViewTests(TestCase):
