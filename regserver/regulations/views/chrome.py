@@ -31,7 +31,7 @@ class ChromeView(TemplateView):
         full_tree = generator.get_regulation(part, version)
         relevant_tree = generator.get_tree_paragraph(label_id, version)
 
-        if not full_tree or relevant_tree:
+        if full_tree is None or relevant_tree is None:
             raise Http404
 
         partial_view = self.partial_class.as_view()
