@@ -96,16 +96,18 @@ def get_regulation(regulation, version):
     access in the templates."""
     api = api_reader.ApiReader()
     reg = api.regulation(regulation, version)
-    title = reg['title']
-    # up till the paren
-    match = re.search('part \d+[^\w]*([^\(]*)', title, re.I)
-    if match:
-        reg['title_clean'] = match.group(1).strip()
-    match = re.search('\(regulation (\w+)\)', title, re.I)
-    if match:
-        reg['reg_letter'] = match.group(1)
 
-    return reg
+    if reg:
+        title = reg['title']
+        # up till the paren
+        match = re.search('part \d+[^\w]*([^\(]*)', title, re.I)
+        if match:
+            reg['title_clean'] = match.group(1).strip()
+        match = re.search('\(regulation (\w+)\)', title, re.I)
+        if match:
+            reg['reg_letter'] = match.group(1)
+
+        return reg
 
 
 def get_tree_paragraph(paragraph_id, version):
@@ -156,4 +158,5 @@ def get_diff_json(regulation, older, newer):
 
 def get_diff_applier(regulation, older, newer):
     diff_json = get_diff_json(regulation, older, newer)
-    return DiffApplier(diff_json)
+    if diff_json:
+        return DiffApplier(diff_json)

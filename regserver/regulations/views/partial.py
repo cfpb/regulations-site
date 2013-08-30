@@ -1,5 +1,6 @@
 #vim: set encoding=utf-8
 from django.views.generic.base import TemplateView
+from django.http import Http404
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
@@ -28,6 +29,10 @@ class PartialView(TemplateView):
         label_id = context['label_id']
         version = context['version']
 
+        tree = generator.get_tree_paragraph(label_id, version)
+        if tree is None:
+            raise Http404
+
         if 'layers' in self.request.GET.keys():
             appliers = utils.handle_specified_layers(
                 self.request.GET['layers'],
@@ -40,9 +45,8 @@ class PartialView(TemplateView):
                 label_id, version, self.__class__.sectional_links)
             inline_applier, p_applier, s_applier = layer_creator.get_appliers()
 
-        tree = generator.get_tree_paragraph(label_id, version)
+        
         builder = generate_html(tree, (inline_applier, p_applier, s_applier))
-
         return self.transform_context(context, builder)
 
 

@@ -14,6 +14,11 @@ INSTALLED_APPS += (
     'django_nose',
 )
 
+CACHES['default'] = {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'LOCATION': '/tmp/django_cache',
+}
+
 
 try:
     from local_settings import *

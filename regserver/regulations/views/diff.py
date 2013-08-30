@@ -1,5 +1,6 @@
 #vim: set encoding=utf-8
 from django.views.generic.base import TemplateView
+from django.http import Http404
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
@@ -23,10 +24,14 @@ class PartialSectionDiffView(TemplateView):
 
         tree = generator.get_tree_paragraph(label_id, older)
 
-        appliers = utils.handle_specified_layers('', label_id, older)
-
         reg = label_id.split('-')[0]
-        appliers += (generator.get_diff_applier(reg, older, newer),)
+        diff = generator.get_diff_applier(reg, older, newer)
+
+        if tree is None or diff is None:
+            raise Http404
+
+        appliers = utils.handle_specified_layers('', label_id, older)
+        appliers += (diff)
 
         builder = HTMLBuilder(*appliers)
         builder.tree = tree

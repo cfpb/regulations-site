@@ -24,6 +24,12 @@ class ApiClient:
         no error handling"""
 
         if self.base_url.startswith('http'):
-            return requests.get(self.base_url + suffix, params=params).json()
+            r = requests.get(self.base_url + suffix, params=params)
+            if r.status_code == requests.codes.ok:
+                return r.json()
+            elif r.status_code == 404:
+                return None
+            else:
+                r.raise_for_status()
         else:
             return self.get_from_file_system(suffix)
