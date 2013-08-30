@@ -1,6 +1,7 @@
 from django.core.cache import get_cache
 from regulations.generator import api_client
 
+
 class ApiCache(object):
     """ Interface with the cache. """
     def __init__(self):
@@ -13,7 +14,8 @@ class ApiCache(object):
         self.cache.set(key, value)
 
     def generate_key(self, cache_key_elements):
-        return '-'.join(cache_key_elements) 
+        return '-'.join(cache_key_elements)
+
 
 class ApiReader(object):
     """ Access the regulations API. Either hit the cache, or if there's a miss,
@@ -25,7 +27,7 @@ class ApiReader(object):
 
     def regversions(self, label):
         return self._get(
-            ['regversions', label], 
+            ['regversions', label],
             'regulation/%s' % label)
 
     def add_regulation_tree(self, reg_tree, version):
@@ -57,7 +59,7 @@ class ApiReader(object):
         cached = self.cache.get(cache_key)
 
         if cached is not None:
-            return cached 
+            return cached
         else:
             element = self.client.get(api_suffix, api_params)
             self.cache.set(cache_key, element)
@@ -66,10 +68,10 @@ class ApiReader(object):
     def layer(self, layer_name, label, version):
         regulation_part = label.split('-')[0]
         return self._get(
-            ['layer', layer_name, regulation_part, version], 
+            ['layer', layer_name, regulation_part, version],
             'layer/%s/%s/%s' % (layer_name, regulation_part, version))
 
-    def diff(self):
+    def diff(self, label, older, newer):
         """ End point for diffs. """
         return self._get(
             ['diff', label, older, newer],
@@ -79,12 +81,12 @@ class ApiReader(object):
         """ End point for notice searching. Right now just a list. """
         if part:
             return self._get(
-                ['notices', part], 
-                'notice', 
-                {'part':part})
+                ['notices', part],
+                'notice',
+                {'part': part})
         else:
             return self._get(
-                ['notices'], 
+                ['notices'],
                 'notices')
 
     def notice(self, fr_document_number):
