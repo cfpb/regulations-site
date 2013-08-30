@@ -5,6 +5,7 @@ from django.views.generic.base import TemplateView
 from regulations.generator import api_reader
 from regulations.generator.node_types import label_to_text
 
+
 class PartialSearch(TemplateView):
     """Display search results without any chrome."""
     template_name = 'search-results.html'
