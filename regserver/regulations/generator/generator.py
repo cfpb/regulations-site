@@ -96,16 +96,18 @@ def get_regulation(regulation, version):
     access in the templates."""
     api = api_reader.ApiReader()
     reg = api.regulation(regulation, version)
-    title = reg['title']
-    # up till the paren
-    match = re.search('part \d+[^\w]*([^\(]*)', title, re.I)
-    if match:
-        reg['title_clean'] = match.group(1).strip()
-    match = re.search('\(regulation (\w+)\)', title, re.I)
-    if match:
-        reg['reg_letter'] = match.group(1)
 
-    return reg
+    if reg:
+        title = reg['title']
+        # up till the paren
+        match = re.search('part \d+[^\w]*([^\(]*)', title, re.I)
+        if match:
+            reg['title_clean'] = match.group(1).strip()
+        match = re.search('\(regulation (\w+)\)', title, re.I)
+        if match:
+            reg['reg_letter'] = match.group(1)
+
+        return reg
 
 
 def get_tree_paragraph(paragraph_id, version):
@@ -140,13 +142,15 @@ def get_sxs(label_id, notice_doc_number):
     notice_doc_number. """
 
     notice = get_notice(notice_doc_number)
-    all_sxs = notice['section_by_section']
-    relevant_sxs = notices.find_label_in_sxs(all_sxs, label_id)
 
-    metadata = notices.extract_notice_metadata(notice)
-    relevant_sxs['metadata'] = metadata
+    if notice:
+        all_sxs = notice['section_by_section']
+        relevant_sxs = notices.find_label_in_sxs(all_sxs, label_id)
 
-    return relevant_sxs
+        metadata = notices.extract_notice_metadata(notice)
+        relevant_sxs['metadata'] = metadata
+
+        return relevant_sxs
 
 
 def get_diff_json(regulation, older, newer):
@@ -156,4 +160,5 @@ def get_diff_json(regulation, older, newer):
 
 def get_diff_applier(regulation, older, newer):
     diff_json = get_diff_json(regulation, older, newer)
-    return DiffApplier(diff_json)
+    if diff_json:
+        return DiffApplier(diff_json)
