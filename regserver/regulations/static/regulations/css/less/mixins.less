@@ -85,13 +85,13 @@ mixins.less contains any mixins or variables to be used throughout the LESS file
  -----------
 */
 
-.slide (@direction: left) {
+.slide (@direction: left, @speed: 300ms) {
     transform: translate3d(0,0,0);
-    -webkit-transition: @direction 300ms ease; 
-       -moz-transition: @direction 300ms ease; 
-        -ms-transition: @direction 300ms ease; 
-         -o-transition: @direction 300ms ease; 
-            transition: @direction 300ms ease;
+    -webkit-transition: @direction @speed ease; 
+       -moz-transition: @direction @speed ease; 
+        -ms-transition: @direction @speed ease; 
+         -o-transition: @direction @speed ease; 
+            transition: @direction @speed ease;
 }
 
  /*

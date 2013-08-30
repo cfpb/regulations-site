@@ -24,27 +24,28 @@
 
 <div id="metadata-{{sxs.label}}" class="sxs-metadata">
 
-    <h3> ANALYSIS TAKEN FROM: </h3>
+    <h3>ANALYSIS TAKEN FROM:</h3>
 
-    <p> 
-        Document Number:  <br />
-        <a href="{{sxs.metadata.fr_url}}">{{sxs.metadata.document_number}}</a>
-    </p>
+        <h4>Document Number:</h4>
+        <p>
+            <a href="{{sxs.metadata.fr_url}}" class="external">{{sxs.metadata.document_number}}</a>
+        </p>
 
-    <p>
-        Action:
-        {{sxs.metadata.action}}
-    </p>
+        <h4>Action:</h4>
+        <p>
+            {{sxs.metadata.action}}
+        </p>
 
-    <p> 
-        Dates: <br />
-        Publication: {{sxs.metadata.publication_date|date:"F j, Y"}} <br />
-        Effective:  {{sxs.metadata.effective_on|date:"F j, Y"}}
-    </p>
+        <h4>Dates:</h4>
+        <ul>
+            <li><strong>Publication:</strong> {{sxs.metadata.publication_date|date:"F j, Y"}}</li>
+            <li><strong>Effective:</strong> {{sxs.metadata.effective_on|date:"F j, Y"}}</li>
+        </li>
 
-    <p> 
-        RIN: {{sxs.metadata.regulation_id_numbers|join:", "}} <br />
-    </p>
+        <h4>RIN:</h4>
+        <p>
+            {{sxs.metadata.regulation_id_numbers|join:", "}}
+        </p>
 {% if sxs.label %}
     </div>
 {% endif %}
