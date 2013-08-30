@@ -182,6 +182,10 @@
     <span class="keyword">var</span> SxSView = Backbone.View.extend({
         el: <span class="string">'#breakaway-view'</span>,
 
+        events: {
+            <span class="string">'click .sxs-back-button'</span>: <span class="string">'closeAnalysis'</span>
+        },
+
         initialize: <span class="keyword">function</span>() {
             <span class="keyword">var</span> analysis = SxSModel.get(<span class="keyword">this</span>.options.regParagraph + <span class="string">'/'</span> + <span class="keyword">this</span>.options.version);
 
@@ -199,7 +203,12 @@
         render: <span class="keyword">function</span>(analysis) {
             <span class="keyword">this</span>.$el.html(analysis);
             <span class="keyword">this</span>.$el.addClass(<span class="string">'open-sxs'</span>);
-        } 
+        },
+
+        closeAnalysis: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+            <span class="keyword">this</span>.$el.removeClass(<span class="string">'open-sxs'</span>);
+        }
     });
 
     <span class="keyword">return</span> SxSView;
