@@ -125,3 +125,27 @@ class ClientTest(TestCase):
         get.return_value = to_return
         reader.regulation('923-b', 'ver')
         self.assertEqual(2, get.call_count)
+
+    @patch('regulations.generator.api_reader.api_client')
+    def test_cache_mutability(self, api_client):
+        to_return = {
+            'text': 'parent',
+            'label': ['1024'],
+            'children': []
+        }
+        get = api_client.ApiClient.return_value.get 
+        get.return_value = to_return
+        reader = ApiReader()
+
+        result = reader.regulation('1024', 'ver')
+        self.assertEqual(to_return, result)
+        child = {
+            'text':'child',
+            'children':[], 
+            'label':['1024', 'a']
+        }
+        result['children'] = [child]
+
+        second = reader.regulation('1024', 'ver')
+        self.assertEqual(1, get.call_count)
+        self.assertEqual(second, {'text':'parent', 'label':['1024'], 'children':[]})
