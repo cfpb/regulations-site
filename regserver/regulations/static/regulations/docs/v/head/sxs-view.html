@@ -193,10 +193,12 @@
             <span class="keyword">else</span> {
                 <span class="keyword">this</span>.render(analysis);
             }
+
         },
 
         render: <span class="keyword">function</span>(analysis) {
             <span class="keyword">this</span>.$el.html(analysis);
+            <span class="keyword">this</span>.$el.addClass(<span class="string">'open-sxs'</span>);
         } 
     });
 
