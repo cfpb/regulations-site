@@ -21,6 +21,7 @@
 {% endfor %}
 </div>
 
+{% if sxs.label %}
 <div id="metadata-{{sxs.label}}" class="sxs-metadata">
 
     <h3>ANALYSIS TAKEN FROM:</h3>
@@ -45,7 +46,6 @@
         <p>
             {{sxs.metadata.regulation_id_numbers|join:", "}}
         </p>
-{% if sxs.label %}
-    </div>
+</div>
 {% endif %}
 </div>
