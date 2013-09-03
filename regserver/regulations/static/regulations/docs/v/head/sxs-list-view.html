@@ -192,6 +192,8 @@
             <span class="keyword">this</span>.model.set(Dispatch.getOpenSection(), analyses);
 
             Dispatch.on(<span class="string">'section:open'</span>, <span class="keyword">this</span>.getAnalyses, <span class="keyword">this</span>);
+
+            <span class="keyword">this</span>.highlightHeader(<span class="keyword">this</span>.$el);
         },
 
         openSxS: <span class="keyword">function</span>(e) {
@@ -223,7 +225,17 @@
         },
 
         render: <span class="keyword">function</span>(html) {
-            <span class="keyword">this</span>.$el.html(html);
+            <span class="keyword">var</span> $html = $(html),
+                list = $html.find(<span class="string">'#sxs-list'</span>).html();
+            <span class="keyword">this</span>.$el.html(list);
+
+            <span class="keyword">this</span>.highlightHeader($html);
+        },
+
+        highlightHeader: <span class="keyword">function</span>($html) {
+            <span class="keyword">if</span> ($html.find(<span class="string">'.expand-drawer'</span>).children().length &gt; <span class="number">0</span>) {
+                <span class="keyword">this</span>.$el.find(<span class="string">'h4'</span>).addClass(<span class="string">'has-content'</span>);
+            }
         }
     });
 

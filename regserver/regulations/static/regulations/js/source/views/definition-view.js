@@ -86,12 +86,15 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         template: function(res) {
-            this.$el.html(res);
+            var $defText;
+            this.$el.html('<div class="definition-text">' + res + '</div>');
 
-            this.$el.prepend('<div class="sidebar-header"><h2>Defined Term</h2><a class="right close-button" href="#">Close definition</a></div>');
+            $defText = this.$el.find('.definition-text');
+
+            this.$el.prepend('<div class="sidebar-header group"><h4>Defined Term<a class="right close-button" href="#">Close definition</a></h4></div>');
 
             // link to definition in content body
-            this.$el.append(
+            $defText.append(
                 RegsHelpers.fastLink(
                     '#' + this.model.id, 
                     RegsHelpers.idToRef(this.model.id),
@@ -104,9 +107,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             this.removeHeadings();
 
             // make definition tabbable
-            this.$el.attr('tabindex', '0')
+            this.$el.attr('tabindex', '0');
                 // make tab-activeated close button at bottom of definition content
-                .append('<a class="close-button tab-activated" href="#">Close definition</a>');
+            $defText.append('<a class="close-button tab-activated" href="#">Close definition</a>');
 
             // **Event trigger** triggers definition open event
             Dispatch.trigger('definition:render', this.$el);

@@ -14,6 +14,8 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
             this.model.set(Dispatch.getOpenSection(), analyses);
 
             Dispatch.on('section:open', this.getAnalyses, this);
+
+            this.highlightHeader(this.$el);
         },
 
         openSxS: function(e) {
@@ -45,7 +47,17 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         },
 
         render: function(html) {
-            this.$el.html(html);
+            var $html = $(html),
+                list = $html.find('#sxs-list').html();
+            this.$el.html(list);
+
+            this.highlightHeader($html);
+        },
+
+        highlightHeader: function($html) {
+            if ($html.find('.expand-drawer').children().length > 0) {
+                this.$el.find('h4').addClass('has-content');
+            }
         }
     });
 

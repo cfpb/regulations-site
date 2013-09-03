@@ -246,7 +246,10 @@
 
         closeExpandables: <span class="keyword">function</span>() {
             <span class="keyword">this</span>.$el.find(<span class="string">'.expandable'</span>).each(<span class="keyword">function</span>(i, folder) {
-                <span class="keyword">this</span>.toggleExpandable($(folder));
+                <span class="keyword">var</span> $folder = $(folder);
+                <span class="keyword">if</span> ($folder.hasClass(<span class="string">'open'</span>)) {
+                    <span class="keyword">this</span>.toggleExpandable($folder);
+                }
             }.bind(<span class="keyword">this</span>));
         },
 
