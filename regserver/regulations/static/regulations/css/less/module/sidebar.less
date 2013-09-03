@@ -1,3 +1,9 @@
+/*
+Sidebar.less
+========================================================================== 
+sidebar.less styles all of the right sidebar content
+*/
+
 /* 
 add a margin to sidebar content
 this offsets the persistent header & ensures long content is inside the viewport
@@ -13,45 +19,22 @@ this offsets the persistent header & ensures long content is inside the viewport
     }
 }
 
+/*
+Sidebar
+=======
+*/
 .secondary-content {
     overflow-y: auto;
     font-size: .875em;
 
+    /* reset the margin and padding of all sidebar lists*/
     ul,
     li {
         .reset;
     }
-
-    .chunk {
-        a:link,
-        a:visited {
-            color: @pacific;
-            text-decoration: none;
-            border: none;
-        }
-
-        a:hover,
-        a:active {
-            border-bottom: 1px solid;
-        }
-
-        &.hidden {
-            margin: 0;
-        }
-
-    }
-
-    .sub-text {
-        margin-top: 0 0 15px 0; 
-        padding: 0 0 15px 0;
-        .border-bottom-light(@width: 1px);
-    }
-
-    .effective,
-    .notice {
-        .avenir-next;
-    }
-
+/* 
+Headers within the sidebar should be <h4>
+*/
     h4 {
         font-size: 0.857142857em;
         margin: 0;
@@ -80,7 +63,6 @@ this offsets the persistent header & ensures long content is inside the viewport
             float: right;
         }
 
-
         @media 
         (-webkit-min-device-pixel-ratio: 2), 
         (min-resolution: 192dpi) {
@@ -107,17 +89,94 @@ this offsets the persistent header & ensures long content is inside the viewport
             }
         }
     }
-
-    h6 {
-        font-size: 1em;
-        margin: 16px 0 0 0;
-    }
-
-    h6:first-child {
-        margin: 0;
-    }
-
 }
+
+/*
+Sidebar Headers
+===============
+*/
+.sidebar-header {
+    .group;
+    background-color: @bg_gray;
+
+    h4 {
+        color: @dark_gray;
+        padding: .5em 1em;
+        .avenir-next;
+        text-transform: uppercase;
+    }
+
+    .close-button {
+        margin-top: .2em;
+        text-indent: -9999px;
+        background: url(../img/close.png) no-repeat 0 0;
+        cursor: pointer;
+        z-index: 99999;
+        width: 13px;
+        float: right;
+    }
+
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .close-button {
+            background: url(../img/close@2x.png) no-repeat 0 0;
+            background-size: 13px 13px;
+        }
+    }
+}
+
+/*
+Regs Meta
+===============
+Regs Meta contains the sub-content meta data found in the sidebar
+*/
+
+.regs-meta {
+    h4 {
+        background-color: @bg_gray;
+        color: @dark_gray;
+        padding: .5em 1em;
+        .avenir-next;
+    }
+
+    .chunk {
+        padding: 1em;
+        .border-bottom-light;
+
+        li a:link {
+            background: url(../img/right.png) no-repeat right;
+            display: block;
+            .avenir-next-demi;
+            color: @black;
+            .border-bottom-light;
+            padding: .5em;
+
+            &:hover, &:active {
+                text-decoration: none;
+            }
+        }
+
+        @media 
+        (-webkit-min-device-pixel-ratio: 2), 
+        (min-resolution: 192dpi) {
+           li a:link {
+                background: url(../img/right@2x.png) no-repeat right;
+                background-size: 16px 13px;
+            }
+        }
+
+        li:last-child a:link {
+            border: none;
+        }
+    }
+}
+
+/*
+Definitions
+===========
+When open definitions appear in the right sidebar
+*/
 
 .open-definition ol,
 .active-term {
@@ -163,7 +222,8 @@ this offsets the persistent header & ensures long content is inside the viewport
     display: none;
 }
 
-/* continue links */
+/* 
+continue links */
 .continue-link {
     .avenir-next-demi;
     display: inline-block;
@@ -172,75 +232,4 @@ this offsets the persistent header & ensures long content is inside the viewport
 
 .continue-link:last-child {
     margin-bottom: 100px;
-}
-
-.sidebar-header {
-    .group;
-    background-color: @bg_gray;
-
-    h4 {
-        color: @dark_gray;
-        padding: .5em 1em;
-        .avenir-next;
-        text-transform: uppercase;
-    }
-
-    .close-button {
-        margin-top: .2em;
-        text-indent: -9999px;
-        background: url(../img/close.png) no-repeat 0 0;
-        cursor: pointer;
-        z-index: 99999;
-        width: 13px;
-        float: right;
-    }
-
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
-    (min-resolution: 192dpi) {
-        .close-button {
-            background: url(../img/close@2x.png) no-repeat 0 0;
-            background-size: 13px 13px;
-        }
-    }
-}
-
-.regs-meta {
-    h4 {
-        background-color: @bg_gray;
-        color: @dark_gray;
-        padding: .5em 1em;
-        .avenir-next;
-    }
-
-    .chunk {
-        padding: 1em;
-        .border-bottom-light;
-
-        li a:link {
-            background: url(../img/right.png) no-repeat right;
-            display: block;
-            .avenir-next-demi;
-            color: @black;
-            .border-bottom-light;
-            padding: .5em;
-
-            &:hover, &:active {
-                text-decoration: none;
-            }
-        }
-
-        @media 
-        (-webkit-min-device-pixel-ratio: 2), 
-        (min-resolution: 192dpi) {
-           li a:link {
-                background: url(../img/right@2x.png) no-repeat right;
-                background-size: 16px 13px;
-            }
-        }
-
-        li:last-child a:link {
-            border: none;
-        }
-    }
 }
