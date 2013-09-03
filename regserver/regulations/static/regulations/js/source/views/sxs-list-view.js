@@ -23,11 +23,12 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
 
             var $sxsLink = $(e.target),
                 paragraphId = $sxsLink.data('sxs-paragraph-id'),
-                version = $sxsLink.data('doc-number');
+                docNumber = $sxsLink.data('doc-number');
 
             Dispatch.set('sxs-analysis', new SxSView({
                     regParagraph: paragraphId,
-                    version: version
+                    docNumber: docNumber,
+                    fromVersion: Dispatch.getVersion()
                 })
             );
         },

@@ -201,11 +201,12 @@
 
             <span class="keyword">var</span> $sxsLink = $(e.target),
                 paragraphId = $sxsLink.data(<span class="string">'sxs-paragraph-id'</span>),
-                version = $sxsLink.data(<span class="string">'doc-number'</span>);
+                docNumber = $sxsLink.data(<span class="string">'doc-number'</span>);
 
             Dispatch.set(<span class="string">'sxs-analysis'</span>, <span class="keyword">new</span> SxSView({
                     regParagraph: paragraphId,
-                    version: version
+                    docNumber: docNumber,
+                    fromVersion: Dispatch.getVersion()
                 })
             );
         },
