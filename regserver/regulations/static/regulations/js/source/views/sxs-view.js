@@ -9,7 +9,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
         },
 
         initialize: function() {
-            var analysis = SxSModel.get(this.options.regParagraph + '/' + this.options.version);
+            var analysis = SxSModel.get(this.options.regParagraph + '/' + this.options.docNumber + '?from_version=' + this.options.fromVersion);
 
             if (typeof analysis.done !== 'undefined') {
                 analysis.done(function(res) {

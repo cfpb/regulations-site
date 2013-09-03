@@ -9,7 +9,7 @@
             {% if analyses %}
                 <ul>
                     {% for analysis in analyses %}
-                        <li><a href="{% url 'paragraph_sxs_view' analysis.label_id analysis.doc_number %}" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}</a></li>
+                        <li><a href="{% url 'chrome_sxs_view' analysis.label_id analysis.doc_number %}?from_version={{ version }}" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}</a></li>
                     {% endfor %}
                 </ul>
             {% endif %}
