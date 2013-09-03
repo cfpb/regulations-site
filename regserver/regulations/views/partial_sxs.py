@@ -23,7 +23,7 @@ class ParagraphSXSView(TemplateView):
             }) + '#' + kwargs['label_id']
             kwargs['back_url'] = back_url
             return super(ParagraphSXSView, self).get(request, *args,
-                         **kwargs)
+                                                     **kwargs)
         except NoReverseMatch:
             return HttpResponseBadRequest("invalid from_version")
 
