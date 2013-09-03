@@ -21,7 +21,7 @@ Generic drawer styles
     border-right: 2px solid #d0d0ce;
     .avenir-next-demi;
     font-size: .875em;
-    .slide (@direction: left); /* animate the panel opening */
+    .slide (@direction: left, @speed: 300ms); /* animate the panel opening */
     overflow-y: scroll; /* allow content to be scrollable */
 }
 
@@ -48,7 +48,7 @@ When applied at large resolutions displays, the active class causes the panel na
 
 /* animate the .toc-head */
 .toc-head {
-    .slide (@direction: left);
+    .slide (@direction: left, @speed: 300ms);
 
     a:hover,
     a:active {
