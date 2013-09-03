@@ -1,3 +1,18 @@
+/* 
+add a margin to sidebar content
+this offsets the persistent header & ensures long content is inside the viewport
+*/
+.sidebar-inner {
+    margin-bottom: 120px;
+}
+
+/* IE8 requires both the margin and padding to offset the header*/
+.lt-ie9 {
+    .secondary-content {
+        padding-bottom: 140px;
+    }
+}
+
 .secondary-content {
     overflow-y: auto;
     font-size: .875em;
@@ -212,6 +227,15 @@
 
             &:hover, &:active {
                 text-decoration: none;
+            }
+        }
+
+        @media 
+        (-webkit-min-device-pixel-ratio: 2), 
+        (min-resolution: 192dpi) {
+           li a:link {
+                background: url(../img/right@2x.png) no-repeat right;
+                background-size: 16px 13px;
             }
         }
 
