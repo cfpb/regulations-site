@@ -89,10 +89,11 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         openSection: function(section, sectionId) {
             var urlPrefix = Dispatch.getURLPrefix();
 
+            Dispatch.set('section', sectionId);
+
             this.$el.html(section);
             window.scrollTo(0, 0);
             Dispatch.trigger('section:open', sectionId);
-            Dispatch.set('section', sectionId);
 
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
             if (urlPrefix) {

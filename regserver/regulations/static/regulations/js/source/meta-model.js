@@ -29,16 +29,18 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
             var cached = this.has(sectionId),
                 section;
 
-            if (!(cached)) {
-                this.content[sectionId] = sectionValue;
-                section = sectionValue;
+            if (typeof sectionId !== 'undefined' && !(_.isEmpty(sectionId))) {
+                if (!(cached)) {
+                    this.content[sectionId] = sectionValue;
+                    section = sectionValue;
 
-                if (_.indexOf(this.structure, sectionId) === -1) {
-                    this.structure.push(sectionId);
+                    if (_.indexOf(this.structure, sectionId) === -1) {
+                        this.structure.push(sectionId);
+                    }
                 }
-            }
-            else {
-                section = cached;
+                else {
+                    section = cached;
+                }
             }
 
             return section; 

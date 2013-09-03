@@ -392,10 +392,11 @@ re-render view</p>
         openSection: <span class="keyword">function</span>(section, sectionId) {
             <span class="keyword">var</span> urlPrefix = Dispatch.getURLPrefix();
 
+            Dispatch.set(<span class="string">'section'</span>, sectionId);
+
             <span class="keyword">this</span>.$el.html(section);
             window.scrollTo(<span class="number">0</span>, <span class="number">0</span>);
             Dispatch.trigger(<span class="string">'section:open'</span>, sectionId);
-            Dispatch.set(<span class="string">'section'</span>, sectionId);
 
             Dispatch.set(<span class="string">'sectionNav'</span>, <span class="keyword">new</span> SectionFooterView({el: <span class="keyword">this</span>.$el.find(<span class="string">'.section-nav'</span>)}));
             <span class="keyword">if</span> (urlPrefix) {
