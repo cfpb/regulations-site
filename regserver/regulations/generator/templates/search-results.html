@@ -1,0 +1,9 @@
+{{ results.total_hits }} result{{ results.results|pluralize }}
+<ul>
+{% for result in results.results %}
+    <li>
+    <h3><a href="{% url 'chrome_section_view' result.section_id version %}#{{result.label|join:'-'}}">{{result.header}}</a></h3>
+        <p>{{result.text}}</p>
+    </li>
+{% endfor %}
+</ul>

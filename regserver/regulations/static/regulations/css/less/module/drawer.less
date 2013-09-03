@@ -36,7 +36,6 @@ When applied at large resolutions displays, the active class causes the panel na
     .panel.active{
         left: -200px;
         top: 200px;
-        overflow-y: hidden;
 
         /* slide content fully offscreen*/
         ol,
@@ -117,7 +116,6 @@ Panel Header
 
 .toc-container {
     margin-top: 126px; /* put drawer content below persistent header*/
-    overflow-y: scroll;
 }
 
 /* 
@@ -139,6 +137,11 @@ Panel Slide Button
     float: right;
     cursor: pointer;
     background: url(../img/left.png) no-repeat center center;
+}
+
+.panel-slide:before {
+    .minicon;
+    content: "\e006";
 }
 
 .panel-slide:hover,
