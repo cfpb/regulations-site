@@ -145,24 +145,28 @@ Regs Meta contains the sub-content meta data found in the sidebar
         .border-bottom-light;
 
         li a:link {
-            background: url(../img/right.png) no-repeat right;
+            /*background: url(../img/right.png) no-repeat right;*/
             display: block;
             .avenir-next-demi;
             color: @black;
             .border-bottom-light;
             padding: .5em;
+            text-decoration: none;
+
+            .minicon-right {
+                float: right;
+                font-size: 0.875em;
+                line-height: 2;
+                color: @dark_gray;
+            }
 
             &:hover, &:active {
                 text-decoration: none;
-            }
-        }
+                color: @pacific;
 
-        @media 
-        (-webkit-min-device-pixel-ratio: 2), 
-        (min-resolution: 192dpi) {
-           li a:link {
-                background: url(../img/right@2x.png) no-repeat right;
-                background-size: 16px 13px;
+                .minicon-right {
+                    color: @pacific;
+                }
             }
         }
 
