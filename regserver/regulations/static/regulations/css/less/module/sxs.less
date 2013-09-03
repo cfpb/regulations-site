@@ -4,10 +4,18 @@ Section by Section Analysis
 sxs.less contains styles for the SxS overlay
 */
 
-#breakaway-view {
-    position: fixed;
-    left: 9999px;
-    .slide (@direction: all, @speed: 600ms);
+.js {
+    #breakaway-view {
+        position: fixed;
+        left: 9999px;
+        .slide (@direction: all, @speed: 800ms);
+    }
+}
+
+.no-js {
+     #breakaway-view {
+        margin-top: 60px;
+    }
 }
 
 /*
@@ -25,7 +33,7 @@ SxS window
     background: #fff;
     z-index: 999999999;
     overflow-y: scroll;
-    .slide (@direction: all, @speed: 600ms);
+    .slide (@direction: all, @speed: 800ms);
 }
 /*
 SxS header
@@ -38,6 +46,16 @@ SxS header
     background-color: @light_orange;
     border-bottom: 1px solid @orange;
     z-index: 100;
+
+    h2 {
+        .avenir-next-bold;
+        font-size: 1em;
+        margin: 0;
+        padding-left: 15px;
+        line-height: 2.125em;
+        letter-spacing: 1px;
+        display: inline-block;
+    }
 }
 
 /*
@@ -48,6 +66,7 @@ Back link
 .sxs-back-button,
 .sxs-back-button:link,
 .sxs-back-button:visited {
+    .avenir-next;
     display: inline-block;
     padding: 0 15px;
     min-width: 5em;

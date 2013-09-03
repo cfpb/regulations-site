@@ -17,7 +17,7 @@ Generic drawer styles
 --------------------- */
 
 .panel {
-    background-color: #f6f6f5;
+    background-color: @bg_gray;
     border-right: 2px solid #d0d0ce;
     .avenir-next-demi;
     font-size: .875em;
@@ -36,10 +36,10 @@ When applied at large resolutions displays, the active class causes the panel na
     .panel.active{
         left: -200px;
         top: 200px;
-        overflow-y: hidden;
 
         /* slide content fully offscreen*/
-        ol, 
+        ol,
+        ul, 
         h2 {
             position: absolute;
             left: -999px;    
@@ -81,7 +81,7 @@ Panel Header
 .drawer-header {
     width: 17.142857143em;
     position: fixed;
-    background-color: #f6f6f5;
+    background-color: @bg_gray;
     border-right: 2px solid #d0d0ce;
 
     h2 {
@@ -116,7 +116,6 @@ Panel Header
 
 .toc-container {
     margin-top: 126px; /* put drawer content below persistent header*/
-    overflow-y: scroll;
 }
 
 /* 
@@ -389,3 +388,8 @@ Search Drawer
 =============
 This contains all of the styles specific to the search
 */
+
+#search {
+    padding: 0 15px;
+}
+
