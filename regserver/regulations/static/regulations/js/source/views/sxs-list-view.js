@@ -15,6 +15,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
 
             Dispatch.on('section:open', this.getAnalyses, this);
 
+            this.truncateLinks();
             this.highlightHeader(this.$el);
         },
 
@@ -51,6 +52,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
                 list = $html.find('#sxs-list').html();
             this.$el.html(list);
 
+            this.truncateLinks();
             this.highlightHeader($html);
         },
 
@@ -58,6 +60,14 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
             if ($html.find('.expand-drawer').children().length > 0) {
                 this.$el.find('h4').addClass('has-content');
             }
+        },
+
+        truncateLinks: function() {
+            this.$el.find('li').each(function(i, li) {
+                var $link = $(li).find('a'),
+                    pid = $link.text();
+                $link.text(pid.split('.')[1]);
+            });
         }
     });
 

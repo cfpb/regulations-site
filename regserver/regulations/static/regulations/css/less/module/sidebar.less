@@ -203,6 +203,23 @@ html.js .expand-drawer {
 
     .chunk {
         padding: 1em;
-        border-bottom: 1px solid @medium_gray;
+        .border-bottom-light;
+
+        li a:link {
+            background: url(../img/right.png) no-repeat right;
+            display: block;
+            .avenir-next-demi;
+            color: @black;
+            .border-bottom-light;
+            padding: .5em;
+
+            &:hover, &:active {
+                text-decoration: none;
+            }
+        }
+
+        li:last-child a:link {
+            border: none;
+        }
     }
 }
