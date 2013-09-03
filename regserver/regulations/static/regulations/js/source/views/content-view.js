@@ -151,6 +151,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         // content section key term link click handler
         termLinkHandler: function(e) {
             e.preventDefault();
+
             var $link = $(e.target),
                 defId = $link.attr('data-definition');
 

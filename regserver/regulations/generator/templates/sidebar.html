@@ -1,15 +1,12 @@
 <div id="sidebar" class="secondary-content">
-    <div id="sidebar-header" class="sidebar-header">
-        <h2></h2>
-    </div>
     <div id="sidebar-content" class="sidebar-inner">
         <section id="sxs-list" class="regs-meta">
-            <h5 class="expandable">Section-by-section Analysis</h5>
+            <h4 class="expandable">Section-by-section Analysis</h4>
             <div class="chunk expand-drawer">
             {% if analyses %}
                 <ul>
                     {% for analysis in analyses %}
-                        <li><a href="{% url 'paragraph_sxs_view' analysis.label_id analysis.doc_number %}" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}</a></li>
+                        <li><a href="{% url 'chrome_sxs_view' analysis.label_id analysis.doc_number %}?from_version={{ version }}" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}</a></li>
                     {% endfor %}
                 </ul>
             {% endif %}

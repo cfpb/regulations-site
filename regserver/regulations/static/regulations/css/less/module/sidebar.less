@@ -8,8 +8,6 @@
     }
 
     .chunk {
-        margin: 1em 0 0 0;
-
         a:link,
         a:visited {
             color: @pacific;
@@ -39,7 +37,7 @@
         .avenir-next;
     }
 
-    h5 {
+    h4 {
         font-size: 0.857142857em;
         margin: 0;
         text-transform: uppercase;
@@ -48,12 +46,15 @@
         .avenir-next-demi;
 
         &.expandable {
-            margin: 1.5em 15px 1.5em 0;
             cursor: pointer;
         }
 
         &.important {
             color: @red_orange;
+        }
+
+        &.has-content {
+            background-color: @light_orange;
         }
 
         &.expandable:after {
@@ -132,6 +133,15 @@
     & > p {
         clear: left;
     }
+
+    .definition-text {
+        padding: 1em;
+        border-bottom: 1px solid @medium_gray;
+
+        p {
+            margin-top: 0;
+        }
+    }
 }
 
 html.js .expand-drawer {
@@ -151,22 +161,22 @@ html.js .expand-drawer {
 
 .sidebar-header {
     .group;
+    background-color: @bg_gray;
 
-    h2 {
-        font-size: .875em;
-        float: left;
-        text-transform: uppercase;
-        .avenir-next;
-        width: 60%;
+    h4 {
         color: @dark_gray;
+        padding: .5em 1em;
+        .avenir-next;
+        text-transform: uppercase;
     }
 
     .close-button {
-        margin: .8em -4px 0 0; /*negative right padding accomodates extra space in image file */
+        margin-top: .2em;
         text-indent: -9999px;
         background: url(../img/close.png) no-repeat 0 0;
         cursor: pointer;
         z-index: 99999;
+        width: 13px;
         float: right;
     }
 
@@ -175,7 +185,21 @@ html.js .expand-drawer {
     (min-resolution: 192dpi) {
         .close-button {
             background: url(../img/close@2x.png) no-repeat 0 0;
-            background-size: 15px 15px;
+            background-size: 13px 13px;
         }
+    }
+}
+
+.regs-meta {
+    h4 {
+        background-color: @bg_gray;
+        color: @dark_gray;
+        padding: .5em 1em;
+        .avenir-next;
+    }
+
+    .chunk {
+        padding: 1em;
+        border-bottom: 1px solid @medium_gray;
     }
 }

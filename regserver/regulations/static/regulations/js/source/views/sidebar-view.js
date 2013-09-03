@@ -45,7 +45,10 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
 
         closeExpandables: function() {
             this.$el.find('.expandable').each(function(i, folder) {
-                this.toggleExpandable($(folder));
+                var $folder = $(folder);
+                if ($folder.hasClass('open')) {
+                    this.toggleExpandable($folder);
+                }
             }.bind(this));
         },
 

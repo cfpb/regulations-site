@@ -1,7 +1,6 @@
-
 {% if sxs.label %}
     <div class="sxs-header">
-        <a class="sxs-back-button" href="#"><i class="minicon-left"></i> &sect; {{label_id}}</a>
+        <a class="sxs-back-button" href="{{ back_url }}"><i class="minicon-left"></i> &sect; {{sxs.header}}</a>
     </div>
     <div class="sxs-content">
         <div id="{{sxs.label}}" class="sxs-main-content group">

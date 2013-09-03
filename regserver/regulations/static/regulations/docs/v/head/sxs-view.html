@@ -187,7 +187,7 @@
         },
 
         initialize: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> analysis = SxSModel.get(<span class="keyword">this</span>.options.regParagraph + <span class="string">'/'</span> + <span class="keyword">this</span>.options.version);
+            <span class="keyword">var</span> analysis = SxSModel.get(<span class="keyword">this</span>.options.regParagraph + <span class="string">'/'</span> + <span class="keyword">this</span>.options.docNumber + <span class="string">'?from_version='</span> + <span class="keyword">this</span>.options.fromVersion);
 
             <span class="keyword">if</span> (<span class="keyword">typeof</span> analysis.done !== <span class="string">'undefined'</span>) {
                 analysis.done(<span class="keyword">function</span>(res) {

@@ -273,9 +273,12 @@ this.options:</p>
         },
 
         template: <span class="keyword">function</span>(res) {
-            <span class="keyword">this</span>.$el.html(res);
+            <span class="keyword">var</span> $defText;
+            <span class="keyword">this</span>.$el.html(<span class="string">'&lt;div class="definition-text"&gt;'</span> + res + <span class="string">'&lt;/div&gt;'</span>);
 
-            <span class="keyword">this</span>.$el.prepend(<span class="string">'&lt;div class="sidebar-header"&gt;&lt;h2&gt;Defined Term&lt;/h2&gt;&lt;a class="right close-button" href="#"&gt;Close definition&lt;/a&gt;&lt;/div&gt;'</span>);</pre></div></div>
+            $defText = <span class="keyword">this</span>.$el.find(<span class="string">'.definition-text'</span>);
+
+            <span class="keyword">this</span>.$el.prepend(<span class="string">'&lt;div class="sidebar-header group"&gt;&lt;h4&gt;Defined Term&lt;a class="right close-button" href="#"&gt;Close definition&lt;/a&gt;&lt;/h4&gt;&lt;/div&gt;'</span>);</pre></div></div>
             
         </li>
         
@@ -290,7 +293,7 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.append(
+            <div class="content"><div class='highlight'><pre>            $defText.append(
                 RegsHelpers.fastLink(
                     <span class="string">'#'</span> + <span class="keyword">this</span>.model.id, 
                     RegsHelpers.idToRef(<span class="keyword">this</span>.model.id),
@@ -327,7 +330,7 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.attr(<span class="string">'tabindex'</span>, <span class="string">'0'</span>)</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.attr(<span class="string">'tabindex'</span>, <span class="string">'0'</span>);</pre></div></div>
             
         </li>
         
@@ -342,7 +345,7 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                .append(<span class="string">'&lt;a class="close-button tab-activated" href="#"&gt;Close definition&lt;/a&gt;'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            $defText.append(<span class="string">'&lt;a class="close-button tab-activated" href="#"&gt;Close definition&lt;/a&gt;'</span>);</pre></div></div>
             
         </li>
         
