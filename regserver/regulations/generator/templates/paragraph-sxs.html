@@ -1,6 +1,7 @@
 {% if sxs.label %}
     <div class="sxs-header">
         <a class="sxs-back-button" href="{{ back_url }}"><i class="minicon-left"></i> &sect; {{sxs.header}}</a>
+        <h2>Section-by-section analysis</h2>
     </div>
     <div class="sxs-content">
         <div id="{{sxs.label}}" class="sxs-main-content group">
@@ -21,6 +22,7 @@
 {% endfor %}
 </div>
 
+{% if sxs.label %}
 <div id="metadata-{{sxs.label}}" class="sxs-metadata">
 
     <h3>ANALYSIS TAKEN FROM:</h3>
@@ -45,7 +47,6 @@
         <p>
             {{sxs.metadata.regulation_id_numbers|join:", "}}
         </p>
-{% if sxs.label %}
-    </div>
+</div>
 {% endif %}
 </div>
