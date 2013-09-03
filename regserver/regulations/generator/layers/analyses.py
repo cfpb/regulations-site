@@ -16,7 +16,8 @@ class SectionBySectionLayer(object):
         doc_number, label_id = self.layer[key][-1]['reference']
         return [{'doc_number': doc_number,
                  'label_id': label_id,
-                 'text': label_to_text(label_id.split('-'))}]
+                 'text': label_to_text(label_id.split('-'),
+                                       include_section=False)}]
 
     def apply_layer(self, text_index):
         """Return a pair of field-name + analyses if they apply; include all
@@ -26,14 +27,14 @@ class SectionBySectionLayer(object):
             requested = text_index.split('-')
             key_parts = key.split('-')
 
-            # Simple Case: lexical child
-            if key_parts[:len(requested)] == requested:
-                analyses.extend(self.to_template_dict(key))
-
             # Interpretations have an added complication
             key_prefix = takewhile(lambda k: k != 'Interp', key_parts)
             key_prefix = list(key_prefix)[:len(requested)]
             if requested[-1] == 'Interp' and requested[:-1] == key_prefix:
+                analyses.extend(self.to_template_dict(key))
+
+            # Simple Case: lexical child
+            elif key_parts[:len(requested)] == requested:
                 analyses.extend(self.to_template_dict(key))
 
         if analyses:

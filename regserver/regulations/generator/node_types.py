@@ -32,7 +32,7 @@ def to_markup_id(id_parts):
     return new_id
 
 
-def label_to_text(label):
+def label_to_text(label, include_section=True):
     """Convert a label:list[string] into a human-readable string"""
     if 'Interp' in label:
         # Interpretation
@@ -52,9 +52,15 @@ def label_to_text(label):
         else:  # e.g. 225-B-3-a-4-i
             return 'Appendix %s-%s(%s)' % (label[1], label[2],
                                            ')('.join(label[3:]))
-    else:
-        # Regulation Text
+    elif include_section:
+        # Regulation Text with section number
         if len(label) == 2:  # e.g. 225-2
             return '.'.join(label)
         else:  # e.g. 225-2-b-4-i-A
             return '%s.%s(%s)' % (label[0], label[1], ')('.join(label[2:]))
+    else:
+        # Regulation Text without section number
+        if len(label) == 2:  # e.g. 225-2
+            return label[1]
+        else:  # e.g. 225-2-b-4-i-A
+            return '%s(%s)' % (label[1], ')('.join(label[2:]))
