@@ -36,6 +36,9 @@ class NodeTypesTest(TestCase):
         self.assertEqual('2323.4', label_to_text(['2323', '4']))
         self.assertEqual('2323.5(r)(3)',
                          label_to_text(['2323', '5', 'r', '3']))
+        self.assertEqual('4', label_to_text(['2323', '4'], False))
+        self.assertEqual('5(r)(3)',
+                         label_to_text(['2323', '5', 'r', '3'], False))
         self.assertEqual('Appendix A', label_to_text(['2323', 'A']))
         self.assertEqual('Appendix A-4', label_to_text(['2323', 'A', '4']))
         self.assertEqual('Appendix A-4(b)(2)',
