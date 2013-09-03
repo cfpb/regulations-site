@@ -6,6 +6,7 @@ from regulations.views.sidebar import SideBarView
 from regulations.views.partial import PartialInterpView, PartialRegulationView
 from regulations.views.partial import PartialParagraphView, PartialSectionView
 from regulations.views.diff import PartialSectionDiffView
+from regulations.views.partial_search import PartialSearch
 from regulations.views.partial_sxs import ParagraphSXSView
 
 #Re-usable URL patterns.
@@ -47,6 +48,9 @@ urlpatterns = patterns(
     url(r'^partial/sidebar/%s/%s$' % (paragraph_pattern, version_pattern),
         SideBarView.as_view(),
         name='sidebar'),
+
+    # Load just search results
+    url(r'^partial/search$', PartialSearch.as_view(), name='search'),
 
     #A regulation section without chrome
     #Example: http://.../partial/201-4/2013-10704

@@ -4,6 +4,10 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
     var SxSView = Backbone.View.extend({
         el: '#breakaway-view',
 
+        events: {
+            'click .sxs-back-button': 'closeAnalysis'
+        },
+
         initialize: function() {
             var analysis = SxSModel.get(this.options.regParagraph + '/' + this.options.version);
 
@@ -21,7 +25,12 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
         render: function(analysis) {
             this.$el.html(analysis);
             this.$el.addClass('open-sxs');
-        } 
+        },
+
+        closeAnalysis: function(e) {
+            e.preventDefault();
+            this.$el.removeClass('open-sxs');
+        }
     });
 
     return SxSView;

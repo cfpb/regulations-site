@@ -1,4 +1,5 @@
 from django.views.generic.base import TemplateView
+from django.http import Http404
 
 from regulations.generator import api_reader
 from regulations.generator.layers.analyses import SectionBySectionLayer
@@ -16,6 +17,10 @@ class SideBarView(TemplateView):
 
         client = api_reader.ApiReader()
         sxs_layer_data = client.layer('analyses', label_id, version)
+
+        if sxs_layer_data is None:
+            raise Http404
+
         sxs_layer = SectionBySectionLayer(sxs_layer_data)
         result = sxs_layer.apply_layer(label_id)
         if result:

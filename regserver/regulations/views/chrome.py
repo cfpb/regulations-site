@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.http import Http404
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
@@ -29,6 +30,9 @@ class ChromeView(TemplateView):
         part = label_id.split('-')[0]
         full_tree = generator.get_regulation(part, version)
         relevant_tree = generator.get_tree_paragraph(label_id, version)
+
+        if full_tree is None or relevant_tree is None:
+            raise Http404
 
         partial_view = self.partial_class.as_view()
         response = partial_view(

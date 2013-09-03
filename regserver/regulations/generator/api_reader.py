@@ -49,8 +49,9 @@ class ApiReader(object):
         else:
             regulation = self.client.get('regulation/%s/%s' % (label, version))
             #Add the tree to the cache
-            self.add_regulation_tree(regulation, version)
-            return regulation
+            if regulation:
+                self.add_regulation_tree(regulation, version)
+                return regulation
 
     def _get(self, cache_key_elements, api_suffix, api_params={}):
         """ Retrieve from the cache whenever possible, or get from the API """
@@ -94,3 +95,10 @@ class ApiReader(object):
         return self._get(
             ['notice', fr_document_number],
             'notice/%s' % fr_document_number)
+
+    def search(self, query, version=None):
+        """Search via the API. Never cache these (that's the duty of the search
+        index)"""
+        if version:
+            return self.client.get('search', {'q': query, 'version': version})
+        return self.client.get('search', {'q': query})
