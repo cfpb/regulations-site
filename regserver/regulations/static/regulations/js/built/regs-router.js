@@ -1,1 +1,1 @@
-define("regs-router",["underscore","backbone"],function(e,t){var n=t.Router.extend({}),r=new n;return t.history.start({pushState:"pushState"in window.history,silent:!0}),r});
+define("regs-router",["underscore","backbone","./dispatch"],function(e,t,n){var r=t.Router.extend({routes:{"regulation/:section/:version":"backToSection"},backToSection:function(e){n.trigger("openSection:set",e)}}),i=new r;return t.history.start({pushState:"pushState"in window.history,silent:!0}),i});
