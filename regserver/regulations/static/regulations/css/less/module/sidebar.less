@@ -56,37 +56,22 @@ Headers within the sidebar should be <h4>
         }
 
         &.expandable:after {
-            content: "";
+            .minicon;
+            content: "\e003";
+            color: @pacific;
             width: 16px;
-            height: 16px;
-            background: url(../img/open_close.png) 0px 3px no-repeat;
+            line-height: 19px;
             float: right;
-        }
 
-        @media 
-        (-webkit-min-device-pixel-ratio: 2), 
-        (min-resolution: 192dpi) {
-            &.expandable:after {
-                background: url(../img/open_close@2x.png) 0px 3px no-repeat;
-                background-size: 13px;
-            }
         }
 
         &.open:after {
-            content: "";
+            .minicon;
+            content: "\e004";
+            color: @pacific;
             width: 16px;
-            height: 16px;
-            background: url(../img/open_close.png) 0px -14px no-repeat;
+            line-height: 19px;
             float: right; 
-        }
-
-        @media 
-        (-webkit-min-device-pixel-ratio: 2), 
-        (min-resolution: 192dpi) {
-            &.open:after {
-                background: url(../img/open_close@2x.png) 0px -14px no-repeat ;
-                background-size: 13px;
-            }
         }
     }
 }
@@ -145,7 +130,6 @@ Regs Meta contains the sub-content meta data found in the sidebar
         .border-bottom-light;
 
         li a:link {
-            /*background: url(../img/right.png) no-repeat right;*/
             display: block;
             .avenir-next-demi;
             color: @black;
