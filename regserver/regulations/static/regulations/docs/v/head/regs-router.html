@@ -185,7 +185,8 @@
         },
 
         backToSection: <span class="keyword">function</span>(section) {
-           Dispatch.trigger(<span class="string">'openSection:set'</span>, section); 
+            Dispatch.trigger(<span class="string">'openSection:set'</span>, section); 
+            Dispatch.trigger(<span class="string">'sxs:close'</span>);
         }
     });
 
