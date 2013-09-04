@@ -136,21 +136,14 @@ def get_notice(document_number):
     return api.notice(document_number)
 
 
-def get_sxs(label_id, notice_doc_number):
+def get_sxs(label_id, notice):
     """ Given a paragraph label_id, find the sxs analysis for that paragraph if
-    it exists and has content. The analysis comes from the Federal REgister
-    notice_doc_number. """
+    it exists and has content. """
 
-    notice = get_notice(notice_doc_number)
+    all_sxs = notice['section_by_section']
+    relevant_sxs = notices.find_label_in_sxs(all_sxs, label_id)
 
-    if notice:
-        all_sxs = notice['section_by_section']
-        relevant_sxs = notices.find_label_in_sxs(all_sxs, label_id)
-
-        metadata = notices.extract_notice_metadata(notice)
-        relevant_sxs['metadata'] = metadata
-
-        return relevant_sxs
+    return relevant_sxs
 
 
 def get_diff_json(regulation, older, newer):
