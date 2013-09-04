@@ -668,7 +668,7 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
 
             section.toggleClass(<span class="string">'open'</span>);
             header.next(<span class="string">'.hidden'</span>).slideToggle();
-            button.html(section.hasClass(<span class="string">'open'</span>) ? <span class="string">'Hide'</span> : <span class="string">'Show'</span>);
+            button.toggleClass(<span class="string">'open'</span>).html(section.hasClass(<span class="string">'open'</span>) ? <span class="string">'Hide'</span> : <span class="string">'Show'</span>);
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
         },</pre></div></div>
