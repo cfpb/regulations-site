@@ -63,11 +63,13 @@ Media Queries
 }
 
 .loading {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)"; /* IE 8 */
-  filter: alpha(opacity=30); /* IE 6 & 7 */
-  -moz-opacity: 0.3;
-  -khtml-opacity: 0.3;
-  opacity: 0.3;
+    -moz-opacity: 0.3;
+    opacity: 0.3;
+
+    * {
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)"; /* IE 8 */
+        filter: alpha(opacity=30); /* IE 6 & 7 */
+    }
 }
 
 .important {

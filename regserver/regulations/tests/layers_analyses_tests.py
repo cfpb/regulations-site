@@ -34,6 +34,35 @@ class SectionBySectionLayerTest(TestCase):
 
         self.assertEqual(None, sxs.apply_layer("222-22"))
 
+    def test_apply_layer_interps(self):
+        layer = {
+            '111-22': [{'reference': ['2007-22', '111-22']}],
+            '111-22-Interp': [{'reference': ['2007-22', '111-22-Interp']}],
+            '111-22-Interp-2': [{'reference': ['2007-22', '111-22-Interp-2']}]
+        }
+        sxs = SectionBySectionLayer(layer)
+
+        _, value = sxs.apply_layer('111-22')
+        self.assertEqual(
+            [{'doc_number': '2007-22', 'label_id': '111-22', 'text': '22'}],
+            value)
+        _, value = sxs.apply_layer('111-22-Interp')
+        self.assertEqual([
+            {'doc_number': '2007-22', 'label_id': '111-22-Interp',
+             'text': 'Comment for 111.22'},
+            {'doc_number': '2007-22', 'label_id': '111-22-Interp-2',
+             'text': 'Comment for 111.22-2'}], value)
+        _, value = sxs.apply_layer('111-22-Interp')
+        self.assertEqual([
+            {'doc_number': '2007-22', 'label_id': '111-22-Interp',
+             'text': 'Comment for 111.22'},
+            {'doc_number': '2007-22', 'label_id': '111-22-Interp-2',
+             'text': 'Comment for 111.22-2'}], value)
+        _, value = sxs.apply_layer('111-22-Interp-2')
+        self.assertEqual([
+            {'doc_number': '2007-22', 'label_id': '111-22-Interp-2',
+             'text': 'Comment for 111.22-2'}], value)
+
     def test_to_template_dict(self):
         layer = {'555-22-Interp': [{'reference': ['aaa', '555-22-Interp']},
                                    {'reference': ['bbb', '555-22-Interp']},
