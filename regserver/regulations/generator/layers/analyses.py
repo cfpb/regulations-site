@@ -23,18 +23,23 @@ class SectionBySectionLayer(object):
         """Return a pair of field-name + analyses if they apply; include all
         children"""
         analyses = []
+        requested = text_index.split('-')
+        requested_prefix = list(takewhile(lambda k: k != 'Interp', requested))
+
         for key in self.layer:
-            requested = text_index.split('-')
             key_parts = key.split('-')
 
-            # Interpretations have an added complication
+            # Interpretations have an added complication:
+            # 1005-2-Interp-2 is a child of 1005-Interp
             key_prefix = takewhile(lambda k: k != 'Interp', key_parts)
-            key_prefix = list(key_prefix)[:len(requested)]
-            if requested[-1] == 'Interp' and requested[:-1] == key_prefix:
+            key_prefix = list(key_prefix)[:len(requested_prefix)]
+            if (requested[-1] == 'Interp' and key_prefix == requested_prefix
+                    and 'Interp' in key_parts):
                 analyses.extend(self.to_template_dict(key))
 
             # Simple Case: lexical child
-            elif key_parts[:len(requested)] == requested:
+            elif (key_parts[:len(requested)] == requested
+                  and ('Interp' in requested) == ('Interp' in key_parts)):
                 analyses.extend(self.to_template_dict(key))
 
         if analyses:
