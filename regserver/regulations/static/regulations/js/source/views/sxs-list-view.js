@@ -57,8 +57,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         modifyListDisplay: function() {
             var $folderContent = this.$el.find('.expand-drawer');
             if ($folderContent.children().length > 0) {
-                this.truncateLinks();
-                this.highlightHeader(this.$el);
+                this.highlightHeader();
             }
             else {
                 $folderContent.text('No analysis available for ' + Dispatch.getOpenSection());
@@ -67,14 +66,6 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
 
         highlightHeader: function() {
             this.$el.find('h4').addClass('has-content');
-        },
-
-        truncateLinks: function() {
-            this.$el.find('li').each(function(i, li) {
-                var $link = $(li).find('a'),
-                    pid = $link.text();
-                $link.text(pid.split('.')[1]);
-            });
         }
     });
 

@@ -176,7 +176,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'./sxs-model'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SxSModel) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'./sxs-model'</span>, <span class="string">'./regs-router'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SxSModel, Router) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> SxSView = Backbone.View.extend({
@@ -187,7 +187,8 @@
         },
 
         initialize: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> analysis = SxSModel.get(<span class="keyword">this</span>.options.regParagraph + <span class="string">'/'</span> + <span class="keyword">this</span>.options.docNumber + <span class="string">'?from_version='</span> + <span class="keyword">this</span>.options.fromVersion);
+            <span class="keyword">var</span> sxsURL = <span class="keyword">this</span>.options.regParagraph + <span class="string">'/'</span> + <span class="keyword">this</span>.options.docNumber + <span class="string">'?from_version='</span> + <span class="keyword">this</span>.options.fromVersion,
+                analysis = SxSModel.get(sxsURL);
 
             <span class="keyword">if</span> (<span class="keyword">typeof</span> analysis.done !== <span class="string">'undefined'</span>) {
                 analysis.done(<span class="keyword">function</span>(res) {
@@ -198,6 +199,9 @@
                 <span class="keyword">this</span>.render(analysis);
             }
 
+            Router.navigate(sxsURL);
+
+            Dispatch.on(<span class="string">'sxs:close'</span>, <span class="keyword">this</span>.closeAnalysis, <span class="keyword">this</span>);
         },
 
         render: <span class="keyword">function</span>(analysis) {
@@ -206,7 +210,11 @@
         },
 
         closeAnalysis: <span class="keyword">function</span>(e) {
-            e.preventDefault();
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> e !== <span class="string">'undefined'</span>) {
+                e.preventDefault();
+                window.history.back();
+            }
+
             <span class="keyword">this</span>.$el.removeClass(<span class="string">'open-sxs'</span>);
         }
     });

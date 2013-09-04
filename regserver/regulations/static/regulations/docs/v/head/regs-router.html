@@ -176,10 +176,19 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'regs-router'</span>, [<span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>(_, Backbone) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'regs-router'</span>, [<span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'./dispatch'</span>], <span class="keyword">function</span>(_, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
 
-    <span class="keyword">var</span> RegsRouter = Backbone.Router.extend({});
+    <span class="keyword">var</span> RegsRouter = Backbone.Router.extend({
+        routes: {
+            <span class="string">'regulation/:section/:version'</span>: <span class="string">'backToSection'</span>
+        },
+
+        backToSection: <span class="keyword">function</span>(section) {
+            Dispatch.trigger(<span class="string">'openSection:set'</span>, section); 
+            Dispatch.trigger(<span class="string">'sxs:close'</span>);
+        }
+    });
 
     <span class="keyword">var</span> router = <span class="keyword">new</span> RegsRouter();
 

@@ -235,8 +235,7 @@
         modifyListDisplay: <span class="keyword">function</span>() {
             <span class="keyword">var</span> $folderContent = <span class="keyword">this</span>.$el.find(<span class="string">'.expand-drawer'</span>);
             <span class="keyword">if</span> ($folderContent.children().length &gt; <span class="number">0</span>) {
-                <span class="keyword">this</span>.truncateLinks();
-                <span class="keyword">this</span>.highlightHeader(<span class="keyword">this</span>.$el);
+                <span class="keyword">this</span>.highlightHeader();
             }
             <span class="keyword">else</span> {
                 $folderContent.text(<span class="string">'No analysis available for '</span> + Dispatch.getOpenSection());
@@ -245,14 +244,6 @@
 
         highlightHeader: <span class="keyword">function</span>() {
             <span class="keyword">this</span>.$el.find(<span class="string">'h4'</span>).addClass(<span class="string">'has-content'</span>);
-        },
-
-        truncateLinks: <span class="keyword">function</span>() {
-            <span class="keyword">this</span>.$el.find(<span class="string">'li'</span>).each(<span class="keyword">function</span>(i, li) {
-                <span class="keyword">var</span> $link = $(li).find(<span class="string">'a'</span>),
-                    pid = $link.text();
-                $link.text(pid.split(<span class="string">'.'</span>)[<span class="number">1</span>]);
-            });
         }
     });
 
