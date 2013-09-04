@@ -190,9 +190,14 @@
         }
     });
 
-    <span class="keyword">var</span> router = <span class="keyword">new</span> RegsRouter();
+    <span class="keyword">var</span> router = <span class="keyword">new</span> RegsRouter(),
+        root = Dispatch.getURLPrefix() || <span class="string">'/'</span>;
 
-    Backbone.history.start({pushState: <span class="string">'pushState'</span> <span class="keyword">in</span> window.history, silent: <span class="literal">true</span>});
+    Backbone.history.start({
+        pushState: <span class="string">'pushState'</span> <span class="keyword">in</span> window.history,
+        silent: <span class="literal">true</span>,
+        root: root
+    });
 
     <span class="keyword">return</span> router;
 });</pre></div></div>

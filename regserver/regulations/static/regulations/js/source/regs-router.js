@@ -12,9 +12,14 @@ define('regs-router', ['underscore', 'backbone', './dispatch'], function(_, Back
         }
     });
 
-    var router = new RegsRouter();
+    var router = new RegsRouter(),
+        root = Dispatch.getURLPrefix() || '/';
 
-    Backbone.history.start({pushState: 'pushState' in window.history, silent: true});
+    Backbone.history.start({
+        pushState: 'pushState' in window.history,
+        silent: true,
+        root: root
+    });
 
     return router;
 });
