@@ -34,25 +34,32 @@
         display: inline-block;
         right: .625em;
         padding-right: 19px;
-        background: url(../img/accordion-sprite.png) no-repeat right 11px;
         text-transform: uppercase;
         line-height: 30px; /* match h4 */
         font-size: .8em;
         cursor: pointer;
-
-        &.carrotify {
-            background: url(../img/carrotdown.png) no-repeat right 0;
-        }
     }
 
-    @media 
+    .expand-button:before {
+        .minicon;
+        content: "\e003";
+        float: right;
+        padding-left: 6px;
+        line-height: 30px;
+    }
+
+    .open.expand-button:before {
+        content: "\e004";
+    }
+
+    /*@media 
     (-webkit-min-device-pixel-ratio: 2), 
     (min-resolution: 192dpi) {
         .expand-button {
             background: url(../img/accordian-sprite@2x.png) no-repeat right 11px;
             background-size: 13px;
         }
-    }
+    }*/
 
     h5 {
         text-transform: none;
@@ -122,14 +129,6 @@
     }
 
 }
-
-.open .expand-button {
-        background-position: right -12px;
-
-        &.carrotify {
-            background: url(../img/carrotup.png) no-repeat right 0;
-        }
-    }
 
 .level-1 > .inline-interpretation:last-child {
     margin-bottom: 0;

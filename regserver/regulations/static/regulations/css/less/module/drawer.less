@@ -18,7 +18,7 @@ Generic drawer styles
 
 .panel {
     background-color: @bg_gray;
-    border-right: 2px solid #d0d0ce;
+    border-right: 2px solid @medium_gray;
     .avenir-next-demi;
     font-size: .875em;
     .slide (@direction: left, @speed: 300ms); /* animate the panel opening */
@@ -82,13 +82,13 @@ Panel Header
     width: 17.142857143em;
     position: fixed;
     background-color: @bg_gray;
-    border-right: 2px solid #d0d0ce;
+    border-right: 2px solid @medium_gray;
 
     h2 {
         margin: 0;
         padding: 10px 15px 14px 15px;
         line-height: 1.2;
-        .border-bottom-light (@width: 2px);
+        .border-bottom-medium (@width: 2px);
 
         .toc-type {
             color: @dark_gray;
@@ -179,7 +179,7 @@ currently these are TOC, History, and Search
     margin-left: -4px;; /*accomodate inline-block spacing */
     height: 34px; /* match height of main header */
     width: 56px;
-    border-right: 1px solid @light_field;
+    border-right: 1px solid @medium_gray;
 }
 
 .drawer-toggles li:first-child {
@@ -221,6 +221,12 @@ currently these are TOC, History, and Search
     }
 }
 
+/* 
+* right now we need to declare the bg-color for each id
+* due to the way the icons are used as background images
+* use of the icon font will change this
+*/
+
 #menu-link:hover,
 #menu-link:active,
 #history-link:hover,
@@ -228,6 +234,14 @@ currently these are TOC, History, and Search
 #search-link:hover,
 #search-link:active {
         background-color: @light_field;
+}
+
+#menu-link,
+#history-link,
+#search-link {
+    &.current {
+        background-color: @light_field;
+    }
 }
 
 @media only screen and ( min-width: 1100px ) {

@@ -206,7 +206,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
 
             section.toggleClass('open');
             header.next('.hidden').slideToggle();
-            button.html(section.hasClass('open') ? 'Hide' : 'Show');
+            button.toggleClass('open').html(section.hasClass('open') ? 'Hide' : 'Show');
 
             return this;
         },
