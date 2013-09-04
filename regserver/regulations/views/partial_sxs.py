@@ -4,6 +4,7 @@ from django.http import Http404, HttpResponseBadRequest
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator, notices
+from regulations.generator.layers.utils import convert_to_python
 from regulations.generator.node_types import label_to_text
 
 
@@ -33,7 +34,12 @@ class ParagraphSXSView(TemplateView):
         label_id = context['label_id']
         notice_id = context['notice_id']
 
-        paragraph_sxs = generator.get_sxs(label_id, notice_id)
+        notice = generator.get_notice(notice_id)
+        if not notice:
+            raise Http404
+        notice = convert_to_python(notice)
+
+        paragraph_sxs = generator.get_sxs(label_id, notice)
 
         if paragraph_sxs is None:
             raise Http404
@@ -44,5 +50,6 @@ class ParagraphSXSView(TemplateView):
             notices.filter_labeled_children(paragraph_sxs)
         context['sxs'] = paragraph_sxs
         context['sxs']['header'] = label_to_text(label_id.split('-'))
+        context['notice'] = notice
 
         return context

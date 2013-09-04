@@ -1,7 +1,7 @@
 {% if sxs.label %}
     <div class="sxs-header">
         <a class="sxs-back-button" href="{{ back_url }}"><i class="minicon-left"></i> &sect; {{sxs.header}}</a>
-        <h2>Section-by-section analysis</h2>
+        <h2>Section-by-section analysis - {{ notice.fr_volume }} FR {{ sxs.page }}</h2>
     </div>
     <div class="sxs-content">
         <div id="{{sxs.label}}" class="sxs-main-content group">
@@ -29,23 +29,23 @@
 
         <h4>Document Number:</h4>
         <p>
-            <a href="{{sxs.metadata.fr_url}}" class="external">{{sxs.metadata.document_number}}</a>
+            <a href="{{notice.fr_url}}" class="external">{{notice.document_number}}</a>
         </p>
 
         <h4>Action:</h4>
         <p>
-            {{sxs.metadata.action}}
+            {{notice.action}}
         </p>
 
         <h4>Dates:</h4>
         <ul>
-            <li><strong>Publication:</strong> {{sxs.metadata.publication_date|date:"F j, Y"}}</li>
-            <li><strong>Effective:</strong> {{sxs.metadata.effective_on|date:"F j, Y"}}</li>
+            <li><strong>Publication:</strong> {{notice.publication_date|date:"F j, Y"}}</li>
+            <li><strong>Effective:</strong> {{notice.effective_on|date:"F j, Y"}}</li>
         </li>
 
         <h4>RIN:</h4>
         <p>
-            {{sxs.metadata.regulation_id_numbers|join:", "}}
+            {{notice.regulation_id_numbers|join:", "}}
         </p>
 </div>
 {% endif %}
