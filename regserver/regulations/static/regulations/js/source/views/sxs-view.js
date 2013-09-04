@@ -1,4 +1,4 @@
-define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model'], function($, _, Backbone, Dispatch, SxSModel) {
+define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model', './regs-router'], function($, _, Backbone, Dispatch, SxSModel, Router) {
     'use strict';
 
     var SxSView = Backbone.View.extend({
@@ -9,7 +9,8 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
         },
 
         initialize: function() {
-            var analysis = SxSModel.get(this.options.regParagraph + '/' + this.options.docNumber + '?from_version=' + this.options.fromVersion);
+            var sxsURL = this.options.regParagraph + '/' + this.options.docNumber + '?from_version=' + this.options.fromVersion,
+                analysis = SxSModel.get(sxsURL);
 
             if (typeof analysis.done !== 'undefined') {
                 analysis.done(function(res) {
@@ -20,6 +21,9 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
                 this.render(analysis);
             }
 
+            Router.navigate(sxsURL);
+
+            Dispatch.on('sxs:close', this.closeAnalysis, this);
         },
 
         render: function(analysis) {
@@ -28,7 +32,11 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
         },
 
         closeAnalysis: function(e) {
-            e.preventDefault();
+            if (typeof e !== 'undefined') {
+                e.preventDefault();
+                window.history.back();
+            }
+
             this.$el.removeClass('open-sxs');
         }
     });
