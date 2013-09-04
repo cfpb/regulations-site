@@ -7,7 +7,8 @@ define('regs-router', ['underscore', 'backbone', './dispatch'], function(_, Back
         },
 
         backToSection: function(section) {
-           Dispatch.trigger('openSection:set', section); 
+            Dispatch.trigger('openSection:set', section); 
+            Dispatch.trigger('sxs:close');
         }
     });
 
