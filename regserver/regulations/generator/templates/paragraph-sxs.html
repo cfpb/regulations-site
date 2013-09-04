@@ -5,8 +5,6 @@
     </div>
     <div class="sxs-content">
         <div id="{{sxs.label}}" class="sxs-main-content group">
-{% else %}
-    <div>
 {% endif %}
 
 <h{{sxs.depth}}> {{sxs.title}} </h{{sxs.depth}}>
@@ -20,7 +18,11 @@
         {%include template_name  %}
     {% endwith %}
 {% endfor %}
-</div>
+
+{% if sxs.label %}
+      </div>
+    </div>
+{% endif %}
 
 {% if sxs.label %}
 <div id="metadata-{{sxs.label}}" class="sxs-metadata">
@@ -49,4 +51,3 @@
         </p>
 </div>
 {% endif %}
-</div>
