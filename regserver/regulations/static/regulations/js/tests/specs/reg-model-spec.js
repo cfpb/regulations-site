@@ -6,8 +6,8 @@ define(['reg-model', 'samplejson'], function(RegModel, testjson) {
       expect(RegModel.structure).toBeTruthy();
     });
 
-    it("should have a structure array with 10 values", function() {
-      expect(RegModel.structure.length).toEqual( 10 );
+    it("should have a structure array with 9 values", function() {
+      expect(RegModel.structure.length).toEqual( 9 );
     });
 
     it("should have content", function() {

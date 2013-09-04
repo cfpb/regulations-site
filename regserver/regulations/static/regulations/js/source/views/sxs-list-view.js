@@ -11,11 +11,11 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
             var analyses = this.$el.find('.chunk');
             this.model = new FolderModel({supplementalPath: 'sidebar'});
 
-            this.model.set(Dispatch.getOpenSection(), analyses);
+            this.model.set(Dispatch.getOpenSection(), analyses.innerHTML);
 
             Dispatch.on('section:open', this.getAnalyses, this);
 
-            this.highlightHeader(this.$el);
+            this.modifyListDisplay();
         },
 
         openSxS: function(e) {
@@ -51,13 +51,30 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
                 list = $html.find('#sxs-list').html();
             this.$el.html(list);
 
-            this.highlightHeader($html);
+            this.modifyListDisplay();
         },
 
-        highlightHeader: function($html) {
-            if ($html.find('.expand-drawer').children().length > 0) {
-                this.$el.find('h4').addClass('has-content');
+        modifyListDisplay: function() {
+            var $folderContent = this.$el.find('.expand-drawer');
+            if ($folderContent.children().length > 0) {
+                this.truncateLinks();
+                this.highlightHeader(this.$el);
             }
+            else {
+                $folderContent.text('No analysis available for ' + Dispatch.getOpenSection());
+            }
+        },
+
+        highlightHeader: function() {
+            this.$el.find('h4').addClass('has-content');
+        },
+
+        truncateLinks: function() {
+            this.$el.find('li').each(function(i, li) {
+                var $link = $(li).find('a'),
+                    pid = $link.text();
+                $link.text(pid.split('.')[1]);
+            });
         }
     });
 
