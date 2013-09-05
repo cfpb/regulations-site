@@ -26,6 +26,7 @@ Sidebar
 .secondary-content {
     overflow-y: auto;
     font-size: .875em;
+    .avenir-next;
 
     /* reset the margin and padding of all sidebar lists*/
     ul,
@@ -156,6 +157,13 @@ Regs Meta contains the sub-content meta data found in the sidebar
 
         li:last-child a:link {
             border: none;
+        }
+
+        /* add a top border to IE8 since it does not recognize .last-child to remove the bottom border*/
+        .lt-ie9 & {
+            li:first-child a:link {
+                .border-top-light;
+            }
         }
     }
 }
