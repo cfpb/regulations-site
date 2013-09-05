@@ -18,7 +18,7 @@ class PartialSectionDiffViewTest(TestCase):
         _, _, _, da = diff_view.get_appliers('204-2', '1', '2')
         self.assertEqual(da, diff_applier)
 
-    @patch('regulations.generator.generator')
+    @patch('regulations.views.diff.generator')
     def test_get_404(self, generator):
         generator.get_tree_paragraph.return_value = None
         response = Client().get('/partial/diff/111/222')
