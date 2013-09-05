@@ -10,6 +10,7 @@ class DiffApplier(object):
 
     INSERT = u'insert'
     DELETE = u'delete'
+    DELETED_OP = 'deleted'
 
     def __init__(self, diff_json):
         self.diff = diff_json
@@ -30,8 +31,14 @@ class DiffApplier(object):
     def get_text(self):
         return ''.join([''.join(d) for d in self.oq])
 
+    def delete_all(self, text):
+        """ Mark all the text passed in as deleted. """
+        return '<del>' + text + '</del>'
+
     def apply_diff(self, original, label):
         if label in self.diff:
+            if self.diff[label]['op'] == self.DELETED_OP:
+                return self.delete_all(original)
             if 'text' in self.diff[label]:
                 text_diffs = self.diff[label]['text']
                 self.deconstruct_text(original)
