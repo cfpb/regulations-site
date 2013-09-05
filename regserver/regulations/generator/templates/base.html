@@ -16,7 +16,7 @@ CSS/Javascript etc., should inherit from this template.
         <title>{{tree.header}}</title>
         <link rel="shortcut icon" type="image/x-icon" href="{%static "regulations/ip/favicon.ico" %}"/>
         <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
-        <script>document.documentElement.className = "js"</script>
+        <script>document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/,'js');</script>
         <script src="{%static "regulations/js/"|add:env|add:"/require.config.js" %}"></script>
         <script>
             if (typeof require !== 'undefined') {
