@@ -187,18 +187,20 @@
         backToSection: <span class="keyword">function</span>(section) {
             Dispatch.trigger(<span class="string">'openSection:set'</span>, section); 
             Dispatch.trigger(<span class="string">'sxs:close'</span>);
+        },
+
+        start:  <span class="keyword">function</span>() {
+            <span class="keyword">var</span> root = Dispatch.getURLPrefix() || <span class="string">'/'</span>;
+
+            Backbone.history.start({
+                pushState: <span class="string">'pushState'</span> <span class="keyword">in</span> window.history,
+                silent: <span class="literal">true</span>,
+                root: root
+            });
         }
     });
 
-    <span class="keyword">var</span> router = <span class="keyword">new</span> RegsRouter(),
-        root = Dispatch.getURLPrefix() || <span class="string">'/'</span>;
-
-    Backbone.history.start({
-        pushState: <span class="string">'pushState'</span> <span class="keyword">in</span> window.history,
-        silent: <span class="literal">true</span>,
-        root: root
-    });
-
+    <span class="keyword">var</span> router = <span class="keyword">new</span> RegsRouter();
     <span class="keyword">return</span> router;
 });</pre></div></div>
             

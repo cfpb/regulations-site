@@ -3,7 +3,7 @@
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
-define(['jquery', 'underscore', 'backbone', 'content-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers'], function($, _, Backbone, ContentView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers) {
+define(['jquery', 'underscore', 'backbone', 'content-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers', './regs-router'], function($, _, Backbone, ContentView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router) {
     'use strict';
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -64,14 +64,15 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'reg-model', 'defini
             window.Regs.analytics = new AnalyticsHandler();
             window.Regs.mainHeader = new HeaderView();
 
-            // cache open section content
-            RegModel.set(openSection, regSection.html());
-
             // cache URL prefix
             urlPrefix = RegsHelpers.findURLPrefix();
             if (urlPrefix) {
                 Dispatch.set('urlprefix', urlPrefix);
             }
+            Router.start();
+
+            // cache open section content
+            RegModel.set(openSection, regSection.html());
 
             this.bindEvents();
         }
