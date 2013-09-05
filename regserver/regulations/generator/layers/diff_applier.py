@@ -1,5 +1,6 @@
 import types
 from collections import deque
+import tree_builder
 
 
 class DiffApplier(object):
@@ -11,9 +12,13 @@ class DiffApplier(object):
     INSERT = u'insert'
     DELETE = u'delete'
     DELETED_OP = 'deleted'
+    ADDED_OP = 'added'
 
-    def __init__(self, diff_json):
+    def __init__(self, diff_json, label_requested):
         self.diff = diff_json
+        #label_requested is the regulation label for which a diff is 
+        #requested. 
+        self.label_requested = label_requested
 
     def deconstruct_text(self, original):
         self.oq = [deque([c]) for c in original]
@@ -34,6 +39,34 @@ class DiffApplier(object):
     def delete_all(self, text):
         """ Mark all the text passed in as deleted. """
         return '<del>' + text + '</del>'
+
+    def add_nodes_to_tree(original, new_nodes):
+        """ Add all the nodes from new_nodes into the original tree. """
+        tree = tree_builder.build_tree_hash(original)
+
+        for n in new_nodes:
+            if tree_builder.parent_in_tree(n, tree):
+                tree_builder.add_node_to_tree(n, tree)
+
+    def tree_changes(self, original_tree):
+        """ Apply additions to the regulation tree. """
+
+        def relevant_added(label):
+            """ Get the operations that add nodes, for the requested section/pargraph. """
+            if self.diff[label]['op'] == self.ADDED_OP and label.startswith(self.label_requested):
+                return True
+        
+        new_nodes = [label for label in self.diff if relevant_added(label)]
+
+        #sort, so that lowest nodes are first
+        new_nodes = sorted(new_nodes, key=lambda x: len(x), reverse=True)
+
+        #for now, remove interpretation nodes
+        reg_text_nodes = [l for l in new_nodes if 'Interp' not in l]
+
+        tree = self.add_nodes_to_tree(original_tree, reg_text_nodes)
+        return tree
+
 
     def apply_diff(self, original, label):
         if label in self.diff:

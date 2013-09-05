@@ -13,8 +13,7 @@ class PartialSectionDiffView(TemplateView):
     template_name = 'regulation-content.html'
 
     def get_appliers(self, label_id, older, newer):
-        reg = label_id.split('-')[0]
-        diff = generator.get_diff_applier(reg, older, newer)
+        diff = generator.get_diff_applier(label_id, older, newer)
 
         if diff is None:
             raise Http404
@@ -34,7 +33,9 @@ class PartialSectionDiffView(TemplateView):
         tree = generator.get_tree_paragraph(label_id, older)
 
         if tree is None:
-            raise Http404
+            #TODO We need a more complicated check here to see if the diffs 
+            #add the requested section. If not -> 404
+            tree = {}
 
         appliers = self.get_appliers(label_id, older, newer)
 

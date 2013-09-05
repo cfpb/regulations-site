@@ -151,7 +151,8 @@ def get_diff_json(regulation, older, newer):
     return api.diff(regulation, older, newer)
 
 
-def get_diff_applier(regulation, older, newer):
+def get_diff_applier(label_id, older, newer):
+    regulation = label_id.split('-')[0]
     diff_json = get_diff_json(regulation, older, newer)
     if diff_json:
-        return DiffApplier(diff_json)
+        return DiffApplier(diff_json, label_id)
