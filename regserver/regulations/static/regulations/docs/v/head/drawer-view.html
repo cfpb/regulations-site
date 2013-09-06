@@ -209,17 +209,14 @@
             <span class="keyword">this</span>.childViews = {
                 <span class="string">'table-of-contents'</span>: {
                     <span class="string">'selector'</span>: $(<span class="string">'#table-of-contents'</span>),
-                    <span class="string">'title'</span>:(<span class="string">'Table of contents for'</span>),
                     <span class="string">'constructor'</span>: TOCView
                 },
                 <span class="string">'history'</span>: {
                     <span class="string">'selector'</span>: $(<span class="string">'#history'</span>),
-                    <span class="string">'title'</span>:(<span class="string">'Switch between versions of'</span>),
                     <span class="string">'constructor'</span>: HistoryView
                 },
                 <span class="string">'search'</span>: {
                     <span class="string">'selector'</span>: $(<span class="string">'#search'</span>),
-                    <span class="string">'title'</span>:(<span class="string">'Search'</span>),
                     <span class="string">'constructor'</span>: SearchView
                 }
             };</pre></div></div>
@@ -298,21 +295,6 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>update the title of the drawer section</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$label.html(<span class="keyword">this</span>.childViews[activeId][<span class="string">'title'</span>]);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
               <p>create a new childView if a view doesn&#39;t already exist</p>
 
             </div>
@@ -323,11 +305,11 @@
         </li>
         
         
-        <li id="section-9">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>set a cookie value equal to the active drawer id</p>
 

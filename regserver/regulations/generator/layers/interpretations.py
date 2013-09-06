@@ -27,12 +27,14 @@ class InterpretationsLayer(object):
             response.render()
 
             context = {
+                'for_markup_id': text_index,
+                'label_id': reference,
                 'markup': response.content,
-                'for_markup_id': text_index
             }
 
             #  exclude 'Interp'
             ref_parts = reference.split('-')[:-1]
+            context['section_id'] = '%s-Interp' % ref_parts[0]
 
             if len(ref_parts) == 2:
                 #  Part-Section/Appendix

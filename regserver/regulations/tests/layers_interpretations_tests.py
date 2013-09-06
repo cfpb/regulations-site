@@ -24,9 +24,11 @@ class InterpretationsLayerTest(TestCase):
         il = InterpretationsLayer(layer)
 
         self.assertEqual(il.apply_layer('200-2-b-3-i'), ('interp', {
-            'markup': 'content',
             'for_markup_id': '200-2-b-3-i',
-            'label': '2(b)(3)(i)'
+            'label_id': '200-2-b-3-i-Interp',
+            'label': '2(b)(3)(i)',
+            'markup': 'content',
+            'section_id': '200-Interp',
         }))
 
     @patch('regulations.generator.layers.interpretations.views'

@@ -12,5 +12,17 @@
             {% endif %}
             </div>
         </section> <!-- /.regs-meta -->
+        <section id="permalinks" class="regs-meta">
+            <h4 class="expandable">Bookmark-able Links</h4>
+            <div class="chunk expand-drawer">
+            {% if permalinks %}
+                <ul>
+                    {% for permalink in permalinks %}
+                        <li><a href="{% url 'chrome_section_view' permalink.section_id version %}#{{ permalink.label_id }}">{{ permalink.text }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            </div>
+        </section> <!-- /.regs-meta -->
     </div> <!-- /#sidebar-content -->
 </div> <!-- /.secondary-content -->

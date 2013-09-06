@@ -1,18 +1,25 @@
 {% comment %}
     Display a table of contents. 
 {% endcomment %}
-<nav {% if top_toc %}id="toc" {% endif %}class="{{nav_class}}" role="navigation">
-    <ol {% if top_toc %}class="toc-container current hidden" id="table-of-contents"{% endif %}>
-        {% for item in toc_items %}
-            {% if item.is_section %}
-                <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">§&nbsp;{{item.label}}</span> {{item.sub_label|safe}}</a></li>
-            {% elif item.is_appendix %}
-                <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
-            {% elif item.is_supplement %}
-                <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
-            {% else %}
-                <li><a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>
-            {% endif %}
-        {% endfor %}
-    </ol>
-</nav>
+<div {% if top_toc %}class="toc-drawer toc-container current hidden" id="table-of-contents"{% endif %}>
+    {% if top_toc %}
+        <div class="drawer-header">
+            <h2 class="toc-type">Table of Contents</h2>
+        </div><!-- /.drawer-header -->
+    {% endif %}
+    <nav {% if top_toc %}id="toc" {% endif %}class="{{nav_class}}" role="navigation">
+        <ol {% if top_toc %}class="drawer-content"{% endif %}>
+            {% for item in toc_items %}
+                {% if item.is_section %}
+                    <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">§&nbsp;{{item.label}}</span> {{item.sub_label|safe}}</a></li>
+                {% elif item.is_appendix %}
+                    <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
+                {% elif item.is_supplement %}
+                    <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
+                {% else %}
+                    <li><a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </nav>
+</div>

@@ -38,11 +38,13 @@ When applied at large resolutions displays, the active class causes the panel na
         top: 200px;
 
         /* slide content fully offscreen*/
-        ol,
-        ul, 
-        h2 {
+        .drawer-content {
             position: absolute;
             left: -999px;    
+        }
+
+        .drawer-header {
+            left: -260px; /*60px extra to accomodate for stacked buttons*/
         }
 }
 
@@ -70,6 +72,10 @@ This works by default, but can cause the nav to reverse position when already ap
 @media only screen and ( max-width: 1100px ) {
     .panel.active{
         left: 0px;
+
+        .drawer-header {
+            left: 0;
+        }
     }
 }
 
@@ -81,42 +87,22 @@ Panel Header
 .drawer-header {
     width: 17.142857143em;
     position: fixed;
+    top: 94px;
     background-color: @bg_gray;
     border-right: 2px solid @medium_gray;
     z-index: 100;
+    border-bottom: 1px solid @medium_gray;
+    padding: 0 15px;
+    .slide (@direction: left, @speed: 300ms);
+
+
 
     h2 {
-        margin: 0;
-        padding: 10px 15px 14px 15px;
-        line-height: 1.2;
-        .border-bottom-medium (@width: 2px);
-
-        .toc-type {
-            color: @dark_gray;
-            font-size: 0.527472527em; /* 12px / (26px * .875em) */
-            .avenir-next;
-            text-transform: uppercase;
-        }
-
-        .toc-part-num {
-          display: block;
-          font-size: 20px; /*18px / (26px * .875em) */
-          margin: 10px 0 7px 0;
-          color: @dark_gray;
-          .avenir-next-bold;
-          text-transform: uppercase;
-        }
-
-        .toc-reg-title {
-          .avenir-next;
-          display: block;
-          font-size: 0.615384615em; /* 14px / (26px * .875em)  */
-        }
+        color: @dark_gray;
+        font-size: .875em; /* 12px / (26px * .875em) */
+        .avenir-next-demi;
+        text-transform: uppercase;
     }
-}
-
-.toc-container {
-    margin-top: 126px; /* put drawer content below persistent header*/
 }
 
 /* 
@@ -177,7 +163,7 @@ currently these are TOC, History, and Search
 .toc-nav-link {
     text-indent: -9999px;
     display: inline-block;
-    margin-left: -4px;; /*accomodate inline-block spacing */
+    margin-left: -4px; /*accomodate inline-block spacing */
     height: 34px; /* match height of main header */
     width: 56px;
     border-right: 1px solid @medium_gray;
@@ -248,6 +234,7 @@ currently these are TOC, History, and Search
 @media only screen and ( min-width: 1100px ) {
     .active .toc-nav-link {
         border-right: none;
+        width: 40px;
     }
 
     .active .drawer-toggles {
@@ -260,9 +247,6 @@ currently these are TOC, History, and Search
         display: list-item;
     }
 
-    .active .toc-nav-link {
-        width: 40px;
-    }
 }
 
 /* 
@@ -273,6 +257,7 @@ This contains all of the styles specific to the TOC
 .regulation-nav {
 
     ol {
+        margin: 40px 0 0 0;
         padding: 0;
     }
 
@@ -315,13 +300,23 @@ History Drawer
 This contains all of the styles specific to the history
 */
 
-#history {
+.history-drawer {
 
     .avenir-next-demi;
 
     ul, 
     li {
         .reset;
+    }
+
+    .drawer-content {
+        margin-top: 40px;
+    }
+
+    .lt-ie9 & {
+        .drawer-content {
+            margin-top: 60px;
+        }
     }
 
     /*TODO: unify link styles with TOC*/
@@ -416,7 +411,93 @@ Search Drawer
 This contains all of the styles specific to the search
 */
 
-#search {
-    padding: 0 15px;
-}
+.search-drawer {
+    .reset;
 
+    .drawer-header {
+        border-bottom: none;
+    }
+
+    .drawer-content {
+        margin-top: 50px;
+    }
+
+    h4 {
+        color: @dark_text;
+        .avenir-next;
+        text-transform: none;
+    }
+
+    .search-box {
+        border-bottom: 1px solid @medium_gray;
+        padding: 0 15px 20px 15px;
+    }
+
+    input {
+        height: 32px;
+        margin: 0;
+    }
+
+    input[type=text]{
+        width: 80%;
+        vertical-align: bottom;
+        font-family: Arial, sans-serif;
+        color: @black;
+        padding: 0 10px;
+        border-top: 1px solid @light_field;
+        border-right: none;
+        border-bottom: 1px solid @light_field;
+        border-left: 1px solid @light_field;
+    }
+
+    button {
+        width: 20%;
+        height: 32px;
+        vertical-align: bottom;
+        margin: 0;
+        background-color: @pacific;
+        color: #fff;
+        border: none;
+        vertical-align: bottom;
+    }
+
+    button:hover,
+    button:active {
+        background-color: @pacific_hover;
+    }
+
+    .version-search {
+        border-bottom: 2px solid @medium_gray;
+        padding: 0 15px 20px 15px;
+    }
+
+    .select-content { 
+        overflow: hidden; /* this hides the select's drop button */
+        position: relative;
+        background: white url('../img/select.png') no-repeat bottom right; 
+        width: 100%;
+        border: solid 1px @light_field;
+        height: 32px;
+    }
+
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .select-content {
+            background: white url('../img/select@2x.png') no-repeat bottom right;
+            background-size: 32px 32px;
+        }
+    }
+
+    select { 
+        width: 115%;
+        background-color: transparent; 
+        background-image: none; 
+        -webkit-appearance: none;
+        border: none; 
+        box-shadow: none;
+        padding: 0 10px; /* add padding to the select, not the div */
+        color: @dark_text;
+        height: 32px;
+    }
+}
