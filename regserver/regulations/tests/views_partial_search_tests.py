@@ -50,3 +50,27 @@ class PartialSearchTest(TestCase):
         self.assertEqual(400, response.status_code)
         response = Client().get('/partial/search/111?q=vvv')
         self.assertEqual(400, response.status_code)
+
+    def test_add_prev_next(self):
+        view = PartialSearch()
+        context = {'results': {'total_hits': 77}}
+        view.add_prev_next(0, context)
+        self.assertFalse('previous' in context)
+        self.assertEqual(context['next'], {'page': 1, 'length': 10})
+
+        del context['next']
+        view.add_prev_next(5, context)
+        self.assertEqual(context['previous'], {'page': 4, 'length': 10})
+        self.assertEqual(context['next'], {'page': 6, 'length': 10})
+
+        del context['previous']
+        del context['next']
+        view.add_prev_next(6, context)
+        self.assertEqual(context['previous'], {'page': 5, 'length': 10})
+        self.assertEqual(context['next'], {'page': 7, 'length': 7})
+
+        del context['previous']
+        del context['next']
+        view.add_prev_next(7, context)
+        self.assertEqual(context['previous'], {'page': 6, 'length': 10})
+        self.assertFalse('next' in context)
