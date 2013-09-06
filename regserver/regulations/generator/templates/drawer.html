@@ -1,20 +1,15 @@
 {% with active_version=version %}
 <div id="menu" class="panel">
-    <div class="drawer-header">
-    <h2>
-        <span class="toc-type">Table of contents for</span>
-        <span class="toc-part-num">{{ tree.meta.cfr_title_number }} CFR Part {{ tree.label.0 }}</span>
-        <span class="toc-reg-title">{{ tree.title_clean|title }}
-        {% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</span>
-    </h2>
-    </div> <!--/.drawer-header-->
  {%if tree.TOC %}
     {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
        {% include "toc.html" %} 
     {% endwith %}
  {%endif%}
-    <div id="history" class="toc-container hidden">
-        <ul>
+    <div id="history" class="history-drawer toc-container hidden">
+        <div class="drawer-header">
+            <h2 class="toc-type">Switch between versions of</h2>
+        </div><!-- /.drawer-header -->
+        <ul class="drawer-content">
         {% for version in history %}
             <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
             {% if part == label_id %}
@@ -41,18 +36,27 @@
         {% endfor %}
         </ul>
     </div> <!--/#history-->
-    <div id="search" class="toc-container hidden">
-        <form action="{% url 'search' %}" method="GET">
-            <h3>Search</h3>
-            <input type="text" name="q" /><input type="submit" />
-            <hr />
-            <h4>Search version</h4>
-            <select name="version">
-            {% for version in history %}
-                <option value="{{version.version}}"{% if active_version == version.version %} selected="selected"{% endif %}>{{version.by_date|date}}</option>
-            {% endfor %}
-            </select>
-        </form>
+    <div id="search" class="search-drawer toc-container hidden">
+        <div class="drawer-header">
+            <h2 class="toc-type">Search</h2>
+        </div><!-- /.drawer-header -->
+        <div class="drawer-content">
+            <form action="{% url 'search' %}" method="GET">
+                <div class="search-box">
+                    <input type="text" name="q" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
+                </div><!--/.search-box-->
+                <div class="version-search">
+                    <h4>Searching version</h4>
+                    <div class="select-content">
+                        <select name="version">
+                        {% for version in history %}
+                            <option value="{{version.version}}"{% if active_version == version.version %} selected="selected"{% endif %}>{{version.by_date|date}}</option>
+                        {% endfor %}
+                        </select>
+                    </div> <!--/.select-content-->
+                </div><!--/.version-search-->
+            </form>
+        </div><!-- /.drawer-content -->
     </div> <!--/#search-->
 </div> <!-- /.panel -->
 {% endwith %}
