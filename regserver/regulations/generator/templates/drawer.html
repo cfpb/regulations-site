@@ -44,14 +44,15 @@
     <div id="search" class="toc-container hidden">
         <form action="{% url 'search' %}" method="GET">
             <h3>Search</h3>
-            <input type="text" name="q" /><input type="submit" />
-            <hr />
+            <input type="text" name="q" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
             <h4>Search version</h4>
-            <select name="version">
-            {% for version in history %}
-                <option value="{{version.version}}"{% if active_version == version.version %} selected="selected"{% endif %}>{{version.by_date|date}}</option>
-            {% endfor %}
-            </select>
+            <div class="select-content">
+                <select name="version">
+                {% for version in history %}
+                    <option value="{{version.version}}"{% if active_version == version.version %} selected="selected"{% endif %}>{{version.by_date|date}}</option>
+                {% endfor %}
+                </select>
+            </div> <!--/.select-content-->
         </form>
     </div> <!--/#search-->
 </div> <!-- /.panel -->

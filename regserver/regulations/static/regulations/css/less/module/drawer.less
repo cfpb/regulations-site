@@ -418,5 +418,72 @@ This contains all of the styles specific to the search
 
 #search {
     padding: 0 15px;
+
+    input {
+        height: 32px;
+        margin: 0;
+    }
+
+    input[type=text]{
+        width: 80%;
+        vertical-align: bottom;
+        font-family: Arial, sans-serif;
+        color: @black;
+        padding: 0 10px;
+        border-top: 1px solid @light_field;
+        border-right: none;
+        border-bottom: 1px solid @light_field;
+        border-left: 1px solid @light_field;
+    }
+
+    button {
+        width: 20%;
+        height: 32px;
+        margin: 0;
+        background-color: @pacific;
+        color: #fff;
+        border: none;
+        vertical-align: bottom;
+        /*add borders to match height/width of input*/
+        border-top: 1px solid @light_field;
+        border-right: 1px solid @light_field;;
+        border-bottom: 1px solid @light_field;
+        border-left: none;
+    }
+
+    button:hover,
+    button:active {
+        background-color: @pacific_hover;
+    }
+
+    .select-content { 
+        overflow: hidden; /* this hides the select's drop button */
+        position: relative;
+        background: white url('../img/select.png') no-repeat bottom right; 
+        width: 100%;
+        border: solid 1px @light_field;
+        height: 32px;
+    }
+
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .select-content {
+            background: white url('../img/select@2x.png') no-repeat bottom right;
+            background-size: 32px 32px;
+        }
+    }
+
+    select { 
+        width: 115%;
+        background-color: transparent; 
+        background-image: none; 
+        -webkit-appearance: none;
+        border: none; 
+        box-shadow: none;
+        padding: 0 10px; /* add padding to the select, not the div */
+        color: @dark_text;
+        height: 32px;
+    }
 }
 
