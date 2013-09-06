@@ -20,17 +20,14 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'dis
             this.childViews = {
                 'table-of-contents': {
                     'selector': $('#table-of-contents'),
-                    'title':('Table of contents for'),
                     'constructor': TOCView
                 },
                 'history': {
                     'selector': $('#history'),
-                    'title':('Switch between versions of'),
                     'constructor': HistoryView
                 },
                 'search': {
                     'selector': $('#search'),
-                    'title':('Search'),
                     'constructor': SearchView
                 }
             };

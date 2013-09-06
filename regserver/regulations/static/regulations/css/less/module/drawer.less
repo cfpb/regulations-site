@@ -293,7 +293,7 @@ History Drawer
 This contains all of the styles specific to the history
 */
 
-#history {
+.history-drawer {
 
     .avenir-next-demi;
 
@@ -304,6 +304,12 @@ This contains all of the styles specific to the history
 
     .drawer-content {
         margin-top: 40px;
+    }
+
+    .lt-ie9 & {
+        .drawer-content {
+            margin-top: 60px;
+        }
     }
 
     /*TODO: unify link styles with TOC*/
@@ -398,7 +404,7 @@ Search Drawer
 This contains all of the styles specific to the search
 */
 
-#search {
+.search-drawer {
     .reset;
 
     .drawer-header {
@@ -440,16 +446,12 @@ This contains all of the styles specific to the search
     button {
         width: 20%;
         height: 32px;
+        vertical-align: bottom;
         margin: 0;
         background-color: @pacific;
         color: #fff;
         border: none;
         vertical-align: bottom;
-        /*add borders to match height/width of input*/
-        border-top: 1px solid @light_field;
-        border-right: 1px solid @light_field;;
-        border-bottom: 1px solid @light_field;
-        border-left: none;
     }
 
     button:hover,
@@ -492,4 +494,3 @@ This contains all of the styles specific to the search
         height: 32px;
     }
 }
-
