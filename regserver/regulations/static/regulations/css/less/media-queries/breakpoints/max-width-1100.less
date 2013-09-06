@@ -4,16 +4,18 @@
         left: -200px;
 
         /* position content fully offscreen*/
-        ol, 
-        h2 {
+        .drawer-content {
             position: absolute;
-            left: -320px;    
+            left: -999px;    
+        }
+
+        .drawer-header {
+            left: -260px; /*60px extra to accomodate for stacked buttons*/
         }
     }
 
     .panel.active {
-        ol,
-        h2 {
+        .drawer-content {
             position: static;
             left: 0;
         }

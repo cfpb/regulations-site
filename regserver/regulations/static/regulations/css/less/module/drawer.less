@@ -38,11 +38,13 @@ When applied at large resolutions displays, the active class causes the panel na
         top: 200px;
 
         /* slide content fully offscreen*/
-        ol,
-        ul, 
-        h2 {
+        .drawer-content {
             position: absolute;
             left: -999px;    
+        }
+
+        .drawer-header {
+            left: -260px; /*60px extra to accomodate for stacked buttons*/
         }
 }
 
@@ -70,6 +72,10 @@ This works by default, but can cause the nav to reverse position when already ap
 @media only screen and ( max-width: 1100px ) {
     .panel.active{
         left: 0px;
+
+        .drawer-header {
+            left: 0;
+        }
     }
 }
 
@@ -87,6 +93,9 @@ Panel Header
     z-index: 100;
     border-bottom: 1px solid @medium_gray;
     padding: 0 15px;
+    .slide (@direction: left, @speed: 300ms);
+
+
 
     h2 {
         color: @dark_gray;
