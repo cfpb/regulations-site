@@ -21,7 +21,7 @@ class PartialSearch(TemplateView):
         version = request.GET.get('version')
         if not query or not version:
             return HttpResponseBadRequest("missing query or version")
-        
+
         kwargs['q'] = query
         kwargs['version'] = version
         return super(PartialSearch, self).get(request, *args, **kwargs)
@@ -48,9 +48,8 @@ class PartialSearch(TemplateView):
         api_page = page // (API_PAGE_SIZE/PAGE_SIZE)
         page_idx = (page % (API_PAGE_SIZE/PAGE_SIZE)) * PAGE_SIZE
 
-        results = api_reader.ApiReader().search(context['q'],
-            context['version'], context['label_id'], api_page)
-
+        results = api_reader.ApiReader().search(
+            context['q'], context['version'], context['label_id'], api_page)
 
         # Ignore results found in the root (i.e. not a section)
         results['results'] = [r for r in results['results']

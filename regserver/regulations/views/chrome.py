@@ -98,7 +98,9 @@ class BadComponentException(Exception):
     """Allows us to propagate errors in loaded partials"""
     def __init__(self, response):
         self.response = response
+
     def __str__(self):
         return repr(self)
+
     def __repr__(self):
         return "BadComponentException(response=%s)" % repr(self.response)

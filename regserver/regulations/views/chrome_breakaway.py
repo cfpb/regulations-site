@@ -20,7 +20,7 @@ class ChromeBreakawayView(ChromeView):
         #   @todo: get the regulation letter as well
 
         content = self.content(context)
-        if isinstance(content, HttpResponse): # error occurred
+        if isinstance(content, HttpResponse):  # error occurred
             return content
         context['partial_content'] = self.content(context)
 
@@ -47,4 +47,3 @@ class ChromeSearchView(ChromeBreakawayView):
         self._assert_good(response)
         response.render()
         return response.content
-

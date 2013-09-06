@@ -29,8 +29,7 @@ class PartialSearchTest(TestCase):
                           'effective_on': date(2001, 1, 1)},
                          {'document_number': 'vvv',
                           'effective_on': date(2003, 4, 5)}],
-             'timeline': 'timeytimey'
-            }
+             'timeline': 'timeytimey'}
         ]
         response = Client().get('/partial/search/111?version=vvv&q=none')
         self.assertTrue('111-22' in response.content)
