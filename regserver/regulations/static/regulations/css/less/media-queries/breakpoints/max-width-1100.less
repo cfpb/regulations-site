@@ -2,6 +2,7 @@
 
     .panel {
         left: -200px;
+        top: 200px;
 
         /* position content fully offscreen*/
         .drawer-content {
@@ -15,20 +16,11 @@
     }
 
     .panel.active {
+        top: 94px;
+
         .drawer-content {
             position: static;
-            left: 0;
-        }
-    }
-
-    .toc-head {
-        .slide (@direction: left, @speed: 300ms);
-        left: -200px;
-    }
-
-    .active {
-        .toc-head {
-            left: 0;
+            top: 94px;
         }
     }
 
@@ -55,6 +47,65 @@
         }
     }
 
+    /*
+    Drawer Nav
+    ----------
+    */
+
+    .toc-head {
+        .slide (@direction: left, @speed: 300ms);
+        position: relative;
+        left: -200px;
+        margin-right: 15px;
+        height: 150px;
+    }
+
+    .toc-nav-link {
+        width: 40px;
+        border-right: none;
+    }
+
+    .drawer-toggles {
+        position: absolute;
+        top: 34px;
+        right: 0;
+    }
+
+    .drawer-toggles li {
+        display: list-item;
+    }
+
+    .active {
+        .toc-head {
+            left: 0px;
+            margin-right: 0;
+            height: 34px;
+        }
+
+        .toc-nav-link {
+            display: inline-block;
+            margin-left: -4px;
+            height: 34px;
+            width: 56px;
+            border-right: 1px solid @medium_gray;
+        }
+
+        .drawer-toggles {
+            position: relative;
+            top: 0;
+            left: 0;
+            margin: 0;
+            width: 200px;
+        }
+
+        .drawer-toggles li {
+            display: inline-block;
+        }
+    }
+    /*
+    Reg Content
+    -----------
+    */
     .main-content {
         margin-left: 40px;
     }
