@@ -3,6 +3,7 @@ from django.http import Http404
 
 from regulations.generator import api_reader
 from regulations.generator.layers.analyses import SectionBySectionLayer
+from regulations.generator.node_types import label_to_text
 
 
 class SideBarView(TemplateView):
@@ -25,5 +26,21 @@ class SideBarView(TemplateView):
         result = sxs_layer.apply_layer(label_id)
         if result:
             context[result[0]] = result[1]
+
+        reg = client.regulation(label_id, version)
+
+        if reg is None:
+            raise Http404
+
+        context['permalinks'] = []
+        def per_node(node):
+            context['permalinks'].append({
+                'label_id': '-'.join(node['label']),
+                'section_id': '-'.join(node['label'][:2]),
+                'text': label_to_text(node['label'], include_section=False)
+            })
+            for child in node['children']:
+                per_node(child)
+        per_node(reg)
 
         return context
