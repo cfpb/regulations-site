@@ -11,7 +11,7 @@ class PartialSearch(TemplateView):
     template_name = 'search-results.html'
 
     def get(self, request, *args, **kwargs):
-        """Override this method so that we can grab the GET variables"""
+        """Override this method so we can return a 400 if needed"""
         query = request.GET.get('q')
         version = request.GET.get('version')
         if not query or not version:

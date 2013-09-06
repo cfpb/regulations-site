@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 
 from regulations.views.chrome import ChromeInterpView, ChromeRegulationView
 from regulations.views.chrome import ChromeParagraphView, ChromeSectionView
-from regulations.views.chrome_breakaway import ChromeSXSView
+from regulations.views.chrome_breakaway import ChromeSXSView, ChromeSearchView
 from regulations.views.sidebar import SideBarView
 from regulations.views.partial import PartialInterpView, PartialRegulationView
 from regulations.views.partial import PartialParagraphView, PartialSectionView
@@ -48,6 +48,9 @@ urlpatterns = patterns(
     url(r'^sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
         ChromeSXSView.as_view(),
         name='chrome_sxs_view'),
+    # Search results for non-JS viewers
+    # Example: http://.../search?q=term&version=2011-1738
+    url(r'^search$', ChromeSearchView.as_view(), name='chrome_search'),
 
     # Load just the sidebar
     # Example: http://.../partial/sidebar/201-2/2013-10704
