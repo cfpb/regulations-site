@@ -48,12 +48,9 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'dis
             this.$children.addClass('hidden');
             // remove the 'hidden' class from the active drawer section
             this.childViews[activeId]['selector'].removeClass('hidden');
-            // update the title of the drawer section
-            this.$label.html(this.childViews[activeId]['title']);
             // create a new childView if a view doesn't already exist
             this.childViews[activeId].view = this.childViews[activeId].view || new this.childViews[activeId].constructor();
             Dispatch.set('drawerState', activeId);
-
             // set a cookie value equal to the active drawer id
             $.cookie('Drawer_State', activeId, { expires: $expiration });
         }
