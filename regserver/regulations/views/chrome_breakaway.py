@@ -43,7 +43,7 @@ class ChromeSearchView(ChromeBreakawayView):
     """Search results"""
     def content(self, context):
         partial_view = PartialSearch.as_view()
-        response = partial_view(self.request)
+        response = partial_view(self.request, label_id=context['label_id'])
         self._assert_good(response)
         response.render()
         return response.content

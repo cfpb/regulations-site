@@ -42,7 +42,7 @@
         </ul>
     </div> <!--/#history-->
     <div id="search" class="toc-container hidden">
-        <form action="{% url 'search' %}" method="GET">
+        <form action="{% url 'chrome_search' tree.label_id %}" method="GET">
             <h3>Search</h3>
             <input type="text" name="q" /><input type="submit" />
             <hr />

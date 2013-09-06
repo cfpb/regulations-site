@@ -50,7 +50,9 @@ urlpatterns = patterns(
         name='chrome_sxs_view'),
     # Search results for non-JS viewers
     # Example: http://.../search?q=term&version=2011-1738
-    url(r'^search$', ChromeSearchView.as_view(), name='chrome_search'),
+    url(r'^search/%s$' % reg_pattern,
+        ChromeSearchView.as_view(),
+        name='chrome_search'),
 
     # Load just the sidebar
     # Example: http://.../partial/sidebar/201-2/2013-10704
@@ -59,7 +61,9 @@ urlpatterns = patterns(
         name='sidebar'),
 
     # Load just search results
-    url(r'^partial/search$', PartialSearch.as_view(), name='search'),
+    url(r'^partial/search/%s$' % reg_pattern,
+        PartialSearch.as_view(),
+        name='partial_search'),
 
     #A regulation section without chrome
     #Example: http://.../partial/201-4/2013-10704
