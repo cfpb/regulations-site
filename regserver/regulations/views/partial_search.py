@@ -58,6 +58,8 @@ class PartialSearch(TemplateView):
 
         for result in results['results']:
             result['header'] = label_to_text(result['label'])
+            if 'title' in result:
+                result['header'] += ' ' + result['title'].title()
             if 'Interp' in result['label']:
                 result['section_id'] = '%s-%s' % (result['label'][0],
                                                   'Interp')
