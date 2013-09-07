@@ -1,4 +1,5 @@
 import types
+import copy
 from collections import deque
 import tree_builder
 
@@ -40,13 +41,25 @@ class DiffApplier(object):
         """ Mark all the text passed in as deleted. """
         return '<del>' + text + '</del>'
 
-    def add_nodes_to_tree(original, new_nodes):
+    def add_all(self, text):
+        """ Mark all the text passed in as deleted. """
+        return '<ins>' + text + '</ins>'
+
+    def add_nodes_to_tree(self, original, adds):
         """ Add all the nodes from new_nodes into the original tree. """
         tree = tree_builder.build_tree_hash(original)
 
-        for n in new_nodes:
-            if tree_builder.parent_in_tree(n, tree):
-                tree_builder.add_node_to_tree(n, tree)
+        for label, node in adds.queue:
+            p_label = tree_builder.parent_label(label)
+            if tree_builder.parent_in_tree(p_label, tree):
+                tree_builder.add_node_to_tree(node, p_label, tree)
+                adds.delete(label)
+            else:
+                parent = adds.find(p_label)
+                if parent:
+                    tree_builder.add_child(parent[1], node)
+                else:
+                    original.update(node)
 
     def tree_changes(self, original_tree):
         """ Apply additions to the regulation tree. """
@@ -55,16 +68,23 @@ class DiffApplier(object):
             """ Get the operations that add nodes, for the requested section/pargraph. """
             if self.diff[label]['op'] == self.ADDED_OP and label.startswith(self.label_requested):
                 return True
-        
-        new_nodes = [label for label in self.diff if relevant_added(label)]
 
-        #sort, so that lowest nodes are first
-        new_nodes = sorted(new_nodes, key=lambda x: len(x), reverse=True)
+        def node(diff_node, label):
+            """ Take diff's specification of a node, and actually turn it into a regulation node. """
+            node = copy.deepcopy(diff_node)
+            node['label_id'] = label
+            node['children'] = []
+            if node['title'] is None:
+                del node['title']
+            return node
 
-        #for now, remove interpretation nodes
-        reg_text_nodes = [l for l in new_nodes if 'Interp' not in l]
+        new_nodes = [(label, node(self.diff[label]['node'], label)) for label in self.diff if relevant_added(label)]
+        reg_text_nodes = [l for l in new_nodes if 'Interp' not in l[0]]
 
-        tree = self.add_nodes_to_tree(original_tree, reg_text_nodes)
+        adds = tree_builder.AddQueue()
+        adds.insert_all(reg_text_nodes)
+
+        tree = self.add_nodes_to_tree(original_tree, adds)
         return tree
 
 
@@ -72,6 +92,8 @@ class DiffApplier(object):
         if label in self.diff:
             if self.diff[label]['op'] == self.DELETED_OP:
                 return self.delete_all(original)
+            if self.diff[label]['op'] == self.ADDED_OP:
+                return self.add_all(original)
             if 'text' in self.diff[label]:
                 text_diffs = self.diff[label]['text']
                 self.deconstruct_text(original)

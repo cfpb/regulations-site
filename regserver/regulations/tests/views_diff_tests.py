@@ -12,7 +12,7 @@ from regulations.views.diff import PartialSectionDiffView
 class PartialSectionDiffViewTest(TestCase):
     @patch('regulations.views.diff.generator')
     def test_get_appliers(self, generator):
-        diff_applier = DiffApplier({'some': 'diff'})
+        diff_applier = DiffApplier({'some': 'diff'}, None)
         generator.get_diff_applier.return_value = diff_applier
         diff_view = PartialSectionDiffView()
         _, _, _, da = diff_view.get_appliers('204-2', '1', '2')
@@ -26,12 +26,13 @@ class PartialSectionDiffViewTest(TestCase):
 
     @patch('regulations.views.diff.generator')
     def test_get_context_data(self, generator):
-        diff_applier = DiffApplier({'some': 'diff'})
+        diff_applier = DiffApplier({'204-3': {'op':'modified'}}, '204-3')
         generator.get_diff_applier.return_value = diff_applier
         generator.get_tree_paragraph.return_value = {
             'text': 'Some Text',
             'children': [],
-            'label': ['204', '3', 'q'],
+            'label_id':'204-3',
+            'label': ['204', '3'],
             'node_type': REGTEXT}
         request = RequestFactory().get('/fake-path')
         view = PartialSectionDiffView.as_view(
