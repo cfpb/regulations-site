@@ -1,0 +1,47 @@
+/*
+Search Results
+===========================
+search-results.less contains styles for search results
+*/
+
+.search-version {
+    color: @dark_gray;
+    text-transform: uppercase;
+    .avenir-next-demi;
+    font-size: 0.875em;
+}
+
+.search-results {
+
+    h3 {
+        .avenir-next-demi;
+        margin-bottom: 0;
+    }
+
+    p {
+        margin-top: .5em;
+    }
+
+    p:before {
+        content: '“';
+    }
+
+    p:after {
+        content: '”';
+    }
+}
+
+.search-nav {
+
+    a:link,
+    a:visited {
+        .avenir-next-demi;
+        color: @pacific;
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+        border-bottom: 1px solid @pacific;
+    }
+}

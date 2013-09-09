@@ -4,8 +4,8 @@ searched as well as the results.
 
 version_timeline is one of "past", "current", and "future".
 {% endcomment %}
-{{ version_by_date|date }} Version - {{ version_timeline|title }} Law
-{{ results.total_hits }} result{{ results.results|pluralize }}
+<p class="search-version">{{ version_by_date|date }} Version - {{ version_timeline|title }} Law
+{{ results.total_hits }} result{{ results.results|pluralize }}</p>
 <ul class="search-results">
 {% for result in results.results %}
     <li>
@@ -15,12 +15,20 @@ version_timeline is one of "past", "current", and "future".
 {% endfor %}
 </ul>
 
+{% if previous or next %}
+<footer class="search-nav">
+{% endif %}
+
 {% if previous %}
-<a href="{% url 'chrome_search' label_id %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ previous.page }}">&lt;
+<a class="previous" href="{% url 'chrome_search' label_id %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ previous.page }}"><i class="minicon-left"></i>
     Previous {{ previous.length }} Results</a>
 {% endif %}
 
 {% if next %}
-<a href="{% url 'chrome_search' label_id %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ next.page }}">
-    Next {{ next.length }} Results &gt;</a>
+<a class="next" href="{% url 'chrome_search' label_id %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ next.page }}"><i class="minicon-right"></i>
+    Next {{ next.length }} Results</a>
+{% endif %}
+
+{% if previous or next %}
+</footer>
 {% endif %}
