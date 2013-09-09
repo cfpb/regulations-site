@@ -41,7 +41,7 @@
             <h2 class="toc-type">Search</h2>
         </div><!-- /.drawer-header -->
         <div class="drawer-content">
-            <form action="{% url 'search' %}" method="GET">
+            <form action="{% url 'chrome_search' tree.label_id %}" method="GET">
                 <div class="search-box">
                     <input type="text" name="q" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
                 </div><!--/.search-box-->

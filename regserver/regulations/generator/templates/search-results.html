@@ -1,3 +1,10 @@
+{% comment %}
+Partial Search Results. Includes version information about the regulation
+searched as well as the results.
+
+version_timeline is one of "past", "current", and "future".
+{% endcomment %}
+{{ version_by_date|date }} Version - {{ version_timeline|title }} Law
 {{ results.total_hits }} result{{ results.results|pluralize }}
 <ul class="search-results">
 {% for result in results.results %}
@@ -7,3 +14,13 @@
     </li>
 {% endfor %}
 </ul>
+
+{% if previous %}
+<a href="{% url 'chrome_search' label_id %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ previous.page }}">&lt;
+    Previous {{ previous.length }} Results</a>
+{% endif %}
+
+{% if next %}
+<a href="{% url 'chrome_search' label_id %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ next.page }}">
+    Next {{ next.length }} Results &gt;</a>
+{% endif %}

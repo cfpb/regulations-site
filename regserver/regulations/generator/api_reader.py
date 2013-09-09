@@ -96,9 +96,12 @@ class ApiReader(object):
             ['notice', fr_document_number],
             'notice/%s' % fr_document_number)
 
-    def search(self, query, version=None):
+    def search(self, query, version=None, regulation=None, page=0):
         """Search via the API. Never cache these (that's the duty of the search
         index)"""
+        params = {'q': query, 'page': page}
         if version:
-            return self.client.get('search', {'q': query, 'version': version})
-        return self.client.get('search', {'q': query})
+            params['version'] = version
+        if regulation:
+            params['regulation'] = regulation
+        return self.client.get('search', params)

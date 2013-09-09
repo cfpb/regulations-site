@@ -13,6 +13,19 @@ class ChromeView(TemplateView):
     """ Base class for views which wish to include chrome. """
     template_name = 'chrome.html'
 
+    def get(self, request, *args, **kwargs):
+        """Override GET so that we can catch and propagate any errors in the
+        included partial(s)"""
+
+        try:
+            return super(ChromeView, self).get(request, *args, **kwargs)
+        except BadComponentException, e:
+            return e.response
+
+    def _assert_good(self, response):
+        if response.status_code != 200:
+            raise BadComponentException(response)
+
     def add_extras(self, context):
         context['env'] = 'source' if settings.DEBUG else 'built'
         context['GOOGLE_ANALYTICS_SITE'] = settings.GOOGLE_ANALYTICS_SITE
@@ -37,12 +50,14 @@ class ChromeView(TemplateView):
         partial_view = self.partial_class.as_view()
         response = partial_view(
             self.request, label_id=label_id, version=version)
+        self._assert_good(response)
         response.render()
         context['partial_content'] = response.content
 
         sidebar_view = SideBarView.as_view()
         response = sidebar_view(self.request, label_id=label_id,
                                 version=version)
+        self._assert_good(response)
         response.render()
         context['sidebar_content'] = response.content
 
@@ -77,3 +92,15 @@ class ChromeParagraphView(ChromeView):
 class ChromeRegulationView(ChromeView):
     """Entire regulation with chrome"""
     partial_class = PartialRegulationView
+
+
+class BadComponentException(Exception):
+    """Allows us to propagate errors in loaded partials"""
+    def __init__(self, response):
+        self.response = response
+
+    def __str__(self):
+        return repr(self)
+
+    def __repr__(self):
+        return "BadComponentException(response=%s)" % repr(self.response)
