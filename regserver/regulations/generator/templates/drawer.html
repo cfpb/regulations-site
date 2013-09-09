@@ -17,14 +17,14 @@
                     {% if version.timeline == 'current' %}
                         <h4>Current Law</h4>
                     {% endif %}
-                    {{ version.by_date|date }}
+                    <span class="version-date">{{ version.by_date|date }}</span>
                 </a>
             {% else %}
                 <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link">
                     {% if version.timeline == 'current' %}
                         <h4>Current Law</h4>
                     {% endif %}
-                    {{ version.by_date|date }}
+                    <span class="version-date">{{ version.by_date|date }}</span>
                 </a>
             {% endif %}
                 <ul class="rule-list">
