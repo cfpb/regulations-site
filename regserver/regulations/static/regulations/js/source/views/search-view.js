@@ -1,7 +1,21 @@
-define('search-view', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
+define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-results-view'], function($, _, Backbone, Dispatch, SearchResultsView) {
     'use strict';
 
     var SearchView = Backbone.View.extend({
+        el: '#search',
+
+        events: {
+            'submit': 'openSearchResults'
+        },
+
+        openSearchResults: function(e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            Dispatch.set('searchResults', new SearchResultsView({
+                query: $form.find('input[name=q]')[0].value,
+                version: $form.find('select[name=version]')[0].value
+            })); 
+        }
 
     });
 

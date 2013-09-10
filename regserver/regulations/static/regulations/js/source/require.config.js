@@ -22,7 +22,8 @@ var require = {
         'search-view': './views/search-view',
         'sxs-list-view': './views/sxs-list-view',
         'sidebar-list-view': './views/sidebar-list-view',
-        'sxs-view': './views/sxs-view'
+        'sxs-view': './views/sxs-view',
+        'search-results-view': './views/search-results-view'
     },
     shim: {
         underscore: {

@@ -71,6 +71,10 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
             else {
                 return false;
             }
+        },
+
+        getRegId: function() {
+            return this.open['reg'];
         }
 
     }, Backbone.Events);   

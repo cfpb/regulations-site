@@ -45,6 +45,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'reg-model', 'defini
         init: function() {
             var openSection,
                 urlPrefix,
+                regId = $('#menu').data('reg-id'),
                 regVersion,
                 regSection = $('.main-content section[data-base-version]');
 
@@ -54,6 +55,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'reg-model', 'defini
 
             regVersion = regSection.data('base-version');
             Dispatch.set('version', regVersion);
+            Dispatch.set('reg', regId);
 
             // init primary Views that require only a single instance
             window.Regs = {};
