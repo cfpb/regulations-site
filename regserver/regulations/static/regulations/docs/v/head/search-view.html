@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="search-model.html">
+                search-model.js
+              </a>
+            
+              
               <a class="source" href="sxs-model.html">
                 sxs-model.js
               </a>
@@ -76,11 +81,6 @@
               
               <a class="source" href="analytics-handler-view.html">
                 analytics-handler-view.js
-              </a>
-            
-              
-              <a class="source" href="reg-view.html">
-                reg-view.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="history-view.html">
                 history-view.js
+              </a>
+            
+              
+              <a class="source" href="main-view.html">
+                main-view.js
+              </a>
+            
+              
+              <a class="source" href="reg-view.html">
+                reg-view.js
+              </a>
+            
+              
+              <a class="source" href="search-results-view.html">
+                search-results-view.js
               </a>
             
               
@@ -176,10 +191,24 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'search-results-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SearchResultsView) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> SearchView = Backbone.View.extend({
+        el: <span class="string">'#search'</span>,
+
+        events: {
+            <span class="string">'submit'</span>: <span class="string">'openSearchResults'</span>
+        },
+
+        openSearchResults: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+            <span class="keyword">var</span> $form = $(e.target);
+            <span class="keyword">new</span> SearchResultsView({
+                query: $form.find(<span class="string">'input[name=q]'</span>)[<span class="number">0</span>].value,
+                version: $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value
+            }); 
+        }
 
     });
 

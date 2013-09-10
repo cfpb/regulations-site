@@ -4,8 +4,8 @@ regulations.js
 lib/jquery-1.9.1.js
 lib/underscore.js
 lib/backbone.js
-lib/jquery.scrollstop.js
 dispatch.js
+lib/jquery.scrollstop.js
 regs-helpers.js
 meta-model.js
 reg-model.js
@@ -15,9 +15,12 @@ views/sub-head-view.js
 views/section-footer-view.js
 regs-router.js
 views/reg-view.js
+views/main-view.js
 lib/jquery.cookie.js
 views/toc-view.js
 views/history-view.js
+search-model.js
+views/search-results-view.js
 views/search-view.js
 views/drawer-view.js
 views/sidebar-head-view.js

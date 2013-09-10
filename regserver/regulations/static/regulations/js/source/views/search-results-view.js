@@ -6,7 +6,6 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
             var query = this.options.query,
                 version = this.options.version,
                 reg = Dispatch.getRegId(),
-                url,
                 results;
 
             this.url = reg + '?q=' + query + '&version=' + version;
@@ -24,6 +23,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
 
         render: function(results) {
             Dispatch.trigger('mainContent:change', results);
+            Dispatch.trigger('searchResults:open');
             Router.navigate('search/' + this.url);
         } 
     });

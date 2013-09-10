@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="search-model.html">
+                search-model.js
+              </a>
+            
+              
               <a class="source" href="sxs-model.html">
                 sxs-model.js
               </a>
@@ -76,11 +81,6 @@
               
               <a class="source" href="analytics-handler-view.html">
                 analytics-handler-view.js
-              </a>
-            
-              
-              <a class="source" href="reg-view.html">
-                reg-view.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="history-view.html">
                 history-view.js
+              </a>
+            
+              
+              <a class="source" href="main-view.html">
+                main-view.js
+              </a>
+            
+              
+              <a class="source" href="reg-view.html">
+                reg-view.js
+              </a>
+            
+              
+              <a class="source" href="search-results-view.html">
+                search-results-view.js
               </a>
             
               
@@ -306,6 +321,10 @@ This scheme currently limits it to one value associated with each type, in theor
             <span class="keyword">else</span> {
                 <span class="keyword">return</span> <span class="literal">false</span>;
             }
+        },
+
+        getRegId: <span class="keyword">function</span>() {
+            <span class="keyword">return</span> <span class="keyword">this</span>.open[<span class="string">'reg'</span>];
         }
 
     }, Backbone.Events);   

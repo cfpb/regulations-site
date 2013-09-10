@@ -1,1 +1,1 @@
-define("search-view",["jquery","underscore","backbone"],function(e,t,n){var r=n.View.extend({});return r});
+define("search-view",["jquery","underscore","backbone","dispatch","search-results-view"],function(e,t,n,r,i){var s=n.View.extend({el:"#search",events:{submit:"openSearchResults"},openSearchResults:function(t){t.preventDefault();var n=e(t.target);new i({query:n.find("input[name=q]")[0].value,version:n.find("select[name=version]")[0].value})}});return s});
