@@ -5,17 +5,18 @@
 {% comment %}
     Page-level template for breakaway views with chrome. Right now, this only includes section-by-section analysis.
 {% endcomment %}
+<div class="full-breakaway">
+    <header id="site-header" class="reg-header">
+    <div class="main-head">
+        {% load static from staticfiles %}
+            <img src="{%static "regulations/ip/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151px">
+            <div class="reg-title">
+                <h1>eRegulations > Regulation {{ reg_letter }}</h1>
+            </div> <!-- /site-title -->
+    </div>
+    </header>
 
-<header id="site-header" class="reg-header">
-<div class="main-head">
-    {% load static from staticfiles %}
-        <img src="{%static "regulations/ip/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151px">
-        <div class="site-title">
-            <h1>eRegulations > Regulation {{ reg_letter }}</h1>
-        </div> <!-- /site-title -->
+    <div id="breakaway-view">{{ partial_content|safe }}</div>
 </div>
-</header>
-
-<div id="breakaway-view">{{ partial_content|safe }}</div>
 
 {% endblock %}

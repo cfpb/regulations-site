@@ -4,7 +4,7 @@ Section by Section Analysis
 sxs.less contains styles for the SxS overlay
 */
 
-.js {
+.breakaway-wrap {
     #breakaway-view {
         position: fixed;
         left: 9999px;
@@ -12,17 +12,18 @@ sxs.less contains styles for the SxS overlay
     }
 }
 
-.no-js {
+/*.no-js {
      #breakaway-view {
         margin-top: 60px;
     }
-}
+}*/
 
 /*
 SxS window
 ----------
 */
-#breakaway-view.open-sxs {
+#breakaway-view.open-sxs,
+.full-breakaway {
     position: fixed;
     padding-bottom: 100px;
     top: 60px; // height of application header
