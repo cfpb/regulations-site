@@ -17,7 +17,9 @@ body {
     color: @black;
     font-family: @body-font;
     font-size: 1em;
-    line-height: 1.625; /* 26px */
+    /*line-height: 1.625;*/ /* 26px */
+    /*line-height: 1.375;*/ /*22px*/
+    line-height: 1.5; /*24px*/
 }
 
 strong {
@@ -38,12 +40,14 @@ h1,
 h2,
 h3{
     .avenir-next-demi;
+    margin-bottom: 0;
 }
 
 h4,
 h5,
 h6 {
     .avenir-next-demi;
+    margin-bottom: 0;
 }
 
 h1 {
@@ -203,6 +207,10 @@ li {
     text-indent: -.94em; /* outdent the § symbol */
 }
 
+.appendix-heading {
+    .reset;
+}
+
 /*  Sub Headings
     -----------
     <h3 class="appendix-subheading">Top Level Reg Heading</h2>
@@ -213,6 +221,7 @@ li {
     .reset;
     font-size: 1.375em; /* 22 / 16 */
     line-height: 1.25;
+    margin-top: 1em;
     text-transform: none;
 }
 
@@ -231,7 +240,11 @@ This attempts to define global rules for a clear hierarchical structure.
     white-space:pre;
 }
 
-.level-1 > li:after {
+.level-1 > li p {
+    margin-top: 0;
+}
+
+/*.level-1 > li:after {
     padding-top: 1em;
     height: 1px;
     display: block;
@@ -239,7 +252,7 @@ This attempts to define global rules for a clear hierarchical structure.
     content: '';
     margin-left: -14em;
     margin-right: -60px;
-}
+}*/
 
 .supplement-section .level-1 > li {
     border-bottom: none;
@@ -254,8 +267,8 @@ This attempts to define global rules for a clear hierarchical structure.
     padding-top: 0;
 }
 
-.level-2 li {
-    margin-top: 1.25em;
+.level-2 > li > p {
+    margin-top: 1em;
 }
 
 /* 
