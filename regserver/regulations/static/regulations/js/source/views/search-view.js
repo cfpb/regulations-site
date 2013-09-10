@@ -11,10 +11,10 @@ define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-r
         openSearchResults: function(e) {
             e.preventDefault();
             var $form = $(e.target);
-            Dispatch.set('searchResults', new SearchResultsView({
+            new SearchResultsView({
                 query: $form.find('input[name=q]')[0].value,
                 version: $form.find('select[name=version]')[0].value
-            })); 
+            }); 
         }
 
     });

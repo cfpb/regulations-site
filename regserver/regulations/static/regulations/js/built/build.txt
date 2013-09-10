@@ -14,7 +14,7 @@ views/definition-view.js
 views/sub-head-view.js
 views/section-footer-view.js
 regs-router.js
-views/content-view.js
+views/reg-view.js
 lib/jquery.cookie.js
 views/toc-view.js
 views/history-view.js

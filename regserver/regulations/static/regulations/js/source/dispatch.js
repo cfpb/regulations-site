@@ -14,7 +14,7 @@
 // However, there are significant interactions that occur across two or more modules. Instead of having a complicated 
 // multi-event scheme or introducing a lot of coupling between modules, Dispatch can house and serve information about these entities.
 //
-// Example: inline definitions. They are triggered by a link in content-view, can be closed by content-view, sidebar-head-view or sidebar-view.
+// Example: inline definitions. They are triggered by a link in reg-view, can be closed by reg-view, sidebar-head-view or sidebar-view.
 // Closing a definition without introducing multiple events or causing cyclical dependencies can be tricky. If the definition View instance belongs
 // to any of these modules, another module will need to as the parent module directly for information about the View instance. Instead, all
 // modules can remove the open definition by calling `Dispatch.remove('definition');`

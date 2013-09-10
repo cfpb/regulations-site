@@ -95,7 +95,7 @@
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require([&#039;app-init&#039;], function(app) { $(document).ready(function() { app.init(); }) })
-define([&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;content-view&#039;, &#039;reg-model&#039;, &#039;definition-view&#039;, &#039;sub-head-view&#039;, &#039;toc-view&#039;, &#039;dispatch&#039;, &#039;sidebar-view&#039;, &#039;konami&#039;], function($, _, Backbone, ContentView, RegModel, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
+define([&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;reg-view&#039;, &#039;reg-model&#039;, &#039;definition-view&#039;, &#039;sub-head-view&#039;, &#039;toc-view&#039;, &#039;dispatch&#039;, &#039;sidebar-view&#039;, &#039;konami&#039;], function($, _, Backbone, RegView, RegModel, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
     &#039;use strict&#039;;
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -168,7 +168,7 @@ define([&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;
             // init primary Views that require only a single instance
             window.toc = new TOCView({el: &#039;#menu&#039;});
             window.sidebar = new SidebarView({el: &#039;#sidebar&#039;});
-            window.regContent = new ContentView({el: &#039;.main-content&#039;});
+            window.regContent = new RegView({el: &#039;.main-content&#039;});
             this.bindEvents();
             this.fetchModelForms();
         }
