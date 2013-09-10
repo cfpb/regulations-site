@@ -49,3 +49,13 @@ class TreeBuilderTest(TestCase):
         
         child_labels = [c['label_id'] for c in tree_hash['204']['children']]
         self.assertEqual(child_labels, ['204-3', '204-4'])
+
+    def test_make_label_sortable_roman(self):
+        label = "iv"
+        sortable = tree_builder.make_label_sortable(label, roman=True)
+        self.assertEquals(sortable, 4)
+
+    def test_make_label_sortable_not_roman(self):
+        label = "iv"
+        sortable = tree_builder.make_label_sortable(label)
+        self.assertEquals(sortable, label)

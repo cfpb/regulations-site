@@ -65,14 +65,17 @@ class DiffApplier(object):
         """ Apply additions to the regulation tree. """
 
         def relevant_added(label):
-            """ Get the operations that add nodes, for the requested section/pargraph. """
+            """ Get the operations that add nodes, for the requested
+            section/pargraph. """
+
             if self.diff[label]['op'] == self.ADDED_OP and label.startswith(self.label_requested):
                 return True
 
         def node(diff_node, label):
-            """ Take diff's specification of a node, and actually turn it into a regulation node. """
+            """ Take diff's specification of a node, and actually turn it into
+            a regulation node. """
+
             node = copy.deepcopy(diff_node)
-            node['label_id'] = label
             node['children'] = []
             if node['title'] is None:
                 del node['title']
@@ -84,8 +87,7 @@ class DiffApplier(object):
         adds = tree_builder.AddQueue()
         adds.insert_all(reg_text_nodes)
 
-        tree = self.add_nodes_to_tree(original_tree, adds)
-        return tree
+        self.add_nodes_to_tree(original_tree, adds)
 
 
     def apply_diff(self, original, label):
