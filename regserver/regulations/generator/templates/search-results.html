@@ -17,7 +17,6 @@ version_timeline is one of "past", "current", and "future".
 
 {% if previous or next %}
 <footer class="search-nav">
-{% endif %}
 
 {% if previous %}
 <a class="previous" href="{% url 'chrome_search' label_id %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ previous.page }}"><i class="minicon-left"></i>
@@ -29,6 +28,5 @@ version_timeline is one of "past", "current", and "future".
     Next {{ next.length }} Results</a>
 {% endif %}
 
-{% if previous or next %}
 </footer>
 {% endif %}
