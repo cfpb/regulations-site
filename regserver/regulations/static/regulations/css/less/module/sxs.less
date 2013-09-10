@@ -12,11 +12,6 @@ sxs.less contains styles for the SxS overlay
     }
 }
 
-/*.no-js {
-     #breakaway-view {
-        margin-top: 60px;
-    }
-}*/
 
 /*
 SxS window
@@ -25,7 +20,6 @@ SxS window
 #breakaway-view.open-sxs,
 .full-breakaway {
     position: fixed;
-    padding-bottom: 100px;
     top: 60px; // height of application header
     left: 0;
     width: 100%;
@@ -35,6 +29,13 @@ SxS window
     z-index: 999999999;
     overflow-y: scroll;
     .slide (@direction: all, @speed: 800ms);
+}
+
+/* offset the content to accomodate the persistent header */
+.sxs {
+    height: 100%;
+    background-color: pink;
+    padding-bottom: 120px;
 }
 /*
 SxS header
@@ -95,8 +96,9 @@ SxS content wrapper
 .sxs-content {
     margin: 0 auto;
     max-width: 1100px;
-    margin-bottom: 60px;
-    padding: 30px 15px;
+    min-height: 100%;
+    height: 100%;
+    padding: 15px;
 }
 
 /* 
@@ -105,6 +107,7 @@ Main content of the SxS Analysis
 */
 .sxs-main-content {
     float: left;
+    padding-bottom: 120px; /*accomodate for persistent header*/
     width: 70%
 }
 
