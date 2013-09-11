@@ -11,10 +11,10 @@ define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-r
         openSearchResults: function(e) {
             e.preventDefault();
             var $form = $(e.target);
-            new SearchResultsView({
+            Dispatch.setContentView(new SearchResultsView({
                 query: $form.find('input[name=q]')[0].value,
                 version: $form.find('select[name=version]')[0].value
-            }); 
+            })); 
 
             Dispatch.set('contentClass', 'search-results');
         }

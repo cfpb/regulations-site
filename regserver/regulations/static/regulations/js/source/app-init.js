@@ -68,7 +68,7 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
                 // cache open section content
                 RegModel.set(openSection, regSection.html());
 
-                new RegView();
+                Dispatch.setContentView(new RegView());
 
             }
 

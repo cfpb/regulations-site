@@ -7,8 +7,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
     'use strict';
 
     var RegView = Backbone.View.extend({
-        el: '.reg-text',
-
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
@@ -88,8 +86,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
         openSection: function(section, sectionId) {
             Dispatch.set('section', sectionId);
-
-            Dispatch.trigger('mainContent:change', section, 'reg-text');
+            this.$el.html(section);
+            Dispatch.trigger('mainContent:change', this.$el, 'reg-text');
 
             window.scrollTo(0, 0);
             Dispatch.trigger('section:open', sectionId);
@@ -242,6 +240,11 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         setActiveTerm: function($link) {
             this.clearActiveTerms();
             $link.addClass('active').data('active', 1);
+        },
+
+        remove: function() {
+            this.stopListening();
+            return this;
         }
     });
 

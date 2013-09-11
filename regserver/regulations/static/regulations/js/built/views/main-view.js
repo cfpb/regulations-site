@@ -1,1 +1,1 @@
-define("main-view",["jquery","underscore","backbone","dispatch","./reg-view"],function(e,t,n,r,i){var s=n.View.extend({el:"#content-wrapper",initialize:function(){r.on("mainContent:change",this.render,this)},render:function(e,t){this.el.className=t,this.$el.html(e)}});return s});
+define("main-view",["jquery","underscore","backbone","dispatch"],function(e,t,n,r){var i=n.View.extend({el:"#content-wrapper",initialize:function(){r.on("mainContent:change",this.render,this)},render:function(e,t){this.el.className=t,this.$el.html(e)}});return i});

@@ -1,4 +1,4 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', './reg-view'], function($, _, Backbone, Dispatch, RegView) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
     'use strict';
 
     var MainView = Backbone.View.extend({
@@ -12,7 +12,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', './reg-view
             this.el.className = elClass;
             this.$el.html(html);
         }
-
     });
 
     return MainView;
