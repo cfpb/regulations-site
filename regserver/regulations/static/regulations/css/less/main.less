@@ -43,7 +43,14 @@ Media Queries
 *, *:before, *:after {
   -moz-box-sizing: border-box;-webkit-box-sizing: border-box; box-sizing: border-box;
  }
- 
+
+.lt-ie10 {
+
+  *, *:before, *:after {
+      box-sizing: content-box;
+  }
+    
+}
  /* hide sxs links */
 .sxs-ref {
     display: none;
