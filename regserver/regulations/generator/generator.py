@@ -91,6 +91,34 @@ class LayerCreator(object):
                 self.appliers['search_replace'])
 
 
+class DiffLayerCreator(LayerCreator):
+    def __init__(self, newer_version):
+        super(DiffLayerCreator, self).__init__()
+        self.newer_version = newer_version
+
+    @staticmethod
+    def combine_layer_versions(older_layer, newer_layer):
+        """ Create a new layer by taking all the nodes from the older 
+        layer, and adding to the all the new nodes from the newer layer. """
+
+        combined_layer = {}
+
+        for n in older_layer:
+            combined_layer[n] = older_layer[n]
+            
+        for n in newer_layer:
+            if n not in combined_layer:
+                combined_layer[n] = newer_layer[n]
+
+        return combined_layer 
+
+    def get_layer_json(self, api_name, regulation, version):
+        older_layer = self.api.layer(api_name, regulation, version)
+        newer_layer = self.api.layer(api_name, regulation, self.newer_version)
+
+        layer_json = self.combine_layer_versions(older_layer, newer_layer)
+        return layer_json
+
 def get_regulation(regulation, version):
     """ Get the regulation JSON tree. Manipulate the label a bit for easier
     access in the templates."""
@@ -151,7 +179,8 @@ def get_diff_json(regulation, older, newer):
     return api.diff(regulation, older, newer)
 
 
-def get_diff_applier(regulation, older, newer):
+def get_diff_applier(label_id, older, newer):
+    regulation = label_id.split('-')[0]
     diff_json = get_diff_json(regulation, older, newer)
     if diff_json:
-        return DiffApplier(diff_json)
+        return DiffApplier(diff_json, label_id)

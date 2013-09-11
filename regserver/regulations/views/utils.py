@@ -13,3 +13,11 @@ def handle_specified_layers(
     layer_creator = generator.LayerCreator()
     layer_creator.add_layers(layer_list, regulation_id, version, sectional)
     return layer_creator.get_appliers()
+
+def handle_diff_layers(
+    layer_names, regulation_id, older, newer, sectional=False):
+    
+    layer_list = get_layer_list(layer_names)
+    layer_creator = generator.DiffLayerCreator(newer)
+    layer_creator.add_layers(layer_list, regulation_id, older, sectional)
+    return layer_creator.get_appliers()
