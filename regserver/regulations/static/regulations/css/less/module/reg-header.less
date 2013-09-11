@@ -30,16 +30,16 @@
 
     .logo {
         display: block;
-        float: left;
+        float: right;
         margin-top: 13px; /* this manually centers the image based on its height and the height of the container */
+        margin-right: 15px;
     }
 
 
-    .site-title {
+    .reg-title {
         display: block;
         float: left;
         line-height: 3.5625em; /*37.5em - 3px*/
-        margin-left: 1em;
 
         h1 {
             .avenir-next;
@@ -49,15 +49,15 @@
     }
 }
 
-.site-title a:link,
-.site-title a:visited {
+.reg-title a:link,
+.reg-title a:visited {
     border-bottom: none;
     color: @dark_field;
     text-decoration: none;
 }
 
-.site-title a:hover,
-.site-title a:active {
+.reg-title a:hover,
+.reg-title a:active {
     color: @pacific;
 }
 
@@ -78,6 +78,11 @@
     .main {
         border-right: 1px solid @medium_gray;
     }
+}
+
+.header-label {
+    display: inline-block;
+    margin-left: 45px;
 }
 
 .effective-date {

@@ -9,10 +9,10 @@
 <header id="site-header" class="reg-header">
 <div class="main-head">
     {% load static from staticfiles %}
+        <div class="reg-title">
+            <h1>{{ tree.meta.cfr_title_number }} CFR Part {{ tree.label.0 }} {{ tree.title_clean|title }} {% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</h1>
+        </div> <!-- /reg-title -->
         <img src="{%static "regulations/ip/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151px">
-        <div class="site-title">
-            <h1>eRegulations > Regulation {{ tree.reg_letter }}</h1>
-        </div> <!-- /site-title -->
 </div>
 
 <div class="sub-head">
@@ -50,7 +50,9 @@
 
 {% include "footer.html" %}
 
-<div id="breakaway-view"></div>
+<div class="breakaway-wrap">
+    <div id="breakaway-view" class="breakaway-content"></div>
+</div>
 
 {% endblock %}
 
