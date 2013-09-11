@@ -2,6 +2,10 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
     'use strict';
 
     var SearchResultsView = Backbone.View.extend({
+        events: {
+            'click .search-nav a': 'paginate'
+        },
+
         initialize: function() {
             var query = this.options.query,
                 version = this.options.version,
@@ -25,7 +29,12 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
             Dispatch.trigger('mainContent:change', results);
             Dispatch.trigger('searchResults:open');
             Router.navigate('search/' + this.url);
-        } 
+        },
+
+        paginate: function(e) {
+            e.preventDefault();
+            debugger;
+        }
     });
 
     return SearchResultsView;
