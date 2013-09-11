@@ -104,7 +104,7 @@ class DiffLayerCreator(LayerCreator):
         combined_layer = {}
 
         for n in older_layer:
-            combined_layer[n] = older_layer
+            combined_layer[n] = older_layer[n]
             
         for n in newer_layer:
             if n not in combined_layer:

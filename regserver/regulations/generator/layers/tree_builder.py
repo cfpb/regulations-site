@@ -103,7 +103,7 @@ def add_child(parent_node, node):
     parent_node['children'].append(node)
 
     for c in parent_node['children']:
-        if len(c['label']) > 4:
+        if len(c['label']) == 5:
             c['sortable'] = make_label_sortable(c['label'][-1], roman=True)
         else:
             c['sortable'] = make_label_sortable(c['label'][-1])
