@@ -19,7 +19,7 @@ class ViewsSideBarViewTest(TestCase):
             '1111-7-a': [{'reference': ['1992-1', '1111-7-a']}]
         }
         api_reader.ApiReader.return_value.regulation.return_value = {
-            'label': ['876', '12'],
+            'label': ['876'],
             'children': [
                 {'label': ['876', '12', 'a'], 'children': []},
                 {'label': ['876', '12', 'b'], 'children': []},
