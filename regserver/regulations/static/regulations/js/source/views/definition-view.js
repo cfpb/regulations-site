@@ -13,7 +13,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
     // this.options:
     // 
     // * **id** string, dash-delimited id of definition paragraph
-    // * **$anchor** jQobj, the content-view link that opened the def
+    // * **$anchor** jQobj, the reg-view link that opened the def
     //
     // this.options turns into this.model
     var DefinitionView = SidebarModuleView.extend({

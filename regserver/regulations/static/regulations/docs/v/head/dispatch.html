@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="search-model.html">
+                search-model.js
+              </a>
+            
+              
               <a class="source" href="sxs-model.html">
                 sxs-model.js
               </a>
@@ -76,11 +81,6 @@
               
               <a class="source" href="analytics-handler-view.html">
                 analytics-handler-view.js
-              </a>
-            
-              
-              <a class="source" href="content-view.html">
-                content-view.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="history-view.html">
                 history-view.js
+              </a>
+            
+              
+              <a class="source" href="main-view.html">
+                main-view.js
+              </a>
+            
+              
+              <a class="source" href="reg-view.html">
+                reg-view.js
+              </a>
+            
+              
+              <a class="source" href="search-results-view.html">
+                search-results-view.js
               </a>
             
               
@@ -184,7 +199,7 @@ Verb:
 There are entities that, at first glance, would seem to have a straightforward parent/child relationship with another module
 However, there are significant interactions that occur across two or more modules. Instead of having a complicated 
 multi-event scheme or introducing a lot of coupling between modules, Dispatch can house and serve information about these entities.</p>
-<p>Example: inline definitions. They are triggered by a link in content-view, can be closed by content-view, sidebar-head-view or sidebar-view.
+<p>Example: inline definitions. They are triggered by a link in reg-view, can be closed by reg-view, sidebar-head-view or sidebar-view.
 Closing a definition without introducing multiple events or causing cyclical dependencies can be tricky. If the definition View instance belongs
 to any of these modules, another module will need to as the parent module directly for information about the View instance. Instead, all
 modules can remove the open definition by calling <code>Dispatch.remove(&#39;definition&#39;);</code></p>
@@ -306,6 +321,10 @@ This scheme currently limits it to one value associated with each type, in theor
             <span class="keyword">else</span> {
                 <span class="keyword">return</span> <span class="literal">false</span>;
             }
+        },
+
+        getRegId: <span class="keyword">function</span>() {
+            <span class="keyword">return</span> <span class="keyword">this</span>.open[<span class="string">'reg'</span>];
         }
 
     }, Backbone.Events);   
