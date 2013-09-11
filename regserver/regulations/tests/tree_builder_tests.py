@@ -2,6 +2,8 @@ from unittest import TestCase
 from regulations.generator.layers import tree_builder
 from regulations.generator.node_types import REGTEXT
 
+import itertools
+
 class TreeBuilderTest(TestCase):
 
     def build_tree(self):
@@ -59,3 +61,44 @@ class TreeBuilderTest(TestCase):
         label = "iv"
         sortable = tree_builder.make_label_sortable(label)
         self.assertEquals(sortable, label)
+
+    def test_parent_label(self):
+        label = '204-a-1-ii'
+        parent_label = tree_builder.parent_label(label)
+        self.assertEquals('204-a-1', parent_label)
+
+    def test_roman_nums(self):
+        first_five = list(itertools.islice(tree_builder.roman_nums(), 0, 5))
+        self.assertEquals(['i', 'ii', 'iii', 'iv', 'v'], first_five)
+
+    def test_add_child(self):
+        tree = self.build_tree()
+
+        child = {
+            'children': [],
+            'label': ['204','2'],
+            'label_id': '204-2',
+            'node_type': REGTEXT,
+            'sortable': 2,
+            'text': 'child text',
+        }
+
+        static_child = {
+            'children': [],
+            'label': ['204','3'],
+            'label_id': '204-3',
+            'node_type': REGTEXT,
+            'sortable': 3,
+            'text': 'child text',
+        }
+
+        static_tree = {
+            'children': [child, static_child],
+            'text':'parent text', 
+            'label': ['204'],
+            'label_id': '204',
+            'node_type': REGTEXT
+        }
+
+        tree_builder.add_child(tree, child)
+        self.assertEquals(static_tree, tree)
