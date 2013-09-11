@@ -85,14 +85,14 @@ Panel Header
 ------------ */
 
 .drawer-header {
-    width: 17.142857143em;
+    width: 240px;
     position: fixed;
-    top: 94px;
+    /*top: 94px;*/
+    height: 40px;
     background-color: @bg_gray;
     border-right: 2px solid @medium_gray;
     z-index: 100;
     border-bottom: 1px solid @medium_gray;
-    padding: 0 15px;
     .slide (@direction: left, @speed: 300ms);
 
 
@@ -199,7 +199,7 @@ currently these are TOC, History, and Search
 
     #history-link {
         background: url(../img/history@2x.png) no-repeat center center;
-        background-size: 20px 16px;
+        background-size: 22.5px 16px;
     }
 
     #search-link {
@@ -221,6 +221,7 @@ currently these are TOC, History, and Search
 #search-link:hover,
 #search-link:active {
         background-color: @light_field;
+        border-bottom: 1px solid @medium_gray;
 }
 
 #menu-link,
@@ -228,6 +229,7 @@ currently these are TOC, History, and Search
 #search-link {
     &.current {
         background-color: @light_field;
+        border-bottom: 1px solid @medium_gray;
     }
 }
 
@@ -257,8 +259,8 @@ This contains all of the styles specific to the TOC
 .regulation-nav {
 
     ol {
-        margin: 40px 0 0 0;
-        padding: 0;
+        margin: 0;
+        padding: 40px 0 0 0;
     }
 
     li {
@@ -267,7 +269,7 @@ This contains all of the styles specific to the TOC
     }
 
     .toc-section-marker {
-      .avenir-next-bold;
+      .avenir-next-demi;
       display: block;
       font-size: 18px;
     }
@@ -310,7 +312,7 @@ This contains all of the styles specific to the history
     }
 
     .drawer-content {
-        margin-top: 40px;
+        padding-top: 40px;
     }
 
     .lt-ie9 & {
@@ -423,7 +425,7 @@ This contains all of the styles specific to the search
     }
 
     .drawer-content {
-        margin-top: 50px;
+        padding-top: 50px;
     }
 
     h4 {

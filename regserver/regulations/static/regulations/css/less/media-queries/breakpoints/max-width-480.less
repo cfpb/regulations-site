@@ -1,4 +1,8 @@
 @media only screen and ( max-width: 480px ) {
+        ol {
+            padding: 0;
+        }
+
         .main-head {
             height: auto;
             padding: 1em 0 0 0;
@@ -9,13 +13,41 @@
         }
 
         .site-title {
-        display: block;
-        float: none;
+            display: block;
+            float: none;
         }
     }
 
-    .panel,
-    .drawer-header {
-        top: 142px; /* offset taller header height */
+    .panel {
+        top: 150px;
+    }
+
+    .panel.active {
+        top: 32px; /* offset shorter header height */
+    }
+
+    .inline-interpretation .expand-button {
+        display: none;
+    }
+
+    .main-head {
+        display: none;
+    }
+
+    .main-content {
+        padding-top: 0;
+    }
+
+    .secondary-content {
+
+        h4 {
+            &.expandable:after {
+                content: "";
+            }
+
+            &.open:after {
+                content: "";
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ add a margin to sidebar content
 this offsets the persistent header & ensures long content is inside the viewport
 */
 .sidebar-inner {
-    margin-bottom: 120px;
+    padding-bottom: 120px;
 }
 
 /* IE8 requires both the margin and padding to offset the header*/
@@ -88,7 +88,7 @@ Sidebar Headers
     h4 {
         color: @dark_gray;
         padding: .5em 1em;
-        .avenir-next;
+        .avenir-next-demi;
         text-transform: uppercase;
     }
 
@@ -119,18 +119,20 @@ Regs Meta contains the sub-content meta data found in the sidebar
 */
 
 .regs-meta {
+    .border-bottom-light;
+
     h4 {
         background-color: @bg_gray;
         color: @dark_gray;
         padding: .5em 1em;
-        .avenir-next;
+        .avenir-next-demi;
     }
 
     .chunk {
         padding: 1em;
-        .border-bottom-light;
 
-        li a:link {
+        li a:link,
+        li a:visited {
             display: block;
             .avenir-next-demi;
             color: @black;

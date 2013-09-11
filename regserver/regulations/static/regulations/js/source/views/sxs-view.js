@@ -29,6 +29,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
         render: function(analysis) {
             this.$el.html(analysis);
             this.$el.addClass('open-sxs');
+            Dispatch.trigger('breakaway:open');
         },
 
         closeAnalysis: function(e) {
@@ -38,6 +39,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
             }
 
             this.$el.removeClass('open-sxs');
+            Dispatch.trigger('breakaway:close');
         }
     });
 

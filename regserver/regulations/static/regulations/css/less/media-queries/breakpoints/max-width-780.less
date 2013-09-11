@@ -6,7 +6,23 @@
         max-width: 100%;
         margin: 0 auto;
         border-left: none;
-        padding-left: 100px;
+        padding-left: 40px;
+
+        .regs-meta {
+            width: 50%;
+            float: left;
+        }
+
+        .regs-meta:first-child {
+            border-right: 1px solid @light_field;
+        }
+
+        .regs-meta:last-child {
+            .chunk {
+                margin-left: -1px;
+                border-left: 1px solid @light_field;
+            }
+        }
     }
 
     .close-button {
@@ -39,5 +55,9 @@
 
     .level-1 > li:after {
         margin-left: -5em;
+    }
+
+    h1 .title {
+        display: none;
     }
 }

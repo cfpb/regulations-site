@@ -26,6 +26,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             Dispatch.on('toc:click', this.loadSection, this);
             Dispatch.on('openSection:set', this.loadSection, this);
 
+            Dispatch.on('breakaway:open', this.hideContent, this);
+            Dispatch.on('breakaway:close', this.showContent, this);
+
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
 
@@ -240,6 +243,14 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         setActiveTerm: function($link) {
             this.clearActiveTerms();
             $link.addClass('active').data('active', 1);
+        },
+
+        hideContent: function() {
+            this.$el.fadeOut(1000);
+        },
+
+        showContent: function() {
+            this.$el.fadeIn();
         }
     });
 
