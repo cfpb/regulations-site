@@ -1,5 +1,9 @@
 @media only screen and ( max-width: 1100px ) {
 
+    /* Drawer
+    ==============================
+    */
+
     .panel {
         left: -200px;
         top: 200px;
@@ -54,7 +58,6 @@
 
     .toc-head {
         .slide (@direction: left, @speed: 300ms);
-        position: relative;
         left: -200px;
         margin-right: 15px;
         height: 150px;
@@ -104,10 +107,12 @@
     }
     /*
     Reg Content
-    -----------
+    ==============================
     */
     .main-content {
         margin-left: 40px;
+        padding: 15px 4%;
+        margin-right: 32%;
     }
 
     .header-main {
@@ -123,8 +128,17 @@
     }
 
     /*
+    Sidebar
+    ==============================
+    */
+
+    .secondary-content {
+        width: 32%;
+    }
+
+    /*
     IE fixes
-    --------
+    ==============================
     */
 
     .lt-ie9 .main-content {

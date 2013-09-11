@@ -222,6 +222,7 @@
         render: <span class="keyword">function</span>(analysis) {
             <span class="keyword">this</span>.$el.html(analysis);
             <span class="keyword">this</span>.$el.addClass(<span class="string">'open-sxs'</span>);
+            Dispatch.trigger(<span class="string">'breakaway:open'</span>);
         },
 
         closeAnalysis: <span class="keyword">function</span>(e) {
@@ -231,6 +232,7 @@
             }
 
             <span class="keyword">this</span>.$el.removeClass(<span class="string">'open-sxs'</span>);
+            Dispatch.trigger(<span class="string">'breakaway:close'</span>);
         }
     });
 

@@ -226,7 +226,10 @@
             
             <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'definition:remove'</span>, <span class="keyword">this</span>.closeDefinition, <span class="keyword">this</span>);
             Dispatch.on(<span class="string">'toc:click'</span>, <span class="keyword">this</span>.loadSection, <span class="keyword">this</span>);
-            Dispatch.on(<span class="string">'openSection:set'</span>, <span class="keyword">this</span>.loadSection, <span class="keyword">this</span>);</pre></div></div>
+            Dispatch.on(<span class="string">'openSection:set'</span>, <span class="keyword">this</span>.loadSection, <span class="keyword">this</span>);
+
+            Dispatch.on(<span class="string">'breakaway:open'</span>, <span class="keyword">this</span>.hideContent, <span class="keyword">this</span>);
+            Dispatch.on(<span class="string">'breakaway:close'</span>, <span class="keyword">this</span>.showContent, <span class="keyword">this</span>);</pre></div></div>
             
         </li>
         
@@ -757,6 +760,14 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
         remove: <span class="keyword">function</span>() {
             <span class="keyword">this</span>.stopListening();
             <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+
+        hideContent: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.$el.fadeOut(<span class="number">1000</span>);
+        },
+
+        showContent: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.$el.fadeIn();
         }
     });
 

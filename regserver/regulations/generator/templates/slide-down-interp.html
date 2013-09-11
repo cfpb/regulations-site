@@ -10,6 +10,6 @@
     <section class="inline-interpretation-content hidden">
         {{ interp.markup | safe }}
 
-        <p><a href="{% url 'chrome_section_view' interp.section_id version %}#{{ interp.label_id }}" class="internal">Official Interpretation for {{ interp.label }}</a></p>
+        <p><a href="{% url 'chrome_section_view' interp.section_id version %}#{{ interp.label_id }}" class="internal section-link">Official Interpretation for {{ interp.label }}</a></p>
     </section>
 </section>
