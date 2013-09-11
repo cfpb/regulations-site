@@ -26,7 +26,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
         },
 
         render: function(results) {
-            Dispatch.trigger('mainContent:change', results);
+            Dispatch.trigger('mainContent:change', results, 'search-results');
             Dispatch.trigger('searchResults:open');
             Router.navigate('search/' + this.url);
         },

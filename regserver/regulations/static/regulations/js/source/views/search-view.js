@@ -15,6 +15,8 @@ define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-r
                 query: $form.find('input[name=q]')[0].value,
                 version: $form.find('select[name=version]')[0].value
             }); 
+
+            Dispatch.set('contentClass', 'search-results');
         }
 
     });

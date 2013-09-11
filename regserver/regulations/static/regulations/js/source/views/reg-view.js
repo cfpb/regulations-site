@@ -89,7 +89,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         openSection: function(section, sectionId) {
             Dispatch.set('section', sectionId);
 
-            Dispatch.trigger('mainContent:change', section);
+            Dispatch.trigger('mainContent:change', section, 'reg-text');
 
             window.scrollTo(0, 0);
             Dispatch.trigger('section:open', sectionId);
