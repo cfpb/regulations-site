@@ -28,6 +28,8 @@ class HTMLBuilder():
         self.generate_html(self.tree[''])
 
     def generate_html(self):
+        if self.diff_applier:
+            self.diff_applier.tree_changes(self.tree)
         self.process_node(self.tree)
 
     def parse_doc_title(self, reg_title):
