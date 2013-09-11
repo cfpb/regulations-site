@@ -13,7 +13,7 @@ def get_appliers(label_id, older, newer):
     if diff is None:
         raise Http404
 
-    appliers = utils.handle_specified_layers('graphics', label_id, older)
+    appliers = utils.handle_diff_layers('graphics', label_id, older, newer)
     appliers += (diff,)
     return appliers
 
