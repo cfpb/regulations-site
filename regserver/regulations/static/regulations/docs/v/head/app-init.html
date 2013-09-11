@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="search-model.html">
+                search-model.js
+              </a>
+            
+              
               <a class="source" href="sxs-model.html">
                 sxs-model.js
               </a>
@@ -76,11 +81,6 @@
               
               <a class="source" href="analytics-handler-view.html">
                 analytics-handler-view.js
-              </a>
-            
-              
-              <a class="source" href="content-view.html">
-                content-view.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="history-view.html">
                 history-view.js
+              </a>
+            
+              
+              <a class="source" href="main-view.html">
+                main-view.js
+              </a>
+            
+              
+              <a class="source" href="reg-view.html">
+                reg-view.js
+              </a>
+            
+              
+              <a class="source" href="search-results-view.html">
+                search-results-view.js
               </a>
             
               
@@ -179,7 +194,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'drawer-view'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>, <span class="string">'./regs-router'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router) {
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'main-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'drawer-view'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>, <span class="string">'./regs-router'</span>], <span class="keyword">function</span>($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router) {
     <span class="string">'use strict'</span>;
     <span class="keyword">return</span> {</pre></div></div>
             
@@ -246,8 +261,9 @@ API should make this obsolete.</p>
         init: <span class="keyword">function</span>() {
             <span class="keyword">var</span> openSection,
                 urlPrefix,
-                regVersion,
-                regSection = $(<span class="string">'.main-content section[data-base-version]'</span>);</pre></div></div>
+                regId = $(<span class="string">'#menu'</span>).data(<span class="string">'reg-id'</span>),
+                regSection = $(<span class="string">'.main-content section[data-base-version]'</span>),
+                regVersion = regSection.data(<span class="string">'base-version'</span>);</pre></div></div>
             
         </li>
         
@@ -262,11 +278,16 @@ API should make this obsolete.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            openSection = regSection.attr(<span class="string">'id'</span>);
-            Dispatch.set(<span class="string">'section'</span>, openSection);
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> regSection !== <span class="string">'undefined'</span>) {
+                openSection = regSection.attr(<span class="string">'id'</span>);
+                Dispatch.set(<span class="string">'section'</span>, openSection);
+            }
 
-            regVersion = regSection.data(<span class="string">'base-version'</span>);
-            Dispatch.set(<span class="string">'version'</span>, regVersion);</pre></div></div>
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> regVersion !== <span class="string">'undefined'</span>) {
+                Dispatch.set(<span class="string">'version'</span>, regVersion);
+            }
+
+            Dispatch.set(<span class="string">'reg'</span>, regId);</pre></div></div>
             
         </li>
         
@@ -285,7 +306,7 @@ API should make this obsolete.</p>
             window.Regs.subhead = <span class="keyword">new</span> SubHeadView();
             window.Regs.drawer = <span class="keyword">new</span> DrawerView();
             window.Regs.sidebar = <span class="keyword">new</span> SidebarView();
-            window.Regs.regContent = <span class="keyword">new</span> ContentView();
+            window.Regs.mainView = <span class="keyword">new</span> MainView();
             window.Regs.analytics = <span class="keyword">new</span> AnalyticsHandler();
             window.Regs.mainHeader = <span class="keyword">new</span> HeaderView();</pre></div></div>
             

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>sidebar-module-view.js</title>
+  <title>main-view.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -176,7 +176,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>sidebar-module-view.js</h1>
+                  <h1>main-view.js</h1>
               </div>
           </li>
         
@@ -188,48 +188,36 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p><strong>Extends</strong> Backbone.View</p>
-<p><strong>Usage</strong> <code>require([&#39;sidebar-module-view&#39;], function(SidebarModuleView) { var thing = SidebarModuleView.extend({}); })</code></p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'sidebar-module-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'reg-model'</span>], <span class="keyword">function</span>($, _, Backbone, RegModel) {
-    <span class="string">'use strict'</span>;
-    <span class="keyword">var</span> SidebarModuleView = Backbone.View.extend({
-        initialize: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> field;
-            <span class="keyword">this</span>.model = {};</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
               
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>looks like it basically populates the model for this view</p>
-<p><strong>TODO</strong> have to remember why or if its even in use anymore</p>
-
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">for</span> (field <span class="keyword">in</span> <span class="keyword">this</span>.options) {
-                <span class="keyword">if</span> (<span class="keyword">this</span>.options.hasOwnProperty(field)) {
-                    <span class="keyword">this</span>.model[field] = <span class="keyword">this</span>.options[field];
-                }
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'main-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'./reg-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, RegView) {
+    <span class="string">'use strict'</span>;
+
+    <span class="keyword">var</span> MainView = Backbone.View.extend({
+        el: <span class="string">'.main-content'</span>,
+
+        initialize: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.setState();            
+
+            <span class="keyword">if</span> (<span class="keyword">this</span>.state === <span class="string">'regulation'</span>) {
+                <span class="keyword">this</span>.child = <span class="keyword">new</span> RegView();
             }
 
-            <span class="keyword">this</span>.model.content = RegModel.get(<span class="keyword">this</span>.model.id);
-            <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.model.content);
+            Dispatch.on(<span class="string">'mainContent:change'</span>, <span class="keyword">this</span>.render, <span class="keyword">this</span>);
+        },
 
-            <span class="keyword">this</span>.render();
+        render: <span class="keyword">function</span>(html) {
+            <span class="keyword">this</span>.$el.html(html);
+        },
 
-            <span class="keyword">return</span> <span class="keyword">this</span>;
+        setState: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> path = _.compact(window.location.pathname.split(<span class="string">'/'</span>));
+            <span class="keyword">this</span>.state = path[<span class="number">0</span>];
         }
     });
 
-    <span class="keyword">return</span> SidebarModuleView;
+    <span class="keyword">return</span> MainView;
 });</pre></div></div>
             
         </li>

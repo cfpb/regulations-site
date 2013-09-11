@@ -69,6 +69,11 @@
               </a>
             
               
+              <a class="source" href="search-model.html">
+                search-model.js
+              </a>
+            
+              
               <a class="source" href="sxs-model.html">
                 sxs-model.js
               </a>
@@ -76,11 +81,6 @@
               
               <a class="source" href="analytics-handler-view.html">
                 analytics-handler-view.js
-              </a>
-            
-              
-              <a class="source" href="reg-view.html">
-                reg-view.js
               </a>
             
               
@@ -101,6 +101,21 @@
               
               <a class="source" href="history-view.html">
                 history-view.js
+              </a>
+            
+              
+              <a class="source" href="main-view.html">
+                main-view.js
+              </a>
+            
+              
+              <a class="source" href="reg-view.html">
+                reg-view.js
+              </a>
+            
+              
+              <a class="source" href="search-results-view.html">
+                search-results-view.js
               </a>
             
               
@@ -183,7 +198,7 @@
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> RegView = Backbone.View.extend({
-        el: <span class="string">'.main-content'</span>,
+        el: <span class="string">'.reg-text'</span>,
 
         events: {
             <span class="string">'click .definition'</span>: <span class="string">'termLinkHandler'</span>,
@@ -395,7 +410,7 @@ re-render view</p>
         openSection: <span class="keyword">function</span>(section, sectionId) {
             Dispatch.set(<span class="string">'section'</span>, sectionId);
 
-            <span class="keyword">this</span>.$el.html(section);
+            Dispatch.trigger(<span class="string">'mainContent:change'</span>, section);
             window.scrollTo(<span class="number">0</span>, <span class="number">0</span>);
             Dispatch.trigger(<span class="string">'section:open'</span>, sectionId);
 

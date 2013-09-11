@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'content-view', 'definition-view'], function($, _, Backbone, ContentView, DefinitionView) {
+define(['jquery', 'underscore', 'backbone', 'reg-view', 'definition-view'], function($, _, Backbone, RegView, DefinitionView) {
     describe("Content view", function() {
         Dispatch = {
             on: function() {},
@@ -6,7 +6,7 @@ define(['jquery', 'underscore', 'backbone', 'content-view', 'definition-view'], 
         };
 
         $('body').append('<div id="content"></div>');
-        contentView = new ContentView({el: '#content'});
+        contentView = new RegView({el: '#content'});
 
         it("should have a content view instance", function() {
             expect(contentView).toBeTruthy();

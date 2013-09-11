@@ -2,12 +2,12 @@
 //
 // **Jurisdiction** .main-content
 //
-// **Usage** ```require(['content-view'], function(ContentView) {})```
-define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'dispatch', 'definition-view', 'sub-head-view', 'reg-model', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegModel, SectionFooterView, Router) {
+// **Usage** ```require(['reg-view'], function(RegView) {})```
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'dispatch', 'definition-view', 'sub-head-view', 'reg-model', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegModel, SectionFooterView, Router) {
     'use strict';
 
-    var ContentView = Backbone.View.extend({
-        el: '.main-content',
+    var RegView = Backbone.View.extend({
+        el: '.reg-text',
 
         events: {
             'click .definition': 'termLinkHandler',
@@ -39,6 +39,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
             this.$sections = {};
 
             this.updateWayfinding();
+
             // this might be silly?
             this.$window = $(window);
 
@@ -92,7 +93,7 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         openSection: function(section, sectionId) {
             Dispatch.set('section', sectionId);
 
-            this.$el.html(section);
+            Dispatch.trigger('mainContent:change', section);
             window.scrollTo(0, 0);
             Dispatch.trigger('section:open', sectionId);
 
@@ -253,5 +254,5 @@ define('content-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop',
         }
     });
 
-    return ContentView;
+    return RegView;
 });

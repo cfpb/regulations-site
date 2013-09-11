@@ -54,8 +54,8 @@
               </a>
             
               
-              <a class="source" href="content-view.html">
-                content-view.js
+              <a class="source" href="reg-view.html">
+                reg-view.js
               </a>
             
               
@@ -114,7 +114,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'content-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'toc-view'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>], <span class="keyword">function</span>($, _, Backbone, ContentView, RegModel, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'reg-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'toc-view'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>], <span class="keyword">function</span>($, _, Backbone, RegView, RegModel, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
     <span class="string">'use strict'</span>;
     <span class="keyword">return</span> {</pre></div></div>
             
@@ -232,7 +232,7 @@ incrementally loads in images once rendering is complete</p>
             
             <div class="content"><div class='highlight'><pre>            window.toc = <span class="keyword">new</span> TOCView({el: <span class="string">'#menu'</span>});
             window.sidebar = <span class="keyword">new</span> SidebarView({el: <span class="string">'#sidebar'</span>});
-            window.regContent = <span class="keyword">new</span> ContentView({el: <span class="string">'.main-content'</span>});
+            window.regContent = <span class="keyword">new</span> RegView({el: <span class="string">'.main-content'</span>});
             <span class="keyword">this</span>.bindEvents();
             <span class="keyword">this</span>.fetchModelForms();
         }
