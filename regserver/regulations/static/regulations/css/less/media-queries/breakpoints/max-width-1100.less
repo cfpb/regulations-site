@@ -16,6 +16,7 @@
 
         .drawer-header {
             left: -260px; /*60px extra to accomodate for stacked buttons*/
+            position: absolute;
         }
     }
 
@@ -25,6 +26,12 @@
         .drawer-content {
             position: static;
             top: 94px;
+        }
+
+        .drawer-header {
+            .toc-type {
+                position: fixed;
+            }
         }
     }
 
@@ -108,6 +115,26 @@
             display: inline-block;
         }
     }
+
+    #menu-link,
+    #history-link,
+    #search-link {
+        &.current {
+            background-color: none;
+        }
+    }
+
+    .active {
+        #menu-link,
+        #history-link,
+        #search-link {
+            &.current {
+                background-color: @light_field;
+                border-bottom: 1px solid @medium_gray;
+            }
+        } 
+    }
+    
     /*
     Reg Content
     ==============================

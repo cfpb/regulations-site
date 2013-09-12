@@ -45,6 +45,10 @@ When applied at large resolutions displays, the active class causes the panel na
 
         .drawer-header {
             left: -260px; /*60px extra to accomodate for stacked buttons*/
+
+            .toc-type {
+                display: none;
+            }
         }
 }
 
@@ -85,15 +89,19 @@ Panel Header
 ------------ */
 
 .drawer-header {
-    width: 240px;
-    position: fixed;
-    /*top: 94px;*/
-    height: 40px;
-    background-color: @bg_gray;
-    border-right: 2px solid @medium_gray;
-    z-index: 100;
-    border-bottom: 1px solid @medium_gray;
-    .slide (@direction: left, @speed: 300ms);
+
+    .toc-type {
+        position: fixed;
+        margin: 0;
+        width: 240px;
+        height: 40px;
+        line-height: 40px;
+        background-color: @bg_gray;
+        border-right: 2px solid @medium_gray;
+        z-index: 100;
+        border-bottom: 1px solid @medium_gray;
+        .slide (@direction: left, @speed: 300ms);
+    }
 
 
 
@@ -102,6 +110,7 @@ Panel Header
         font-size: .875em; /* 12px / (26px * .875em) */
         .avenir-next-demi;
         text-transform: uppercase;
+        padding: 0 15px;
     }
 }
 
@@ -228,15 +237,6 @@ currently these are TOC, History, and Search
 #search-link:active {
         background-color: @light_field;
         border-bottom: 1px solid @medium_gray;
-}
-
-#menu-link,
-#history-link,
-#search-link {
-    &.current {
-        background-color: @light_field;
-        border-bottom: 1px solid @medium_gray;
-    }
 }
 
 @media only screen and ( min-width: 1100px ) {
@@ -428,7 +428,7 @@ This contains all of the styles specific to the search
 .search-drawer {
     .reset;
 
-    .drawer-header {
+    .toc-type {
         border-bottom: none;
     }
 

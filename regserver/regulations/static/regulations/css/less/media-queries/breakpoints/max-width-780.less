@@ -1,6 +1,15 @@
 @media only screen and ( max-width: 780px ) {
 
     /*
+    Typography
+    ========================
+    */
+
+    .section-number {
+        text-indent: 0;
+    }
+
+    /*
     Main Content
     =====================
     */
@@ -9,7 +18,7 @@
         width: 100%;
         margin: 0 auto;
         padding-top: 94px;
-        padding-left: 100px;
+        padding-left: 65px;
     }
 
     .level-1 > li:after {
@@ -51,6 +60,11 @@
         }
     }
 
+    /*
+    Definitions
+    ------------
+    definitions are positioned in a fixed window at the bottom of the viewport 
+    */
     .open-definition {
         position: fixed;
         top: 70%;
@@ -59,9 +73,18 @@
         min-width: 100%;
         min-height: 200px;
         padding: 20px 20px 80px 60px;
-        background: #f6f6f5;
+        background: @bg_gray;
         .border-top-light(@width: 2px);
         z-index: 200;
         overflow-y: scroll;
+
+        .definition-text {
+            border-bottom: none;
+        }
     }
+
+    .sidebar-header {
+        background-color: @bg_gray;
+    }
+
 }

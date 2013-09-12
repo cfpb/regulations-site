@@ -5,6 +5,16 @@
     ====================
     */
 
+    body {
+        font-size: 0.875em;
+    }
+
+    .section-number,
+    .appendix-heading,
+    .supplement-section h3 {
+        font-size: 1.571428571em;
+    }
+
     ol {
         padding: 0;
     }
@@ -13,27 +23,13 @@
     Header
     ====================
     */
-    .main-head {
-        height: auto;
-        padding: 1em 0 0 0;
-        
-        .logo {
-            float: none;
-            margin: 0 0 0 20px
-        }
-
-        .site-title {
-            display: block;
-            float: none;
-        }
-    }
 
     .panel {
         top: 150px;
     }
 
     .panel.active {
-        top: 32px; /* offset shorter header height */
+        top: 36px; /* offset shorter header height */
     }
 
     .main-head {
@@ -42,6 +38,8 @@
 
     .sub-head {
         border-top: 2px solid @dark_text;
+        height: 36px;
+        line-height: 34px;
     }
 
     .main-content {
@@ -62,6 +60,11 @@
             }
         }
     }
+
+    /*
+    Sidebar
+    =============================
+    */
 
     .secondary-content {
         position: static;
