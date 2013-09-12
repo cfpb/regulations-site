@@ -3,7 +3,7 @@
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
-define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers', './regs-router'], function($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router) {
+define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers', './regs-router', './reg-view'], function($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router, RegView) {
     'use strict';
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -49,17 +49,6 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
                 regSection = $('.main-content section[data-base-version]'),
                 regVersion = regSection.data('base-version');
 
-
-            // set open section and version for ajax calls
-            if (typeof regSection !== 'undefined') {
-                openSection = regSection.attr('id');
-                Dispatch.set('section', openSection);
-            }
-
-            if (typeof regVersion !== 'undefined') {
-                Dispatch.set('version', regVersion);
-            }
-
             Dispatch.set('reg', regId);
 
             // init primary Views that require only a single instance
@@ -71,15 +60,28 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
             window.Regs.analytics = new AnalyticsHandler();
             window.Regs.mainHeader = new HeaderView();
 
+            // set open section and version for ajax calls
+            if (typeof regSection !== 'undefined') {
+                openSection = regSection.attr('id');
+                Dispatch.set('section', openSection);
+
+                // cache open section content
+                RegModel.set(openSection, regSection.html());
+
+                Dispatch.setContentView(new RegView());
+
+            }
+
+            if (typeof regVersion !== 'undefined') {
+                Dispatch.set('version', regVersion);
+            }
+
             // cache URL prefix
             urlPrefix = RegsHelpers.findURLPrefix();
             if (urlPrefix) {
                 Dispatch.set('urlprefix', urlPrefix);
             }
             Router.start();
-
-            // cache open section content
-            RegModel.set(openSection, regSection.html());
 
             this.bindEvents();
         }

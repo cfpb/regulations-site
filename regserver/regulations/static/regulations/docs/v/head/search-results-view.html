@@ -195,13 +195,25 @@
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> SearchResultsView = Backbone.View.extend({
+        events: {
+            <span class="string">'click .search-nav a'</span>: <span class="string">'paginate'</span>
+        },
+
         initialize: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> query = <span class="keyword">this</span>.options.query,
-                version = <span class="keyword">this</span>.options.version,
-                reg = Dispatch.getRegId(),
+            <span class="keyword">var</span> reg = Dispatch.getRegId(),
                 results;
 
-            <span class="keyword">this</span>.url = reg + <span class="string">'?q='</span> + query + <span class="string">'&amp;version='</span> + version;
+            <span class="keyword">this</span>.query = <span class="keyword">this</span>.options.query;
+            <span class="keyword">this</span>.version = <span class="keyword">this</span>.options.version;
+
+            <span class="keyword">this</span>.url = reg + <span class="string">'?q='</span> + <span class="keyword">this</span>.query + <span class="string">'&amp;version='</span> + <span class="keyword">this</span>.version;
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.options.page !== <span class="string">'undefined'</span>) {
+                <span class="keyword">this</span>.url += <span class="string">'&amp;page='</span> + <span class="keyword">this</span>.options.page;
+            }
+
+            <span class="keyword">this</span>.page = <span class="keyword">this</span>.options.page || <span class="number">0</span>;
+
             results = SearchModel.get(<span class="keyword">this</span>.url);
 
             <span class="keyword">if</span> (<span class="keyword">typeof</span> results.done !== <span class="string">'undefined'</span>) {
@@ -215,10 +227,28 @@
         },
 
         render: <span class="keyword">function</span>(results) {
-            Dispatch.trigger(<span class="string">'mainContent:change'</span>, results);
+            <span class="keyword">this</span>.$el.html(results);
+            Dispatch.trigger(<span class="string">'mainContent:change'</span>, <span class="keyword">this</span>.$el, <span class="string">'search-results'</span>);
             Dispatch.trigger(<span class="string">'searchResults:open'</span>);
             Router.navigate(<span class="string">'search/'</span> + <span class="keyword">this</span>.url);
-        } 
+        },
+
+        paginate: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+
+            <span class="keyword">var</span> page = $(e.target).hasClass(<span class="string">'previous'</span>) ? --<span class="keyword">this</span>.page : ++<span class="keyword">this</span>.page;
+
+            Dispatch.setContentView(<span class="keyword">new</span> SearchResultsView({
+                query: <span class="keyword">this</span>.query,
+                version: <span class="keyword">this</span>.version,
+                page: page
+            }));
+        },
+
+        remove: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.stopListening();
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        }
     });
 
     <span class="keyword">return</span> SearchResultsView;

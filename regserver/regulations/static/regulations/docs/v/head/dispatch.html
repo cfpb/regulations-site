@@ -249,6 +249,14 @@ This scheme currently limits it to one value associated with each type, in theor
             
             <div class="content"><div class='highlight'><pre>        set: <span class="keyword">function</span>(key, val) {
             <span class="keyword">this</span>.open[key] = val;
+        },
+
+        setContentView: <span class="keyword">function</span>(view) {
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.open[<span class="string">'contentView'</span>] !== <span class="string">'undefined'</span>) {
+                <span class="keyword">this</span>.open[<span class="string">'contentView'</span>].remove();
+            }
+
+            <span class="keyword">this</span>.set(<span class="string">'contentView'</span>, view);
         },</pre></div></div>
             
         </li>
@@ -325,6 +333,10 @@ This scheme currently limits it to one value associated with each type, in theor
 
         getRegId: <span class="keyword">function</span>() {
             <span class="keyword">return</span> <span class="keyword">this</span>.open[<span class="string">'reg'</span>];
+        },
+
+        getContentView: <span class="keyword">function</span>() {
+            <span class="keyword">return</span> <span class="keyword">this</span>.open[<span class="string">'contentView'</span>];
         }
 
     }, Backbone.Events);   
