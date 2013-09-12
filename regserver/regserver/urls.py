@@ -43,6 +43,11 @@ urlpatterns = patterns(
     url(r'^regulation/%s/%s$' % (paragraph_pattern, version_pattern),
         ChromeParagraphView.as_view(),
         name='chrome_paragraph_view'),
+    #A regulation section with chrome
+    #Example: http://.../regulation/201-4/2013-10704
+    url(r'^regulation/%s$' % reg_pattern, 
+        'regulations.views.landing.regulation',
+        name='regulation_landing_view'),
     #A section by section paragraph with chrome
     #Example: http://.../sxs/201-2-g/2011-1738
     url(r'^sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
