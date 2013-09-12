@@ -137,8 +137,15 @@ define('regs-helpers', function() {
         },
 
         findStartingContent: function() {
-            var path = _.compact(window.location.pathname.split('/'));
-            return path[0];
+            var path = _.compact(window.location.pathname.split('/')),
+                sessionState = sessionStorage.getItem('drawerDefault');
+
+            if (sessionState === null) {
+                return path[0];
+            }
+            else {
+                return sessionState;
+            }
         }
     };
 });

@@ -198,7 +198,11 @@
 
         el: <span class="string">'#history'</span>,
 
-       initialize: <span class="keyword">function</span>() {</pre></div></div>
+        events: {
+            <span class="string">'click .version-link'</span>: <span class="string">'setStorageItem'</span>
+        },
+
+        initialize: <span class="keyword">function</span>() {</pre></div></div>
             
         </li>
         
@@ -229,9 +233,11 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.find(<span class="string">'.status-list[data-base-version='</span> + Dispatch.getVersion() + <span class="string">']'</span>).addClass(<span class="string">'current'</span>);
+        },
+
+        setStorageItem: <span class="keyword">function</span>() {
+            sessionStorage.setItem(<span class="string">'drawerDefault'</span>, <span class="string">'history'</span>);
         }
-
-
     });
 
     <span class="keyword">return</span> HistoryView;

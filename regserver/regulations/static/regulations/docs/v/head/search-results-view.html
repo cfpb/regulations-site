@@ -224,6 +224,8 @@
             <span class="keyword">else</span> {
                 <span class="keyword">this</span>.render(results);
             }
+
+            Dispatch.on(<span class="string">'searchResults:back'</span>, <span class="keyword">this</span>.createSibling);
         },
 
         render: <span class="keyword">function</span>(results) {
@@ -236,13 +238,20 @@
         paginate: <span class="keyword">function</span>(e) {
             e.preventDefault();
 
-            <span class="keyword">var</span> page = $(e.target).hasClass(<span class="string">'previous'</span>) ? --<span class="keyword">this</span>.page : ++<span class="keyword">this</span>.page;
+            <span class="keyword">var</span> page = $(e.target).hasClass(<span class="string">'previous'</span>) ? <span class="keyword">this</span>.page - <span class="number">1</span> : <span class="keyword">this</span>.page + <span class="number">1</span>,
+                config = {
+                    query: <span class="keyword">this</span>.query,
+                    version: <span class="keyword">this</span>.version,
+                    page: page
+                };
 
-            Dispatch.setContentView(<span class="keyword">new</span> SearchResultsView({
-                query: <span class="keyword">this</span>.query,
-                version: <span class="keyword">this</span>.version,
-                page: page
-            }));
+            <span class="keyword">this</span>.createSibling(config);
+        },
+
+        createSibling: <span class="keyword">function</span>(configObj) {
+            Dispatch.setContentView(
+                <span class="keyword">new</span> SearchResultsView(configObj)
+            );
         },
 
         remove: <span class="keyword">function</span>() {

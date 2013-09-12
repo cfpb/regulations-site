@@ -191,17 +191,31 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'regs-router'</span>, [<span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'./dispatch'</span>], <span class="keyword">function</span>(_, Backbone, Dispatch) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'regs-router'</span>, [<span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'queryparams'</span>], <span class="keyword">function</span>(_, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> RegsRouter = Backbone.Router.extend({
         routes: {
-            <span class="string">'regulation/:section/:version'</span>: <span class="string">'backToSection'</span>
+            <span class="string">'regulation/:section/:version'</span>: <span class="string">'backToSection'</span>,
+            <span class="string">'search/:reg'</span>: <span class="string">'backToSearchResults'</span>
         },
 
         backToSection: <span class="keyword">function</span>(section) {
             Dispatch.trigger(<span class="string">'openSection:set'</span>, section); 
             Dispatch.trigger(<span class="string">'sxs:close'</span>);
+        },
+
+        backToSearchResults: <span class="keyword">function</span>(reg, params) {
+            <span class="keyword">var</span> config = {
+                query: params.q,
+                version: params.version
+            };
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> params.page !== <span class="string">'undefined'</span>) {
+                config.page = params.page;
+            }
+
+            Dispatch.trigger(<span class="string">'searchResults:back'</span>, config);
         },
 
         start:  <span class="keyword">function</span>() {

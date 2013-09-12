@@ -31,6 +31,8 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
             else {
                 this.render(results);
             }
+
+            Dispatch.on('searchResults:back', this.createSibling);
         },
 
         render: function(results) {
@@ -43,13 +45,20 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
         paginate: function(e) {
             e.preventDefault();
 
-            var page = $(e.target).hasClass('previous') ? --this.page : ++this.page;
+            var page = $(e.target).hasClass('previous') ? this.page - 1 : this.page + 1,
+                config = {
+                    query: this.query,
+                    version: this.version,
+                    page: page
+                };
 
-            Dispatch.setContentView(new SearchResultsView({
-                query: this.query,
-                version: this.version,
-                page: page
-            }));
+            this.createSibling(config);
+        },
+
+        createSibling: function(configObj) {
+            Dispatch.setContentView(
+                new SearchResultsView(configObj)
+            );
         },
 
         remove: function() {
