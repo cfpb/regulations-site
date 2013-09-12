@@ -7,8 +7,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
     'use strict';
 
     var RegView = Backbone.View.extend({
-        el: '.reg-text',
-
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
@@ -22,7 +20,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             //
             // * when a definition is removed, update term links
             Dispatch.on('definition:remove', this.closeDefinition, this);
-
             Dispatch.on('toc:click', this.loadSection, this);
             Dispatch.on('openSection:set', this.loadSection, this);
 
@@ -77,7 +74,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             var returned = RegModel.get(sectionId);
 
             // visually indicate that a new section is loading
-            $('.reg-text').addClass('loading');
+            $('.main-content').addClass('loading');
 
             if (typeof returned.done !== 'undefined') {
                 // @TODO: error handling
@@ -92,13 +89,16 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
         openSection: function(section, sectionId) {
             Dispatch.set('section', sectionId);
+            this.$el.html(section);
+            Dispatch.trigger('mainContent:change', this.$el, 'reg-text');
 
-            Dispatch.trigger('mainContent:change', section);
             window.scrollTo(0, 0);
             Dispatch.trigger('section:open', sectionId);
 
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
             Router.navigate('regulation/' + sectionId + '/' + Dispatch.getVersion());
+
+            $('.main-content').removeClass('loading');
 
             this.updateWayfinding();
         },
@@ -245,6 +245,11 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         setActiveTerm: function($link) {
             this.clearActiveTerms();
             $link.addClass('active').data('active', 1);
+        },
+
+        remove: function() {
+            this.stopListening();
+            return this;
         },
 
         hideContent: function() {

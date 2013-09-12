@@ -134,6 +134,18 @@ define('regs-helpers', function() {
             else {
                 return url = _.compact(url).join('/');
             }
+        },
+
+        findStartingContent: function() {
+            var path = _.compact(window.location.pathname.split('/')),
+                sessionState = sessionStorage.getItem('drawerDefault');
+
+            if (sessionState === null) {
+                return path[0];
+            }
+            else {
+                return sessionState;
+            }
         }
     };
 });

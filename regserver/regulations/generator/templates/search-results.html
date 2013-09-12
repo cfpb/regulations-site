@@ -6,7 +6,7 @@ version_timeline is one of "past", "current", and "future".
 {% endcomment %}
 <p class="search-version">{{ version_by_date|date }} Version - {{ version_timeline|title }} Law
 {{ results.total_hits }} result{{ results.results|pluralize }}</p>
-<ul class="search-results">
+<ul class="result-list">
 {% for result in results.results %}
     <li>
     <h3><a href="{% url 'chrome_section_view' result.section_id version %}#{{result.label|join:'-'}}" class="internal">{{result.header}}</a></h3>

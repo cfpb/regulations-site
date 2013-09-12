@@ -37,6 +37,15 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
             this.open[key] = val;
         },
 
+        setContentView: function(view) {
+            if (typeof this.open['contentView'] !== 'undefined') {
+                this.open['contentView'].remove();
+                delete(this.open['contentView']);
+            }
+
+            this.set('contentView', view);
+        },
+
         // remove a value from Dispatch.open and call its `remove()` method
         // **Param** string, entity type, ex. 'definition'
         remove: function(key) {
@@ -75,6 +84,10 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
 
         getRegId: function() {
             return this.open['reg'];
+        },
+
+        getContentView: function() {
+            return this.open['contentView'];
         }
 
     }, Backbone.Events);   

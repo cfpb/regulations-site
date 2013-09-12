@@ -380,6 +380,18 @@ interpreted</p>
             <span class="keyword">else</span> {
                 <span class="keyword">return</span> url = _.compact(url).join(<span class="string">'/'</span>);
             }
+        },
+
+        findStartingContent: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> path = _.compact(window.location.pathname.split(<span class="string">'/'</span>)),
+                sessionState = sessionStorage.getItem(<span class="string">'drawerDefault'</span>);
+
+            <span class="keyword">if</span> (sessionState === <span class="literal">null</span>) {
+                <span class="keyword">return</span> path[<span class="number">0</span>];
+            }
+            <span class="keyword">else</span> {
+                <span class="keyword">return</span> sessionState;
+            }
         }
     };
 });</pre></div></div>

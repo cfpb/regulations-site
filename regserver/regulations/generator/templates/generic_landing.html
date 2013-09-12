@@ -1,0 +1,48 @@
+<div id="main_content">
+{% block reg_main_content %}
+{% endblock %}
+
+<form action="{% url 'chrome_search' label_id %}" method="GET">
+    <div class="search-box">
+        <input type="text" name="q" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
+        <input type="hidden" name="version" value="{{current_version.version}}"/>
+    </div>
+</form>
+
+<div id="footer">
+    {% block legal_disclaimer %}
+    {% endblock %}
+
+    <h3> About the Tool </h3>
+
+    <p>
+    Brought to you by the CFPB Technology and Innovation Team. This site is an
+    open source project and developed by open source software.  <br />
+    <a href="http://cfpb.github.io/eregs/">http://cfpb.github.io/eregs/</a>
+    </p>
+
+    <h4> Feedback about the tool: </h4>
+    <a href="mailto:CFPB_eRegs_Team@cfpb.gov">CFPB_eRegs_Team@cfpb.gov</a>
+</div>
+
+</div>
+
+
+<div id="sidebar">
+{% if new_version %}
+    <h3> New version to be effective: {{new_version.by_date|date:"d/m/Y"}} </h3>
+    <ul>
+        <li> <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}">View new version</a></li>
+        {%comment %} 
+        <li> <a href="{% url 'chome_section_diff_view' reg_first_section current_version.version new_version.version %}">Compare new version</a></li>
+        {% endcomment %}
+    </ul>
+{% endif %}
+
+{% block reg_sidebar %}
+{% endblock %}
+
+<h4> Questions about interpretation or application </h4>
+<p> <a href="mailto:CFPB_reginquiries@cfpb.gov">CFPB_reginquiries@cfpb.gov</a> </p>
+<p> (202) 435-7700 </p>
+</div>

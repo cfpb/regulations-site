@@ -9,6 +9,7 @@ from regulations.views.partial import PartialParagraphView, PartialSectionView
 from regulations.views.diff import PartialSectionDiffView
 from regulations.views.partial_search import PartialSearch
 from regulations.views.partial_sxs import ParagraphSXSView
+from regulations.views.redirect import redirect_by_date, redirect_by_date_get
 
 #Re-usable URL patterns.
 version_pattern = r'(?P<version>[-\d\w]+)'
@@ -23,6 +24,14 @@ notice_pattern = r'(?P<notice_id>[\d]+[-][\d]+)'
 
 urlpatterns = patterns(
     '',
+    # Redirect to version by date (by GET)
+    # Example http://.../regulation_redirect/201-3-v
+    url(r'^regulation_redirect/%s$' % paragraph_pattern, redirect_by_date_get,
+        name='redirect_by_date_get'),
+    # Redirect to version by date
+    # Example: http://.../regulations/201-3-v/1999/11/8
+    url(r'^regulation/%s/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})$'
+        % paragraph_pattern, redirect_by_date, name='redirect_by_date'),
     #A regulation section with chrome
     #Example: http://.../regulation/201-4/2013-10704
     url(r'^regulation/%s/%s$' % (section_pattern, version_pattern),
@@ -43,6 +52,11 @@ urlpatterns = patterns(
     url(r'^regulation/%s/%s$' % (paragraph_pattern, version_pattern),
         ChromeParagraphView.as_view(),
         name='chrome_paragraph_view'),
+    #A regulation landing page
+    #Example: http://.../regulation/201
+    url(r'^regulation/%s$' % reg_pattern, 
+        'regulations.views.landing.regulation',
+        name='regulation_landing_view'),
     #A section by section paragraph with chrome
     #Example: http://.../sxs/201-2-g/2011-1738
     url(r'^sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
