@@ -13,13 +13,6 @@ define(['jquery', 'underscore', 'backbone', 'drawer-view'], function($, _, Backb
             });
         });
 
-        it("should instantiate the history view if the cookie is set", function() {
-            drawerView.changeContents('history');
-            drawerView2 = new DrawerView();
-
-            expect(drawerView2.childViews['history'].view).toBeTruthy();            
-        });
-
         it("should hide all drawer panes besides history", function() {
             $('.toc-container:not(#history)').each(function(el) {
                 expect($(el).hasClass('hidden')).toBeTruthy();

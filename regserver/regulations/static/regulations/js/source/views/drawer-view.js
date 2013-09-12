@@ -3,16 +3,17 @@
 // **Usage** ```require(['drawer-view'], function(DrawerView) {})```
 //
 // **Jurisdiction** Left panel drawer container
-define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'dispatch', 'toc-view', 'history-view', 'search-view'], function($, _, Backbone, jQCookie, Dispatch, TOCView, HistoryView, SearchView) {
+define('drawer-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'toc-view', 'history-view', 'search-view', 'regs-helpers'], function($, _, Backbone, Dispatch, TOCView, HistoryView, SearchView, Helpers) {
     'use strict';
 
     var DrawerView = Backbone.View.extend({
         el: '#menu',
 
         initialize: function() {
-            // the cookieValue defaults to the table of contents, else the value of the cookie set within changeContents
-            var cookieValue = $.cookie('Drawer_State') || 'table-of-contents';
-            
+            var openTab,
+                k,
+                path = Helpers.findStartingContent();
+
             Dispatch.on('drawer:stateChange', this.changeContents, this);
 
             this.$label = $('.toc-type');
@@ -32,24 +33,29 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'jquery-cookie', 'dis
                 }
             };
             
+            // sets default tab for search
+            for (k in this.childViews) {
+                if (this.childViews.hasOwnProperty(path)) {
+                    openTab = path;
+                }
+            }
+
+            openTab = openTab || 'table-of-contents';
+
             // initialize child view to populate drawer
-            this.changeContents(cookieValue); 
+            this.changeContents(openTab); 
         },
 
         changeContents: function(activeId) {
-            var $expiration = new Date(),
-                minutes = 60;
-            //set date to 60 minutes for cookie expiration    
-            $expiration.setTime($expiration.getTime() + (minutes * 60 * 1000));
             // hide the content of all drawer sections
             this.$children.addClass('hidden');
+
             // remove the 'hidden' class from the active drawer section
             this.childViews[activeId]['selector'].removeClass('hidden');
+
             // create a new childView if a view doesn't already exist
             this.childViews[activeId].view = this.childViews[activeId].view || new this.childViews[activeId].constructor();
             Dispatch.set('drawerState', activeId);
-            // set a cookie value equal to the active drawer id
-            $.cookie('Drawer_State', activeId, { expires: $expiration });
         }
 
     });

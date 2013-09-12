@@ -12,10 +12,10 @@ reg-model.js
 views/sidebar-module-view.js
 views/definition-view.js
 views/sub-head-view.js
-lib/jquery.cookie.js
 views/toc-view.js
 views/history-view.js
 search-model.js
+lib/backbone.queryparams.js
 regs-router.js
 views/search-results-view.js
 views/search-view.js
