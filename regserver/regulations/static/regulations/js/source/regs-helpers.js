@@ -120,7 +120,7 @@ define('regs-helpers', function() {
             pathLen = sitePath.length;
 
             for (i=0; i<=pathLen; i++) {
-                if (sitePath[i] === 'regulation' || sitePath[i] === 'sxs') {
+                if (sitePath[i] === 'regulation' || sitePath[i] === 'sxs' || sitePath[i] === 'search' || sitePath[i] === 'diff') {
                     break;
                 }
                 else if (sitePath[i] !== '') {
