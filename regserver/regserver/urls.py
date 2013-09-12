@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 
 from regulations.views.chrome import ChromeInterpView, ChromeRegulationView
 from regulations.views.chrome import ChromeParagraphView, ChromeSearchView
-from regulations.views.chrome import ChromeSectionView
+from regulations.views.chrome import ChromeSectionView, ChromeSectionDiffView
 from regulations.views.chrome_breakaway import ChromeSXSView
 from regulations.views.sidebar import SideBarView
 from regulations.views.partial import PartialInterpView, PartialRegulationView
@@ -54,6 +54,12 @@ urlpatterns = patterns(
     url(r'^search/%s$' % reg_pattern,
         ChromeSearchView.as_view(),
         name='chrome_search'),
+    # Diff view of a section for non-JS viewers (or book markers)
+    # Example: http://.../diff/201-4/2011-1738/2013-10704
+    url(r'^diff/%s/%s/%s$' %
+        (section_pattern, version_pattern, newer_version_pattern),
+        ChromeSectionDiffView.as_view(),
+        name='chrome_section_diff_view'),
 
     # Load just the sidebar
     # Example: http://.../partial/sidebar/201-2/2013-10704
