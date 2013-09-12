@@ -31,6 +31,8 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
             else {
                 this.render(results);
             }
+
+            Dispatch.on('searchResults:back', this.goBackOnePage, this);
         },
 
         render: function(results) {
@@ -43,12 +45,20 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
         paginate: function(e) {
             e.preventDefault();
 
-            var page = $(e.target).hasClass('previous') ? --this.page : ++this.page;
+            var page = $(e.target).hasClass('previous') ? this.page - 1 : this.page + 1;
 
             Dispatch.setContentView(new SearchResultsView({
                 query: this.query,
                 version: this.version,
                 page: page
+            }));
+        },
+
+        goBackOnePage: function() {
+            Dispatch.setContentView(new SearchResultsView({
+                query: this.query,
+                version: this.version,
+                page: this.page - 1
             }));
         },
 

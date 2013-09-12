@@ -3,12 +3,17 @@ define('regs-router', ['underscore', 'backbone', './dispatch'], function(_, Back
 
     var RegsRouter = Backbone.Router.extend({
         routes: {
-            'regulation/:section/:version': 'backToSection'
+            'regulation/:section/:version': 'backToSection',
+            'search/:reg': 'backToSearchResults'
         },
 
         backToSection: function(section) {
             Dispatch.trigger('openSection:set', section); 
             Dispatch.trigger('sxs:close');
+        },
+
+        backToSearchResults: function() {
+            Dispatch.trigger('searchResults:back');
         },
 
         start:  function() {
