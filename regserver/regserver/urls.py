@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, include, url
 
 from regulations.views.chrome import ChromeInterpView, ChromeRegulationView
-from regulations.views.chrome import ChromeParagraphView, ChromeSectionView
-from regulations.views.chrome_breakaway import ChromeSXSView, ChromeSearchView
+from regulations.views.chrome import ChromeParagraphView, ChromeSearchView
+from regulations.views.chrome import ChromeSectionView
+from regulations.views.chrome_breakaway import ChromeSXSView
 from regulations.views.sidebar import SideBarView
 from regulations.views.partial import PartialInterpView, PartialRegulationView
 from regulations.views.partial import PartialParagraphView, PartialSectionView

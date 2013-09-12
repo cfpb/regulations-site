@@ -6,6 +6,7 @@ from regulations.generator import generator
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
 from regulations.views.partial import *
+from regulations.views.partial_search import PartialSearch
 from regulations.views.sidebar import SideBarView
 
 
@@ -92,6 +93,17 @@ class ChromeParagraphView(ChromeView):
 class ChromeRegulationView(ChromeView):
     """Entire regulation with chrome"""
     partial_class = PartialRegulationView
+
+
+class ChromeSearchView(ChromeView):
+    """Search results with chrome"""
+    partial_class = PartialSearch
+
+    def get(self, request, *args, **kwargs):
+        """Override GET so that we can pull our the version"""
+
+        kwargs['version'] = request.GET.get('version', '')
+        return super(ChromeSearchView, self).get(request, *args, **kwargs)
 
 
 class BadComponentException(Exception):
