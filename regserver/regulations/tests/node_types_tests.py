@@ -49,3 +49,4 @@ class NodeTypesTest(TestCase):
                          label_to_text(['2323', '7', 'b', 'Interp', '1', 'v']))
         self.assertEqual('Comment for Appendix Z',
                          label_to_text(['2323', 'Z', 'Interp']))
+        self.assertEqual('Regulation 204', label_to_text(['204']))

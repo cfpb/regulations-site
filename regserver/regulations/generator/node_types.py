@@ -34,7 +34,9 @@ def to_markup_id(id_parts):
 
 def label_to_text(label, include_section=True):
     """Convert a label:list[string] into a human-readable string"""
-    if 'Interp' in label:
+    if len(label) == 1:
+        return 'Regulation %s' % label[0]
+    elif 'Interp' in label:
         # Interpretation
         prefix = list(takewhile(lambda l: l != 'Interp', label))
         suffix = label[label.index('Interp')+1:]
