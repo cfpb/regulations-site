@@ -4,6 +4,7 @@ var require = {
         underscore: './lib/underscore',
         backbone: './lib/backbone',
         'jquery-scrollstop': './lib/jquery.scrollstop',
+        'queryparams': './lib/backbone.queryparams',
         'jquery-cookie': './lib/jquery.cookie',
         'definition-view': './views/definition-view',
         'regs-fixed-el-view': './views/regs-fixed-el-view',

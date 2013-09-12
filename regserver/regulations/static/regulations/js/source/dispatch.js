@@ -40,6 +40,7 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
         setContentView: function(view) {
             if (typeof this.open['contentView'] !== 'undefined') {
                 this.open['contentView'].remove();
+                delete(this.open['contentView']);
             }
 
             this.set('contentView', view);
