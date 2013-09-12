@@ -3,6 +3,7 @@ from mock import patch
 
 from regulations.views import landing
 
+
 class LandingViewTest(TestCase):
     
     @patch('regulations.views.landing.api_reader')
@@ -20,18 +21,18 @@ class LandingViewTest(TestCase):
     @patch('regulations.views.landing.fetch_grouped_history')
     def test_get_versions(self, fetch_grouped_history):
         fetch_grouped_history.return_value = [
-            {'timeline':'future', 'version':'a'}, 
-            {'timeline':'current', 'version':'b'}]
+            {'timeline': 'future', 'version': 'a'}, 
+            {'timeline': 'current', 'version': 'b'}]
         current_ver, next_ver = landing.get_versions('204')
-        self.assertEqual({'timeline':'current', 'version':'b'}, current_ver)
-        self.assertEqual({'timeline':'future', 'version':'a'}, next_ver)
+        self.assertEqual({'timeline': 'current', 'version': 'b'}, current_ver)
+        self.assertEqual({'timeline': 'future', 'version': 'a'}, next_ver)
 
     @patch('regulations.views.landing.fetch_grouped_history')
     def test_get_versions_no_next(self, fetch_grouped_history):
         fetch_grouped_history.return_value = [
-            {'timeline':'current', 'version':'b'}]
+            {'timeline': 'current', 'version': 'b'}]
         current_ver, next_ver = landing.get_versions('204')
-        self.assertEqual({'timeline':'current', 'version':'b'}, current_ver)
+        self.assertEqual({'timeline': 'current', 'version': 'b'}, current_ver)
         self.assertEqual(None, next_ver)
 
     def test_first_section(self):

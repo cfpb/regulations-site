@@ -6,10 +6,12 @@ from django.template.loader import select_template
 from regulations.generator import api_reader
 from regulations.generator.versions import fetch_grouped_history
 
+
 def regulation_exists(label_id):
     client = api_reader.ApiReader()
     vr = client.regversions(label_id)
     return (vr and len(vr) > 0)
+
 
 def get_versions(label_id):
     """ Get the current and next version of the regulation. """
@@ -25,9 +27,11 @@ def get_versions(label_id):
         current_version = current[0]
         return (current_version, next_version)
 
+
 def first_section(label_id):
     """ Return a label to the first section of a regulation. """
     return '%s-1' % label_id
+
 
 def regulation(request, label_id):
     context = {}
@@ -40,9 +44,11 @@ def regulation(request, label_id):
     context['reg_first_section'] = first_section(label_id)
 
     c = RequestContext(request, context)
-    
+
     if regulation_exists(label_id):
-        t = select_template(['landing_%s.html' % label_id, 'generic_landing.html'])
+        t = select_template([
+            'landing_%s.html' % label_id,
+            'generic_landing.html'])
         return HttpResponse(t.render(c))
     else:
         raise Http404
