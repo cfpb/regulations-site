@@ -34,11 +34,12 @@ class SideBarView(TemplateView):
 
         context['permalinks'] = []
         def per_node(node):
-            context['permalinks'].append({
-                'label_id': '-'.join(node['label']),
-                'section_id': '-'.join(node['label'][:2]),
-                'text': label_to_text(node['label'], include_section=False)
-            })
+            if len(node['label']) > 1:
+                context['permalinks'].append({
+                    'label_id': '-'.join(node['label']),
+                    'section_id': '-'.join(node['label'][:2]),
+                    'text': label_to_text(node['label'], include_section=False)
+                })
             for child in node['children']:
                 per_node(child)
         per_node(reg)
