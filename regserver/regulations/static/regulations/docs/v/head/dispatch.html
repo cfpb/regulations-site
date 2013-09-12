@@ -254,6 +254,7 @@ This scheme currently limits it to one value associated with each type, in theor
         setContentView: <span class="keyword">function</span>(view) {
             <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.open[<span class="string">'contentView'</span>] !== <span class="string">'undefined'</span>) {
                 <span class="keyword">this</span>.open[<span class="string">'contentView'</span>].remove();
+                <span class="keyword">delete</span>(<span class="keyword">this</span>.open[<span class="string">'contentView'</span>]);
             }
 
             <span class="keyword">this</span>.set(<span class="string">'contentView'</span>, view);
