@@ -5,13 +5,14 @@ from django.views.generic.base import TemplateView
 from regulations.generator import api_reader
 from regulations.generator.node_types import label_to_text
 from regulations.generator.versions import fetch_grouped_history
+from regulations.views.partial import PartialView
 
 
 API_PAGE_SIZE = 50
 PAGE_SIZE = 10
 
 
-class PartialSearch(TemplateView):
+class PartialSearch(PartialView):
     """Display search results without any chrome."""
     template_name = 'search-results.html'
 
@@ -37,7 +38,9 @@ class PartialSearch(TemplateView):
                                'length': min(remaining, PAGE_SIZE)}
 
     def get_context_data(self, **kwargs):
-        context = super(PartialSearch, self).get_context_data(**kwargs)
+        # We don't want to run the content data of PartialView -- it assumes
+        # we will be applying layers
+        context = super(PartialView, self).get_context_data(**kwargs)
 
         try:
             page = int(self.request.GET.get('page', '0'))
