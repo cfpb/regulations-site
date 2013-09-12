@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from django.http import Http404
+from django.test import RequestFactory
 from mock import patch
 
 from regulations.views.redirect import *
@@ -25,3 +26,11 @@ class ViewsRedirectTest(TestCase):
         response = redirect_by_date(None, '8888', '2010', '06', '08')
         self.assertEqual(302, response.status_code)
         self.assertTrue('ccc' in response['Location'])
+
+    @patch('regulations.views.redirect.redirect_by_date')
+    def test_redirect_by_get(self, redirect_by_date):
+        request = RequestFactory().get('?year=2222&month=11&day=20')
+        redirect_by_get(request, 'lablab')
+        self.assertTrue(redirect_by_date.called)
+        self.assertEqual(('lablab', '2222', '11', '20'),
+                         redirect_by_date.call_args[0][1:])

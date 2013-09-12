@@ -9,7 +9,7 @@ from regulations.views.partial import PartialParagraphView, PartialSectionView
 from regulations.views.diff import PartialSectionDiffView
 from regulations.views.partial_search import PartialSearch
 from regulations.views.partial_sxs import ParagraphSXSView
-from regulations.views.redirect import redirect_by_date
+from regulations.views.redirect import redirect_by_date, redirect_by_get
 
 #Re-usable URL patterns.
 version_pattern = r'(?P<version>[-\d\w]+)'
@@ -24,6 +24,10 @@ notice_pattern = r'(?P<notice_id>[\d]+[-][\d]+)'
 
 urlpatterns = patterns(
     '',
+    # Redirect to version by date (by GET)
+    # Example http://.../regulation_redirect/201-3-v
+    url(r'^regulation_redirect/%s$' % paragraph_pattern, redirect_by_get,
+        name='redirect_by_get'),
     # Redirect to version by date
     # Example: http://.../regulations/201-3-v/1999/11/8
     url(r'^regulation/%s/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})$'
