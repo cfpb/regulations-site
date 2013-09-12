@@ -19,7 +19,7 @@ def get_versions(label_id):
     if history:
         future = [h for h in history if h['timeline'] == 'future']
         if len(future) > 0:
-            next_version = future[0]
+            next_version = future[-1]
         else:
             next_version = None
 
@@ -38,7 +38,7 @@ def regulation(request, label_id):
     current_version, new_version = get_versions(label_id)
     if new_version:
         context['new_version'] = new_version
-        context['current_version'] = current_version
+    context['current_version'] = current_version
 
     context['label_id'] = label_id
     context['reg_first_section'] = first_section(label_id)
