@@ -1,6 +1,91 @@
 @media only screen and ( max-width: 600px ) {
 
+    /*
+    Typography
+    ========================
+    */
+
+    body {
+        font-size: 0.875em;
+    }
+
+    .section-number,
+    .appendix-heading,
+    .supplement-section h3 {
+        font-size: 1.25em;
+    }
+
+    .section-number {
+        text-indent: 0;
+    }
+
+    /*
+    Header
+    ========================
+    */
+
+    .sub-head {
+        height: 33px;
+    }
+
     .effective-date strong {
         display: none;
+    }
+
+    .header-label {
+        margin-left: 0;
+    }
+
+    .effective-date {
+        font-size: 1em;
+    }
+
+    /*
+    Main Content
+    ========================
+    */
+
+    .main-content {
+        padding-left: 60px;
+        padding-right: 15px;
+
+        ol {
+            list-style-position: inside;
+        }
+    }
+
+    /*iOS doesn't like the key-term display block*/
+    .key-term {
+        display: inline;
+    }
+
+    .key-term:after {
+        content: '\a'; 
+        white-space: pre;
+    }
+
+    .inline-interpretation {
+        margin-left: 0;
+
+        .expand-text {
+            display: none;
+        }
+    }
+
+    /*
+    Footer
+    =========================
+    */
+
+    .next-prev-title {
+        display: none;
+    }
+
+    .next-prev-label {
+        display: none;
+    }
+
+    .previous {
+        margin-left: -25px;
     }
 }

@@ -1,4 +1,30 @@
 @media only screen and ( max-width: 780px ) {
+
+    /*
+    Main Content
+    =====================
+    */
+
+    .main-content {
+        width: 100%;
+        margin: 0 auto;
+        padding-top: 94px;
+        padding-left: 100px;
+    }
+
+    .level-1 > li:after {
+        margin-left: -5em;
+    }
+
+    h1 .title {
+        display: none;
+    }
+
+
+    /*
+    Sidebar
+    =====================
+    */
     
     .secondary-content {
         position: static;
@@ -25,13 +51,6 @@
         }
     }
 
-    .close-button {
-        float: none;
-        position: fixed;
-        top: 70%;
-        right: 0px;
-    }
-
     .open-definition {
         position: fixed;
         top: 70%;
@@ -44,20 +63,5 @@
         .border-top-light(@width: 2px);
         z-index: 200;
         overflow-y: scroll;
-    }
-
-    .main-content {
-        width: 100%;
-        margin: 0 auto;
-        padding-top: 94px;
-        padding-left: 100px;
-    }
-
-    .level-1 > li:after {
-        margin-left: -5em;
-    }
-
-    h1 .title {
-        display: none;
     }
 }

@@ -1,12 +1,22 @@
 @media only screen and ( max-width: 480px ) {
-        ol {
-            padding: 0;
-        }
+    
+    /*
+    Typography
+    ====================
+    */
 
-        .main-head {
-            height: auto;
-            padding: 1em 0 0 0;
-            
+    ol {
+        padding: 0;
+    }
+
+    /*
+    Header
+    ====================
+    */
+    .main-head {
+        height: auto;
+        padding: 1em 0 0 0;
+        
         .logo {
             float: none;
             margin: 0 0 0 20px
@@ -26,27 +36,54 @@
         top: 32px; /* offset shorter header height */
     }
 
-    .inline-interpretation .expand-button {
-        display: none;
-    }
-
     .main-head {
         display: none;
     }
 
+    .sub-head {
+        border-top: 2px solid @dark_text;
+    }
+
     .main-content {
-        padding-top: 0;
+        padding-top: 10px;
+    }
+
+    .inline-interpretation {
+         h4 {
+            padding: 0;
+            background: none;
+        }
+
+        @media 
+        (-webkit-min-device-pixel-ratio: 2), 
+        (min-resolution: 192dpi) {
+            h4 {
+                background: none;
+            }
+        }
     }
 
     .secondary-content {
+        position: static;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        border-left: none;
+        padding-left: 40px;
 
-        h4 {
-            &.expandable:after {
-                content: "";
-            }
+        .regs-meta {
+            width: 100%;
+            float: left;
+        }
 
-            &.open:after {
-                content: "";
+        .regs-meta:first-child {
+            border-right: none;
+        }
+
+        .regs-meta:last-child {
+            .chunk {
+                margin-left: 0;
+                border-left: none;
             }
         }
     }
