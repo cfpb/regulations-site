@@ -675,11 +675,13 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
             <div class="content"><div class='highlight'><pre>            e.stopPropagation();
             <span class="keyword">var</span> header = $(e.currentTarget),
                 section = header.parent(),
-                button = header.find(<span class="string">'.expand-button'</span>);
+                button = header.find(<span class="string">'.expand-button'</span>),
+                buttonText = header.find(<span class="string">'.expand-text'</span>);
 
             section.toggleClass(<span class="string">'open'</span>);
             header.next(<span class="string">'.hidden'</span>).slideToggle();
-            button.toggleClass(<span class="string">'open'</span>).html(section.hasClass(<span class="string">'open'</span>) ? <span class="string">'Hide'</span> : <span class="string">'Show'</span>);
+            button.toggleClass(<span class="string">'open'</span>);
+            buttonText.html(section.hasClass(<span class="string">'open'</span>) ? <span class="string">'Hide'</span> : <span class="string">'Show'</span>);
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
         },</pre></div></div>
