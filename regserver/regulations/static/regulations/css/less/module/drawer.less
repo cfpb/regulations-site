@@ -149,6 +149,12 @@ Panel Slide Button
     }
 }
 
+.active {
+    .panel-slide {
+        border-bottom: 1px solid @medium_gray;
+    }
+}
+
 /* 
 TOC Nav Links
 -------------
@@ -243,10 +249,12 @@ currently these are TOC, History, and Search
         position: absolute;
         top: 34px;
         right: 0px;
-    }
+        bordoer-top: 1px solid pink;
 
-     .active .drawer-toggles li {
-        display: list-item;
+        li {
+            display: list-item;
+            border-bottom: 1px solid @medium_gray;
+        }
     }
 
 }
