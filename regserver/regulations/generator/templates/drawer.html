@@ -10,7 +10,7 @@
             <h2 class="toc-type">Switch between versions</h2>
         </div><!-- /.drawer-header -->
         <div class="drawer-content">
-            <form action="{% url 'redirect_by_get' label_id %}"
+            <form action="{% url 'redirect_by_date_get' label_id %}"
                   method="GET">
 
               {% with current_year=today|date:"Y" current_month=today|date:"m" current_day=today|date:"d" %}
