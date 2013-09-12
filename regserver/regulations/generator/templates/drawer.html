@@ -9,38 +9,65 @@
         <div class="drawer-header">
             <h2 class="toc-type">Switch between versions</h2>
         </div><!-- /.drawer-header -->
-        <ul class="drawer-content">
-        {% for version in history %}
-            <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
-            {% if part == label_id %}
-                <a href="{% url 'chrome_regulation_view' part version.version %}" class="version-link">
-                    {% if version.timeline == 'current' %}
-                        <h4>Current Law</h4>
-                    {% endif %}
-                    <span class="version-date">{{ version.by_date|date }}</span>
-                </a>
-            {% else %}
-                <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link">
-                    {% if version.timeline == 'current' %}
-                        <h4>Current Law</h4>
-                    {% endif %}
-                    <span class="version-date">{{ version.by_date|date }}</span>
-                </a>
-            {% endif %}
-                {% if active_version < version.version %}
-                    <a class="compare" href="{% url 'chrome_section_diff_view' label_id active_version version.version %}">Compare</a>
-                {% elif active_version > version.version %}
-                    <a class="compare" href="{% url 'chrome_section_diff_view' label_id version.version active_version %}">Compare</a>
-                {% endif %}
+        <div class="drawer-content">
+            <form action="{% url 'redirect_by_date_get' label_id %}"
+                  method="GET">
 
-                <ul class="rule-list">
-                {% for notice in version.notices %}
-                    <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
+              {% with current_year=today|date:"Y" current_month=today|date:"m" current_day=today|date:"d" %}
+                <select name="year">
+
+                {% for year in ranges.year %}
+                    <option {% if year == current_year %}
+                        selected="selected" {% endif %}>{{ year }}</option>
                 {% endfor %}
-                </ul>
-            </li>
-        {% endfor %}
-        </ul>
+                </select>
+                <select name="month">
+                {% for month in ranges.month %}
+                    <option {% if month == current_month %}
+                        selected="selected" {% endif %}>{{ month }}</option>
+                {% endfor %}
+                </select>
+                <select name="day">
+                {% for day in ranges.day %}
+                    <option {% if day == current_day %}
+                        selected="selected" {% endif %}>{{ day }}</option>
+                {% endfor %}
+                </select>
+                <button type="submit">Go</button>
+              {% endwith %}
+            </form>
+            <ul>
+            {% for version in history %}
+                <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
+                {% if part == label_id %}
+                    <a href="{% url 'chrome_regulation_view' part version.version %}" class="version-link">
+                        {% if version.timeline == 'current' %}
+                            <h4>Current Law</h4>
+                        {% endif %}
+                        <span class="version-date">{{ version.by_date|date }}</span>
+                    </a>
+                {% else %}
+                    <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link">
+                        {% if version.timeline == 'current' %}
+                            <h4>Current Law</h4>
+                        {% endif %}
+                        <span class="version-date">{{ version.by_date|date }}</span>
+                    </a>
+                {% endif %}
+                    {% if active_version < version.version %}
+                        <a class="compare" href="{% url 'chrome_section_diff_view' label_id active_version version.version %}">Compare</a>
+                    {% elif active_version > version.version %}
+                        <a class="compare" href="{% url 'chrome_section_diff_view' label_id version.version active_version %}">Compare</a>
+                    {% endif %}
+                    <ul class="rule-list">
+                    {% for notice in version.notices %}
+                        <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
+                    {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
     </div> <!--/#history-->
     <div id="search" class="search-drawer toc-container hidden">
         <div class="drawer-header">
