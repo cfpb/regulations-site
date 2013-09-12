@@ -6,6 +6,7 @@ from mock import patch
 
 from regulations.views.redirect import *
 
+
 class ViewsRedirectTest(TestCase):
     @patch('regulations.views.redirect.ApiReader')
     def test_redirect_by_date(self, ApiReader):

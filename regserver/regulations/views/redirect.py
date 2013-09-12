@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 
 from regulations.generator.api_reader import ApiReader
 
+
 def redirect_by_date(request, label_id, year, month, day):
     """If a user requests a date as the version, find the version which was
     current as of that date"""

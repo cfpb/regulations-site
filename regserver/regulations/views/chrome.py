@@ -72,7 +72,7 @@ class ChromeView(TemplateView):
 
         context['part'] = part
         context['history'] = fetch_grouped_history(part)
-        
+
         context['ranges'] = self.generate_ranges(context['history'])
         context['today'] = date.today()
 
@@ -84,13 +84,13 @@ class ChromeView(TemplateView):
         earliest = [v['by_date'] for v in history]
         earliest = sorted(earliest)
         today = date.today()
-        ranges = {'month': ('%02d' % m for m in range(1,13)),
-                  'day': ('%02d' % d for d in range(1,32))}
+        ranges = {'month': ('%02d' % m for m in range(1, 13)),
+                  'day': ('%02d' % d for d in range(1, 32))}
         if not earliest:
             ranges['year'] = map(str, range(today.year + 10, 1979, -1))
         else:
             ranges['year'] = map(str, range(today.year + 10,
-                                            earliest[0].year -1, -1))
+                                            earliest[0].year - 1, -1))
         return ranges
 
 
