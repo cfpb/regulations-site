@@ -29,9 +29,9 @@ class ViewsRedirectTest(TestCase):
         self.assertTrue('ccc' in response['Location'])
 
     @patch('regulations.views.redirect.redirect_by_date')
-    def test_redirect_by_get(self, redirect_by_date):
+    def test_redirect_by_date_get(self, redirect_by_date):
         request = RequestFactory().get('?year=2222&month=11&day=20')
-        redirect_by_get(request, 'lablab')
+        redirect_by_date_get(request, 'lablab')
         self.assertTrue(redirect_by_date.called)
         self.assertEqual(('lablab', '2222', '11', '20'),
                          redirect_by_date.call_args[0][1:])
