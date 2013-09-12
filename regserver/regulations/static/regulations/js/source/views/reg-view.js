@@ -7,6 +7,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
     'use strict';
 
     var RegView = Backbone.View.extend({
+        el: '#content-wrapper',
+
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
@@ -193,7 +195,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
         // handler for when inline interpretation is clicked
         expandInterp: function(e) {
-
             // user can click anywhere in the header of a closed interp
             // for an open interp, they can click "hide" button or header
             e.stopPropagation();
