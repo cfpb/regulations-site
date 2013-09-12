@@ -8,6 +8,7 @@ from regulations.generator.node_types import EMPTYPART, REGTEXT
 from regulations.views import utils
 from regulations.views.partial import PartialView
 
+
 def get_appliers(label_id, older, newer):
     diff = generator.get_diff_applier(label_id, older, newer)
 
@@ -39,12 +40,12 @@ class PartialSectionDiffView(PartialView):
         tree = generator.get_tree_paragraph(label_id, older)
 
         if tree is None:
-            #TODO We need a more complicated check here to see if the diffs 
+            #TODO We need a more complicated check here to see if the diffs
             #add the requested section. If not -> 404
             tree = {}
 
         appliers = get_appliers(label_id, older, newer)
-        
+
         builder = HTMLBuilder(*appliers)
         builder.tree = tree
         builder.generate_html()

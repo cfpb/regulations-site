@@ -128,7 +128,6 @@ class ChromeSectionDiffView(ChromeView):
         return response.content
 
 
-
 class BadComponentException(Exception):
     """Allows us to propagate errors in loaded partials"""
     def __init__(self, response):
