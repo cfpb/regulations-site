@@ -15,7 +15,7 @@ define(['jquery', 'underscore', 'backbone', 'header-view'], function($, _, Backb
         });
         
         it("should add the active class to #menu", function() {
-            header.openTOC(eventStub);
+            header.openDrawer(eventStub);
 
             expect($('#menu').hasClass('active')).toBeTruthy();
         });
@@ -25,7 +25,7 @@ define(['jquery', 'underscore', 'backbone', 'header-view'], function($, _, Backb
         });
 
         it("should remove the active class to #menu", function() {
-            header.openTOC(eventStub);
+            header.openDrawer(eventStub);
 
             expect($('#menu').hasClass('active')).toBeFalsy();
         });
@@ -39,7 +39,7 @@ define(['jquery', 'underscore', 'backbone', 'header-view'], function($, _, Backb
         });
 
         it("should have the current class when clicked", function() {
-            header.toggleDrawer(eventStub);
+            header.toggleDrawerTab(eventStub);
 
             expect($('a').hasClass('current')).toBeTruthy();
         });
