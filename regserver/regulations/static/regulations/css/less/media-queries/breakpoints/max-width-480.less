@@ -1,53 +1,114 @@
 @media only screen and ( max-width: 480px ) {
-        ol {
-            padding: 0;
-        }
+    
+    /*
+    Typography
+    ====================
+    */
 
-        .main-head {
-            height: auto;
-            padding: 1em 0 0 0;
-            
-        .logo {
-            float: none;
-            margin: 0 0 0 20px
-        }
-
-        .site-title {
-            display: block;
-            float: none;
-        }
+    body {
+        font-size: 0.875em;
     }
+
+    .section-number,
+    .appendix-heading,
+    .supplement-section h3 {
+        font-size: 1.571428571em;
+    }
+
+    ol {
+        padding: 0;
+    }
+
+    /*
+    Header
+    ====================
+    */
 
     .panel {
         top: 150px;
     }
 
     .panel.active {
-        top: 32px; /* offset shorter header height */
-    }
-
-    .inline-interpretation .expand-button {
-        display: none;
+        top: 36px; /* offset shorter header height */
     }
 
     .main-head {
         display: none;
     }
 
-    .main-content {
-        padding-top: 0;
+    .sub-head {
+        border-top: 2px solid @dark_text;
+        height: 36px;
+        line-height: 34px;
     }
 
-    .secondary-content {
+    .main-content {
+        padding-top: 10px;
+    }
 
-        h4 {
-            &.expandable:after {
-                content: "";
-            }
+    .inline-interpretation {
+         h4 {
+            padding: 0;
+            background: none;
+        }
 
-            &.open:after {
-                content: "";
+        @media 
+        (-webkit-min-device-pixel-ratio: 2), 
+        (min-resolution: 192dpi) {
+            h4 {
+                background: none;
             }
         }
+    }
+
+    /*
+    Sidebar
+    =============================
+    */
+
+    .secondary-content {
+        position: static;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        border-left: none;
+        padding-left: 40px;
+
+        .regs-meta {
+            width: 100%;
+            float: left;
+        }
+
+        .regs-meta:first-child {
+            border-right: none;
+        }
+
+        .regs-meta:last-child {
+            .chunk {
+                margin-left: 0;
+                border-left: none;
+            }
+        }
+    }
+
+    #breakaway-view.open-sxs,
+    .full-breakaway {
+        position: fixed;
+        top: 0;
+    }
+
+    .sxs-label {
+        display: none;
+    }
+
+    /*
+    Sidebar
+    =============================
+    */
+    .application-footer {
+        min-height: 120px;
+        margin: 15px 15px 30px 40px;
+        background: url(../ip/logo.png) no-repeat bottom right;
+        background-size: 150px auto;
     }
 }

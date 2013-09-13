@@ -197,7 +197,7 @@
         el: <span class="string">'.reg-header'</span>,
 
         initialize: <span class="keyword">function</span>() {
-            <span class="keyword">this</span>.$activeEls = $(<span class="string">'#menu, #site-header, #reg-content'</span>);</pre></div></div>
+            <span class="keyword">this</span>.$activeEls = $(<span class="string">'#menu, #site-header, #reg-content, #primary-footer'</span>);</pre></div></div>
             
         </li>
         
@@ -216,24 +216,28 @@
         },
 
         events: {
-            <span class="string">'click .toc-toggle'</span>: <span class="string">'openTOC'</span>,
-            <span class="string">'click .toc-nav-link'</span>: <span class="string">'toggleDrawer'</span>
+            <span class="string">'click .toc-toggle'</span>: <span class="string">'openDrawer'</span>,
+            <span class="string">'click .toc-nav-link'</span>: <span class="string">'toggleDrawerTab'</span>
         },
 
-        openTOC: <span class="keyword">function</span>(e) {
+        updateDrawerState: <span class="keyword">function</span>(state) {
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.$activeEls !== <span class="string">'undefined'</span>) {
+                Dispatch.trigger(<span class="string">'toc:toggle'</span>, state + <span class="string">' toc'</span>);
+                $(<span class="string">'#panel-link'</span>).toggleClass(<span class="string">'open'</span>);
+                <span class="keyword">this</span>.$activeEls.toggleClass(<span class="string">'active'</span>);
+            }
+        },
+
+        openDrawer: <span class="keyword">function</span>(e) {
             e.preventDefault();
 
             <span class="keyword">var</span> $target = $(e.target),
                 state = ($target.hasClass(<span class="string">'open'</span>)) ? <span class="string">'close'</span> : <span class="string">'open'</span>;
 
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.$activeEls !== <span class="string">'undefined'</span>) {
-                Dispatch.trigger(<span class="string">'toc:toggle'</span>, state + <span class="string">' toc'</span>);
-                $target.toggleClass(<span class="string">'open'</span>);
-                <span class="keyword">this</span>.$activeEls.toggleClass(<span class="string">'active'</span>);
-            }
+            <span class="keyword">this</span>.updateDrawerState(state);
         },
 
-        toggleDrawer: <span class="keyword">function</span>(e) {
+        toggleDrawerTab: <span class="keyword">function</span>(e) {
             e.preventDefault();
 
             <span class="keyword">var</span> $target = $(e.target),
@@ -241,6 +245,10 @@
 
             <span class="keyword">this</span>.$tocLinks.removeClass(<span class="string">'current'</span>);
             $target.addClass(<span class="string">'current'</span>);
+
+            <span class="keyword">if</span> ($(<span class="string">'.panel'</span>).css(<span class="string">'left'</span>) === <span class="string">'-200px'</span>) {
+                <span class="keyword">this</span>.updateDrawerState(<span class="string">'open'</span>);
+            }
 
             Dispatch.trigger(<span class="string">'drawer:stateChange'</span>, linkValue);
 
