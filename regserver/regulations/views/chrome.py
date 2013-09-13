@@ -7,7 +7,9 @@ from django.views.generic.base import TemplateView
 from regulations.generator import generator
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
+from regulations.views.diff import PartialSectionDiffView
 from regulations.views.partial import *
+from regulations.views.partial_search import PartialSearch
 from regulations.views.sidebar import SideBarView
 
 
@@ -34,6 +36,15 @@ class ChromeView(TemplateView):
         context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
         return context
 
+    def process_partial(self, context):
+        partial_view = self.partial_class.as_view()
+        response = partial_view(self.request,
+                                label_id=context['label_id'],
+                                version=context['version'])
+        self._assert_good(response)
+        response.render()
+        return response.content
+
     def get_context_data(self, **kwargs):
         context = super(ChromeView, self).get_context_data(**kwargs)
 
@@ -49,12 +60,7 @@ class ChromeView(TemplateView):
         if full_tree is None or relevant_tree is None:
             raise Http404
 
-        partial_view = self.partial_class.as_view()
-        response = partial_view(
-            self.request, label_id=label_id, version=version)
-        self._assert_good(response)
-        response.render()
-        context['partial_content'] = response.content
+        context['partial_content'] = self.process_partial(context)
 
         sidebar_view = SideBarView.as_view()
         response = sidebar_view(self.request, label_id=label_id,
@@ -112,6 +118,34 @@ class ChromeParagraphView(ChromeView):
 class ChromeRegulationView(ChromeView):
     """Entire regulation with chrome"""
     partial_class = PartialRegulationView
+
+
+class ChromeSearchView(ChromeView):
+    """Search results with chrome"""
+    partial_class = PartialSearch
+
+    def get(self, request, *args, **kwargs):
+        """Override GET so that we can pull our the version"""
+
+        kwargs['version'] = request.GET.get('version', '')
+        return super(ChromeSearchView, self).get(request, *args, **kwargs)
+
+
+class ChromeSectionDiffView(ChromeView):
+    """Search results with chrome"""
+    partial_class = PartialSectionDiffView
+
+    def process_partial(self, context):
+        """Must override the parameters to this partial as it needs to have
+        a 'newer_version' field"""
+        partial_view = self.partial_class.as_view()
+        response = partial_view(self.request,
+                                label_id=context['label_id'],
+                                version=context['version'],
+                                newer_version=context['newer_version'])
+        self._assert_good(response)
+        response.render()
+        return response.content
 
 
 class BadComponentException(Exception):
