@@ -194,7 +194,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'toc-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, RegsHelpers) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'toc-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'regs-helpers'</span>, <span class="string">'reg-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, RegsHelpers, RegView) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> TOCView = Backbone.View.extend({
         el: <span class="string">'#table-of-contents'</span>,
@@ -275,7 +275,10 @@ when a TOC link is clicked, send an event along with the href of the clicked lin
             
             <div class="content"><div class='highlight'><pre>        sendClickEvent: <span class="keyword">function</span>(e) {
             e.preventDefault();
-            Dispatch.trigger(<span class="string">'toc:click'</span>, $(e.currentTarget).data(<span class="string">'section-id'</span>));
+
+            <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'section-id'</span>);
+            Dispatch.trigger(<span class="string">'toc:click'</span>, sectionId);
+            Dispatch.setContentView(<span class="keyword">new</span> RegView({sectionId: sectionId}));
         },</pre></div></div>
             
         </li>

@@ -12,11 +12,14 @@ reg-model.js
 views/sidebar-module-view.js
 views/definition-view.js
 views/sub-head-view.js
+lib/jquery.scrollstop.js
+views/section-footer-view.js
+lib/backbone.queryparams.js
+regs-router.js
+views/reg-view.js
 views/toc-view.js
 views/history-view.js
 search-model.js
-lib/backbone.queryparams.js
-regs-router.js
 views/search-results-view.js
 views/search-view.js
 views/drawer-view.js
@@ -30,8 +33,5 @@ views/sidebar-view.js
 lib/konami.js
 views/header-view.js
 views/analytics-handler-view.js
-lib/jquery.scrollstop.js
-views/section-footer-view.js
-views/reg-view.js
 app-init.js
 regulations.js
