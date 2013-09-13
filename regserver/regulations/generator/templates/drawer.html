@@ -10,33 +10,7 @@
             <h2 class="toc-type">Switch between versions</h2>
         </div><!-- /.drawer-header -->
         <div class="drawer-content">
-            <form action="{% url 'redirect_by_date_get' label_id %}"
-                  method="GET">
-
-              {% with current_year=today|date:"Y" current_month=today|date:"m" current_day=today|date:"d" %}
-                <select name="year">
-
-                {% for year in ranges.year %}
-                    <option {% if year == current_year %}
-                        selected="selected" {% endif %}>{{ year }}</option>
-                {% endfor %}
-                </select>
-                <select name="month">
-                {% for month in ranges.month %}
-                    <option {% if month == current_month %}
-                        selected="selected" {% endif %}>{{ month }}</option>
-                {% endfor %}
-                </select>
-                <select name="day">
-                {% for day in ranges.day %}
-                    <option {% if day == current_day %}
-                        selected="selected" {% endif %}>{{ day }}</option>
-                {% endfor %}
-                </select>
-                <button type="submit">Go</button>
-              {% endwith %}
-            </form>
-            <ul>
+            <ul class="version-list">
             {% for version in history %}
                 <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
                 {% if part == label_id %}
@@ -67,6 +41,32 @@
                 </li>
             {% endfor %}
             </ul>
+            <form action="{% url 'redirect_by_date_get' label_id %}"
+                  method="GET">
+
+              {% with current_year=today|date:"Y" current_month=today|date:"m" current_day=today|date:"d" %}
+                <select name="year">
+
+                {% for year in ranges.year %}
+                    <option {% if year == current_year %}
+                        selected="selected" {% endif %}>{{ year }}</option>
+                {% endfor %}
+                </select>
+                <select name="month">
+                {% for month in ranges.month %}
+                    <option {% if month == current_month %}
+                        selected="selected" {% endif %}>{{ month }}</option>
+                {% endfor %}
+                </select>
+                <select name="day">
+                {% for day in ranges.day %}
+                    <option {% if day == current_day %}
+                        selected="selected" {% endif %}>{{ day }}</option>
+                {% endfor %}
+                </select>
+                <button type="submit">Go</button>
+              {% endwith %}
+            </form>
         </div>
     </div> <!--/#history-->
     <div id="search" class="search-drawer toc-container hidden">

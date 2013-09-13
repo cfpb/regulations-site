@@ -359,9 +359,40 @@ This contains all of the styles specific to the history
     .version-link:hover,
     .version-link:active,
     .version-link:target,
+    //.version-list > li:hover,
     .current {
         color: @black;
         background-color: @green_light;
+    }
+
+    .compare,
+    .compare:link,
+    .compare:visited {
+        .avenir-next-demi;
+        box-sizing: border-box;
+        display: block;
+        margin: 0.5em auto 1em auto;
+        padding: 0.71428571428571em 1em;
+        width: 100px;
+        border: none;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        background-color: @pacific;
+        color: #fff;
+        font-size: 1em;
+        line-height: 1;
+        text-align: center;
+        text-decoration: none;
+        -webkit-transition: .1s;
+        -moz-transition: .1s;
+        transition: .1s;
+    }
+
+    .compare:hover,
+    .compare:active,
+    .compare:focus {
+        background-color: #328ED8;
     }
 
     h3 {
