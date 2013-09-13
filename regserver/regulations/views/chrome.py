@@ -8,6 +8,7 @@ from regulations.generator import generator
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
 from regulations.views.diff import PartialSectionDiffView
+from regulations.views.landing import get_versions, regulation as landing_page
 from regulations.views.partial import *
 from regulations.views.partial_search import PartialSearch
 from regulations.views.sidebar import SideBarView
@@ -146,6 +147,23 @@ class ChromeSectionDiffView(ChromeView):
         self._assert_good(response)
         response.render()
         return response.content
+
+
+class ChromeLandingView(ChromeView):
+    """Landing page with chrome"""
+    partial_class = PartialRegulationView # Needed to know sectional status
+
+    def process_partial(self, context):
+        """Landing page isn't a TemplateView"""
+        response = landing_page(self.request, context['label_id'])
+        self._assert_good(response)
+        return response.content
+
+    def get(self, request, *args, **kwargs):
+        """Override GET to add the version to chrome context"""
+        current, _ = get_versions(kwargs['label_id'])
+        kwargs['version'] = current['version']
+        return super(ChromeLandingView, self).get(request, *args, **kwargs)
 
 
 class BadComponentException(Exception):
