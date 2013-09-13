@@ -12,8 +12,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
-            'mouseenter *[data-permalink-section]': 'showPermalink',
-            'click .permalink-marker': 'permalinkMarkerHandler',
             'click .definition.active': 'openDefinitionLinkHandler'
         },
 
@@ -23,7 +21,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             // * when a definition is removed, update term links
             Dispatch.on('definition:remove', this.closeDefinition, this);
             Dispatch.on('toc:click', this.loadSection, this);
-            Dispatch.on('openSection:set', this.loadSection, this);
+            Dispatch.on('render:set', this.loadSection, this);
 
             Dispatch.on('breakaway:open', this.hideContent, this);
             Dispatch.on('breakaway:close', this.showContent, this);
@@ -33,7 +31,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
             // set active section vars
             // @TODO: how do activeSection and Dispatch.get('section') live together?
-            this.activeSection = '';
+            this.activeSection = this.options.sectionId || '';
             this.$activeSection = '';
             this.$sections = {};
 
@@ -73,26 +71,26 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         // ask for section data, when promise is completed,
         // re-render view
         loadSection: function(sectionId) {
-            var returned = RegModel.get(sectionId);
+            Dispatch.trigger('loading:start');
 
-            // visually indicate that a new section is loading
-            $('.main-content').addClass('loading');
+            var returned = RegModel.get(sectionId);
 
             if (typeof returned.done !== 'undefined') {
                 // @TODO: error handling
                 returned.done(function(section) {
-                    this.openSection(section, sectionId);
+                    this.render(section, sectionId);
                 }.bind(this));
             }
             else {
-               this.openSection(returned, sectionId); 
+               this.render(returned, sectionId); 
             }
         },
 
-        openSection: function(section, sectionId) {
+        render: function(section, sectionId) {
+            var markup = $(section)[0].innerHTML;
             Dispatch.set('section', sectionId);
-            this.$el.html(section);
-            Dispatch.trigger('mainContent:change', this.$el, 'reg-text');
+
+            Dispatch.trigger('mainContent:change', markup, 'reg-text');
 
             window.scrollTo(0, 0);
             Dispatch.trigger('section:open', sectionId);
@@ -100,7 +98,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
             Router.navigate('regulation/' + sectionId + '/' + Dispatch.getVersion());
 
-            $('.main-content').removeClass('loading');
+            Dispatch.trigger('loading:finish');
 
             this.updateWayfinding();
         },
@@ -120,11 +118,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             for (i = 0; i < len; i++) {
                 this.$sections[i] = $(this.$contentContainer[i]);
             }
-        },
-
-        // for a consistent API
-        render: function() {
-            this.loadSection(Dispatch.getOpenSection());
         },
 
         // only concerned with resetting DOM, no matter
@@ -209,27 +202,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             return this;
         },
 
-        // handler for when a permalink icon should be shown
-        showPermalink: function(e) {
-            $('.permalink-marker').remove();
-
-            var permalink = document.createElement('a'),
-                $section = $(e.currentTarget),
-                $permalink;
-
-            permalink.href = '#' + $section[0].id;
-            permalink.innerHTML = 'Permalink';
-            permalink.className = 'permalink-marker';
-            $permalink = $(permalink);
-
-            $section.children().first().prepend($permalink);
-        },
-
-        // send GA event when permalink is clicked
-        permalinkMarkerHandler: function(e) {
-            Dispatch.trigger('ga-event:permalink', $(e.target).attr('href'));
-        },
-
         changeFocus: function(id) {
             $(id).focus();
         },
@@ -247,14 +219,18 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         },
 
         remove: function() {
+            this.header.remove();
+            Dispatch.remove('sectionNav');
             this.stopListening();
             return this;
         },
 
+        // when breakaway view loads
         hideContent: function() {
             this.$el.fadeOut(1000);
         },
 
+        // when breakaway view unloads
         showContent: function() {
             this.$el.fadeIn();
         }
