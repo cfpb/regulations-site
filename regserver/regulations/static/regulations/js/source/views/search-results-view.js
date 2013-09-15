@@ -62,6 +62,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
         },
 
         remove: function() {
+            this.$el.remove();
             this.stopListening();
             return this;
         }

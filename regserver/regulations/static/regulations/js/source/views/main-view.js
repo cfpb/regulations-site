@@ -2,7 +2,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($
     'use strict';
 
     var MainView = Backbone.View.extend({
-        el: '#content-wrapper',
+        el: '#content-body',
 
         initialize: function() {
             Dispatch.on('mainContent:change', this.render, this);

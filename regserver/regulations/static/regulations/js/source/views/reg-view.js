@@ -87,10 +87,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         },
 
         render: function(section, sectionId) {
-            var markup = $(section)[0].innerHTML;
             Dispatch.set('section', sectionId);
 
-            Dispatch.trigger('mainContent:change', markup, 'reg-text');
+            Dispatch.trigger('mainContent:change', section, 'reg-text');
 
             window.scrollTo(0, 0);
             Dispatch.trigger('section:open', sectionId);
@@ -224,6 +223,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             this.header.remove();
             Dispatch.remove('sectionNav');
             this.stopListening();
+            this.$el.remove();
             return this;
         },
 
