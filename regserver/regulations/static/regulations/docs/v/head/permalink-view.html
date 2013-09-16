@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>toc-view.js</title>
+  <title>permalink-view.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -181,7 +181,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>toc-view.js</h1>
+                  <h1>permalink-view.js</h1>
               </div>
           </li>
         
@@ -193,122 +193,25 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p><strong>Extends</strong> Backbone.View</p>
-<p><strong>Usage</strong> <code>require([&#39;toc-view&#39;], function(TOCView) {})</code></p>
-<p><strong>Jurisdiction</strong> Expandable Table of Contents</p>
-
+              
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'toc-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, RegsHelpers) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'permalink-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
-    <span class="keyword">var</span> TOCView = Backbone.View.extend({
-        el: <span class="string">'#table-of-contents'</span>,
 
-        events: {
-            <span class="string">'click a'</span>: <span class="string">'sendClickEvent'</span>
+    <span class="keyword">var</span> PermalinkView = Backbone.View.extend({
+        el: <span class="string">'#permalinks'</span>,
+
+        initialize: <span class="keyword">function</span>() {
+            Dispatch.on(<span class="string">'sidebar:update'</span>, <span class="keyword">this</span>.update, <span class="keyword">this</span>);
         },
 
-        initialize: <span class="keyword">function</span>() {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p><strong>Event Listeners</strong>
-when the active section changes, highlight it in the TOC</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'activeSection:change'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);
-
-            Dispatch.on(<span class="string">'openSection:set'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p><strong>TODO</strong> need to work out a bug where it scrolls the content section
-$(&#39;#menu-link:not(.active)&#39;).on(&#39;click&#39;, this.scrollToActive);</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        },</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>update active classes, find new active based on the reg entity id in the anchor</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        setActive: <span class="keyword">function</span>(id) {
-            <span class="keyword">this</span>.$el.find(<span class="string">'.current'</span>).removeClass(<span class="string">'current'</span>);
-            <span class="keyword">this</span>.$el.find(<span class="string">'a[data-section-id='</span> + RegsHelpers.findBaseSection(id) + <span class="string">']'</span>).addClass(<span class="string">'current'</span>);
-
-            <span class="keyword">return</span> <span class="keyword">this</span>;
-        },</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p><strong>Event trigger</strong>
-when a TOC link is clicked, send an event along with the href of the clicked link</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        sendClickEvent: <span class="keyword">function</span>(e) {
-            e.preventDefault();
-
-            <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'section-id'</span>);
-            Dispatch.trigger(<span class="string">'regSection:open'</span>, sectionId, {id: sectionId}, <span class="string">'regSection'</span>);
-        },</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p><strong>Inactive</strong> 
-Intended to keep the active link in view as the user moves around the doc</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        scrollToActive: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> activeLink = document.querySelectorAll(<span class="string">'#table-of-contents .current'</span>);
-
-            <span class="keyword">if</span> (activeLink[<span class="number">0</span>]) {
-                activeLink[<span class="number">0</span>].scrollIntoView();
-            }
+        update: <span class="keyword">function</span>(html) {
+            <span class="keyword">this</span>.$el.html(html);
         }
     });
 
-    <span class="keyword">return</span> TOCView;
+    <span class="keyword">return</span> PermalinkView;
 });</pre></div></div>
             
         </li>
