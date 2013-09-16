@@ -35,11 +35,11 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
         toggleDrawerTab: function(e) {
             e.preventDefault();
 
-            var $target = $(e.currentTarget),
+            var $target = $(e.target),
                 linkValue = _.last($target.closest('a').attr('href').split('#'));
 
             this.$tocLinks.removeClass('current');
-            $target.addClass('current');
+            $target.closest('a').addClass('current');
 
             if ($('.panel').css('left') === '-200px') {
                 this.updateDrawerState('open');

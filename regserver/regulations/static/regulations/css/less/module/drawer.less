@@ -174,16 +174,20 @@ currently these are TOC, History, and Search
 
 .drawer-toggles li {
     display: inline-block;
+    margin-left: -4px; /*accomodate inline-block spacing */
+    border-right: 1px solid @medium_gray;
+}
+
+.drawer-toggles li:first-child {
+    margin-left: 0; /*remove negative margin from first list item*/
 }
 
 .toc-nav-link {
     display: inline-block;
     text-align: center;
-    margin-left: -4px; /*accomodate inline-block spacing */
     height: 34px; /* match height of main header */
     line-height: 34px;
     width: 56px;
-    border-right: 1px solid @medium_gray;
     -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
 }
 
@@ -197,10 +201,6 @@ currently these are TOC, History, and Search
 .toc-nav-link:active {
         background-color: @light_field;
         border-bottom: 1px solid @medium_gray;
-}
-
-.drawer-toggles li:first-child {
-    margin-left: 0; /*remove negative margin from first list item*/
 }
 
 @media only screen and ( min-width: 1100px ) {
