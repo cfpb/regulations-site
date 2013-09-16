@@ -41,6 +41,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
 
+            Dispatch.trigger('regSection:open:after', this.options.id);
+
         },
 
         // naive way to update the active table of contents link and wayfinding header
