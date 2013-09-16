@@ -8,6 +8,7 @@ from regulations.generator import generator
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
 from regulations.views.diff import PartialSectionDiffView
+from regulations.views.landing import get_versions, regulation as landing_page
 from regulations.views.partial import *
 from regulations.views.partial_search import PartialSearch
 from regulations.views.sidebar import SideBarView
@@ -79,25 +80,9 @@ class ChromeView(TemplateView):
         context['part'] = part
         context['history'] = fetch_grouped_history(part)
 
-        context['ranges'] = self.generate_ranges(context['history'])
         context['today'] = date.today()
 
         return context
-
-    def generate_ranges(self, history):
-        """To generate a select box for dates, we need a range of years,
-        months, dates, etc."""
-        earliest = [v['by_date'] for v in history]
-        earliest = sorted(earliest)
-        today = date.today()
-        ranges = {'month': ('%02d' % m for m in range(1, 13)),
-                  'day': ('%02d' % d for d in range(1, 32))}
-        if not earliest:
-            ranges['year'] = map(str, range(today.year + 10, 1979, -1))
-        else:
-            ranges['year'] = map(str, range(today.year + 10,
-                                            earliest[0].year - 1, -1))
-        return ranges
 
 
 class ChromeInterpView(ChromeView):
@@ -146,6 +131,26 @@ class ChromeSectionDiffView(ChromeView):
         self._assert_good(response)
         response.render()
         return response.content
+
+
+class ChromeLandingView(ChromeView):
+    """Landing page with chrome"""
+    partial_class = PartialSectionView  # Needed to know sectional status
+
+    def process_partial(self, context):
+        """Landing page isn't a TemplateView"""
+        response = landing_page(self.request, context['regulation'])
+        self._assert_good(response)
+        return response.content
+
+    def get_context_data(self, **kwargs):
+        """Add the version and replace the label_id for the chrome context"""
+        current, _ = get_versions(kwargs['label_id'])
+        kwargs['version'] = current['version']
+        kwargs['regulation'] = kwargs['label_id']
+        # Use the first section for the chrome -- does not work in all regs
+        kwargs['label_id'] = kwargs['label_id'] + '-1'
+        return super(ChromeLandingView, self).get_context_data(**kwargs)
 
 
 class BadComponentException(Exception):

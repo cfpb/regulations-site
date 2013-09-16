@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, include, url
 
-from regulations.views.chrome import ChromeInterpView, ChromeRegulationView
-from regulations.views.chrome import ChromeParagraphView, ChromeSearchView
-from regulations.views.chrome import ChromeSectionView, ChromeSectionDiffView
+from regulations.views.chrome import ChromeInterpView, ChromeLandingView
+from regulations.views.chrome import ChromeParagraphView, ChromeRegulationView
+from regulations.views.chrome import ChromeSearchView, ChromeSectionView
+from regulations.views.chrome import ChromeSectionDiffView
 from regulations.views.chrome_breakaway import ChromeSXSView
 from regulations.views.sidebar import SideBarView
 from regulations.views.partial import PartialInterpView, PartialRegulationView
@@ -55,8 +56,7 @@ urlpatterns = patterns(
         name='chrome_paragraph_view'),
     #A regulation landing page
     #Example: http://.../regulation/201
-    url(r'^regulation/%s$' % reg_pattern, 
-        'regulations.views.landing.regulation',
+    url(r'^regulation/%s$' % reg_pattern, ChromeLandingView.as_view(),
         name='regulation_landing_view'),
     #A section by section paragraph with chrome
     #Example: http://.../sxs/201-2-g/2011-1738
