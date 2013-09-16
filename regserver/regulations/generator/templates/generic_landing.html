@@ -26,9 +26,9 @@
 <div class="alert">
     <h3> New version to be effective: {{new_version.by_date|date:"d/m/Y"}} </h3>
     <ul>
-        <li> <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}">View new version</a></li>
+        <li> <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}" class="go">View new version</a></li>
         {%comment %} 
-        <li> <a href="{% url 'chome_section_diff_view' reg_first_section current_version.version new_version.version %}">Compare new version</a></li>
+        <li> <a href="{% url 'chome_section_diff_view' reg_first_section current_version.version new_version.version %}" class="go">Compare new version</a></li>
         {% endcomment %}
     </ul>
 </div>
@@ -38,6 +38,6 @@
 {% endblock %}
 
 <h4> Questions about interpretation or application </h4>
-<p> <a href="mailto:CFPB_reginquiries@cfpb.gov">CFPB_reginquiries@cfpb.gov</a> </p>
+<p> <a href="mailto:CFPB_reginquiries@cfpb.gov" class="mail">CFPB_reginquiries@cfpb.gov</a> </p>
 <p> (202) 435-7700 </p>
 </div>

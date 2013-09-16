@@ -107,6 +107,19 @@ li {
  Link Styles
  ========================================================================== */
 
+a:link,
+a:visited {
+    color: @pacific;
+    text-decoration: none;
+    border: none;
+}
+
+a:hover,
+a:active,
+a:focus {
+    border-bottom: 1px solid;
+}
+
 /*  Internal Links
     ---------------
     <a href="#" class="internal">internal contents</a> 
@@ -149,20 +162,11 @@ li {
     margin-right: 6px;
 }
 
-.external:link,
-.external:visited,
-.mail:link,
-.mail:visited {
-    color: @pacific;
-    text-decoration: none;
-    border: none;
-}
-
-.external:hover,
-.external:active,
-.mail:hover,
-.mail:active {
-    border-bottom: 1px solid;
+.go:after {
+   .minicon;
+    content: "\e002";
+    font-size: 0.875em;
+    margin-left: 6px; 
 }
 
 /*  Definition Links 
