@@ -199,11 +199,13 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             e.stopPropagation();
             var header = $(e.currentTarget),
                 section = header.parent(),
-                button = header.find('.expand-button');
+                button = header.find('.expand-button'),
+                buttonText = header.find('.expand-text');
 
             section.toggleClass('open');
             header.next('.hidden').slideToggle();
-            button.toggleClass('open').html(section.hasClass('open') ? 'Hide' : 'Show');
+            button.toggleClass('open');
+            buttonText.html(section.hasClass('open') ? 'Hide' : 'Show');
 
             return this;
         },

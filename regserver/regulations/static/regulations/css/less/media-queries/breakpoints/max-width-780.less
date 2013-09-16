@@ -1,4 +1,39 @@
 @media only screen and ( max-width: 780px ) {
+
+    /*
+    Typography
+    ========================
+    */
+
+    .section-number {
+        text-indent: 0;
+    }
+
+    /*
+    Main Content
+    =====================
+    */
+
+    .main-content {
+        width: 100%;
+        margin: 0 auto;
+        padding-top: 94px;
+        padding-left: 65px;
+    }
+
+    .level-1 > li:after {
+        margin-left: -5em;
+    }
+
+    h1 .title {
+        display: none;
+    }
+
+
+    /*
+    Sidebar
+    =====================
+    */
     
     .secondary-content {
         position: static;
@@ -25,13 +60,11 @@
         }
     }
 
-    .close-button {
-        float: none;
-        position: fixed;
-        top: 70%;
-        right: 0px;
-    }
-
+    /*
+    Definitions
+    ------------
+    definitions are positioned in a fixed window at the bottom of the viewport 
+    */
     .open-definition {
         position: fixed;
         top: 70%;
@@ -40,24 +73,34 @@
         min-width: 100%;
         min-height: 200px;
         padding: 20px 20px 80px 60px;
-        background: #f6f6f5;
+        background: @bg_gray;
         .border-top-light(@width: 2px);
         z-index: 200;
         overflow-y: scroll;
+
+        .definition-text {
+            border-bottom: none;
+        }
     }
 
-    .main-content {
+    .sidebar-header {
+        background-color: @bg_gray;
+    }
+
+    /*
+    SxS Analysis
+    =====================
+    */
+
+    .sxs-main-content {
+        float: none;
+        padding-bottom: 1em; /*accomodate for persistent header*/
+        width: 100%
+    }
+
+    .sxs-metadata {
+        float: none;
         width: 100%;
-        margin: 0 auto;
-        padding-top: 94px;
-        padding-left: 100px;
     }
 
-    .level-1 > li:after {
-        margin-left: -5em;
-    }
-
-    h1 .title {
-        display: none;
-    }
 }

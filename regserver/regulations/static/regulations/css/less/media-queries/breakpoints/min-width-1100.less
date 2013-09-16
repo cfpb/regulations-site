@@ -10,4 +10,24 @@
             margin-left: -14em;
         }
     }
+
+    #menu-link,
+    #history-link,
+    #search-link {
+        &.current {
+            background-color: @light_field;
+            border-bottom: 1px solid @medium_gray;
+        }
+    }
+
+    .active {
+        #menu-link,
+        #history-link,
+        #search-link {
+            &.current {
+                background-color: none;
+                border-bottom: 1px solid @medium_gray;
+            }
+        } 
+    }
 }

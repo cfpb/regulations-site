@@ -16,6 +16,7 @@
 
         .drawer-header {
             left: -260px; /*60px extra to accomodate for stacked buttons*/
+            position: absolute;
         }
     }
 
@@ -26,15 +27,23 @@
             position: static;
             top: 94px;
         }
+
+        .drawer-header {
+            .toc-type {
+                position: fixed;
+            }
+        }
     }
 
     .panel-slide {
         background: url(../img/right.png) no-repeat center center;
+        border-bottom: 1px solid @medium_gray;
         
     }
 
     .active .panel-slide {
         background: url(../img/left.png) no-repeat center center;
+        border-bottom: none;
     }
 
     @media 
@@ -76,6 +85,7 @@
 
     .drawer-toggles li {
         display: list-item;
+        border-bottom: 1px solid @medium_gray;
     }
 
     .active {
@@ -105,6 +115,26 @@
             display: inline-block;
         }
     }
+
+    #menu-link,
+    #history-link,
+    #search-link {
+        &.current {
+            background-color: none;
+        }
+    }
+
+    .active {
+        #menu-link,
+        #history-link,
+        #search-link {
+            &.current {
+                background-color: @light_field;
+                border-bottom: 1px solid @medium_gray;
+            }
+        } 
+    }
+    
     /*
     Reg Content
     ==============================
@@ -134,6 +164,15 @@
 
     .secondary-content {
         width: 32%;
+    }
+
+    /*
+    Footer
+    ==============================
+    */
+
+    .application-footer {
+        margin-left: 40px;
     }
 
     /*
