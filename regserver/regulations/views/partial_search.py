@@ -41,6 +41,7 @@ class PartialSearch(PartialView):
         # We don't want to run the content data of PartialView -- it assumes
         # we will be applying layers
         context = super(PartialView, self).get_context_data(**kwargs)
+        context['regulation'] = context['label_id'].split('-')[0]
 
         try:
             page = int(self.request.GET.get('page', '0'))
@@ -52,7 +53,7 @@ class PartialSearch(PartialView):
         page_idx = (page % (API_PAGE_SIZE/PAGE_SIZE)) * PAGE_SIZE
 
         results = api_reader.ApiReader().search(
-            context['q'], context['version'], context['label_id'], api_page)
+            context['q'], context['version'], context['regulation'], api_page)
 
         # Ignore results found in the root (i.e. not a section)
         results['results'] = [r for r in results['results']
@@ -70,7 +71,7 @@ class PartialSearch(PartialView):
                 result['section_id'] = '-'.join(result['label'][:2])
         context['results'] = results
 
-        for version in fetch_grouped_history(context['label_id']):
+        for version in fetch_grouped_history(context['regulation']):
             for notice in version['notices']:
                 if notice['document_number'] == context['version']:
                     context['version_by_date'] = notice['effective_on']
