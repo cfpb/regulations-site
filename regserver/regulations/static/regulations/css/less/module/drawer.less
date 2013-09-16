@@ -119,6 +119,20 @@ Drawer Links
 ============
 */
 
+.toc-head {
+    a:link,
+    a:visited {
+        color: @dark_gray;
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+            background-color: @light_field;
+            border-bottom: 1px solid @medium_gray;
+    }
+}
+
 /*
 Panel Slide Button
 ------------------
@@ -126,36 +140,23 @@ Panel Slide Button
 */
 
 .panel-slide {
-    text-indent: -9999px;
     display: block;
     height: 34px; /* match height of main header */
+    line-height: 34px;
     width: 40px;
     float: right;
     cursor: pointer;
-    background: url(../img/left.png) no-repeat center center;
+    text-align: center;
+    font-size: 0.875em;
 }
 
-.panel-slide:hover,
-.panel-slide:active {
-    background-color: @light_field;
+.panel-slide:before {
+    .minicon;
+    content: "\e006";
 }
 
-.active .panel-slide {
-    background: url(../img/right.png) no-repeat center center;
-}
-
-@media 
-(-webkit-min-device-pixel-ratio: 2), 
-(min-resolution: 192dpi) {
-    .panel-slide {
-        background: url(../img/left@2x.png) no-repeat center center;
-        background-size: 16px 13px;
-    }
-
-    .active .panel-slide {
-        background: url(../img/right@2x.png) no-repeat center center;
-        background-size: 16px 13px;
-    }
+.active .panel-slide:before {
+    content: "\e002";
 }
 
 .active {
