@@ -17,6 +17,7 @@ from regulations.views.sidebar import SideBarView
 class ChromeView(TemplateView):
     """ Base class for views which wish to include chrome. """
     template_name = 'chrome.html'
+    has_sidebar = True
 
     def get(self, request, *args, **kwargs):
         """Override GET so that we can catch and propagate any errors in the
@@ -63,12 +64,13 @@ class ChromeView(TemplateView):
 
         context['partial_content'] = self.process_partial(context)
 
-        sidebar_view = SideBarView.as_view()
-        response = sidebar_view(self.request, label_id=label_id,
-                                version=version)
-        self._assert_good(response)
-        response.render()
-        context['sidebar_content'] = response.content
+        if self.has_sidebar:
+            sidebar_view = SideBarView.as_view()
+            response = sidebar_view(self.request, label_id=label_id,
+                                    version=version)
+            self._assert_good(response)
+            response.render()
+            context['sidebar_content'] = response.content
 
         appliers = utils.handle_specified_layers(
             'toc,meta', part, version, self.partial_class.sectional_links)
@@ -151,7 +153,9 @@ class ChromeSectionDiffView(ChromeView):
 
 class ChromeLandingView(ChromeView):
     """Landing page with chrome"""
+    template_name = 'landing-chrome.html'
     partial_class = PartialSectionView  # Needed to know sectional status
+    has_sidebar = False
 
     def process_partial(self, context):
         """Landing page isn't a TemplateView"""

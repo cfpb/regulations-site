@@ -1,0 +1,10 @@
+{% extends "chrome.html" %}
+
+{% comment %}
+Does not wrap the content in a #content-body; this is instead provided by the
+landing page content (which also provides the sidebar).
+{% endcomment %}
+
+{% block chrome-content %}
+{{ partial_content|safe }}
+{% endblock %}
