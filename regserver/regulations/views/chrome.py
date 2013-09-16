@@ -151,7 +151,7 @@ class ChromeSectionDiffView(ChromeView):
 
 class ChromeLandingView(ChromeView):
     """Landing page with chrome"""
-    partial_class = PartialSectionView # Needed to know sectional status
+    partial_class = PartialSectionView  # Needed to know sectional status
 
     def process_partial(self, context):
         """Landing page isn't a TemplateView"""
