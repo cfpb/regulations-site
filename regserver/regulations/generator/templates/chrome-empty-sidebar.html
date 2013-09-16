@@ -1,0 +1,12 @@
+{% extends "chrome.html" %}
+
+{% comment %}
+Search results (and perhaps other pages) need an empty sidebar
+{% endcomment %}
+
+{% block chrome-sidebar %}
+<div id="sidebar" class="secondary-content">
+    <div id="sidebar-content" class="sidebar-inner">
+    </div>
+</div>
+{% endblock %}
