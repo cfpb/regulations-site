@@ -8,7 +8,7 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
         },
 
         backToSection: function(section) {
-            Dispatch.trigger('openSection:set', section); 
+            Dispatch.trigger('regSection:open', section, {id: section}, 'regSection'); 
             Dispatch.trigger('sxs:close');
         },
 
@@ -22,7 +22,7 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
                 config.page = params.page;
             }
 
-            Dispatch.trigger('searchResults:back', config);
+            Dispatch.trigger('search:submitted', config, 'searchResults');
         },
 
         start:  function() {

@@ -13,7 +13,8 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
 
             this.model.set(Dispatch.getOpenSection(), analyses.innerHTML);
 
-            Dispatch.on('regSection:open', this.getAnalyses, this);
+            Dispatch.on('regSection:open:after', this.getSidebar, this);
+
 
             this.modifyListDisplay();
         },
@@ -33,7 +34,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
             );
         },
 
-        getAnalyses: function(sectionId) {
+        getSidebar: function(sectionId) {
             var partial = this.model.get(sectionId);
 
             if (typeof partial.done !== 'undefined') {
@@ -52,6 +53,9 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
             this.$el.html(list);
 
             this.modifyListDisplay();
+
+            // @TODO: move permalink updating to somewhere sane
+            Dispatch.trigger('sidebar:update', $html.find('#permalinks'));
         },
 
         modifyListDisplay: function() {

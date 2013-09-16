@@ -195,14 +195,21 @@
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> SearchResultsView = Backbone.View.extend({
+        el: <span class="string">'#content-wrapper.search-results'</span>,
+
         events: {
             <span class="string">'click .search-nav a'</span>: <span class="string">'paginate'</span>
         },
 
         initialize: <span class="keyword">function</span>() {
-            Dispatch.trigger(<span class="string">'searchResults:open'</span>);
+            <span class="keyword">var</span> $results = <span class="keyword">this</span>.$el.find(<span class="string">'#result-count'</span>);
+            Dispatch.trigger(<span class="string">'searchResults:open'</span>, $results.html());
+            $results.remove();
+
             Router.navigate(<span class="string">'search/'</span> + <span class="keyword">this</span>.options.url);
 
+            <span class="keyword">this</span>.query = <span class="keyword">this</span>.options.query;
+            <span class="keyword">this</span>.version = <span class="keyword">this</span>.options.version;
             <span class="keyword">this</span>.page = <span class="keyword">this</span>.options.page || <span class="number">0</span>;
         },
 
@@ -216,7 +223,7 @@
                     page: page
                 };
 
-            Dispatch.trigger(<span class="string">'search:submitted'</span>, config);
+            Dispatch.trigger(<span class="string">'search:submitted'</span>, config, <span class="string">'searchResults'</span>);
         },
 
         remove: <span class="keyword">function</span>() {
