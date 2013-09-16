@@ -46,20 +46,10 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
             var openSection,
                 urlPrefix,
                 regId = $('#menu').data('reg-id'),
-                regSection = $('.main-content section[data-base-version]'),
+                regSection = $('section[data-base-version]'),
                 regVersion = regSection.data('base-version');
 
             Dispatch.set('reg', regId);
-
-            // init primary Views that require only a single instance
-            window.Regs = {};
-            window.Regs.subhead = new SubHeadView();
-            window.Regs.drawer = new DrawerView();
-            window.Regs.sidebar = new SidebarView();
-            window.Regs.mainView = new MainView();
-            window.Regs.analytics = new AnalyticsHandler();
-            window.Regs.mainHeader = new HeaderView();
-
             // set open section and version for ajax calls
             if (typeof regSection !== 'undefined') {
                 openSection = regSection.attr('id');
@@ -68,8 +58,7 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
                 // cache open section content
                 RegModel.set(openSection, regSection.html());
 
-                Dispatch.setContentView(new RegView());
-
+                Dispatch.setContentView(new RegView({id: openSection}));
             }
 
             if (typeof regVersion !== 'undefined') {
@@ -81,6 +70,16 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
             if (urlPrefix) {
                 Dispatch.set('urlprefix', urlPrefix);
             }
+
+            // init primary Views that require only a single instance
+            window.Regs = {};
+            window.Regs.subhead = new SubHeadView();
+            window.Regs.drawer = new DrawerView();
+            window.Regs.sidebar = new SidebarView();
+            window.Regs.mainView = new MainView();
+            window.Regs.analytics = new AnalyticsHandler();
+            window.Regs.mainHeader = new HeaderView();
+
             Router.start();
 
             this.bindEvents();

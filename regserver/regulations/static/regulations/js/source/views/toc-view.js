@@ -3,7 +3,7 @@
 // **Usage** ```require(['toc-view'], function(TOCView) {})```
 //
 // **Jurisdiction** Expandable Table of Contents
-define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helpers', 'reg-view'], function($, _, Backbone, Dispatch, RegsHelpers, RegView) {
+define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helpers'], function($, _, Backbone, Dispatch, RegsHelpers) {
     'use strict';
     var TOCView = Backbone.View.extend({
         el: '#table-of-contents',
@@ -37,8 +37,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helper
             e.preventDefault();
 
             var sectionId = $(e.currentTarget).data('section-id');
-            Dispatch.trigger('toc:click', sectionId);
-            Dispatch.setContentView(new RegView({sectionId: sectionId}));
+            Dispatch.trigger('toc:click', sectionId, {id: sectionId}, 'regSection');
         },
 
         // **Inactive** 

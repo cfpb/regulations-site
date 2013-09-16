@@ -20,25 +20,27 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             //
             // * when a definition is removed, update term links
             Dispatch.on('definition:remove', this.closeDefinition, this);
-            Dispatch.on('toc:click', this.loadSection, this);
-            Dispatch.on('render:set', this.loadSection, this);
 
             Dispatch.on('breakaway:open', this.hideContent, this);
             Dispatch.on('breakaway:close', this.showContent, this);
+
+            Dispatch.set('section', this.options.id);
+
+            // seems to trigger sxs list loading
+            Dispatch.trigger('section:open', this.options.id);
 
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
 
             // set active section vars
             // @TODO: how do activeSection and Dispatch.get('section') live together?
-            this.activeSection = this.options.sectionId || '';
+            this.activeSection = this.options.id || '';
             this.$activeSection = '';
             this.$sections = {};
 
             this.updateWayfinding();
 
-            // this might be silly?
-            this.$window = $(window);
+            Router.navigate('regulation/' + this.options.id + '/' + Dispatch.getVersion());
 
             // new View instance for subheader
             this.header = new SubHeadView();
@@ -54,7 +56,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             var len = this.$contentContainer.length - 1;
 
             for (var i = 0; i <= len; i++) {
-                if (this.$sections[i].offset().top + this.$contentHeader.height() >= this.$window.scrollTop()) {
+                if (this.$sections[i].offset().top + this.$contentHeader.height() >= $(window).scrollTop()) {
                     if (_.isEmpty(this.activeSection) || (this.activeSection !== this.$sections[i].id)) {
                         this.activeSection = this.$sections[i][0].id;
                         this.$activeSection = this.$sections[i][0];
@@ -66,40 +68,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             }
                  
             return this;
-        },
-
-        // ask for section data, when promise is completed,
-        // re-render view
-        loadSection: function(sectionId) {
-            Dispatch.trigger('loading:start');
-
-            var returned = RegModel.get(sectionId);
-
-            if (typeof returned.done !== 'undefined') {
-                // @TODO: error handling
-                returned.done(function(section) {
-                    this.render(section, sectionId);
-                }.bind(this));
-            }
-            else {
-               this.render(returned, sectionId); 
-            }
-        },
-
-        render: function(section, sectionId) {
-            Dispatch.set('section', sectionId);
-
-            Dispatch.trigger('mainContent:change', section, 'reg-text');
-
-            window.scrollTo(0, 0);
-            Dispatch.trigger('section:open', sectionId);
-
-            Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
-            Router.navigate('regulation/' + sectionId + '/' + Dispatch.getVersion());
-
-            Dispatch.trigger('loading:finish');
-
-            this.updateWayfinding();
         },
 
         updateWayfinding: function() {

@@ -191,7 +191,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'search-results-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SearchResultsView) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> SearchView = Backbone.View.extend({
@@ -203,13 +203,13 @@
 
         openSearchResults: <span class="keyword">function</span>(e) {
             e.preventDefault();
-            <span class="keyword">var</span> $form = $(e.target);
-            Dispatch.setContentView(<span class="keyword">new</span> SearchResultsView({
-                query: $form.find(<span class="string">'input[name=q]'</span>)[<span class="number">0</span>].value,
-                version: $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value
-            })); 
+            <span class="keyword">var</span> $form = $(e.target),
+                options = {};
 
-            Dispatch.set(<span class="string">'contentClass'</span>, <span class="string">'search-results'</span>);
+            options.query = $form.find(<span class="string">'input[name=q]'</span>)[<span class="number">0</span>].value;
+            options.version = $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value;
+
+            Dispatch.trigger(<span class="string">'search:submitted'</span>, options, <span class="string">'searchResults'</span>);
         }
 
     });
