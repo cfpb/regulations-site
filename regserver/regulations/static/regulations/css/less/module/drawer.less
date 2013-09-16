@@ -176,67 +176,30 @@ currently these are TOC, History, and Search
 }
 
 .toc-nav-link {
-    text-indent: -9999px;
     display: inline-block;
+    text-align: center;
     margin-left: -4px; /*accomodate inline-block spacing */
     height: 34px; /* match height of main header */
+    line-height: 34px;
     width: 56px;
     border-right: 1px solid @medium_gray;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.toc-nav-link:link,
+.toc-nav-link:visited {
+    color: @dark_gray;
+    text-decoration: none;
+}
+
+.toc-nav-link:hover,
+.toc-nav-link:active {
+        background-color: @light_field;
+        border-bottom: 1px solid @medium_gray;
 }
 
 .drawer-toggles li:first-child {
     margin-left: 0; /*remove negative margin from first list item*/
-}
-
-#menu-link {
-    background: url(../img/nav-link.png) no-repeat center center;
-
-    &.hamburgerify {
-        background: url(../img/hamburger.png) no-repeat center center;
-    }
-}
-
-#history-link {
-    background: url(../img/history.png) no-repeat center center;
-}
-
-#search-link {
-    background: url(../img/search.png) no-repeat center center;
-}
-
-@media 
-(-webkit-min-device-pixel-ratio: 2), 
-(min-resolution: 192dpi) {
-    #menu-link {
-        background: url(../img/nav-link@2x.png) no-repeat center center;
-        background-size: 20px 16px;
-    }
-
-    #history-link {
-        background: url(../img/history@2x.png) no-repeat center center;
-        background-size: 22.5px 16px;
-    }
-
-    #search-link {
-        background: url(../img/search@2x.png) no-repeat center center;
-        background-size: 20px 16px;
-    }
-}
-
-/* 
-* right now we need to declare the bg-color for each id
-* due to the way the icons are used as background images
-* use of the icon font will change this
-*/
-
-#menu-link:hover,
-#menu-link:active,
-#history-link:hover,
-#history-link:active,
-#search-link:hover,
-#search-link:active {
-        background-color: @light_field;
-        border-bottom: 1px solid @medium_gray;
 }
 
 @media only screen and ( min-width: 1100px ) {
