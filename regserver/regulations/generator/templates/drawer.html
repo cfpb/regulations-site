@@ -48,32 +48,6 @@
                 </li>
             {% endfor %}
             </ul>
-            <form action="{% url 'redirect_by_date_get' label_id %}"
-                  method="GET">
-
-              {% with current_year=today|date:"Y" current_month=today|date:"m" current_day=today|date:"d" %}
-                <select name="year">
-
-                {% for year in ranges.year %}
-                    <option {% if year == current_year %}
-                        selected="selected" {% endif %}>{{ year }}</option>
-                {% endfor %}
-                </select>
-                <select name="month">
-                {% for month in ranges.month %}
-                    <option {% if month == current_month %}
-                        selected="selected" {% endif %}>{{ month }}</option>
-                {% endfor %}
-                </select>
-                <select name="day">
-                {% for day in ranges.day %}
-                    <option {% if day == current_day %}
-                        selected="selected" {% endif %}>{{ day }}</option>
-                {% endfor %}
-                </select>
-                <button type="submit">Go</button>
-              {% endwith %}
-            </form>
         </div>
     </div> <!--/#history-->
     <div id="search" class="search-drawer toc-container hidden">

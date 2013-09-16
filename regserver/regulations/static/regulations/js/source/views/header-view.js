@@ -35,8 +35,8 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
         toggleDrawerTab: function(e) {
             e.preventDefault();
 
-            var $target = $(e.target),
-                linkValue = _.last($target.attr('href').split('#'));
+            var $target = $(e.currentTarget),
+                linkValue = _.last($target.closest('a').attr('href').split('#'));
 
             this.$tocLinks.removeClass('current');
             $target.addClass('current');
