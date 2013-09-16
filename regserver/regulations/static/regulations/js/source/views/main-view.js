@@ -6,7 +6,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
 
         initialize: function() {
             Dispatch.on('mainContent:change', this.render, this);
-            Dispatch.on('toc:click', this.loadContent, this);
+            Dispatch.on('regSection:open', this.loadContent, this);
             Dispatch.on('search:submitted', this.assembleSearchURL, this);
 
             Dispatch.on('loading:start', this.loading, this);

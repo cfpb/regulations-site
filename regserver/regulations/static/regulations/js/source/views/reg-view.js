@@ -26,9 +26,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
             Dispatch.set('section', this.options.id);
 
-            // seems to trigger sxs list loading
-            Dispatch.trigger('section:open', this.options.id);
-
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
 

@@ -37,7 +37,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helper
             e.preventDefault();
 
             var sectionId = $(e.currentTarget).data('section-id');
-            Dispatch.trigger('toc:click', sectionId, {id: sectionId}, 'regSection');
+            Dispatch.trigger('regSection:open', sectionId, {id: sectionId}, 'regSection');
         },
 
         // **Inactive** 
