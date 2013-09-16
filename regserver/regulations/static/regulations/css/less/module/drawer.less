@@ -119,6 +119,20 @@ Drawer Links
 ============
 */
 
+.toc-head {
+    a:link,
+    a:visited {
+        color: @dark_gray;
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:active {
+            background-color: @light_field;
+            border-bottom: 1px solid @medium_gray;
+    }
+}
+
 /*
 Panel Slide Button
 ------------------
@@ -126,36 +140,23 @@ Panel Slide Button
 */
 
 .panel-slide {
-    text-indent: -9999px;
     display: block;
     height: 34px; /* match height of main header */
+    line-height: 34px;
     width: 40px;
     float: right;
     cursor: pointer;
-    background: url(../img/left.png) no-repeat center center;
+    text-align: center;
+    font-size: 0.875em;
 }
 
-.panel-slide:hover,
-.panel-slide:active {
-    background-color: @light_field;
+.panel-slide:before {
+    .minicon;
+    content: "\e006";
 }
 
-.active .panel-slide {
-    background: url(../img/right.png) no-repeat center center;
-}
-
-@media 
-(-webkit-min-device-pixel-ratio: 2), 
-(min-resolution: 192dpi) {
-    .panel-slide {
-        background: url(../img/left@2x.png) no-repeat center center;
-        background-size: 16px 13px;
-    }
-
-    .active .panel-slide {
-        background: url(../img/right@2x.png) no-repeat center center;
-        background-size: 16px 13px;
-    }
+.active .panel-slide:before {
+    content: "\e002";
 }
 
 .active {
@@ -173,14 +174,7 @@ currently these are TOC, History, and Search
 
 .drawer-toggles li {
     display: inline-block;
-}
-
-.toc-nav-link {
-    text-indent: -9999px;
-    display: inline-block;
     margin-left: -4px; /*accomodate inline-block spacing */
-    height: 34px; /* match height of main header */
-    width: 56px;
     border-right: 1px solid @medium_gray;
 }
 
@@ -188,53 +182,23 @@ currently these are TOC, History, and Search
     margin-left: 0; /*remove negative margin from first list item*/
 }
 
-#menu-link {
-    background: url(../img/nav-link.png) no-repeat center center;
-
-    &.hamburgerify {
-        background: url(../img/hamburger.png) no-repeat center center;
-    }
+.toc-nav-link {
+    display: inline-block;
+    text-align: center;
+    height: 34px; /* match height of main header */
+    line-height: 34px;
+    width: 56px;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
 }
 
-#history-link {
-    background: url(../img/history.png) no-repeat center center;
+.toc-nav-link:link,
+.toc-nav-link:visited {
+    color: @dark_gray;
+    text-decoration: none;
 }
 
-#search-link {
-    background: url(../img/search.png) no-repeat center center;
-}
-
-@media 
-(-webkit-min-device-pixel-ratio: 2), 
-(min-resolution: 192dpi) {
-    #menu-link {
-        background: url(../img/nav-link@2x.png) no-repeat center center;
-        background-size: 20px 16px;
-    }
-
-    #history-link {
-        background: url(../img/history@2x.png) no-repeat center center;
-        background-size: 22.5px 16px;
-    }
-
-    #search-link {
-        background: url(../img/search@2x.png) no-repeat center center;
-        background-size: 20px 16px;
-    }
-}
-
-/* 
-* right now we need to declare the bg-color for each id
-* due to the way the icons are used as background images
-* use of the icon font will change this
-*/
-
-#menu-link:hover,
-#menu-link:active,
-#history-link:hover,
-#history-link:active,
-#search-link:hover,
-#search-link:active {
+.toc-nav-link:hover,
+.toc-nav-link:active {
         background-color: @light_field;
         border-bottom: 1px solid @medium_gray;
 }
@@ -359,9 +323,40 @@ This contains all of the styles specific to the history
     .version-link:hover,
     .version-link:active,
     .version-link:target,
+    //.version-list > li:hover,
     .current {
         color: @black;
         background-color: @green_light;
+    }
+
+    .compare,
+    .compare:link,
+    .compare:visited {
+        .avenir-next-demi;
+        box-sizing: border-box;
+        display: block;
+        margin: 0.5em auto 1em auto;
+        padding: 0.71428571428571em 1em;
+        width: 100px;
+        border: none;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        background-color: @pacific;
+        color: #fff;
+        font-size: 1em;
+        line-height: 1;
+        text-align: center;
+        text-decoration: none;
+        -webkit-transition: .1s;
+        -moz-transition: .1s;
+        transition: .1s;
+    }
+
+    .compare:hover,
+    .compare:active,
+    .compare:focus {
+        background-color: #328ED8;
     }
 
     h3 {
@@ -449,47 +444,22 @@ This contains all of the styles specific to the search
         text-transform: none;
     }
 
+    .version-search {
+        border-bottom: 2px solid @medium_gray;
+        padding: 0 15px 20px 15px;
+    }
+
     .search-box {
         border-bottom: 1px solid @medium_gray;
         padding: 0 15px 20px 15px;
     }
 
-    input {
-        height: 32px;
-        margin: 0;
-    }
-
     input[type=text]{
         width: 80%;
-        vertical-align: bottom;
-        font-family: Arial, sans-serif;
-        color: @black;
-        padding: 0 10px;
-        border-top: 1px solid @light_field;
-        border-right: none;
-        border-bottom: 1px solid @light_field;
-        border-left: 1px solid @light_field;
     }
 
     button {
         width: 20%;
-        height: 32px;
-        vertical-align: bottom;
-        margin: 0;
-        background-color: @pacific;
-        color: #fff;
-        border: none;
-        vertical-align: bottom;
-    }
-
-    button:hover,
-    button:active {
-        background-color: @pacific_hover;
-    }
-
-    .version-search {
-        border-bottom: 2px solid @medium_gray;
-        padding: 0 15px 20px 15px;
     }
 
     .select-content { 
@@ -522,3 +492,39 @@ This contains all of the styles specific to the search
         height: 32px;
     }
 }
+
+.search-box {
+
+    input {
+        height: 32px;
+        margin: 0;
+    }
+
+    input[type=text]{
+        vertical-align: bottom;
+        .avenir-next;
+        color: @black;
+        padding: 0 10px;
+        border-top: 1px solid @light_field;
+        border-right: none;
+        border-bottom: 1px solid @light_field;
+        border-left: 1px solid @light_field;
+    }
+
+    button {
+        height: 32px;
+        vertical-align: bottom;
+        margin: 0;
+        background-color: @pacific;
+        color: #fff;
+        border: none;
+        vertical-align: bottom;
+    }
+
+    button:hover,
+    button:active {
+        background-color: @pacific_hover;
+    }
+}
+
+

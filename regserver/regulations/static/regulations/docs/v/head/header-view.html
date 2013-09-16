@@ -246,10 +246,10 @@
             e.preventDefault();
 
             <span class="keyword">var</span> $target = $(e.target),
-                linkValue = _.last($target.attr(<span class="string">'href'</span>).split(<span class="string">'#'</span>));
+                linkValue = _.last($target.closest(<span class="string">'a'</span>).attr(<span class="string">'href'</span>).split(<span class="string">'#'</span>));
 
             <span class="keyword">this</span>.$tocLinks.removeClass(<span class="string">'current'</span>);
-            $target.addClass(<span class="string">'current'</span>);
+            $target.closest(<span class="string">'a'</span>).addClass(<span class="string">'current'</span>);
 
             <span class="keyword">if</span> ($(<span class="string">'.panel'</span>).css(<span class="string">'left'</span>) === <span class="string">'-200px'</span>) {
                 <span class="keyword">this</span>.updateDrawerState(<span class="string">'open'</span>);

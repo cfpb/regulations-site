@@ -109,13 +109,16 @@ class ChromeRegulationView(ChromeView):
 
 class ChromeSearchView(ChromeView):
     """Search results with chrome"""
+    template_name = 'chrome-empty-sidebar.html'
     partial_class = PartialSearch
+    has_sidebar = False
 
-    def get(self, request, *args, **kwargs):
-        """Override GET so that we can pull our the version"""
-
-        kwargs['version'] = request.GET.get('version', '')
-        return super(ChromeSearchView, self).get(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        """Get the version and label_id for the chrome context"""
+        kwargs['version'] = self.request.GET.get('version', '')
+        # Use the first section for the chrome -- does not work in all regs
+        kwargs['label_id'] = kwargs['label_id'] + '-1'
+        return super(ChromeSearchView, self).get_context_data(**kwargs)
 
 
 class ChromeSectionDiffView(ChromeView):
