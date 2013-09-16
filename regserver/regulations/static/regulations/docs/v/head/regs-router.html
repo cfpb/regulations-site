@@ -201,7 +201,7 @@
         },
 
         backToSection: <span class="keyword">function</span>(section) {
-            Dispatch.trigger(<span class="string">'openSection:set'</span>, section); 
+            Dispatch.trigger(<span class="string">'regSection:open'</span>, section, {id: section}, <span class="string">'regSection'</span>); 
             Dispatch.trigger(<span class="string">'sxs:close'</span>);
         },
 
@@ -215,7 +215,7 @@
                 config.page = params.page;
             }
 
-            Dispatch.trigger(<span class="string">'searchResults:back'</span>, config);
+            Dispatch.trigger(<span class="string">'search:submitted'</span>, config, <span class="string">'searchResults'</span>);
         },
 
         start:  <span class="keyword">function</span>() {

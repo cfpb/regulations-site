@@ -28,7 +28,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             url += '?q=' + options.query;
             url += '&version=' + options.version;
 
-            if (typeof this.options.page !== 'undefined') {
+            if (typeof options.page !== 'undefined') {
                 url += '&page=' + options.page;
             }
 
