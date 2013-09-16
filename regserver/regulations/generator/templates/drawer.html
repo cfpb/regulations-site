@@ -35,11 +35,6 @@
                         <span class="version-date">{{ version.by_date|date }}</span>
                     </a>
                 {% endif %}
-                    {% if active_version < version.version %}
-                        <a class="compare" href="{% url 'chrome_section_diff_view' label_id active_version version.version %}">Compare</a>
-                    {% elif active_version > version.version %}
-                        <a class="compare" href="{% url 'chrome_section_diff_view' label_id version.version active_version %}">Compare</a>
-                    {% endif %}
                     <ul class="rule-list">
                     {% for notice in version.notices %}
                         <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
