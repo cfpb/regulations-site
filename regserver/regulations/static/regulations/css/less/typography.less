@@ -143,15 +143,25 @@ li {
     }
 }
 
+.mail:before {
+    .minicon;
+    content: "\e00e";
+    margin-right: 6px;
+}
+
 .external:link,
-.external:visited {
+.external:visited,
+.mail:link,
+.mail:visited {
     color: @pacific;
     text-decoration: none;
     border: none;
 }
 
 .external:hover,
-.external:active {
+.external:active,
+.mail:hover,
+.mail:active {
     border-bottom: 1px solid;
 }
 
