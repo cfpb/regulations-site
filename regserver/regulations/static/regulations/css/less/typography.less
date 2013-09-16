@@ -114,12 +114,6 @@ a:visited {
     border: none;
 }
 
-a:hover,
-a:active,
-a:focus {
-    border-bottom: 1px solid;
-}
-
 /*  Internal Links
     ---------------
     <a href="#" class="internal">internal contents</a> 
@@ -133,7 +127,8 @@ a:focus {
 }
 
 .internal:hover,
-.internal:active {
+.internal:active,
+.internal:focus {
     background-color: #cde3f1;
 }
 
@@ -167,6 +162,18 @@ a:focus {
     content: "\e002";
     font-size: 0.875em;
     margin-left: 6px; 
+}
+
+.external:hover,
+.mail:hover,
+.go:hover,
+.external:active,
+.mail:active,
+.go:active,
+.external:focus,
+.mail:focus,
+.go:focus {
+    border-bottom: 1px solid;
 }
 
 /*  Definition Links 
