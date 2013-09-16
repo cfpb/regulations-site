@@ -159,14 +159,14 @@ class ChromeLandingView(ChromeView):
         self._assert_good(response)
         return response.content
 
-    def get(self, request, *args, **kwargs):
-        """Override GET to add the version to chrome context"""
+    def get_context_data(self, **kwargs):
+        """Add the version and replace the label_id for the chrome context"""
         current, _ = get_versions(kwargs['label_id'])
         kwargs['version'] = current['version']
-        # Use the first section for the chrome -- does not work in all regs
         kwargs['regulation'] = kwargs['label_id']
+        # Use the first section for the chrome -- does not work in all regs
         kwargs['label_id'] = kwargs['label_id'] + '-1'
-        return super(ChromeLandingView, self).get(request, *args, **kwargs)
+        return super(ChromeLandingView, self).get_context_data(**kwargs)
 
 
 class BadComponentException(Exception):
