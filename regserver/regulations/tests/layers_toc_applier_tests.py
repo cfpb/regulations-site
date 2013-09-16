@@ -82,4 +82,4 @@ class TableOfContentsLayerTest(TestCase):
         toc.sectional = True
         toc.version = 'verver'
         result = toc.apply_layer('100')
-        self.assertEqual('/regulation/100-1/verver#100-1', result[1][0]['url'])
+        self.assertTrue('100-1/verver#100-1' in result[1][0]['url'])
