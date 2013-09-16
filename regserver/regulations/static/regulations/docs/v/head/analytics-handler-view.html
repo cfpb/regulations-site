@@ -199,7 +199,7 @@
             <span class="keyword">this</span>.bindListeners();
 
             Dispatch.on(<span class="string">'ga-event:definition'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Inline Definition'</span>);
-            Dispatch.on(<span class="string">'toc:click'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Table of Contents'</span>);
+            Dispatch.on(<span class="string">'regSection:open'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Table of Contents'</span>);
             Dispatch.on(<span class="string">'interpretation:toggle'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Inline interpretation'</span>);
             Dispatch.on(<span class="string">'ga-event:permalink'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Permalink'</span>);
         },</pre></div></div>
