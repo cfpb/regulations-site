@@ -4,7 +4,7 @@
 
 <form action="{% url 'chrome_search' label_id %}" method="GET">
     <div class="search-box">
-        <input type="text" name="q" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
+        <input type="text" name="q" /><button type="submit">Search <span class="minicon-search"></span></button>
         <input type="hidden" name="version" value="{{current_version.version}}"/>
     </div>
 </form>
