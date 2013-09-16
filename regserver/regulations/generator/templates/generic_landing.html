@@ -2,13 +2,6 @@
 {% block reg_main_content %}
 {% endblock %}
 
-<form action="{% url 'chrome_search' label_id %}" method="GET">
-    <div class="search-box">
-        <input type="text" name="q" /><button type="submit">Search <span class="minicon-search"></span></button>
-        <input type="hidden" name="version" value="{{current_version.version}}"/>
-    </div>
-</form>
-
 <div id="footer">
     {% block legal_disclaimer %}
     {% endblock %}
