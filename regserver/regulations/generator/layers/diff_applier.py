@@ -61,15 +61,20 @@ class DiffApplier(object):
                 else:
                     original.update(node)
 
+    def is_child_of_requested(self, label):
+        """ Return true if the label is a child of the requested label.  """
+        if label.startswith(self.label_requested + '-'):
+            return True
+
+    def relevant_added(self, label):
+        """ Get the operations that add nodes, for the requested
+        section/pargraph. """
+
+        if self.diff[label]['op'] == self.ADDED_OP and self.is_child_of_requested(label):
+            return True
+
     def tree_changes(self, original_tree):
         """ Apply additions to the regulation tree. """
-
-        def relevant_added(label):
-            """ Get the operations that add nodes, for the requested
-            section/pargraph. """
-
-            if self.diff[label]['op'] == self.ADDED_OP and label.startswith(self.label_requested):
-                return True
 
         def node(diff_node, label):
             """ Take diff's specification of a node, and actually turn it into
@@ -81,7 +86,7 @@ class DiffApplier(object):
                 del node['title']
             return node
 
-        new_nodes = [(label, node(self.diff[label]['node'], label)) for label in self.diff if relevant_added(label)]
+        new_nodes = [(label, node(self.diff[label]['node'], label)) for label in self.diff if self.relevant_added(label)]
         reg_text_nodes = [l for l in new_nodes if 'Interp' not in l[0]]
 
         adds = tree_builder.AddQueue()
