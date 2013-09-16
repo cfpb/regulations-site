@@ -12,7 +12,8 @@ def redirect_by_date(request, label_id, year, month, day):
     date_versions = []
     client = ApiReader()
     for struct in client.regversions(label_id.split('-')[0])['versions']:
-        date_versions.append((struct['by_date'], struct['version']))
+        if 'by_date' in struct:
+            date_versions.append((struct['by_date'], struct['version']))
 
     date_versions = sorted(date_versions)
     last_version = None
