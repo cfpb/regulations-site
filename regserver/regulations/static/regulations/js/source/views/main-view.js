@@ -1,16 +1,76 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-results-view', 'reg-view', 'reg-model', 'search-model'], function($, _, Backbone, Dispatch, SearchResultsView, RegView, RegModel, SearchModel) {
     'use strict';
 
     var MainView = Backbone.View.extend({
-        el: '#content-wrapper',
+        el: '#content-body',
 
         initialize: function() {
             Dispatch.on('mainContent:change', this.render, this);
+            Dispatch.on('regSection:open', this.loadContent, this);
+            Dispatch.on('search:submitted', this.assembleSearchURL, this);
+
+            Dispatch.on('loading:start', this.loading, this);
+            Dispatch.on('loading:finish', this.loaded, this);
         },
 
-        render: function(html, elClass) {
-            this.el.className = elClass;
+        modelmap: {
+            'regSection': RegModel,
+            'searchResults': SearchModel
+        }, 
+
+        viewmap: {
+            'regSection': RegView,
+            'searchResults': SearchResultsView
+        },
+
+        assembleSearchURL: function(options, type) {
+            var url = Dispatch.getRegId();
+            url += '?q=' + options.query;
+            url += '&version=' + options.version;
+
+            if (typeof this.options.page !== 'undefined') {
+                url += '&page=' + options.page;
+            }
+
+            options.url = url;
+            this.loadContent(url, options, type);
+        },
+
+        loadContent: function(getParam, options, type) {
+            Dispatch.trigger('loading:start');
+            var returned = this.modelmap[type].get(getParam);
+
+            if (typeof returned.done !== 'undefined') {
+                // @TODO: error handling
+                returned.done(function(response) {
+                    this.createView(response, options, type);
+                }.bind(this));
+            }
+            else {
+               this.createView(returned, options, type); 
+            }
+        },
+
+        createView: function(html, options, type) {
+            this.render(html);
+
+            Dispatch.setContentView(new this.viewmap[type](options));
+            window.scrollTo(0,0);
+            Dispatch.trigger('loading:finish');
+        },
+
+        render: function(html) {
             this.$el.html(html);
+        },
+
+        loading: function() {
+            // visually indicate that a new section is loading
+            $('.main-content').addClass('loading');
+
+        },
+
+        loaded: function() {
+            $('.main-content').removeClass('loading');
         }
     });
 

@@ -1,4 +1,4 @@
-define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-results-view'], function($, _, Backbone, Dispatch, SearchResultsView) {
+define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
     'use strict';
 
     var SearchView = Backbone.View.extend({
@@ -10,13 +10,13 @@ define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-r
 
         openSearchResults: function(e) {
             e.preventDefault();
-            var $form = $(e.target);
-            Dispatch.setContentView(new SearchResultsView({
-                query: $form.find('input[name=q]')[0].value,
-                version: $form.find('select[name=version]')[0].value
-            })); 
+            var $form = $(e.target),
+                options = {};
 
-            Dispatch.set('contentClass', 'search-results');
+            options.query = $form.find('input[name=q]')[0].value;
+            options.version = $form.find('select[name=version]')[0].value;
+
+            Dispatch.trigger('search:submitted', options, 'searchResults');
         }
 
     });

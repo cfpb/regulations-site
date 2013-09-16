@@ -59,21 +59,5 @@ define(['jquery', 'underscore', 'backbone', 'reg-view', 'definition-view'], func
                 expect($('#123-4').data('active')).toBeFalsy();
             });
         });
-
-        describe("showPermalink", function() {
-            $('body').append('<div class="reg-paragraph">aasdfasdf<p id="inner-reg-p"></p></div>');
-            var eventStub = { currentTarget: $('.reg-paragraph')};
-            $('body').append('<div id="old-active-permalink" class="permalink-marker"></div>');
-
-            contentView.showPermalink(eventStub);
-
-            it("should remove old permalinks in DOM", function() {
-                expect($('#old-active-permalink').hasClass('permalink-marker')).toBeFalsy();
-            });
-
-            it("should attach permalink to <p>", function() {
-                expect($('#inner-reg-p').find('.permalink-marker').length).toEqual(1);
-            });
-        });
     });
 });

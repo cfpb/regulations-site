@@ -144,6 +144,7 @@ define('regs-helpers', function() {
                 return path[0];
             }
             else {
+                sessionStorage.removeItem('drawerDefault');
                 return sessionState;
             }
         }

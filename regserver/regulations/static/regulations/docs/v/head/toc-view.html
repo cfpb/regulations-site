@@ -275,7 +275,9 @@ when a TOC link is clicked, send an event along with the href of the clicked lin
             
             <div class="content"><div class='highlight'><pre>        sendClickEvent: <span class="keyword">function</span>(e) {
             e.preventDefault();
-            Dispatch.trigger(<span class="string">'toc:click'</span>, $(e.currentTarget).data(<span class="string">'section-id'</span>));
+
+            <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'section-id'</span>);
+            Dispatch.trigger(<span class="string">'regSection:open'</span>, sectionId, {id: sectionId}, <span class="string">'regSection'</span>);
         },</pre></div></div>
             
         </li>

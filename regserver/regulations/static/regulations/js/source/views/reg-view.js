@@ -7,11 +7,11 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
     'use strict';
 
     var RegView = Backbone.View.extend({
+        el: '#content-wrapper',
+
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
-            'mouseenter *[data-permalink-section]': 'showPermalink',
-            'click .permalink-marker': 'permalinkMarkerHandler',
             'click .definition.active': 'openDefinitionLinkHandler'
         },
 
@@ -20,25 +20,24 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             //
             // * when a definition is removed, update term links
             Dispatch.on('definition:remove', this.closeDefinition, this);
-            Dispatch.on('toc:click', this.loadSection, this);
-            Dispatch.on('openSection:set', this.loadSection, this);
 
             Dispatch.on('breakaway:open', this.hideContent, this);
             Dispatch.on('breakaway:close', this.showContent, this);
+
+            Dispatch.set('section', this.options.id);
 
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
 
             // set active section vars
             // @TODO: how do activeSection and Dispatch.get('section') live together?
-            this.activeSection = '';
+            this.activeSection = this.options.id || '';
             this.$activeSection = '';
             this.$sections = {};
 
             this.updateWayfinding();
 
-            // this might be silly?
-            this.$window = $(window);
+            Router.navigate('regulation/' + this.options.id + '/' + Dispatch.getVersion());
 
             // new View instance for subheader
             this.header = new SubHeadView();
@@ -54,7 +53,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             var len = this.$contentContainer.length - 1;
 
             for (var i = 0; i <= len; i++) {
-                if (this.$sections[i].offset().top + this.$contentHeader.height() >= this.$window.scrollTop()) {
+                if (this.$sections[i].offset().top + this.$contentHeader.height() >= $(window).scrollTop()) {
                     if (_.isEmpty(this.activeSection) || (this.activeSection !== this.$sections[i].id)) {
                         this.activeSection = this.$sections[i][0].id;
                         this.$activeSection = this.$sections[i][0];
@@ -66,41 +65,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             }
                  
             return this;
-        },
-
-        // ask for section data, when promise is completed,
-        // re-render view
-        loadSection: function(sectionId) {
-            var returned = RegModel.get(sectionId);
-
-            // visually indicate that a new section is loading
-            $('.main-content').addClass('loading');
-
-            if (typeof returned.done !== 'undefined') {
-                // @TODO: error handling
-                returned.done(function(section) {
-                    this.openSection(section, sectionId);
-                }.bind(this));
-            }
-            else {
-               this.openSection(returned, sectionId); 
-            }
-        },
-
-        openSection: function(section, sectionId) {
-            Dispatch.set('section', sectionId);
-            this.$el.html(section);
-            Dispatch.trigger('mainContent:change', this.$el, 'reg-text');
-
-            window.scrollTo(0, 0);
-            Dispatch.trigger('section:open', sectionId);
-
-            Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
-            Router.navigate('regulation/' + sectionId + '/' + Dispatch.getVersion());
-
-            $('.main-content').removeClass('loading');
-
-            this.updateWayfinding();
         },
 
         updateWayfinding: function() {
@@ -118,11 +82,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             for (i = 0; i < len; i++) {
                 this.$sections[i] = $(this.$contentContainer[i]);
             }
-        },
-
-        // for a consistent API
-        render: function() {
-            this.loadSection(Dispatch.getOpenSection());
         },
 
         // only concerned with resetting DOM, no matter
@@ -193,7 +152,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
         // handler for when inline interpretation is clicked
         expandInterp: function(e) {
-
             // user can click anywhere in the header of a closed interp
             // for an open interp, they can click "hide" button or header
             e.stopPropagation();
@@ -208,27 +166,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             buttonText.html(section.hasClass('open') ? 'Hide' : 'Show');
 
             return this;
-        },
-
-        // handler for when a permalink icon should be shown
-        showPermalink: function(e) {
-            $('.permalink-marker').remove();
-
-            var permalink = document.createElement('a'),
-                $section = $(e.currentTarget),
-                $permalink;
-
-            permalink.href = '#' + $section[0].id;
-            permalink.innerHTML = 'Permalink';
-            permalink.className = 'permalink-marker';
-            $permalink = $(permalink);
-
-            $section.children().first().prepend($permalink);
-        },
-
-        // send GA event when permalink is clicked
-        permalinkMarkerHandler: function(e) {
-            Dispatch.trigger('ga-event:permalink', $(e.target).attr('href'));
         },
 
         changeFocus: function(id) {
@@ -248,14 +185,19 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         },
 
         remove: function() {
+            this.header.remove();
+            Dispatch.remove('sectionNav');
             this.stopListening();
+            this.$el.remove();
             return this;
         },
 
+        // when breakaway view loads
         hideContent: function() {
             this.$el.fadeOut(1000);
         },
 
+        // when breakaway view unloads
         showContent: function() {
             this.$el.fadeIn();
         }
