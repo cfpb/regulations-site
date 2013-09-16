@@ -71,7 +71,7 @@ urlpatterns = patterns(
     # Diff view of a section for non-JS viewers (or book markers)
     # Example: http://.../diff/201-4/2011-1738/2013-10704
     url(r'^diff/%s/%s/%s$' %
-        (paragraph_pattern, version_pattern, newer_version_pattern),
+        (section_pattern, version_pattern, newer_version_pattern),
         ChromeSectionDiffView.as_view(),
         name='chrome_section_diff_view'),
 

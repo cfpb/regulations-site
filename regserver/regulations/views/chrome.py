@@ -151,11 +151,11 @@ class ChromeSectionDiffView(ChromeView):
 
 class ChromeLandingView(ChromeView):
     """Landing page with chrome"""
-    partial_class = PartialRegulationView # Needed to know sectional status
+    partial_class = PartialSectionView # Needed to know sectional status
 
     def process_partial(self, context):
         """Landing page isn't a TemplateView"""
-        response = landing_page(self.request, context['label_id'])
+        response = landing_page(self.request, context['regulation'])
         self._assert_good(response)
         return response.content
 
@@ -163,6 +163,9 @@ class ChromeLandingView(ChromeView):
         """Override GET to add the version to chrome context"""
         current, _ = get_versions(kwargs['label_id'])
         kwargs['version'] = current['version']
+        # Use the first section for the chrome -- does not work in all regs
+        kwargs['regulation'] = kwargs['label_id']
+        kwargs['label_id'] = kwargs['label_id'] + '-1'
         return super(ChromeLandingView, self).get(request, *args, **kwargs)
 
 
