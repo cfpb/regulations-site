@@ -33,6 +33,14 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
         },
 
         openRegFolders: function() {
+            if (this.$el.find('#sxs-list').length === 0) {
+                this.$el.append('<section id="sxs-list" class="regs-meta"></section>');
+            }
+
+            if (this.$el.find('#permalinks').length === 0) {
+                this.$el.append('<section id="permalinks" class="regs-meta"></section>');
+            }
+
             this.childViews.sxs = new SxSListView();
             this.childViews.permalink = new PermalinkView();
         },
