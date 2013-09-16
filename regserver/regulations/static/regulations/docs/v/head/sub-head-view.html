@@ -215,7 +215,8 @@ when the active section changes, change the contents of the header</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'activeSection:change'</span>, <span class="keyword">this</span>.changeTitle, <span class="keyword">this</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'activeSection:change'</span>, <span class="keyword">this</span>.changeTitle, <span class="keyword">this</span>);
+            Dispatch.on(<span class="string">'searchResults:open'</span>, <span class="keyword">this</span>.displayCount, <span class="keyword">this</span>);</pre></div></div>
             
         </li>
         
@@ -248,8 +249,15 @@ when the active section changes, change the contents of the header</p>
             
             <div class="content"><div class='highlight'><pre>        changeTitle: <span class="keyword">function</span>(id) {
             <span class="keyword">this</span>.$activeTitle.html(<span class="string">'&lt;em class="header-label"&gt;'</span> + RegsHelpers.idToRef(id) + <span class="string">'&lt;/em&gt;'</span>);
-
             <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+
+        displayCount: <span class="keyword">function</span>(resultCount) {
+            <span class="keyword">this</span>.$activeTitle.html(<span class="string">'&lt;em class="header-label"&gt;Search results -- '</span> + resultCount + <span class="string">'&lt;/em&gt;'</span>);
+        },
+
+        reset: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.$activeTitle.html(<span class="string">''</span>);
         }
     });
 

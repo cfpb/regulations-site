@@ -12,6 +12,7 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-h
             // **Event listeners**
             // when the active section changes, change the contents of the header
             Dispatch.on('activeSection:change', this.changeTitle, this);
+            Dispatch.on('searchResults:open', this.displayCount, this);
 
             // cache inner title DOM node for frequent reference
             this.$activeTitle = this.$el.find('#active-title');
@@ -20,8 +21,15 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-h
         // populates subhead with new title
         changeTitle: function(id) {
             this.$activeTitle.html('<em class="header-label">' + RegsHelpers.idToRef(id) + '</em>');
-
             return this;
+        },
+
+        displayCount: function(resultCount) {
+            this.$activeTitle.html('<em class="header-label">Search results -- ' + resultCount + '</em>');
+        },
+
+        reset: function() {
+            this.$activeTitle.html('');
         }
     });
 
