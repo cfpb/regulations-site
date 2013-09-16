@@ -38,13 +38,17 @@
 
 <div class="wrap group">
 
+{% block chrome-content %}
 <div id="content-body" class="main-content">
 
     {{ partial_content|safe }}
 
 </div> <!-- /.main-content -->
+{% endblock %}
 
+{% block chrome-sidebar %}
 {{ sidebar_content|safe }}
+{% endblock %}
 
 </div> <!-- /.wrap -->
 
