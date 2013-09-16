@@ -109,6 +109,11 @@
               </a>
             
               
+              <a class="source" href="permalink-view.html">
+                permalink-view.js
+              </a>
+            
+              
               <a class="source" href="reg-view.html">
                 reg-view.js
               </a>
@@ -194,7 +199,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'sidebar-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-head-view'</span>, <span class="string">'sxs-list-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarHeadView, SxSListView) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'sidebar-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-head-view'</span>, <span class="string">'sxs-list-view'</span>, <span class="string">'permalink-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarHeadView, SxSListView, PermalinkView) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> SidebarView = Backbone.View.extend({
         el: <span class="string">'#sidebar-content'</span>,
@@ -237,7 +242,16 @@
         },
 
         openRegFolders: <span class="keyword">function</span>() {
+            <span class="keyword">if</span> (<span class="keyword">this</span>.$el.find(<span class="string">'#sxs-list'</span>).length === <span class="number">0</span>) {
+                <span class="keyword">this</span>.$el.append(<span class="string">'&lt;section id="sxs-list" class="regs-meta"&gt;&lt;/section&gt;'</span>);
+            }
+
+            <span class="keyword">if</span> (<span class="keyword">this</span>.$el.find(<span class="string">'#permalinks'</span>).length === <span class="number">0</span>) {
+                <span class="keyword">this</span>.$el.append(<span class="string">'&lt;section id="permalinks" class="regs-meta"&gt;&lt;/section&gt;'</span>);
+            }
+
             <span class="keyword">this</span>.childViews.sxs = <span class="keyword">new</span> SxSListView();
+            <span class="keyword">this</span>.childViews.permalink = <span class="keyword">new</span> PermalinkView();
         },</pre></div></div>
             
         </li>

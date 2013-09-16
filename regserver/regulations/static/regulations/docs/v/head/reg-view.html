@@ -109,6 +109,11 @@
               </a>
             
               
+              <a class="source" href="permalink-view.html">
+                permalink-view.js
+              </a>
+            
+              
               <a class="source" href="reg-view.html">
                 reg-view.js
               </a>
@@ -271,6 +276,8 @@
             Router.navigate(<span class="string">'regulation/'</span> + <span class="keyword">this</span>.options.id + <span class="string">'/'</span> + Dispatch.getVersion());
 
             Dispatch.set(<span class="string">'sectionNav'</span>, <span class="keyword">new</span> SectionFooterView({el: <span class="keyword">this</span>.$el.find(<span class="string">'.section-nav'</span>)}));
+
+            Dispatch.trigger(<span class="string">'regSection:open:after'</span>, <span class="keyword">this</span>.options.id);
 
         },</pre></div></div>
             
