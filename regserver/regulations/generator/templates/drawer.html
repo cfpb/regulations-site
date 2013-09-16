@@ -17,7 +17,7 @@
               / <input type="text" name="year" value="{{ today|date:"Y" }}" />
               <button type="submit">Go</button>
             </form>
-            <ul>
+            <ul class="version-list">
             {% for version in history %}
                 <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
                 {% if part == label_id %}

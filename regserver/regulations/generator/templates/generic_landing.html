@@ -4,13 +4,6 @@
             {% block reg_main_content %}
             {% endblock %}
 
-            <form action="{% url 'chrome_search' label_id %}" method="GET">
-                <div class="search-box">
-                    <input type="text" name="q" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
-                    <input type="hidden" name="version" value="{{current_version.version}}"/>
-                </div>
-            </form>
-
             <div id="disclaimer">
                 {% block legal_disclaimer %}
                 {% endblock %}
@@ -23,13 +16,15 @@
 <div id="sidebar" class="secondary-content">
     <div id="sidebar-content" class="sidebar-inner">
         {% if new_version %}
+        <div class="alert">
             <h3> New version to be effective: {{new_version.by_date|date:"m/d/Y"}} </h3>
             <ul>
-                <li> <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}">View new version</a></li>
+                <li> <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}" class="go">View new version</a></li>
                 {%comment %} 
-                <li> <a href="{% url 'chome_section_diff_view' reg_first_section current_version.version new_version.version %}">Compare new version</a></li>
+                <li> <a href="{% url 'chome_section_diff_view' reg_first_section current_version.version new_version.version %}" class="go">Compare new version</a></li>
                 {% endcomment %}
             </ul>
+        </div><!--/.alert-->
         {% endif %}
 
         {% block reg_sidebar %}

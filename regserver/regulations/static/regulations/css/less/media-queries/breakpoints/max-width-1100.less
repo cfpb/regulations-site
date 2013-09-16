@@ -36,28 +36,20 @@
     }
 
     .panel-slide {
-        background: url(../img/right.png) no-repeat center center;
         border-bottom: 1px solid @medium_gray;
-        
     }
 
     .active .panel-slide {
-        background: url(../img/left.png) no-repeat center center;
         border-bottom: none;
     }
 
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
-    (min-resolution: 192dpi) {
-        .panel-slide {
-            background: url(../img/right@2x.png) no-repeat center center;
-            background-size: 16px 13px;
-        }
+    .panel-slide:before {
+        .minicon;
+        content: "\e002";
+    }
 
-        .active .panel-slide {
-            background: url(../img/left@2x.png) no-repeat center center;
-            background-size: 16px 13px;
-        }
+    .active .panel-slide:before {
+        content: "\e006";
     }
 
     /*
