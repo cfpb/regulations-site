@@ -229,8 +229,14 @@
             Dispatch.on(<span class="string">'definition:open'</span>, <span class="keyword">this</span>.closeExpandables, <span class="keyword">this</span>);
             Dispatch.on(<span class="string">'definition:render'</span>, <span class="keyword">this</span>.insertDefinition, <span class="keyword">this</span>);
 
-            <span class="keyword">this</span>.childViews = {};
+            Dispatch.on(<span class="string">'search:submitted'</span>, <span class="keyword">this</span>.closeAllChildren, <span class="keyword">this</span>);
+            Dispatch.on(<span class="string">'regSection:open'</span>, <span class="keyword">this</span>.openRegFolders, <span class="keyword">this</span>);
 
+            <span class="keyword">this</span>.childViews = {};
+            <span class="keyword">this</span>.openRegFolders();
+        },
+
+        openRegFolders: <span class="keyword">function</span>() {
             <span class="keyword">this</span>.childViews.sxs = <span class="keyword">new</span> SxSListView();
         },</pre></div></div>
             
@@ -280,6 +286,15 @@
 
             $expandable.toggleClass(<span class="string">'open'</span>)
                 .next(<span class="string">'.chunk'</span>).slideToggle();
+        },
+
+        closeAllChildren: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> k;
+            <span class="keyword">for</span> (k <span class="keyword">in</span> <span class="keyword">this</span>.childViews) {
+                <span class="keyword">if</span> (<span class="keyword">this</span>.childViews.hasOwnProperty(k)) {
+                    <span class="keyword">this</span>.childViews[k].remove();
+                }
+            }
         }
     });
 

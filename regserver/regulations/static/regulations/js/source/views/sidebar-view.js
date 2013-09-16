@@ -25,8 +25,14 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
             Dispatch.on('definition:open', this.closeExpandables, this);
             Dispatch.on('definition:render', this.insertDefinition, this);
 
-            this.childViews = {};
+            Dispatch.on('search:submitted', this.closeAllChildren, this);
+            Dispatch.on('regSection:open', this.openRegFolders, this);
 
+            this.childViews = {};
+            this.openRegFolders();
+        },
+
+        openRegFolders: function() {
             this.childViews.sxs = new SxSListView();
         },
 
@@ -64,6 +70,15 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
 
             $expandable.toggleClass('open')
                 .next('.chunk').slideToggle();
+        },
+
+        closeAllChildren: function() {
+            var k;
+            for (k in this.childViews) {
+                if (this.childViews.hasOwnProperty(k)) {
+                    this.childViews[k].remove();
+                }
+            }
         }
     });
 

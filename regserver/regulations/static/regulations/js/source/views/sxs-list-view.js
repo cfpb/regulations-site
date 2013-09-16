@@ -13,7 +13,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
 
             this.model.set(Dispatch.getOpenSection(), analyses.innerHTML);
 
-            Dispatch.on('section:open', this.getAnalyses, this);
+            Dispatch.on('regSection:open', this.getAnalyses, this);
 
             this.modifyListDisplay();
         },

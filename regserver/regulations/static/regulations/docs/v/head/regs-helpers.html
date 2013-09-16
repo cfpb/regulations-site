@@ -390,6 +390,7 @@ interpreted</p>
                 <span class="keyword">return</span> path[<span class="number">0</span>];
             }
             <span class="keyword">else</span> {
+                sessionStorage.removeItem(<span class="string">'drawerDefault'</span>);
                 <span class="keyword">return</span> sessionState;
             }
         }
