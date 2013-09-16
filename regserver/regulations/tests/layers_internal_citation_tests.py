@@ -5,13 +5,13 @@ from unittest import TestCase
 class InternalCitationLayerTest(TestCase):
 
     def test_url_for(self):
-        self.assertEqual('/regulation/999-88/verver#999-88-e',
+        self.assertTrue('999-88/verver#999-88-e' in 
             InternalCitationLayer.sectional_url_for(['999', '88', 'e'],
             'verver'))
-        self.assertEqual('/regulation/999-88-Interp/verver#999-88-e-Interp-1',
+        self.assertTrue('999-88-Interp/verver#999-88-e-Interp-1' in 
             InternalCitationLayer.sectional_url_for(['999', '88', 'e',
             'Interp', '1'], 'verver'))
-        self.assertEqual('/regulation/999-Interp/verver#999-Interp',
+        self.assertTrue('999-Interp/verver#999-Interp' in 
             InternalCitationLayer.sectional_url_for(['999', 'Interp'],
             'verver'))
         self.assertEqual('#999-88-e',
@@ -30,6 +30,6 @@ class InternalCitationLayerTest(TestCase):
         icl.version = 'vvvv'
         icl.render_url(['888', '123'], 'look')
         context = loader.get_template.return_value.render.call_args[0][0]
-        self.assertEqual('/regulation/888-123/vvvv#888-123', 
-                context['citation']['url'])
+
+        self.assertTrue('888-123/vvvv#888-123' in context['citation']['url'])
         self.assertEqual('look', context['citation']['label'])
