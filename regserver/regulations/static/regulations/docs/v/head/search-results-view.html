@@ -202,7 +202,10 @@
         },
 
         initialize: <span class="keyword">function</span>() {
-            Dispatch.trigger(<span class="string">'searchResults:open'</span>);
+            <span class="keyword">var</span> $results = <span class="keyword">this</span>.$el.find(<span class="string">'#result-count'</span>);
+            Dispatch.trigger(<span class="string">'searchResults:open'</span>, $results.html());
+            $results.remove();
+
             Router.navigate(<span class="string">'search/'</span> + <span class="keyword">this</span>.options.url);
 
             <span class="keyword">this</span>.query = <span class="keyword">this</span>.options.query;

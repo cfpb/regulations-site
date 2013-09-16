@@ -25,7 +25,8 @@
         'sidebar-list-view': './views/sidebar-list-view',
         'sxs-view': './views/sxs-view',
         'search-results-view': './views/search-results-view',
-        'main-view': './views/main-view'
+        'main-view': './views/main-view',
+        'permalink-view': './views/permalink-view'
     },
     shim: {
         underscore: {

@@ -9,7 +9,10 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
         },
 
         initialize: function() {
-            Dispatch.trigger('searchResults:open');
+            var $results = this.$el.find('#result-count');
+            Dispatch.trigger('searchResults:open', $results.html());
+            $results.remove();
+
             Router.navigate('search/' + this.options.url);
 
             this.query = this.options.query;

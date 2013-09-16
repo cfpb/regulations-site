@@ -6,7 +6,7 @@ version_timeline is one of "past", "current", and "future".
 {% endcomment %}
 <div id="content-wrapper" class="search-results">
     <p class="search-version">{{ version_by_date|date }} Version - {{ version_timeline|title }} Law
-    {{ results.total_hits }} result{{ results.results|pluralize }}</p>
+    <span id="result-count">{{ results.total_hits }} result{{ results.results|pluralize }}</span></p>
     <ul class="result-list">
     {% for result in results.results %}
         <li>

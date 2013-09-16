@@ -1,10 +1,12 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-results-view', 'reg-view', 'reg-model', 'search-model'], function($, _, Backbone, Dispatch, SearchResultsView, RegView, RegModel, SearchModel) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view'], function($, _, Backbone, Dispatch, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView) {
     'use strict';
 
     var MainView = Backbone.View.extend({
         el: '#content-body',
 
         initialize: function() {
+            this.header = new SubHeadView();
+
             Dispatch.on('mainContent:change', this.render, this);
             Dispatch.on('regSection:open', this.loadContent, this);
             Dispatch.on('search:submitted', this.assembleSearchURL, this);
@@ -60,6 +62,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
         },
 
         render: function(html) {
+            this.header.reset();
             this.$el.html(html);
         },
 
