@@ -10,6 +10,11 @@ reg-landing.less contains styles specific to the regulation landing page
     padding: .5em 0;
 }
 
+/*
+Tags
+============================
+*/
+
 .tag-list {
 
     padding: 0;
@@ -47,17 +52,19 @@ reg-landing.less contains styles specific to the regulation landing page
 
 /*
 Search
-======
+============================
 */
  .main-content {
     .search-box {
-        margin-top: 2em;
+        padding: 2em 0;
+        border-bottom: 1px solid @light_field;
 
         input[type=text]{
             width: 82%;
         }
 
         button {
+            .avenir-next;
             font-size: 0.875em;
             line-height: 32px;
             padding: 0 10px 10px 10px;
@@ -100,3 +107,18 @@ Search
         }
     }
  }
+
+ /*
+Disclaimer
+============================
+*/
+
+.disclaimer {
+    margin: 2em 0;
+    padding: 10px;
+    background-color: @grey;
+
+    p {
+        .avenir-next;
+    }
+}

@@ -11,18 +11,19 @@
     <p>
     Brought to you by the CFPB Technology and Innovation Team. This site is an
     open source project and developed by open source software.  <br />
-    <a href="http://cfpb.github.io/eregs/">http://cfpb.github.io/eregs/</a>
+    <a href="http://cfpb.github.io/eregs/" class="external">http://cfpb.github.io/eregs/</a>
     </p>
 
     <h4> Feedback about the tool: </h4>
-    <a href="mailto:CFPB_eRegs_Team@cfpb.gov">CFPB_eRegs_Team@cfpb.gov</a>
+    <a href="mailto:CFPB_eRegs_Team@cfpb.gov" class="mail">CFPB_eRegs_Team@cfpb.gov</a>
 </div>
 
 </div>
 
 
-<div id="sidebar">
+<div id="sidebar" class="secondary-content">
 {% if new_version %}
+<div class="alert">
     <h3> New version to be effective: {{new_version.by_date|date:"d/m/Y"}} </h3>
     <ul>
         <li> <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}">View new version</a></li>
@@ -30,6 +31,7 @@
         <li> <a href="{% url 'chome_section_diff_view' reg_first_section current_version.version new_version.version %}">Compare new version</a></li>
         {% endcomment %}
     </ul>
+</div>
 {% endif %}
 
 {% block reg_sidebar %}
