@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['reg-view'], function(RegView) {})```
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'dispatch', 'definition-view', 'sub-head-view', 'reg-model', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView, RegModel, SectionFooterView, Router) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'dispatch', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, RegModel, SectionFooterView, Router) {
     'use strict';
 
     var RegView = Backbone.View.extend({
@@ -39,8 +39,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
             Router.navigate('regulation/' + this.options.id + '/' + Dispatch.getVersion());
 
-            // new View instance for subheader
-            this.header = new SubHeadView();
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
 
         },
@@ -185,10 +183,10 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         },
 
         remove: function() {
-            this.header.remove();
+            $(window).off('scrollstop');
             Dispatch.remove('sectionNav');
-            this.stopListening();
             this.$el.remove();
+            this.stopListening();
             return this;
         },
 

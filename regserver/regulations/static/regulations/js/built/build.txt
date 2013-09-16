@@ -15,9 +15,9 @@ regs-helpers.js
 reg-model.js
 views/sidebar-module-view.js
 views/definition-view.js
-views/sub-head-view.js
 views/section-footer-view.js
 views/reg-view.js
+views/sub-head-view.js
 views/main-view.js
 views/toc-view.js
 views/history-view.js

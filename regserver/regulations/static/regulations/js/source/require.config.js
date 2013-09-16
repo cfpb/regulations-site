@@ -35,6 +35,9 @@ var require = {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
+        'jquery-scrollstop': {
+            deps: ['jquery']
+        },
         konami: {
             exports: 'Konami'
         }
