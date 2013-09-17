@@ -29,6 +29,7 @@ Modules
 @import url(module/search-results.less);
 @import url(module/forms.less);
 @import url(module/diffs.less);
+@import url(module/expandables.less);
 @import url(module/reg-landing.less);
 
 /*
@@ -44,6 +45,13 @@ Media Queries
 /* apply a natural box layout model to all elements */
 *, *:before, *:after {
   -moz-box-sizing: border-box;-webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+
+.browser-warning {
+    background-color: #FAB051;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    padding: 10px 15px;
  }
 
 .lt-ie10 {
@@ -71,6 +79,10 @@ Media Queries
     position: absolute;
     text-align: left;
     text-indent: -99999px;
+}
+
+.content-wrap {
+    padding: 0 15px;
 }
 
 .loading {
