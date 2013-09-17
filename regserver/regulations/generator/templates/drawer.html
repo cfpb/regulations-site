@@ -10,13 +10,15 @@
             <h2 class="toc-type">Switch between versions</h2>
         </div><!-- /.drawer-header -->
         <div class="drawer-content">
+            <div class="form-wrap group">
             <form action="{% url 'redirect_by_date_get' label_id %}"
-                  method="GET">
-              <input type="text" name="month" value="{{ today|date:"m" }}" />
-              / <input type="text" name="day" value="{{ today|date:"d" }}" />
-              / <input type="text" name="year" value="{{ today|date:"Y" }}" />
-              <button type="submit">Go</button>
+                  method="GET" class="date-input">
+              <input type="text" name="month" class="month-input" placeholder="{{ today|date:"m" }}" />
+              / <input type="text" name="day" class="day-input" placeholder="{{ today|date:"d" }}" />
+              / <input type="text" name="year" class="year-input" placeholder="{{ today|date:"Y" }}" />
+              <button type="submit">Find</button>
             </form>
+            </div><!--./date-form-->
             <ul class="version-list">
             {% for version in history %}
                 <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">

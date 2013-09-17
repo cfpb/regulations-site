@@ -299,6 +299,10 @@ This contains all of the styles specific to the history
 
     /*TODO: unify link styles with TOC*/
 
+    .version-list {
+        border-top: 1px solid @light_field;
+    }
+
     .status-list {
         border-bottom: 1px solid @light_field;
     }
@@ -327,7 +331,6 @@ This contains all of the styles specific to the history
     .version-link:hover,
     .version-link:active,
     .version-link:target,
-    //.version-list > li:hover,
     .current {
         color: @black;
         background-color: @green_light;
@@ -397,14 +400,8 @@ This contains all of the styles specific to the history
         .avenir-next-demi;
         font-size: 1.285714286em;
     }
-
-    .drawer-content input[type=text] {
-        width: 2.25em;
-    }
-    .drawer-content input[name=year] {
-        width: 3em;
-    }
 }
+
 .js {
    .rule-list {
     display: none;
@@ -413,6 +410,36 @@ This contains all of the styles specific to the history
    .current .rule-list {
     display: block;
    }
+
+   /*
+   date input
+   ----------
+   */
+   .form-wrap {
+        margin: 15px;
+        background-color: #fff;
+        line-height: 32px;
+   }
+   
+   input[type=text]{
+        border: none;
+        text-align: center;
+    }
+
+    /*Oh how dirty I feel, using !important :/ */
+    input[name=month],
+    input[name=day] {
+        width: 15%;
+    }
+
+    input[name=year] {
+        width: 32.5%;
+    }
+
+    button {
+        float: right;
+        padding: 0 10px;
+    }
 }
 
 /*IE8 refuses to apply the link hovers*/
@@ -505,29 +532,12 @@ This contains all of the styles specific to the search
     }
 
     input[type=text]{
-        vertical-align: bottom;
-        .avenir-next;
-        color: @black;
         padding: 0 10px;
+        text-align: left;
         border-top: 1px solid @light_field;
         border-right: none;
         border-bottom: 1px solid @light_field;
         border-left: 1px solid @light_field;
-    }
-
-    button {
-        height: 32px;
-        vertical-align: bottom;
-        margin: 0;
-        background-color: @pacific;
-        color: #fff;
-        border: none;
-        vertical-align: bottom;
-    }
-
-    button:hover,
-    button:active {
-        background-color: @pacific_hover;
     }
 }
 
