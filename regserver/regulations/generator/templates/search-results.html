@@ -5,16 +5,18 @@ searched as well as the results.
 version_timeline is one of "past", "current", and "future".
 {% endcomment %}
 <div id="content-wrapper" class="search-results">
-    <p class="search-version">{{ version_by_date|date }} Version - {{ version_timeline|title }} Law
-    <span id="result-count">{{ results.total_hits }} result{{ results.results|pluralize }}</span></p>
-    <ul class="result-list">
-    {% for result in results.results %}
-        <li>
-        <h3><a href="{% url 'chrome_section_view' result.section_id version %}#{{result.label|join:'-'}}" class="internal">{{result.header}}</a></h3>
-            <p>{{result.text}}</p>
-        </li>
-    {% endfor %}
-    </ul>
+    <section data-base-version="{{ version }}">
+        <p class="search-version">{{ version_by_date|date }} Version - {{ version_timeline|title }} Law
+        <span id="result-count">{{ results.total_hits }} result{{ results.results|pluralize }}</span></p>
+        <ul class="result-list">
+        {% for result in results.results %}
+            <li>
+            <h3><a href="{% url 'chrome_section_view' result.section_id version %}#{{result.label|join:'-'}}" class="internal">{{result.header}}</a></h3>
+                <p>{{result.text}}</p>
+            </li>
+        {% endfor %}
+        </ul>
+    </section>
 
     {% if previous or next %}
     <footer class="search-nav">
