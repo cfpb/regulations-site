@@ -3,6 +3,8 @@ from django.template import (Context, RequestContext,
     loader, Template)
 
 from regulations.generator import api_reader
+from regulations.views import utils
+from regulations.views.partial import generate_html
 
 
 class MissingContentException(Exception):
@@ -18,9 +20,10 @@ class MissingSectionException(Exception):
     """" This is for when we suspect that we have the version requested, but
     maybe just not the label_id. """
 
-    def __init__(self, label_id, version):
+    def __init__(self, label_id, version, full_tree):
         self.label_id = label_id
         self.version = version
+        self.full_tree = full_tree
 
     def __str__(self):
         return repr(self)
@@ -47,7 +50,23 @@ def check_version(label_id, version):
     return len(requested_version) > 0
 
 
-def handle_missing_section_404(request, label_id, version, extra_context=None):
+def build_drawer_context(context, label_id, version, full_tree):
+    regulation_root = label_id.split('-')[0]
+    first_section = regulation_root + '-1'
+    context['label_id'] = first_section
+    context['version'] = version
+
+    appliers = utils.handle_specified_layers(
+        'toc,meta', regulation_root, version, True)
+    builder = generate_html(full_tree, appliers)
+    context['tree'] = full_tree
+
+def handle_missing_section_404(
+    request, 
+    label_id, 
+    version, 
+    full_tree,
+    extra_context=None):
 
     if not check_version(label_id, version):
         return handle_generic_404(request)
@@ -60,4 +79,14 @@ def handle_missing_section_404(request, label_id, version, extra_context=None):
     template = loader.get_template('missing_section_404.html')
     body = template.render(RequestContext(
         request, context))
-    return http.HttpResponseNotFound(body, content_type='text/html')
+
+    chrome_template = loader.get_template('chrome.html')
+
+    #Build up enough of a context to get a drawer that works. 
+    context['partial_content'] = body
+    build_drawer_context(context, label_id, version, full_tree)
+   
+    chrome_body = chrome_template.render(RequestContext(
+        request, context))
+
+    return http.HttpResponseNotFound(chrome_body, content_type='text/html')

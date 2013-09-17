@@ -13,7 +13,7 @@ from regulations.views.partial import *
 from regulations.views.partial_search import PartialSearch
 from regulations.views.sidebar import SideBarView
 
-from error_handling import MissingContentException, MissingSectionException, handle_missing_section_404
+from regulations.views import error_handling
 
 
 class ChromeView(TemplateView):
@@ -29,12 +29,12 @@ class ChromeView(TemplateView):
             return super(ChromeView, self).get(request, *args, **kwargs)
         except BadComponentException, e:
             return e.response
-        except MissingSectionException, e:
+        except error_handling.MissingSectionException, e:
             context = self.add_extras({})
-            return handle_missing_section_404(request, 
-                e.label_id, 
-                e.version, 
-                context)
+            return error_handling.handle_missing_section_404(
+                request, e.label_id, e.version, e.full_tree, context)
+        except error_handling.MissingContentException, e:
+            return error_handling.handle_generic_404(request)
 
     def _assert_good(self, response):
         if response.status_code != 200:
@@ -67,8 +67,11 @@ class ChromeView(TemplateView):
         full_tree = generator.get_regulation(part, version)
         relevant_tree = generator.get_tree_paragraph(label_id, version)
 
-        if full_tree is None or relevant_tree is None:
-            raise MissingSectionException(label_id, version)
+        if full_tree is None:
+            raise error_handling.MissingContentException()
+        
+        if relevant_tree is None:
+            raise error_handling.MissingSectionException(label_id, version, full_tree)
 
         context['partial_content'] = self.process_partial(context)
 
