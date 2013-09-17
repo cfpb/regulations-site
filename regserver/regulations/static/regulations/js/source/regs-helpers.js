@@ -113,27 +113,8 @@ define('regs-helpers', function() {
         },
 
         findURLPrefix: function() {
-            var i, pathLen, sitePath,
-                url = [];
-
-            sitePath = document.location.pathname.split('/');
-            pathLen = sitePath.length;
-
-            for (i=0; i<=pathLen; i++) {
-                if (sitePath[i] === 'regulation' || sitePath[i] === 'sxs' || sitePath[i] === 'search' || sitePath[i] === 'diff') {
-                    break;
-                }
-                else if (sitePath[i] !== '') {
-                    url.push(sitePath[i]);
-                }
-            }
-
-            if (url.length === 0) {
-                return false;
-            }
-            else {
-                return url = _.compact(url).join('/');
-            }
+            //  Strip trailing slash
+            return APP_PREFIX.substring(0, APP_PREFIX.length - 2);
         },
 
         findStartingContent: function() {

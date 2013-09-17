@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.conf import settings
+from django.core.urlresolvers import get_script_prefix
 from django.http import Http404
 from django.views.generic.base import TemplateView
 
@@ -34,6 +35,7 @@ class ChromeView(TemplateView):
 
     def add_extras(self, context):
         context['env'] = 'source' if settings.DEBUG else 'built'
+        context['APP_PREFIX'] = get_script_prefix()
         context['GOOGLE_ANALYTICS_SITE'] = settings.GOOGLE_ANALYTICS_SITE
         context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
         return context
