@@ -34,6 +34,11 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helper
         sendClickEvent: function(e) {
             e.preventDefault();
 
+            var $target = $(e.target);
+
+            $('.current').removeClass('current');
+            $target.closest('li').addClass('current');
+
             var sectionId = $(e.currentTarget).data('section-id');
             Dispatch.trigger('regSection:open', sectionId, {id: sectionId}, 'regSection');
         },

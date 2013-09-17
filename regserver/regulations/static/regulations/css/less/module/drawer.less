@@ -264,12 +264,11 @@ This contains all of the styles specific to the TOC
     }
 
     a:hover,
-    a:active
-    li .current {
+    a:active,
+    .current {
         color: @black;
         background-color: @green_light;
     }
-
 }
 
 /* 
@@ -425,8 +424,6 @@ This contains all of the styles specific to the history
         border: none;
         text-align: center;
     }
-
-    /*Oh how dirty I feel, using !important :/ */
     input[name=month],
     input[name=day] {
         width: 15%;
