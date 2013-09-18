@@ -1,11 +1,11 @@
 from django import http
-from django.template import (Context, RequestContext, 
-    loader, Template)
+from django.template import Context, RequestContext, loader, Template
 
 from regulations.generator import api_reader
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
 from regulations.views.partial import generate_html
+
 
 class MissingContentException(Exception):
     """ This is essentially a generic 404. """
@@ -23,25 +23,27 @@ class MissingSectionException(Exception):
     def __init__(self, label_id, version, context):
         self.label_id = label_id
         self.version = version
-        self.context = context 
+        self.context = context
 
     def __str__(self):
         return repr(self)
 
     def __repr__(self):
-        return "MissingSectionException(%s, %s)" % (self.label_id, self.version)
+        return "MissingSectionException(%s, %s)" % (
+            self.label_id, self.version)
 
 
 def handle_generic_404(request):
     template = loader.get_template('generic_404.html')
-    context = {'request_path':request.path}
+    context = {'request_path': request.path}
     utils.add_extras(context)
     body = template.render(RequestContext(
         request, context))
     return http.HttpResponseNotFound(body, content_type='text/html')
 
+
 def check_version(label_id, version):
-    """ We check if the version of this regulation exists, and the user is only 
+    """ We check if the version of this regulation exists, and the user is only
     referencing a section that does not exist. """
 
     reg_part = label_id.split('-')[0]
@@ -51,17 +53,15 @@ def check_version(label_id, version):
     requested_version = [v for v in vr['versions'] if v['version'] == version]
     return len(requested_version) > 0
 
+
 def handle_missing_section_404(
-    request, 
-    label_id, 
-    version, 
-    extra_context=None):
+        request, label_id, version, extra_context=None):
 
     if not check_version(label_id, version):
         return handle_generic_404(request)
 
     context = {
-        'request_path':request.path
+        'request_path': request.path
     }
     context.update(extra_context)
 
