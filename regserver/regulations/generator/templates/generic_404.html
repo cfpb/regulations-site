@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="main-head">
+    {% load static from staticfiles %}
+    <img src="{%static "regulations/ip/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151px">
+</div>
+
+<div class="sub-head">
+ <div id="content-header" class="header-main">
+        <span id="active-title"></span>
+    </div>
+
+</div>
+
+<div id="content-body" class="main-content">
+
+<section class="error">
+    <h3>404 - Regulation content not found. </h3>
+
+    <p>We're sorry we do not have the regulation content you are looking for. </p>
+</section> <!--.error-->
+
+<div><!-- /.content-body-->
+
+{% endblock %}
