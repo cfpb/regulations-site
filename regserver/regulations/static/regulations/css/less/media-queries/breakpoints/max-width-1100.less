@@ -87,12 +87,20 @@
             height: 34px;
         }
 
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
         .toc-nav-link {
             display: inline-block;
-            margin-left: -4px;
-            height: 34px;
+            *display:inline;
+            zoom: 1;
+            height: 100%;
+            padding: 0;
+            margin: 0;
             width: 56px;
-            border-right: 1px solid @medium_gray;
+            vertical-align: center;
         }
 
         .drawer-toggles {
@@ -105,6 +113,8 @@
 
         .drawer-toggles li {
             display: inline-block;
+            margin-left: -4px;
+            border-right: 1px solid @medium_gray;
         }
     }
 
@@ -166,10 +176,5 @@
     .application-footer {
         margin-left: 40px;
     }
-
-    /*
-    IE fixes
-    ==============================
-    */
 
 }

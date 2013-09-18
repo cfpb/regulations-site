@@ -172,26 +172,39 @@ TOC Nav Links
 currently these are TOC, History, and Search
 */
 
-.drawer-toggles li {
-    display: inline-block;
-    margin-left: -4px; /*accomodate inline-block spacing */
-    border-right: 1px solid @medium_gray;
-}
-
-.drawer-toggles li:first-child {
-    margin-left: 0; /*remove negative margin from first list item*/
-}
-
 .toc-nav-link {
     display: inline-block;
-    text-align: center;
-    height: 34px; /* match height of main header */
-    line-height: 34px;
+    *display:inline;
+    zoom: 1;
+    height: 100%;
+    padding: 0;
+    margin: 0;
     width: 56px;
+    text-align: center;
+    border-right: 1px solid @medium_gray;
+    vertical-align: center;
     
     .minicon-history {
         font-size: 1.25em; /* git bump up the history minicon size because it is wider/shorter than other icons */
     }
+}
+
+.drawer-toggles {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 200px;
+}
+
+.drawer-toggles li {
+    display: inline-block;
+    margin-left: -4px;
+    border-right: 1px solid @medium_gray;
+}
+
+.active .drawer-toggles li {
+    margin-left: 0;
 }
 
 .toc-nav-link:link,
