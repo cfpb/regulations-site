@@ -112,30 +112,6 @@ define('regs-helpers', function() {
             }
         },
 
-        findURLPrefix: function() {
-            var i, pathLen, sitePath,
-                url = [];
-
-            sitePath = document.location.pathname.split('/');
-            pathLen = sitePath.length;
-
-            for (i=0; i<=pathLen; i++) {
-                if (sitePath[i] === 'regulation' || sitePath[i] === 'sxs' || sitePath[i] === 'search' || sitePath[i] === 'diff') {
-                    break;
-                }
-                else if (sitePath[i] !== '') {
-                    url.push(sitePath[i]);
-                }
-            }
-
-            if (url.length === 0) {
-                return false;
-            }
-            else {
-                return url = _.compact(url).join('/');
-            }
-        },
-
         findStartingContent: function() {
             var path = _.compact(window.location.pathname.split('/')),
                 sessionState = sessionStorage.getItem('drawerDefault');

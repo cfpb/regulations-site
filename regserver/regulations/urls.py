@@ -32,31 +32,31 @@ urlpatterns = patterns(
         name='redirect_by_date_get'),
     # Redirect to version by date
     # Example: http://.../regulations/201-3-v/1999/11/8
-    url(r'^regulation/%s/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})$'
+    url(r'^%s/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})$'
         % paragraph_pattern, redirect_by_date, name='redirect_by_date'),
     #A regulation section with chrome
     #Example: http://.../regulation/201-4/2013-10704
-    url(r'^regulation/%s/%s$' % (section_pattern, version_pattern),
+    url(r'^%s/%s$' % (section_pattern, version_pattern),
         ChromeSectionView.as_view(),
         name='chrome_section_view'),
     #Interpretation of a section/paragraph or appendix
     #Example: http://.../regulation/201-4-Interp/2013-10704
-    url(r'^regulation/%s/%s$' % (interp_pattern, version_pattern),
+    url(r'^%s/%s$' % (interp_pattern, version_pattern),
         ChromeInterpView.as_view(),
         name='chrome_interp_view'),
     #The whole regulation with chrome
     #Example: http://.../regulation/201/2013-10704
-    url(r'^regulation/%s/%s$' % (reg_pattern, version_pattern),
+    url(r'^%s/%s$' % (reg_pattern, version_pattern),
         ChromeRegulationView.as_view(),
         name='chrome_regulation_view'),
     #A regulation paragraph with chrome
     #Example: http://.../regulation/201-2-g/2013-10704
-    url(r'^regulation/%s/%s$' % (paragraph_pattern, version_pattern),
+    url(r'^%s/%s$' % (paragraph_pattern, version_pattern),
         ChromeParagraphView.as_view(),
         name='chrome_paragraph_view'),
     #A regulation landing page
     #Example: http://.../regulation/201
-    url(r'^regulation/%s$' % reg_pattern, ChromeLandingView.as_view(),
+    url(r'^%s$' % reg_pattern, ChromeLandingView.as_view(),
         name='regulation_landing_view'),
     #A section by section paragraph with chrome
     #Example: http://.../sxs/201-2-g/2011-1738

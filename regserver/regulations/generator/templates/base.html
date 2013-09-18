@@ -24,6 +24,7 @@ CSS/Javascript etc., should inherit from this template.
             if (typeof require !== 'undefined') {
                 require.baseUrl = "{%static "regulations/js/"|add:env|add:"/"%}";
             }
+            window.APP_PREFIX = "{{ APP_PREFIX }}";
         </script>
         <script data-main="regulations" src="{%static "regulations/js/"|add:env|add:"/lib/require.js" %}"></script>
 
