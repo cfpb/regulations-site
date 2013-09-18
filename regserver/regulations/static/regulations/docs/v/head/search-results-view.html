@@ -211,7 +211,9 @@
             Dispatch.trigger(<span class="string">'searchResults:open'</span>, $results.html());
             $results.remove();
 
-            Router.navigate(<span class="string">'search/'</span> + <span class="keyword">this</span>.options.url);
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.options.url !== <span class="string">'undefined'</span>) {
+                Router.navigate(<span class="string">'search/'</span> + <span class="keyword">this</span>.options.url);
+            }
 
             <span class="keyword">this</span>.query = <span class="keyword">this</span>.options.query;
             <span class="keyword">this</span>.version = <span class="keyword">this</span>.options.version;

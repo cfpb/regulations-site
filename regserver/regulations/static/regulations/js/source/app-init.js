@@ -3,7 +3,7 @@
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
-define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers', './regs-router', './reg-view', 'queryparams'], function($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router, RegView) {
+define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers', './regs-router', './reg-view', 'search-results-view'], function($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router, RegView, SearchResultsView) {
     'use strict';
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -50,8 +50,19 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
                 regVersion = regSection.data('base-version');
 
             Dispatch.set('reg', regId);
-            // set open section and version for ajax calls
-            if (typeof regSection !== 'undefined') {
+
+            if (window.location.pathname.indexOf('search') > 0) {
+                var urlobj = RegsHelpers.parseURL(window.location.href),
+                    params = urlobj.params;
+
+                Dispatch.setContentView(
+                    new SearchResultsView({
+                        query: params.q,
+                        version: params.version
+                    })
+                );
+            }
+            else if (typeof regSection !== 'undefined') {
                 openSection = regSection.attr('id');
                 Dispatch.set('section', openSection);
 
@@ -60,6 +71,7 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
 
                 Dispatch.setContentView(new RegView({id: openSection}));
             }
+
 
             if (typeof regVersion !== 'undefined') {
                 Dispatch.set('version', regVersion);
