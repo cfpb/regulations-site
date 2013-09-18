@@ -24,5 +24,9 @@
         {% endif %}
         </ol>
 
-        {{ c.interp.markup | safe }}
+        {% if c.interp %}
+            {% with interp=c.interp %}
+                {% include "slide-down-interp.html" %}
+            {% endwith %}
+        {% endif %}
 {% endif %}

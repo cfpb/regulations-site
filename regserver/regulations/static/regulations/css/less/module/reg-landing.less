@@ -19,6 +19,7 @@ Tags
 
     padding: 0;
     margin: 0 0 1em 0;
+    font-size: 0.875em;
     .avenir-next;
 
     li {
@@ -40,7 +41,7 @@ Tags
 
         a:hover,
         a:active {
-            background-color: @light_field;
+            background-color: #E7E7E6;
         }
     }
 }
@@ -109,14 +110,81 @@ Search
  }
 
  /*
+Sidebar
+============================
+*/
+
+.secondary-content {
+    .landing {
+        .regs-meta {
+            border-bottom: none;
+        }
+
+        h3 {
+            margin-top: 0;
+            .avenir-next;
+            font-size: 1.285714286em;
+            margin-bottom: 1em;
+        }
+
+        h4 {
+            color: @black;
+            text-transform: none;
+            margin-bottom: 0.5em;
+        }
+
+        ul {
+            margin-bottom: 2em;
+        }
+    }
+}
+
+ /*
 Disclaimer
 ============================
 */
 
 .disclaimer {
+    position: relative;
     margin: 2em 0;
     padding: 10px;
-    background-color: @grey;
+    background-color: @bg_gray;
+
+    &:hover {
+        background-color: @grey;
+        cursor: pointer;
+    }
+
+    &.open {
+        background-color: @grey;
+        cursor: auto;
+    }
+
+    h4 {
+        display: inline;
+        font-size: 1em;
+        text-transform: none;
+        margin: 0;
+        padding: 0;
+        line-height: 20px;
+    }
+
+    h4:before {
+        .minicon;
+        content: "\e00f";
+        margin-right: 8px;
+        line-height: 20px;
+    }
+
+    .expand-button {
+        float: right;
+        padding-top: 2px;
+        line-height: 20px;
+    }
+
+    .expand-button:before {
+        line-height: 20px;
+    }
 
     p {
         .avenir-next;
@@ -127,14 +195,11 @@ Disclaimer
     background-color: #F6D9D3;
     border: 1px solid #E8A091;
     padding: 30px 15px;
+    margin-bottom: 2em;
     .avenir-next;
-
-    h3 {
-        .reset;
-        .avenir-next;
-    }
 
     ul {
         padding: 0;
+        margin: 0;
     }
 }

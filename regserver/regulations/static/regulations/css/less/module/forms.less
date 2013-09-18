@@ -1,0 +1,40 @@
+/*
+Forms.less
+========================================================================== 
+formsless contains generic form styles
+*/
+
+input {
+    height: 32px;
+    margin: 0;
+}
+
+input[type=text]{
+    vertical-align: bottom;
+    .avenir-next;
+    color: @black;
+}
+
+button {
+    height: 32px;
+    vertical-align: bottom;
+    margin: 0;
+    background-color: @pacific;
+    color: #fff;
+    border: none;
+    vertical-align: bottom;
+    text-align: center;
+    -webkit-transition: .1s;
+    -moz-transition: .1s;
+    transition: .1s;
+}
+
+button:hover,
+button:active {
+    background-color: @pacific_hover;
+}
+
+textarea:focus, 
+input:focus {
+    border: 1px solid @pacific;
+}
