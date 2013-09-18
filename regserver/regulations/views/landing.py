@@ -34,6 +34,10 @@ def first_section(label_id):
 
 
 def regulation(request, label_id):
+
+    if not regulation_exists(label_id):
+        raise Http404
+
     context = {}
     current_version, new_version = get_versions(label_id)
     if new_version:
@@ -45,10 +49,7 @@ def regulation(request, label_id):
 
     c = RequestContext(request, context)
 
-    if regulation_exists(label_id):
-        t = select_template([
-            'landing_%s.html' % label_id,
-            'generic_landing.html'])
-        return HttpResponse(t.render(c))
-    else:
-        raise Http404
+    t = select_template([
+        'landing_%s.html' % label_id,
+        'generic_landing.html'])
+    return HttpResponse(t.render(c))

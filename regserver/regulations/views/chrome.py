@@ -8,7 +8,7 @@ from regulations.generator import generator
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
 from regulations.views.diff import PartialSectionDiffView
-from regulations.views.landing import get_versions, regulation as landing_page
+from regulations.views.landing import regulation_exists, get_versions, regulation as landing_page
 from regulations.views.partial import *
 from regulations.views.partial_search import PartialSearch
 from regulations.views.sidebar import SideBarView
@@ -163,6 +163,10 @@ class ChromeLandingView(ChromeView):
 
     def get_context_data(self, **kwargs):
         """Add the version and replace the label_id for the chrome context"""
+
+        if not regulation_exists(kwargs['label_id']):
+            raise error_handling.MissingContentException()
+
         current, _ = get_versions(kwargs['label_id'])
         kwargs['version'] = current['version']
         kwargs['regulation'] = kwargs['label_id']
