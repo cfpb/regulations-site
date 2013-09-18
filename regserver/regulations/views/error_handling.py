@@ -1,10 +1,8 @@
 from django import http
-from django.template import Context, RequestContext, loader, Template
+from django.template import RequestContext, loader
 
 from regulations.generator import api_reader
-from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
-from regulations.views.partial import generate_html
 
 
 class MissingContentException(Exception):
