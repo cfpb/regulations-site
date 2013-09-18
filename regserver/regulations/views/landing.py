@@ -35,9 +35,6 @@ def first_section(label_id):
 
 def regulation(request, label_id):
 
-    if not regulation_exists(label_id):
-        raise Http404
-
     context = {}
     current_version, new_version = get_versions(label_id)
     if new_version:
