@@ -34,8 +34,10 @@ class MissingSectionException(Exception):
 
 def handle_generic_404(request):
     template = loader.get_template('generic_404.html')
+    context = {'request_path':request.path}
+    utils.add_extras(context)
     body = template.render(RequestContext(
-        request, {'request_path':request.path}))
+        request, context))
     return http.HttpResponseNotFound(body, content_type='text/html')
 
 def check_version(label_id, version):

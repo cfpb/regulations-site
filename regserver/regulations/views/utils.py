@@ -1,3 +1,4 @@
+from django.conf import settings
 from regulations.generator import generator
 
 
@@ -21,3 +22,9 @@ def handle_diff_layers(
     layer_creator = generator.DiffLayerCreator(newer)
     layer_creator.add_layers(layer_list, regulation_id, older, sectional)
     return layer_creator.get_appliers()
+
+def add_extras(context):
+    context['env'] = 'source' if settings.DEBUG else 'built'
+    context['GOOGLE_ANALYTICS_SITE'] = settings.GOOGLE_ANALYTICS_SITE
+    context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
+    return context
