@@ -112,11 +112,6 @@ define('regs-helpers', function() {
             }
         },
 
-        findURLPrefix: function() {
-            //  Strip trailing slash
-            return APP_PREFIX.substring(0, APP_PREFIX.length - 2);
-        },
-
         findStartingContent: function() {
             var path = _.compact(window.location.pathname.split('/')),
                 sessionState = sessionStorage.getItem('drawerDefault');
