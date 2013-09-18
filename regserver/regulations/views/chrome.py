@@ -38,13 +38,6 @@ class ChromeView(TemplateView):
         if response.status_code != 200:
             raise BadComponentException(response)
 
-    def add_extras(self, context):
-        context['env'] = 'source' if settings.DEBUG else 'built'
-        context['APP_PREFIX'] = get_script_prefix()
-        context['GOOGLE_ANALYTICS_SITE'] = settings.GOOGLE_ANALYTICS_SITE
-        context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
-        return context
-
     def process_partial(self, context):
         partial_view = self.partial_class.as_view()
         response = partial_view(self.request,
@@ -73,7 +66,7 @@ class ChromeView(TemplateView):
         builder = generate_html(full_tree, appliers)
 
         context['tree'] = full_tree
-        self.add_extras(context)
+        utils.add_extras(context)
 
         context['part'] = part
         context['history'] = fetch_grouped_history(part)

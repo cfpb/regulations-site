@@ -25,6 +25,7 @@ def handle_diff_layers(
 
 def add_extras(context):
     context['env'] = 'source' if settings.DEBUG else 'built'
+    context['APP_PREFIX'] = get_script_prefix()
     context['GOOGLE_ANALYTICS_SITE'] = settings.GOOGLE_ANALYTICS_SITE
     context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
     return context
