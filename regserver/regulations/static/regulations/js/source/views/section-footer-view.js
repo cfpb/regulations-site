@@ -13,6 +13,11 @@ define('section-footer-view', ['jquery', 'underscore', 'backbone', 'dispatch'], 
             e.preventDefault();
             var sectionId = $(e.target).data('linked-section');
             Dispatch.trigger('regSection:open', sectionId, {id:sectionId}, 'regSection');
+        },
+
+        remove: function() {
+            this.stopListening();
+            return this;
         }
     });
 

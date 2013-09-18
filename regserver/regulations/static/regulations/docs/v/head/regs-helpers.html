@@ -398,6 +398,45 @@ interpreted</p>
                 sessionStorage.removeItem(<span class="string">'drawerDefault'</span>);
                 <span class="keyword">return</span> sessionState;
             }
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>thanks, James Padolsey <a href="http://james.padolsey.com/javascript/parsing-urls-with-the-dom/">http://james.padolsey.com/javascript/parsing-urls-with-the-dom/</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        parseURL: <span class="keyword">function</span>(url) {
+            <span class="keyword">var</span> a =  document.createElement(<span class="string">'a'</span>);
+            a.href = url;
+            <span class="keyword">return</span> {
+                source: url,
+                protocol: a.protocol.replace(<span class="string">':'</span>,<span class="string">''</span>),
+                host: a.hostname,
+                port: a.port,
+                query: a.search,
+                params: (<span class="keyword">function</span>(){
+                    <span class="keyword">var</span> ret = {},
+                        seg = a.search.replace(<span class="regexp">/^\?/</span>,<span class="string">''</span>).split(<span class="string">'&amp;'</span>),
+                        len = seg.length, i = <span class="number">0</span>, s;
+                    <span class="keyword">for</span> (;i&lt;len;i++) {
+                        <span class="keyword">if</span> (!seg[i]) { <span class="keyword">continue</span>; }
+                        s = seg[i].split(<span class="string">'='</span>);
+                        ret[s[<span class="number">0</span>]] = s[<span class="number">1</span>];
+                    }
+                    <span class="keyword">return</span> ret;
+                })(),
+                hash: a.hash.replace(<span class="string">'#'</span>,<span class="string">''</span>),
+                path: a.pathname.replace(<span class="regexp">/^([^\/])/</span>,<span class="string">'/$1'</span>),
+                segments: a.pathname.replace(<span class="regexp">/^\//</span>,<span class="string">''</span>).split(<span class="string">'/'</span>)
+            };
         }
     };
 });</pre></div></div>
