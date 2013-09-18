@@ -30,9 +30,8 @@ class ChromeView(TemplateView):
         except BadComponentException, e:
             return e.response
         except error_handling.MissingSectionException, e:
-            context = self.add_extras({})
             return error_handling.handle_missing_section_404(
-                request, e.label_id, e.version, e.full_tree, context)
+                request, e.label_id, e.version, e.context)
         except error_handling.MissingContentException, e:
             return error_handling.handle_generic_404(request)
 
@@ -65,24 +64,10 @@ class ChromeView(TemplateView):
         #   @todo: just query the meta and toc layers
         part = label_id.split('-')[0]
         full_tree = generator.get_regulation(part, version)
-        relevant_tree = generator.get_tree_paragraph(label_id, version)
 
         if full_tree is None:
             raise error_handling.MissingContentException()
         
-        if relevant_tree is None:
-            raise error_handling.MissingSectionException(label_id, version, full_tree)
-
-        context['partial_content'] = self.process_partial(context)
-
-        if self.has_sidebar:
-            sidebar_view = SideBarView.as_view()
-            response = sidebar_view(self.request, label_id=label_id,
-                                    version=version)
-            self._assert_good(response)
-            response.render()
-            context['sidebar_content'] = response.content
-
         appliers = utils.handle_specified_layers(
             'toc,meta', part, version, self.partial_class.sectional_links)
         builder = generate_html(full_tree, appliers)
@@ -94,6 +79,21 @@ class ChromeView(TemplateView):
         context['history'] = fetch_grouped_history(part)
 
         context['today'] = date.today()
+
+       
+        relevant_tree = generator.get_tree_paragraph(label_id, version)
+        if relevant_tree is None:
+            raise error_handling.MissingSectionException(label_id, version, context)
+
+        context['partial_content'] = self.process_partial(context)
+        if self.has_sidebar:
+            sidebar_view = SideBarView.as_view()
+            response = sidebar_view(self.request, label_id=label_id,
+                                    version=version)
+            self._assert_good(response)
+            response.render()
+            context['sidebar_content'] = response.content
+
 
         return context
 
