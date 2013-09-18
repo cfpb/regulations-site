@@ -6,22 +6,26 @@
     Page-level template for everything but notices.
 {% endcomment %}
 
+<!--[if lt IE 8]>
+    <p class="browser-warning">You are using an outdated browser. Please upgrade your browser to improve your experience.</p>
+<![endif]-->
+
 <header id="site-header" class="reg-header">
 <div class="main-head">
     {% load static from staticfiles %}
         <div class="reg-title">
-            <h1>{{ tree.meta.cfr_title_number }} CFR Part {{ tree.label.0 }} <span class="title">{{ tree.title_clean|title }} </span>{% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</h1>
+            <h1><a href="{% url 'regulation_landing_view' tree.label.0 %}">{{ tree.meta.cfr_title_number }} CFR Part {{ tree.label.0 }} <span class="title">{{ tree.title_clean|title }} </span>{% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</a></h1>
         </div> <!-- /reg-title -->
         <img src="{%static "regulations/ip/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151px">
 </div>
 
 <div class="sub-head">
     <div class="toc-head">
-        <a href="#" id="panel-link" class="toc-toggle panel-slide">Navigation</a>
+        <a href="#" id="panel-link" class="toc-toggle panel-slide"><span class="icon-text">Navigation</span></a>
         <ul class="drawer-toggles">
-            <li><a href="#table-of-contents" id="menu-link" class="toc-nav-link">Table of Contents</a></li>
-            <li><a href="#history" id="history-link" class="toc-nav-link">History</a></li>
-            <li><a href="#search" id="search-link" class="toc-nav-link">Search</a></li>
+            <li><a href="#table-of-contents" id="menu-link" class="toc-nav-link"><span class="icon-text">Table of Contents</span><span class="minicon-menu"></span></a></li>
+            <li><a href="#history" id="history-link" class="toc-nav-link"></span><span class="icon-text">History</span><span class="minicon-history"></a></li>
+            <li><a href="#search" id="search-link" class="toc-nav-link"></span><span class="icon-text">Search</span><span class="minicon-search"></a></li>
         </ul>
     </div> <!-- /toc-head-->
     <div id="content-header" class="header-main">

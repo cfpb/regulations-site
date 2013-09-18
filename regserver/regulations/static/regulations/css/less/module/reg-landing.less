@@ -1,0 +1,205 @@
+/*
+Reg-Landing.less
+========================================================================== 
+reg-landing.less contains styles specific to the regulation landing page
+*/
+
+.banner-text {
+    .avenir-next;
+    font-size: 2em;
+    padding: .5em 0;
+}
+
+/*
+Tags
+============================
+*/
+
+.tag-list {
+
+    padding: 0;
+    margin: 0 0 1em 0;
+    font-size: 0.875em;
+    .avenir-next;
+
+    li {
+        list-style: none;
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+
+        a:link,
+        a:visited {
+            background-color: @pacific_light;
+            color: @black;
+            text-decoration: none;
+            padding: 10px;
+            -webkit-transition: .1s;
+            -moz-transition: .1s;
+            transition: .1s;
+        }
+
+        a:hover,
+        a:active {
+            background-color: #E7E7E6;
+        }
+    }
+}
+
+.list-header {
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
+/*
+Search
+============================
+*/
+ .main-content {
+    .search-box {
+        padding: 2em 0;
+        border-bottom: 1px solid @light_field;
+
+        input[type=text]{
+            width: 82%;
+        }
+
+        button {
+            .avenir-next;
+            font-size: 0.875em;
+            line-height: 32px;
+            padding: 0 10px 10px 10px;
+            width: 18%;
+        }
+
+        ::-webkit-input-placeholder {
+            .avenir-next-demi;
+           text-transform: uppercase;
+           font-size: 0.75em;
+           padding-top: 4px;
+        }
+
+        :-moz-placeholder {
+            .avenir-next-demi;
+           text-transform: uppercase;
+           font-size: 0.75em;
+           padding-top: 4px;
+        }
+
+        ::-moz-placeholder { 
+            .avenir-next-demi;
+           text-transform: uppercase;
+           font-size: 0.75em;
+           padding-top: 4px;
+        }
+
+        :-ms-input-placeholder {
+            .avenir-next-demi;
+           text-transform: uppercase;
+           font-size: 0.75em;
+           padding-top: 4px;
+        }
+
+        input-placeholder {
+            .avenir-next-demi;
+            text-transform: uppercase;
+            font-size: 0.75em;
+            padding-top: 4px;
+        }
+    }
+ }
+
+ /*
+Sidebar
+============================
+*/
+
+.secondary-content {
+    .landing {
+        .regs-meta {
+            border-bottom: none;
+        }
+
+        h3 {
+            margin-top: 0;
+            .avenir-next;
+            font-size: 1.285714286em;
+            margin-bottom: 1em;
+        }
+
+        h4 {
+            color: @black;
+            text-transform: none;
+            margin-bottom: 0.5em;
+        }
+
+        ul {
+            margin-bottom: 2em;
+        }
+    }
+}
+
+ /*
+Disclaimer
+============================
+*/
+
+.disclaimer {
+    position: relative;
+    margin: 2em 0;
+    padding: 10px;
+    background-color: @bg_gray;
+
+    &:hover {
+        background-color: @grey;
+        cursor: pointer;
+    }
+
+    &.open {
+        background-color: @grey;
+        cursor: auto;
+    }
+
+    h4 {
+        display: inline;
+        font-size: 1em;
+        text-transform: none;
+        margin: 0;
+        padding: 0;
+        line-height: 20px;
+    }
+
+    h4:before {
+        .minicon;
+        content: "\e00f";
+        margin-right: 8px;
+        line-height: 20px;
+    }
+
+    .expand-button {
+        float: right;
+        padding-top: 2px;
+        line-height: 20px;
+    }
+
+    .expand-button:before {
+        line-height: 20px;
+    }
+
+    p {
+        .avenir-next;
+    }
+}
+
+.alert {
+    background-color: #F6D9D3;
+    border: 1px solid #E8A091;
+    padding: 30px 15px;
+    margin-bottom: 2em;
+    .avenir-next;
+
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+}

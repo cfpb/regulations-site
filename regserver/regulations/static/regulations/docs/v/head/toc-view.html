@@ -208,7 +208,8 @@
             <span class="string">'click a'</span>: <span class="string">'sendClickEvent'</span>
         },
 
-        initialize: <span class="keyword">function</span>() {</pre></div></div>
+        initialize: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> openSection = Dispatch.getOpenSection();</pre></div></div>
             
         </li>
         
@@ -224,9 +225,11 @@ when the active section changes, highlight it in the TOC</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'activeSection:change'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);
+            <div class="content"><div class='highlight'><pre>            Dispatch.on(<span class="string">'regSection:open'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);
 
-            Dispatch.on(<span class="string">'openSection:set'</span>, <span class="keyword">this</span>.setActive, <span class="keyword">this</span>);</pre></div></div>
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> openSection !== <span class="string">'undefined'</span>) {
+                <span class="keyword">this</span>.setActive(openSection);
+            }</pre></div></div>
             
         </li>
         

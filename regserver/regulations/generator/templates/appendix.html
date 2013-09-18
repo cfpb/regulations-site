@@ -30,9 +30,19 @@
                 </ol>
             {% endif %}
 
-            {{ level_one.interp.markup | safe }}
+            {% if level_one.interp %}
+                {% with interp=level_one.interp %}
+                    {% include "slide-down-interp.html" %}
+                {% endwith %}
+            {% endif %}
             </section>
         {% endfor %}
+    {% endif %}
+
+    {% if c.interp %}
+        {% with interp=c.interp %}
+            {% include "slide-down-interp.html" %}
+        {% endwith %}
     {% endif %}
 {% endif %}
 

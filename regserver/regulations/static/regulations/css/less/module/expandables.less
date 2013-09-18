@@ -1,0 +1,19 @@
+.expand-button {
+    color: @pacific;
+    .avenir-next-demi;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: .8em;
+    cursor: pointer;
+}
+
+.expand-button:before {
+    .minicon;
+    content: "\e003";
+    float: right;
+    padding-left: 6px;
+}
+
+.open.expand-button:before {
+    content: "\e004";
+}

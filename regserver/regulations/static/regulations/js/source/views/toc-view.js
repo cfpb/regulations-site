@@ -13,9 +13,14 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helper
         },
 
         initialize: function() {
+            var openSection = Dispatch.getOpenSection();
             // **Event Listeners**
             // when the active section changes, highlight it in the TOC
-            Dispatch.on('activeSection:change', this.setActive, this);
+            Dispatch.on('regSection:open', this.setActive, this);
+
+            if (typeof openSection !== 'undefined') {
+                this.setActive(openSection);
+            }
 
             // **TODO** need to work out a bug where it scrolls the content section
             // $('#menu-link:not(.active)').on('click', this.scrollToActive);

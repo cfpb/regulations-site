@@ -107,6 +107,16 @@ li {
  Link Styles
  ========================================================================== */
 
+a:link,
+a:visited {
+    color: @pacific;
+    text-decoration: none;
+    border: none;
+    -webkit-transition: .1s;
+    -moz-transition: .1s;
+    transition: .1s;
+}
+
 /*  Internal Links
     ---------------
     <a href="#" class="internal">internal contents</a> 
@@ -120,7 +130,8 @@ li {
 }
 
 .internal:hover,
-.internal:active {
+.internal:active,
+.internal:focus {
     background-color: #cde3f1;
 }
 
@@ -143,15 +154,28 @@ li {
     }
 }
 
-.external:link,
-.external:visited {
-    color: @pacific;
-    text-decoration: none;
-    border: none;
+.mail:before {
+    .minicon;
+    content: "\e00e";
+    margin-right: 6px;
+}
+
+.go:after {
+   .minicon;
+    content: "\e002";
+    font-size: 0.875em;
+    margin-left: 6px; 
 }
 
 .external:hover,
-.external:active {
+.mail:hover,
+.go:hover,
+.external:active,
+.mail:active,
+.go:active,
+.external:focus,
+.mail:focus,
+.go:focus {
     border-bottom: 1px solid;
 }
 

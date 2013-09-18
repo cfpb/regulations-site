@@ -36,10 +36,10 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
             e.preventDefault();
 
             var $target = $(e.target),
-                linkValue = _.last($target.attr('href').split('#'));
+                linkValue = _.last($target.closest('a').attr('href').split('#'));
 
             this.$tocLinks.removeClass('current');
-            $target.addClass('current');
+            $target.closest('a').addClass('current');
 
             if ($('.panel').css('left') === '-200px') {
                 this.updateDrawerState('open');

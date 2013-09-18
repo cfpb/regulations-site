@@ -199,7 +199,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'main-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'drawer-view'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>, <span class="string">'./regs-router'</span>, <span class="string">'./reg-view'</span>, <span class="string">'queryparams'</span>], <span class="keyword">function</span>($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router, RegView) {
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'main-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'drawer-view'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>, <span class="string">'./regs-router'</span>, <span class="string">'./reg-view'</span>, <span class="string">'search-results-view'</span>], <span class="keyword">function</span>($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router, RegView, SearchResultsView) {
     <span class="string">'use strict'</span>;
     <span class="keyword">return</span> {</pre></div></div>
             
@@ -252,6 +252,24 @@ API should make this obsolete.</p>
             
             <div class="content"><div class='highlight'><pre>        bindEvents: <span class="keyword">function</span>() {
 
+            <span class="comment">/*
+            * landing page expandable until we discuss the langing page view 
+            * TODO: unify all expandables
+            */</span>
+            $(<span class="string">'.disclaimer-header'</span>).on(<span class="string">'click'</span>, <span class="keyword">function</span>(e){
+                e.preventDefault();
+                
+                <span class="keyword">var</span> header = $(e.currentTarget),
+                section = header.parent(),
+                button = header.find(<span class="string">'.expand-button'</span>),
+                buttonText = header.find(<span class="string">'.expand-text'</span>);
+
+                section.toggleClass(<span class="string">'open'</span>);
+                header.next(<span class="string">'.hidden'</span>).slideToggle();
+                button.toggleClass(<span class="string">'open'</span>);
+                buttonText.html(section.hasClass(<span class="string">'open'</span>) ? <span class="string">'Hide'</span> : <span class="string">'Show'</span>);
+            });
+
             <span class="comment">/* ssshhhhh */</span>
             <span class="keyword">new</span> Konami(<span class="keyword">function</span>() {
                 <span class="comment">/* http://thenounproject.com/noun/hamburger/#icon-No17373 */</span>
@@ -265,12 +283,26 @@ API should make this obsolete.</p>
 
         init: <span class="keyword">function</span>() {
             <span class="keyword">var</span> openSection,
-                urlPrefix,
                 regId = $(<span class="string">'#menu'</span>).data(<span class="string">'reg-id'</span>),
                 regSection = $(<span class="string">'section[data-base-version]'</span>),
                 regVersion = regSection.data(<span class="string">'base-version'</span>);
 
-            Dispatch.set(<span class="string">'reg'</span>, regId);</pre></div></div>
+            Dispatch.set(<span class="string">'reg'</span>, regId);
+
+            <span class="keyword">if</span> (window.location.pathname.indexOf(<span class="string">'search'</span>) &gt; <span class="number">0</span>) {
+                <span class="keyword">var</span> urlobj = RegsHelpers.parseURL(window.location.href),
+                    params = urlobj.params;
+
+                Dispatch.setContentView(
+                    <span class="keyword">new</span> SearchResultsView({
+                        query: params.q,
+                        version: params.version
+                    })
+                );
+            }
+            <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> regSection !== <span class="string">'undefined'</span>) {
+                openSection = regSection.attr(<span class="string">'id'</span>);
+                Dispatch.set(<span class="string">'section'</span>, openSection);</pre></div></div>
             
         </li>
         
@@ -281,13 +313,19 @@ API should make this obsolete.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>set open section and version for ajax calls</p>
+              <p>cache open section content</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> regSection !== <span class="string">'undefined'</span>) {
-                openSection = regSection.attr(<span class="string">'id'</span>);
-                Dispatch.set(<span class="string">'section'</span>, openSection);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>                RegModel.set(openSection, regSection.html());
+
+                Dispatch.setContentView(<span class="keyword">new</span> RegView({id: openSection}));
+            }
+
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> regVersion !== <span class="string">'undefined'</span>) {
+                Dispatch.set(<span class="string">'version'</span>, regVersion);
+            }</pre></div></div>
             
         </li>
         
@@ -298,17 +336,12 @@ API should make this obsolete.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>cache open section content</p>
+              <p>cache URL prefix</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                RegModel.set(openSection, regSection.html());
-
-                Dispatch.setContentView(<span class="keyword">new</span> RegView({id: openSection}));
-            }
-
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> regVersion !== <span class="string">'undefined'</span>) {
-                Dispatch.set(<span class="string">'version'</span>, regVersion);
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (window.APP_PREFIX) {
+                Dispatch.set(<span class="string">'urlprefix'</span>, window.APP_PREFIX.substring(<span class="number">1</span>));
             }</pre></div></div>
             
         </li>
@@ -319,24 +352,6 @@ API should make this obsolete.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>cache URL prefix</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            urlPrefix = RegsHelpers.findURLPrefix();
-            <span class="keyword">if</span> (urlPrefix) {
-                Dispatch.set(<span class="string">'urlprefix'</span>, urlPrefix);
-            }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>init primary Views that require only a single instance</p>
 

@@ -10,14 +10,16 @@
             <h2 class="toc-type">Switch between versions</h2>
         </div><!-- /.drawer-header -->
         <div class="drawer-content">
+            <div class="form-wrap group">
             <form action="{% url 'redirect_by_date_get' label_id %}"
-                  method="GET">
-              <input type="text" name="month" value="{{ today|date:"m" }}" />
-              / <input type="text" name="day" value="{{ today|date:"d" }}" />
-              / <input type="text" name="year" value="{{ today|date:"Y" }}" />
-              <button type="submit">Go</button>
+                  method="GET" class="date-input">
+              <input type="text" name="month" class="month-input" placeholder="{{ today|date:"m" }}" />
+              / <input type="text" name="day" class="day-input" placeholder="{{ today|date:"d" }}" />
+              / <input type="text" name="year" class="year-input" placeholder="{{ today|date:"Y" }}" />
+              <button type="submit">Find</button>
             </form>
-            <ul>
+            </div><!--./date-form-->
+            <ul class="version-list">
             {% for version in history %}
                 <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
                 {% if part == label_id %}
@@ -35,11 +37,6 @@
                         <span class="version-date">{{ version.by_date|date }}</span>
                     </a>
                 {% endif %}
-                    {% if active_version < version.version %}
-                        <a class="compare" href="{% url 'chrome_section_diff_view' label_id active_version version.version %}">Compare</a>
-                    {% elif active_version > version.version %}
-                        <a class="compare" href="{% url 'chrome_section_diff_view' label_id version.version active_version %}">Compare</a>
-                    {% endif %}
                     <ul class="rule-list">
                     {% for notice in version.notices %}
                         <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
