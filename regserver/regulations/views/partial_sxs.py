@@ -6,6 +6,7 @@ from django.views.generic.base import TemplateView
 from regulations.generator import generator, notices
 from regulations.generator.layers.utils import convert_to_python
 from regulations.generator.node_types import label_to_text
+from regulations.views import error_handling
 
 
 class ParagraphSXSView(TemplateView):
@@ -36,13 +37,13 @@ class ParagraphSXSView(TemplateView):
 
         notice = generator.get_notice(notice_id)
         if not notice:
-            raise Http404
+            raise error_handling.MissingContentException()
         notice = convert_to_python(notice)
 
         paragraph_sxs = generator.get_sxs(label_id, notice)
 
         if paragraph_sxs is None:
-            raise Http404
+            raise error_handling.MissingContentException()
 
         notices.add_depths(paragraph_sxs, 3)
 

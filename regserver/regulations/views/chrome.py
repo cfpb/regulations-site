@@ -12,7 +12,6 @@ from regulations.views.landing import regulation_exists, get_versions, regulatio
 from regulations.views.partial import *
 from regulations.views.partial_search import PartialSearch
 from regulations.views.sidebar import SideBarView
-
 from regulations.views import error_handling
 
 

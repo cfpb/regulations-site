@@ -9,10 +9,10 @@ from regulations.views.chrome import *
 
 class ViewsChromeTest(TestCase):
     @patch('regulations.views.chrome.generator')
-    def test_propagate_error(self, generator):
+    def test_404(self, generator):
         """Test that the response of the outer view is that of the inner
         when there's an error"""
-        generator.get_regulation.return_value = {}
+        generator.get_regulation.return_value = None
         generator.get_tree_paragraph.return_value = {}
 
         class InnerView(TemplateView):
@@ -25,4 +25,4 @@ class ViewsChromeTest(TestCase):
         view = FakeView()
         view.request = RequestFactory().get('/')
         response = view.get(view.request, label_id='lab', version='ver')
-        self.assertEqual(410, response.status_code)
+        self.assertEqual(404, response.status_code)
