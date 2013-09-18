@@ -96,7 +96,7 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
 
             // cache URL prefix
             if (window.APP_PREFIX) {
-                Dispatch.set('urlprefix', window.APP_PREFIX.substring(0, window.APP_PREFIX.length - 2));
+                Dispatch.set('urlprefix', window.APP_PREFIX.substring(1));
             }
 
             // init primary Views that require only a single instance
