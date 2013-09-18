@@ -147,3 +147,9 @@ class DiffApplierTest(TestCase):
 
         da.add_nodes_to_tree(tree, adds)
 
+    def test_child_picking(self):
+        da = self.create_diff_applier()
+        da.label_requested = '204-3'
+
+        self.assertTrue(da.is_child_of_requested('204-3-a'))
+        self.assertFalse(da.is_child_of_requested('204-32'))

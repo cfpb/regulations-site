@@ -210,6 +210,11 @@
             e.preventDefault();
             <span class="keyword">var</span> sectionId = $(e.target).data(<span class="string">'linked-section'</span>);
             Dispatch.trigger(<span class="string">'regSection:open'</span>, sectionId, {id:sectionId}, <span class="string">'regSection'</span>);
+        },
+
+        remove: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.stopListening();
+            <span class="keyword">return</span> <span class="keyword">this</span>;
         }
     });
 
