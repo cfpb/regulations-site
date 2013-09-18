@@ -1,5 +1,6 @@
 from django.conf import settings
 from regulations.generator import generator
+from django.core.urlresolvers import get_script_prefix
 
 
 def get_layer_list(names):
