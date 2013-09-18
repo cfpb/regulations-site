@@ -1,6 +1,8 @@
 from unittest import TestCase
 from mock import patch
 
+from django.conf import settings
+
 from regulations.views.utils import *
 
 class UtilsTest(TestCase):
@@ -16,4 +18,25 @@ class UtilsTest(TestCase):
         layer_names = 'graphics,meta'
         appliers = handle_specified_layers(layer_names, '205', '2013-1')
         self.assertEquals(3, len(appliers))
+
+    def test_add_extras_env(self):
+        context = {}
+        
+        settings.DEBUG = True
+        add_extras(context)
+        self.assertEqual('source', context['env'])
+
+        settings.DEBUG = False
+        add_extras(context)
+        self.assertEqual('built', context['env'])
+
+    def test_add_extras(self):
+        context = {}
+        add_extras(context)
+
+        self.assertTrue('GOOGLE_ANALYTICS_ID' in context)
+        self.assertTrue('GOOGLE_ANALYTICS_SITE' in context)
+        self.assertTrue('APP_PREFIX' in context)
+        self.assertTrue('env' in context)
+
 

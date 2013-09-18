@@ -46,12 +46,7 @@ class ChromeView(TemplateView):
         response.render()
         return response.content
 
-    def get_context_data(self, **kwargs):
-        context = super(ChromeView, self).get_context_data(**kwargs)
-
-        label_id = context['label_id']
-        version = context['version']
-
+    def set_tree_context(self, context, label_id, version):
         #   Hack solution: pull in full regulation, then the partial
         #   @todo: just query the meta and toc layers
         part = label_id.split('-')[0]
@@ -72,6 +67,14 @@ class ChromeView(TemplateView):
 
         context['today'] = date.today()
 
+    def get_context_data(self, **kwargs):
+
+        context = super(ChromeView, self).get_context_data(**kwargs)
+
+        label_id = context['label_id']
+        version = context['version']
+
+        self.set_tree_context(context, label_id, version)
        
         relevant_tree = generator.get_tree_paragraph(label_id, version)
         if relevant_tree is None:
