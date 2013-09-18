@@ -1,6 +1,6 @@
 #vim: set encoding=utf-8
 from django.core.urlresolvers import reverse, NoReverseMatch
-from django.http import Http404, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator, notices

@@ -1,6 +1,4 @@
-from django.conf import settings
 from django.http import HttpResponseBadRequest
-from django.views.generic.base import TemplateView
 
 from regulations.generator import api_reader
 from regulations.generator.node_types import label_to_text
