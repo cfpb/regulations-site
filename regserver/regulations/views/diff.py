@@ -1,6 +1,4 @@
 #vim: set encoding=utf-8
-from django.views.generic.base import TemplateView
-from django.http import Http404
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
