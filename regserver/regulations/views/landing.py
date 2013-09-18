@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from django.http import Http404
 from django.template import RequestContext
 from django.template.loader import select_template
 
