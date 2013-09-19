@@ -207,14 +207,16 @@
         },
 
         openSearchResults: <span class="keyword">function</span>(e) {
-            e.preventDefault();
-            <span class="keyword">var</span> $form = $(e.target),
-                options = {};
+            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+                e.preventDefault();
+                <span class="keyword">var</span> $form = $(e.target),
+                    options = {};
 
-            options.query = $form.find(<span class="string">'input[name=q]'</span>)[<span class="number">0</span>].value;
-            options.version = $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value;
+                options.query = $form.find(<span class="string">'input[name=q]'</span>)[<span class="number">0</span>].value;
+                options.version = $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value;
 
-            Dispatch.trigger(<span class="string">'search:submitted'</span>, options, <span class="string">'searchResults'</span>);
+                Dispatch.trigger(<span class="string">'search:submitted'</span>, options, <span class="string">'searchResults'</span>);
+            }
         }
 
     });

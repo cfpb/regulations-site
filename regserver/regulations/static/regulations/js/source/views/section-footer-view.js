@@ -10,9 +10,11 @@ define('section-footer-view', ['jquery', 'underscore', 'backbone', 'dispatch'], 
         },
 
         sendNavEvent: function(e) {
-            e.preventDefault();
-            var sectionId = $(e.target).data('linked-section');
-            Dispatch.trigger('regSection:open', sectionId, {id:sectionId}, 'regSection');
+            if (window.history && window.history.pushState) {
+                e.preventDefault();
+                var sectionId = $(e.target).data('linked-section');
+                Dispatch.trigger('regSection:open', sectionId, {id:sectionId}, 'regSection');
+            }
         },
 
         remove: function() {

@@ -231,13 +231,15 @@
         },
 
         closeAnalysis: <span class="keyword">function</span>(e) {
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> e !== <span class="string">'undefined'</span>) {
-                e.preventDefault();
-                window.history.back();
-            }
+            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+                <span class="keyword">if</span> (<span class="keyword">typeof</span> e !== <span class="string">'undefined'</span>) {
+                    e.preventDefault();
+                    window.history.back();
+                }
 
-            <span class="keyword">this</span>.$el.removeClass(<span class="string">'open-sxs'</span>);
-            Dispatch.trigger(<span class="string">'breakaway:close'</span>);
+                <span class="keyword">this</span>.$el.removeClass(<span class="string">'open-sxs'</span>);
+                Dispatch.trigger(<span class="string">'breakaway:close'</span>);
+            }
         }
     });
 

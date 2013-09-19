@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from django.http import Http404
 from django.template import RequestContext
 from django.template.loader import select_template
 
@@ -34,6 +33,7 @@ def first_section(label_id):
 
 
 def regulation(request, label_id):
+
     context = {}
     current_version, new_version = get_versions(label_id)
     if new_version:
@@ -45,10 +45,7 @@ def regulation(request, label_id):
 
     c = RequestContext(request, context)
 
-    if regulation_exists(label_id):
-        t = select_template([
-            'landing_%s.html' % label_id,
-            'generic_landing.html'])
-        return HttpResponse(t.render(c))
-    else:
-        raise Http404
+    t = select_template([
+        'landing_%s.html' % label_id,
+        'generic_landing.html'])
+    return HttpResponse(t.render(c))

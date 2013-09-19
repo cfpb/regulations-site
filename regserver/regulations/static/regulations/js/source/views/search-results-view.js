@@ -23,16 +23,18 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
         },
 
         paginate: function(e) {
-            e.preventDefault();
+            if (window.history && window.history.pushState) {
+                e.preventDefault();
 
-            var page = $(e.target).hasClass('previous') ? this.page - 1 : this.page + 1,
-                config = {
-                    query: this.query,
-                    version: this.version,
-                    page: page
-                };
+                var page = $(e.target).hasClass('previous') ? this.page - 1 : this.page + 1,
+                    config = {
+                        query: this.query,
+                        version: this.version,
+                        page: page
+                    };
 
-            Dispatch.trigger('search:submitted', config, 'searchResults');
+                Dispatch.trigger('search:submitted', config, 'searchResults');
+            }
         },
 
         remove: function() {
