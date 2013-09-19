@@ -174,7 +174,7 @@ currently these are TOC, History, and Search
 
 .toc-nav-link {
     display: inline-block;
-    *display:inline;
+    *display: inline;
     zoom: 1;
     height: 100%;
     padding: 0;
@@ -203,10 +203,6 @@ currently these are TOC, History, and Search
     border-right: 1px solid @medium_gray;
 }
 
-.active .drawer-toggles li {
-    margin-left: 0;
-}
-
 .toc-nav-link:link,
 .toc-nav-link:visited {
     color: @dark_gray;
@@ -220,20 +216,33 @@ currently these are TOC, History, and Search
 }
 
 @media only screen and ( min-width: 1100px ) {
-    .active .toc-nav-link {
-        border-right: none;
-        width: 40px;
+
+    .active {
+        .toc-nav-link {
+            display: block;
+            *display: block;
+            border-right: none;
+            width: 40px;
+        }
+
+        .toc-nav-link:hover,
+        .toc-nav-link:active {
+            border-bottom: none;
+        }
     }
 
     .active .drawer-toggles {
         position: absolute;
+        width: 40px;
         top: 34px;
-        right: 0px;
-        bordoer-top: 1px solid pink;
+        right: 0;
+        left: 198px;
 
         li {
+            margin-left: 0;
             display: list-item;
             border-bottom: 1px solid @medium_gray;
+            border-right: none;
         }
     }
 
