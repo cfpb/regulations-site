@@ -37,7 +37,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
             this.updateWayfinding();
 
-            Router.navigate(this.options.id + '/' + Dispatch.getVersion());
+            if (window.history && window.history.pushState) {
+                Router.navigate(this.options.id + '/' + Dispatch.getVersion());
+            }
 
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
 

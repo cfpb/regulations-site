@@ -21,7 +21,9 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
                 this.render(analysis);
             }
 
-            Router.navigate('sxs/' + sxsURL);
+            if (window.history && window.history.pushState) {
+                Router.navigate('sxs/' + sxsURL);
+            }
 
             Dispatch.on('sxs:close', this.closeAnalysis, this);
         },

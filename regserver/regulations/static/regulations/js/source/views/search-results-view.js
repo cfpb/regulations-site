@@ -13,8 +13,10 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
             Dispatch.trigger('searchResults:open', $results.html());
             $results.remove();
 
-            if (typeof this.options.url !== 'undefined') {
-                Router.navigate('search/' + this.options.url);
+            if (window.history && window.history.pushState) {
+                if (typeof this.options.url !== 'undefined') {
+                    Router.navigate('search/' + this.options.url);
+                }
             }
 
             this.query = this.options.query;
