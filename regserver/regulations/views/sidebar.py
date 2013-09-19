@@ -33,12 +33,14 @@ class SideBarView(TemplateView):
             raise Http404
 
         context['permalinks'] = []
+
         def per_node(node):
             if len(node['label']) > 1:
                 context['permalinks'].append({
                     'label_id': '-'.join(node['label']),
                     'section_id': '-'.join(node['label'][:2]),
-                    'text': label_to_text(node['label'], include_section=False)
+                    'text': label_to_text(node['label'], include_section=False,
+                                          include_marker=True)
                 })
             for child in node['children']:
                 per_node(child)
