@@ -218,18 +218,20 @@
         },
 
         openSxS: <span class="keyword">function</span>(e) {
-            e.preventDefault();
+            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+                e.preventDefault();
 
-            <span class="keyword">var</span> $sxsLink = $(e.target),
-                paragraphId = $sxsLink.data(<span class="string">'sxs-paragraph-id'</span>),
-                docNumber = $sxsLink.data(<span class="string">'doc-number'</span>);
+                <span class="keyword">var</span> $sxsLink = $(e.target),
+                    paragraphId = $sxsLink.data(<span class="string">'sxs-paragraph-id'</span>),
+                    docNumber = $sxsLink.data(<span class="string">'doc-number'</span>);
 
-            Dispatch.set(<span class="string">'sxs-analysis'</span>, <span class="keyword">new</span> SxSView({
-                    regParagraph: paragraphId,
-                    docNumber: docNumber,
-                    fromVersion: Dispatch.getVersion()
-                })
-            );
+                Dispatch.set(<span class="string">'sxs-analysis'</span>, <span class="keyword">new</span> SxSView({
+                        regParagraph: paragraphId,
+                        docNumber: docNumber,
+                        fromVersion: Dispatch.getVersion()
+                    })
+                );
+            }
         },
 
         getSidebar: <span class="keyword">function</span>(sectionId) {

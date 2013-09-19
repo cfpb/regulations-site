@@ -37,10 +37,12 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helper
         // **Event trigger**
         // when a TOC link is clicked, send an event along with the href of the clicked link
         sendClickEvent: function(e) {
-            e.preventDefault();
+            if (window.history && window.history.pushState) {
+                e.preventDefault();
 
-            var sectionId = $(e.currentTarget).data('section-id');
-            Dispatch.trigger('regSection:open', sectionId, {id: sectionId}, 'regSection');
+                var sectionId = $(e.currentTarget).data('section-id');
+                Dispatch.trigger('regSection:open', sectionId, {id: sectionId}, 'regSection');
+            }
         },
 
         // **Inactive** 

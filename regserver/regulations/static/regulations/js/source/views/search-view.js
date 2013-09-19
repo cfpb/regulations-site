@@ -9,14 +9,16 @@ define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
         },
 
         openSearchResults: function(e) {
-            e.preventDefault();
-            var $form = $(e.target),
-                options = {};
+            if (window.history && window.history.pushState) {
+                e.preventDefault();
+                var $form = $(e.target),
+                    options = {};
 
-            options.query = $form.find('input[name=q]')[0].value;
-            options.version = $form.find('select[name=version]')[0].value;
+                options.query = $form.find('input[name=q]')[0].value;
+                options.version = $form.find('select[name=version]')[0].value;
 
-            Dispatch.trigger('search:submitted', options, 'searchResults');
+                Dispatch.trigger('search:submitted', options, 'searchResults');
+            }
         }
 
     });

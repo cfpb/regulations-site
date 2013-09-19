@@ -33,13 +33,15 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
         },
 
         closeAnalysis: function(e) {
-            if (typeof e !== 'undefined') {
-                e.preventDefault();
-                window.history.back();
-            }
+            if (window.history && window.history.pushState) {
+                if (typeof e !== 'undefined') {
+                    e.preventDefault();
+                    window.history.back();
+                }
 
-            this.$el.removeClass('open-sxs');
-            Dispatch.trigger('breakaway:close');
+                this.$el.removeClass('open-sxs');
+                Dispatch.trigger('breakaway:close');
+            }
         }
     });
 

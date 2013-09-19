@@ -20,18 +20,20 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         },
 
         openSxS: function(e) {
-            e.preventDefault();
+            if (window.history && window.history.pushState) {
+                e.preventDefault();
 
-            var $sxsLink = $(e.target),
-                paragraphId = $sxsLink.data('sxs-paragraph-id'),
-                docNumber = $sxsLink.data('doc-number');
+                var $sxsLink = $(e.target),
+                    paragraphId = $sxsLink.data('sxs-paragraph-id'),
+                    docNumber = $sxsLink.data('doc-number');
 
-            Dispatch.set('sxs-analysis', new SxSView({
-                    regParagraph: paragraphId,
-                    docNumber: docNumber,
-                    fromVersion: Dispatch.getVersion()
-                })
-            );
+                Dispatch.set('sxs-analysis', new SxSView({
+                        regParagraph: paragraphId,
+                        docNumber: docNumber,
+                        fromVersion: Dispatch.getVersion()
+                    })
+                );
+            }
         },
 
         getSidebar: function(sectionId) {
