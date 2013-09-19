@@ -27,7 +27,7 @@ reg-landing.less contains styles specific to the regulation landing page
         margin-bottom: 0.5em;
     }
 
-    p {
+    p, li {
         .avenir-next;
     }
 }
@@ -157,7 +157,9 @@ Sidebar
 */
 
 .secondary-content {
-    .landing {
+    &.landing {
+        //position: absolute;
+
         .regs-meta {
             border-bottom: none;
         }
@@ -179,6 +181,10 @@ Sidebar
         ul {
             margin-bottom: 2em;
         }
+
+        li {
+            margin-top: 0.5em;
+        }
     }
 }
 
@@ -190,8 +196,7 @@ Sidebar
     .avenir-next;
 
     ul {
-        padding: 0;
-        margin: 0;
+        .reset;
     }
 }
 
@@ -200,12 +205,18 @@ Main Content Area
 ============================
 */
 
+.disclaimer, .about-the-tool, .feedback {
+    p, li {
+        font-size: 0.875em;
+    }
+
+    ul {
+        .reset;
+    }
+}
+
 .disclaimer {
     margin: 40px 0;
-
-    p {
-        .avenir-next;
-    }
 }
 
 .about-the-tool {

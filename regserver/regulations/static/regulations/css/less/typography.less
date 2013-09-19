@@ -103,6 +103,10 @@ li {
     margin-top: 1em; /*16px*/
 }
 
+address {
+    font-style: normal;
+}
+
 /* 
  Link Styles
  ========================================================================== */
@@ -154,6 +158,17 @@ a:visited {
     }
 }
 
+.phone:link,
+.phone:visited {
+    color: @black;
+}
+
+.phone:before {
+    .minicon;
+    content: "\e00c";
+    margin-right: 6px;
+}
+
 .mail:before {
     .minicon;
     content: "\e00e";
@@ -164,6 +179,12 @@ a:visited {
    .minicon;
     content: "\e002";
     font-size: 0.875em;
+    margin-left: 6px; 
+}
+
+.pdf:after {
+   .minicon;
+    content: "\e00d";
     margin-left: 6px; 
 }
 
