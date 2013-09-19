@@ -283,7 +283,6 @@ API should make this obsolete.</p>
 
         init: <span class="keyword">function</span>() {
             <span class="keyword">var</span> openSection,
-                urlPrefix,
                 regId = $(<span class="string">'#menu'</span>).data(<span class="string">'reg-id'</span>),
                 regSection = $(<span class="string">'section[data-base-version]'</span>),
                 regVersion = regSection.data(<span class="string">'base-version'</span>);
@@ -341,9 +340,8 @@ API should make this obsolete.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            urlPrefix = RegsHelpers.findURLPrefix();
-            <span class="keyword">if</span> (urlPrefix) {
-                Dispatch.set(<span class="string">'urlprefix'</span>, urlPrefix);
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (window.APP_PREFIX) {
+                Dispatch.set(<span class="string">'urlprefix'</span>, window.APP_PREFIX.substring(<span class="number">1</span>));
             }</pre></div></div>
             
         </li>

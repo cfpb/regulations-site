@@ -3,7 +3,7 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
 
     var RegsRouter = Backbone.Router.extend({
         routes: {
-            'regulation/:section/:version': 'backToSection',
+            ':section/:version': 'backToSection',
             'search/:reg': 'backToSearchResults'
         },
 

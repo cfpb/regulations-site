@@ -62,7 +62,6 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
 
         init: function() {
             var openSection,
-                urlPrefix,
                 regId = $('#menu').data('reg-id'),
                 regSection = $('section[data-base-version]'),
                 regVersion = regSection.data('base-version');
@@ -96,9 +95,8 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
             }
 
             // cache URL prefix
-            urlPrefix = RegsHelpers.findURLPrefix();
-            if (urlPrefix) {
-                Dispatch.set('urlprefix', urlPrefix);
+            if (window.APP_PREFIX) {
+                Dispatch.set('urlprefix', window.APP_PREFIX.substring(1));
             }
 
             // init primary Views that require only a single instance
