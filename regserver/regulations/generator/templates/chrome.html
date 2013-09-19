@@ -12,11 +12,10 @@
 
 <header id="site-header" class="reg-header">
 <div class="main-head">
-    {% load static from staticfiles %}
-        <div class="reg-title">
-            <h1><a href="{% url 'regulation_landing_view' tree.label.0 %}">{{ tree.meta.cfr_title_number }} CFR Part {{ tree.label.0 }} <span class="title">{{ tree.title_clean|title }} </span>{% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</a></h1>
-        </div> <!-- /reg-title -->
-        <img src="{%static "regulations/ip/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151px">
+    <div class="reg-title">
+        <h1><a href="{% url 'regulation_landing_view' tree.label.0 %}">{{ tree.meta.cfr_title_number }} CFR Part {{ tree.label.0 }} <span class="title">{{ tree.title_clean|title }} </span>{% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</a></h1>
+    </div> <!-- /reg-title -->
+    {% include "logo.html" %} 
 </div>
 
 <div class="sub-head">
