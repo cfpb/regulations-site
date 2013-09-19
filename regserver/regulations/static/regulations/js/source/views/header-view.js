@@ -4,7 +4,7 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
         el: '.reg-header',
 
         initialize: function() {
-            this.$activeEls = $('#menu, #site-header, #reg-content, #primary-footer');
+            this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer');
 
             // view switcher buttons - TOC, calendar, search
             this.$tocLinks = $('.toc-nav-link');
