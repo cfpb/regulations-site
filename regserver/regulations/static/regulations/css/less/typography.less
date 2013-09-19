@@ -103,6 +103,10 @@ li {
     margin-top: 1em; /*16px*/
 }
 
+address {
+    font-style: normal;
+}
+
 /* 
  Link Styles
  ========================================================================== */
@@ -154,6 +158,17 @@ a:visited {
     }
 }
 
+.phone:link,
+.phone:visited {
+    color: @black;
+}
+
+.phone:before {
+    .minicon;
+    content: "\e00c";
+    margin-right: 6px;
+}
+
 .mail:before {
     .minicon;
     content: "\e00e";
@@ -167,15 +182,24 @@ a:visited {
     margin-left: 6px; 
 }
 
+.pdf:after {
+   .minicon;
+    content: "\e00d";
+    margin-left: 6px; 
+}
+
 .external:hover,
 .mail:hover,
 .go:hover,
+.pdf:hover,
 .external:active,
 .mail:active,
 .go:active,
+.pdf:active,
 .external:focus,
 .mail:focus,
-.go:focus {
+.go:focus,
+.pdf:focus {
     border-bottom: 1px solid;
 }
 

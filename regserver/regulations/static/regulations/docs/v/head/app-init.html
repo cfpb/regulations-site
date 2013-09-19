@@ -252,24 +252,6 @@ API should make this obsolete.</p>
             
             <div class="content"><div class='highlight'><pre>        bindEvents: <span class="keyword">function</span>() {
 
-            <span class="comment">/*
-            * landing page expandable until we discuss the langing page view 
-            * TODO: unify all expandables
-            */</span>
-            $(<span class="string">'.disclaimer-header'</span>).on(<span class="string">'click'</span>, <span class="keyword">function</span>(e){
-                e.preventDefault();
-                
-                <span class="keyword">var</span> header = $(e.currentTarget),
-                section = header.parent(),
-                button = header.find(<span class="string">'.expand-button'</span>),
-                buttonText = header.find(<span class="string">'.expand-text'</span>);
-
-                section.toggleClass(<span class="string">'open'</span>);
-                header.next(<span class="string">'.hidden'</span>).slideToggle();
-                button.toggleClass(<span class="string">'open'</span>);
-                buttonText.html(section.hasClass(<span class="string">'open'</span>) ? <span class="string">'Hide'</span> : <span class="string">'Show'</span>);
-            });
-
             <span class="comment">/* ssshhhhh */</span>
             <span class="keyword">new</span> Konami(<span class="keyword">function</span>() {
                 <span class="comment">/* http://thenounproject.com/noun/hamburger/#icon-No17373 */</span>

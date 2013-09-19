@@ -1,4 +1,4 @@
-<div id="content-body" class="main-content">
+<div id="content-body" class="main-content landing">
     <section id="content-wrapper">
         <section data-base-version="{{ current_version.version }}">
             {% block reg_main_content %}
@@ -13,8 +13,8 @@
 </div>
 
 
-<div id="sidebar" class="secondary-content">
-    <div id="sidebar-content" class="sidebar-inner landing">
+<div id="sidebar" class="secondary-content landing">
+    <div id="sidebar-content" class="sidebar-inner">
         {% if new_version %}
         <div class="alert">
             <h3> New version to be effective: {{new_version.by_date|date:"m/d/Y"}} </h3>

@@ -10,6 +10,48 @@ reg-landing.less contains styles specific to the regulation landing page
     padding: .5em 0;
 }
 
+.landing {
+    h4 {
+        .avenir-next;
+        display: inline;
+        font-size: 1.125em;
+        text-transform: none;
+        margin: 0;
+        padding: 0;
+        line-height: 20px;
+    }
+
+    h5 {
+        color: @black;
+        text-transform: none;
+        margin-bottom: 0.5em;
+    }
+
+    p, li {
+        .avenir-next;
+    }
+}
+
+.landing-curent-link {
+    margin: 40px 0 0 0;
+
+    a {
+        .avenir-next;
+        display: inline-block;
+        line-height: 20px;
+    }
+}
+
+.landing-curent-link:after {
+    padding-top: 2em;
+    height: 1px;
+    display: block;
+    border-bottom: 1px solid @light_field;
+    content: '';
+    margin-left: -14em;
+    margin-right: -60px;
+}
+
 /*
 Tags
 ============================
@@ -115,7 +157,9 @@ Sidebar
 */
 
 .secondary-content {
-    .landing {
+    &.landing {
+        //position: absolute;
+
         .regs-meta {
             border-bottom: none;
         }
@@ -131,82 +175,50 @@ Sidebar
             color: @black;
             text-transform: none;
             margin-bottom: 0.5em;
+            .avenir-next-demi;
         }
 
         ul {
             margin-bottom: 2em;
         }
+
+        li {
+            margin-top: 0.5em;
+        }
+
+        .alert {
+            background-color: #F6D9D3;
+            border: 1px solid #E8A091;
+            padding: 30px 15px;
+            margin-bottom: 2em;
+            .avenir-next;
+
+            ul {
+                .reset;
+            }
+        }
     }
 }
 
  /*
-Disclaimer
+Main Content Area
 ============================
 */
 
-.disclaimer {
-    position: relative;
-    margin: 2em 0;
-    background-color: @bg_gray;
-
-    .disclaimer-header {
-        padding: 10px;
+.disclaimer, .about-the-tool, .feedback {
+    p, li {
+        font-size: 0.875em;
     }
 
-    .disclaimer-content {
-        padding: 0 10px 10px 10px;
-    }
-
-    &:hover {
-        background-color: @grey;
-        cursor: pointer;
-    }
-
-    &.open {
-        background-color: @grey;
-        cursor: auto;
-    }
-
-    h4 {
-        display: inline;
-        font-size: 1em;
-        text-transform: none;
-        margin: 0;
-        padding: 0;
-        line-height: 20px;
-    }
-
-    h4:before {
-        .minicon;
-        content: "\e00f";
-        margin-right: 8px;
-        line-height: 20px;
-    }
-
-    .expand-button {
-        float: right;
-        padding-top: 2px;
-        line-height: 20px;
-    }
-
-    .expand-button:before {
-        line-height: 20px;
-    }
-
-    p {
-        .avenir-next;
+    ul {
+        .reset;
     }
 }
 
-.alert {
-    background-color: #F6D9D3;
-    border: 1px solid #E8A091;
-    padding: 30px 15px;
-    margin-bottom: 2em;
-    .avenir-next;
+.disclaimer {
+    margin: 40px 0;
+}
 
-    ul {
-        padding: 0;
-        margin: 0;
-    }
+.about-the-tool {
+    margin-bottom: 40px;
 }
