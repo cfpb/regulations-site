@@ -31,24 +31,6 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
         // Purgatory for DOM event bindings that should happen in a View
         bindEvents: function() {
 
-            /*
-            * landing page expandable until we discuss the langing page view 
-            * TODO: unify all expandables
-            */
-            $('.disclaimer-header').on('click', function(e){
-                e.preventDefault();
-                
-                var header = $(e.currentTarget),
-                section = header.parent(),
-                button = header.find('.expand-button'),
-                buttonText = header.find('.expand-text');
-
-                section.toggleClass('open');
-                header.next('.hidden').slideToggle();
-                button.toggleClass('open');
-                buttonText.html(section.hasClass('open') ? 'Hide' : 'Show');
-            });
-
             /* ssshhhhh */
             new Konami(function() {
                 /* http://thenounproject.com/noun/hamburger/#icon-No17373 */
