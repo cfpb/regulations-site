@@ -33,7 +33,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 interpretationId = $('#' + this.model.id).data('interpId');
                 interpretation.remove();
 
-                this.$el.append(
+                this.$el.children('.definition-text').append(
                     RegsHelpers.fastLink(
                         '#' + interpretationId, 
                         'Related commentary', 
