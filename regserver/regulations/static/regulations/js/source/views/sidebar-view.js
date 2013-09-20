@@ -28,6 +28,8 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
             Dispatch.on('search:submitted', this.closeAllChildren, this);
             Dispatch.on('regSection:open', this.openRegFolders, this);
 
+            Dispatch.on('regSection:open', this.removeLandingSidebar, this);
+
             this.childViews = {};
             this.openRegFolders();
         },
@@ -42,7 +44,11 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
             }
 
             this.childViews.sxs = new SxSListView();
-            this.childViews.permalink = new PermalinkView();
+            this.childViews.permalink = new PermalinkView();    
+        },
+
+        removeLandingSidebar: function() {
+            $('.landing-sidebar').hide();
         },
 
         // open whatever content should populate the sidebar
