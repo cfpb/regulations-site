@@ -196,7 +196,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> SearchView = Backbone.View.extend({
@@ -207,16 +207,43 @@
         },
 
         openSearchResults: <span class="keyword">function</span>(e) {
-            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
-                e.preventDefault();
-                <span class="keyword">var</span> $form = $(e.target),
+            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Temporarily removing ajax search results
+e.preventDefault();</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="keyword">var</span> $form = $(e.target),
                     options = {};
 
                 options.query = $form.find(<span class="string">'input[name=q]'</span>)[<span class="number">0</span>].value;
-                options.version = $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value;
+                options.version = $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Temporarily removing ajax search results
+Dispatch.trigger(&#39;search:submitted&#39;, options, &#39;searchResults&#39;);</p>
 
-                Dispatch.trigger(<span class="string">'search:submitted'</span>, options, <span class="string">'searchResults'</span>);
-            }
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            }
         }
 
     });
