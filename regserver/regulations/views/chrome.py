@@ -38,15 +38,12 @@ class ChromeView(TemplateView):
             raise BadComponentException(response)
 
     def process_partial(self, context):
-        partial_view = self.partial_class()
-        partial_view.request = self.request
-        response = partial_view.get(self.request,
-                                    label_id=context['label_id'],
-                                    version=context['version'])
+        partial_view = self.partial_class.as_view()
+        response = partial_view(self.request,
+                                label_id=context['label_id'],
+                                version=context['version'])
         self._assert_good(response)
         response.render()
-        if hasattr(partial_view, 'final_context'):
-            context['partial_context'] = partial_view.final_context
         return response.content
 
     def set_tree_context(self, context, label_id, version):
@@ -121,6 +118,18 @@ class ChromeSearchView(ChromeView):
     template_name = 'chrome-search.html'
     partial_class = PartialSearch
     has_sidebar = False
+
+    def process_partial(self, context):
+        partial_view = self.partial_class()
+        partial_view.request = self.request
+        response = partial_view.get(self.request,
+                                    label_id=context['label_id'],
+                                    version=context['version'],
+                                    skip_count=True)
+        self._assert_good(response)
+        response.render()
+        context['partial_context'] = partial_view.final_context
+        return response.content
 
     def get_context_data(self, **kwargs):
         """Get the version and label_id for the chrome context"""
