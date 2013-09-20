@@ -237,6 +237,8 @@
             Dispatch.on(<span class="string">'search:submitted'</span>, <span class="keyword">this</span>.closeAllChildren, <span class="keyword">this</span>);
             Dispatch.on(<span class="string">'regSection:open'</span>, <span class="keyword">this</span>.openRegFolders, <span class="keyword">this</span>);
 
+            Dispatch.on(<span class="string">'regSection:open'</span>, <span class="keyword">this</span>.removeLandingSidebar, <span class="keyword">this</span>);
+
             <span class="keyword">this</span>.childViews = {};
             <span class="keyword">this</span>.openRegFolders();
         },
@@ -251,7 +253,11 @@
             }
 
             <span class="keyword">this</span>.childViews.sxs = <span class="keyword">new</span> SxSListView();
-            <span class="keyword">this</span>.childViews.permalink = <span class="keyword">new</span> PermalinkView();
+            <span class="keyword">this</span>.childViews.permalink = <span class="keyword">new</span> PermalinkView();    
+        },
+
+        removeLandingSidebar: <span class="keyword">function</span>() {
+            $(<span class="string">'.landing-sidebar'</span>).hide();
         },</pre></div></div>
             
         </li>
