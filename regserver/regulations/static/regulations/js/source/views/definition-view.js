@@ -64,10 +64,18 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         sendDefinitionLinkEvent: function(e) {
-            Dispatch.trigger('ga-event:definition', {
-                action: 'clicked key term inside definition',
-                context: $(e.target).attr('href')
-            });
+            var $target = $(e.target),
+                targetSection = $target.data('definition').split('-').slice(0,2).join('-');
+            if (targetSection === Dispatch.getOpenSection()) {
+                // Definition is on this page
+                Dispatch.trigger('ga-event:definition', {
+                    action: 'clicked term inside definition',
+                    context: $target.attr('href')
+                });
+            } else {
+                // Definition is on a different page
+                Dispatch.trigger('regSection:open', targetSection, {id: targetSection, hash: $target.data('definition')}, 'regSection');
+            }
         },
 
         render: function() {

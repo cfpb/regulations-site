@@ -268,7 +268,11 @@
             <span class="keyword">this</span>.render(html);
 
             Dispatch.setContentView(<span class="keyword">new</span> <span class="keyword">this</span>.viewmap[type](options));
-            window.scrollTo(<span class="number">0</span>,<span class="number">0</span>);
+            <span class="keyword">if</span> (options.hash) {
+                window.scrollTo(<span class="number">0</span>, $(<span class="string">'#'</span> + options.hash).offset().top);
+            } <span class="keyword">else</span> {
+                window.scrollTo(<span class="number">0</span>,<span class="number">0</span>);
+            }
             Dispatch.trigger(<span class="string">'loading:finish'</span>);
         },
 

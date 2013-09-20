@@ -57,7 +57,11 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             this.render(html);
 
             Dispatch.setContentView(new this.viewmap[type](options));
-            window.scrollTo(0,0);
+            if (options.hash) {
+                window.scrollTo(0, $('#' + options.hash).offset().top);
+            } else {
+                window.scrollTo(0,0);
+            }
             Dispatch.trigger('loading:finish');
         },
 
