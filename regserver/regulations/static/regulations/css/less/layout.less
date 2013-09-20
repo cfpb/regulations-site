@@ -46,6 +46,15 @@ Main Content
     z-index: 999999;
 }
 
+/*IE 9 does all sorts of whacky things with the box model and scrollbars. This should fix that*/
+.lt-ie10 {
+    .panel {
+        width: 238px;
+        -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box;
+        
+    }
+}
+
 /*
 TOC Header Navigation
 ---------------------
