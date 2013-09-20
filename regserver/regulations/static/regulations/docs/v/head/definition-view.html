@@ -240,7 +240,7 @@ this.options:</p>
                 interpretationId = $(<span class="string">'#'</span> + <span class="keyword">this</span>.model.id).data(<span class="string">'interpId'</span>);
                 interpretation.remove();
 
-                <span class="keyword">this</span>.$el.append(
+                <span class="keyword">this</span>.$el.children(<span class="string">'.definition-text'</span>).append(
                     RegsHelpers.fastLink(
                         <span class="string">'#'</span> + interpretationId, 
                         <span class="string">'Related commentary'</span>, 
