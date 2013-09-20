@@ -19,7 +19,7 @@ Main Content
     margin-top: 50px;
     margin-left: 15em; /*240px; - offsets .panel */
     margin-right: 25%; /* offset .secondary-content */
-    padding: 15px 60px;
+    padding: 50px 60px;
     overflow-x: none;
 }
 
@@ -44,6 +44,15 @@ Main Content
     width: 240px;
     padding-bottom: 60px;
     z-index: 999999;
+}
+
+/*IE 9 does all sorts of whacky things with the box model and scrollbars. This should fix that*/
+.lt-ie10 {
+    .panel {
+        width: 238px;
+        -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box;
+        
+    }
 }
 
 /*
@@ -94,8 +103,8 @@ Section Offsets
 .supplement-section section:before  {
     display: block; 
     content: ""; 
-    height: 60px; 
-    margin: -60px 0 0; 
+    height: 100px; 
+    margin: -100px 0 0; 
     visibility: hidden;
 }
 

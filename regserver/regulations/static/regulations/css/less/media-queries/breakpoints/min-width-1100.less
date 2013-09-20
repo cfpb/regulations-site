@@ -17,9 +17,7 @@
         }
     }
 
-    #menu-link,
-    #history-link,
-    #search-link {
+    .toc-nav-link {
         &.current {
             background-color: @light_field;
             border-bottom: 1px solid @medium_gray;
@@ -27,12 +25,10 @@
     }
 
     .active {
-        #menu-link,
-        #history-link,
-        #search-link {
+       .toc-nav-link {
             &.current {
-                background-color: none;
-                border-bottom: 1px solid @medium_gray;
+                background-color: @bg_gray;
+                border-bottom: none;
             }
         } 
     }
