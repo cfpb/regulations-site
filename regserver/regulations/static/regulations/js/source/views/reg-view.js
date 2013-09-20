@@ -156,7 +156,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         expandInterp: function(e) {
             // user can click anywhere in the header of a closed interp
             // for an open interp, they can click "hide" button or header
-            e.stopPropagation();
+            e.preventDefault();
             var header = $(e.currentTarget),
                 section = header.parent(),
                 button = header.find('.expand-button'),
