@@ -234,7 +234,7 @@
         }
     });
 
-    <span class="keyword">if</span> (<span class="keyword">typeof</span> window.history !== <span class="string">'undefined'</span> &amp;&amp; <span class="keyword">typeof</span> window.history.pushState !== <span class="string">'undefined'</span>) {
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> window.history === <span class="string">'undefined'</span> &amp;&amp; <span class="keyword">typeof</span> window.history.pushState === <span class="string">'undefined'</span>) {
         RegsRouter = <span class="keyword">function</span>() {
             <span class="keyword">this</span>.start = <span class="keyword">function</span>() {};
             <span class="keyword">this</span>.navigate = <span class="keyword">function</span>() {};

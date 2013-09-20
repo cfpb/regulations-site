@@ -36,7 +36,7 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
         }
     });
 
-    if (typeof window.history !== 'undefined' && typeof window.history.pushState !== 'undefined') {
+    if (typeof window.history === 'undefined' && typeof window.history.pushState === 'undefined') {
         RegsRouter = function() {
             this.start = function() {};
             this.navigate = function() {};

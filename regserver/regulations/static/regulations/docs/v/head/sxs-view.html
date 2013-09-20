@@ -219,7 +219,9 @@
                 <span class="keyword">this</span>.render(analysis);
             }
 
-            Router.navigate(<span class="string">'sxs/'</span> + sxsURL);
+            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+                Router.navigate(<span class="string">'sxs/'</span> + sxsURL);
+            }
 
             Dispatch.on(<span class="string">'sxs:close'</span>, <span class="keyword">this</span>.closeAnalysis, <span class="keyword">this</span>);
         },
