@@ -11,8 +11,6 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
             var analyses = this.$el.find('.chunk');
             this.model = new FolderModel({supplementalPath: 'sidebar'});
 
-            this.model.set(Dispatch.getOpenSection(), analyses.innerHTML);
-
             Dispatch.on('regSection:open:after', this.getSidebar, this);
 
 

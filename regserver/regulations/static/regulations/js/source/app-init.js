@@ -63,7 +63,6 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
             }
             else if (typeof regSection !== 'undefined') {
                 openSection = regSection.attr('id');
-                Dispatch.set('section', openSection);
 
                 // cache open section content
                 RegModel.set(openSection, regSection.html());
