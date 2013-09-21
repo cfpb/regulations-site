@@ -56,28 +56,28 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             }
         },
 
-        sendContinueLinkEvent: function(e) {
-            Dispatch.trigger('ga-event:definition', {
-                action: 'clicked continue link',
-                context: $(e.target).attr('href')
-            });
-        },
-
-        sendDefinitionLinkEvent: function(e) {
-            var $target = $(e.target),
-                targetSection = $target.data('definition').split('-').slice(0,2).join('-');
-            e.preventDefault();
+        definitionRouter: function(paragraph, actionText) {
+            var targetSection = paragraph.split('-').slice(0,2).join('-');
             if (targetSection === Dispatch.getOpenSection()) {
                 // Definition is on this page
                 Dispatch.trigger('ga-event:definition', {
-                    action: 'clicked term inside definition',
-                    context: $target.attr('href')
+                    action: actionText,
+                    context: '#' + paragraph
                 });
             } else {
                 // Definition is on a different page
-                Router.navigate(targetSection + '/' + Dispatch.getVersion() + '#' + $target.data('definition'), {'trigger': true});
-                // Dispatch.trigger('regSection:open', targetSection, {id: targetSection, hash: $target.data('definition')}, 'regSection');
+                Router.navigate(targetSection + '/' + Dispatch.getVersion() + '#' + paragraph, {'trigger': true});
             }
+        },
+
+        sendContinueLinkEvent: function(e) {
+            e.preventDefault();
+            this.definitionRouter($(e.target).attr('href').substr(1), 'clicked continue link');
+        },
+
+        sendDefinitionLinkEvent: function(e) {
+            e.preventDefault();
+            this.definitionRouter($(e.target).data('definition'), 'clicked term inside definition');
         },
 
         render: function() {
