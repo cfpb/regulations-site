@@ -7,8 +7,15 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
             'search/:reg': 'backToSearchResults'
         },
 
-        backToSection: function(section) {
-            Dispatch.trigger('regSection:open', section, {id: section}, 'regSection'); 
+        backToSection: function(section, versionAndHash) {
+            var poundPosition = versionAndHash.indexOf('#'),
+                options;
+            if (poundPosition === -1) {
+                options = {id: section};
+            } else {
+                options = {id: section, scrollToId: versionAndHash.substr(poundPosition) };
+            }
+            Dispatch.trigger('regSection:open', section, options, 'regSection'); 
             Dispatch.trigger('sxs:close');
         },
 

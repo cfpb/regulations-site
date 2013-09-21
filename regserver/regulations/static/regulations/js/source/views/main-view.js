@@ -57,8 +57,8 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             this.render(html);
 
             Dispatch.setContentView(new this.viewmap[type](options));
-            if (options.hash) {
-                window.scrollTo(0, $('#' + options.hash).offset().top);
+            if (options.scrollToId) {
+                window.scrollTo(0, $(options.scrollToId).offset().top);
             } else {
                 window.scrollTo(0,0);
             }

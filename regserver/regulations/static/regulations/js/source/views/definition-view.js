@@ -6,7 +6,7 @@
 //
 // A single inline interpretation, child of the sidebar
 // As of sprint 6, the only View that is instantiated more than once
-define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'dispatch', 'regs-helpers'], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers) {
+define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'dispatch', 'regs-helpers', './regs-router'], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers, Router) {
     'use strict';
 
     // **Constructor**
@@ -66,6 +66,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         sendDefinitionLinkEvent: function(e) {
             var $target = $(e.target),
                 targetSection = $target.data('definition').split('-').slice(0,2).join('-');
+            e.preventDefault();
             if (targetSection === Dispatch.getOpenSection()) {
                 // Definition is on this page
                 Dispatch.trigger('ga-event:definition', {
@@ -74,7 +75,8 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 });
             } else {
                 // Definition is on a different page
-                Dispatch.trigger('regSection:open', targetSection, {id: targetSection, hash: $target.data('definition')}, 'regSection');
+                Router.navigate(targetSection + '/' + Dispatch.getVersion() + '#' + $target.data('definition'), {'trigger': true});
+                // Dispatch.trigger('regSection:open', targetSection, {id: targetSection, hash: $target.data('definition')}, 'regSection');
             }
         },
 
