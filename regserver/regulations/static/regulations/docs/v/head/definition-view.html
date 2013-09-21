@@ -237,13 +237,13 @@ this.options:</p>
                 interpretationId;
 
             <span class="keyword">if</span> (<span class="keyword">typeof</span> interpretation[<span class="number">0</span>] !== <span class="string">'undefined'</span>) {
-                interpretationId = $(<span class="string">'#'</span> + <span class="keyword">this</span>.model.id).data(<span class="string">'interpId'</span>);
+                interpretationId = $(interpretation[<span class="number">0</span>]).data(<span class="string">'interp-id'</span>);
                 interpretation.remove();
 
                 <span class="keyword">this</span>.$el.children(<span class="string">'.definition-text'</span>).append(
                     RegsHelpers.fastLink(
                         <span class="string">'#'</span> + interpretationId, 
-                        <span class="string">'Related commentary'</span>, 
+                        <span class="string">'Official Interpretation'</span>,
                         <span class="string">'continue-link internal interp'</span>
                     )
                 );
@@ -264,8 +264,10 @@ this.options:</p>
         },
 
         definitionRouter: <span class="keyword">function</span>(paragraph, actionText) {
-            <span class="keyword">var</span> targetSection = paragraph.split(<span class="string">'-'</span>).slice(<span class="number">0</span>,<span class="number">2</span>).join(<span class="string">'-'</span>);
-            <span class="keyword">if</span> (targetSection === Dispatch.getOpenSection()) {</pre></div></div>
+            <span class="keyword">var</span> targetSection;
+            <span class="keyword">if</span> (paragraph.indexOf(<span class="string">'Interp'</span>) === -<span class="number">1</span>) {
+                targetSection = paragraph.split(<span class="string">'-'</span>).slice(<span class="number">0</span>,<span class="number">2</span>).join(<span class="string">'-'</span>);
+            } <span class="keyword">else</span> {</pre></div></div>
             
         </li>
         
@@ -275,6 +277,23 @@ this.options:</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Interpretations all live in the same place</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                targetSection = paragraph.split(<span class="string">'-'</span>)[<span class="number">0</span>] + <span class="string">'-Interp'</span>;
+            }
+            <span class="keyword">if</span> (targetSection === Dispatch.getOpenSection()) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Definition is on this page</p>
 
@@ -289,11 +308,11 @@ this.options:</p>
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>Definition is on a different page</p>
 
@@ -339,11 +358,11 @@ this.options:</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>link to definition in content body</p>
 
@@ -360,11 +379,11 @@ this.options:</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>remove inline interpretation, add interpretation link</p>
 
@@ -376,11 +395,11 @@ this.options:</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>make definition tabbable</p>
 
@@ -391,11 +410,11 @@ this.options:</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>make tab-activeated close button at bottom of definition content</p>
 
@@ -406,11 +425,11 @@ this.options:</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p><strong>Event trigger</strong> triggers definition open event</p>
 
@@ -421,11 +440,11 @@ this.options:</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>set focus to the open definition</p>
 
@@ -460,11 +479,11 @@ this.options:</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p><strong>Event trigger</strong> notifies app that definition is removed</p>
 

@@ -30,13 +30,13 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 interpretationId;
 
             if (typeof interpretation[0] !== 'undefined') {
-                interpretationId = $('#' + this.model.id).data('interpId');
+                interpretationId = $(interpretation[0]).data('interp-id');
                 interpretation.remove();
 
                 this.$el.children('.definition-text').append(
                     RegsHelpers.fastLink(
                         '#' + interpretationId, 
-                        'Related commentary', 
+                        'Official Interpretation',
                         'continue-link internal interp'
                     )
                 );
@@ -57,7 +57,13 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         definitionRouter: function(paragraph, actionText) {
-            var targetSection = paragraph.split('-').slice(0,2).join('-');
+            var targetSection;
+            if (paragraph.indexOf('Interp') === -1) {
+                targetSection = paragraph.split('-').slice(0,2).join('-');
+            } else {
+                // Interpretations all live in the same place
+                targetSection = paragraph.split('-')[0] + '-Interp';
+            }
             if (targetSection === Dispatch.getOpenSection()) {
                 // Definition is on this page
                 Dispatch.trigger('ga-event:definition', {
