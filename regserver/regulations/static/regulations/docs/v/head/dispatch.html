@@ -256,14 +256,14 @@ This scheme currently limits it to one value associated with each type, in theor
             <span class="keyword">this</span>.open[key] = val;
         },
 
-        setContentView: <span class="keyword">function</span>(view) {
+        removeContentView: <span class="keyword">function</span>() {
             <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.open[<span class="string">'contentView'</span>] !== <span class="string">'undefined'</span>) {
-                <span class="keyword">if</span> (<span class="keyword">this</span>.open[<span class="string">'contentView'</span>].hasOwnProperty(<span class="string">'remove'</span>)) {
-                    <span class="keyword">this</span>.open[<span class="string">'contentView'</span>].remove();
-                }
+                <span class="keyword">this</span>.open[<span class="string">'contentView'</span>].remove();
                 <span class="keyword">delete</span>(<span class="keyword">this</span>.open[<span class="string">'contentView'</span>]);
             }
+        },
 
+        setContentView: <span class="keyword">function</span>(view) {
             <span class="keyword">this</span>.set(<span class="string">'contentView'</span>, view);
         },</pre></div></div>
             
@@ -307,6 +307,10 @@ This scheme currently limits it to one value associated with each type, in theor
                 <span class="keyword">return</span> <span class="keyword">this</span>.open[type].model.id;
             }
             <span class="keyword">return</span> <span class="literal">false</span>;
+        },
+
+        get: <span class="keyword">function</span>(item) {
+            <span class="keyword">return</span> <span class="keyword">this</span>.open[item];
         },</pre></div></div>
             
         </li>

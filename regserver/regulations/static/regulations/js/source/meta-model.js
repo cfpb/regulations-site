@@ -42,7 +42,6 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
                     section = cached;
                 }
             }
-
             return section; 
         },
 

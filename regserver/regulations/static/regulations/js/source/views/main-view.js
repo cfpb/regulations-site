@@ -54,16 +54,20 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
         },
 
         createView: function(html, options, type) {
-            this.render(html);
-
+            Dispatch.removeContentView();
+            this.render(html, options.scrollToId);
             Dispatch.setContentView(new this.viewmap[type](options));
-            window.scrollTo(0,0);
             Dispatch.trigger('loading:finish');
         },
 
-        render: function(html) {
+        render: function(html, scrollToId) {
+            var offsetTop;
+
             this.header.reset();
             this.$el.html(html);
+
+            offsetTop = (scrollToId) ? (scrollToId).offset().top : 0;
+            window.scrollTo(0, offsetTop);
         },
 
         loading: function() {
