@@ -3,18 +3,22 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
 
     var RegsRouter = Backbone.Router.extend({
         routes: {
-            ':section/:version': 'backToSection',
+            ':section/:version': 'loadSection',
             'search/:reg': 'backToSearchResults'
         },
 
-        backToSection: function(section, versionAndHash) {
-            var poundPosition = versionAndHash.indexOf('#'),
-                options;
-            if (poundPosition === -1) {
+        loadSection: function(section, versionAndHash) {
+            var poundPosition,
                 options = {id: section};
-            } else {
-                options = {id: section, scrollToId: versionAndHash.substr(poundPosition) };
+
+            if (typeof versionAndHash !== 'undefined') {
+                poundPosition = versionAndHash.indexOf('#');
             }
+
+            if (poundPosition !== -1) {
+                options.scrollToId = versionAndHash.substr(poundPosition);
+            }
+
             Dispatch.trigger('regSection:open', section, options, 'regSection'); 
             Dispatch.trigger('sxs:close');
         },
