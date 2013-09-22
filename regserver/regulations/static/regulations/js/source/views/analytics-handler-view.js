@@ -9,6 +9,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'dispatch'], fu
             Dispatch.on('regSection:open', this.sendEvent, 'Table of Contents');
             Dispatch.on('interpretation:toggle', this.sendEvent, 'Inline interpretation');
             Dispatch.on('ga-event:permalink', this.sendEvent, 'Permalink');
+            Dispatch.on('search:submitted', this.sendEvent);
         },
 
         // TODO: standardize context on Dispatch events
@@ -29,6 +30,11 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'dispatch'], fu
                     if (typeof context.action === 'function') {
                         action = context.action.call();
                     }
+                }
+                // from search event
+                else if (typeof e.query !== 'undefined') {
+                    action = 'search';
+                    object = e.query + ' ' + e.version;
                 }
                 // from Dispatch event
                 else {
