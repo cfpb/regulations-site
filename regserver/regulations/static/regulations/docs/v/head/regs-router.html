@@ -201,12 +201,23 @@
 
     <span class="keyword">var</span> RegsRouter = Backbone.Router.extend({
         routes: {
-            <span class="string">':section/:version'</span>: <span class="string">'backToSection'</span>,
+            <span class="string">':section/:version'</span>: <span class="string">'loadSection'</span>,
             <span class="string">'search/:reg'</span>: <span class="string">'backToSearchResults'</span>
         },
 
-        backToSection: <span class="keyword">function</span>(section) {
-            Dispatch.trigger(<span class="string">'regSection:open'</span>, section, {id: section}, <span class="string">'regSection'</span>); 
+        loadSection: <span class="keyword">function</span>(section, versionAndHash) {
+            <span class="keyword">var</span> poundPosition,
+                options = {id: section};
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> versionAndHash !== <span class="string">'undefined'</span>) {
+                poundPosition = versionAndHash.indexOf(<span class="string">'#'</span>);
+            }
+
+            <span class="keyword">if</span> (poundPosition !== -<span class="number">1</span>) {
+                options.scrollToId = versionAndHash.substr(poundPosition);
+            }
+
+            Dispatch.trigger(<span class="string">'regSection:open'</span>, section, options, <span class="string">'regSection'</span>); 
             Dispatch.trigger(<span class="string">'sxs:close'</span>);
         },
 
