@@ -201,7 +201,7 @@ As of sprint 6, the only View that is instantiated more than once</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'definition-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'sidebar-module-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'dispatch'</span>, <span class="string">'regs-helpers'</span>, <span class="string">'./regs-router'</span>], <span class="keyword">function</span>($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers, Router) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'definition-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'sidebar-module-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'dispatch'</span>, <span class="string">'regs-helpers'</span>, <span class="string">'./regs-router'</span>], <span class="keyword">function</span>($, _, Backbone, SidebarModuleView, RegModel, Dispatch, Helpers, Router) {
     <span class="string">'use strict'</span>;</pre></div></div>
             
         </li>
@@ -241,7 +241,7 @@ this.options:</p>
                 interpretation.remove();
 
                 <span class="keyword">this</span>.$el.children(<span class="string">'.definition-text'</span>).append(
-                    RegsHelpers.fastLink(
+                    Helpers.fastLink(
                         <span class="string">'#'</span> + interpretationId, 
                         <span class="string">'Official Interpretation'</span>,
                         <span class="string">'continue-link internal interp'</span>
@@ -265,8 +265,9 @@ this.options:</p>
 
         definitionRouter: <span class="keyword">function</span>(paragraph, actionText) {
             <span class="keyword">var</span> targetSection;
+
             <span class="keyword">if</span> (paragraph.indexOf(<span class="string">'Interp'</span>) === -<span class="number">1</span>) {
-                targetSection = paragraph.split(<span class="string">'-'</span>).slice(<span class="number">0</span>,<span class="number">2</span>).join(<span class="string">'-'</span>);
+                targetSection = Helpers.findBaseSection(paragraph);
             } <span class="keyword">else</span> {</pre></div></div>
             
         </li>
@@ -284,6 +285,7 @@ this.options:</p>
             
             <div class="content"><div class='highlight'><pre>                targetSection = paragraph.split(<span class="string">'-'</span>)[<span class="number">0</span>] + <span class="string">'-Interp'</span>;
             }
+
             <span class="keyword">if</span> (targetSection === Dispatch.getOpenSection()) {</pre></div></div>
             
         </li>
@@ -369,9 +371,9 @@ this.options:</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>            $defText.append(
-                RegsHelpers.fastLink(
+                Helpers.fastLink(
                     <span class="string">'#'</span> + <span class="keyword">this</span>.model.id, 
-                    RegsHelpers.idToRef(<span class="keyword">this</span>.model.id),
+                    Helpers.idToRef(<span class="keyword">this</span>.model.id),
                     <span class="string">'continue-link internal'</span>
                 )
             );</pre></div></div>
