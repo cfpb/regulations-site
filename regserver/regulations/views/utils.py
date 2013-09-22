@@ -1,6 +1,6 @@
 from django.conf import settings
 from regulations.generator import generator
-from django.core.urlresolvers import get_script_prefix
+from django.core.urlresolvers import reverse
 
 
 def get_layer_list(names):
@@ -26,7 +26,11 @@ def handle_diff_layers(
 
 def add_extras(context):
     context['env'] = 'source' if settings.DEBUG else 'built'
-    context['APP_PREFIX'] = get_script_prefix()
+    prefix = reverse('regulation_landing_view', kwargs={'label_id': '9999'})
+    prefix = prefix.replace('9999', '')
+    if prefix != '/':   # Strip final slash
+        prefix = prefix[:-1]
+    context['APP_PREFIX'] = prefix
     context['GOOGLE_ANALYTICS_SITE'] = settings.GOOGLE_ANALYTICS_SITE
     context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
     return context
