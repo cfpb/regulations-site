@@ -65,7 +65,9 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
                 openSection = regSection.attr('id');
 
                 // cache open section content
-                RegModel.set(openSection, regSection.html());
+                // version data attribute should really be on the el
+                // that encapsulates all main/reg view
+                RegModel.set(openSection, $('#content-body').html());
 
                 Dispatch.setContentView(new RegView({id: openSection}));
             }
