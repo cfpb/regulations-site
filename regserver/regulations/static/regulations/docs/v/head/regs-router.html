@@ -205,8 +205,15 @@
             <span class="string">'search/:reg'</span>: <span class="string">'backToSearchResults'</span>
         },
 
-        backToSection: <span class="keyword">function</span>(section) {
-            Dispatch.trigger(<span class="string">'regSection:open'</span>, section, {id: section}, <span class="string">'regSection'</span>); 
+        backToSection: <span class="keyword">function</span>(section, versionAndHash) {
+            <span class="keyword">var</span> poundPosition = versionAndHash.indexOf(<span class="string">'#'</span>),
+                options;
+            <span class="keyword">if</span> (poundPosition === -<span class="number">1</span>) {
+                options = {id: section};
+            } <span class="keyword">else</span> {
+                options = {id: section, scrollToId: versionAndHash.substr(poundPosition) };
+            }
+            Dispatch.trigger(<span class="string">'regSection:open'</span>, section, options, <span class="string">'regSection'</span>); 
             Dispatch.trigger(<span class="string">'sxs:close'</span>);
         },
 

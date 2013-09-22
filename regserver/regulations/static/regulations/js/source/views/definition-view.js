@@ -6,7 +6,7 @@
 //
 // A single inline interpretation, child of the sidebar
 // As of sprint 6, the only View that is instantiated more than once
-define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'dispatch', 'regs-helpers'], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers) {
+define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'dispatch', 'regs-helpers', './regs-router'], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers, Router) {
     'use strict';
 
     // **Constructor**
@@ -30,13 +30,13 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 interpretationId;
 
             if (typeof interpretation[0] !== 'undefined') {
-                interpretationId = $('#' + this.model.id).data('interpId');
+                interpretationId = $(interpretation[0]).data('interp-id');
                 interpretation.remove();
 
                 this.$el.children('.definition-text').append(
                     RegsHelpers.fastLink(
                         '#' + interpretationId, 
-                        'Related commentary', 
+                        'Official Interpretation',
                         'continue-link internal interp'
                     )
                 );
@@ -56,18 +56,34 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             }
         },
 
+        definitionRouter: function(paragraph, actionText) {
+            var targetSection;
+            if (paragraph.indexOf('Interp') === -1) {
+                targetSection = paragraph.split('-').slice(0,2).join('-');
+            } else {
+                // Interpretations all live in the same place
+                targetSection = paragraph.split('-')[0] + '-Interp';
+            }
+            if (targetSection === Dispatch.getOpenSection()) {
+                // Definition is on this page
+                Dispatch.trigger('ga-event:definition', {
+                    action: actionText,
+                    context: '#' + paragraph
+                });
+            } else {
+                // Definition is on a different page
+                Router.navigate(targetSection + '/' + Dispatch.getVersion() + '#' + paragraph, {'trigger': true});
+            }
+        },
+
         sendContinueLinkEvent: function(e) {
-            Dispatch.trigger('ga-event:definition', {
-                action: 'clicked continue link',
-                context: $(e.target).attr('href')
-            });
+            e.preventDefault();
+            this.definitionRouter($(e.target).attr('href').substr(1), 'clicked continue link');
         },
 
         sendDefinitionLinkEvent: function(e) {
-            Dispatch.trigger('ga-event:definition', {
-                action: 'clicked key term inside definition',
-                context: $(e.target).attr('href')
-            });
+            e.preventDefault();
+            this.definitionRouter($(e.target).data('definition'), 'clicked term inside definition');
         },
 
         render: function() {
