@@ -25,6 +25,10 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
                 Router.navigate('sxs/' + sxsURL);
             }
 
+            Dispatch.trigger('ga-event:sxs', {
+                opensxs: this.options.regParagraph + ' ' + this.options.docNumber + ' ' + this.options.fromVersion
+            });
+
             Dispatch.on('sxs:close', this.closeAnalysis, this);
         },
 

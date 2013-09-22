@@ -207,6 +207,8 @@
             Dispatch.on(<span class="string">'regSection:open'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Table of Contents'</span>);
             Dispatch.on(<span class="string">'interpretation:toggle'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Inline interpretation'</span>);
             Dispatch.on(<span class="string">'ga-event:permalink'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Permalink'</span>);
+            Dispatch.on(<span class="string">'search:submitted'</span>, <span class="keyword">this</span>.sendEvent);
+            Dispatch.on(<span class="string">'ga-event:sxs'</span>, <span class="keyword">this</span>.sendEvent);
         },</pre></div></div>
             
         </li>
@@ -263,6 +265,28 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
+              <p>from search event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> e.query !== <span class="string">'undefined'</span>) {
+                    action = <span class="string">'submitted search'</span>;
+                    object = e.query + <span class="string">' '</span> + e.version;
+                }
+                <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> e.opensxs !== <span class="string">'undefined'</span>) {
+                    action = <span class="string">'opened SxS'</span>;
+                    object = e.opensxs;
+                }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
               <p>from Dispatch event</p>
 
             </div>
@@ -276,11 +300,11 @@
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>also from Dispatch event</p>
 
