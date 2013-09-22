@@ -8,7 +8,6 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         },
 
         initialize: function() {
-            var analyses = this.$el.find('.chunk');
             this.model = new FolderModel({supplementalPath: 'sidebar'});
 
             Dispatch.on('regSection:open:after', this.getSidebar, this);
