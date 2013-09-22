@@ -608,7 +608,7 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
         },
 
         remove: <span class="keyword">function</span>() {
-            $(window).off(<span class="string">'scrollstop'</span>);
+            Dispatch.get(<span class="string">'sectionNav'</span>).remove();
             Dispatch.remove(<span class="string">'sectionNav'</span>);
             <span class="keyword">this</span>.$el.remove();
             <span class="keyword">this</span>.stopListening();

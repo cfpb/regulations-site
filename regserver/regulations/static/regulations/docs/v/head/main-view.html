@@ -265,16 +265,17 @@
         },
 
         createView: <span class="keyword">function</span>(html, options, type) {
+            Dispatch.removeContentView();
             <span class="keyword">this</span>.render(html);
-
             Dispatch.setContentView(<span class="keyword">new</span> <span class="keyword">this</span>.viewmap[type](options));
-            window.scrollTo(<span class="number">0</span>,<span class="number">0</span>);
+
             Dispatch.trigger(<span class="string">'loading:finish'</span>);
         },
 
         render: <span class="keyword">function</span>(html) {
             <span class="keyword">this</span>.header.reset();
             <span class="keyword">this</span>.$el.html(html);
+            window.scrollTo(<span class="number">0</span>,<span class="number">0</span>);
         },
 
         loading: <span class="keyword">function</span>() {</pre></div></div>

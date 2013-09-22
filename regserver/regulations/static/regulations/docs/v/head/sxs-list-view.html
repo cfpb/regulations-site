@@ -206,10 +206,7 @@
         },
 
         initialize: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> analyses = <span class="keyword">this</span>.$el.find(<span class="string">'.chunk'</span>);
             <span class="keyword">this</span>.model = <span class="keyword">new</span> FolderModel({supplementalPath: <span class="string">'sidebar'</span>});
-
-            <span class="keyword">this</span>.model.set(Dispatch.getOpenSection(), analyses.innerHTML);
 
             Dispatch.on(<span class="string">'regSection:open:after'</span>, <span class="keyword">this</span>.getSidebar, <span class="keyword">this</span>);
 
