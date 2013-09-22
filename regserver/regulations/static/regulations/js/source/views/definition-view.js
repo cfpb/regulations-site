@@ -6,7 +6,7 @@
 //
 // A single inline interpretation, child of the sidebar
 // As of sprint 6, the only View that is instantiated more than once
-define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'dispatch', 'regs-helpers', './regs-router'], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers, Router) {
+define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'dispatch', 'regs-helpers', './regs-router'], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, Helpers, Router) {
     'use strict';
 
     // **Constructor**
@@ -34,7 +34,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 interpretation.remove();
 
                 this.$el.children('.definition-text').append(
-                    RegsHelpers.fastLink(
+                    Helpers.fastLink(
                         '#' + interpretationId, 
                         'Official Interpretation',
                         'continue-link internal interp'
@@ -58,12 +58,14 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
         definitionRouter: function(paragraph, actionText) {
             var targetSection;
+
             if (paragraph.indexOf('Interp') === -1) {
-                targetSection = paragraph.split('-').slice(0,2).join('-');
+                targetSection = Helpers.findBaseSection(paragraph);
             } else {
                 // Interpretations all live in the same place
                 targetSection = paragraph.split('-')[0] + '-Interp';
             }
+
             if (targetSection === Dispatch.getOpenSection()) {
                 // Definition is on this page
                 Dispatch.trigger('ga-event:definition', {
@@ -111,9 +113,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
             // link to definition in content body
             $defText.append(
-                RegsHelpers.fastLink(
+                Helpers.fastLink(
                     '#' + this.model.id, 
-                    RegsHelpers.idToRef(this.model.id),
+                    Helpers.idToRef(this.model.id),
                     'continue-link internal'
                 )
             );

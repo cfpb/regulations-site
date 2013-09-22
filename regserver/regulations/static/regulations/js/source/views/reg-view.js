@@ -193,7 +193,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         },
 
         remove: function() {
-            $(window).off('scrollstop');
+            Dispatch.get('sectionNav').remove();
             Dispatch.remove('sectionNav');
             this.$el.remove();
             this.stopListening();
