@@ -47,6 +47,16 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
                 returned.done(function(response) {
                     this.createView(response, options, type);
                 }.bind(this));
+
+                returned.fail(function() {
+                    var alertNode = document.createElement('div');
+
+                    alertNode.innerHTML = 'There was an issue loading your data. This may be because your device is currently offline. Please try again.';
+                    alertNode.className = 'alert';
+
+                    $(alertNode).insertBefore('h2.section-number');
+                    this.loaded();
+                }.bind(this));
             }
             else {
                this.createView(returned, options, type); 
