@@ -7,7 +7,8 @@ from regulations.generator import generator
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
 from regulations.views.diff import PartialSectionDiffView
-from regulations.views.landing import regulation_exists, get_versions, regulation as landing_page
+from regulations.views.landing import regulation_exists, get_versions
+from regulations.views.landing import regulation as landing_page
 from regulations.views.partial import *
 from regulations.views.partial_search import PartialSearch
 from regulations.views.sidebar import SideBarView
@@ -54,7 +55,7 @@ class ChromeView(TemplateView):
 
         if full_tree is None:
             raise error_handling.MissingContentException()
-        
+
         appliers = utils.handle_specified_layers(
             'toc,meta', part, version, self.partial_class.sectional_links)
         builder = generate_html(full_tree, appliers)
@@ -75,10 +76,11 @@ class ChromeView(TemplateView):
         version = context['version']
 
         self.set_tree_context(context, label_id, version)
-       
+
         relevant_tree = generator.get_tree_paragraph(label_id, version)
         if relevant_tree is None:
-            raise error_handling.MissingSectionException(label_id, version, context)
+            raise error_handling.MissingSectionException(label_id, version,
+                                                         context)
 
         context['partial_content'] = self.process_partial(context)
         if self.has_sidebar:
@@ -88,7 +90,6 @@ class ChromeView(TemplateView):
             self._assert_good(response)
             response.render()
             context['sidebar_content'] = response.content
-
 
         return context
 
@@ -115,9 +116,21 @@ class ChromeRegulationView(ChromeView):
 
 class ChromeSearchView(ChromeView):
     """Search results with chrome"""
-    template_name = 'chrome-empty-sidebar.html'
+    template_name = 'chrome-search.html'
     partial_class = PartialSearch
     has_sidebar = False
+
+    def process_partial(self, context):
+        partial_view = self.partial_class()
+        partial_view.request = self.request
+        response = partial_view.get(self.request,
+                                    label_id=context['label_id'],
+                                    version=context['version'],
+                                    skip_count=True)
+        self._assert_good(response)
+        response.render()
+        context['partial_context'] = partial_view.final_context
+        return response.content
 
     def get_context_data(self, **kwargs):
         """Get the version and label_id for the chrome context"""

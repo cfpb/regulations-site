@@ -7,7 +7,10 @@ version_timeline is one of "past", "current", and "future".
 <div id="content-wrapper" class="search-results">
     <section data-base-version="{{ version }}">
         <p class="search-version">{{ version_by_date|date }} Version - {{ version_timeline|title }} Law
-        <span id="result-count">{{ results.total_hits }} result{{ results.results|pluralize }}</span></p>
+        {% if not skip_count %}
+        <span id="result-count">{{ results.total_hits }} result{{ results.results|pluralize }}</span>
+        {% endif %}
+        </p>
         <ul class="result-list">
         {% for result in results.results %}
             <li>

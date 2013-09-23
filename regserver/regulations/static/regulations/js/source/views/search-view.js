@@ -1,4 +1,4 @@
-define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
+define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone) {
     'use strict';
 
     var SearchView = Backbone.View.extend({
@@ -10,14 +10,16 @@ define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
 
         openSearchResults: function(e) {
             if (window.history && window.history.pushState) {
-                e.preventDefault();
+                // Temporarily removing ajax search results
+                // e.preventDefault();
                 var $form = $(e.target),
                     options = {};
 
                 options.query = $form.find('input[name=q]')[0].value;
                 options.version = $form.find('select[name=version]')[0].value;
 
-                Dispatch.trigger('search:submitted', options, 'searchResults');
+                // Temporarily removing ajax search results
+                // Dispatch.trigger('search:submitted', options, 'searchResults');
             }
         }
 
