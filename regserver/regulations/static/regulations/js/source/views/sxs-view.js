@@ -45,13 +45,11 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
                     window.history.back();
                 }
 
-
                 this.$el.removeClass('open-sxs');
                 Dispatch.trigger('breakaway:close');
+                Dispatch.trigger('ga-event:sxsclose', Dispatch.getOpenSection());
 
-                Dispatch.trigger('ga-event:sxsclose', 'close SxS by back link');
                 Dispatch.get('sxs-analysis').remove();
-
             }
         },
 
