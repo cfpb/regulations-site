@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 
+from regulations.generator import api_reader
 from regulations.views import utils
 from regulations.views.chrome import ChromeView
 from regulations.views.partial_search import PartialSearch
@@ -18,7 +19,10 @@ class ChromeBreakawayView(ChromeView):
         #   Skip ChromeView's implementation
         context = super(ChromeView, self).get_context_data(**kwargs)
 
-        #   @todo: get the regulation letter as well
+        context['regulation'] = context['label_id'].split('-')[0]
+        meta = api_reader.ApiReader().layer('meta',
+            context['regulation'], self.request.GET.get('from_version'))
+        context['meta'] = meta[context['regulation']][0]
 
         content = self.content(context)
         if isinstance(content, HttpResponse):  # error occurred
