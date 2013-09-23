@@ -66,16 +66,11 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 targetSection = paragraph.split('-')[0] + '-Interp';
             }
 
-            if (targetSection === Dispatch.getOpenSection()) {
-                // Definition is on this page
-                Dispatch.trigger('ga-event:definition', {
-                    action: actionText,
-                    context: '#' + paragraph
-                });
-            } else {
-                // Definition is on a different page
-                Router.navigate(targetSection + '/' + Dispatch.getVersion() + '#' + paragraph, {'trigger': true});
-            }
+            Dispatch.trigger('ga-event:definition', {
+                action: actionText,
+                context: '#' + paragraph
+            });
+            Router.navigate(targetSection + '/' + Dispatch.getVersion() + '#' + paragraph, {'trigger': true});
         },
 
         sendContinueLinkEvent: function(e) {

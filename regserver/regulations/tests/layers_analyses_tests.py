@@ -1,3 +1,4 @@
+#vim: set encoding=utf-8
 from regulations.generator.layers.analyses import *
 from unittest import TestCase
 
@@ -23,14 +24,14 @@ class SectionBySectionLayerTest(TestCase):
         key, value = sxs.apply_layer("111-22")
         self.assertEqual("analyses", key)
         self.assertEqual([
-            {'doc_number': '2009-11', 'label_id': '111-22', 'text': '22'},
+            {'doc_number': '2009-11', 'label_id': '111-22', 'text': u'§ 22'},
             {'doc_number': '2009-22', 'label_id': '111-22-a',
-             'text': '22(a)'}], value)
+             'text': u'§ 22(a)'}], value)
 
         key, value = sxs.apply_layer("111-22-a")
         self.assertEqual("analyses", key)
         self.assertEqual([{'doc_number': '2009-22', 'label_id': '111-22-a',
-                           'text': '22(a)'}], value)
+                           'text': u'§ 22(a)'}], value)
 
         self.assertEqual(None, sxs.apply_layer("222-22"))
 
@@ -44,7 +45,7 @@ class SectionBySectionLayerTest(TestCase):
 
         _, value = sxs.apply_layer('111-22')
         self.assertEqual(
-            [{'doc_number': '2007-22', 'label_id': '111-22', 'text': '22'}],
+            [{'doc_number': '2007-22', 'label_id': '111-22', 'text': u'§ 22'}],
             value)
         _, value = sxs.apply_layer('111-22-Interp')
         self.assertEqual([

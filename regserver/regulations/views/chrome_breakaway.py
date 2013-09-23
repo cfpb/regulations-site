@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 
+from regulations.views import utils
 from regulations.views.chrome import ChromeView
 from regulations.views.partial_search import PartialSearch
 from regulations.views.partial_sxs import ParagraphSXSView
@@ -24,7 +25,7 @@ class ChromeBreakawayView(ChromeView):
             return content
         context['partial_content'] = self.content(context)
 
-        self.add_extras(context)
+        utils.add_extras(context)
         return context
 
 
