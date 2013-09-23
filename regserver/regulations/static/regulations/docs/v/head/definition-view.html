@@ -294,13 +294,17 @@ this.options:</p>
         },
 
         sendContinueLinkEvent: <span class="keyword">function</span>(e) {
-            e.preventDefault();
-            <span class="keyword">this</span>.definitionRouter($(e.target).attr(<span class="string">'href'</span>).substr(<span class="number">1</span>), <span class="string">'clicked continue link'</span>);
+            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+                e.preventDefault();
+                <span class="keyword">this</span>.definitionRouter($(e.target).attr(<span class="string">'href'</span>).substr(<span class="number">1</span>), <span class="string">'clicked continue link'</span>);
+            }
         },
 
         sendDefinitionLinkEvent: <span class="keyword">function</span>(e) {
-            e.preventDefault();
-            <span class="keyword">this</span>.definitionRouter($(e.target).data(<span class="string">'definition'</span>), <span class="string">'clicked term inside definition'</span>);
+            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+                e.preventDefault();
+                <span class="keyword">this</span>.definitionRouter($(e.target).data(<span class="string">'definition'</span>), <span class="string">'clicked term inside definition'</span>);
+            }
         },
 
         render: <span class="keyword">function</span>() {

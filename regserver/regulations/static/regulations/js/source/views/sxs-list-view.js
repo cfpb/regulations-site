@@ -12,7 +12,6 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
 
             Dispatch.on('regSection:open:after', this.getSidebar, this);
 
-
             this.modifyListDisplay();
         },
 
@@ -70,6 +69,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         highlightHeader: function() {
             this.$el.find('header').addClass('has-content');
         }
+
     });
 
     return SxSListView;

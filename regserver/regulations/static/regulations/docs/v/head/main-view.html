@@ -272,13 +272,19 @@
         },
 
         render: <span class="keyword">function</span>(html, scrollToId) {
-            <span class="keyword">var</span> offsetTop;
+            <span class="keyword">var</span> offsetTop, $scrollToId;
 
             <span class="keyword">this</span>.header.reset();
             <span class="keyword">this</span>.$el.html(html);
 
-            offsetTop = scrollToId &amp;&amp; $(scrollToId) ? $(scrollToId).offset().top : <span class="number">0</span>;
-            window.scrollTo(<span class="number">0</span>, offsetTop);
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> scrollToId !== <span class="string">'undefined'</span>) {
+                $scrollToId = $(<span class="string">'#'</span> + scrollToId);
+                <span class="keyword">if</span> ($scrollToId.length &gt; <span class="number">0</span>) {
+                    offsetTop = $scrollToId.offset().top;
+                }
+            }
+
+            window.scrollTo(<span class="number">0</span>, offsetTop || <span class="number">0</span>);
         },
 
         loading: <span class="keyword">function</span>() {</pre></div></div>

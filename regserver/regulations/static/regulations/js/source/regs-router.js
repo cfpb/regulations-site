@@ -7,20 +7,12 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
             'search/:reg': 'backToSearchResults'
         },
 
-        loadSection: function(section, versionAndHash) {
-            var poundPosition,
-                options = {id: section};
+        loadSection: function(section) {
+            var options = {id: section};
 
-            if (typeof versionAndHash !== 'undefined') {
-                poundPosition = versionAndHash.indexOf('#');
-            }
-
-            if (poundPosition !== -1) {
-                options.scrollToId = versionAndHash.substr(poundPosition);
-            }
+            options.scrollToId = Backbone.history.getHash();
 
             Dispatch.trigger('regSection:open', section, options, 'regSection'); 
-            Dispatch.trigger('sxs:close');
         },
 
         backToSearchResults: function(reg, params) {
