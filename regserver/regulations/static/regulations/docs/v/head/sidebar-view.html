@@ -295,7 +295,7 @@
         },
 
         toggleExpandable: <span class="keyword">function</span>(e) {
-            <span class="keyword">var</span> $expandable;
+            <span class="keyword">var</span> $expandable = $(e.currentTarget);
             <span class="keyword">if</span> (<span class="keyword">typeof</span> e.stopPropagation !== <span class="string">'undefined'</span>) {
                 e.stopPropagation();
                 $expandable = $(e.currentTarget);
