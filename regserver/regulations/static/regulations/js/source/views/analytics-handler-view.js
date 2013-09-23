@@ -11,6 +11,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'dispatch'], fu
             Dispatch.on('ga-event:permalink', this.sendEvent, 'Permalink');
             Dispatch.on('search:submitted', this.sendEvent);
             Dispatch.on('ga-event:sxs', this.sendEvent);
+            Dispatch.on('ga-event:sxsclose', this.sendEvent);
         },
 
         // TODO: standardize context on Dispatch events
@@ -20,7 +21,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'dispatch'], fu
             if (typeof window.ga === 'undefined') {
                 return;
             }
-
+console.log(e);
             if (typeof e === 'object') {
                 // from jQ event
                 if (typeof e.data !== 'undefined') {

@@ -20,7 +20,6 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
             }
 
             Dispatch.trigger('regSection:open', section, options, 'regSection'); 
-            Dispatch.trigger('sxs:close');
         },
 
         backToSearchResults: function(reg, params) {

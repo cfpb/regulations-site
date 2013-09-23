@@ -35,6 +35,14 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
         },
 
         openRegFolders: function() {
+            if (this.childViews.sxs) {
+                this.childViews.sxs.remove();
+            }
+
+            if (this.childViews.permalink) {
+                this.childViews.permalink.remove();
+            }
+
             if (this.$el.find('#sxs-list').length === 0) {
                 this.$el.append('<section id="sxs-list" class="regs-meta"></section>');
             }
