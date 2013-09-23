@@ -38,7 +38,13 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             this.updateWayfinding();
 
             if (window.history && window.history.pushState) {
-                Router.navigate(this.options.id + '/' + Dispatch.getVersion());
+                var url = this.options.id + '/' + Dispatch.getVersion(),
+                    hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
+                //  Be sure not to lose any hash info
+                if (hashPosition !== -1) {
+                    url = url + Backbone.history.fragment.substr(hashPosition);
+                }
+                Router.navigate(url);
             }
 
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
@@ -187,7 +193,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         },
 
         remove: function() {
-            $(window).off('scrollstop');
+            Dispatch.get('sectionNav').remove();
             Dispatch.remove('sectionNav');
             this.$el.remove();
             this.stopListening();

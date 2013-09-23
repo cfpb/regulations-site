@@ -37,14 +37,14 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
             this.open[key] = val;
         },
 
-        setContentView: function(view) {
+        removeContentView: function() {
             if (typeof this.open['contentView'] !== 'undefined') {
-                if (this.open['contentView'].hasOwnProperty('remove')) {
-                    this.open['contentView'].remove();
-                }
+                this.open['contentView'].remove();
                 delete(this.open['contentView']);
             }
+        },
 
+        setContentView: function(view) {
             this.set('contentView', view);
         },
 
@@ -64,6 +64,10 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
                 return this.open[type].model.id;
             }
             return false;
+        },
+
+        get: function(item) {
+            return this.open[item];
         },
 
         // return open section ex. 1005-3

@@ -223,6 +223,10 @@
                 Router.navigate(<span class="string">'sxs/'</span> + sxsURL);
             }
 
+            Dispatch.trigger(<span class="string">'ga-event:sxs'</span>, {
+                opensxs: <span class="keyword">this</span>.options.regParagraph + <span class="string">' '</span> + <span class="keyword">this</span>.options.docNumber + <span class="string">' '</span> + <span class="keyword">this</span>.options.fromVersion
+            });
+
             Dispatch.on(<span class="string">'sxs:close'</span>, <span class="keyword">this</span>.closeAnalysis, <span class="keyword">this</span>);
         },
 
