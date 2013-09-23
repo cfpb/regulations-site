@@ -13,9 +13,9 @@
             <div class="form-wrap group">
             <form action="{% url 'redirect_by_date_get' label_id %}"
                   method="GET" class="date-input">
-              <input type="text" name="month" class="month-input" placeholder="{{ today|date:"m" }}" />
-              / <input type="text" name="day" class="day-input" placeholder="{{ today|date:"d" }}" />
-              / <input type="text" name="year" class="year-input" placeholder="{{ today|date:"Y" }}" />
+              <input type="text" name="month" class="month-input" maxlength="2" value="{{ today|date:"m" }}" />
+              / <input type="text" name="day" class="day-input" maxlength="2" value="{{ today|date:"d" }}" />
+              / <input type="text" name="year" class="year-input" maxlength="4" value="{{ today|date:"Y" }}" />
               <button type="submit">Find</button>
             </form>
             </div><!--./date-form-->
