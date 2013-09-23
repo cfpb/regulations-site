@@ -160,6 +160,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             // **Event trigger** notifies app that definition is removed
             Dispatch.trigger('sidebarModule:remove', this.model.id);
 
+            // return focus to the definition link once the definition is removed
+            $('.definition.active').focus();
+
             return this;
         }
     });

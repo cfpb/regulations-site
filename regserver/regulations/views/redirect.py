@@ -1,9 +1,9 @@
 from datetime import date
 
-from django.http import Http404
 from django.shortcuts import redirect
 
 from regulations.generator.api_reader import ApiReader
+from regulations.views.error_handling import handle_generic_404
 
 
 def redirect_by_date(request, label_id, year, month, day):
@@ -32,10 +32,18 @@ def redirect_by_date(request, label_id, year, month, day):
     elif last_version:
         return redirect('chrome_paragraph_view', label_id, last_version)
     else:
-        raise Http404
+        return handle_generic_404(request)
 
 
 def redirect_by_date_get(request, label_id):
-    """Handles date, etc. if they are part of the GET variable"""
-    return redirect_by_date(request, label_id, request.GET.get('year'),
-                            request.GET.get('month'), request.GET.get('day'))
+    """Handles date, etc. if they are part of the GET variable. We check for
+    bad data here (as we can't rely on url regex)"""
+    try:
+        year = int(request.GET.get('year'))
+        month = int(request.GET.get('month'))
+        day = int(request.GET.get('day'))
+
+        return redirect_by_date(request, label_id, "%04d" % year,
+                                "%02d" % month, "%02d" % day)
+    except ValueError:
+        return handle_generic_404(request)

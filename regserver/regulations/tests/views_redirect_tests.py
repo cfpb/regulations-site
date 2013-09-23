@@ -16,8 +16,14 @@ class ViewsRedirectTest(TestCase):
             {'by_date': '2010-06-07', 'version': 'ccc'},
         ]}
 
-        self.assertRaises(Http404, redirect_by_date, None, '8888', '1999',
-                          '10', '10')
+        with patch('regulations.views.redirect.handle_generic_404') as handle:
+            redirect_by_date(None, '8888', '1999', '10', '10')
+            self.assertTrue(handle.called)
+
+            handle.reset_mock()
+            redirect_by_date(None, '8888', '', '', '')
+            self.assertTrue(handle.called)
+
         response = redirect_by_date(None, '8888', '2000', '01', '01')
         self.assertEqual(302, response.status_code)
         self.assertTrue('aaa' in response['Location'])
@@ -35,3 +41,15 @@ class ViewsRedirectTest(TestCase):
         self.assertTrue(redirect_by_date.called)
         self.assertEqual(('lablab', '2222', '11', '20'),
                          redirect_by_date.call_args[0][1:])
+
+        request = RequestFactory().get('?year=22&month=1&day=2')
+        redirect_by_date.reset_mock()
+        redirect_by_date_get(request, 'lablab')
+        self.assertTrue(redirect_by_date.called)
+        self.assertEqual(('lablab', '0022', '01', '02'),
+                         redirect_by_date.call_args[0][1:])
+
+        with patch('regulations.views.redirect.handle_generic_404') as handle:
+            request = RequestFactory().get('?year=bad&month=data&day=here')
+            redirect_by_date_get(request, 'lablab')
+            self.assertTrue(handle.called)
