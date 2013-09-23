@@ -1,4 +1,4 @@
-define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
+define('search-view', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
     'use strict';
 
     var SearchView = Backbone.View.extend({
@@ -6,11 +6,6 @@ define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
 
         events: {
             'submit': 'openSearchResults'
-        },
-
-        initialize: function() {
-            Dispatch.on('search:submitted', this.populateTextField, this);
-            this.populateTextField();
         },
 
         openSearchResults: function(e) {
@@ -26,22 +21,6 @@ define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
                 // Temporarily removing ajax search results
                 // Dispatch.trigger('search:submitted', options, 'searchResults');
             }
-        },
-
-        populateTextField: function(/*config*/) {
-            var $searchField = this.$el.find('input[name=q]'),
-                sliceStart = window.location.search.indexOf('=') + 1,
-                sliceEnd = window.location.search.indexOf('&'),
-                query = window.location.search.slice(sliceStart, sliceEnd),
-                pattern = new RegExp('\\+', 'g');
-            //if (typeof config.query !== 'undefined') {
-                if ($searchField[0].value === '') {
-                    //this.$el.find('input[name=q]')[0].value = config.query;
-                    // temporary solution
-                    query = decodeURIComponent(query).replace(pattern, ' ');
-                    $searchField[0].value = query;
-                }
-            //}
         }
 
     });
