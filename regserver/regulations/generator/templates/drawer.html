@@ -22,8 +22,8 @@
             <ul class="version-list">
             {% for version in history %}
                 <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
-                {% if part == label_id %}
-                    <a href="{% url 'chrome_regulation_view' part version.version %}" class="version-link" data-version="{{ version.version }}">
+                {% if reg_part == label_id %}
+                    <a href="{% url 'chrome_regulation_view' reg_part version.version %}" class="version-link" data-version="{{ version.version }}">
                         {% if version.timeline == 'current' %}
                             <h4>Current Law</h4>
                         {% endif %}
