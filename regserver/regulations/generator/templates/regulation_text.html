@@ -16,6 +16,12 @@
         </p>
         {% endif %}
 
+        {% if c.interp %}
+            {% with interp=c.interp %}
+                {% include "slide-down-interp.html" %}
+            {% endwith %}
+        {% endif %}
+
         <ol class="level-1" type="a">
         {% if c.children %}
             {% for node in c.children %}
@@ -23,10 +29,4 @@
             {% endfor %}
         {% endif %}
         </ol>
-
-        {% if c.interp %}
-            {% with interp=c.interp %}
-                {% include "slide-down-interp.html" %}
-            {% endwith %}
-        {% endif %}
 {% endif %}

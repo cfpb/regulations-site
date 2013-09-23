@@ -17,7 +17,8 @@ class SectionBySectionLayer(object):
         return [{'doc_number': doc_number,
                  'label_id': label_id,
                  'text': label_to_text(label_id.split('-'),
-                                       include_section=False)}]
+                                       include_section=False,
+                                       include_marker=True)}]
 
     def apply_layer(self, text_index):
         """Return a pair of field-name + analyses if they apply; include all

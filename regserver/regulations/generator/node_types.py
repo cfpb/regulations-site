@@ -1,3 +1,4 @@
+#vim: set encoding=utf-8
 from itertools import takewhile
 
 APPENDIX = u'appendix'
@@ -32,8 +33,13 @@ def to_markup_id(id_parts):
     return new_id
 
 
-def label_to_text(label, include_section=True):
+def label_to_text(label, include_section=True, include_marker=False):
     """Convert a label:list[string] into a human-readable string"""
+    if include_marker:
+        marker = u'§ '
+    else:
+        marker = ''
+
     if len(label) == 1:
         return 'Regulation %s' % label[0]
     elif 'Interp' in label:
@@ -57,12 +63,13 @@ def label_to_text(label, include_section=True):
     elif include_section:
         # Regulation Text with section number
         if len(label) == 2:  # e.g. 225-2
-            return '.'.join(label)
+            return marker + '.'.join(label)
         else:  # e.g. 225-2-b-4-i-A
-            return '%s.%s(%s)' % (label[0], label[1], ')('.join(label[2:]))
+            return marker + '%s.%s(%s)' % (label[0], label[1],
+                                           ')('.join(label[2:]))
     else:
         # Regulation Text without section number
         if len(label) == 2:  # e.g. 225-2
-            return label[1]
+            return marker + label[1]
         else:  # e.g. 225-2-b-4-i-A
-            return '%s(%s)' % (label[1], ')('.join(label[2:]))
+            return marker + '%s(%s)' % (label[1], ')('.join(label[2:]))
