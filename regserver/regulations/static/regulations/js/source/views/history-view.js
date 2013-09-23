@@ -33,10 +33,13 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'dispatch'], functio
             if (typeof prefix !== 'undefined' && prefix.substr(prefix.length - 1) !== '/') {
                 prefix = prefix + '/';
             }
-            this.$el.find('.version-link').each(function() {
-                var $link = $(this);
-                $link.attr('href', prefix + currentSection + '/' + $link.data('version'));
-            });
+            // currentSection may not be defined (e.g. on the landing page)
+            if (typeof currentSection !== 'undefined') {
+                this.$el.find('.version-link').each(function() {
+                    var $link = $(this);
+                    $link.attr('href', prefix + currentSection + '/' + $link.data('version'));
+                });
+            }
         }
     });
 
