@@ -631,8 +631,10 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
             <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
                 e.preventDefault();
 
-                <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'linked-section'</span>);
-                Dispatch.trigger(<span class="string">'regSection:open'</span>, sectionId, {id: sectionId}, <span class="string">'regSection'</span>);
+                <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'linked-section'</span>),
+                    subSectionId = $(e.currentTarget).data(<span class="string">'linked-subsection'</span>);
+                
+                Router.navigate(sectionId + <span class="string">'/'</span> + Dispatch.getVersion() + <span class="string">'#'</span> + subSectionId, {trigger: <span class="literal">true</span>});
             }
         },
 
