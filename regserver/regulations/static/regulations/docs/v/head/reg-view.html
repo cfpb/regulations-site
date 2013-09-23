@@ -208,7 +208,8 @@
         events: {
             <span class="string">'click .definition'</span>: <span class="string">'termLinkHandler'</span>,
             <span class="string">'click .inline-interp-header'</span>: <span class="string">'expandInterp'</span>,
-            <span class="string">'click .definition.active'</span>: <span class="string">'openDefinitionLinkHandler'</span>
+            <span class="string">'click .definition.active'</span>: <span class="string">'openDefinitionLinkHandler'</span>,
+            <span class="string">'click .inline-interpretation .section-link'</span>: <span class="string">'openInterp'</span>
         },
 
         initialize: <span class="keyword">function</span>() {</pre></div></div>
@@ -624,6 +625,17 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
         setActiveTerm: <span class="keyword">function</span>($link) {
             <span class="keyword">this</span>.clearActiveTerms();
             $link.addClass(<span class="string">'active'</span>).data(<span class="string">'active'</span>, <span class="number">1</span>);
+        },
+
+        openInterp: <span class="keyword">function</span>(e) {
+            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+                e.preventDefault();
+
+                <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'linked-section'</span>),
+                    subSectionId = $(e.currentTarget).data(<span class="string">'linked-subsection'</span>);
+                
+                Router.navigate(sectionId + <span class="string">'/'</span> + Dispatch.getVersion() + <span class="string">'#'</span> + subSectionId, {trigger: <span class="literal">true</span>});
+            }
         },
 
         remove: <span class="keyword">function</span>() {
