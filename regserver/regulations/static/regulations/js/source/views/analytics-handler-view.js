@@ -12,6 +12,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'dispatch'], fu
             Dispatch.on('search:submitted', this.sendEvent);
             Dispatch.on('ga-event:sxs', this.sendEvent);
             Dispatch.on('ga-event:sxsclose', this.sendEvent, 'close SxS by back link');
+            Dispatch.on('ga-event:sectionnav', this.sendEvent, 'navigate to section by footer pagination');
         },
 
         // TODO: standardize context on Dispatch events
