@@ -210,6 +210,8 @@
             <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
                 e.preventDefault();
                 <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'linked-section'</span>);
+
+                Dispatch.trigger(<span class="string">'ga-event:sectionnav'</span>, sectionId);
                 Dispatch.trigger(<span class="string">'regSection:open'</span>, sectionId, {id:sectionId}, <span class="string">'regSection'</span>);
             }
         },

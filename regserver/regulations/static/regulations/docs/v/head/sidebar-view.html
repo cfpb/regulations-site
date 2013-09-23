@@ -244,6 +244,14 @@
         },
 
         openRegFolders: <span class="keyword">function</span>() {
+            <span class="keyword">if</span> (<span class="keyword">this</span>.childViews.sxs) {
+                <span class="keyword">this</span>.childViews.sxs.remove();
+            }
+
+            <span class="keyword">if</span> (<span class="keyword">this</span>.childViews.permalink) {
+                <span class="keyword">this</span>.childViews.permalink.remove();
+            }
+
             <span class="keyword">if</span> (<span class="keyword">this</span>.$el.find(<span class="string">'#sxs-list'</span>).length === <span class="number">0</span>) {
                 <span class="keyword">this</span>.$el.append(<span class="string">'&lt;section id="sxs-list" class="regs-meta"&gt;&lt;/section&gt;'</span>);
             }

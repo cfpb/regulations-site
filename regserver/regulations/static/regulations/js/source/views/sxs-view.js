@@ -47,7 +47,17 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
 
                 this.$el.removeClass('open-sxs');
                 Dispatch.trigger('breakaway:close');
+                Dispatch.trigger('ga-event:sxsclose', Dispatch.getOpenSection());
+
+                Dispatch.get('sxs-analysis').remove();
             }
+        },
+
+        remove: function() {
+            this.$el.html('');
+            this.stopListening();
+            this.$el.off();
+            return this;
         }
     });
 

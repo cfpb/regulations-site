@@ -245,7 +245,17 @@
 
                 <span class="keyword">this</span>.$el.removeClass(<span class="string">'open-sxs'</span>);
                 Dispatch.trigger(<span class="string">'breakaway:close'</span>);
+                Dispatch.trigger(<span class="string">'ga-event:sxsclose'</span>, Dispatch.getOpenSection());
+
+                Dispatch.get(<span class="string">'sxs-analysis'</span>).remove();
             }
+        },
+
+        remove: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.$el.html(<span class="string">''</span>);
+            <span class="keyword">this</span>.stopListening();
+            <span class="keyword">this</span>.$el.off();
+            <span class="keyword">return</span> <span class="keyword">this</span>;
         }
     });
 
