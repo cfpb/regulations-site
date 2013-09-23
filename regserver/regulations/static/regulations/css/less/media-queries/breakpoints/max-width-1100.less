@@ -7,6 +7,7 @@
     .panel {
         left: -200px;
         top: 200px;
+        overflow-y: hidden;
 
         /* position content fully offscreen*/
         .drawer-content {
@@ -22,6 +23,7 @@
 
     .panel.active {
         top: 94px;
+        overflow-y: scroll; /* allow content to be scrollable */
 
         .drawer-content {
             position: static;
