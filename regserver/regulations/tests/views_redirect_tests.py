@@ -43,7 +43,13 @@ class ViewsRedirectTest(TestCase):
                          redirect_by_date.call_args[0][1:])
 
         request = RequestFactory().get('?year=22&month=1&day=2')
+        redirect_by_date.reset_mock()
         redirect_by_date_get(request, 'lablab')
         self.assertTrue(redirect_by_date.called)
         self.assertEqual(('lablab', '0022', '01', '02'),
                          redirect_by_date.call_args[0][1:])
+
+        with patch('regulations.views.redirect.handle_generic_404') as handle:
+            request = RequestFactory().get('?year=bad&month=data&day=here')
+            redirect_by_date_get(request, 'lablab')
+            self.assertTrue(handle.called)
