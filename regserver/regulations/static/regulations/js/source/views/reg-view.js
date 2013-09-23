@@ -197,8 +197,10 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             if (window.history && window.history.pushState) {
                 e.preventDefault();
 
-                var sectionId = $(e.currentTarget).data('linked-section');
-                Dispatch.trigger('regSection:open', sectionId, {id: sectionId}, 'regSection');
+                var sectionId = $(e.currentTarget).data('linked-section'),
+                    subSectionId = $(e.currentTarget).data('linked-subsection');
+                
+                Router.navigate(sectionId + '/' + Dispatch.getVersion() + '#' + subSectionId, {trigger: true});
             }
         },
 
