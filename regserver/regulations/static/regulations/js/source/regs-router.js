@@ -7,7 +7,7 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
             'search/:reg': 'backToSearchResults'
         },
 
-        loadSection: function(section, versionAndHash) {
+        loadSection: function(section) {
             var options = {id: section};
 
             options.scrollToId = Backbone.history.getHash();
