@@ -47,17 +47,11 @@ class ChromeView(TemplateView):
         return response.content
 
     def set_tree_context(self, context, label_id, version):
-        #   Hack solution: pull in full regulation, then the partial
-        #   @todo: just query the meta and toc layers
         part = label_id.split('-')[0]
         full_tree = generator.get_regulation(part, version)
 
         if full_tree is None:
             raise error_handling.MissingContentException()
-
-        appliers = utils.handle_specified_layers(
-            'toc,meta', part, version, self.partial_class.sectional_links)
-        builder = generate_html(full_tree, appliers)
 
         table_of_contents = utils.table_of_contents(
             part,
@@ -71,7 +65,6 @@ class ChromeView(TemplateView):
             self.partial_class.sectional_links)
         context['meta'] = regulation_meta
 
-        context['tree'] = full_tree
         utils.add_extras(context)
 
         context['part'] = part
