@@ -30,6 +30,22 @@ urlpatterns = patterns(
     # Example http://.../regulation_redirect/201-3-v
     url(r'^regulation_redirect/%s$' % paragraph_pattern, redirect_by_date_get,
         name='redirect_by_date_get'),
+    #A section by section paragraph with chrome
+    #Example: http://.../sxs/201-2-g/2011-1738
+    url(r'^sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
+        ChromeSXSView.as_view(),
+        name='chrome_sxs_view'),
+    # Search results for non-JS viewers
+    # Example: http://.../search?q=term&version=2011-1738
+    url(r'^search/%s$' % reg_pattern,
+        ChromeSearchView.as_view(),
+        name='chrome_search'),
+    # Diff view of a section for non-JS viewers (or book markers)
+    # Example: http://.../diff/201-4/2011-1738/2013-10704
+    url(r'^diff/%s/%s/%s$' %
+        (section_pattern, version_pattern, newer_version_pattern),
+        ChromeSectionDiffView.as_view(),
+        name='chrome_section_diff_view'),
     # Redirect to version by date
     # Example: http://.../regulations/201-3-v/1999/11/8
     url(r'^%s/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})$'
@@ -58,22 +74,6 @@ urlpatterns = patterns(
     #Example: http://.../regulation/201
     url(r'^%s$' % reg_pattern, ChromeLandingView.as_view(),
         name='regulation_landing_view'),
-    #A section by section paragraph with chrome
-    #Example: http://.../sxs/201-2-g/2011-1738
-    url(r'^sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
-        ChromeSXSView.as_view(),
-        name='chrome_sxs_view'),
-    # Search results for non-JS viewers
-    # Example: http://.../search?q=term&version=2011-1738
-    url(r'^search/%s$' % reg_pattern,
-        ChromeSearchView.as_view(),
-        name='chrome_search'),
-    # Diff view of a section for non-JS viewers (or book markers)
-    # Example: http://.../diff/201-4/2011-1738/2013-10704
-    url(r'^diff/%s/%s/%s$' %
-        (section_pattern, version_pattern, newer_version_pattern),
-        ChromeSectionDiffView.as_view(),
-        name='chrome_section_diff_view'),
 
     # Load just the sidebar
     # Example: http://.../partial/sidebar/201-2/2013-10704
@@ -86,6 +86,16 @@ urlpatterns = patterns(
         PartialSearch.as_view(),
         name='partial_search'),
 
+    #A diff view of a section (without chrome)
+    url(r'^partial/diff/%s/%s/%s$' % (
+        section_pattern, version_pattern, newer_version_pattern),
+        PartialSectionDiffView.as_view(),
+        name='partial_section_diff_view'),
+    #A section by section paragraph (without chrome)
+    #Example: http://.../partial/sxs/201-2-g/2011-1738
+    url(r'^partial/sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
+        ParagraphSXSView.as_view(),
+        name='paragraph_sxs_view'),
     #A regulation section without chrome
     #Example: http://.../partial/201-4/2013-10704
     url(r'^partial/%s/%s$' % (section_pattern, version_pattern),
@@ -106,14 +116,4 @@ urlpatterns = patterns(
     url(r'^partial/%s/%s$' % (paragraph_pattern, version_pattern),
         PartialParagraphView.as_view(),
         name='partial_paragraph_view'),
-    #A diff view of a section (without chrome)
-    url(r'^partial/diff/%s/%s/%s$' % (
-        section_pattern, version_pattern, newer_version_pattern),
-        PartialSectionDiffView.as_view(),
-        name='partial_section_diff_view'),
-    #A section by section paragraph (without chrome)
-    #Example: http://.../partial/sxs/201-2-g/2011-1738
-    url(r'^partial/sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
-        ParagraphSXSView.as_view(),
-        name='paragraph_sxs_view'),
 )

@@ -76,5 +76,6 @@ class PartialSearch(PartialView):
                     context['version_timeline'] = version['timeline']
 
         self.add_prev_next(page, context)
+        self.final_context = context
 
         return context
