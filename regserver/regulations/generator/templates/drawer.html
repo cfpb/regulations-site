@@ -23,14 +23,14 @@
             {% for version in history %}
                 <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
                 {% if part == label_id %}
-                    <a href="{% url 'chrome_regulation_view' part version.version %}" class="version-link">
+                    <a href="{% url 'chrome_regulation_view' part version.version %}" class="version-link" data-version="{{ version.version }}">
                         {% if version.timeline == 'current' %}
                             <h4>Current Law</h4>
                         {% endif %}
                         <span class="version-date">{{ version.by_date|date }}</span>
                     </a>
                 {% else %}
-                    <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link">
+                    <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link" data-version="{{ version.version }}">
                         {% if version.timeline == 'current' %}
                             <h4>Current Law</h4>
                         {% endif %}

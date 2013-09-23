@@ -207,7 +207,8 @@
             <span class="string">'click .version-link'</span>: <span class="string">'setStorageItem'</span>
         },
 
-        initialize: <span class="keyword">function</span>() {</pre></div></div>
+        initialize: <span class="keyword">function</span>() {
+            Dispatch.on(<span class="string">'regSection:open:after'</span>, <span class="keyword">this</span>.updateLinks, <span class="keyword">this</span>);</pre></div></div>
             
         </li>
         
@@ -237,11 +238,35 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.find(<span class="string">'.status-list[data-base-version='</span> + Dispatch.getVersion() + <span class="string">']'</span>).addClass(<span class="string">'current'</span>);
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.find(<span class="string">'.status-list[data-base-version='</span> + Dispatch.getVersion() + <span class="string">']'</span>).addClass(<span class="string">'current'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p> History view may not have been initialized before the section was updated;
+ update the links now.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.updateLinks();
         },
 
         setStorageItem: <span class="keyword">function</span>() {
             sessionStorage.setItem(<span class="string">'drawerDefault'</span>, <span class="string">'history'</span>);
+        },
+
+        updateLinks: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> currentSection = Dispatch.getOpenSection();
+            <span class="keyword">this</span>.$el.find(<span class="string">'.version-link'</span>).each(<span class="keyword">function</span>() {
+                <span class="keyword">var</span> $link = $(<span class="keyword">this</span>);
+                $link.attr(<span class="string">'href'</span>, window.APP_PREFIX + currentSection + <span class="string">'/'</span> + $link.data(<span class="string">'version'</span>));
+            });
         }
     });
 
