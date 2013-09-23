@@ -66,7 +66,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             this.header.reset();
             this.$el.html(html);
 
-            offsetTop = (scrollToId) ? (scrollToId).offset().top : 0;
+            offsetTop = scrollToId && $(scrollToId) ? $(scrollToId).offset().top : 0;
             window.scrollTo(0, offsetTop);
         },
 
