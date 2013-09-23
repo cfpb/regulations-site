@@ -35,7 +35,7 @@ define('search-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
                 query = window.location.search.slice(sliceStart, sliceEnd),
                 pattern = new RegExp('\\+', 'g');
             //if (typeof config.query !== 'undefined') {
-                if ($searchField[0].value === "") {
+                if ($searchField[0].value === '') {
                     //this.$el.find('input[name=q]')[0].value = config.query;
                     // temporary solution
                     query = decodeURIComponent(query).replace(pattern, ' ');

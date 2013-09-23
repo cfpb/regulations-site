@@ -196,7 +196,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> SearchView = Backbone.View.extend({
@@ -204,6 +204,11 @@
 
         events: {
             <span class="string">'submit'</span>: <span class="string">'openSearchResults'</span>
+        },
+
+        initialize: <span class="keyword">function</span>() {
+            Dispatch.on(<span class="string">'search:submitted'</span>, <span class="keyword">this</span>.populateTextField, <span class="keyword">this</span>);
+            <span class="keyword">this</span>.populateTextField();
         },
 
         openSearchResults: <span class="keyword">function</span>(e) {
@@ -244,7 +249,62 @@ Dispatch.trigger(&#39;search:submitted&#39;, options, &#39;searchResults&#39;);<
             </div>
             
             <div class="content"><div class='highlight'><pre>            }
-        }
+        },
+
+        populateTextField: <span class="keyword">function</span>(<span class="comment">/*config*/</span>) {
+            <span class="keyword">var</span> $searchField = <span class="keyword">this</span>.$el.find(<span class="string">'input[name=q]'</span>),
+                sliceStart = window.location.search.indexOf(<span class="string">'='</span>) + <span class="number">1</span>,
+                sliceEnd = window.location.search.indexOf(<span class="string">'&amp;'</span>),
+                query = window.location.search.slice(sliceStart, sliceEnd),
+                pattern = <span class="keyword">new</span> RegExp(<span class="string">'\\+'</span>, <span class="string">'g'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>if (typeof config.query !== &#39;undefined&#39;) {</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="keyword">if</span> ($searchField[<span class="number">0</span>].value === <span class="string">''</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>this.$el.find(&#39;input[name=q]&#39;)[0].value = config.query;
+temporary solution</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    query = decodeURIComponent(query).replace(pattern, <span class="string">' '</span>);
+                    $searchField[<span class="number">0</span>].value = query;
+                }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>}</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        }
 
     });
 
