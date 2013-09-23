@@ -74,13 +74,17 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         sendContinueLinkEvent: function(e) {
-            e.preventDefault();
-            this.definitionRouter($(e.target).attr('href').substr(1), 'clicked continue link');
+            if (window.history && window.history.pushState) {
+                e.preventDefault();
+                this.definitionRouter($(e.target).attr('href').substr(1), 'clicked continue link');
+            }
         },
 
         sendDefinitionLinkEvent: function(e) {
-            e.preventDefault();
-            this.definitionRouter($(e.target).data('definition'), 'clicked term inside definition');
+            if (window.history && window.history.pushState) {
+                e.preventDefault();
+                this.definitionRouter($(e.target).data('definition'), 'clicked term inside definition');
+            }
         },
 
         render: function() {
