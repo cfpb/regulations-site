@@ -37,5 +37,7 @@ def redirect_by_date(request, label_id, year, month, day):
 
 def redirect_by_date_get(request, label_id):
     """Handles date, etc. if they are part of the GET variable"""
-    return redirect_by_date(request, label_id, request.GET.get('year'),
-                            request.GET.get('month'), request.GET.get('day'))
+    return redirect_by_date(request, label_id,
+                            request.GET.get('year').zfill(4),
+                            request.GET.get('month').zfill(2),
+                            request.GET.get('day').zfill(2))
