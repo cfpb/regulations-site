@@ -1,7 +1,7 @@
 {% with active_version=version %}
-<div id="menu" class="panel" data-reg-id="{{ tree.label_id }}">
- {%if tree.TOC %}
-    {% with nav_class='regulation-nav' toc_items=tree.TOC top_toc=True %}
+<div id="menu" class="panel" data-reg-id="{{ reg_part }}">
+ {%if TOC %}
+    {% with nav_class='regulation-nav' toc_items=TOC top_toc=True %}
        {% include "toc.html" %} 
     {% endwith %}
  {%endif%}
@@ -52,7 +52,7 @@
             <h2 class="toc-type">Search</h2>
         </div><!-- /.drawer-header -->
         <div class="drawer-content">
-            <form action="{% url 'chrome_search' tree.label_id %}" method="GET">
+            <form action="{% url 'chrome_search' reg_part %}" method="GET">
                 <div class="search-box">
                     <input type="text" name="q" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
                 </div><!--/.search-box-->

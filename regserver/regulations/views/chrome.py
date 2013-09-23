@@ -1,6 +1,5 @@
 from datetime import date
 
-from django.conf import settings
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
@@ -60,10 +59,17 @@ class ChromeView(TemplateView):
             'toc,meta', part, version, self.partial_class.sectional_links)
         builder = generate_html(full_tree, appliers)
 
+        table_of_contents = utils.table_of_contents(
+            part,
+            version,
+            self.partial_class.sectional_links)
+        context['TOC'] = table_of_contents
+
         context['tree'] = full_tree
         utils.add_extras(context)
 
         context['part'] = part
+        context['reg_part'] = part
         context['history'] = fetch_grouped_history(part)
 
         context['today'] = date.today()
