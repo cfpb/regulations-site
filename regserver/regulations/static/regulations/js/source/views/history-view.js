@@ -28,10 +28,14 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'dispatch'], functio
         },
 
         updateLinks: function() {
-            var currentSection = Dispatch.getOpenSection();
+            var currentSection = Dispatch.getOpenSection(),
+                prefix = window.APP_PREFIX;
+            if (typeof prefix !== 'undefined' && prefix.substr(prefix.length - 1) !== '/') {
+                prefix = prefix + '/';
+            }
             this.$el.find('.version-link').each(function() {
                 var $link = $(this);
-                $link.attr('href', window.APP_PREFIX + currentSection + '/' + $link.data('version'));
+                $link.attr('href', prefix + currentSection + '/' + $link.data('version'));
             });
         }
     });
