@@ -12,7 +12,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
-            'click .definition.active': 'openDefinitionLinkHandler'
+            'click .definition.active': 'openDefinitionLinkHandler',
+            'click .inline-interpretation .section-link': 'openInterp'
         },
 
         initialize: function() {
@@ -190,6 +191,15 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         setActiveTerm: function($link) {
             this.clearActiveTerms();
             $link.addClass('active').data('active', 1);
+        },
+
+        openInterp: function(e) {
+            if (window.history && window.history.pushState) {
+                e.preventDefault();
+
+                var sectionId = $(e.currentTarget).data('linked-section');
+                Dispatch.trigger('regSection:open', sectionId, {id: sectionId}, 'regSection');
+            }
         },
 
         remove: function() {
