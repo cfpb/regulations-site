@@ -65,6 +65,12 @@ class ChromeView(TemplateView):
             self.partial_class.sectional_links)
         context['TOC'] = table_of_contents
 
+        regulation_meta = utils.regulation_meta(
+            part,
+            version,
+            self.partial_class.sectional_links)
+        context['meta'] = regulation_meta
+
         context['tree'] = full_tree
         utils.add_extras(context)
 

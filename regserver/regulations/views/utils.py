@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 
 from regulations.generator import generator
 from regulations.generator.layers.toc_applier import TableOfContentsLayer
+from regulations.generator.layers.meta import MetaLayer
 
 
 def get_layer_list(names):
@@ -21,6 +22,20 @@ def table_of_contents(regulation_part, version, sectional=False):
     p_applier = layer_manager.appliers['paragraph']
     toc_layer = p_applier.layers[TableOfContentsLayer.shorthand]
     applied_layer = toc_layer.apply_layer(regulation_part)
+
+    return applied_layer[1]
+
+
+def regulation_meta(regulation_part, version, sectional=False):
+    """ Return the contents of the meta layer, without using a tree. """
+
+    layer_manager = generator.LayerCreator()
+    layer_manager.add_layer(
+        MetaLayer.shorthand, regulation_part, version, sectional)
+
+    p_applier = layer_manager.appliers['paragraph']
+    meta_layer = p_applier.layers[MetaLayer.shorthand]
+    applied_layer = meta_layer.apply_layer(regulation_part)
 
     return applied_layer[1]
 

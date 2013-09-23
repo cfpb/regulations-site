@@ -13,7 +13,7 @@
 <header id="site-header" class="reg-header">
 <div class="main-head">
     <div class="reg-title">
-        <h1><a href="{% url 'regulation_landing_view' reg_part %}">{{ tree.meta.cfr_title_number }} CFR Part {{ reg_part }} <span class="title">{{ tree.title_clean|title }} </span>{% if tree.reg_letter %}(Regulation {{ tree.reg_letter }}){% endif %}</a></h1>
+        <h1><a href="{% url 'regulation_landing_view' reg_part %}">{{ meta.cfr_title_number }} CFR Part {{ reg_part }} <span class="title">{{ meta.title }} {{meta.statutory_name|title}} </span>{% if meta.reg_letter %}(Regulation {{ meta.reg_letter }}){% endif %}</a></h1>
     </div> <!-- /reg-title -->
     {% include "logo.html" %} 
 </div>
@@ -32,7 +32,7 @@
         <span id="active-title">{% block active_title %}{% endblock %}</span>
     </div>
     <div class="header-secondary">
-        <span class="effective-date"><strong>Effective Date:</strong> {{ tree.meta.effective_date|date }}</span>
+        <span class="effective-date"><strong>Effective Date:</strong> {{ meta.effective_date|date }}</span>
         <h2> </h2>
     </div>
 </div>
