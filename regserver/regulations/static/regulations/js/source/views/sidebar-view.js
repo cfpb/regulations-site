@@ -74,7 +74,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
         },
 
         toggleExpandable: function(e) {
-            var $expandable;
+            var $expandable = $(e.currentTarget);
             if (typeof e.stopPropagation !== 'undefined') {
                 e.stopPropagation();
                 $expandable = $(e.currentTarget);

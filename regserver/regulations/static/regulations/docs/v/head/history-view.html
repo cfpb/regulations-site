@@ -262,11 +262,31 @@
         },
 
         updateLinks: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> currentSection = Dispatch.getOpenSection();
-            <span class="keyword">this</span>.$el.find(<span class="string">'.version-link'</span>).each(<span class="keyword">function</span>() {
-                <span class="keyword">var</span> $link = $(<span class="keyword">this</span>);
-                $link.attr(<span class="string">'href'</span>, window.APP_PREFIX + currentSection + <span class="string">'/'</span> + $link.data(<span class="string">'version'</span>));
-            });
+            <span class="keyword">var</span> currentSection = Dispatch.getOpenSection(),
+                prefix = window.APP_PREFIX;
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> prefix !== <span class="string">'undefined'</span> &amp;&amp; prefix.substr(prefix.length - <span class="number">1</span>) !== <span class="string">'/'</span>) {
+                prefix = prefix + <span class="string">'/'</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>currentSection may not be defined (e.g. on the landing page)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> currentSection !== <span class="string">'undefined'</span>) {
+                <span class="keyword">this</span>.$el.find(<span class="string">'.version-link'</span>).each(<span class="keyword">function</span>() {
+                    <span class="keyword">var</span> $link = $(<span class="keyword">this</span>);
+                    $link.attr(<span class="string">'href'</span>, prefix + currentSection + <span class="string">'/'</span> + $link.data(<span class="string">'version'</span>));
+                });
+            }
         }
     });
 

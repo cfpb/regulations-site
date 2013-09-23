@@ -202,7 +202,7 @@
         el: <span class="string">'#sxs-list'</span>,
 
         events: {
-            <span class="string">'click a'</span>: <span class="string">'openSxS'</span>
+            <span class="string">'click .sxs-link'</span>: <span class="string">'openSxS'</span>
         },
 
         initialize: <span class="keyword">function</span>() {
@@ -278,7 +278,7 @@
         },
 
         highlightHeader: <span class="keyword">function</span>() {
-            <span class="keyword">this</span>.$el.find(<span class="string">'h4'</span>).addClass(<span class="string">'has-content'</span>);
+            <span class="keyword">this</span>.$el.find(<span class="string">'header'</span>).addClass(<span class="string">'has-content'</span>);
         }
     });
 
