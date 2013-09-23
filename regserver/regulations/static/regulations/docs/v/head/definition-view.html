@@ -460,7 +460,22 @@ this.options:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'sidebarModule:remove'</span>, <span class="keyword">this</span>.model.id);
+            <div class="content"><div class='highlight'><pre>            Dispatch.trigger(<span class="string">'sidebarModule:remove'</span>, <span class="keyword">this</span>.model.id);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>return focus to the definition link once the definition is removed</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            $(<span class="string">'.definition.active'</span>).focus();
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
         }

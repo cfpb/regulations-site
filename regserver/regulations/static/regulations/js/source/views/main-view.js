@@ -78,6 +78,9 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
 
         loaded: function() {
             $('.main-content').removeClass('loading');
+
+            // change focus to main content area when new sections are loaded
+            $('.section-focus').focus();
         }
     });
 
