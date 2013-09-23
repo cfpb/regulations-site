@@ -8,16 +8,9 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
         },
 
         loadSection: function(section, versionAndHash) {
-            var poundPosition,
-                options = {id: section};
+            var options = {id: section};
 
-            if (typeof versionAndHash !== 'undefined') {
-                poundPosition = versionAndHash.indexOf('#');
-            }
-
-            if (poundPosition !== -1) {
-                options.scrollToId = versionAndHash.substr(poundPosition);
-            }
+            options.scrollToId = Backbone.history.getHash();
 
             Dispatch.trigger('regSection:open', section, options, 'regSection'); 
         },

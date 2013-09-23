@@ -37,8 +37,6 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
                 /* http://thenounproject.com/noun/carrot/#icon-No7790 */
                 document.getElementById('menu-link').className += ' hamburgerify';
                 $('.inline-interpretation .expand-button').addClass('carrotify');
-                $('#about-tool').html('Made with <span style="color: red"><3</span> by:');
-                $('#about-reg').html('Find our brilliant attorneys at:');
             });
         },
 

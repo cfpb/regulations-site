@@ -61,13 +61,19 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
         },
 
         render: function(html, scrollToId) {
-            var offsetTop;
+            var offsetTop, $scrollToId;
 
             this.header.reset();
             this.$el.html(html);
 
-            offsetTop = scrollToId && $(scrollToId) ? $(scrollToId).offset().top : 0;
-            window.scrollTo(0, offsetTop);
+            if (typeof scrollToId !== 'undefined') {
+                $scrollToId = $('#' + scrollToId);
+                if ($scrollToId.length > 0) {
+                    offsetTop = $scrollToId.offset().top;
+                }
+            }
+
+            window.scrollTo(0, offsetTop || 0);
         },
 
         loading: function() {
