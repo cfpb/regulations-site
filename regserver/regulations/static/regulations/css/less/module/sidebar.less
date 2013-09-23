@@ -36,6 +36,7 @@ Sidebar
 /* 
 Headers within the sidebar should be <h4>
 */
+
     h4 {
         font-size: 0.857142857em;
         margin: 0;
@@ -44,38 +45,53 @@ Headers within the sidebar should be <h4>
         color: @dark_gray;
         .avenir-next-demi;
 
-        &.expandable {
-            cursor: pointer;
-        }
-
         &.important {
             color: @red_orange;
         }
+    }
+
+
+/*
+Sidebar Expandables
+-------------------
+*/
+
+    .expandable {
+        cursor: pointer;
+        background-color: @bg_gray;
+        width: 100%;
 
         &.has-content {
             background-color: @light_orange;
         }
 
-        &.expandable:after {
-            .minicon;
-            content: "\e003";
-            color: @pacific;
-            width: 16px;
-            line-height: 19px;
-            float: right;
-
+        h4 {
+            display: inline-block;
         }
 
-        &.open:after {
+        a {
+            float: right;
+            font-size: 0.875em;
+            margin-right: 25px;
+            line-height: 30px;
+        }
+    }
+
+    header {
+        &.expandable a:before {
+            .minicon;
+            content: "\e003";
+            color: @pacific;            
+        }
+
+        &.open a:before {
             .minicon;
             content: "\e004";
             color: @pacific;
-            width: 16px;
-            line-height: 19px;
-            float: right; 
         }
     }
 }
+
 
 /*
 Sidebar Headers
@@ -122,7 +138,6 @@ Regs Meta contains the sub-content meta data found in the sidebar
     .border-bottom-light;
 
     h4 {
-        background-color: @bg_gray;
         color: @dark_gray;
         padding: .5em 1em;
         .avenir-next-demi;

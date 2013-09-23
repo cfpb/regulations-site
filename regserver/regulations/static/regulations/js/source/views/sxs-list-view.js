@@ -4,7 +4,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         el: '#sxs-list',
 
         events: {
-            'click a': 'openSxS'
+            'click .sxs-link': 'openSxS'
         },
 
         initialize: function() {
@@ -68,7 +68,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         },
 
         highlightHeader: function() {
-            this.$el.find('h4').addClass('has-content');
+            this.$el.find('header').addClass('has-content');
         }
     });
 
