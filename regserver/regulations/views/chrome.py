@@ -74,7 +74,6 @@ class ChromeView(TemplateView):
         reg_part = label_id.split('-')[0]
 
         error_handling.check_regulation(reg_part)
-
         self.set_chrome_context(context, reg_part, version)
 
         relevant_tree = generator.get_tree_paragraph(label_id, version)

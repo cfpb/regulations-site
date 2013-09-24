@@ -27,12 +27,13 @@ class ViewsChromeTest(TestCase):
         response = view.get(view.request, label_id='lab', version='ver')
         self.assertEqual(404, response.status_code)
 
-    @patch('regulations.views.chrome.ChromeView.set_tree_context')
+    @patch('regulations.views.chrome.error_handling')
+    @patch('regulations.views.chrome.ChromeView.set_chrome_context')
     @patch('regulations.views.chrome.generator')
-    def test_error_propagation(self, generator, set_tree_context):
+    def test_error_propagation(self, generator, set_tree_context, error_handling):
         """Test that the response of the outer view is that of the inner
         when there's an error"""
-        generator.get_regulation.return_value = {}
+        error_handling.check_regulation.return_value = None
         generator.get_tree_paragraph.return_value = {}
         set_tree_context.return_value = None
 
