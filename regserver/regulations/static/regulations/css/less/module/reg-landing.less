@@ -7,11 +7,11 @@ reg-landing.less contains styles specific to the regulation landing page
 .banner-text {
     .avenir-next;
     font-size: 2em;
-    padding: .5em 0;
+    padding: 0 0 .5em 0;
 }
 
 .landing {
-    h4 {
+    .secondary-content h4 {
         .avenir-next;
         display: inline;
         font-size: 1.125em;
@@ -33,7 +33,7 @@ reg-landing.less contains styles specific to the regulation landing page
 }
 
 .landing-curent-link {
-    margin: 40px 0 0 0;
+    margin: 0;
 
     a {
         .avenir-next;
@@ -60,7 +60,7 @@ Tags
 .tag-list {
 
     padding: 0;
-    margin: 0 0 1em 0;
+    margin: 0 0 40px 0;
     font-size: 0.875em;
     .avenir-next;
 
@@ -87,6 +87,7 @@ Tags
         }
     }
 }
+
 
 .list-header {
     font-size: 1em;
@@ -156,34 +157,44 @@ Sidebar
 ============================
 */
 
-.landing-sidebar {
+.secondary-content {
 
-    .regs-meta {
-        border-bottom: none;
+    .landing-sidebar {
+
+        .alert {
+            border-right: none;
+            border-left: none;
+            border-top: none;
+        }
+
+        .regs-meta {
+            border-bottom: none;
+        }
+
+        h3 {
+            margin-top: 0;
+            .avenir-next;
+            font-size: 1.285714286em;
+            margin-bottom: 1em;
+        }
+
+        h4 {
+            color: @black;
+            text-transform: none;
+            margin-bottom: 0.5em;
+            .avenir-next-demi;
+            letter-spacing: normal;
+        }
+
+        ul {
+            margin-bottom: 2em;
+        }
+
+        li {
+            margin-top: 0.5em;
+        }
+
     }
-
-    h3 {
-        margin-top: 0;
-        .avenir-next;
-        font-size: 1.285714286em;
-        margin-bottom: 1em;
-    }
-
-    h4 {
-        color: @black;
-        text-transform: none;
-        margin-bottom: 0.5em;
-        .avenir-next-demi;
-    }
-
-    ul {
-        margin-bottom: 2em;
-    }
-
-    li {
-        margin-top: 0.5em;
-    }
-
 }
 
  /*
