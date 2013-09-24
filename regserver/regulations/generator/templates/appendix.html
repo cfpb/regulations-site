@@ -11,12 +11,6 @@
             {% endwith %}
          {%endif%}
 
-    {% if c.interp %}
-        {% with interp=c.interp %}
-            {% include "slide-down-interp.html" %}
-        {% endwith %}
-    {% endif %}
-
     {% if c.children %}
         {% for level_one in c.children %}
             <section id="{{level_one.markup_id}}" class="appendix-section">
@@ -28,12 +22,6 @@
             </p>
             {% endif %}
 
-            {% if level_one.interp %}
-                {% with interp=level_one.interp %}
-                    {% include "slide-down-interp.html" %}
-                {% endwith %}
-            {% endif %}
-
             {% if level_one.children %}
                 <ol class="level-{{level_one.children.0.list_level}}" type="{{level_one.children.0.list_type}}">
                 {% for node in level_one.children  %}
@@ -41,7 +29,19 @@
                 {% endfor %}
                 </ol>
             {% endif %}
+
+            {% if level_one.interp %}
+                {% with interp=level_one.interp %}
+                    {% include "slide-down-interp.html" %}
+                {% endwith %}
+            {% endif %}
             </section>
         {% endfor %}
+    {% endif %}
+
+    {% if c.interp %}
+        {% with interp=c.interp %}
+            {% include "slide-down-interp.html" %}
+        {% endwith %}
     {% endif %}
 {% endif %}

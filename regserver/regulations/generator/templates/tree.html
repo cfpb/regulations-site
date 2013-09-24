@@ -9,11 +9,6 @@
     {{node.marked_up|safe}}
 {% endif %}
 </p>
-{% if node.interp %}
-    {% with interp=node.interp %}
-        {% include "slide-down-interp.html" %}
-    {% endwith %}
-{% endif %}
 {% endif %}
 {% if node.children %}
 <ol class="level-{{node.children.0.list_level}}" 
@@ -24,4 +19,9 @@
         {% endwith %}
     {% endfor %}
 </ol>
+{% endif %}
+{% if node.interp %}
+    {% with interp=node.interp %}
+        {% include "slide-down-interp.html" %}
+    {% endwith %}
 {% endif %}
