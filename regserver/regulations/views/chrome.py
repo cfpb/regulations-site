@@ -74,6 +74,7 @@ class ChromeView(TemplateView):
 
         label_id = context['label_id']
         version = context['version']
+        context['q'] = self.request.GET.get('q', '')
 
         self.set_tree_context(context, label_id, version)
 
