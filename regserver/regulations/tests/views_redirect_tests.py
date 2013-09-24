@@ -42,11 +42,24 @@ class ViewsRedirectTest(TestCase):
         self.assertEqual(('lablab', '2222', '11', '20'),
                          redirect_by_date.call_args[0][1:])
 
+        request = RequestFactory().get('?year=-2222&month=-11&day=-20')
+        redirect_by_date_get(request, 'lablab')
+        self.assertTrue(redirect_by_date.called)
+        self.assertEqual(('lablab', '2222', '11', '20'),
+                         redirect_by_date.call_args[0][1:])
+
+        request = RequestFactory().get('?year=123&month=1&day=2')
+        redirect_by_date.reset_mock()
+        redirect_by_date_get(request, 'lablab')
+        self.assertTrue(redirect_by_date.called)
+        self.assertEqual(('lablab', '0123', '01', '02'),
+                         redirect_by_date.call_args[0][1:])
+
         request = RequestFactory().get('?year=22&month=1&day=2')
         redirect_by_date.reset_mock()
         redirect_by_date_get(request, 'lablab')
         self.assertTrue(redirect_by_date.called)
-        self.assertEqual(('lablab', '0022', '01', '02'),
+        self.assertEqual(('lablab', '2022', '01', '02'),
                          redirect_by_date.call_args[0][1:])
 
         with patch('regulations.views.redirect.handle_generic_404') as handle:

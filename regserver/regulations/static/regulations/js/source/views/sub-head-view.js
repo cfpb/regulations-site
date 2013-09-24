@@ -25,7 +25,7 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-h
         },
 
         displayCount: function(resultCount) {
-            this.$activeTitle.html('<em class="header-label">Search results -- ' + resultCount + '</em>');
+            this.$activeTitle.html('<em class="header-label">Search results — ' + resultCount + '</em>');
         },
 
         reset: function() {
