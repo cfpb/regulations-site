@@ -8,6 +8,7 @@ reg-landing.less contains styles specific to the regulation landing page
     .avenir-next;
     font-size: 2em;
     padding: 0 0 .5em 0;
+    margin-top: .6em;
 }
 
 .landing {
@@ -65,8 +66,9 @@ Tags
     li {
         list-style: none;
         display: inline-block;
-        margin-right: 10px;
+        margin-right: 8px;
         margin-bottom: 10px;
+        margin-top: 16px;
 
         a:link,
         a:visited {
@@ -163,6 +165,15 @@ Sidebar
             border-right: none;
             border-left: none;
             border-top: none;
+            border-bottom: 1px solid @light_field;
+
+            a {
+                .avenir-next-demi;
+            }
+
+            ul {
+                margin-bottom: 0;
+            }
         }
 
         .regs-meta {
