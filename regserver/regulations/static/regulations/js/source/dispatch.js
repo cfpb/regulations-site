@@ -66,6 +66,15 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
             return false;
         },
 
+        getDrawerState: function() {
+            if (typeof this.open['drawerState'] !== 'undefined') {
+                return this.open['drawerState'];
+            }
+            else {
+                return false;
+            }
+        },
+
         get: function(item) {
             return this.open[item];
         },

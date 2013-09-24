@@ -131,6 +131,7 @@ define('regs-helpers', function() {
             var sessionState = sessionStorage.getItem('drawerDefault');
 
             if (sessionState) {
+                sessionStorage.removeItem('drawerDefault');
                 return sessionState;
             }
             else {

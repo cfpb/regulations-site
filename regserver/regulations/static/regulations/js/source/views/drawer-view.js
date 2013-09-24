@@ -12,7 +12,7 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'toc-view
         initialize: function() {
             var openTab,
                 k,
-                path = Helpers.findStartingContent();
+                path = Dispatch.getDrawerState();
 
             Dispatch.on('drawer:stateChange', this.changeContents, this);
 

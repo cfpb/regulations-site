@@ -10,7 +10,7 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch', './regs-h
         },
 
         initialize: function() {
-            var openDrawer = Helpers.findStartingContent();
+            var openDrawer = Dispatch.getDrawerState();
             this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer');
 
             // view switcher buttons - TOC, calendar, search
