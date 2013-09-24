@@ -128,15 +128,13 @@ define('regs-helpers', function() {
         },
 
         findStartingContent: function() {
-            var path = _.compact(window.location.pathname.split('/')),
-                sessionState = sessionStorage.getItem('drawerDefault');
+            var sessionState = sessionStorage.getItem('drawerDefault');
 
-            if (sessionState === null) {
-                return path[0];
+            if (sessionState) {
+                return sessionState;
             }
             else {
-                sessionStorage.removeItem('drawerDefault');
-                return sessionState;
+                return false;
             }
         },
 

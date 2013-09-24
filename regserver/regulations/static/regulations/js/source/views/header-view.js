@@ -1,13 +1,24 @@
-define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
+define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch', './regs-helpers'], function($, _, Backbone, Dispatch, Helpers) {
     'use strict';
     var HeaderView = Backbone.View.extend({
         el: '.reg-header',
 
+        idMap: {
+            'table-of-contents': '#menu-link',
+            'history': '#history-link',
+            'search': '#search-link'
+        },
+
         initialize: function() {
+            var openDrawer = Helpers.findStartingContent();
             this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer');
 
             // view switcher buttons - TOC, calendar, search
             this.$tocLinks = $('.toc-nav-link');
+
+            if (openDrawer) {
+                this.changeActiveTab(openDrawer);
+            }
         },
 
         events: {
@@ -38,15 +49,19 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
             var $target = $(e.target),
                 linkValue = _.last($target.closest('a').attr('href').split('#'));
 
+            this.changeActiveTab(linkValue);
+
+            Dispatch.trigger('drawer:stateChange', linkValue);
+
+        },
+
+        changeActiveTab: function(tab) {
             this.$tocLinks.removeClass('current');
-            $target.closest('a').addClass('current');
+            $(this.idMap[tab]).addClass('current');
 
             if ($('.panel').css('left') === '-200px') {
                 this.updateDrawerState('open');
             }
-
-            Dispatch.trigger('drawer:stateChange', linkValue);
-
         }
     });
 
