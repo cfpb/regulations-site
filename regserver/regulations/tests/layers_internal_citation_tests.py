@@ -8,7 +8,7 @@ class InternalCitationLayerTest(TestCase):
         self.assertTrue('999-88/verver#999-88-e' in 
             InternalCitationLayer.sectional_url_for(['999', '88', 'e'],
             'verver'))
-        self.assertTrue('999-88-Interp/verver#999-88-e-Interp-1' in 
+        self.assertTrue('999-Interp/verver#999-88-e-Interp-1' in 
             InternalCitationLayer.sectional_url_for(['999', '88', 'e',
             'Interp', '1'], 'verver'))
         self.assertTrue('999-Interp/verver#999-Interp' in 

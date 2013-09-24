@@ -54,7 +54,7 @@
         <div class="drawer-content">
             <form action="{% url 'chrome_search' tree.label_id %}" method="GET">
                 <div class="search-box">
-                    <input type="text" name="q" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
+                    <input type="text" name="q" value="{{ q }}" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
                 </div><!--/.search-box-->
                 <div class="version-search">
                     <h4>Searching version</h4>

@@ -1,4 +1,6 @@
 from django.template import loader, Context
+from django.core.urlresolvers import reverse, NoReverseMatch
+
 from ..node_types import to_markup_id
 import utils
 
@@ -11,11 +13,22 @@ class DefinitionsLayer(object):
         self.defining_template = loader.get_template('layers/defining.html')
         self.citations_template =\
             loader.get_template('layers/definition_citation.html')
+        self.sectional = False
+        self.version = None
 
-    @staticmethod
-    def create_url(citation):
+    def create_url(self, citation):
         """ Create the URL for a definition. """
-        return '#' + '-'.join(to_markup_id(citation))
+
+        url = ''
+        if self.sectional:
+            try:
+                url = reverse('chrome_section_view',
+                              kwargs={'label_id': '-'.join(citation[:2]),
+                                      'version': self.version})
+            except NoReverseMatch:
+                # Error in the data
+                pass
+        return url + '#' + '-'.join(to_markup_id(citation))
 
     @staticmethod
     def create_definition_reference(citation):
@@ -27,7 +40,7 @@ class DefinitionsLayer(object):
 
         context = {
             'citation': {
-                'url': DefinitionsLayer.create_url(citation),
+                'url': self.create_url(citation),
                 'label': original_text,
                 'definition_reference':
                 DefinitionsLayer.create_definition_reference(citation)}}

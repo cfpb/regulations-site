@@ -25,18 +25,14 @@ class InternalCitationLayer():
 
     @staticmethod
     def sectional_url_for(label, version):
-        section_url = '-'.join(to_markup_id(label[:2]))
+        if 'Interp' in label:
+            section_url = label[0] + '-Interp'
+        else:
+            section_url = '-'.join(to_markup_id(label[:2]))
         try:
-            if 'Interp' in label and len(label) > 2:
-                url = reverse(
-                    'chrome_interp_view',
-                    kwargs={
-                        'label_id': section_url + '-Interp',
-                        'version': version})
-            else:
-                url = reverse(
-                    'chrome_section_view',
-                    kwargs={'label_id': section_url, 'version': version})
+            url = reverse(
+                'chrome_section_view',
+                kwargs={'label_id': section_url, 'version': version})
         except NoReverseMatch:
             #XXX We have some errors in our layers. Once those are fixed, we
             #need to revisit this.
