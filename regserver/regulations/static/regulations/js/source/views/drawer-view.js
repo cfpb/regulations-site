@@ -32,10 +32,13 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'toc-view
                     'constructor': SearchView
                 }
             };
+
             // sets default tab for search
-            for (k in this.childViews) {
-                if (this.childViews.hasOwnProperty(path)) {
-                    openTab = path;
+            if (path) {
+                for (k in this.childViews) {
+                    if (this.childViews.hasOwnProperty(path)) {
+                        openTab = path;
+                    }
                 }
             }
 

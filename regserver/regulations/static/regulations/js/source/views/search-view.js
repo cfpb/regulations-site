@@ -17,7 +17,7 @@ define('search-view', ['jquery', 'underscore', 'backbone'], function($, _, Backb
 
                 options.query = $form.find('input[name=q]')[0].value;
                 options.version = $form.find('select[name=version]')[0].value;
-
+                sessionStorage.setItem('drawerDefault', 'search');
                 // Temporarily removing ajax search results
                 // Dispatch.trigger('search:submitted', options, 'searchResults');
             }
