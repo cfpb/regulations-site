@@ -102,10 +102,20 @@ define('regs-helpers', function() {
         //
         // **TODO** RegModel.getParent is the same?
         findBaseSection: function(id) {
-            if (id.indexOf('-') !== -1) {
-                var parts = id.split('-');
+            var parts, base;
 
-                return parts[0] + '-' + parts[1];
+            if (id.indexOf('-') !== -1) {
+                parts = id.split('-');
+                base = parts[0];
+
+                if (id.indexOf('Interp') !== -1) {
+                    base += '-Interp';
+                }
+                else {
+                    base += '-' + parts[1];
+                }
+
+                return base;
             }
             else {
                 return id;
