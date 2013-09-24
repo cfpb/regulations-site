@@ -196,7 +196,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'header-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'./regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, Helpers) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'header-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> HeaderView = Backbone.View.extend({
         el: <span class="string">'.reg-header'</span>,
@@ -208,7 +208,7 @@
         },
 
         initialize: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> openDrawer = Helpers.findStartingContent();
+            <span class="keyword">var</span> openDrawer = Dispatch.getDrawerState();
             <span class="keyword">this</span>.$activeEls = $(<span class="string">'#menu, #site-header, #content-body, #primary-footer'</span>);</pre></div></div>
             
         </li>

@@ -199,7 +199,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'main-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'drawer-view'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>, <span class="string">'./regs-router'</span>, <span class="string">'./reg-view'</span>, <span class="string">'search-results-view'</span>], <span class="keyword">function</span>($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router, RegView, SearchResultsView) {
+            <div class="content"><div class='highlight'><pre>define([<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'main-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'definition-view'</span>, <span class="string">'sub-head-view'</span>, <span class="string">'drawer-view'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-view'</span>, <span class="string">'konami'</span>, <span class="string">'header-view'</span>, <span class="string">'analytics-handler'</span>, <span class="string">'regs-helpers'</span>, <span class="string">'./regs-router'</span>, <span class="string">'./reg-view'</span>, <span class="string">'search-results-view'</span>], <span class="keyword">function</span>($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, Helpers, Router, RegView, SearchResultsView) {
     <span class="string">'use strict'</span>;
     <span class="keyword">return</span> {</pre></div></div>
             
@@ -265,12 +265,17 @@ API should make this obsolete.</p>
             <span class="keyword">var</span> openSection,
                 regId = $(<span class="string">'#menu'</span>).data(<span class="string">'reg-id'</span>),
                 regSection = $(<span class="string">'section[data-base-version]'</span>),
-                regVersion = regSection.data(<span class="string">'base-version'</span>);
+                regVersion = regSection.data(<span class="string">'base-version'</span>),
+                drawerState = Helpers.findStartingContent();
 
             Dispatch.set(<span class="string">'reg'</span>, regId);
 
+            <span class="keyword">if</span> (drawerState) {
+                Dispatch.set(<span class="string">'drawerState'</span>, drawerState);
+            }
+
             <span class="keyword">if</span> (window.location.pathname.indexOf(<span class="string">'search'</span>) &gt; <span class="number">0</span>) {
-                <span class="keyword">var</span> urlobj = RegsHelpers.parseURL(window.location.href),
+                <span class="keyword">var</span> urlobj = Helpers.parseURL(window.location.href),
                     params = urlobj.params;
 
                 Dispatch.setContentView(
@@ -302,7 +307,6 @@ that encapsulates all main/reg view</p>
 
                 Dispatch.setContentView(<span class="keyword">new</span> RegView({id: openSection}));
             }
-
 
             <span class="keyword">if</span> (<span class="keyword">typeof</span> regVersion !== <span class="string">'undefined'</span>) {
                 Dispatch.set(<span class="string">'version'</span>, regVersion);

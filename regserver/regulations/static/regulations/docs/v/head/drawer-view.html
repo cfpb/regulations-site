@@ -199,7 +199,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'drawer-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'toc-view'</span>, <span class="string">'history-view'</span>, <span class="string">'search-view'</span>, <span class="string">'regs-helpers'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, TOCView, HistoryView, SearchView, Helpers) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'drawer-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'toc-view'</span>, <span class="string">'history-view'</span>, <span class="string">'search-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, TOCView, HistoryView, SearchView) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> DrawerView = Backbone.View.extend({
@@ -208,7 +208,7 @@
         initialize: <span class="keyword">function</span>() {
             <span class="keyword">var</span> openTab,
                 k,
-                path = Helpers.findStartingContent();
+                path = Dispatch.getDrawerState();
 
             Dispatch.on(<span class="string">'drawer:stateChange'</span>, <span class="keyword">this</span>.changeContents, <span class="keyword">this</span>);
 

@@ -5,16 +5,16 @@ define(['jquery', 'underscore', 'backbone', 'reg-view', 'definition-view'], func
             set: function() {}
         };
 
-        $('body').append('<div id="content-wrapper"></div>');
-        regView = new RegView({el: '#content-wrapper'});
+        $('body').append('<div id="content"></div>');
+        contentView = new RegView({el: '#content'});
 
         it("should have a content view instance", function() {
-            expect(regView).toBeTruthy();
+            expect(contentView).toBeTruthy();
         });
 
         describe("openDefinition", function() {
             $link = $('<a id="123-2" href="#123-2" class="definition"></a>');
-            defView = regView.openDefinition('123-2', $link);
+            defView = contentView.openDefinition('123-2', $link);
 
             it("should give the link an active class", function() {
                 expect($link.hasClass('active')).toBeTruthy();
@@ -27,7 +27,7 @@ define(['jquery', 'underscore', 'backbone', 'reg-view', 'definition-view'], func
 
         describe("setActiveTerm", function() {
             $('#content').append('<a id="123-3" href="#123-3" class="definition"></a><a href="#123-4" class="definition active"></a>');
-            regView.setActiveTerm($('#123-3'));
+            contentView.setActiveTerm($('#123-3'));
 
             it("should remove all other active terms", function() {
                 expect($('#123-4').hasClass('active')).toBeFalsy();
@@ -49,7 +49,7 @@ define(['jquery', 'underscore', 'backbone', 'reg-view', 'definition-view'], func
 
         describe("clearActiveTerms", function() {
             it("should eliminate all active classes on links", function() {
-                regView.clearActiveTerms();
+                contentView.clearActiveTerms();
                 expect($('#content .active').length).toEqual(0);
             });
 
