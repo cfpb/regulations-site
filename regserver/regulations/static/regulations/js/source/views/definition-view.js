@@ -28,16 +28,24 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         formatInterpretations: function() {
             var interpretation = this.$el.find('.inline-interpretation'),
                 interpretationId,
-                baseInterpId;
+                baseInterpId,
+                url, prefix;
 
             if (typeof interpretation[0] !== 'undefined') {
                 interpretationId = $(interpretation[0]).data('interp-id');
                 baseInterpId = Helpers.findBaseSection(interpretationId);
                 interpretation.remove();
+                prefix = Dispatch.getURLPrefix();
+
+                url = '/' + baseInterpId + '/' + Dispatch.getVersion() + '#' + interpretationId;
+
+                if (prefix) {
+                    url = '/' + prefix + url;
+                }
 
                 this.$el.children('.definition-text').append(
                     Helpers.fastLink(
-                        '/' + baseInterpId + '/' + Dispatch.getVersion() + '#' + interpretationId, 
+                        url,
                         'Official Interpretation',
                         'continue-link internal interp',
                         ['data-linked-section', baseInterpId]
@@ -60,10 +68,18 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         definitionRouter: function(href, paragraph, actionText) {
+            var prefix = Dispatch.getURLPrefix(),
+                hrefParts = _.compact(href.split('/'));
             Dispatch.trigger('ga-event:definition', {
                 action: actionText,
                 context: '#' + paragraph
             });
+
+            // links need prefix inserted for non-pushState browsers
+            // but we don't want to route with the prefix
+            if (prefix && hrefParts[0] === prefix) {
+                href = hrefParts.slice(1).join('/');
+            }
 
             Router.navigate(href, {'trigger': true});
         },
@@ -72,7 +88,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             if (window.history && window.history.pushState) {
                 e.preventDefault();
                 var $link = $(e.target),
-                    href = $link.attr('href').substr(1),
+                    href = $link.attr('href'),
                     p = $link.data('linked-section');
 
                 this.definitionRouter(href, p, 'clicked continue link');
@@ -83,8 +99,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             if (window.history && window.history.pushState) {
                 e.preventDefault();
                 var $link = $(e.target),
-                    href = $link.attr('href').substr(1),
+                    href = $link.attr('href'),
                     p = Helpers.findBaseSection($link.data('definition'));
+
                 this.definitionRouter(href, p, 'clicked term inside definition');
             }
         },
@@ -105,17 +122,25 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         template: function(res) {
-            var $defText, parentId;
+            var $defText, parentId, url, prefix;
             this.$el.html('<div class="definition-text">' + res + '</div>');
 
             $defText = this.$el.find('.definition-text');
             parentId = Helpers.findBaseSection(this.model.id);
             this.$el.prepend('<div class="sidebar-header group"><h4>Defined Term<a class="right close-button" href="#">Close definition</a></h4></div>');
 
+            prefix = Dispatch.getURLPrefix();
+
+            url = '/' + parentId + '/' + Dispatch.getVersion() + '#' + this.model.id;
+
+            if (prefix) {
+                url = '/' + prefix + url;
+            }
+
             // link to definition in content body
             $defText.append(
                 Helpers.fastLink(
-                    '/' + parentId + '/' + Dispatch.getVersion() + '#' + this.model.id, 
+                    url, 
                     Helpers.idToRef(this.model.id),
                     'continue-link internal',
                     ['data-linked-section', parentId]
