@@ -27,17 +27,20 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
         formatInterpretations: function() {
             var interpretation = this.$el.find('.inline-interpretation'),
-                interpretationId;
+                interpretationId,
+                baseInterpId;
 
             if (typeof interpretation[0] !== 'undefined') {
                 interpretationId = $(interpretation[0]).data('interp-id');
+                baseInterpId = Helpers.findBaseSection(interpretationId);
                 interpretation.remove();
 
                 this.$el.children('.definition-text').append(
                     Helpers.fastLink(
-                        '#' + interpretationId, 
+                        '/' + baseInterpId + '/' + Dispatch.getVersion() + '#' + interpretationId, 
                         'Official Interpretation',
-                        'continue-link internal interp'
+                        'continue-link internal interp',
+                        ['data-linked-section', baseInterpId]
                     )
                 );
             }
@@ -56,34 +59,33 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             }
         },
 
-        definitionRouter: function(paragraph, actionText) {
-            var targetSection;
-
-            if (paragraph.indexOf('Interp') === -1) {
-                targetSection = Helpers.findBaseSection(paragraph);
-            } else {
-                // Interpretations all live in the same place
-                targetSection = paragraph.split('-')[0] + '-Interp';
-            }
-
+        definitionRouter: function(href, paragraph, actionText) {
             Dispatch.trigger('ga-event:definition', {
                 action: actionText,
                 context: '#' + paragraph
             });
-            Router.navigate(targetSection + '/' + Dispatch.getVersion() + '#' + paragraph, {'trigger': true});
+
+            Router.navigate(href, {'trigger': true});
         },
 
         sendContinueLinkEvent: function(e) {
             if (window.history && window.history.pushState) {
                 e.preventDefault();
-                this.definitionRouter($(e.target).attr('href').substr(1), 'clicked continue link');
+                var $link = $(e.target),
+                    href = $link.attr('href').substr(1),
+                    p = $link.data('linked-section');
+
+                this.definitionRouter(href, p, 'clicked continue link');
             }
         },
 
         sendDefinitionLinkEvent: function(e) {
             if (window.history && window.history.pushState) {
                 e.preventDefault();
-                this.definitionRouter($(e.target).data('definition'), 'clicked term inside definition');
+                var $link = $(e.target),
+                    href = $link.attr('href').substr(1),
+                    p = Helpers.findBaseSection($link.data('definition'));
+                this.definitionRouter(href, p, 'clicked term inside definition');
             }
         },
 
@@ -103,19 +105,20 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         template: function(res) {
-            var $defText;
+            var $defText, parentId;
             this.$el.html('<div class="definition-text">' + res + '</div>');
 
             $defText = this.$el.find('.definition-text');
-
+            parentId = Helpers.findBaseSection(this.model.id);
             this.$el.prepend('<div class="sidebar-header group"><h4>Defined Term<a class="right close-button" href="#">Close definition</a></h4></div>');
 
             // link to definition in content body
             $defText.append(
                 Helpers.fastLink(
-                    '#' + this.model.id, 
+                    '/' + parentId + '/' + Dispatch.getVersion() + '#' + this.model.id, 
                     Helpers.idToRef(this.model.id),
-                    'continue-link internal'
+                    'continue-link internal',
+                    ['data-linked-section', parentId]
                 )
             );
 

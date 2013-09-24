@@ -22,7 +22,7 @@ define('regs-helpers', function() {
         //
         // verbose, but much faster than the concise jquery alternatives
         // http://jsperf.com/create-dom-element/8
-        fastLink: function(href, text, classStr) {
+        fastLink: function(href, text, classStr, dataConfig) {
             var link = document.createElement('a'),
                 $link;
 
@@ -30,6 +30,11 @@ define('regs-helpers', function() {
             link.href = href;
             link.innerHTML = text;
             link.className = classStr || '';
+
+            // takes an array to add a data attr
+            if (typeof dataConfig !== 'undefined') {
+                link[dataConfig[0]] = dataConfig[1];
+            }
 
             return $link;
         },
