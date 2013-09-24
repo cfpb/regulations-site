@@ -18,7 +18,7 @@
     <section class="landing-sidebar">
         {% if new_version %}
         <div class="alert">
-            <h3> New version to be effective: {{new_version.by_date|date:"m/d/Y"}} </h3>
+            <h3> New version to be effective: <strong>{{new_version.by_date|date:"m/d/Y"}}</strong></h3>
             <ul>
                 <li> <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}" class="go">View new version</a></li>
                 {%comment %} 
