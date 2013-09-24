@@ -40,6 +40,17 @@ def handle_generic_404(request):
     return http.HttpResponseNotFound(body, content_type='text/html')
 
 
+def check_regulation(reg_part):
+    """ If versions of the reg_part given don't exist, raise 
+    a MissingContentException(). """
+
+    client = api_reader.ApiReader()
+    vr = client.regversions(reg_part)
+
+    if not vr:
+        raise MissingContentException()
+    
+
 def check_version(label_id, version):
     """ We check if the version of this regulation exists, and the user is only
     referencing a section that does not exist. """
