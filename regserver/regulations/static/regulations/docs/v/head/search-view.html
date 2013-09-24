@@ -227,7 +227,8 @@ e.preventDefault();</p>
                     options = {};
 
                 options.query = $form.find(<span class="string">'input[name=q]'</span>)[<span class="number">0</span>].value;
-                options.version = $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value;</pre></div></div>
+                options.version = $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value;
+                sessionStorage.setItem(<span class="string">'drawerDefault'</span>, <span class="string">'search'</span>);</pre></div></div>
             
         </li>
         
