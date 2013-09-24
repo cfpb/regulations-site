@@ -229,17 +229,14 @@ jQobj: new link</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        fastLink: <span class="keyword">function</span>(href, text, classStr) {
+            <div class="content"><div class='highlight'><pre>        fastLink: <span class="keyword">function</span>(href, text, classStr, dataConfig) {
             <span class="keyword">var</span> link = document.createElement(<span class="string">'a'</span>),
                 $link;
 
             $link = $(link);
             link.href = href;
             link.innerHTML = text;
-            link.className = classStr || <span class="string">''</span>;
-
-            <span class="keyword">return</span> $link;
-        },</pre></div></div>
+            link.className = classStr || <span class="string">''</span>;</pre></div></div>
             
         </li>
         
@@ -249,6 +246,26 @@ jQobj: new link</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>takes an array to add a data attr</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (<span class="keyword">typeof</span> dataConfig !== <span class="string">'undefined'</span>) {
+                link[dataConfig[<span class="number">0</span>]] = dataConfig[<span class="number">1</span>];
+            }
+
+            <span class="keyword">return</span> $link;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p><strong>Params</strong>
 <code>interpParts</code>: Array of Strings or Numbers, entity that is 
@@ -270,11 +287,11 @@ interpreted</p>
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p><strong>Params</strong>
 <code>p0</code>: String or Number, section ID
@@ -290,11 +307,11 @@ interpreted</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p><strong>Param</strong> dash-delimited string representation of reg entity ID</p>
 <p><strong>Returns</strong> Reg entity marker formatted for human readability</p>
@@ -341,11 +358,11 @@ interpreted</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Finds parent-most reg paragraph</p>
 <p><strong>TODO</strong> RegModel.getParent is the same?</p>
@@ -353,10 +370,20 @@ interpreted</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>        findBaseSection: <span class="keyword">function</span>(id) {
-            <span class="keyword">if</span> (id.indexOf(<span class="string">'-'</span>) !== -<span class="number">1</span>) {
-                <span class="keyword">var</span> parts = id.split(<span class="string">'-'</span>);
+            <span class="keyword">var</span> parts, base;
 
-                <span class="keyword">return</span> parts[<span class="number">0</span>] + <span class="string">'-'</span> + parts[<span class="number">1</span>];
+            <span class="keyword">if</span> (id.indexOf(<span class="string">'-'</span>) !== -<span class="number">1</span>) {
+                parts = id.split(<span class="string">'-'</span>);
+                base = parts[<span class="number">0</span>];
+
+                <span class="keyword">if</span> (id.indexOf(<span class="string">'Interp'</span>) !== -<span class="number">1</span>) {
+                    base += <span class="string">'-Interp'</span>;
+                }
+                <span class="keyword">else</span> {
+                    base += <span class="string">'-'</span> + parts[<span class="number">1</span>];
+                }
+
+                <span class="keyword">return</span> base;
             }
             <span class="keyword">else</span> {
                 <span class="keyword">return</span> id;
@@ -379,11 +406,11 @@ interpreted</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>thanks, James Padolsey <a href="http://james.padolsey.com/javascript/parsing-urls-with-the-dom/">http://james.padolsey.com/javascript/parsing-urls-with-the-dom/</a></p>
 
