@@ -1,6 +1,5 @@
 from datetime import date
 
-from django.conf import settings
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
@@ -47,26 +46,23 @@ class ChromeView(TemplateView):
         response.render()
         return response.content
 
-    def set_tree_context(self, context, label_id, version):
-        #   Hack solution: pull in full regulation, then the partial
-        #   @todo: just query the meta and toc layers
-        part = label_id.split('-')[0]
-        full_tree = generator.get_regulation(part, version)
-
-        if full_tree is None:
-            raise error_handling.MissingContentException()
-
-        appliers = utils.handle_specified_layers(
-            'toc,meta', part, version, self.partial_class.sectional_links)
-        builder = generate_html(full_tree, appliers)
-
-        context['tree'] = full_tree
+    def set_chrome_context(self, context, reg_part, version):
         utils.add_extras(context)
-
-        context['part'] = part
-        context['history'] = fetch_grouped_history(part)
-
+        context['reg_part'] = reg_part
+        context['history'] = fetch_grouped_history(reg_part)
         context['today'] = date.today()
+
+        table_of_contents = utils.table_of_contents(
+            reg_part,
+            version,
+            self.partial_class.sectional_links)
+        context['TOC'] = table_of_contents
+
+        regulation_meta = utils.regulation_meta(
+            reg_part,
+            version,
+            self.partial_class.sectional_links)
+        context['meta'] = regulation_meta
 
     def get_context_data(self, **kwargs):
 
@@ -74,9 +70,11 @@ class ChromeView(TemplateView):
 
         label_id = context['label_id']
         version = context['version']
+        reg_part = label_id.split('-')[0]
         context['q'] = self.request.GET.get('q', '')
 
-        self.set_tree_context(context, label_id, version)
+        error_handling.check_regulation(reg_part)
+        self.set_chrome_context(context, reg_part, version)
 
         relevant_tree = generator.get_tree_paragraph(label_id, version)
         if relevant_tree is None:
