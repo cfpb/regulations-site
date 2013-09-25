@@ -1,7 +1,10 @@
 from unittest import TestCase
 from mock import patch
 
+from django.test import RequestFactory
+
 from regulations.views import error_handling
+
 
 class ErrorHandlingTest(TestCase):
 
@@ -10,7 +13,7 @@ class ErrorHandlingTest(TestCase):
         api_reader.ApiReader.return_value.regversions.return_value = None
 
         self.assertRaises(
-            error_handling.MissingContentException, 
+            error_handling.MissingContentException,
             error_handling.check_regulation, '204')
 
     @patch('regulations.views.error_handling.api_reader')
@@ -19,3 +22,38 @@ class ErrorHandlingTest(TestCase):
 
         result = error_handling.check_regulation('204')
         self.assertEqual(result, None)
+
+    @patch('regulations.views.error_handling.api_reader')
+    def test_check_version(self, api_reader):
+        api_reader.ApiReader.return_value.regversions.return_value =\
+            {'versions': [{'version': '2'}]}
+        result = error_handling.check_version('204', '2')
+        self.assertTrue(result)
+
+    @patch('regulations.views.error_handling.api_reader')
+    def test_check_no_version(self, api_reader):
+        api_reader.ApiReader.return_value.regversions.return_value =\
+            {'versions': [{'version': '3'}]}
+        result = error_handling.check_version('204', '2')
+        self.assertFalse(result)
+
+    def test_handle_generic_404(self):
+        request = RequestFactory().get('/fake-path')
+        result = error_handling.handle_generic_404(request)
+        self.assertEqual(result.status_code, 404)
+        self.assertTrue('Regulation content not found' in result.content)
+
+    @patch('regulations.views.error_handling.add_to_chrome')
+    @patch('regulations.views.error_handling.api_reader')
+    def test_handle_missing_section_404(self, api_reader, add_to_chrome):
+        api_reader.ApiReader.return_value.regversions.return_value =\
+            {'versions': [{'version': '2'}]}
+        add_to_chrome.return_value = None
+
+        request = RequestFactory().get('/fake-path')
+
+        extra_content = {'passed': 1, 'env': 'source'}
+        response = error_handling.handle_missing_section_404(
+            request, '204', '2', extra_content)
+        self.assertEqual(response, None)
+        self.assertTrue(add_to_chrome.called)
