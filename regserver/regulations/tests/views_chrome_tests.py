@@ -35,7 +35,8 @@ class ViewsChromeTest(TestCase):
     @patch('regulations.views.chrome.error_handling')
     @patch('regulations.views.chrome.ChromeView.set_chrome_context')
     @patch('regulations.views.chrome.generator')
-    def test_error_propagation(self, generator, set_chrome_context, error_handling):
+    def test_error_propagation(
+            self, generator, set_chrome_context, error_handling):
         """Test that the response of the outer view is that of the inner
         when there's an error"""
         error_handling.check_regulation.return_value = None
