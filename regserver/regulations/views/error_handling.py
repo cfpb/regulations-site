@@ -40,6 +40,17 @@ def handle_generic_404(request):
     return http.HttpResponseNotFound(body, content_type='text/html')
 
 
+def check_regulation(reg_part):
+    """ If versions of the reg_part given don't exist, raise
+    a MissingContentException(). """
+
+    client = api_reader.ApiReader()
+    vr = client.regversions(reg_part)
+
+    if not vr:
+        raise MissingContentException()
+
+
 def check_version(label_id, version):
     """ We check if the version of this regulation exists, and the user is only
     referencing a section that does not exist. """
@@ -50,6 +61,16 @@ def check_version(label_id, version):
 
     requested_version = [v for v in vr['versions'] if v['version'] == version]
     return len(requested_version) > 0
+
+
+def add_to_chrome(body, context, request):
+    chrome_template = loader.get_template('chrome.html')
+
+    context['partial_content'] = body
+    chrome_body = chrome_template.render(RequestContext(
+        request, context))
+
+    return http.HttpResponseNotFound(chrome_body, content_type='text/html')
 
 
 def handle_missing_section_404(
@@ -67,10 +88,4 @@ def handle_missing_section_404(
     body = template.render(RequestContext(
         request, context))
 
-    chrome_template = loader.get_template('chrome.html')
-
-    context['partial_content'] = body
-    chrome_body = chrome_template.render(RequestContext(
-        request, context))
-
-    return http.HttpResponseNotFound(chrome_body, content_type='text/html')
+    return add_to_chrome(body, context, request)

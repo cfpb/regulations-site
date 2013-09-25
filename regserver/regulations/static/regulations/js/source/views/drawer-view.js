@@ -3,7 +3,7 @@
 // **Usage** ```require(['drawer-view'], function(DrawerView) {})```
 //
 // **Jurisdiction** Left panel drawer container
-define('drawer-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'toc-view', 'history-view', 'search-view', 'regs-helpers'], function($, _, Backbone, Dispatch, TOCView, HistoryView, SearchView, Helpers) {
+define('drawer-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'toc-view', 'history-view', 'search-view'], function($, _, Backbone, Dispatch, TOCView, HistoryView, SearchView) {
     'use strict';
 
     var DrawerView = Backbone.View.extend({
@@ -12,7 +12,7 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'toc-view
         initialize: function() {
             var openTab,
                 k,
-                path = Helpers.findStartingContent();
+                path = Dispatch.getDrawerState();
 
             Dispatch.on('drawer:stateChange', this.changeContents, this);
 
@@ -32,10 +32,13 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'toc-view
                     'constructor': SearchView
                 }
             };
+
             // sets default tab for search
-            for (k in this.childViews) {
-                if (this.childViews.hasOwnProperty(path)) {
-                    openTab = path;
+            if (path) {
+                for (k in this.childViews) {
+                    if (this.childViews.hasOwnProperty(path)) {
+                        openTab = path;
+                    }
                 }
             }
 

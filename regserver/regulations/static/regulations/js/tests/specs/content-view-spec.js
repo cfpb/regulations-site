@@ -1,5 +1,5 @@
 define(['jquery', 'underscore', 'backbone', 'reg-view', 'definition-view'], function($, _, Backbone, RegView, DefinitionView) {
-    describe("Content view", function() {
+    describe("Reg view", function() {
         Dispatch = {
             on: function() {},
             set: function() {}

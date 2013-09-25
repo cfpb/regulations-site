@@ -9,6 +9,8 @@ define('search-view', ['jquery', 'underscore', 'backbone'], function($, _, Backb
         },
 
         openSearchResults: function(e) {
+            sessionStorage.setItem('drawerDefault', 'search');
+
             if (window.history && window.history.pushState) {
                 // Temporarily removing ajax search results
                 // e.preventDefault();
@@ -17,7 +19,6 @@ define('search-view', ['jquery', 'underscore', 'backbone'], function($, _, Backb
 
                 options.query = $form.find('input[name=q]')[0].value;
                 options.version = $form.find('select[name=version]')[0].value;
-
                 // Temporarily removing ajax search results
                 // Dispatch.trigger('search:submitted', options, 'searchResults');
             }
