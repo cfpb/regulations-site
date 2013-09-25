@@ -48,7 +48,6 @@ class ChromeView(TemplateView):
 
     def set_chrome_context(self, context, reg_part, version):
         utils.add_extras(context)
-        context['part'] = reg_part
         context['reg_part'] = reg_part
         context['history'] = fetch_grouped_history(reg_part)
         context['today'] = date.today()
