@@ -201,7 +201,14 @@
     <span class="keyword">var</span> HeaderView = Backbone.View.extend({
         el: <span class="string">'.reg-header'</span>,
 
+        idMap: {
+            <span class="string">'table-of-contents'</span>: <span class="string">'#menu-link'</span>,
+            <span class="string">'history'</span>: <span class="string">'#history-link'</span>,
+            <span class="string">'search'</span>: <span class="string">'#search-link'</span>
+        },
+
         initialize: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> openDrawer = Dispatch.getDrawerState();
             <span class="keyword">this</span>.$activeEls = $(<span class="string">'#menu, #site-header, #content-body, #primary-footer'</span>);</pre></div></div>
             
         </li>
@@ -218,6 +225,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$tocLinks = $(<span class="string">'.toc-nav-link'</span>);
+
+            <span class="keyword">if</span> (openDrawer) {
+                <span class="keyword">this</span>.changeActiveTab(openDrawer);
+            }
         },
 
         events: {
@@ -248,15 +259,19 @@
             <span class="keyword">var</span> $target = $(e.target),
                 linkValue = _.last($target.closest(<span class="string">'a'</span>).attr(<span class="string">'href'</span>).split(<span class="string">'#'</span>));
 
+            <span class="keyword">this</span>.changeActiveTab(linkValue);
+
+            Dispatch.trigger(<span class="string">'drawer:stateChange'</span>, linkValue);
+
+        },
+
+        changeActiveTab: <span class="keyword">function</span>(tab) {
             <span class="keyword">this</span>.$tocLinks.removeClass(<span class="string">'current'</span>);
-            $target.closest(<span class="string">'a'</span>).addClass(<span class="string">'current'</span>);
+            $(<span class="keyword">this</span>.idMap[tab]).addClass(<span class="string">'current'</span>);
 
             <span class="keyword">if</span> ($(<span class="string">'.panel'</span>).css(<span class="string">'left'</span>) === <span class="string">'-200px'</span>) {
                 <span class="keyword">this</span>.updateDrawerState(<span class="string">'open'</span>);
             }
-
-            Dispatch.trigger(<span class="string">'drawer:stateChange'</span>, linkValue);
-
         }
     });
 

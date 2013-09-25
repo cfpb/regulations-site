@@ -72,6 +72,7 @@ class ChromeView(TemplateView):
         label_id = context['label_id']
         version = context['version']
         reg_part = label_id.split('-')[0]
+        context['q'] = self.request.GET.get('q', '')
 
         error_handling.check_regulation(reg_part)
         self.set_chrome_context(context, reg_part, version)

@@ -209,6 +209,8 @@
             Dispatch.on(<span class="string">'ga-event:permalink'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'Permalink'</span>);
             Dispatch.on(<span class="string">'search:submitted'</span>, <span class="keyword">this</span>.sendEvent);
             Dispatch.on(<span class="string">'ga-event:sxs'</span>, <span class="keyword">this</span>.sendEvent);
+            Dispatch.on(<span class="string">'ga-event:sxsclose'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'close SxS by back link'</span>);
+            Dispatch.on(<span class="string">'ga-event:sectionnav'</span>, <span class="keyword">this</span>.sendEvent, <span class="string">'navigate to section by footer pagination'</span>);
         },</pre></div></div>
             
         </li>

@@ -234,17 +234,28 @@ this.options:</p>
 
         formatInterpretations: <span class="keyword">function</span>() {
             <span class="keyword">var</span> interpretation = <span class="keyword">this</span>.$el.find(<span class="string">'.inline-interpretation'</span>),
-                interpretationId;
+                interpretationId,
+                baseInterpId,
+                url, prefix;
 
             <span class="keyword">if</span> (<span class="keyword">typeof</span> interpretation[<span class="number">0</span>] !== <span class="string">'undefined'</span>) {
                 interpretationId = $(interpretation[<span class="number">0</span>]).data(<span class="string">'interp-id'</span>);
+                baseInterpId = Helpers.findBaseSection(interpretationId);
                 interpretation.remove();
+                prefix = Dispatch.getURLPrefix();
+
+                url = <span class="string">'/'</span> + baseInterpId + <span class="string">'/'</span> + Dispatch.getVersion() + <span class="string">'#'</span> + interpretationId;
+
+                <span class="keyword">if</span> (prefix) {
+                    url = <span class="string">'/'</span> + prefix + url;
+                }
 
                 <span class="keyword">this</span>.$el.children(<span class="string">'.definition-text'</span>).append(
                     Helpers.fastLink(
-                        <span class="string">'#'</span> + interpretationId, 
+                        url,
                         <span class="string">'Official Interpretation'</span>,
-                        <span class="string">'continue-link internal interp'</span>
+                        <span class="string">'continue-link internal interp'</span>,
+                        [<span class="string">'data-linked-section'</span>, baseInterpId]
                     )
                 );
             }
@@ -263,12 +274,13 @@ this.options:</p>
             }
         },
 
-        definitionRouter: <span class="keyword">function</span>(paragraph, actionText) {
-            <span class="keyword">var</span> targetSection;
-
-            <span class="keyword">if</span> (paragraph.indexOf(<span class="string">'Interp'</span>) === -<span class="number">1</span>) {
-                targetSection = Helpers.findBaseSection(paragraph);
-            } <span class="keyword">else</span> {</pre></div></div>
+        definitionRouter: <span class="keyword">function</span>(href, paragraph, actionText) {
+            <span class="keyword">var</span> prefix = Dispatch.getURLPrefix(),
+                hrefParts = _.compact(href.split(<span class="string">'/'</span>));
+            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, {
+                action: actionText,
+                context: <span class="string">'#'</span> + paragraph
+            });</pre></div></div>
             
         </li>
         
@@ -279,28 +291,38 @@ this.options:</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Interpretations all live in the same place</p>
+              <p>links need prefix inserted for non-pushState browsers
+but we don&#39;t want to route with the prefix</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                targetSection = paragraph.split(<span class="string">'-'</span>)[<span class="number">0</span>] + <span class="string">'-Interp'</span>;
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (prefix &amp;&amp; hrefParts[<span class="number">0</span>] === prefix) {
+                href = hrefParts.slice(<span class="number">1</span>).join(<span class="string">'/'</span>);
             }
 
-            Dispatch.trigger(<span class="string">'ga-event:definition'</span>, {
-                action: actionText,
-                context: <span class="string">'#'</span> + paragraph
-            });
-            Router.navigate(targetSection + <span class="string">'/'</span> + Dispatch.getVersion() + <span class="string">'#'</span> + paragraph, {<span class="string">'trigger'</span>: <span class="literal">true</span>});
+            Router.navigate(href, {<span class="string">'trigger'</span>: <span class="literal">true</span>});
         },
 
         sendContinueLinkEvent: <span class="keyword">function</span>(e) {
-            e.preventDefault();
-            <span class="keyword">this</span>.definitionRouter($(e.target).attr(<span class="string">'href'</span>).substr(<span class="number">1</span>), <span class="string">'clicked continue link'</span>);
+            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+                e.preventDefault();
+                <span class="keyword">var</span> $link = $(e.target),
+                    href = $link.attr(<span class="string">'href'</span>),
+                    p = $link.data(<span class="string">'linked-section'</span>);
+
+                <span class="keyword">this</span>.definitionRouter(href, p, <span class="string">'clicked continue link'</span>);
+            }
         },
 
         sendDefinitionLinkEvent: <span class="keyword">function</span>(e) {
-            e.preventDefault();
-            <span class="keyword">this</span>.definitionRouter($(e.target).data(<span class="string">'definition'</span>), <span class="string">'clicked term inside definition'</span>);
+            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+                e.preventDefault();
+                <span class="keyword">var</span> $link = $(e.target),
+                    href = $link.attr(<span class="string">'href'</span>),
+                    p = Helpers.findBaseSection($link.data(<span class="string">'definition'</span>));
+
+                <span class="keyword">this</span>.definitionRouter(href, p, <span class="string">'clicked term inside definition'</span>);
+            }
         },
 
         render: <span class="keyword">function</span>() {
@@ -319,12 +341,20 @@ this.options:</p>
         },
 
         template: <span class="keyword">function</span>(res) {
-            <span class="keyword">var</span> $defText;
+            <span class="keyword">var</span> $defText, parentId, url, prefix;
             <span class="keyword">this</span>.$el.html(<span class="string">'&lt;div class="definition-text"&gt;'</span> + res + <span class="string">'&lt;/div&gt;'</span>);
 
             $defText = <span class="keyword">this</span>.$el.find(<span class="string">'.definition-text'</span>);
+            parentId = Helpers.findBaseSection(<span class="keyword">this</span>.model.id);
+            <span class="keyword">this</span>.$el.prepend(<span class="string">'&lt;div class="sidebar-header group"&gt;&lt;h4&gt;Defined Term&lt;a class="right close-button" href="#"&gt;Close definition&lt;/a&gt;&lt;/h4&gt;&lt;/div&gt;'</span>);
 
-            <span class="keyword">this</span>.$el.prepend(<span class="string">'&lt;div class="sidebar-header group"&gt;&lt;h4&gt;Defined Term&lt;a class="right close-button" href="#"&gt;Close definition&lt;/a&gt;&lt;/h4&gt;&lt;/div&gt;'</span>);</pre></div></div>
+            prefix = Dispatch.getURLPrefix();
+
+            url = <span class="string">'/'</span> + parentId + <span class="string">'/'</span> + Dispatch.getVersion() + <span class="string">'#'</span> + <span class="keyword">this</span>.model.id;
+
+            <span class="keyword">if</span> (prefix) {
+                url = <span class="string">'/'</span> + prefix + url;
+            }</pre></div></div>
             
         </li>
         
@@ -341,9 +371,10 @@ this.options:</p>
             
             <div class="content"><div class='highlight'><pre>            $defText.append(
                 Helpers.fastLink(
-                    <span class="string">'#'</span> + <span class="keyword">this</span>.model.id, 
+                    url, 
                     Helpers.idToRef(<span class="keyword">this</span>.model.id),
-                    <span class="string">'continue-link internal'</span>
+                    <span class="string">'continue-link internal'</span>,
+                    [<span class="string">'data-linked-section'</span>, parentId]
                 )
             );</pre></div></div>
             

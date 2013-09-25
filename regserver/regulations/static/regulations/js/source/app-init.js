@@ -3,7 +3,7 @@
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
-define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers', './regs-router', './reg-view', 'search-results-view'], function($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, RegsHelpers, Router, RegView, SearchResultsView) {
+define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'dispatch', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers', './regs-router', './reg-view', 'search-results-view'], function($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, Helpers, Router, RegView, SearchResultsView) {
     'use strict';
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -37,8 +37,6 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
                 /* http://thenounproject.com/noun/carrot/#icon-No7790 */
                 document.getElementById('menu-link').className += ' hamburgerify';
                 $('.inline-interpretation .expand-button').addClass('carrotify');
-                $('#about-tool').html('Made with <span style="color: red"><3</span> by:');
-                $('#about-reg').html('Find our brilliant attorneys at:');
             });
         },
 
@@ -46,12 +44,17 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
             var openSection,
                 regId = $('#menu').data('reg-id'),
                 regSection = $('section[data-base-version]'),
-                regVersion = regSection.data('base-version');
+                regVersion = regSection.data('base-version'),
+                drawerState = Helpers.findStartingContent();
 
             Dispatch.set('reg', regId);
 
+            if (drawerState) {
+                Dispatch.set('drawerState', drawerState);
+            }
+
             if (window.location.pathname.indexOf('search') > 0) {
-                var urlobj = RegsHelpers.parseURL(window.location.href),
+                var urlobj = Helpers.parseURL(window.location.href),
                     params = urlobj.params;
 
                 Dispatch.setContentView(
@@ -71,7 +74,6 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
 
                 Dispatch.setContentView(new RegView({id: openSection}));
             }
-
 
             if (typeof regVersion !== 'undefined') {
                 Dispatch.set('version', regVersion);

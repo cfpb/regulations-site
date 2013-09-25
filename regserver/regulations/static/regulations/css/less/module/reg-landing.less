@@ -7,7 +7,8 @@ reg-landing.less contains styles specific to the regulation landing page
 .banner-text {
     .avenir-next;
     font-size: 2em;
-    padding: .5em 0;
+    padding: 0 0 .5em 0;
+    margin-top: .6em;
 }
 
 .landing {
@@ -33,7 +34,7 @@ reg-landing.less contains styles specific to the regulation landing page
 }
 
 .landing-curent-link {
-    margin: 40px 0 0 0;
+    margin: 0;
 
     a {
         .avenir-next;
@@ -48,8 +49,6 @@ reg-landing.less contains styles specific to the regulation landing page
     display: block;
     border-bottom: 1px solid @light_field;
     content: '';
-    margin-left: -14em;
-    margin-right: -60px;
 }
 
 /*
@@ -60,15 +59,16 @@ Tags
 .tag-list {
 
     padding: 0;
-    margin: 0 0 1em 0;
+    margin: 0 0 40px 0;
     font-size: 0.875em;
     .avenir-next;
 
     li {
         list-style: none;
         display: inline-block;
-        margin-right: 10px;
+        margin-right: 8px;
         margin-bottom: 10px;
+        margin-top: 16px;
 
         a:link,
         a:visited {
@@ -88,8 +88,9 @@ Tags
     }
 }
 
+
 .list-header {
-    font-size: 1em;
+    font-size: 1.125em;
     margin-bottom: 0;
 }
 
@@ -156,44 +157,52 @@ Sidebar
 ============================
 */
 
-.landing-sidebar {
+.secondary-content {
 
-    .regs-meta {
-        border-bottom: none;
-    }
+    .landing-sidebar {
 
-    h3 {
-        margin-top: 0;
-        .avenir-next;
-        font-size: 1.285714286em;
-        margin-bottom: 1em;
-    }
+        .alert {
+            border-right: none;
+            border-left: none;
+            border-top: none;
+            border-bottom: 1px solid @light_field;
 
-    h4 {
-        color: @black;
-        text-transform: none;
-        margin-bottom: 0.5em;
-        .avenir-next-demi;
-    }
+            a {
+                .avenir-next-demi;
+            }
 
-    ul {
-        margin-bottom: 2em;
-    }
+            ul {
+                margin-bottom: 0;
+            }
+        }
 
-    li {
-        margin-top: 0.5em;
-    }
+        .regs-meta {
+            border-bottom: none;
+        }
 
-    .alert {
-        background-color: #F6D9D3;
-        border: 1px solid #E8A091;
-        padding: 30px 15px;
-        margin-bottom: 2em;
-        .avenir-next;
+        h3 {
+            margin-top: 0;
+            .avenir-next;
+            font-size: 1.285714286em;
+            margin-bottom: 1em;
+        }
+
+        h4 {
+            color: @black;
+            text-transform: none;
+            margin-bottom: 0.5em;
+            .avenir-next-demi;
+            letter-spacing: normal;
+        }
 
         ul {
-            .reset;
+            margin-bottom: 2em;
         }
+
+        li {
+            margin-top: 0.5em;
+        }
+
     }
 }
 

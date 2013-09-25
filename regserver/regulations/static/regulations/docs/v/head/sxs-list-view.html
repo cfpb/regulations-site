@@ -210,7 +210,6 @@
 
             Dispatch.on(<span class="string">'regSection:open:after'</span>, <span class="keyword">this</span>.getSidebar, <span class="keyword">this</span>);
 
-
             <span class="keyword">this</span>.modifyListDisplay();
         },
 
@@ -280,6 +279,7 @@
         highlightHeader: <span class="keyword">function</span>() {
             <span class="keyword">this</span>.$el.find(<span class="string">'header'</span>).addClass(<span class="string">'has-content'</span>);
         }
+
     });
 
     <span class="keyword">return</span> SxSListView;

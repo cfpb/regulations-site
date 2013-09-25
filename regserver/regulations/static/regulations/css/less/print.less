@@ -28,13 +28,6 @@ h1, h2, h3, h4 {
 p {
     orphans: 3;
 }
-
-.reg-section,
-.appendix-section,
-.supplement-section {
-    page-break-after: always;
-}
-
 /*
  Hidden Elements
  ========================================================================== */
@@ -48,7 +41,9 @@ p {
  .reg-header,
  .main-head,
  .sub-head,
- .next-prev {
+ .next-prev,
+ .regs-meta,
+ footer {
     display: none;
  }
 
@@ -105,8 +100,8 @@ body, .wrap {
 }
 
 .level-1 .key-term {
-    font-size: 14pt;
-    line-height: 23pt;
+    font-size: 1em;
+    line-height: 1.5;
 }
 
 /*
@@ -151,6 +146,13 @@ a[href^="http://"] {
         display: none;
      }
 
+     .definition:link {
+        border-bottom: none;
+     }
+
+     .section-link {
+        display: none;
+     }
 }
 
 /*

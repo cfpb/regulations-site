@@ -258,6 +258,16 @@
             <div class="content"><div class='highlight'><pre>                returned.done(<span class="keyword">function</span>(response) {
                     <span class="keyword">this</span>.createView(response, options, type);
                 }.bind(<span class="keyword">this</span>));
+
+                returned.fail(<span class="keyword">function</span>() {
+                    <span class="keyword">var</span> alertNode = document.createElement(<span class="string">'div'</span>);
+
+                    alertNode.innerHTML = <span class="string">'There was an issue loading your data. This may be because your device is currently offline. Please try again.'</span>;
+                    alertNode.className = <span class="string">'alert'</span>;
+
+                    $(alertNode).insertBefore(<span class="string">'h2.section-number'</span>);
+                    <span class="keyword">this</span>.loaded();
+                }.bind(<span class="keyword">this</span>));
             }
             <span class="keyword">else</span> {
                <span class="keyword">this</span>.createView(returned, options, type); 
@@ -272,13 +282,19 @@
         },
 
         render: <span class="keyword">function</span>(html, scrollToId) {
-            <span class="keyword">var</span> offsetTop;
+            <span class="keyword">var</span> offsetTop, $scrollToId;
 
             <span class="keyword">this</span>.header.reset();
             <span class="keyword">this</span>.$el.html(html);
 
-            offsetTop = scrollToId &amp;&amp; $(scrollToId) ? $(scrollToId).offset().top : <span class="number">0</span>;
-            window.scrollTo(<span class="number">0</span>, offsetTop);
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> scrollToId !== <span class="string">'undefined'</span>) {
+                $scrollToId = $(<span class="string">'#'</span> + scrollToId);
+                <span class="keyword">if</span> ($scrollToId.length &gt; <span class="number">0</span>) {
+                    offsetTop = $scrollToId.offset().top;
+                }
+            }
+
+            window.scrollTo(<span class="number">0</span>, offsetTop || <span class="number">0</span>);
         },
 
         loading: <span class="keyword">function</span>() {</pre></div></div>

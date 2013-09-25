@@ -22,7 +22,7 @@ define('regs-helpers', function() {
         //
         // verbose, but much faster than the concise jquery alternatives
         // http://jsperf.com/create-dom-element/8
-        fastLink: function(href, text, classStr) {
+        fastLink: function(href, text, classStr, dataConfig) {
             var link = document.createElement('a'),
                 $link;
 
@@ -30,6 +30,11 @@ define('regs-helpers', function() {
             link.href = href;
             link.innerHTML = text;
             link.className = classStr || '';
+
+            // takes an array to add a data attr
+            if (typeof dataConfig !== 'undefined') {
+                link[dataConfig[0]] = dataConfig[1];
+            }
 
             return $link;
         },
@@ -102,10 +107,20 @@ define('regs-helpers', function() {
         //
         // **TODO** RegModel.getParent is the same?
         findBaseSection: function(id) {
-            if (id.indexOf('-') !== -1) {
-                var parts = id.split('-');
+            var parts, base;
 
-                return parts[0] + '-' + parts[1];
+            if (id.indexOf('-') !== -1) {
+                parts = id.split('-');
+                base = parts[0];
+
+                if (id.indexOf('Interp') !== -1) {
+                    base += '-Interp';
+                }
+                else {
+                    base += '-' + parts[1];
+                }
+
+                return base;
             }
             else {
                 return id;
@@ -113,15 +128,14 @@ define('regs-helpers', function() {
         },
 
         findStartingContent: function() {
-            var path = _.compact(window.location.pathname.split('/')),
-                sessionState = sessionStorage.getItem('drawerDefault');
+            var sessionState = sessionStorage.getItem('drawerDefault');
 
-            if (sessionState === null) {
-                return path[0];
-            }
-            else {
+            if (sessionState) {
                 sessionStorage.removeItem('drawerDefault');
                 return sessionState;
+            }
+            else {
+                return false;
             }
         },
 

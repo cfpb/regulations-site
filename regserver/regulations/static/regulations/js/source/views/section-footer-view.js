@@ -13,6 +13,8 @@ define('section-footer-view', ['jquery', 'underscore', 'backbone', 'dispatch'], 
             if (window.history && window.history.pushState) {
                 e.preventDefault();
                 var sectionId = $(e.currentTarget).data('linked-section');
+
+                Dispatch.trigger('ga-event:sectionnav', sectionId);
                 Dispatch.trigger('regSection:open', sectionId, {id:sectionId}, 'regSection');
             }
         },

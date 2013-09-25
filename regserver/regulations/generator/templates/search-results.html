@@ -17,6 +17,8 @@ version_timeline is one of "past", "current", and "future".
             <h3><a href="{% url 'chrome_section_view' result.section_id version %}#{{result.label|join:'-'}}" class="internal">{{result.header}}</a></h3>
                 <p>{{result.text}}</p>
             </li>
+        {% empty %}
+            <span class="no-results">Sorry, there are no results that match your search in this version.</span>
         {% endfor %}
         </ul>
     </section>
@@ -25,13 +27,11 @@ version_timeline is one of "past", "current", and "future".
     <footer class="search-nav">
 
     {% if previous %}
-    <a class="previous" href="{% url 'chrome_search' regulation %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ previous.page }}"><i class="minicon-left"></i>
-        Previous {{ previous.length }} Results</a>
+    <a class="previous" href="{% url 'chrome_search' regulation %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ previous.page }}"><i class="minicon-left"></i>Previous {{ previous.length }} Results</a>
     {% endif %}
 
     {% if next %}
-    <a class="next" href="{% url 'chrome_search' regulation %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ next.page }}"><i class="minicon-right"></i>
-        Next {{ next.length }} Results</a>
+    <a class="next" href="{% url 'chrome_search' regulation %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ next.page }}"><i class="minicon-right"></i>Next {{ next.length }} Results</a>
     {% endif %}
 
     </footer>

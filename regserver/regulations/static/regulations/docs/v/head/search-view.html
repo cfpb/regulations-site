@@ -196,7 +196,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>], <span class="keyword">function</span>($, _, Backbone) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> SearchView = Backbone.View.extend({
@@ -207,6 +207,8 @@
         },
 
         openSearchResults: <span class="keyword">function</span>(e) {
+            sessionStorage.setItem(<span class="string">'drawerDefault'</span>, <span class="string">'search'</span>);
+
             <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {</pre></div></div>
             
         </li>

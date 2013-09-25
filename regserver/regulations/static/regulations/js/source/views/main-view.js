@@ -47,6 +47,16 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
                 returned.done(function(response) {
                     this.createView(response, options, type);
                 }.bind(this));
+
+                returned.fail(function() {
+                    var alertNode = document.createElement('div');
+
+                    alertNode.innerHTML = 'There was an issue loading your data. This may be because your device is currently offline. Please try again.';
+                    alertNode.className = 'alert';
+
+                    $(alertNode).insertBefore('h2.section-number');
+                    this.loaded();
+                }.bind(this));
             }
             else {
                this.createView(returned, options, type); 
@@ -61,13 +71,19 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
         },
 
         render: function(html, scrollToId) {
-            var offsetTop;
+            var offsetTop, $scrollToId;
 
             this.header.reset();
             this.$el.html(html);
 
-            offsetTop = scrollToId && $(scrollToId) ? $(scrollToId).offset().top : 0;
-            window.scrollTo(0, offsetTop);
+            if (typeof scrollToId !== 'undefined') {
+                $scrollToId = $('#' + scrollToId);
+                if ($scrollToId.length > 0) {
+                    offsetTop = $scrollToId.offset().top;
+                }
+            }
+
+            window.scrollTo(0, offsetTop || 0);
         },
 
         loading: function() {

@@ -103,9 +103,10 @@ Sidebar Headers
 
     h4 {
         color: @dark_gray;
-        padding: .5em 1em;
+        padding: .5em 0 .5em .9375em;
         .avenir-next-demi;
         text-transform: uppercase;
+        padding-right: 25px;
     }
 
     .close-button {
@@ -115,7 +116,6 @@ Sidebar Headers
         cursor: pointer;
         z-index: 99999;
         width: 13px;
-        float: right;
     }
 
     @media 
@@ -134,8 +134,13 @@ Regs Meta
 Regs Meta contains the sub-content meta data found in the sidebar
 */
 
-.regs-meta {
+.expand-drawer,
+.expandable {
     .border-bottom-light;
+}
+
+.regs-meta {
+    //.border-bottom-light;
 
     h4 {
         color: @dark_gray;
@@ -221,9 +226,12 @@ When open definitions appear in the right sidebar
         clear: left;
     }
 
+    .open-definition {
+        border-bottom: 1px solid @medium_gray;
+    }
+
     .definition-text {
         padding: 1em;
-        border-bottom: 1px solid @medium_gray;
 
         p {
             margin-top: 0;

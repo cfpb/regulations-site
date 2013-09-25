@@ -5,7 +5,13 @@
     ====================
     */
 
-    body {
+    .reg-text {
+        margin-top: 20px;
+    }
+
+    .main-content,
+    .reg-header,
+    .secondary-content {
         font-size: 0.875em;
     }
 
@@ -46,6 +52,16 @@
         padding-top: 10px;
     }
 
+    .header-label,
+    .effective-date {
+        font-size: 0.8em;
+        line-height: 34px;
+    }
+
+    .effective-date {
+        margin-top: 2px;
+    }
+
     .inline-interpretation {
          h4 {
             padding: 0;
@@ -66,24 +82,70 @@
     =============================
     */
 
+    .sidebar-inner {
+        padding-bottom: 30px;
+    }
+    
+
+    /*
+    Footer
+    =============================
+    */
+    .section-nav {
+
+        .next-prev {
+            font-size: 1.125em;
+        }
+    }
+
+    .application-footer {
+        .title-logo {
+            display: block;
+            margin-bottom: 1em;
+
+            h1 {
+                //display: inline-block;
+                font-size: 1em;
+                margin-bottom: 1em;
+            }
+        }
+    }
+
+     /*
+    Landing Page
+    ====================
+    */
+
+    .banner-text {
+        margin-top: 50px;
+    }
+
+
+     /*
+    SxS Analysis
+    =============================
+    */
+
     #breakaway-view.open-sxs,
     .full-breakaway {
         position: fixed;
         top: 0;
     }
 
+    .sxs-header {
+        border-top: 2px solid @dark_gray;
+    }
+
     .sxs-label {
         display: none;
     }
 
-    /*
-    Sidebar
-    =============================
-    */
-    .application-footer {
-        min-height: 120px;
-        margin: 15px 15px 30px 40px;
-        background: url(../ip/logo.png) no-repeat bottom right;
-        background-size: 150px auto;
+    sxs-back-button,
+    .sxs-back-button:link,
+    .sxs-back-button:visited {
+        height: 32px;
+        line-height: 31px;
     }
 }
+
+
