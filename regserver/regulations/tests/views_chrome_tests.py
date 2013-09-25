@@ -16,7 +16,6 @@ class ViewsChromeTest(TestCase):
         """Test that the response of the outer view is that of the inner
         when there's an error"""
         api_reader.ApiReader.return_value.regversions.return_value = None
-        generator.get_regulation.return_value = None
         generator.get_tree_paragraph.return_value = {}
         set_chrome_context.return_value = None
 
