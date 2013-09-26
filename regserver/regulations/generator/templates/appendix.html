@@ -11,6 +11,8 @@
             {% endwith %}
          {%endif%}
 
+         {{ c.marked_up|safe|linebreaksbr }}
+
     {% if c.children %}
         {% for level_one in c.children %}
             <section id="{{level_one.markup_id}}" class="appendix-section">

@@ -13,7 +13,7 @@ def appendix_supplement(data):
 
         segments = try_split(data['title'], (u'—', '-'))
         if segments:
-            element['label'], element['sub_label'] = segments
+            element['label'], element['sub_label'] = segments[:2]
         element['section_id'] = '-'.join(data['index'])
         return element
 
