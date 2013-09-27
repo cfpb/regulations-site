@@ -55,6 +55,6 @@ def regulation(request, label_id):
 
     t = select_template([
         'landing_%s.html' % label_id,
-        'landing_base.html', 
+        'landing_base.html',
         'generic_landing.html'])
     return HttpResponse(t.render(c))

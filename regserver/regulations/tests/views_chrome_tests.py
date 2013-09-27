@@ -2,10 +2,9 @@ from unittest import TestCase
 
 from django.http import HttpResponseGone
 from django.test import RequestFactory
-from mock import Mock, patch
+from mock import patch
 
 from regulations.views.chrome import *
-from regulations.views.error_handling import MissingContentException
 
 
 class ViewsChromeTest(TestCase):

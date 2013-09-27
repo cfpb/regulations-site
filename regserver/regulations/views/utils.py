@@ -69,6 +69,7 @@ def add_extras(context):
     context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
     return context
 
+
 def first_section(reg_part, version):
     """ Use the table of contents for a regulation, to get the label of the
     first section of the regulation. In most regulations, this is -1, but in
