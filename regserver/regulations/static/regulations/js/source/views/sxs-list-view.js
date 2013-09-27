@@ -61,9 +61,6 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
             if ($folderContent.children().length > 0) {
                 this.highlightHeader();
             }
-            else {
-                $folderContent.text('No analysis available for ' + Dispatch.getOpenSection());
-            }
         },
 
         highlightHeader: function() {
