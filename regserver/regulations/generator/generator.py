@@ -37,7 +37,7 @@ class LayerCreator(object):
     LAYERS = {
         INTERNAL: ('internal-citations', 'inline', InternalCitationLayer),
         TOC: ('toc', 'paragraph', TableOfContentsLayer),
-        EXTERNAL: ('external-citations', 'inline', ExternalCitationLayer),
+        #EXTERNAL: ('external-citations', 'inline', ExternalCitationLayer),
         TERMS: ('terms', 'inline', DefinitionsLayer),
         SXS: ('analyses', 'paragraph', SectionBySectionLayer),
         PARAGRAPH: (
