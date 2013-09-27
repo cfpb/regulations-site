@@ -16,6 +16,8 @@ class SideBarView(TemplateView):
         label_id = context['label_id']
         version = context['version']
 
+        context['human_label_id'] = label_to_text(
+            context['label_id'].split('-'), include_marker=True)
         client = api_reader.ApiReader()
         sxs_layer_data = client.layer('analyses', label_id, version)
 
