@@ -70,5 +70,9 @@ def add_extras(context):
     return context
 
 def first_section(reg_part, version):
+    """ Use the table of contents for a regulation, to get the label of the
+    first section of the regulation. In most regulations, this is -1, but in
+    some it's -101. """
+
     toc = table_of_contents(reg_part, version, sectional=False)
     return toc[0]['section_id']
