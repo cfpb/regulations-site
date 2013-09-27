@@ -131,11 +131,19 @@ class ChromeSearchView(ChromeView):
         context['partial_context'] = partial_view.final_context
         return response.content
 
+    @staticmethod
+    def get_search_chrome_context(request, reg_part):
+        version = request.GET.get('version', '')
+        first_section = utils.first_section(reg_part, version)
+        return version, first_section
+
     def get_context_data(self, **kwargs):
         """Get the version and label_id for the chrome context"""
-        kwargs['version'] = self.request.GET.get('version', '')
-        # Use the first section for the chrome -- does not work in all regs
-        kwargs['label_id'] = kwargs['label_id'] + '-1'
+
+        version, first_section = self.get_search_chrome_context(
+            self.request, kwargs['label_id'])
+        kwargs['version'] = version
+        kwargs['label_id'] = first_section
         return super(ChromeSearchView, self).get_context_data(**kwargs)
 
 
@@ -178,7 +186,8 @@ class ChromeLandingView(ChromeView):
         kwargs['version'] = current['version']
         kwargs['regulation'] = kwargs['label_id']
         # Use the first section for the chrome -- does not work in all regs
-        kwargs['label_id'] = kwargs['label_id'] + '-1'
+        kwargs['label_id'] = utils.first_section(
+            kwargs['regulation'], kwargs['version'])
         return super(ChromeLandingView, self).get_context_data(**kwargs)
 
 

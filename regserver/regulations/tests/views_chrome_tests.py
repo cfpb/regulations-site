@@ -53,3 +53,11 @@ class ViewsChromeTest(TestCase):
         view.request = RequestFactory().get('/')
         response = view.get(view.request, label_id='lab', version='ver')
         self.assertEqual(410, response.status_code)
+
+    @patch('regulations.views.chrome.utils')
+    def test_get_search_chrome_kwargs(self, utils):
+        request = RequestFactory().get('/fake_path?version=2')
+        utils.first_section.return_value = '204-1'
+        args = ChromeSearchView.get_search_chrome_context(request, '204')
+        self.assertEqual(args, ('2', '204-1'))
+        self.assertTrue(utils.first_section.called)
