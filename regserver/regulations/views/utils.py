@@ -68,3 +68,7 @@ def add_extras(context):
     context['GOOGLE_ANALYTICS_SITE'] = settings.GOOGLE_ANALYTICS_SITE
     context['GOOGLE_ANALYTICS_ID'] = settings.GOOGLE_ANALYTICS_ID
     return context
+
+def first_section(reg_part, version):
+    toc = table_of_contents(reg_part, version, sectional=False)
+    return toc[0]['section_id']
