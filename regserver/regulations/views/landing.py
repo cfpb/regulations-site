@@ -28,11 +28,6 @@ def get_versions(label_id):
         return (current_version, next_version)
 
 
-def first_section(label_id):
-    """ Return a label to the first section of a regulation. """
-    return '%s-1' % label_id
-
-
 def regulation(request, label_id):
 
     context = {}

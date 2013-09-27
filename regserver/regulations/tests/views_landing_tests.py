@@ -34,6 +34,3 @@ class LandingViewTest(TestCase):
         current_ver, next_ver = landing.get_versions('204')
         self.assertEqual({'timeline': 'current', 'version': 'b'}, current_ver)
         self.assertEqual(None, next_ver)
-
-    def test_first_section(self):
-        self.assertEqual('204-1', landing.first_section('204'))
