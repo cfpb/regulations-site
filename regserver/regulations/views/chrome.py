@@ -185,7 +185,6 @@ class ChromeLandingView(ChromeView):
         current, _ = get_versions(kwargs['label_id'])
         kwargs['version'] = current['version']
         kwargs['regulation'] = kwargs['label_id']
-        # Use the first section for the chrome -- does not work in all regs
         kwargs['label_id'] = utils.first_section(
             kwargs['regulation'], kwargs['version'])
         return super(ChromeLandingView, self).get_context_data(**kwargs)
