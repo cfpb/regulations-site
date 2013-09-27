@@ -5,7 +5,6 @@ from django.views.generic.base import TemplateView
 from regulations.generator import generator
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
-from regulations.views.diff import PartialSectionDiffView
 from regulations.views.landing import regulation_exists, get_versions
 from regulations.views.landing import regulation as landing_page
 from regulations.views.partial import *
@@ -36,6 +35,9 @@ class ChromeView(TemplateView):
     def _assert_good(self, response):
         if response.status_code != 200:
             raise BadComponentException(response)
+
+    def main_content(self, context):
+        pass
 
     def process_partial(self, context):
         partial_view = self.partial_class.as_view()
@@ -81,7 +83,9 @@ class ChromeView(TemplateView):
             raise error_handling.MissingSectionException(label_id, version,
                                                          context)
 
-        context['partial_content'] = self.process_partial(context)
+        context['main_content_context'] = self.main_content(context)
+        context['main_content_template'] = self.partial_class.template_name
+        #context['partial_content'] = self.process_partial(context)
         if self.has_sidebar:
             sidebar_view = SideBarView.as_view()
             response = sidebar_view(self.request, label_id=label_id,
@@ -137,23 +141,6 @@ class ChromeSearchView(ChromeView):
         # Use the first section for the chrome -- does not work in all regs
         kwargs['label_id'] = kwargs['label_id'] + '-1'
         return super(ChromeSearchView, self).get_context_data(**kwargs)
-
-
-class ChromeSectionDiffView(ChromeView):
-    """Search results with chrome"""
-    partial_class = PartialSectionDiffView
-
-    def process_partial(self, context):
-        """Must override the parameters to this partial as it needs to have
-        a 'newer_version' field"""
-        partial_view = self.partial_class.as_view()
-        response = partial_view(self.request,
-                                label_id=context['label_id'],
-                                version=context['version'],
-                                newer_version=context['newer_version'])
-        self._assert_good(response)
-        response.render()
-        return response.content
 
 
 class ChromeLandingView(ChromeView):

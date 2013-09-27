@@ -27,3 +27,16 @@ class TemplatetagsInContextTest(TestCase):
         self.assertEqual("3. c1.f1c2.f2c2.f3", lines[4])
         self.assertEqual("4. c2a.f4", lines[6])
         self.assertEqual("5. f1", lines[8])
+
+    def test_in_context_cascade(self):
+        """Make sure fields that are not dicts get passed along"""
+        text = "{% load in_context %}{% begincontext c1 f2 %}"
+        text += "{{ f1 }}{{ f2 }}\n"
+        text += "{% endcontext %}"
+        text += "{{ f1 }}{{ f2 }}"
+
+        context = {'f1': 'f1', 'f2': 'f2', 'c1': {'f1': 'c1.f1'}}
+        output = Template(text).render(Context(context))
+        lines = output.split("\n")
+        self.assertEqual("c1.f1f2", lines[0])
+        self.assertEqual("f1f2", lines[1])

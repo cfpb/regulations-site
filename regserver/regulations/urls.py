@@ -3,12 +3,11 @@ from django.conf.urls import patterns, include, url
 from regulations.views.chrome import ChromeInterpView, ChromeLandingView
 from regulations.views.chrome import ChromeParagraphView, ChromeRegulationView
 from regulations.views.chrome import ChromeSearchView, ChromeSectionView
-from regulations.views.chrome import ChromeSectionDiffView
 from regulations.views.chrome_breakaway import ChromeSXSView
 from regulations.views.sidebar import SideBarView
 from regulations.views.partial import PartialInterpView, PartialRegulationView
 from regulations.views.partial import PartialParagraphView, PartialSectionView
-from regulations.views.diff import PartialSectionDiffView
+from regulations.views.diff import ChromeSectionDiffView, PartialSectionDiffView
 from regulations.views.partial_search import PartialSearch
 from regulations.views.partial_sxs import ParagraphSXSView
 from regulations.views.redirect import redirect_by_date, redirect_by_date_get

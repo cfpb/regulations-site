@@ -10,7 +10,11 @@ class InContextNode(template.Node):
     def render(self, context):
         new_context = {}
         for field in self.subcontext_names:
-            new_context.update(context.get(field, {}))
+            value = context.get(field, {})
+            if isinstance(value, dict):
+                new_context.update(context.get(field, {}))
+            else:
+                new_context[field] = value
         return self.nodelist.render(template.Context(new_context))
 
 @register.tag('begincontext')
@@ -31,6 +35,9 @@ def in_context(parser, token):
         1: Kitty
         2:  5
         3: Kitty
+
+    Arguments which are not dictionaries will 'cascade' into the inner
+    context.
     """
     nodelist = parser.parse(('endcontext',))
     parser.delete_first_token()

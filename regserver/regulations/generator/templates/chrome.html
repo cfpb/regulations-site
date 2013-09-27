@@ -32,8 +32,10 @@
         <span id="active-title">{% block active_title %}{% endblock %}</span>
     </div>
     <div class="header-secondary">
+        {% block header-secondary %}
         <span class="effective-date"><strong>Effective Date:</strong> {{ meta.effective_date|date }}</span>
         <h2> </h2>
+        {% endblock %}
     </div>
 </div>
 </header>
@@ -44,8 +46,10 @@
 
 {% block chrome-content %}
 <div id="content-body" class="main-content">
-
-    {{ partial_content|safe }}
+    {% load in_context %}
+    {% begincontext main_content_context main_content_template %}
+        {% include main_content_template %}
+    {% endcontext %}
 
 </div> <!-- /.main-content -->
 {% endblock %}

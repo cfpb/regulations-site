@@ -3,9 +3,9 @@
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
 from regulations.generator.node_types import EMPTYPART, REGTEXT
-from regulations.views import utils
+from regulations.views import error_handling, utils
+from regulations.views.chrome import ChromeView
 from regulations.views.partial import PartialView
-from regulations.views import error_handling
 
 
 def get_appliers(label_id, older, newer):
@@ -64,3 +64,16 @@ class PartialSectionDiffView(PartialView):
                 'children': [builder.tree]}
         context['tree'] = {'children': [child_of_root]}
         return context
+
+
+class ChromeSectionDiffView(ChromeView):
+    """Search results with chrome"""
+    template_name = 'diff-chrome.html'
+    partial_class = PartialSectionDiffView
+
+    def main_content(self, context):
+        view = self.partial_class()
+        view.request = self.request
+        return view.get_context_data(
+            label_id=context['label_id'], version=context['version'],
+            newer_version=context['newer_version'])
