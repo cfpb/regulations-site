@@ -48,6 +48,10 @@ Headers within the sidebar should be <h4>
         &.important {
             color: @red_orange;
         }
+
+        h5 {
+            margin: 0;
+        }
     }
 
 
@@ -148,6 +152,15 @@ Regs Meta contains the sub-content meta data found in the sidebar
         .avenir-next-demi;
     }
 
+    h5 {
+        margin: 0;
+        .avenir-next;
+        font-size: 1em;
+        text-transform: none;
+        padding-bottom: 12px;
+        border-bottom: 1px solid @light_neutral;
+    }
+
     .chunk {
         padding: 1em;
 
@@ -177,9 +190,9 @@ Regs Meta contains the sub-content meta data found in the sidebar
             }
         }
 
-        li:last-child a:link {
+        /*li:last-child a:link {
             border: none;
-        }
+        }*/
 
         /* add a top border to IE8 since it does not recognize .last-child to remove the bottom border*/
         .lt-ie9 & {

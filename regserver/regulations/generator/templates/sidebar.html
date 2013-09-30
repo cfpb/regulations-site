@@ -7,11 +7,14 @@
             </header>
             <div class="chunk expand-drawer">
             {% if analyses %}
+                <h5>Recent analyses</h5>
                 <ul>
                     {% for analysis in analyses %}
                         <li><a href="{% url 'chrome_sxs_view' analysis.label_id analysis.doc_number %}?from_version={{ version }}" class="sxs-link" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}<span class="minicon-right"></span></a></li>
                     {% endfor %}
                 </ul>
+            {% else %}
+                No analyses available for {{ human_label_id }} in this tool.
             {% endif %}
             </div>
         </section> <!-- /.regs-meta -->
