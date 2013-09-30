@@ -75,11 +75,6 @@ class ChromeSectionDiffView(ChromeView):
     template_name = 'diff-chrome.html'
     partial_class = PartialSectionDiffView
 
-    def main_content(self, context):
-        view = self.partial_class()
-        view.request = self.request
-        return view.get_context_data(**context)
-
     def set_chrome_context(self, context, reg_part, version):
         utils.add_extras(context)
         context['reg_part'] = reg_part

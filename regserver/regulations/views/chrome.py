@@ -36,17 +36,11 @@ class ChromeView(TemplateView):
         if response.status_code != 200:
             raise BadComponentException(response)
 
-    def main_content(self, context):
-        pass
-
-    def process_partial(self, context):
-        partial_view = self.partial_class.as_view()
-        response = partial_view(self.request,
-                                label_id=context['label_id'],
-                                version=context['version'])
-        self._assert_good(response)
-        response.render()
-        return response.content
+    def add_main_content(self, context):
+        view = self.partial_class()
+        view.request = self.request
+        context['main_content_context'] = view.get_context_data(**context)
+        context['main_content_template'] = view.template_name
 
     def set_chrome_context(self, context, reg_part, version):
         utils.add_extras(context)
@@ -66,7 +60,6 @@ class ChromeView(TemplateView):
         context['meta'] = regulation_meta
 
     def get_context_data(self, **kwargs):
-
         context = super(ChromeView, self).get_context_data(**kwargs)
 
         label_id = context['label_id']
@@ -76,8 +69,7 @@ class ChromeView(TemplateView):
 
         error_handling.check_regulation(reg_part)
 
-        context['main_content_context'] = self.main_content(context)
-        context['main_content_template'] = self.partial_class.template_name
+        self.add_main_content(context)
 
         self.set_chrome_context(context, reg_part, version)
 
@@ -86,7 +78,6 @@ class ChromeView(TemplateView):
             raise error_handling.MissingSectionException(label_id, version,
                                                          context)
 
-        #context['partial_content'] = self.process_partial(context)
         if self.has_sidebar:
             sidebar_view = SideBarView.as_view()
             response = sidebar_view(self.request, label_id=label_id,
@@ -124,45 +115,23 @@ class ChromeSearchView(ChromeView):
     partial_class = PartialSearch
     has_sidebar = False
 
-    def process_partial(self, context):
-        partial_view = self.partial_class()
-        partial_view.request = self.request
-        response = partial_view.get(self.request,
-                                    label_id=context['label_id'],
-                                    version=context['version'],
-                                    skip_count=True)
-        self._assert_good(response)
-        response.render()
-        context['partial_context'] = partial_view.final_context
-        return response.content
-
-    @staticmethod
-    def get_search_chrome_context(request, reg_part):
-        version = request.GET.get('version', '')
-        first_section = utils.first_section(reg_part, version)
-        return version, first_section
-
     def get_context_data(self, **kwargs):
-        """Get the version and label_id for the chrome context"""
-
-        version, first_section = self.get_search_chrome_context(
-            self.request, kwargs['label_id'])
-        kwargs['version'] = version
-        kwargs['label_id'] = first_section
+        """Get the version for the chrome context"""
+        kwargs['version'] = self.request.GET.get('version', '')
         return super(ChromeSearchView, self).get_context_data(**kwargs)
 
 
 class ChromeLandingView(ChromeView):
     """Landing page with chrome"""
     template_name = 'landing-chrome.html'
-    partial_class = PartialSectionView  # Needed to know sectional status
+    partial_class = PartialSectionView
     has_sidebar = False
 
-    def process_partial(self, context):
+    def add_main_content(self, context):
         """Landing page isn't a TemplateView"""
         response = landing_page(self.request, context['regulation'])
         self._assert_good(response)
-        return response.content
+        context['main_content'] = response.content
 
     def get_context_data(self, **kwargs):
         """Add the version and replace the label_id for the chrome context"""
@@ -173,8 +142,6 @@ class ChromeLandingView(ChromeView):
         current, _ = get_versions(kwargs['label_id'])
         kwargs['version'] = current['version']
         kwargs['regulation'] = kwargs['label_id']
-        kwargs['label_id'] = utils.first_section(
-            kwargs['regulation'], kwargs['version'])
         return super(ChromeLandingView, self).get_context_data(**kwargs)
 
 
