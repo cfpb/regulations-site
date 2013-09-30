@@ -12,9 +12,7 @@
             {% for item in toc_items %}
                 {% if item.is_section %}
                     <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">§&nbsp;{{item.label}}</span> {{item.sub_label|safe}}</a></li>
-                {% elif item.is_appendix %}
-                    <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
-                {% elif item.is_supplement %}
+                {% elif item.is_appendix or item.is_supplement%}
                     <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
                 {% else %}
                     <li><a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>

@@ -29,6 +29,7 @@ class TableOfContentsLayer(object):
                 element = {
                     'url': url,
                     'label': data['title'],
+                    'index': data['index'],
                     'section_id': '-'.join(data['index'])
                 }
                 self.section(element, data)
@@ -36,12 +37,14 @@ class TableOfContentsLayer(object):
                 toc_list.append(element)
             return ('TOC', toc_list)
 
-    def section(self, element, data):
+    @staticmethod
+    def section(element, data):
         title_data = title_parsing.section(data)
         if title_data:
             element.update(title_data)
 
-    def appendix_supplement(self, element, data):
+    @staticmethod
+    def appendix_supplement(element, data):
         as_data = title_parsing.appendix_supplement(data)
         if as_data:
             element.update(as_data)

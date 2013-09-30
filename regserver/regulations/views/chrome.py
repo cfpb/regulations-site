@@ -52,7 +52,6 @@ class ChromeView(TemplateView):
         utils.add_extras(context)
         context['reg_part'] = reg_part
         context['history'] = fetch_grouped_history(reg_part)
-        context['today'] = date.today()
 
         table_of_contents = utils.table_of_contents(
             reg_part,
@@ -76,6 +75,10 @@ class ChromeView(TemplateView):
         context['q'] = self.request.GET.get('q', '')
 
         error_handling.check_regulation(reg_part)
+
+        context['main_content_context'] = self.main_content(context)
+        context['main_content_template'] = self.partial_class.template_name
+
         self.set_chrome_context(context, reg_part, version)
 
         relevant_tree = generator.get_tree_paragraph(label_id, version)
@@ -83,8 +86,6 @@ class ChromeView(TemplateView):
             raise error_handling.MissingSectionException(label_id, version,
                                                          context)
 
-        context['main_content_context'] = self.main_content(context)
-        context['main_content_template'] = self.partial_class.template_name
         #context['partial_content'] = self.process_partial(context)
         if self.has_sidebar:
             sidebar_view = SideBarView.as_view()

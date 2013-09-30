@@ -2,10 +2,14 @@
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
+from regulations.generator.layers.toc_applier import TableOfContentsLayer
 from regulations.generator.node_types import EMPTYPART, REGTEXT
+from regulations.generator.versions import fetch_grouped_history
 from regulations.views import error_handling, utils
 from regulations.views.chrome import ChromeView
 from regulations.views.partial import PartialView
+
+from django.core.urlresolvers import reverse
 
 
 def get_appliers(label_id, older, newer):
@@ -74,6 +78,59 @@ class ChromeSectionDiffView(ChromeView):
     def main_content(self, context):
         view = self.partial_class()
         view.request = self.request
-        return view.get_context_data(
-            label_id=context['label_id'], version=context['version'],
-            newer_version=context['newer_version'])
+        return view.get_context_data(**context)
+
+    def set_chrome_context(self, context, reg_part, version):
+        utils.add_extras(context)
+        context['reg_part'] = reg_part
+        context['history'] = fetch_grouped_history(reg_part)
+
+        diff = generator.get_diff_json(reg_part, version,
+            context['main_content_context']['newer_version'])
+
+        old_toc = utils.table_of_contents(
+            reg_part,
+            version,
+            self.partial_class.sectional_links)
+        context['TOC'] = self.diff_toc(context, old_toc, diff)
+
+        regulation_meta = utils.regulation_meta(
+            reg_part,
+            version,
+            self.partial_class.sectional_links)
+        context['meta'] = regulation_meta
+
+    @staticmethod
+    def diff_toc(context, old_toc, diff):
+        compiled_toc = list(old_toc)
+        for node in (v['node'] for v in diff.values() if v['op'] == 'added'):
+            if len(node['label']) == 2 and node['title']:
+                element = {
+                    'label': node['title'],
+                    'index': node['label'],
+                    'section_id': '-'.join(node['label']),
+                    'op': 'added'
+                }
+                data = {'index': node['label'], 'title': node['title']}
+                TableOfContentsLayer.section(element, data)
+                TableOfContentsLayer.appendix_supplement(element, data)
+                compiled_toc.append(element)
+
+        def normalize(label):
+            normalized = []
+            for part in label:
+                try:
+                    normalized.append(int(part))
+                except ValueError:
+                    normalized.append(part)
+            return normalized
+
+        compiled_toc = sorted(compiled_toc, key=lambda el: tuple(
+            normalize(el['index'])))
+        for el in compiled_toc:
+            el['url'] = reverse('chrome_section_diff_view', kwargs={
+                'label_id': el['section_id'], 'version': context['version'],
+                'newer_version':
+                    context['main_content_context']['newer_version']})
+
+        return compiled_toc
