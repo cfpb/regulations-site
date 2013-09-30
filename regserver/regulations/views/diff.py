@@ -75,25 +75,32 @@ class ChromeSectionDiffView(ChromeView):
     template_name = 'diff-chrome.html'
     partial_class = PartialSectionDiffView
 
-    def set_chrome_context(self, context, reg_part, version):
-        utils.add_extras(context)
-        context['reg_part'] = reg_part
-        context['history'] = fetch_grouped_history(reg_part)
-
-        diff = generator.get_diff_json(reg_part, version,
+    def add_main_content(self, context):
+        super(ChromeSectionDiffView, self).add_main_content(context)
+        diff = generator.get_diff_json(context['reg_part'],
+            context['version'],
             context['main_content_context']['newer_version'])
 
         old_toc = utils.table_of_contents(
-            reg_part,
-            version,
+            context['reg_part'],
+            context['version'],
             self.partial_class.sectional_links)
         context['TOC'] = self.diff_toc(context, old_toc, diff)
 
-        regulation_meta = utils.regulation_meta(
-            reg_part,
-            version,
-            self.partial_class.sectional_links)
-        context['meta'] = regulation_meta
+    def get_context_data(self, **kwargs):
+        context = super(ChromeView, self).get_context_data(**kwargs)
+
+        label_id = context['label_id']
+        version = context['version']
+        reg_part = label_id.split('-')[0]
+        context['q'] = self.request.GET.get('q', '')
+
+        self.set_chrome_context(context, reg_part, version)
+        error_handling.check_regulation(reg_part)
+
+        self.add_main_content(context)
+
+        return context
 
     @staticmethod
     def diff_toc(context, old_toc, diff):
@@ -110,6 +117,15 @@ class ChromeSectionDiffView(ChromeView):
                 TableOfContentsLayer.section(element, data)
                 TableOfContentsLayer.appendix_supplement(element, data)
                 compiled_toc.append(element)
+        
+        modified = set()
+        for label in (key for key, value in diff.iteritems()
+                                         if value['op'] == 'modified'):
+            label = label.split('-')
+            if 'Interp' in label:
+                modified.add((label[0], 'Interp'))
+            else:
+                modified.add(tuple(label[:2]))
 
         def normalize(label):
             normalized = []
@@ -127,5 +143,7 @@ class ChromeSectionDiffView(ChromeView):
                 'label_id': el['section_id'], 'version': context['version'],
                 'newer_version':
                     context['main_content_context']['newer_version']})
+            if tuple(el['index']) in modified:
+                el['op'] = 'modified'
 
         return compiled_toc

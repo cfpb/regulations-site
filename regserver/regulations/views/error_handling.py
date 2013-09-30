@@ -66,7 +66,7 @@ def check_version(label_id, version):
 def add_to_chrome(body, context, request):
     chrome_template = loader.get_template('chrome.html')
 
-    context['partial_content'] = body
+    context['main_content'] = body
     chrome_body = chrome_template.render(RequestContext(
         request, context))
 

@@ -15,3 +15,25 @@ table of contents and the version tab are quite different
     {% endwith %}
 <h2> </h2>
 {% endblock %}
+
+
+{% block toc %}
+<div class="toc-drawer toc-container current hidden diff-toc" id="table-of-contents">
+    <div class="drawer-header">
+        <h2 class="toc-type">Table of Contents</h2>
+    </div><!-- /.drawer-header -->
+    <nav id="toc" class="regulation-nav" role="navigation">
+        <ol class="drawer-content">
+            {% for item in TOC %}
+                {% if item.is_section %}
+                <li>{{item.op}}<a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">§&nbsp;{{item.label}}</span> {{item.sub_label|safe}}</a></li>
+                {% elif item.is_appendix or item.is_supplement%}
+                <li>{{item.op}}<a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
+                {% else %}
+                <li>{{item.op}}<a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </nav>
+</div>
+{% endblock %}

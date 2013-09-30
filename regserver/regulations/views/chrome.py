@@ -67,16 +67,15 @@ class ChromeView(TemplateView):
         reg_part = label_id.split('-')[0]
         context['q'] = self.request.GET.get('q', '')
 
-        error_handling.check_regulation(reg_part)
-
-        self.add_main_content(context)
-
         self.set_chrome_context(context, reg_part, version)
+        error_handling.check_regulation(reg_part)
 
         relevant_tree = generator.get_tree_paragraph(label_id, version)
         if relevant_tree is None:
             raise error_handling.MissingSectionException(label_id, version,
                                                          context)
+        self.add_main_content(context)
+
 
         if self.has_sidebar:
             sidebar_view = SideBarView.as_view()
@@ -118,6 +117,7 @@ class ChromeSearchView(ChromeView):
     def get_context_data(self, **kwargs):
         """Get the version for the chrome context"""
         kwargs['version'] = self.request.GET.get('version', '')
+        kwargs['skip_count'] = True
         return super(ChromeSearchView, self).get_context_data(**kwargs)
 
 
