@@ -118,14 +118,17 @@ class ChromeSectionDiffView(ChromeView):
                 TableOfContentsLayer.appendix_supplement(element, data)
                 compiled_toc.append(element)
         
-        modified = set()
-        for label in (key for key, value in diff.iteritems()
-                                         if value['op'] == 'modified'):
+        modified, deleted = set(), set()
+        for label, diff_value in diff.iteritems():
             label = label.split('-')
             if 'Interp' in label:
-                modified.add((label[0], 'Interp'))
+                label = (label[0], 'Interp')
             else:
-                modified.add(tuple(label[:2]))
+                label = tuple(label[:2])
+            if diff_value['op'] == 'modified':
+                modified.add(label)
+            elif diff_value['op'] == 'deleted':
+                deleted.add(label)
 
         def normalize(label):
             normalized = []
@@ -145,5 +148,7 @@ class ChromeSectionDiffView(ChromeView):
                     context['main_content_context']['newer_version']})
             if tuple(el['index']) in modified:
                 el['op'] = 'modified'
+            if tuple(el['index']) in deleted:
+                el['op'] = 'deleted'
 
         return compiled_toc
