@@ -3,7 +3,7 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'dispatch'], functio
 
     var HistoryView = Backbone.View.extend({
 
-        el: '#history',
+        el: '#history:not(.diff-history)',
 
         events: {
             'click .version-link': 'setStorageItem'
@@ -13,7 +13,7 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'dispatch'], functio
             Dispatch.on('regSection:open:after', this.updateLinks, this);
 
             // remove the current class from all .status-list items
-            $('.status-list').removeClass('current');
+            this.$el.find('.status-list').removeClass('current');
             
             // check the data-base-version attribute of each <li> against the document
             this.$el.find('.status-list[data-base-version=' + Dispatch.getVersion() + ']').addClass('current');
