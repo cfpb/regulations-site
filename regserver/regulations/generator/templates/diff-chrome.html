@@ -17,7 +17,7 @@ table of contents and the version tab are quite different
 {% endblock %}
 
 
-{% block toc %}
+{% block drawer-toc %}
 <div class="toc-drawer toc-container current hidden diff-toc" id="table-of-contents">
     <div class="drawer-header">
         <h2 class="toc-type">Table of Contents</h2>
@@ -36,4 +36,40 @@ table of contents and the version tab are quite different
         </ol>
     </nav>
 </div>
+{% endblock %}
+
+{% block drawer-history %}
+    <div id="history" class="history-drawer toc-container hidden">
+        <div class="drawer-header">
+            <h2 class="toc-type">Regulation versions</h2>
+        </div><!-- /.drawer-header -->
+        <div class="drawer-content">
+            <div class="form-wrap group">
+            <form action="{% url 'redirect_by_date_get' label_id %}"
+                  method="GET" class="date-input">
+              <input type="text" name="month" class="month-input" maxlength="2" value="{% now "m" %}" />
+              / <input type="text" name="day" class="day-input" maxlength="2" value="{% now "d" %}" />
+              / <input type="text" name="year" class="year-input" maxlength="4" value="{% now "Y" %}" />
+              <button type="submit">Find</button>
+            </form>
+            </div><!--./date-form-->
+            <div class="group">
+                <a href="{% url 'chrome_section_view' label_id version %}" class="version-link" data-version="{{ version }}">
+                    Turn Off Diff Mode
+                </a>
+            </div>
+            <ul class="version-list">
+            {% for version in history %}
+                <li class="{{version.timeline}} status-list">
+                    <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link" data-version="{{ version.version }}">
+                        {% if version.timeline == 'current' %}
+                            <h4>Current Law</h4>
+                        {% endif %}
+                        <span class="version-date">{{ version.by_date|date }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div> <!--/#history-->
 {% endblock %}

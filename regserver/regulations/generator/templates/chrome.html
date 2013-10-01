@@ -46,55 +46,57 @@
 {% endcomment %}
 {% with active_version=version %}
 <div id="menu" class="panel" data-reg-id="{{ reg_part }}">
-    {% block toc %}
+    {% block drawer-toc %}
         {%if TOC %}
             {% with nav_class='regulation-nav' toc_items=TOC top_toc=True %}
                 {% include "toc.html" %} 
             {% endwith %}
         {%endif%}
     {% endblock %}
-    <div id="history" class="history-drawer toc-container hidden">
-        <div class="drawer-header">
-            <h2 class="toc-type">Regulation versions</h2>
-        </div><!-- /.drawer-header -->
-        <div class="drawer-content">
-            <div class="form-wrap group">
-            <form action="{% url 'redirect_by_date_get' label_id %}"
-                  method="GET" class="date-input">
-              <input type="text" name="month" class="month-input" maxlength="2" value="{% now "m" %}" />
-              / <input type="text" name="day" class="day-input" maxlength="2" value="{% now "d" %}" />
-              / <input type="text" name="year" class="year-input" maxlength="4" value="{% now "Y" %}" />
-              <button type="submit">Find</button>
-            </form>
-            </div><!--./date-form-->
-            <ul class="version-list">
-            {% for version in history %}
-                <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
-                {% if reg_part == label_id %}
-                    <a href="{% url 'chrome_regulation_view' reg_part version.version %}" class="version-link" data-version="{{ version.version }}">
-                        {% if version.timeline == 'current' %}
-                            <h4>Current Law</h4>
-                        {% endif %}
-                        <span class="version-date">{{ version.by_date|date }}</span>
-                    </a>
-                {% else %}
-                    <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link" data-version="{{ version.version }}">
-                        {% if version.timeline == 'current' %}
-                            <h4>Current Law</h4>
-                        {% endif %}
-                        <span class="version-date">{{ version.by_date|date }}</span>
-                    </a>
-                {% endif %}
-                    <ul class="rule-list">
-                    {% for notice in version.notices %}
-                        <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
-                    {% endfor %}
-                    </ul>
-                </li>
-            {% endfor %}
-            </ul>
-        </div>
-    </div> <!--/#history-->
+    {% block drawer-history %}
+        <div id="history" class="history-drawer toc-container hidden">
+            <div class="drawer-header">
+                <h2 class="toc-type">Regulation versions</h2>
+            </div><!-- /.drawer-header -->
+            <div class="drawer-content">
+                <div class="form-wrap group">
+                <form action="{% url 'redirect_by_date_get' label_id %}"
+                      method="GET" class="date-input">
+                  <input type="text" name="month" class="month-input" maxlength="2" value="{% now "m" %}" />
+                  / <input type="text" name="day" class="day-input" maxlength="2" value="{% now "d" %}" />
+                  / <input type="text" name="year" class="year-input" maxlength="4" value="{% now "Y" %}" />
+                  <button type="submit">Find</button>
+                </form>
+                </div><!--./date-form-->
+                <ul class="version-list">
+                {% for version in history %}
+                    <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
+                    {% if reg_part == label_id %}
+                        <a href="{% url 'chrome_regulation_view' reg_part version.version %}" class="version-link" data-version="{{ version.version }}">
+                            {% if version.timeline == 'current' %}
+                                <h4>Current Law</h4>
+                            {% endif %}
+                            <span class="version-date">{{ version.by_date|date }}</span>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link" data-version="{{ version.version }}">
+                            {% if version.timeline == 'current' %}
+                                <h4>Current Law</h4>
+                            {% endif %}
+                            <span class="version-date">{{ version.by_date|date }}</span>
+                        </a>
+                    {% endif %}
+                        <ul class="rule-list">
+                        {% for notice in version.notices %}
+                            <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
+                        {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div> <!--/#history-->
+    {% endblock %}
     <div id="search" class="search-drawer toc-container hidden">
         <div class="drawer-header">
             <h2 class="toc-type">Search</h2>
