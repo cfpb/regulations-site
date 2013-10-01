@@ -68,6 +68,21 @@
                   <button type="submit">Find</button>
                 </form>
                 </div><!--./date-form-->
+                <div class="group">
+                    <div class="select-content">
+                        <form action="{% url 'diff_redirect' label_id active_version %}" method="GET">
+                            <select name="new_version">
+                                <option value="default" disabled="disabled" selected="selected">Compare with:</option>
+                                {% for version in history %}
+                                    {% if active_version != version.version %}
+                                        <option value="{{version.version}}">{{version.by_date|date}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <button type="submit">Go</button>
+                    </div> <!--/.select-content-->
+                </div><!--/.version-search-->
+                </div>
                 <ul class="version-list">
                 {% for version in history %}
                     <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">

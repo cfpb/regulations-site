@@ -10,7 +10,8 @@ from regulations.views.partial import PartialParagraphView, PartialSectionView
 from regulations.views.diff import ChromeSectionDiffView, PartialSectionDiffView
 from regulations.views.partial_search import PartialSearch
 from regulations.views.partial_sxs import ParagraphSXSView
-from regulations.views.redirect import redirect_by_date, redirect_by_date_get
+from regulations.views.redirect import diff_redirect, redirect_by_date
+from regulations.views.redirect import redirect_by_date_get
 
 #Re-usable URL patterns.
 version_pattern = r'(?P<version>[-\d\w]+)'
@@ -29,6 +30,10 @@ urlpatterns = patterns(
     # Example http://.../regulation_redirect/201-3-v
     url(r'^regulation_redirect/%s$' % paragraph_pattern, redirect_by_date_get,
         name='redirect_by_date_get'),
+    # Redirect to a diff based on GET params
+    # Example http://.../diff_redirect/201-3/old_version?new_version=new
+    url(r'^diff_redirect/%s/%s$' % (section_pattern, version_pattern),
+        diff_redirect, name='diff_redirect'),
     #A section by section paragraph with chrome
     #Example: http://.../sxs/201-2-g/2011-1738
     url(r'^sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
