@@ -4,6 +4,7 @@ import re
 from django.shortcuts import redirect
 
 from regulations.generator.api_reader import ApiReader
+from regulations.generator.versions import fetch_grouped_history
 from regulations.views.error_handling import handle_generic_404
 
 
@@ -59,5 +60,20 @@ def diff_redirect(request, label_id, version):
     new_version = request.GET.get('new_version', '')
     if not re.match(r'[-\d\w]+', new_version):
         return handle_generic_404(request)
+
+    # Re-order if needed - History is sorted in reverse chronological order
+    for major_version in fetch_grouped_history(label_id.split('-')[0]):
+        for notice in major_version['notices']:
+            # Hit the "old" version first, meaning it's not actually the old
+            # version
+            if notice['document_number'] == version:
+                return redirect('chrome_section_diff_view', label_id,
+                        new_version, version)
+            # Hit the new version first -- sort is correct
+            elif notice['document_number'] == new_version:
+                return redirect('chrome_section_diff_view', label_id,
+                        version, new_version)
+
+    # Didn't find the versions in question. Assume this was intentional
     return redirect('chrome_section_diff_view', label_id, version,
         new_version)
