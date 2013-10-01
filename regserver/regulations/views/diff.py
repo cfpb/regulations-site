@@ -77,9 +77,11 @@ class ChromeSectionDiffView(ChromeView):
 
     def add_main_content(self, context):
         super(ChromeSectionDiffView, self).add_main_content(context)
+        context['left_version'] = context['version']
+        context['right_version'] = \
+            context['main_content_context']['newer_version']
         diff = generator.get_diff_json(context['reg_part'],
-            context['version'],
-            context['main_content_context']['newer_version'])
+            context['version'], context['right_version'])
 
         old_toc = utils.table_of_contents(
             context['reg_part'],
