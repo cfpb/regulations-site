@@ -5,16 +5,32 @@ define(['jquery', 'underscore', 'backbone', 'reg-view', 'definition-view'], func
             set: function() {}
         };
 
-        $('body').append('<div id="content"></div>');
-        contentView = new RegView({el: '#content'});
+        $('body').append('<div id="content"><header class="reg-header">header</header><div class="reg-section"></div><div class="appendix-section"></div><div class="supplement-section"></div><ul class="level-1"><li id="123-45"></li></ul></div>');
+        regView = new RegView({el: '#content', id: '123-49'});
 
-        it("should have a content view instance", function() {
-            expect(contentView).to.be.ok();
+        describe("init", function() {
+            it("should have a content view instance", function() {
+                expect(regView).to.be.ok();
+            });
+
+            it("should have the activeSection set", function() {
+                expect(regView.activeSection).to.be('123-49');
+            });
+
+            describe("updateWayfinding", function() {
+                it("should cache the reg headers", function() {
+                    expect(regView.$contentHeader.length).to.be(1);
+                });
+
+                it("should generate a an object of eligible active sections", function() {
+                    expect(_.has(regView.$sections, 3)).to.be.ok();
+                });        
+            });
         });
 
         describe("openDefinition", function() {
             $link = $('<a id="123-2" href="#123-2" class="definition"></a>');
-            defView = contentView.openDefinition('123-2', $link);
+            defView = regView.openDefinition('123-2', $link);
 
             it("should give the link an active class", function() {
                 expect($link.hasClass('active')).to.be.ok();
@@ -27,7 +43,7 @@ define(['jquery', 'underscore', 'backbone', 'reg-view', 'definition-view'], func
 
         describe("setActiveTerm", function() {
             $('#content').append('<a id="123-3" href="#123-3" class="definition"></a><a href="#123-4" class="definition active"></a>');
-            contentView.setActiveTerm($('#123-3'));
+            regView.setActiveTerm($('#123-3'));
 
             it("should remove all other active terms", function() {
                 expect($('#123-4').hasClass('active')).to.not.be.ok();
@@ -43,13 +59,13 @@ define(['jquery', 'underscore', 'backbone', 'reg-view', 'definition-view'], func
             });
 
             it("123-2 should not still have an active data attr", function() {
-                expect($('#123-2').data('active')).to.to.not.be.ok();
+                expect($('#123-2').data('active')).to.not.be.ok();
             });
         });
 
         describe("clearActiveTerms", function() {
             it("should eliminate all active classes on links", function() {
-                contentView.clearActiveTerms();
+                regView.clearActiveTerms();
                 expect($('#content .active').length).to.be(0);
             });
 

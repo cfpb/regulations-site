@@ -5,43 +5,46 @@ define(['jquery', 'underscore', 'backbone', 'header-view'], function($, _, Backb
             .append('<div id="site-header"></div>')
             .append('<a href="#history" id="history-link" class="toc-nav-link">History</a>');
 
-        var header = new HeaderView(),
-            eventStub = { preventDefault: new Function(),
+        var headerview = new HeaderView(),
+            eventStub;
+
+        eventStub = { 
+            preventDefault: new Function(),
             target: document.getElementById('history-link')
         };
 
         it("should have an initialized instance", function() {
-            expect(header).toBeDefined();
+            expect(headerview).to.be.ok();
         });
         
         it("should add the active class to #menu", function() {
-            header.openDrawer(eventStub);
+            headerview.openDrawer(eventStub);
 
-            expect($('#menu').hasClass('active')).toBeTruthy();
+            expect($('#menu').hasClass('active')).to.be.ok();
         });
 
-        it("should add the active class to #site-header", function() {
-            expect($('#site-header').hasClass('active')).toBeTruthy();
+        it("should add the active class to #site-headerview", function() {
+            expect($('#site-header').hasClass('active')).to.be.ok();
         });
 
         it("should remove the active class to #menu", function() {
-            header.openDrawer(eventStub);
+            headerview.openDrawer(eventStub);
 
-            expect($('#menu').hasClass('active')).toBeFalsy();
+            expect($('#menu').hasClass('active')).to.not.be.ok();
         });
 
-        it("should remove the active class to #site-header", function() {
-            expect($('#site-header').hasClass('active')).toBeFalsy();
+        it("should remove the active class to #site-headerview", function() {
+            expect($('#site-header').hasClass('active')).to.not.be.ok();
         });
 
         it("should not have the current class by default", function() {
-            expect($('a').hasClass('current')).toBeFalsy();
+            expect($('a').hasClass('current')).to.not.be.ok();
         });
 
         it("should have the current class when clicked", function() {
-            header.toggleDrawerTab(eventStub);
+            headerview.toggleDrawerTab(eventStub);
 
-            expect($('a').hasClass('current')).toBeTruthy();
+            expect($('a').hasClass('current')).to.be.ok();
         });
     }); 
 });

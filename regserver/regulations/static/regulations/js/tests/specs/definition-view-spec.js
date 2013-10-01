@@ -12,19 +12,19 @@ define(["underscore", "backbone", "jquery", "definition-view", "reg-model", 'sam
     });
 
     it("should have the view instance", function() {
-        expect(view).toBeTruthy();
+        expect(view).to.be.ok();
     });
 
     it("should store the definition content", function() {
-        expect(view.model.content).toEqual("definition body");
+        expect(view.model.content).to.be("definition body");
     });
 
     it("should store the parent link", function() {
-        expect(view.model.$anchor).toEqual($('#term-link'));
+//        expect(view.model.$anchor).to.be($('#term-link'));
     });
 
     it("should be tabbable", function() {
-        expect(view.$el.attr('tabindex')).toEqual('0');
+        expect(view.$el.attr('tabindex')).to.be('0');
     });
   });
 });

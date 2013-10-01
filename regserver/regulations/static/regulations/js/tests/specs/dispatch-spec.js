@@ -4,7 +4,7 @@ define(['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone
             var view = {model: {id: 3}};
             Dispatch.set('definition', view);
 
-            expect(Dispatch.open.definition).toEqual(view);
+            expect(Dispatch.open.definition).to.be(view);
         });
 
         it("should call the remove method of stored items on remove", function() {
@@ -12,17 +12,17 @@ define(['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone
             Dispatch.set('thing', thing);
             Dispatch.remove('thing');
 
-            expect(VAL).toEqual('yes');
+            expect(VAL).to.be('yes');
         });
 
         it("should remove cached object", function() {
-            expect(Dispatch.open.thing).toBeUndefined();
+            expect(Dispatch.open.thing).to.not.be.ok();
         });
 
         it("should return the id of view objects", function() {
             var id = Dispatch.getViewId('definition');
 
-            expect(id).toEqual(3);
+            expect(id).to.be(3);
         });
     });
 });
