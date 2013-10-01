@@ -2,7 +2,6 @@
 
 {% block active_title %}
 <em class="header-label">
-Search results — {{ main_content_context.results.total_hits }} 
-                  result{{ main_content_context.results.total_hits|pluralize }}
+Search results — {{ results.total_hits }} result{{ results.total_hits|pluralize }}
 </em>
 {% endblock %}

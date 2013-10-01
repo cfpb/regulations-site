@@ -68,7 +68,7 @@
                   <button type="submit">Find</button>
                 </form>
                 </div><!--./date-form-->
-                <div class="group">
+                <div class="group" class="diff-selector">
                     <div class="select-content">
                         <form action="{% url 'diff_redirect' label_id active_version %}" method="GET">
                             <select name="new_version">
@@ -81,8 +81,7 @@
                             </select>
                             <button type="submit">Go</button>
                     </div> <!--/.select-content-->
-                </div><!--/.version-search-->
-                </div>
+                </div><!--/.diff-selector-->
                 <ul class="version-list">
                 {% for version in history %}
                     <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
