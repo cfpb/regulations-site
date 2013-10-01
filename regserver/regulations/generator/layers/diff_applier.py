@@ -70,7 +70,9 @@ class DiffApplier(object):
         """ Get the operations that add nodes, for the requested
         section/pargraph. """
 
-        if self.diff[label]['op'] == self.ADDED_OP and self.is_child_of_requested(label):
+        if (self.diff[label]['op'] == self.ADDED_OP 
+            and (label == self.label_requested
+                 or self.is_child_of_requested(label))):
             return True
 
     def tree_changes(self, original_tree):
