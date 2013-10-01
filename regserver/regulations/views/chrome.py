@@ -120,6 +120,12 @@ class ChromeSearchView(ChromeView):
         kwargs['skip_count'] = True
         return super(ChromeSearchView, self).get_context_data(**kwargs)
 
+    def add_main_content(self, context):
+        """Override this so that we have access to the main content's
+        results field"""
+        super(ChromeSearchView, self).add_main_content(context)
+        context['results'] = context['main_content_context']['results']
+
 
 class ChromeLandingView(ChromeView):
     """Landing page with chrome"""
@@ -136,12 +142,14 @@ class ChromeLandingView(ChromeView):
     def get_context_data(self, **kwargs):
         """Add the version and replace the label_id for the chrome context"""
 
-        if not regulation_exists(kwargs['label_id']):
+        reg_part = kwargs['label_id']
+        if not regulation_exists(reg_part):
             raise error_handling.MissingContentException()
 
         current, _ = get_versions(kwargs['label_id'])
         kwargs['version'] = current['version']
-        kwargs['regulation'] = kwargs['label_id']
+        kwargs['regulation'] = reg_part
+        kwargs['label_id'] = utils.first_section(reg_part, current['version'])
         return super(ChromeLandingView, self).get_context_data(**kwargs)
 
 
