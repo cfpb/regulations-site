@@ -74,6 +74,8 @@ class ChromeSectionDiffView(ChromeView):
     """Search results with chrome"""
     template_name = 'diff-chrome.html'
     partial_class = PartialSectionDiffView
+    check_tree = False
+    has_sidebar = False
 
     def add_main_content(self, context):
         super(ChromeSectionDiffView, self).add_main_content(context)
@@ -88,21 +90,6 @@ class ChromeSectionDiffView(ChromeView):
             context['version'],
             self.partial_class.sectional_links)
         context['TOC'] = self.diff_toc(context, old_toc, diff)
-
-    def get_context_data(self, **kwargs):
-        context = super(ChromeView, self).get_context_data(**kwargs)
-
-        label_id = context['label_id']
-        version = context['version']
-        reg_part = label_id.split('-')[0]
-        context['q'] = self.request.GET.get('q', '')
-
-        self.set_chrome_context(context, reg_part, version)
-        error_handling.check_regulation(reg_part)
-
-        self.add_main_content(context)
-
-        return context
 
     @staticmethod
     def diff_toc(context, old_toc, diff):

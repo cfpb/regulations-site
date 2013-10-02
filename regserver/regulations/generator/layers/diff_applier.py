@@ -84,7 +84,7 @@ class DiffApplier(object):
 
             node = copy.deepcopy(diff_node)
             node['children'] = []
-            if node['title'] is None:
+            if 'title' in node and node['title'] is None:
                 del node['title']
             return node
 

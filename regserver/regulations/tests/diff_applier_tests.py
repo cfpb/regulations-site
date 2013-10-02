@@ -153,3 +153,14 @@ class DiffApplierTest(TestCase):
 
         self.assertTrue(da.is_child_of_requested('204-3-a'))
         self.assertFalse(da.is_child_of_requested('204-32'))
+
+    def test_tree_changes_new_section(self):
+        diff = {'9999-25': {'op': 'added',
+                            'node': {'text': 'Some Text',
+                                     'label': ['9999', '25'],
+                                     'children': []}}}
+        old_tree = {}
+        da = diff_applier.DiffApplier(diff, '9999-25')
+        da.tree_changes(old_tree)
+
+        self.assertEqual(old_tree['label'], ['9999', '25'])

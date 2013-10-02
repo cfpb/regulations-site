@@ -17,6 +17,7 @@ class ChromeView(TemplateView):
     """ Base class for views which wish to include chrome. """
     template_name = 'chrome.html'
     has_sidebar = True
+    check_tree = True
 
     def get(self, request, *args, **kwargs):
         """Override GET so that we can catch and propagate any errors in the
@@ -67,13 +68,14 @@ class ChromeView(TemplateView):
         reg_part = label_id.split('-')[0]
         context['q'] = self.request.GET.get('q', '')
 
-        self.set_chrome_context(context, reg_part, version)
         error_handling.check_regulation(reg_part)
+        self.set_chrome_context(context, reg_part, version)
 
-        relevant_tree = generator.get_tree_paragraph(label_id, version)
-        if relevant_tree is None:
-            raise error_handling.MissingSectionException(label_id, version,
-                                                         context)
+        if self.check_tree:
+            relevant_tree = generator.get_tree_paragraph(label_id, version)
+            if relevant_tree is None:
+                raise error_handling.MissingSectionException(label_id, version,
+                                                             context)
         self.add_main_content(context)
 
 
@@ -113,11 +115,14 @@ class ChromeSearchView(ChromeView):
     template_name = 'chrome-search.html'
     partial_class = PartialSearch
     has_sidebar = False
+    check_tree = False
 
     def get_context_data(self, **kwargs):
         """Get the version for the chrome context"""
         kwargs['version'] = self.request.GET.get('version', '')
         kwargs['skip_count'] = True
+        kwargs['label_id'] = utils.first_section(kwargs['label_id'], 
+                                                 kwargs['version'])
         return super(ChromeSearchView, self).get_context_data(**kwargs)
 
     def add_main_content(self, context):
@@ -132,6 +137,7 @@ class ChromeLandingView(ChromeView):
     template_name = 'landing-chrome.html'
     partial_class = PartialSectionView
     has_sidebar = False
+    check_tree = False
 
     def add_main_content(self, context):
         """Landing page isn't a TemplateView"""

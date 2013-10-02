@@ -1,13 +1,22 @@
 from unittest import TestCase
 
+from django.conf import settings
 from django.http import HttpResponseGone
-from django.test import RequestFactory
+from django.test import Client, RequestFactory
 from mock import patch
 
 from regulations.views.chrome import *
 
 
 class ViewsChromeTest(TestCase):
+    def setUp(self):
+        self.original_debug = settings.DEBUG
+        self.original_api_base = settings.API_BASE
+
+    def tearDown(self):
+        settings.DEBUG = self.original_debug
+        settings.API_BASE = self.original_api_base
+
     @patch('regulations.views.error_handling.api_reader')
     @patch('regulations.views.chrome.ChromeView.set_chrome_context')
     @patch('regulations.views.chrome.generator')
@@ -48,3 +57,16 @@ class ViewsChromeTest(TestCase):
         view.request = RequestFactory().get('/')
         response = view.get(view.request, label_id='lab', version='ver')
         self.assertEqual(410, response.status_code)
+
+    @patch('regulations.views.chrome.generator')
+    def test_get_404(self, generator):
+        generator.get_regulation.return_value = None
+        response = Client().get('/regulation/111/222')
+        self.assertEqual(404, response.status_code)
+
+    @patch('regulations.views.chrome.generator')
+    def test_get_404_tree(self, generator):
+        generator.get_regulation.return_value = {'regulation':'tree'}
+        generator.get_tree_paragraph.return_value = None
+        response = Client().get('/regulation/111/222')
+        self.assertEqual(404, response.status_code)
