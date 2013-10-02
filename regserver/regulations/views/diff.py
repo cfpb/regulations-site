@@ -113,7 +113,7 @@ def diff_toc(context, old_toc, diff):
         newer_version = context['main_content_context']['newer_version']
         el['url'] = reverse('chrome_section_diff_view', kwargs={
             'label_id': el['section_id'], 'version': context['version'],
-            'newer_version': newer_versuon})
+            'newer_version': newer_version})
         # Deleted first, lest deletions in paragraphs affect the section
         if tuple(el['index']) in deleted and 'op' not in el:
             el['op'] = 'deleted'
