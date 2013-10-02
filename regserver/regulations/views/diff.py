@@ -89,55 +89,62 @@ class ChromeSectionDiffView(ChromeView):
             context['reg_part'],
             context['version'],
             self.partial_class.sectional_links)
-        context['TOC'] = self.diff_toc(context, old_toc, diff)
+        context['TOC'] = diff_toc(context, old_toc, diff)
 
-    @staticmethod
-    def diff_toc(context, old_toc, diff):
-        compiled_toc = list(old_toc)
-        for node in (v['node'] for v in diff.values() if v['op'] == 'added'):
-            if len(node['label']) == 2 and node['title']:
-                element = {
-                    'label': node['title'],
-                    'index': node['label'],
-                    'section_id': '-'.join(node['label']),
-                    'op': 'added'
-                }
-                data = {'index': node['label'], 'title': node['title']}
-                TableOfContentsLayer.section(element, data)
-                TableOfContentsLayer.appendix_supplement(element, data)
-                compiled_toc.append(element)
+def diff_toc(context, old_toc, diff):
+    compiled_toc = list(old_toc)
+    for node in (v['node'] for v in diff.values() if v['op'] == 'added'):
+        if len(node['label']) == 2 and node['title']:
+            element = {
+                'label': node['title'],
+                'index': node['label'],
+                'section_id': '-'.join(node['label']),
+                'op': 'added'
+            }
+            data = {'index': node['label'], 'title': node['title']}
+            TableOfContentsLayer.section(element, data)
+            TableOfContentsLayer.appendix_supplement(element, data)
+            compiled_toc.append(element)
+    
+    modified, deleted = modified_deleted_sections(diff)
+    for el in compiled_toc:
+        el['url'] = reverse('chrome_section_diff_view', kwargs={
+            'label_id': el['section_id'], 'version': context['version'],
+            'newer_version':
+                context['main_content_context']['newer_version']})
+        # Deleted first, lest deletions in paragraphs affect the section
+        if tuple(el['index']) in deleted and 'op' not in el:
+            el['op'] = 'deleted'
+        if tuple(el['index']) in modified and 'op' not in el:
+            el['op'] = 'modified'
+
+    return sort_toc(compiled_toc)
+
+def sort_toc(toc):
+    def normalize(label):
+        normalized = []
+        for part in label:
+            try:
+                normalized.append(int(part))
+            except ValueError:
+                normalized.append(part)
+        return normalized
+
+    return sorted(toc, key=lambda el: tuple(normalize(el['index'])))
+
+def modified_deleted_sections(diff):
+    modified, deleted = set(), set()
+    for label, diff_value in diff.iteritems():
+        label = tuple(label.split('-'))
+        if 'Interp' in label:
+            section_label = (label[0], 'Interp')
+        else:
+            section_label = tuple(label[:2])
         
-        modified, deleted = set(), set()
-        for label, diff_value in diff.iteritems():
-            label = label.split('-')
-            if 'Interp' in label:
-                label = (label[0], 'Interp')
-            else:
-                label = tuple(label[:2])
-            if diff_value['op'] == 'modified':
-                modified.add(label)
-            elif diff_value['op'] == 'deleted':
-                deleted.add(label)
-
-        def normalize(label):
-            normalized = []
-            for part in label:
-                try:
-                    normalized.append(int(part))
-                except ValueError:
-                    normalized.append(part)
-            return normalized
-
-        compiled_toc = sorted(compiled_toc, key=lambda el: tuple(
-            normalize(el['index'])))
-        for el in compiled_toc:
-            el['url'] = reverse('chrome_section_diff_view', kwargs={
-                'label_id': el['section_id'], 'version': context['version'],
-                'newer_version':
-                    context['main_content_context']['newer_version']})
-            if tuple(el['index']) in modified:
-                el['op'] = 'modified'
-            if tuple(el['index']) in deleted:
-                el['op'] = 'deleted'
-
-        return compiled_toc
+        # Whole section was deleted
+        if diff_value['op'] == 'deleted' and label == section_label:
+            deleted.add(section_label)
+        # Whole section added/modified or paragraph added/deleted/modified
+        else:
+            modified.add(section_label)
+    return modified, deleted
