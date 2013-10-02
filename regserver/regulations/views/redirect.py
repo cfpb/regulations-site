@@ -58,7 +58,7 @@ def diff_redirect(request, label_id, version):
     """Handles constructing the diff url by pulling the new version from
     GET. We check for bad data here (as we can't rely on url regex)"""
     new_version = request.GET.get('new_version', '')
-    if not re.match(r'[-\d\w]+', new_version):
+    if not re.match(r'^[-\d\w]+$', new_version):
         return handle_generic_404(request)
 
     # Re-order if needed - History is sorted in reverse chronological order
