@@ -78,7 +78,6 @@ class ChromeView(TemplateView):
                                                              context)
         self.add_main_content(context)
 
-
         if self.has_sidebar:
             sidebar_view = SideBarView.as_view()
             response = sidebar_view(self.request, label_id=label_id,
@@ -121,7 +120,7 @@ class ChromeSearchView(ChromeView):
         """Get the version for the chrome context"""
         kwargs['version'] = self.request.GET.get('version', '')
         kwargs['skip_count'] = True
-        kwargs['label_id'] = utils.first_section(kwargs['label_id'], 
+        kwargs['label_id'] = utils.first_section(kwargs['label_id'],
                                                  kwargs['version'])
         return super(ChromeSearchView, self).get_context_data(**kwargs)
 

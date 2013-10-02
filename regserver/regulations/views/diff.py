@@ -35,7 +35,8 @@ class PartialSectionDiffView(PartialView):
         """ Override GET so that we can catch and propagate any errors. """
 
         try:
-            return super(PartialSectionDiffView, self).get(request, *args, **kwargs)
+            return super(PartialSectionDiffView, self).get(request, *args,
+                                                           **kwargs)
         except error_handling.MissingContentException, e:
             return error_handling.handle_generic_404(request)
 
@@ -82,14 +83,15 @@ class ChromeSectionDiffView(ChromeView):
         context['left_version'] = context['version']
         context['right_version'] = \
             context['main_content_context']['newer_version']
-        diff = generator.get_diff_json(context['reg_part'],
-            context['version'], context['right_version'])
+        diff = generator.get_diff_json(
+            context['reg_part'], context['version'], context['right_version'])
 
         old_toc = utils.table_of_contents(
             context['reg_part'],
             context['version'],
             self.partial_class.sectional_links)
         context['TOC'] = diff_toc(context, old_toc, diff)
+
 
 def diff_toc(context, old_toc, diff):
     compiled_toc = list(old_toc)
@@ -105,13 +107,13 @@ def diff_toc(context, old_toc, diff):
             TableOfContentsLayer.section(element, data)
             TableOfContentsLayer.appendix_supplement(element, data)
             compiled_toc.append(element)
-    
+
     modified, deleted = modified_deleted_sections(diff)
     for el in compiled_toc:
+        newer_version = context['main_content_context']['newer_version']
         el['url'] = reverse('chrome_section_diff_view', kwargs={
             'label_id': el['section_id'], 'version': context['version'],
-            'newer_version':
-                context['main_content_context']['newer_version']})
+            'newer_version': newer_versuon})
         # Deleted first, lest deletions in paragraphs affect the section
         if tuple(el['index']) in deleted and 'op' not in el:
             el['op'] = 'deleted'
@@ -119,6 +121,7 @@ def diff_toc(context, old_toc, diff):
             el['op'] = 'modified'
 
     return sort_toc(compiled_toc)
+
 
 def sort_toc(toc):
     def normalize(label):
@@ -132,6 +135,7 @@ def sort_toc(toc):
 
     return sorted(toc, key=lambda el: tuple(normalize(el['index'])))
 
+
 def modified_deleted_sections(diff):
     modified, deleted = set(), set()
     for label, diff_value in diff.iteritems():
@@ -140,7 +144,7 @@ def modified_deleted_sections(diff):
             section_label = (label[0], 'Interp')
         else:
             section_label = tuple(label[:2])
-        
+
         # Whole section was deleted
         if diff_value['op'] == 'deleted' and label == section_label:
             deleted.add(section_label)

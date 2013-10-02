@@ -17,8 +17,8 @@ class DiffApplier(object):
 
     def __init__(self, diff_json, label_requested):
         self.diff = diff_json
-        #label_requested is the regulation label for which a diff is 
-        #requested. 
+        #label_requested is the regulation label for which a diff is
+        #requested.
         self.label_requested = label_requested
 
     def deconstruct_text(self, original):
@@ -70,7 +70,7 @@ class DiffApplier(object):
         """ Get the operations that add nodes, for the requested
         section/pargraph. """
 
-        if (self.diff[label]['op'] == self.ADDED_OP 
+        if (self.diff[label]['op'] == self.ADDED_OP
             and (label == self.label_requested
                  or self.is_child_of_requested(label))):
             return True
@@ -88,14 +88,14 @@ class DiffApplier(object):
                 del node['title']
             return node
 
-        new_nodes = [(label, node(self.diff[label]['node'], label)) for label in self.diff if self.relevant_added(label)]
+        new_nodes = [(label, node(self.diff[label]['node'], label))
+                     for label in self.diff if self.relevant_added(label)]
         reg_text_nodes = [l for l in new_nodes if 'Interp' not in l[0]]
 
         adds = tree_builder.AddQueue()
         adds.insert_all(reg_text_nodes)
 
         self.add_nodes_to_tree(original_tree, adds)
-
 
     def apply_diff(self, original, label):
         if label in self.diff:

@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from django.template import Context, Template
 
+
 class TemplatetagsInContextTest(TestCase):
     def test_in_context(self):
         text = "{% load in_context %}"
@@ -15,7 +16,7 @@ class TemplatetagsInContextTest(TestCase):
         text += "{% endcontext %}{% endcontext %}\n"
         text += "5. {{ f1 }}{{ f2 }}{{ f3 }}{{ f4 }}"
 
-        context = {'f1' : 'f1',
+        context = {'f1': 'f1',
                    'c1': {'f2': 'c1.f2', 'f1': 'c1.f1'},
                    'c2': {'f2': 'c2.f2',
                           'f3': 'c2.f3', 'c2a': {'f4': 'c2a.f4'}}}

@@ -2,11 +2,12 @@ from django import template
 
 register = template.Library()
 
+
 class InContextNode(template.Node):
     def __init__(self, nodelist, subcontext_names):
         self.nodelist = nodelist
         self.subcontext_names = subcontext_names
-    
+
     def render(self, context):
         new_context = {}
         for field in self.subcontext_names:
@@ -16,6 +17,7 @@ class InContextNode(template.Node):
             else:
                 new_context[field] = value
         return self.nodelist.render(template.Context(new_context))
+
 
 @register.tag('begincontext')
 def in_context(parser, token):

@@ -68,12 +68,12 @@ def diff_redirect(request, label_id, version):
             # version
             if notice['document_number'] == version:
                 return redirect('chrome_section_diff_view', label_id,
-                        new_version, version)
+                                new_version, version)
             # Hit the new version first -- sort is correct
             elif notice['document_number'] == new_version:
                 return redirect('chrome_section_diff_view', label_id,
-                        version, new_version)
+                                version, new_version)
 
     # Didn't find the versions in question. Assume this was intentional
     return redirect('chrome_section_diff_view', label_id, version,
-        new_version)
+                    new_version)

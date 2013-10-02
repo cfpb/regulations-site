@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from regulations.views.diff import *
 
+
 class ChromeSectionDiffViewTests(TestCase):
     def test_diff_toc(self):
         """Integration test."""

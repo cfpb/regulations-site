@@ -46,10 +46,11 @@ class ViewsChromeTest(TestCase):
         """While we don't rely on this sort of propagation for the main
         content (much), test it in the sidebar"""
         sbv.as_view.return_value.return_value = HttpResponseGone()
-        
+
         class FakeView(ChromeView):
             def add_main_content(self, context):
                 pass
+
             def set_chrome_context(self, context, reg_part, version):
                 pass
 
@@ -66,7 +67,7 @@ class ViewsChromeTest(TestCase):
 
     @patch('regulations.views.chrome.generator')
     def test_get_404_tree(self, generator):
-        generator.get_regulation.return_value = {'regulation':'tree'}
+        generator.get_regulation.return_value = {'regulation': 'tree'}
         generator.get_tree_paragraph.return_value = None
         response = Client().get('/regulation/111/222')
         self.assertEqual(404, response.status_code)
