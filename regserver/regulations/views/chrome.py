@@ -135,13 +135,13 @@ class ChromeSearchView(ChromeView):
 class ChromeLandingView(ChromeView):
     """Landing page with chrome"""
     template_name = 'landing-chrome.html'
-    partial_class = PartialSectionView
+    partial_class = PartialSectionView  # Needed to know sectional status
     has_sidebar = False
     check_tree = False
 
     def add_main_content(self, context):
         """Landing page isn't a TemplateView"""
-        response = landing_page(self.request, context['regulation'])
+        response = landing_page(self.request, context['reg_part'])
         self._assert_good(response)
         context['main_content'] = response.content
 
@@ -154,7 +154,6 @@ class ChromeLandingView(ChromeView):
 
         current, _ = get_versions(kwargs['label_id'])
         kwargs['version'] = current['version']
-        kwargs['regulation'] = reg_part
         kwargs['label_id'] = utils.first_section(reg_part, current['version'])
         return super(ChromeLandingView, self).get_context_data(**kwargs)
 
