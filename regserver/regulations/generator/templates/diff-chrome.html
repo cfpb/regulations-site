@@ -10,7 +10,7 @@ table of contents and the version tab are quite different
 <span class="effective-date"><strong>Effective Date:</strong>
     {% with older_version=version %}
         {% for version in history %} {% if version.version == older_version %}{{ version.by_date|date }}{% endif %} {% endfor %}
-        ..
+        to
         {% for version in history %} {% if version.version == newer_version %}{{ version.by_date|date }}{% endif %} {% endfor %}
     {% endwith %}
 <h2> </h2>
