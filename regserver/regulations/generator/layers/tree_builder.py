@@ -46,9 +46,21 @@ def build_tree_hash(tree):
             tree_hash[label_id] = c
     return tree_hash
 
-def parent_label(node_label):
-    parent_label = node_label.rsplit("-", 1)[0]
-    return parent_label
+def parent_label(node):
+    """This is not perfect. It can not handle children of subparts, for
+    example"""
+    if node['node_type'].upper() == 'INTERP':
+        interpreting = list(itertools.takewhile(
+            lambda l: l != 'Interp', node['label']))
+        paragraph = node['label'][len(interpreting)+1:]
+        if paragraph:
+            return interpreting + ['Interp'] + paragraph[:-1]
+        elif len(interpreting) == 1: # Root of interpretations
+            return interpreting
+        else:
+            return interpreting[:-1] + ['Interp']
+    else:
+        return node['label'][:-1]
 
 def parent_in_tree(parent_label, tree_hash):
     """ Return True if the parent of node_label is in the tree """
@@ -103,9 +115,17 @@ def add_child(parent_node, node):
     parent_node['children'].append(node)
 
     for c in parent_node['children']:
-        if len(c['label']) == 5:
-            c['sortable'] = make_label_sortable(c['label'][-1], roman=True)
+        if c['node_type'].upper() == 'INTERP':
+            if c['label'][-1] == 'Interp':
+                c['sortable'] = make_label_sortable(c['label'][-2],
+                    roman=(len(c['label']) == 6))
+            else:
+                paragraph = list(itertools.dropwhile(lambda l: l != 'Interp',
+                    c['label']))[1:]
+                c['sortable'] = make_label_sortable(paragraph[-1],
+                    roman=(len(paragraph) == 2))
         else:
-            c['sortable'] = make_label_sortable(c['label'][-1])
+            c['sortable'] = make_label_sortable(c['label'][-1],
+                roman=(len(c['label']) == 5))
                     
     parent_node['children'].sort(key=lambda x: x['sortable'])

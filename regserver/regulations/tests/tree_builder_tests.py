@@ -29,9 +29,7 @@ class TreeBuilderTest(TestCase):
         tree_hash = tree_builder.build_tree_hash(tree)
         self.assertEqual(tree_hash.keys(), ['204-3', '204'])
 
-        candidate = '204-3-a'
-        parent_label = tree_builder.parent_label(candidate)
-        self.assertTrue(tree_builder.parent_in_tree(parent_label, tree_hash))
+        self.assertTrue(tree_builder.parent_in_tree('204-3', tree_hash))
 
     def test_add_node(self):
         new_node = {
@@ -63,9 +61,31 @@ class TreeBuilderTest(TestCase):
         self.assertEquals(sortable, label)
 
     def test_parent_label(self):
-        label = '204-a-1-ii'
-        parent_label = tree_builder.parent_label(label)
-        self.assertEquals('204-a-1', parent_label)
+        node = {'node_type': 'REGTEXT', 'label': ['204', 'a', '1', 'ii']}
+        parent_label = tree_builder.parent_label(node)
+        self.assertEquals(['204', 'a', '1'], parent_label)
+
+        node = {'node_type': 'INTERP', 'label': ['204', 'Interp']}
+        parent_label = tree_builder.parent_label(node)
+        self.assertEquals(['204'], parent_label)
+
+        node = {'node_type': 'INTERP', 'label': ['204', '2', 'Interp']}
+        parent_label = tree_builder.parent_label(node)
+        self.assertEquals(['204', 'Interp'], parent_label)
+
+        node = {'node_type': 'INTERP', 'label': ['204', '2', 'a', 'Interp']}
+        parent_label = tree_builder.parent_label(node)
+        self.assertEquals(['204', '2', 'Interp'], parent_label)
+
+        node = {'node_type': 'INTERP',
+                'label': ['204', '2', 'Interp', '1']}
+        parent_label = tree_builder.parent_label(node)
+        self.assertEquals(['204', '2', 'Interp'], parent_label)
+
+        node = {'node_type': 'INTERP',
+                'label': ['204', '2', 'Interp', '1', 'i']}
+        parent_label = tree_builder.parent_label(node)
+        self.assertEquals(['204', '2', 'Interp', '1'], parent_label)
 
     def test_roman_nums(self):
         first_five = list(itertools.islice(tree_builder.roman_nums(), 0, 5))
@@ -102,3 +122,45 @@ class TreeBuilderTest(TestCase):
 
         tree_builder.add_child(tree, child)
         self.assertEquals(static_tree, tree)
+
+    def test_add_child_interp(self):
+        tree = self.build_tree()
+
+        parent = {'children': [
+            {'node_type': 'INTERP', 'label': ['204', '4', 'Interp']},
+            {'node_type': 'INTERP', 'label': ['204', '2', 'Interp']}
+        ]}
+        tree_builder.add_child(parent, {'node_type': 'INTERP',
+                                        'label': ['204', '3', 'Interp']})
+        self.assertEqual([2, 3, 4],
+                         [c['sortable'] for c in parent['children']])
+
+        prefix = ['204', '4', 'a', '2']
+        parent = {'children': [
+            {'node_type': 'INTERP', 'label': prefix + ['v', 'Interp']},
+            {'node_type': 'INTERP', 'label': prefix + ['iv', 'Interp']}
+        ]}
+        tree_builder.add_child(parent, {'node_type': 'INTERP',
+                                        'label': prefix + ['ix', 'Interp']})
+        self.assertEqual([4, 5, 9],
+                         [c['sortable'] for c in parent['children']])
+
+        prefix = ['204', '4', 'Interp']
+        parent = {'children': [
+            {'node_type': 'INTERP', 'label': prefix + ['1']},
+            {'node_type': 'INTERP', 'label': prefix + ['3']}
+        ]}
+        tree_builder.add_child(parent, {'node_type': 'INTERP',
+                                        'label': prefix + ['2']})
+        self.assertEqual([1, 2, 3],
+                         [c['sortable'] for c in parent['children']])
+
+        prefix = ['204', 'Interp', '2']
+        parent = {'children': [
+            {'node_type': 'INTERP', 'label': prefix + ['v']},
+            {'node_type': 'INTERP', 'label': prefix + ['iv']}
+        ]}
+        tree_builder.add_child(parent, {'node_type': 'INTERP',
+                                        'label': prefix + ['ix']})
+        self.assertEqual([4, 5, 9],
+                         [c['sortable'] for c in parent['children']])

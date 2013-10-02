@@ -155,9 +155,20 @@ class DiffApplierTest(TestCase):
         self.assertTrue(da.is_child_of_requested('204-3-a'))
         self.assertFalse(da.is_child_of_requested('204-32'))
 
+        da.label_requested = '204-3-Interp'
+        self.assertTrue(da.is_child_of_requested('204-3-a-Interp'))
+        self.assertTrue(da.is_child_of_requested('204-3-Interp-1'))
+        self.assertFalse(da.is_child_of_requested('204-30-Interp'))
+
+        da.label_requested = '204-3-Interp-4'
+        self.assertFalse(da.is_child_of_requested('204-3-a-Interp'))
+        self.assertFalse(da.is_child_of_requested('204-3-Interp-1'))
+        self.assertTrue(da.is_child_of_requested('204-3-Interp-4-a'))
+
     def test_tree_changes_new_section(self):
         diff = {'9999-25': {'op': 'added',
                             'node': {'text': 'Some Text',
+                                     'node_type': 'REGTEXT',
                                      'label': ['9999', '25'],
                                      'children': []}}}
         old_tree = {}
