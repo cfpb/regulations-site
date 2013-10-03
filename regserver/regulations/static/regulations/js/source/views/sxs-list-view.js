@@ -9,6 +9,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
 
         initialize: function() {
             this.model = new FolderModel({supplementalPath: 'sidebar'});
+            this.render = _.bind(this.render, this);
 
             Dispatch.on('regSection:open:after', this.getSidebar, this);
 
@@ -33,16 +34,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         },
 
         getSidebar: function(sectionId) {
-            var partial = this.model.get(sectionId);
-
-            if (typeof partial.done !== 'undefined') {
-                partial.done(function(sxs) {
-                    this.render(sxs);
-                }.bind(this));
-            }
-            else {
-                this.render(partial);
-            }
+            var partial = this.model.get(sectionId, this.render);
         },
 
         render: function(html) {
