@@ -10,6 +10,8 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             Dispatch.on('mainContent:change', this.render, this);
             Dispatch.on('regSection:open', this.loadContent, this);
             Dispatch.on('search:submitted', this.assembleSearchURL, this);
+            Dispatch.on('content:loading', this.loading, this);
+            Dispatch.on('content:loaded', this.loaded, this);
         },
 
         modelmap: {
@@ -35,16 +37,18 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             this.loadContent(url, options, type);
         },
 
-        loadContent: function(getParam, options, type) {
-            var returned,renderCB;
+        loadContent: function(id, options, type) {
+            var returned, render;
 
-            this.loading();
-
-            renderCB = function(returned) {
+            // callback to be sent to model's get method
+            // called after ajax resolves sucessfully
+            render = function(returned) {
                 this.createView(returned, options, type); 
             }.bind(this);
 
-            returned = this.modelmap[type].get(getParam, renderCB)
+            // simplifies to
+            // this.model.get()
+            returned = this.modelmap[type].get(id, render)
 
             return this;
         },
@@ -53,7 +57,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             Dispatch.removeContentView();
             this.render(html, options.scrollToId);
             Dispatch.setContentView(new this.viewmap[type](options));
-            this.loaded();
         },
 
         render: function(html, scrollToId) {

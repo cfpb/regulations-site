@@ -56,15 +56,17 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
         // **Params**
         // 
         // * ```id```: string, dash-delimited reg entity id
-        //
-        // **Returns** representation of the reg entity requested in the format requested,
+        // * ```callback```: function to be called once content is loaded
         get: function(id, callback) {
             var $promise, resolve;
 
             Dispatch.trigger('content:loading');
 
+            // if we have the requested content cached, retrieve it
+            // otherwise, we need to ask the server for it
             $promise = (this.has(id)) ? this._retrieve(id) : this.request(id);
 
+            // callback once the promise resolves
             resolve = function(response) {
                 if (typeof callback !== 'undefined') {
                 callback(response);
