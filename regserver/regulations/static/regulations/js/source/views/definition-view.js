@@ -20,9 +20,24 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         className: 'open-definition',
         events: {
             'click .close-button.tab-activated': 'close',
-            'click .close-button': 'headerButtonClose',
-            'click .definition': 'sendDefinitionLinkEvent',
-            'click .continue-link': 'sendContinueLinkEvent'
+            'click .close-button': 'headerButtonClose'
+        },
+
+        initialize: function() {
+            var bodyText;
+
+            this.render = _.bind(this.render, this);
+            this.id = this.options.id;
+
+            // if pushState is supported, attach the
+            // appropriate event handlers
+            if (Dispatch.hasPushState) {
+                this.events['click .definition'] = 'sendDefinitionLinkEvent';
+                this.events['click .continue-link'] = 'sendContinueLinkEvent';
+                this.delegateEvents(this.events);
+            }
+
+            bodyText = RegModel.get(this.id, this.render);
         },
 
         formatInterpretations: function() {
@@ -85,53 +100,34 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         sendContinueLinkEvent: function(e) {
-            if (window.history && window.history.pushState) {
-                e.preventDefault();
-                var $link = $(e.target),
-                    href = $link.attr('href'),
-                    p = $link.data('linked-section');
+            e.preventDefault();
+            var $link = $(e.target),
+                href = $link.attr('href'),
+                p = $link.data('linked-section');
 
-                this.definitionRouter(href, p, 'clicked continue link');
-            }
+            this.definitionRouter(href, p, 'clicked continue link');
         },
 
         sendDefinitionLinkEvent: function(e) {
-            if (window.history && window.history.pushState) {
-                e.preventDefault();
-                var $link = $(e.target),
-                    href = $link.attr('href'),
-                    p = Helpers.findBaseSection($link.data('definition'));
+            e.preventDefault();
+            var $link = $(e.target),
+                href = $link.attr('href'),
+                p = Helpers.findBaseSection($link.data('definition'));
 
-                this.definitionRouter(href, p, 'clicked term inside definition');
-            }
+            this.definitionRouter(href, p, 'clicked term inside definition');
         },
 
-        render: function() {
-            var defHTML = RegModel.get(this.model.id);
-
-            if (typeof defHTML.done !== 'undefined') {
-                defHTML.done(function(res) {
-                    this.template(res);
-                }.bind(this));
-            }
-            else {
-                this.template(defHTML);
-            }
-
-            return this;
-        },
-
-        template: function(res) {
+        render: function(res) {
             var $defText, parentId, url, prefix;
             this.$el.html('<div class="definition-text">' + res + '</div>');
 
             $defText = this.$el.find('.definition-text');
-            parentId = Helpers.findBaseSection(this.model.id);
+            parentId = Helpers.findBaseSection(this.id);
             this.$el.prepend('<div class="sidebar-header group"><h4>Defined Term<a class="right close-button" href="#">Close definition</a></h4></div>');
 
             prefix = Dispatch.getURLPrefix();
 
-            url = '/' + parentId + '/' + Dispatch.getVersion() + '#' + this.model.id;
+            url = '/' + parentId + '/' + Dispatch.getVersion() + '#' + this.id;
 
             if (prefix) {
                 url = '/' + prefix + url;
@@ -141,7 +137,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             $defText.append(
                 Helpers.fastLink(
                     url, 
-                    Helpers.idToRef(this.model.id),
+                    Helpers.idToRef(this.id),
                     'continue-link internal',
                     ['data-linked-section', parentId]
                 )
@@ -170,23 +166,23 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             Dispatch.remove('definition');
             Dispatch.trigger('ga-event:definition', {
                 action: 'closed definition by tab-revealed link',
-                context: this.model.id
+                context: this.id
             });
-            Dispatch.trigger('definition:remove', this.model.id);
+            Dispatch.trigger('definition:remove', this.id);
         },
 
         headerButtonClose: function(e) {
             e.preventDefault();
             Dispatch.remove('definition');
             Dispatch.trigger('ga-event:definition', 'close by header button');
-            Dispatch.trigger('definition:remove', this.model.id);
+            Dispatch.trigger('definition:remove', this.id);
         },
 
         remove: function() {
             this.stopListening();
             this.$el.remove();
             // **Event trigger** notifies app that definition is removed
-            Dispatch.trigger('sidebarModule:remove', this.model.id);
+            Dispatch.trigger('sidebarModule:remove', this.id);
 
             // return focus to the definition link once the definition is removed
             $('.definition.active').focus();

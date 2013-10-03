@@ -38,7 +38,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
             this.updateWayfinding();
 
-            if (window.history && window.history.pushState) {
+            if (Dispatch.hasPushState) {
                 var url = this.options.id + '/' + Dispatch.getVersion(),
                     hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
                 //  Be sure not to lose any hash info
@@ -195,14 +195,12 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         },
 
         openInterp: function(e) {
-            if (window.history && window.history.pushState) {
-                e.preventDefault();
+            e.preventDefault();
 
-                var sectionId = $(e.currentTarget).data('linked-section'),
-                    subSectionId = $(e.currentTarget).data('linked-subsection');
-                
-                Router.navigate(sectionId + '/' + Dispatch.getVersion() + '#' + subSectionId, {trigger: true});
-            }
+            var sectionId = $(e.currentTarget).data('linked-section'),
+                subSectionId = $(e.currentTarget).data('linked-subsection');
+            
+            Router.navigate(sectionId + '/' + Dispatch.getVersion() + '#' + subSectionId, {trigger: true});
         },
 
         remove: function() {

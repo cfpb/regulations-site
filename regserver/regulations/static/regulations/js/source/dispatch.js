@@ -100,8 +100,12 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
             }
         },
 
-        isDynamicSession: function() {
+        hasPushState: function() {
             return(this.state['pushState']);
+        },
+
+        setState: function(state) {
+            this.state['pushState'] = state;
         },
 
         getUIMode: function() {

@@ -14,23 +14,27 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
             Dispatch.on('regSection:open:after', this.getSidebar, this);
 
             this.modifyListDisplay();
+
+            // if the browser doesn't support pushState, don't 
+            // trigger click events for links
+            if (Dispatch.hasPushState === false) {
+                this.events = {};
+            }
         },
 
         openSxS: function(e) {
-            if (window.history && window.history.pushState) {
-                e.preventDefault();
+            e.preventDefault();
 
-                var $sxsLink = $(e.target),
-                    paragraphId = $sxsLink.data('sxs-paragraph-id'),
-                    docNumber = $sxsLink.data('doc-number');
+            var $sxsLink = $(e.target),
+                paragraphId = $sxsLink.data('sxs-paragraph-id'),
+                docNumber = $sxsLink.data('doc-number');
 
-                Dispatch.set('sxs-analysis', new SxSView({
-                        regParagraph: paragraphId,
-                        docNumber: docNumber,
-                        fromVersion: Dispatch.getVersion()
-                    })
-                );
-            }
+            Dispatch.set('sxs-analysis', new SxSView({
+                    regParagraph: paragraphId,
+                    docNumber: docNumber,
+                    fromVersion: Dispatch.getVersion()
+                })
+            );
         },
 
         getSidebar: function(sectionId) {
