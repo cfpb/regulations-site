@@ -69,7 +69,7 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
             // callback once the promise resolves
             resolve = function(response) {
                 if (typeof callback !== 'undefined') {
-                callback(response);
+                    callback(response);
                 }
                 Dispatch.trigger('content:loaded');
             };
@@ -91,6 +91,8 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
             return this;
         },
 
+        // basically returns ```this.content[id]``` immediately,
+        // but is consistent with the interface that ```this.request``` provides
         _retrieve: function(id) {
             var $deferred = $.Deferred();
 
