@@ -6,7 +6,7 @@
 define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helpers'], function($, _, Backbone, Dispatch, RegsHelpers) {
     'use strict';
     var TOCView = Backbone.View.extend({
-        el: '#table-of-contents',
+        el: '#table-of-contents:not(.diff-toc)',
 
         events: {
             'click a': 'sendClickEvent'

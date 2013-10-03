@@ -1,7 +1,9 @@
 import types
 import copy
 from collections import deque
-import tree_builder
+from itertools import takewhile
+
+from regulations.generator.layers import tree_builder
 
 
 class DiffApplier(object):
@@ -17,8 +19,8 @@ class DiffApplier(object):
 
     def __init__(self, diff_json, label_requested):
         self.diff = diff_json
-        #label_requested is the regulation label for which a diff is 
-        #requested. 
+        #label_requested is the regulation label for which a diff is
+        #requested.
         self.label_requested = label_requested
 
     def deconstruct_text(self, original):
@@ -50,7 +52,7 @@ class DiffApplier(object):
         tree = tree_builder.build_tree_hash(original)
 
         for label, node in adds.queue:
-            p_label = tree_builder.parent_label(label)
+            p_label = '-'.join(tree_builder.parent_label(node))
             if tree_builder.parent_in_tree(p_label, tree):
                 tree_builder.add_node_to_tree(node, p_label, tree)
                 adds.delete(label)
@@ -63,14 +65,28 @@ class DiffApplier(object):
 
     def is_child_of_requested(self, label):
         """ Return true if the label is a child of the requested label.  """
-        if label.startswith(self.label_requested + '-'):
-            return True
+        req = self.label_requested
+        if 'Interp' in label and 'Interp' in req:
+            # Sub-paragraph
+            if label.startswith(req + '-'):
+                return True
+            # The parent must not be a sub paragraph if the prefixes differ
+            if not req.endswith('-Interp'):
+                return False
+            req_interpreting = req[:req.find('-Interp')]
+            child_interpreting = label[:label.find('-Interp')]
+            return child_interpreting.startswith(req_interpreting + '-')
+        elif 'Interp' not in label and 'Interp' not in req:
+            return label.startswith(req + '-')
+        return False
 
     def relevant_added(self, label):
         """ Get the operations that add nodes, for the requested
         section/pargraph. """
 
-        if self.diff[label]['op'] == self.ADDED_OP and self.is_child_of_requested(label):
+        if (self.diff[label]['op'] == self.ADDED_OP
+            and (label == self.label_requested
+                 or self.is_child_of_requested(label))):
             return True
 
     def tree_changes(self, original_tree):
@@ -82,18 +98,17 @@ class DiffApplier(object):
 
             node = copy.deepcopy(diff_node)
             node['children'] = []
-            if node['title'] is None:
+            if 'title' in node and node['title'] is None:
                 del node['title']
             return node
 
-        new_nodes = [(label, node(self.diff[label]['node'], label)) for label in self.diff if self.relevant_added(label)]
-        reg_text_nodes = [l for l in new_nodes if 'Interp' not in l[0]]
+        new_nodes = [(label, node(self.diff[label]['node'], label))
+                     for label in self.diff if self.relevant_added(label)]
 
         adds = tree_builder.AddQueue()
-        adds.insert_all(reg_text_nodes)
+        adds.insert_all(new_nodes)
 
         self.add_nodes_to_tree(original_tree, adds)
-
 
     def apply_diff(self, original, label):
         if label in self.diff:
