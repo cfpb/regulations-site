@@ -36,28 +36,17 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
         },
 
         loadContent: function(getParam, options, type) {
+            var returned,renderCB;
+
             this.loading();
-            var returned = this.modelmap[type].get(getParam);
 
-            if (typeof returned.done !== 'undefined') {
-                // @TODO: error handling
-                returned.done(function(response) {
-                    this.createView(response, options, type);
-                }.bind(this));
+            renderCB = function(returned) {
+                this.createView(returned, options, type); 
+            }.bind(this);
 
-                returned.fail(function() {
-                    var alertNode = document.createElement('div');
+            returned = this.modelmap[type].get(getParam, renderCB)
 
-                    alertNode.innerHTML = 'There was an issue loading your data. This may be because your device is currently offline. Please try again.';
-                    alertNode.className = 'alert';
-
-                    $(alertNode).insertBefore('h2.section-number');
-                    this.loaded();
-                }.bind(this));
-            }
-            else {
-               this.createView(returned, options, type); 
-            }
+            return this;
         },
 
         createView: function(html, options, type) {

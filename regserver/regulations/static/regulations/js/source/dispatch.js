@@ -50,11 +50,7 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
 
             //      },
             //      'content:loaded': {
-            //          'args': {
-            //              'id': 'unique id ex. 123-4',
-            //              'type': 'type of content ex "regSection" or "sxs",
-            //              'usage': 'to render loaded content or settle state after content is rendered'
-            //          }
+            //          'usage': 'to render loaded content or settle state after content is rendered'
             //      },
             //      'mode:change': {
             //          'args': {
@@ -71,7 +67,9 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
 
             var listenTo = {
                 'content:loaded': this.setActivityStatus,
-                'content:loading': this.setActivityStatus,
+                'content:loading:regSection': this.setActivityStatus,
+                'content:loading:sxs': this.setActivityStatus,
+                'content:loading:sidebar': this.setActivityStatus,
                 'mode:change': this.setUIMode
             };
 
