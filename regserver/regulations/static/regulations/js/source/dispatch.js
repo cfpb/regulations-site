@@ -44,20 +44,20 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
             //     'content:loading': {
             //          'args': { 
             //              'id': 'unique id ex. 123-4',
-            //              'type': 'type of content ex "regSection" or "sxs",
             //          },
-            //          'usage': 'to do prep work or start transitional states before content loads'
+            //          'usage': 'to update state and block subsequent requests until current request is resolved'
 
             //      },
             //      'content:loaded': {
-            //          'usage': 'to render loaded content or settle state after content is rendered'
+            //          'usage': 'to update state and unblock new requests from occurring'
             //      },
             //      'mode:change': {
             //          'args': {
             //              'id': 'open content in new mode',
-            //              'type': 'new mode changed to. should correspond with this.state["mode"]',
-            //              'usage': 'to prompt views to make alterations based on the new state
+            //              'type': 'new mode changed to. should correspond with this.state["mode"]'
             //          }
+            //          'usage': 'to prompt views to make alterations based on the new state
+
             //      },
             //      'ga-event:?': {
             //          '?': 'event to be sent to Google Analytics'
@@ -67,9 +67,7 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
 
             var listenTo = {
                 'content:loaded': this.setActivityStatus,
-                'content:loading:regSection': this.setActivityStatus,
-                'content:loading:sxs': this.setActivityStatus,
-                'content:loading:sidebar': this.setActivityStatus,
+                'content:loading': this.setActivityStatus,
                 'mode:change': this.setUIMode
             };
 
