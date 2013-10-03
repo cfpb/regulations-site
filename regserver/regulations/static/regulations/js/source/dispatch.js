@@ -46,7 +46,6 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
             //              'id': 'unique id ex. 123-4',
             //          },
             //          'usage': 'to update state and block subsequent requests until current request is resolved'
-
             //      },
             //      'content:loaded': {
             //          'usage': 'to update state and unblock new requests from occurring'
@@ -57,7 +56,6 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
             //              'type': 'new mode changed to. should correspond with this.state["mode"]'
             //          }
             //          'usage': 'to prompt views to make alterations based on the new state
-
             //      },
             //      'ga-event:?': {
             //          '?': 'event to be sent to Google Analytics'
@@ -71,10 +69,14 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
                 'mode:change': this.setUIMode
             };
 
+            // like an event listener, calls
+            // "bound" method in ```listenTo``` based
+            // on current event
             if (listenTo.hasOwnProperty[name]) {
                 listenTo[name](arguments);
             }
 
+            // call parent ```trigger()```
             Dispatch.__super__.trigger.apply(this, name); 
         },
 
