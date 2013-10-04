@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>main-view.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app-init.html">
+                app-init.js
+              </a>
+            
+              
+              <a class="source" href="build.html">
+                build.js
+              </a>
+            
+              
+              <a class="source" href="dispatch.html">
+                dispatch.js
+              </a>
+            
+              
+              <a class="source" href="folder-model.html">
+                folder-model.js
+              </a>
+            
+              
+              <a class="source" href="meta-model.html">
+                meta-model.js
+              </a>
+            
+              
+              <a class="source" href="reg-model.html">
+                reg-model.js
+              </a>
+            
+              
+              <a class="source" href="regs-helpers.html">
+                regs-helpers.js
+              </a>
+            
+              
+              <a class="source" href="regs-router.html">
+                regs-router.js
+              </a>
+            
+              
+              <a class="source" href="regulations.html">
+                regulations.js
+              </a>
+            
+              
+              <a class="source" href="require.config.html">
+                require.config.js
+              </a>
+            
+              
+              <a class="source" href="search-model.html">
+                search-model.js
+              </a>
+            
+              
+              <a class="source" href="sxs-model.html">
+                sxs-model.js
+              </a>
+            
+              
+              <a class="source" href="analytics-handler-view.html">
+                analytics-handler-view.js
+              </a>
+            
+              
+              <a class="source" href="definition-view.html">
+                definition-view.js
+              </a>
+            
+              
+              <a class="source" href="drawer-view.html">
+                drawer-view.js
+              </a>
+            
+              
+              <a class="source" href="header-view.html">
+                header-view.js
+              </a>
+            
+              
+              <a class="source" href="history-view.html">
+                history-view.js
+              </a>
+            
+              
+              <a class="source" href="main-view.html">
+                main-view.js
+              </a>
+            
+              
+              <a class="source" href="permalink-view.html">
+                permalink-view.js
+              </a>
+            
+              
+              <a class="source" href="reg-view.html">
+                reg-view.js
+              </a>
+            
+              
+              <a class="source" href="search-results-view.html">
+                search-results-view.js
+              </a>
+            
+              
+              <a class="source" href="search-view.html">
+                search-view.js
+              </a>
+            
+              
+              <a class="source" href="section-footer-view.html">
+                section-footer-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-head-view.html">
+                sidebar-head-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-list-view.html">
+                sidebar-list-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-module-view.html">
+                sidebar-module-view.js
+              </a>
+            
+              
+              <a class="source" href="sidebar-view.html">
+                sidebar-view.js
+              </a>
+            
+              
+              <a class="source" href="sub-head-view.html">
+                sub-head-view.js
+              </a>
+            
+              
+              <a class="source" href="sxs-list-view.html">
+                sxs-list-view.js
+              </a>
+            
+              
+              <a class="source" href="sxs-view.html">
+                sxs-view.js
+              </a>
+            
+              
+              <a class="source" href="toc-view.html">
+                toc-view.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>main-view.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'main-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'search-results-view'</span>, <span class="string">'reg-view'</span>, <span class="string">'reg-model'</span>, <span class="string">'search-model'</span>, <span class="string">'sub-head-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView) {
+    <span class="string">'use strict'</span>;
+
+    <span class="keyword">var</span> MainView = Backbone.View.extend({
+        el: <span class="string">'#content-body'</span>,
+
+        initialize: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.header = <span class="keyword">new</span> SubHeadView();
+
+            Dispatch.on(<span class="string">'mainContent:change'</span>, <span class="keyword">this</span>.render, <span class="keyword">this</span>);
+            Dispatch.on(<span class="string">'regSection:open'</span>, <span class="keyword">this</span>.loadContent, <span class="keyword">this</span>);
+            Dispatch.on(<span class="string">'search:submitted'</span>, <span class="keyword">this</span>.assembleSearchURL, <span class="keyword">this</span>);
+
+            Dispatch.on(<span class="string">'loading:start'</span>, <span class="keyword">this</span>.loading, <span class="keyword">this</span>);
+            Dispatch.on(<span class="string">'loading:finish'</span>, <span class="keyword">this</span>.loaded, <span class="keyword">this</span>);
+        },
+
+        modelmap: {
+            <span class="string">'regSection'</span>: RegModel,
+            <span class="string">'searchResults'</span>: SearchModel
+        }, 
+
+        viewmap: {
+            <span class="string">'regSection'</span>: RegView,
+            <span class="string">'searchResults'</span>: SearchResultsView
+        },
+
+        assembleSearchURL: <span class="keyword">function</span>(options, type) {
+            <span class="keyword">var</span> url = Dispatch.getRegId();
+            url += <span class="string">'?q='</span> + options.query;
+            url += <span class="string">'&amp;version='</span> + options.version;
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> options.page !== <span class="string">'undefined'</span>) {
+                url += <span class="string">'&amp;page='</span> + options.page;
+            }
+
+            options.url = url;
+            <span class="keyword">this</span>.loadContent(url, options, type);
+        },
+
+        loadContent: <span class="keyword">function</span>(getParam, options, type) {
+            Dispatch.trigger(<span class="string">'loading:start'</span>);
+            <span class="keyword">var</span> returned = <span class="keyword">this</span>.modelmap[type].get(getParam);
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> returned.done !== <span class="string">'undefined'</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>@TODO: error handling</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                returned.done(<span class="keyword">function</span>(response) {
+                    <span class="keyword">this</span>.createView(response, options, type);
+                }.bind(<span class="keyword">this</span>));
+
+                returned.fail(<span class="keyword">function</span>() {
+                    <span class="keyword">var</span> alertNode = document.createElement(<span class="string">'div'</span>);
+
+                    alertNode.innerHTML = <span class="string">'There was an issue loading your data. This may be because your device is currently offline. Please try again.'</span>;
+                    alertNode.className = <span class="string">'alert'</span>;
+
+                    $(alertNode).insertBefore(<span class="string">'h2.section-number'</span>);
+                    <span class="keyword">this</span>.loaded();
+                }.bind(<span class="keyword">this</span>));
+            }
+            <span class="keyword">else</span> {
+               <span class="keyword">this</span>.createView(returned, options, type); 
+            }
+        },
+
+        createView: <span class="keyword">function</span>(html, options, type) {
+            Dispatch.removeContentView();
+            <span class="keyword">this</span>.render(html, options.scrollToId);
+            Dispatch.setContentView(<span class="keyword">new</span> <span class="keyword">this</span>.viewmap[type](options));
+            Dispatch.trigger(<span class="string">'loading:finish'</span>);
+        },
+
+        render: <span class="keyword">function</span>(html, scrollToId) {
+            <span class="keyword">var</span> offsetTop, $scrollToId;
+
+            <span class="keyword">this</span>.header.reset();
+            <span class="keyword">this</span>.$el.html(html);
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> scrollToId !== <span class="string">'undefined'</span>) {
+                $scrollToId = $(<span class="string">'#'</span> + scrollToId);
+                <span class="keyword">if</span> ($scrollToId.length &gt; <span class="number">0</span>) {
+                    offsetTop = $scrollToId.offset().top;
+                }
+            }
+
+            window.scrollTo(<span class="number">0</span>, offsetTop || <span class="number">0</span>);
+        },
+
+        loading: <span class="keyword">function</span>() {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>visually indicate that a new section is loading</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            $(<span class="string">'.main-content'</span>).addClass(<span class="string">'loading'</span>);
+
+        },
+
+        loaded: <span class="keyword">function</span>() {
+            $(<span class="string">'.main-content'</span>).removeClass(<span class="string">'loading'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>change focus to main content area when new sections are loaded</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            $(<span class="string">'.section-focus'</span>).focus();
+        }
+    });
+
+    <span class="keyword">return</span> MainView;
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

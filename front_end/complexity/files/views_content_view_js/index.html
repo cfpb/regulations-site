@@ -37,7 +37,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>views/content-view.js</h1>
+    <h1>views/reg-view.js</h1>
   </div>
 </div>
 
@@ -94,11 +94,11 @@
 //
 // **Jurisdiction** .main-content
 //
-// **Usage** ```require([&#039;content-view&#039;], function(ContentView) {})```
-define(&#039;content-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;jquery-scrollstop&#039;, &#039;regs-dispatch&#039;, &#039;definition-view&#039;, &#039;sub-head-view&#039;], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView) {
+// **Usage** ```require([&#039;reg-view&#039;], function(RegView) {})```
+define(&#039;reg-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;jquery-scrollstop&#039;, &#039;dispatch&#039;, &#039;definition-view&#039;, &#039;sub-head-view&#039;], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, SubHeadView) {
     &#039;use strict&#039;;
 
-    var ContentView = Backbone.View.extend({
+    var RegView = Backbone.View.extend({
         events: {
             &#039;click .definition&#039;: &#039;termLinkHandler&#039;,
             &#039;click .inline-interp-header&#039;: &#039;expandInterp&#039;,
@@ -282,7 +282,7 @@ define(&#039;content-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#
         }
     });
 
-    return ContentView;
+    return RegView;
 });</textarea>
   </div>
 </div>
