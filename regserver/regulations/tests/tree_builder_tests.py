@@ -125,11 +125,11 @@ class TreeBuilderTest(TestCase):
 
     def test_add_child_appendix(self):
         parent = {'children': [
-            {'node_type':'APPENDIX', 'label': ['204', 'A', '1']}, 
-            {'node_type':'APPENDIX', 'label': ['204', 'A', '3']}, 
+            {'node_type': 'APPENDIX', 'label': ['204', 'A', '1']},
+            {'node_type': 'APPENDIX', 'label': ['204', 'A', '3']},
             ]}
 
-        child_to_add = {'node_type':'APPENDIX', 'label':['204', 'A', '2(a)']}
+        child_to_add = {'node_type': 'APPENDIX', 'label': ['204', 'A', '2(a)']}
         tree_builder.add_child(parent, child_to_add)
         self.assertEquals(
             ['204-A-1', '204-A-2(a)', '204-A-3'],
@@ -137,8 +137,6 @@ class TreeBuilderTest(TestCase):
             )
 
     def test_add_child_interp(self):
-        tree = self.build_tree()
-
         parent = {'children': [
             {'node_type': 'INTERP', 'label': ['204', '4', 'Interp']},
             {'node_type': 'INTERP', 'label': ['204', '2', 'Interp']}
