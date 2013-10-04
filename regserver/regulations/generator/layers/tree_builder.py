@@ -105,17 +105,17 @@ def make_label_sortable(label, roman=False):
     appropriately sortable. """
 
     if label.isdigit():
-        return int(label)
+        return (int(label),)
     if label.isalpha():
         if roman:
             #If the label is all letters, it's a roman numeral
             romans = list(itertools.islice(roman_nums(), 0, 50))
             return 1 + romans.index(label)
         else:
-            return label
+            return (label,)
     else:
         m = re.match(r"([0-9]+)([\(])([a-z]+)([\)])", label, re.I)
-        return (int(m.groups()[0]), m.groups()[1])
+        return (int(m.groups()[0]), m.groups()[2])
 
 
 def add_child(parent_node, node):
