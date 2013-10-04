@@ -130,7 +130,7 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
         // **Param** string, entity type, ex. 'definition'
         getViewId: function(type) {
             if (typeof this.open[type] === 'object') {
-                return this.open[type].model.id;
+                return this.open[type].id;
             }
             return false;
         },
