@@ -135,7 +135,5 @@ def add_child(parent_node, node):
         else:
             c['sortable'] = make_label_sortable(c['label'][-1],
                                                 roman=(len(c['label']) == 5))
-            if c['node_type'].upper() == 'APPENDIX':
-                print c['sortable']
 
     parent_node['children'].sort(key=lambda x: x['sortable'])
