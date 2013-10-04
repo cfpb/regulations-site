@@ -57,6 +57,12 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
             //          }
             //          'usage': 'to prompt views to make alterations based on the new state
             //      },
+            //      'definition:remove': {
+            //          'args': {
+            //              'id': 'def reg section id'
+            //          },
+            //          'usage': 'remove active key term in body, remove sidebar header'
+            //      }
             //      'ga-event:?': {
             //          '?': 'event to be sent to Google Analytics'
             //      }
@@ -76,6 +82,7 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
                 listenTo[name](arguments);
             }
 
+            /* jshint camelcase: false */
             // call parent ```trigger()```
             Dispatch.__super__.trigger.apply(this, name); 
         },

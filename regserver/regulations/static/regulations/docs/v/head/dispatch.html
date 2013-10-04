@@ -213,7 +213,7 @@ modules can remove the open definition by calling <code>Dispatch.remove(&#39;def
             
             <div class="content"><div class='highlight'><pre>define(<span class="string">'dispatch'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
     <span class="string">'use strict'</span>;
-    <span class="keyword">return</span> _.extend({</pre></div></div>
+    <span class="keyword">var</span> Dispatch = _.extend({</pre></div></div>
             
         </li>
         
@@ -232,7 +232,9 @@ This scheme currently limits it to one value associated with each type, in theor
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        open: {},</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        open: {},
+
+        state: {},</pre></div></div>
             
         </li>
         
@@ -256,6 +258,90 @@ This scheme currently limits it to one value associated with each type, in theor
             <span class="keyword">this</span>.open[key] = val;
         },
 
+        trigger: <span class="keyword">function</span>(name) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>var events: {
+    &#39;content:loading&#39;: {
+         &#39;args&#39;: { 
+             &#39;id&#39;: &#39;unique id ex. 123-4&#39;,
+         },
+         &#39;usage&#39;: &#39;to update state and block subsequent requests until current request is resolved&#39;
+     },
+     &#39;content:loaded&#39;: {
+         &#39;usage&#39;: &#39;to update state and unblock new requests from occurring&#39;
+     },
+     &#39;mode:change&#39;: {
+         &#39;args&#39;: {
+             &#39;id&#39;: &#39;open content in new mode&#39;,
+             &#39;type&#39;: &#39;new mode changed to. should correspond with this.state[&quot;mode&quot;]&#39;
+         }
+         &#39;usage&#39;: &#39;to prompt views to make alterations based on the new state
+     },
+     &#39;definition:remove&#39;: {
+         &#39;args&#39;: {
+             &#39;id&#39;: &#39;def reg section id&#39;
+         },
+         &#39;usage&#39;: &#39;remove active key term in body, remove sidebar header&#39;
+     }
+     &#39;ga-event:?&#39;: {
+         &#39;?&#39;: &#39;event to be sent to Google Analytics&#39;
+     }</p>
+<p>};</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">var</span> listenTo = {
+                <span class="string">'content:loaded'</span>: <span class="keyword">this</span>.setActivityStatus,
+                <span class="string">'content:loading'</span>: <span class="keyword">this</span>.setActivityStatus,
+                <span class="string">'mode:change'</span>: <span class="keyword">this</span>.setUIMode
+            };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>like an event listener, calls
+&quot;bound&quot; method in <code>listenTo</code> based
+on current event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (listenTo.hasOwnProperty[name]) {
+                listenTo[name](arguments);
+            }
+
+            <span class="comment">/* jshint camelcase: false */</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>call parent <code>trigger()</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            Dispatch.__super__.trigger.apply(<span class="keyword">this</span>, name); 
+        },
+
         removeContentView: <span class="keyword">function</span>() {
             <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.open[<span class="string">'contentView'</span>] !== <span class="string">'undefined'</span>) {
                 <span class="keyword">this</span>.open[<span class="string">'contentView'</span>].remove();
@@ -270,11 +356,11 @@ This scheme currently limits it to one value associated with each type, in theor
         </li>
         
         
-        <li id="section-4">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>remove a value from Dispatch.open and call its <code>remove()</code> method
 <strong>Param</strong> string, entity type, ex. &#39;definition&#39;</p>
@@ -286,16 +372,68 @@ This scheme currently limits it to one value associated with each type, in theor
                 <span class="keyword">this</span>.open[key].remove();
                 <span class="keyword">delete</span>(<span class="keyword">this</span>.open[key]);
             }
+        },
+
+        hasPushState: <span class="keyword">function</span>() {
+            <span class="keyword">return</span>(<span class="keyword">this</span>.state[<span class="string">'pushState'</span>]);
+        },
+
+        setState: <span class="keyword">function</span>(state) {
+            <span class="keyword">this</span>.state[<span class="string">'pushState'</span>] = state;
+        },
+
+        getUIMode: <span class="keyword">function</span>() {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>var options = [&#39;regSection&#39;, &#39;breakaway&#39;, &#39;search&#39;, &#39;diff&#39;, &#39;history&#39;];</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">return</span>(<span class="keyword">this</span>.state[<span class="string">'mode'</span>]);
+        },
+
+        setUIMode: <span class="keyword">function</span>(context) {
+            <span class="keyword">this</span>.state[<span class="string">'mode'</span>] = context.type;
+        },
+
+        getActivityStatus: <span class="keyword">function</span>() {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>var options = [&#39;standby&#39;, &#39;init&#39;, &#39;loading&#39;];</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">return</span>(<span class="keyword">this</span>.state[<span class="string">'activity'</span>] || <span class="string">'standby'</span>);   
+        },
+
+        setActivityStatus: <span class="keyword">function</span>(context) {
+            <span class="keyword">this</span>.state[<span class="string">'activity'</span>] = context.type;
         },</pre></div></div>
             
         </li>
         
         
-        <li id="section-5">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>retrieve the id of the stored object
 <strong>Param</strong> string, entity type, ex. &#39;definition&#39;</p>
@@ -304,7 +442,7 @@ This scheme currently limits it to one value associated with each type, in theor
             
             <div class="content"><div class='highlight'><pre>        getViewId: <span class="keyword">function</span>(type) {
             <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.open[type] === <span class="string">'object'</span>) {
-                <span class="keyword">return</span> <span class="keyword">this</span>.open[type].model.id;
+                <span class="keyword">return</span> <span class="keyword">this</span>.open[type].id;
             }
             <span class="keyword">return</span> <span class="literal">false</span>;
         },
@@ -325,11 +463,11 @@ This scheme currently limits it to one value associated with each type, in theor
         </li>
         
         
-        <li id="section-6">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>return open section ex. 1005-3</p>
 
@@ -361,6 +499,8 @@ This scheme currently limits it to one value associated with each type, in theor
         }
 
     }, Backbone.Events);   
+
+    <span class="keyword">return</span> Dispatch;
 });</pre></div></div>
             
         </li>

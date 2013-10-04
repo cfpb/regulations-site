@@ -38,7 +38,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         },
 
         getSidebar: function(sectionId) {
-            var partial = this.model.get(sectionId, this.render);
+            this.model.get(sectionId, this.render);
         },
 
         render: function(html) {

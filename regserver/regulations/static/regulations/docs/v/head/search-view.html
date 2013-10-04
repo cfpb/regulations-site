@@ -196,7 +196,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>], <span class="keyword">function</span>($, _, Backbone) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'search-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'./dispatch'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> SearchView = Backbone.View.extend({
@@ -206,10 +206,7 @@
             <span class="string">'submit'</span>: <span class="string">'openSearchResults'</span>
         },
 
-        openSearchResults: <span class="keyword">function</span>(e) {
-            sessionStorage.setItem(<span class="string">'drawerDefault'</span>, <span class="string">'search'</span>);
-
-            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {</pre></div></div>
+        initialize: <span class="keyword">function</span>() {</pre></div></div>
             
         </li>
         
@@ -220,16 +217,18 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Temporarily removing ajax search results
-e.preventDefault();</p>
+              <p>if the browser doesn&#39;t support pushState, don&#39;t 
+trigger click events for links</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="keyword">var</span> $form = $(e.target),
-                    options = {};
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState === <span class="literal">false</span>) {
+                <span class="keyword">this</span>.events = {};
+            }
+        },
 
-                options.query = $form.find(<span class="string">'input[name=q]'</span>)[<span class="number">0</span>].value;
-                options.version = $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value;</pre></div></div>
+        openSearchResults: <span class="keyword">function</span>(e) {
+            sessionStorage.setItem(<span class="string">'drawerDefault'</span>, <span class="string">'search'</span>);</pre></div></div>
             
         </li>
         
@@ -241,12 +240,31 @@ e.preventDefault();</p>
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>Temporarily removing ajax search results
+e.preventDefault();</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">var</span> $form = $(e.target),
+                options = {};
+
+            options.query = $form.find(<span class="string">'input[name=q]'</span>)[<span class="number">0</span>].value;
+            options.version = $form.find(<span class="string">'select[name=version]'</span>)[<span class="number">0</span>].value;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Temporarily removing ajax search results
 Dispatch.trigger(&#39;search:submitted&#39;, options, &#39;searchResults&#39;);</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            }
-        }
+            <div class="content"><div class='highlight'><pre>        }
 
     });
 

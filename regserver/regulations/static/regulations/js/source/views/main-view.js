@@ -49,7 +49,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
 
             // simplifies to
             // this.model.get()
-            returned = this.modelmap[type].get(id, render)
+            returned = this.modelmap[type].get(id, render);
 
             return this;
         },

@@ -242,10 +242,15 @@ when the active section changes, highlight it in the TOC</p>
               </div>
               <p><strong>TODO</strong> need to work out a bug where it scrolls the content section
 $(&#39;#menu-link:not(.active)&#39;).on(&#39;click&#39;, this.scrollToActive);</p>
+<p>if the browser doesn&#39;t support pushState, don&#39;t 
+trigger click events for links</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState === <span class="literal">false</span>) {
+                <span class="keyword">this</span>.events = {};
+            }
+        },</pre></div></div>
             
         </li>
         
@@ -282,12 +287,10 @@ when a TOC link is clicked, send an event along with the href of the clicked lin
             </div>
             
             <div class="content"><div class='highlight'><pre>        sendClickEvent: <span class="keyword">function</span>(e) {
-            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
-                e.preventDefault();
+            e.preventDefault();
 
-                <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'section-id'</span>);
-                Dispatch.trigger(<span class="string">'regSection:open'</span>, sectionId, {id: sectionId}, <span class="string">'regSection'</span>);
-            }
+            <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'section-id'</span>);
+            Dispatch.trigger(<span class="string">'regSection:open'</span>, sectionId, {id: sectionId}, <span class="string">'regSection'</span>);
         },</pre></div></div>
             
         </li>

@@ -208,9 +208,6 @@
             Dispatch.on(<span class="string">'mainContent:change'</span>, <span class="keyword">this</span>.render, <span class="keyword">this</span>);
             Dispatch.on(<span class="string">'regSection:open'</span>, <span class="keyword">this</span>.loadContent, <span class="keyword">this</span>);
             Dispatch.on(<span class="string">'search:submitted'</span>, <span class="keyword">this</span>.assembleSearchURL, <span class="keyword">this</span>);
-
-            Dispatch.on(<span class="string">'loading:start'</span>, <span class="keyword">this</span>.loading, <span class="keyword">this</span>);
-            Dispatch.on(<span class="string">'loading:finish'</span>, <span class="keyword">this</span>.loaded, <span class="keyword">this</span>);
         },
 
         modelmap: {
@@ -236,11 +233,10 @@
             <span class="keyword">this</span>.loadContent(url, options, type);
         },
 
-        loadContent: <span class="keyword">function</span>(getParam, options, type) {
-            Dispatch.trigger(<span class="string">'loading:start'</span>);
-            <span class="keyword">var</span> returned = <span class="keyword">this</span>.modelmap[type].get(getParam);
+        loadContent: <span class="keyword">function</span>(id, options, type) {
+            <span class="keyword">var</span> returned, render;
 
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> returned.done !== <span class="string">'undefined'</span>) {</pre></div></div>
+            <span class="keyword">this</span>.loading();</pre></div></div>
             
         </li>
         
@@ -251,34 +247,39 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>@TODO: error handling</p>
+              <p>callback to be sent to model&#39;s get method
+called after ajax resolves sucessfully</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                returned.done(<span class="keyword">function</span>(response) {
-                    <span class="keyword">this</span>.createView(response, options, type);
-                }.bind(<span class="keyword">this</span>));
+            <div class="content"><div class='highlight'><pre>            render = <span class="keyword">function</span>(returned) {
+                <span class="keyword">this</span>.createView(returned, options, type); 
+                <span class="keyword">this</span>.loaded();
+            }.bind(<span class="keyword">this</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>simplifies to
+this.model.get()</p>
 
-                returned.fail(<span class="keyword">function</span>() {
-                    <span class="keyword">var</span> alertNode = document.createElement(<span class="string">'div'</span>);
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            returned = <span class="keyword">this</span>.modelmap[type].get(id, render);
 
-                    alertNode.innerHTML = <span class="string">'There was an issue loading your data. This may be because your device is currently offline. Please try again.'</span>;
-                    alertNode.className = <span class="string">'alert'</span>;
-
-                    $(alertNode).insertBefore(<span class="string">'h2.section-number'</span>);
-                    <span class="keyword">this</span>.loaded();
-                }.bind(<span class="keyword">this</span>));
-            }
-            <span class="keyword">else</span> {
-               <span class="keyword">this</span>.createView(returned, options, type); 
-            }
+            <span class="keyword">return</span> <span class="keyword">this</span>;
         },
 
         createView: <span class="keyword">function</span>(html, options, type) {
             Dispatch.removeContentView();
             <span class="keyword">this</span>.render(html, options.scrollToId);
             Dispatch.setContentView(<span class="keyword">new</span> <span class="keyword">this</span>.viewmap[type](options));
-            Dispatch.trigger(<span class="string">'loading:finish'</span>);
         },
 
         render: <span class="keyword">function</span>(html, scrollToId) {
@@ -302,11 +303,11 @@
         </li>
         
         
-        <li id="section-3">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>visually indicate that a new section is loading</p>
 
@@ -322,11 +323,11 @@
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>change focus to main content area when new sections are loaded</p>
 
