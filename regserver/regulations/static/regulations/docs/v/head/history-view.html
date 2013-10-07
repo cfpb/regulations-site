@@ -201,7 +201,7 @@
 
     <span class="keyword">var</span> HistoryView = Backbone.View.extend({
 
-        el: <span class="string">'#history'</span>,
+        el: <span class="string">'#history:not(.diff-history)'</span>,
 
         events: {
             <span class="string">'click .version-link'</span>: <span class="string">'setStorageItem'</span>
@@ -223,7 +223,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            $(<span class="string">'.status-list'</span>).removeClass(<span class="string">'current'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">this</span>.$el.find(<span class="string">'.status-list'</span>).removeClass(<span class="string">'current'</span>);</pre></div></div>
             
         </li>
         

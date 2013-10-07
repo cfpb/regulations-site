@@ -2,10 +2,14 @@
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
+from regulations.generator.layers.toc_applier import TableOfContentsLayer
 from regulations.generator.node_types import EMPTYPART, REGTEXT
-from regulations.views import utils
+from regulations.generator.versions import fetch_grouped_history
+from regulations.views import error_handling, utils
+from regulations.views.chrome import ChromeView
 from regulations.views.partial import PartialView
-from regulations.views import error_handling
+
+from django.core.urlresolvers import reverse
 
 
 def get_appliers(label_id, older, newer):
@@ -31,7 +35,8 @@ class PartialSectionDiffView(PartialView):
         """ Override GET so that we can catch and propagate any errors. """
 
         try:
-            return super(PartialSectionDiffView, self).get(request, *args, **kwargs)
+            return super(PartialSectionDiffView, self).get(request, *args,
+                                                           **kwargs)
         except error_handling.MissingContentException, e:
             return error_handling.handle_generic_404(request)
 
@@ -64,3 +69,86 @@ class PartialSectionDiffView(PartialView):
                 'children': [builder.tree]}
         context['tree'] = {'children': [child_of_root]}
         return context
+
+
+class ChromeSectionDiffView(ChromeView):
+    """Search results with chrome"""
+    template_name = 'diff-chrome.html'
+    partial_class = PartialSectionDiffView
+    check_tree = False
+    has_sidebar = False
+
+    def add_main_content(self, context):
+        super(ChromeSectionDiffView, self).add_main_content(context)
+        context['left_version'] = context['version']
+        context['right_version'] = \
+            context['main_content_context']['newer_version']
+        diff = generator.get_diff_json(
+            context['reg_part'], context['version'], context['right_version'])
+
+        old_toc = utils.table_of_contents(
+            context['reg_part'],
+            context['version'],
+            self.partial_class.sectional_links)
+        context['TOC'] = diff_toc(context, old_toc, diff)
+
+
+def diff_toc(context, old_toc, diff):
+    compiled_toc = list(old_toc)
+    for node in (v['node'] for v in diff.values() if v['op'] == 'added'):
+        if len(node['label']) == 2 and node['title']:
+            element = {
+                'label': node['title'],
+                'index': node['label'],
+                'section_id': '-'.join(node['label']),
+                'op': 'added'
+            }
+            data = {'index': node['label'], 'title': node['title']}
+            TableOfContentsLayer.section(element, data)
+            TableOfContentsLayer.appendix_supplement(element, data)
+            compiled_toc.append(element)
+
+    modified, deleted = modified_deleted_sections(diff)
+    for el in compiled_toc:
+        newer_version = context['main_content_context']['newer_version']
+        el['url'] = reverse('chrome_section_diff_view', kwargs={
+            'label_id': el['section_id'], 'version': context['version'],
+            'newer_version': newer_version})
+        # Deleted first, lest deletions in paragraphs affect the section
+        if tuple(el['index']) in deleted and 'op' not in el:
+            el['op'] = 'deleted'
+        if tuple(el['index']) in modified and 'op' not in el:
+            el['op'] = 'modified'
+
+    return sort_toc(compiled_toc)
+
+
+def sort_toc(toc):
+    def normalize(label):
+        normalized = []
+        for part in label:
+            try:
+                normalized.append(int(part))
+            except ValueError:
+                normalized.append(part)
+        return normalized
+
+    return sorted(toc, key=lambda el: tuple(normalize(el['index'])))
+
+
+def modified_deleted_sections(diff):
+    modified, deleted = set(), set()
+    for label, diff_value in diff.iteritems():
+        label = tuple(label.split('-'))
+        if 'Interp' in label:
+            section_label = (label[0], 'Interp')
+        else:
+            section_label = tuple(label[:2])
+
+        # Whole section was deleted
+        if diff_value['op'] == 'deleted' and label == section_label:
+            deleted.add(section_label)
+        # Whole section added/modified or paragraph added/deleted/modified
+        else:
+            modified.add(section_label)
+    return modified, deleted

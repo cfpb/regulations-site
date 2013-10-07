@@ -66,3 +66,31 @@ class ViewsRedirectTest(TestCase):
             request = RequestFactory().get('?year=bad&month=data&day=here')
             redirect_by_date_get(request, 'lablab')
             self.assertTrue(handle.called)
+
+    def test_diff_redirect_bad_version(self):
+        request = RequestFactory().get('?new_version=A+Bad+Version')
+        response = diff_redirect(request, 'lablab', 'verver')
+        self.assertEqual(404, response.status_code)
+
+    @patch('regulations.views.redirect.fetch_grouped_history')
+    def test_diff_redirect_order(self, fgh):
+        fgh.return_value = [
+            {'notices': [{'document_number': '3'}, {'document_number': '2'}]},
+            {'notices': [{'document_number': '1'}]}]
+        request = RequestFactory().get('?new_version=3')
+        response = diff_redirect(request, '1111-22', '1')
+        self.assertTrue('diff/1111-22/1/3' in response['Location'])
+        response = diff_redirect(request, '1111-22', '2')
+        self.assertTrue('diff/1111-22/2/3' in response['Location'])
+
+        request = RequestFactory().get('?new_version=2')
+        response = diff_redirect(request, '1111-22', '1')
+        self.assertTrue('diff/1111-22/1/2' in response['Location'])
+        response = diff_redirect(request, '1111-22', '3')
+        self.assertTrue('diff/1111-22/2/3' in response['Location'])
+
+        request = RequestFactory().get('?new_version=1')
+        response = diff_redirect(request, '1111-22', '2')
+        self.assertTrue('diff/1111-22/1/2' in response['Location'])
+        response = diff_redirect(request, '1111-22', '3')
+        self.assertTrue('diff/1111-22/1/3' in response['Location'])

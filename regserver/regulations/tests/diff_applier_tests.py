@@ -58,7 +58,8 @@ class DiffApplierTest(TestCase):
         self.assertEquals(da.oq, deque_list)
 
     def test_apply_diff(self):
-        diff = {'204': {'text': [('delete', 0, 2), ('insert', 4, 'AAB')], 'op':''}}
+        diff = {'204': {'text': [('delete', 0, 2), ('insert', 4, 'AAB')],
+                        'op': ''}}
         da = diff_applier.DiffApplier(diff, None)
         da.apply_diff('acbd', '204')
 
@@ -76,11 +77,11 @@ class DiffApplierTest(TestCase):
             'text': 'child text',
             'children': [],
             'label_id': '204-3',
-            'label': ['204','3'],
+            'label': ['204', '3'],
             'node_type': REGTEXT
         }
         tree = {
-            'text':'parent text', 
+            'text': 'parent text',
             'children': [child],
             'label_id': '204',
             'label': ['204'],
@@ -95,7 +96,7 @@ class DiffApplierTest(TestCase):
             'text': 'child text',
             'children': [],
             'label_id': '204-2',
-            'label': ['204','2'],
+            'label': ['204', '2'],
             'node_type': REGTEXT
         }
 
@@ -113,14 +114,14 @@ class DiffApplierTest(TestCase):
             'text': 'new node text',
             'children': [],
             'label_id': '204-2',
-            'label': ['204','2'],
+            'label': ['204', '2'],
             'node_type': REGTEXT
         }
         new_node_child = {
             'text': 'new node child text',
             'children': [],
             'label_id': '204-2-a',
-            'label': ['204','2', 'a'],
+            'label': ['204', '2', 'a'],
             'node_type': REGTEXT
         }
         da = diff_applier.DiffApplier({}, None)
@@ -138,7 +139,7 @@ class DiffApplierTest(TestCase):
             'text': 'new node text',
             'children': [],
             'label_id': '204-2',
-            'label': ['204','2'],
+            'label': ['204', '2'],
             'node_type': REGTEXT
         }
         da = diff_applier.DiffApplier({}, None)
@@ -153,3 +154,25 @@ class DiffApplierTest(TestCase):
 
         self.assertTrue(da.is_child_of_requested('204-3-a'))
         self.assertFalse(da.is_child_of_requested('204-32'))
+
+        da.label_requested = '204-3-Interp'
+        self.assertTrue(da.is_child_of_requested('204-3-a-Interp'))
+        self.assertTrue(da.is_child_of_requested('204-3-Interp-1'))
+        self.assertFalse(da.is_child_of_requested('204-30-Interp'))
+
+        da.label_requested = '204-3-Interp-4'
+        self.assertFalse(da.is_child_of_requested('204-3-a-Interp'))
+        self.assertFalse(da.is_child_of_requested('204-3-Interp-1'))
+        self.assertTrue(da.is_child_of_requested('204-3-Interp-4-a'))
+
+    def test_tree_changes_new_section(self):
+        diff = {'9999-25': {'op': 'added',
+                            'node': {'text': 'Some Text',
+                                     'node_type': 'REGTEXT',
+                                     'label': ['9999', '25'],
+                                     'children': []}}}
+        old_tree = {}
+        da = diff_applier.DiffApplier(diff, '9999-25')
+        da.tree_changes(old_tree)
+
+        self.assertEqual(old_tree['label'], ['9999', '25'])
