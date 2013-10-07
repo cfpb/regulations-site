@@ -167,6 +167,7 @@ CACHES = {
     'api_cache':{
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'api_cache_memory',
+        'TIMEOUT': 3600,
     }
 
 }
