@@ -61,11 +61,11 @@ table of contents and the version tab are quite different
             <ul class="version-list">
             {% for version in history %}
                 <li class="status-list{% if version.version == left_version or version.version == right_version %} current{% endif %}">
-                    {% if version.version == left_version %}
+                    <!--{% if version.version == left_version %}
                       (Left)
                     {% elif version.version == right_version %}
                       (Right)
-                    {% endif %}
+                    {% endif %}-->
                     <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link" data-version="{{ version.version }}">
                         {% if version.timeline == 'current' %}
                             <h4>Current Law</h4>
