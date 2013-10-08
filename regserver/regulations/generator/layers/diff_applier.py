@@ -27,7 +27,10 @@ class DiffApplier(object):
         self.oq = [deque([c]) for c in original]
 
     def insert_text(self, pos, new_text):
-        self.oq[pos-1].extend(['<ins>', new_text, '</ins>'])
+        if pos == len(self.oq):
+            self.oq[pos-1].extend(['<ins>', new_text, '</ins>'])
+        else:
+            self.oq[pos].appendleft('<ins>' + new_text + '</ins>')
 
     def delete_text(self, start, end):
         self.oq[start].appendleft('<del>')
@@ -132,6 +135,8 @@ class DiffApplier(object):
 
                             _, _, new_text = d[1]
 
+                            # Place the new text at the end of the delete for
+                            # readability.
                             self.insert_text(e, new_text)
                 return self.get_text()
         return original

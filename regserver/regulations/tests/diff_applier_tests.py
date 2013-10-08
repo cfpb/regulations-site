@@ -34,9 +34,9 @@ class DiffApplierTest(TestCase):
     def test_insert_text(self):
         da = self.create_diff_applier()
 
-        da.insert_text(2, 'AA')
+        da.insert_text(1, 'AA')
         deque_list = [
-            deque(['a']), deque(['b', '<ins>', 'AA', '</ins>']),
+            deque(['a']), deque(['<ins>AA</ins>', 'b']),
             deque(['c']), deque(['d'])]
         self.assertEquals(da.oq, deque_list)
 
