@@ -12,7 +12,12 @@ from regulations.views import error_handling
 class ParagraphSXSView(TemplateView):
     """ Given a regulation paragraph and a Federal Register notice number,
     display the appropriate section by section analyses."""
-    template_name = 'paragraph-sxs.html'
+
+    def get_template_names(self):
+        """ The disclaimer that exists on this page can be over ridden. If an
+        agency specfic disclaimer is provided, use that. """
+
+        return ['sxs_with_disclaimer.html', 'paragraph-sxs.html']
 
     def get(self, request, *args, **kwargs):
         """Override this method so that we can grab the GET variables"""
