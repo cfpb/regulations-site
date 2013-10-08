@@ -151,8 +151,8 @@ OFFLINE_OUTPUT_DIR = ''
 
 DATE_FORMAT = 'n/j/Y'
 
-GOOGLE_ANALYTICS_ID = ''
-GOOGLE_ANALYTICS_SITE = ''
+EREGS_GA_ID = ''
+EREGS_GA_SITE = ''
 
 #Django by default tries to setup a databse when running 
 #tests. We don't have a database, so we override the default 
