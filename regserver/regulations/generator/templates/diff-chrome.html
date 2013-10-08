@@ -7,7 +7,7 @@ table of contents and the version tab are quite different
 {% endcomment %}
 
 {% block header-secondary %}
-<span class="effective-date"><strong>Effective Date:</strong>
+<span class="effective-date"><strong>Comparing:</strong>
     {% with older_version=version %}
         {% for version in history %} {% if version.version == older_version %}{{ version.by_date|date }}{% endif %} {% endfor %}
         to
@@ -26,11 +26,11 @@ table of contents and the version tab are quite different
         <ol class="drawer-content">
             {% for item in TOC %}
                 {% if item.is_section %}
-                <li>{{item.op}}<a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">§&nbsp;{{item.label}}</span> {{item.sub_label|safe}}</a></li>
+                <li class="{{item.op}}"><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">§&nbsp;{{item.label}}</span> {{item.sub_label|safe}}</a></li>
                 {% elif item.is_appendix or item.is_supplement%}
-                <li>{{item.op}}<a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
+                <li class="{{item.op}}"><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
                 {% else %}
-                <li>{{item.op}}<a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>
+                <li class="{{item.op}}"><a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>
                 {% endif %}
             {% endfor %}
         </ol>
@@ -54,18 +54,18 @@ table of contents and the version tab are quite different
             </form>
             </div><!--./date-form-->
             <div class="group">
-                <a href="{% url 'chrome_section_view' label_id version %}" class="version-link" data-version="{{ version }}">
+                <a href="{% url 'chrome_section_view' label_id version %}" class="stop-button" data-version="{{ version }}">
                     Stop Comparing
                 </a>
             </div>
             <ul class="version-list">
             {% for version in history %}
                 <li class="status-list{% if version.version == left_version or version.version == right_version %} current{% endif %}">
-                    {% if version.version == left_version %}
+                    <!--{% if version.version == left_version %}
                       (Left)
                     {% elif version.version == right_version %}
                       (Right)
-                    {% endif %}
+                    {% endif %}-->
                     <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link" data-version="{{ version.version }}">
                         {% if version.timeline == 'current' %}
                             <h4>Current Law</h4>

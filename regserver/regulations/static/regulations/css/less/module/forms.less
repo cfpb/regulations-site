@@ -38,3 +38,44 @@ textarea:focus,
 input:focus {
     border: 1px solid @pacific;
 }
+
+/*
+Selects
+--------------------------------
+*/
+
+.select-content { 
+    overflow: hidden; /* this hides the select's drop button */
+    position: relative;
+    background: white url('../img/select.png') no-repeat bottom right; 
+    //width: 100%;
+    border: solid 1px @light_field;
+    height: 32px;
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .select-content {
+        background: white url('../img/select@2x.png') no-repeat bottom right;
+        background-size: 32px 32px;
+    }
+}
+
+select { 
+    width: 115%;
+    background-color: transparent; 
+    background-image: none; 
+    -webkit-appearance: none;
+    border: none; 
+    box-shadow: none;
+    padding: 0 10px; /* add padding to the select, not the div */
+    color: @dark_text;
+    height: 32px;
+}
+
+.lt-ie9 {
+    select {
+        height: 24px;
+    }
+}

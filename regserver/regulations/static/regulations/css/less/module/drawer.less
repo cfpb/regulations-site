@@ -292,6 +292,24 @@ This contains all of the styles specific to the TOC
         color: @black;
         background-color: @green_light;
     }
+
+    /*
+    TOC in Diff View
+    -----------------
+    */
+
+    .modified a,
+    .added a {
+        border-right: 8px solid @green_midtone;
+    }
+
+    .deleted a,
+    .deleted a:link,
+    .deleted a:visited {
+        border-right: 8px solid @red_orange_50;
+        text-decoration: line-through;
+        color: @light_field;
+    }
 }
 
 /* 
@@ -416,6 +434,10 @@ This contains all of the styles specific to the history
         .avenir-next-demi;
         font-size: 1.285714286em;
     }
+
+    .select-content {
+        margin: 15px;
+    }
 }
 
 .js {
@@ -435,6 +457,9 @@ This contains all of the styles specific to the history
         margin: 15px;
         background-color: #fff;
         line-height: 32px;
+        border-top: 1px solid @light_field;
+        border-bottom: 1px solid @light_field;
+        border-left: 1px solid @light_field;
    }
    
    input[type=text]{
@@ -454,6 +479,9 @@ This contains all of the styles specific to the history
     button {
         float: right;
         padding: 0 10px;
+        margin-top: -1px;
+        margin-bottom: -1px;
+        height: 34px;
     }
 }
 
@@ -465,6 +493,29 @@ This contains all of the styles specific to the history
             background-color: @green_light;
         }
     }
+}
+
+.stop-button {
+    display: block;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    margin: 15px;
+    background-color: @red_orange;
+    padding: 10px;
+    text-align: center;
+}
+
+.stop-button:link,
+.stop-button:visited {
+    color: #fff;
+}
+
+.stop-button:hover,
+.stop-button:active,
+.stop-button:focus {
+    background-color: @red_orange_50;
+    color: @black;
 }
 
 /* 
@@ -503,42 +554,6 @@ This contains all of the styles specific to the search
 
     button {
         width: 20%;
-    }
-
-    .select-content { 
-        overflow: hidden; /* this hides the select's drop button */
-        position: relative;
-        background: white url('../img/select.png') no-repeat bottom right; 
-        width: 100%;
-        border: solid 1px @light_field;
-        height: 32px;
-    }
-
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
-    (min-resolution: 192dpi) {
-        .select-content {
-            background: white url('../img/select@2x.png') no-repeat bottom right;
-            background-size: 32px 32px;
-        }
-    }
-
-    select { 
-        width: 115%;
-        background-color: transparent; 
-        background-image: none; 
-        -webkit-appearance: none;
-        border: none; 
-        box-shadow: none;
-        padding: 0 10px; /* add padding to the select, not the div */
-        color: @dark_text;
-        height: 32px;
-    }
-}
-
-.lt-ie9 {
-    .search-drawer select {
-        height: 24px;
     }
 }
 
