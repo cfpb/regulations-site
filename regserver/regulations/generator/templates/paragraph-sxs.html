@@ -49,8 +49,10 @@
             {{notice.regulation_id_numbers|join:", "}}
         </p>
 
+        {% block sxs_disclaimer %}
         <p>This is the most recent section-by-section analysis for this 
         paragraph. There may be others in the Federal Register.</p>
+        {% endblock %}
 </div>
 {% endif %}
 {% if sxs.label %}
