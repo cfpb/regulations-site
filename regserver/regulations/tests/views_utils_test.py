@@ -81,6 +81,14 @@ class UtilsTest(TestCase):
         self.assertEqual('googid', context['GOOGLE_ANALYTICS_ID'])
         self.assertEqual('googsite', context['GOOGLE_ANALYTICS_SITE'])
 
+        settings.EREGS_GA_ID = ''
+        settings.EREGS_GA_SITE = ''
+
+        context = {}
+        add_extras(context)
+        self.assertEqual('googid', context['GOOGLE_ANALYTICS_ID'])
+        self.assertEqual('googsite', context['GOOGLE_ANALYTICS_SITE'])
+
     @patch('regulations.views.utils.table_of_contents')
     def test_first_section(self, table_of_contents):
         table_of_contents.return_value = [

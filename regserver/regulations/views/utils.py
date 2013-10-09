@@ -65,10 +65,12 @@ def add_extras(context):
     if prefix != '/':   # Strip final slash
         prefix = prefix[:-1]
     context['APP_PREFIX'] = prefix
-    context['GOOGLE_ANALYTICS_SITE'] = getattr(settings, 'EREGS_GA_SITE',
-        getattr(settings, 'GOOGLE_ANALYTICS_SITE', ''))
-    context['GOOGLE_ANALYTICS_ID'] = getattr(settings, 'EREGS_GA_ID',
-        getattr(settings, 'GOOGLE_ANALYTICS_ID', ''))
+    context['GOOGLE_ANALYTICS_SITE'] = getattr(settings, 'EREGS_GA_SITE', '')
+    context['GOOGLE_ANALYTICS_ID'] = getattr(settings, 'EREGS_GA_ID', '')
+
+    for attr in ('GOOGLE_ANALYTICS_SITE', 'GOOGLE_ANALYTICS_ID'):
+        if not context[attr]:
+            context[attr] = getattr(settings, attr, '')
     return context
 
 
