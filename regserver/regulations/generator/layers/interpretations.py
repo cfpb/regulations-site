@@ -21,6 +21,7 @@ class InterpretationsLayer(object):
 
             partial_view = views.partial.PartialInterpView.as_view(inline=True)
             request = HttpRequest()
+            request.GET['layers'] = 'terms,graphics,internal,keyterms,paragraph'
             request.method = 'GET'
             response = partial_view(request, label_id=reference,
                                     version=self.version)
