@@ -15,7 +15,9 @@ CSS/Javascript etc., should inherit from this template.
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{tree.header}}</title>
+        <title>
+        PART {{reg_part}} - {{meta.statutory_name}} {%if meta.reg_letter %} (REGULATION {{meta.reg_letter}}) {% endif %}
+        </title>
         <link rel="shortcut icon" type="image/x-icon" href="{%static "regulations/ip/favicon.ico" %}"/>
         <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
         <script src="{%static "regulations/js/source/lib/modernizr.js" %}"></script>
