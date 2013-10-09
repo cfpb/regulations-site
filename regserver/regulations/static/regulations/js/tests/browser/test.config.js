@@ -46,7 +46,9 @@
       }
   });
 
-  require(['../specs/definition-view-spec.js', '../specs/reg-view-spec.js', '../specs/regs-helpers-spec.js', '../specs/dispatch-spec.js', '../specs/content-view-spec.js', '../specs/drawer-view-spec.js', '../specs/reg-model-spec.js'], function() {
+//  require(['../specs/definition-view-spec.js', '../specs/reg-view-spec.js', '../specs/regs-helpers-spec.js', '../specs/dispatch-spec.js', '../specs/content-view-spec.js', '../specs/drawer-view-spec.js', '../specs/reg-model-spec.js'], function() {});
+
+require(['../functional/toc.js', function() {
     if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
     else { mocha.run(); }
   });

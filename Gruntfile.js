@@ -110,26 +110,8 @@ module.exports = function(grunt) {
         }
     },
 
-
-    /**
-     *
-     * https://npmjs.org/package/grunt-ghost
-     *
-     * Functional testing w/ Phantom, Casper
-     *
-     */
-    ghost: {
-        dist: {
-            filesSrc: ['<%= env.frontEndPath %>/js/tests/functional/*.js'],
-            options: {
-                args: {
-                    testUrl: '<%= env.testUrl %>'
-                },
-                direct: true,
-                verbose: true,
-                logLevel: 'debug'
-            }
-        }
+    casperjs: {
+        files: ['<%= env.frontEndPath %>/js/tests/functional/*.js'],
     },
 
     requirejs: {
@@ -219,7 +201,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-ghost');
+    grunt.loadNpmTasks('grunt-casperjs');
     grunt.loadNpmTasks('grunt-docco2');
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-plato');
