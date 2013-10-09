@@ -13,7 +13,7 @@ class LandingViewTest(TestCase):
         self.assertFalse(reg_versions)
 
     @patch('regulations.views.landing.api_reader')
-    def test_regulation_exists_not(self, api_reader):
+    def test_regulation_exists(self, api_reader):
         api_reader.ApiReader.return_value.regversions.return_value = [{'version':'exists'}]
         reg_versions = landing.regulation_exists('204')
         self.assertTrue(reg_versions)
