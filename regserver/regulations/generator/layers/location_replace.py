@@ -23,7 +23,7 @@ class LocationReplace(object):
 
         list_offsets = LocationReplace.find_all_offsets(original, text)
         self.offset_counters = range(self.offset_starter, self.offset_starter + len(list_offsets))
-        self.offsets = dict(list(zip(self.offset_counters, list_offsets)))
+        self.offsets = dict(zip(self.offset_counters, list_offsets))
 
     def update_offset_starter(self):
         """ As we're navigating the XML node, we need to keep track of how many offsets we've 
