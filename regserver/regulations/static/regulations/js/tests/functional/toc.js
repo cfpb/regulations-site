@@ -3,6 +3,7 @@ var casper = require('casper').create(),
 
 casper.start();
 
+//TODO: env var?
 casper.thenOpen('http://localhost:8000/1005', function() {
 });
 

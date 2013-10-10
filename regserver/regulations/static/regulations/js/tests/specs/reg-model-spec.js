@@ -19,18 +19,14 @@ define(['reg-model', 'samplejson'], function(RegModel, testjson) {
       expect(RegModel.content['2345-9-a'].valueOf()).to.be(content);
     });
 
-    it("should get 2345-9", function() {
-      expect(RegModel.get('2345-9')).to.be("asdfksjflksjdf"); 
-    });
-
     it("should get children", function() {
       var arr = ["2345-9-a-2", "2345-9-a-1"];
 
-      expect(RegModel.getChildren('2345-9-a')).to.be(arr);
+      expect(RegModel.getChildren('2345-9-a')).to.eql(arr);
     });
 
     it("should not get children", function() {
-      expect(RegModel.getChildren('233')).to.be([]);
+      expect(RegModel.getChildren('233')).to.eql([]);
     });
 
     it("should get parent", function() {

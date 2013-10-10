@@ -1,7 +1,7 @@
 define(['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
     describe("Dispatch", function() {
         it("should house view instances that need to be accessed cross-module", function() {
-            var view = {model: {id: 3}};
+            var view = {id: 3};
             Dispatch.set('definition', view);
 
             expect(Dispatch.open.definition).to.be(view);
