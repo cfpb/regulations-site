@@ -1,4 +1,5 @@
 {
-    "testUrl": "URL that CasperJS should use for functional tests",
+    // URL that CasperJS should use for functional tests
+    "testUrl": "",
     "frontEndPath": "regserver/regulations/static/regulations"
 }
