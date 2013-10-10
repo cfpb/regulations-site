@@ -30,7 +30,7 @@ class DiffApplier(object):
         if pos == len(self.oq):
             self.oq[pos-1].extend(['<ins>', new_text, '</ins>'])
         else:
-            self.oq[pos].extend(['<ins>', new_text, '</ins>'])
+            self.oq[pos].appendleft('<ins>' + new_text + '</ins>')
 
     def delete_text(self, start, end):
         self.oq[start].appendleft('<del>')
@@ -123,13 +123,12 @@ class DiffApplier(object):
                 for d in text_diffs:
                     if d[0] == self.INSERT:
                         _, pos, new_text = d
-                        self.insert_text(pos, new_text + ' ')
+                        self.insert_text(pos, new_text)
                     if d[0] == self.DELETE:
                         _, s, e = d
                         self.delete_text(s, e)
                     if isinstance(d[0], types.ListType):
                         if d[0][0] == self.DELETE and d[1][0] == self.INSERT:
-
                             # Text replace scenario.
                             _, s, e = d[0]
                             self.delete_text(s, e)
@@ -138,6 +137,6 @@ class DiffApplier(object):
 
                             # Place the new text at the end of the delete for
                             # readability.
-                            self.insert_text(e-1, new_text)
+                            self.insert_text(e, new_text)
                 return self.get_text()
         return original

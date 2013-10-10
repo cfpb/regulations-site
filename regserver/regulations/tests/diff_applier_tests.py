@@ -36,7 +36,7 @@ class DiffApplierTest(TestCase):
 
         da.insert_text(1, 'AA')
         deque_list = [
-            deque(['a']), deque(['b', '<ins>', 'AA', '</ins>']),
+            deque(['a']), deque(['<ins>AA</ins>', 'b']),
             deque(['c']), deque(['d'])]
         self.assertEquals(da.oq, deque_list)
 
@@ -64,7 +64,7 @@ class DiffApplierTest(TestCase):
         da.apply_diff('acbd', '204')
 
         new_text = da.get_text()
-        self.assertEquals('<del>ac</del>bd<ins>AAB </ins>', new_text)
+        self.assertEquals('<del>ac</del>bd<ins>AAB</ins>', new_text)
 
     def test_delete_all(self):
         da = diff_applier.DiffApplier({}, None)
