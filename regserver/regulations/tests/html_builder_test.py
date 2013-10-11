@@ -6,6 +6,7 @@ from regulations.generator.html_builder import *
 from regulations.generator.layers.layers_applier import InlineLayersApplier
 from regulations.generator.layers.layers_applier import ParagraphLayersApplier
 from regulations.generator.node_types import REGTEXT, APPENDIX, INTERP
+from regulations.generator.layers import diff_applier
 
 
 class HTMLBuilderTest(TestCase):
@@ -154,20 +155,11 @@ class HTMLBuilderTest(TestCase):
         builder.process_node(node)
         self.assertTrue('header' in node)
         self.assertEqual('Some Title', node['header'])
-        self.assertFalse('header_marker' in node)
-        self.assertFalse('header_num' in node)
-        self.assertFalse('header_title' in node)
-
+       
         node = {'text': '', 'children': [], 'label': ['99', '22'],
                 'title': u'§ 22.1 Title', 'node_type': REGTEXT}
         builder.process_node(node)
         self.assertTrue('header' in node)
-        self.assertTrue('header_marker' in node)
-        self.assertEqual(u'§&nbsp;', node['header_marker'])
-        self.assertTrue('header_num' in node)
-        self.assertEqual(u'22.1', node['header_num'])
-        self.assertTrue('header_title' in node)
-        self.assertEqual(u' Title', node['header_title'])
 
     def test_no_section_sign(self):
         text = HTMLBuilder.section_space(' abc')
@@ -216,3 +208,29 @@ class HTMLBuilderTest(TestCase):
         node['label'] = ['872', '22']
         builder.modify_interp_node(node)
         self.assertEqual(node['header'], node['header_markup'])
+
+    def test_process_node_title_diff(self):
+        builder = HTMLBuilder(None, None, None)
+        diff = {'204': {'title': [('delete', 0, 2), ('insert', 4, 'AAC')],
+                        'text':  [('delete', 0, 2), ('insert', 4, 'AAB')],
+                        'op': ''}}
+        da = diff_applier.DiffApplier(diff, None)
+        node = {
+            "label_id": "204",
+            "title": "abcd",
+            'node_type': APPENDIX
+        }
+        builder.diff_applier = da
+        builder.process_node_title(node)
+        self.assertEqual('<del>ab</del>cd<ins>AAC</ins>', node['header'])
+
+    def test_node_title_no_diff(self):
+        builder = HTMLBuilder(None, None, None)
+        node = {
+            "label_id": "204",
+            "title": "abcd",
+            'node_type': APPENDIX
+        }
+        builder.process_node_title(node)
+        self.assertTrue('header' in node)
+        self.assertEqual(node['title'], 'abcd')
