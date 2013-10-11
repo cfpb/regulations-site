@@ -13,15 +13,19 @@ class InternalCitationLayer():
         self.sectional = False
         self.version = None
         self.rev_urls = RegUrl()
+        self.rendered = {}
 
     def render_url(
         self, label, text,
             template_name='layers/internal_citation.html'):
 
-        url = self.rev_urls.fetch(label, self.version, self.sectional)
-        c = Context({'citation': {'url': url, 'label': text}})
-        template = loader.get_template(template_name)
-        return template.render(c).strip('\n')
+        key = (tuple(label), text, template_name)
+        if key not in self.rendered:
+            url = self.rev_urls.fetch(label, self.version, self.sectional)
+            c = Context({'citation': {'url': url, 'label': text}})
+            template = loader.get_template(template_name)
+            self.rendered[key] = template.render(c).strip('\n')
+        return self.rendered[key]
 
     def apply_layer(self, text, text_index):
         if text_index in self.layer:
