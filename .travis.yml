@@ -10,10 +10,10 @@ install:
    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
    - sudo apt-get update
    - sudo apt-get install nodejs phantomjs
-   - npm -v
    - npm install grunt-cli grunt-init
    - sudo npm install -g casper
    - npm install
+   - npm install theresaanna/grunt-casperjs
    - cp example-config.json config.json
 script:
     - cd regserver
