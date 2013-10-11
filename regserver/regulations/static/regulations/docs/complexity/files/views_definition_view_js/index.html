@@ -13,7 +13,7 @@
   <![endif]-->
 
   <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
-  <link href="../../assets/css/vendor/bootstrap-3.0.0-wip.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
   <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
   <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
   <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
@@ -26,8 +26,8 @@
 
 <div class="navbar navbar-fixed-top">
   <div class="container">
-    <a class="brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
-    <ul class="nav">
+    <a class="navbar-brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
       <li>
         <a href="../../index.html">Report Home</a>
       </li>
@@ -43,31 +43,31 @@
 
 <div class="container aggregate-stats">
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">69.06</p>
+      <p class="stat">64.55</p>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">91</p>
+      <p class="stat">191</p>
     </div>
   </div>
   <div class="row historical">
-    <div class="span6">
+    <div class="col-md-6">
       <p id="chart_historical_maint" class="chart"></p>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <p id="chart_historical_sloc" class="chart"></p>
     </div>
   </div>
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">17.21</p>
+      <p class="stat">27.40</p>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.53</p>
+      <p class="stat">1.59</p>
     </div>
   </div>
 </div>
@@ -77,11 +77,11 @@
     <h2 class="header">Function weight</h2>
   </div>
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
       <div id="fn-by-complexity" class="stat"></div>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
       <div id="fn-by-sloc" class="stat"></div>
     </div>
@@ -90,7 +90,7 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="span12">// **Extends** SidebarModuleView
+    <textarea id="file-source" class="col-md-12">// **Extends** SidebarModuleView
 //
 // **TODO** Determine how much sense that still makes ^^
 //
@@ -98,7 +98,7 @@
 //
 // A single inline interpretation, child of the sidebar
 // As of sprint 6, the only View that is instantiated more than once
-define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;sidebar-module-view&#039;, &#039;reg-model&#039;, &#039;dispatch&#039;, &#039;regs-helpers&#039;], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, RegsHelpers) {
+define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;sidebar-module-view&#039;, &#039;reg-model&#039;, &#039;dispatch&#039;, &#039;regs-helpers&#039;, &#039;./regs-router&#039;], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, Helpers, Router) {
     &#039;use strict&#039;;
 
     // **Constructor**
@@ -111,22 +111,36 @@ define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;,
     var DefinitionView = SidebarModuleView.extend({
         className: &#039;open-definition&#039;,
         events: {
-            &#039;click .close-button&#039;: &#039;close&#039;
+            &#039;click .close-button.tab-activated&#039;: &#039;close&#039;,
+            &#039;click .close-button&#039;: &#039;headerButtonClose&#039;,
+            &#039;click .definition&#039;: &#039;sendDefinitionLinkEvent&#039;,
+            &#039;click .continue-link&#039;: &#039;sendContinueLinkEvent&#039;
         },
 
         formatInterpretations: function() {
             var interpretation = this.$el.find(&#039;.inline-interpretation&#039;),
-                interpretationId;
+                interpretationId,
+                baseInterpId,
+                url, prefix;
 
             if (typeof interpretation[0] !== &#039;undefined&#039;) {
-                interpretationId = $(&#039;#&#039; + this.model.id).data(&#039;interpId&#039;);
+                interpretationId = $(interpretation[0]).data(&#039;interp-id&#039;);
+                baseInterpId = Helpers.findBaseSection(interpretationId);
                 interpretation.remove();
+                prefix = Dispatch.getURLPrefix();
 
-                this.$el.append(
-                    RegsHelpers.fastLink(
-                        &#039;#&#039; + interpretationId, 
-                        &#039;Related commentary&#039;, 
-                        &#039;continue-link internal interp&#039;
+                url = &#039;/&#039; + baseInterpId + &#039;/&#039; + Dispatch.getVersion() + &#039;#&#039; + interpretationId;
+
+                if (prefix) {
+                    url = &#039;/&#039; + prefix + url;
+                }
+
+                this.$el.children(&#039;.definition-text&#039;).append(
+                    Helpers.fastLink(
+                        url,
+                        &#039;Official Interpretation&#039;,
+                        &#039;continue-link internal interp&#039;,
+                        [&#039;data-linked-section&#039;, baseInterpId]
                     )
                 );
             }
@@ -145,13 +159,83 @@ define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;,
             }
         },
 
+        definitionRouter: function(href, paragraph, actionText) {
+            var prefix = Dispatch.getURLPrefix(),
+                hrefParts = _.compact(href.split(&#039;/&#039;));
+            Dispatch.trigger(&#039;ga-event:definition&#039;, {
+                action: actionText,
+                context: &#039;#&#039; + paragraph
+            });
+
+            // links need prefix inserted for non-pushState browsers
+            // but we don&#039;t want to route with the prefix
+            if (prefix &amp;&amp; hrefParts[0] === prefix) {
+                href = hrefParts.slice(1).join(&#039;/&#039;);
+            }
+
+            Router.navigate(href, {&#039;trigger&#039;: true});
+        },
+
+        sendContinueLinkEvent: function(e) {
+            if (window.history &amp;&amp; window.history.pushState) {
+                e.preventDefault();
+                var $link = $(e.target),
+                    href = $link.attr(&#039;href&#039;),
+                    p = $link.data(&#039;linked-section&#039;);
+
+                this.definitionRouter(href, p, &#039;clicked continue link&#039;);
+            }
+        },
+
+        sendDefinitionLinkEvent: function(e) {
+            if (window.history &amp;&amp; window.history.pushState) {
+                e.preventDefault();
+                var $link = $(e.target),
+                    href = $link.attr(&#039;href&#039;),
+                    p = Helpers.findBaseSection($link.data(&#039;definition&#039;));
+
+                this.definitionRouter(href, p, &#039;clicked term inside definition&#039;);
+            }
+        },
+
         render: function() {
+            var defHTML = RegModel.get(this.model.id);
+
+            if (typeof defHTML.done !== &#039;undefined&#039;) {
+                defHTML.done(function(res) {
+                    this.template(res);
+                }.bind(this));
+            }
+            else {
+                this.template(defHTML);
+            }
+
+            return this;
+        },
+
+        template: function(res) {
+            var $defText, parentId, url, prefix;
+            this.$el.html(&#039;&lt;div class=&quot;definition-text&quot;&gt;&#039; + res + &#039;&lt;/div&gt;&#039;);
+
+            $defText = this.$el.find(&#039;.definition-text&#039;);
+            parentId = Helpers.findBaseSection(this.model.id);
+            this.$el.prepend(&#039;&lt;div class=&quot;sidebar-header group&quot;&gt;&lt;h4&gt;Defined Term&lt;a class=&quot;right close-button&quot; href=&quot;#&quot;&gt;Close definition&lt;/a&gt;&lt;/h4&gt;&lt;/div&gt;&#039;);
+
+            prefix = Dispatch.getURLPrefix();
+
+            url = &#039;/&#039; + parentId + &#039;/&#039; + Dispatch.getVersion() + &#039;#&#039; + this.model.id;
+
+            if (prefix) {
+                url = &#039;/&#039; + prefix + url;
+            }
+
             // link to definition in content body
-            this.$el.append(
-                RegsHelpers.fastLink(
-                    &#039;#&#039; + this.model.id, 
-                    RegsHelpers.idToRef(this.model.id),
-                    &#039;continue-link internal&#039;
+            $defText.append(
+                Helpers.fastLink(
+                    url, 
+                    Helpers.idToRef(this.model.id),
+                    &#039;continue-link internal&#039;,
+                    [&#039;data-linked-section&#039;, parentId]
                 )
             );
 
@@ -160,28 +244,44 @@ define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;,
             this.removeHeadings();
 
             // make definition tabbable
-            this.$el.attr(&#039;tabindex&#039;, &#039;0&#039;)
+            this.$el.attr(&#039;tabindex&#039;, &#039;0&#039;);
                 // make tab-activeated close button at bottom of definition content
-                .append(&#039;&lt;a class=&quot;close-button&quot; href=&quot;#&quot;&gt;Close definition&lt;/a&gt;&#039;);
+            $defText.append(&#039;&lt;a class=&quot;close-button tab-activated&quot; href=&quot;#&quot;&gt;Close definition&lt;/a&gt;&#039;);
 
             // **Event trigger** triggers definition open event
             Dispatch.trigger(&#039;definition:render&#039;, this.$el);
 
             // set focus to the open definition
             this.$el.focus();
+
             return this;
         },
 
         close: function(e) {
             e.preventDefault();
             Dispatch.remove(&#039;definition&#039;);
+            Dispatch.trigger(&#039;ga-event:definition&#039;, {
+                action: &#039;closed definition by tab-revealed link&#039;,
+                context: this.model.id
+            });
+            Dispatch.trigger(&#039;definition:remove&#039;, this.model.id);
+        },
+
+        headerButtonClose: function(e) {
+            e.preventDefault();
+            Dispatch.remove(&#039;definition&#039;);
+            Dispatch.trigger(&#039;ga-event:definition&#039;, &#039;close by header button&#039;);
+            Dispatch.trigger(&#039;definition:remove&#039;, this.model.id);
         },
 
         remove: function() {
             this.stopListening();
             this.$el.remove();
             // **Event trigger** notifies app that definition is removed
-            Dispatch.trigger(&#039;definition:remove&#039;, this.model.id);
+            Dispatch.trigger(&#039;sidebarModule:remove&#039;, this.model.id);
+
+            // return focus to the definition link once the definition is removed
+            $(&#039;.definition.active&#039;).focus();
 
             return this;
         }

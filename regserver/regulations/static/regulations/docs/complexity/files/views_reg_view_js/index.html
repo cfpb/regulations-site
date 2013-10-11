@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>views/reg-view.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
+      <p class="stat">66.20</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
+      <p class="stat">223</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
+      <p class="stat">37.64</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
+      <p class="stat">1.99</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">// **Extends** Backbone.View
+//
+// **Jurisdiction** .main-content
+//
+// **Usage** ```require([&#039;reg-view&#039;], function(RegView) {})```
+define(&#039;reg-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;jquery-scrollstop&#039;, &#039;dispatch&#039;, &#039;definition-view&#039;, &#039;reg-model&#039;, &#039;section-footer-view&#039;, &#039;regs-router&#039;], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, RegModel, SectionFooterView, Router) {
+    &#039;use strict&#039;;
+
+    var RegView = Backbone.View.extend({
+        el: &#039;#content-wrapper&#039;,
+
+        events: {
+            &#039;click .definition&#039;: &#039;termLinkHandler&#039;,
+            &#039;click .inline-interp-header&#039;: &#039;expandInterp&#039;,
+            &#039;click .definition.active&#039;: &#039;openDefinitionLinkHandler&#039;,
+            &#039;click .inline-interpretation .section-link&#039;: &#039;openInterp&#039;
+        },
+
+        initialize: function() {
+            // **Event Listeners**
+            //
+            // * when a definition is removed, update term links
+            Dispatch.on(&#039;definition:remove&#039;, this.closeDefinition, this);
+
+            Dispatch.on(&#039;breakaway:open&#039;, this.hideContent, this);
+            Dispatch.on(&#039;breakaway:close&#039;, this.showContent, this);
+
+            Dispatch.set(&#039;section&#039;, this.options.id);
+
+            // * when a scroll event completes, check what the active secion is
+            $(window).on(&#039;scrollstop&#039;, (_.bind(this.checkActiveSection, this)));
+
+            // set active section vars
+            // @TODO: how do activeSection and Dispatch.get(&#039;section&#039;) live together?
+            this.activeSection = this.options.id || &#039;&#039;;
+            this.$activeSection = &#039;&#039;;
+            this.$sections = {};
+
+            this.updateWayfinding();
+
+            if (window.history &amp;&amp; window.history.pushState) {
+                var url = this.options.id + &#039;/&#039; + Dispatch.getVersion(),
+                    hashPosition = (typeof Backbone.history.fragment === &#039;undefined&#039;) ? -1 : Backbone.history.fragment.indexOf(&#039;#&#039;);
+                //  Be sure not to lose any hash info
+                if (hashPosition !== -1) {
+                    url = url + Backbone.history.fragment.substr(hashPosition);
+                }
+                Router.navigate(url);
+            }
+
+            Dispatch.set(&#039;sectionNav&#039;, new SectionFooterView({el: this.$el.find(&#039;.section-nav&#039;)}));
+
+            Dispatch.trigger(&#039;regSection:open:after&#039;, this.options.id);
+
+        },
+
+        // naive way to update the active table of contents link and wayfinding header
+        // once a scroll event ends, we loop through each content section DOM node
+        // the first one whose offset is greater than the window scroll position, accounting
+        // for the fixed position header, is deemed the active section
+        checkActiveSection: function() {
+            var len = this.$contentContainer.length - 1;
+
+            for (var i = 0; i &lt;= len; i++) {
+                if (this.$sections[i].offset().top + this.$contentHeader.height() &gt;= $(window).scrollTop()) {
+                    if (_.isEmpty(this.activeSection) || (this.activeSection !== this.$sections[i].id)) {
+                        this.activeSection = this.$sections[i][0].id;
+                        this.$activeSection = this.$sections[i][0];
+                        // **Event** trigger active section change
+                        Dispatch.trigger(&#039;activeSection:change&#039;, this.activeSection);
+                        return;
+                    }
+                }
+            }
+                 
+            return this;
+        },
+
+        updateWayfinding: function() {
+            var i, len;
+
+            // cache all sections in the DOM eligible to be the active section
+            // also cache some jQobjs that we will refer to frequently
+            this.$contentHeader = this.$contentHeader || $(&#039;header.reg-header&#039;);
+
+            // sections that are eligible for being the active section
+            this.$contentContainer = this.$el.find(&#039;.level-1 li[id], .reg-section, .appendix-section, .supplement-section&#039;);
+
+            // cache jQobjs of each reg section
+            len = this.$contentContainer.length;
+            for (i = 0; i &lt; len; i++) {
+                this.$sections[i] = $(this.$contentContainer[i]);
+            }
+        },
+
+        // only concerned with resetting DOM, no matter
+        // what way the definition was closed
+        closeDefinition: function() {
+            this.clearActiveTerms();
+        },
+
+        // only concerned with sending GA event if the definition
+        // is closed via active term link
+        openDefinitionLinkHandler: function(e) {
+            Dispatch.trigger(&#039;ga-event:definition&#039;, {
+                action: &#039;clicked key term to close definition&#039;,
+                context: $(e.target).data(&#039;definition&#039;)
+            });
+        },
+
+        toggleDefinition: function($link) {
+            this.setActiveTerm($link); 
+
+            return this;
+        },
+
+        // content section key term link click handler
+        termLinkHandler: function(e) {
+            e.preventDefault();
+
+            var $link = $(e.target),
+                defId = $link.attr(&#039;data-definition&#039;);
+
+            // if this link is already active, toggle def shut
+            if ($link.data(&#039;active&#039;)) {
+                Dispatch.remove(&#039;definition&#039;);
+                this.clearActiveTerms();
+            }
+            else {
+                // if its the same definition, diff term link
+                if (Dispatch.getViewId(&#039;definition&#039;) === defId) {
+                    this.toggleDefinition($link);
+                }
+                else {
+                    // close old definition, if there is one
+                    Dispatch.remove(&#039;definition&#039;);
+                    // open new definition
+                    this.openDefinition(defId, $link);
+                }
+            }
+
+            return this;
+        },
+
+        openDefinition: function(defId, $link) {
+            var definition = new DefinitionView({
+                id: defId,
+                $anchor: $link
+            });
+
+            Dispatch.set(&#039;definition&#039;, definition);
+            Dispatch.trigger(&#039;definition:open&#039;);
+            Dispatch.trigger(&#039;ga-event:definition&#039;, {
+                action: &#039;clicked key term to open definition&#039;,
+                context: defId
+            });
+            this.setActiveTerm($link);
+
+            return definition;
+        },
+
+        // handler for when inline interpretation is clicked
+        expandInterp: function(e) {
+            // user can click anywhere in the header of a closed interp
+            // for an open interp, they can click &quot;hide&quot; button or header
+            e.stopPropagation();
+            e.preventDefault();
+            var header = $(e.currentTarget),
+                section = header.parent(),
+                button = header.find(&#039;.expand-button&#039;),
+                buttonText = header.find(&#039;.expand-text&#039;);
+
+            section.toggleClass(&#039;open&#039;);
+            header.next(&#039;.hidden&#039;).slideToggle();
+            button.toggleClass(&#039;open&#039;);
+            buttonText.html(section.hasClass(&#039;open&#039;) ? &#039;Hide&#039; : &#039;Show&#039;);
+
+            return this;
+        },
+
+        changeFocus: function(id) {
+            $(id).focus();
+        },
+
+        // Sets DOM back to neutral state
+        clearActiveTerms: function() {
+            this.$el.find(&#039;.active.definition&#039;)
+                .removeClass(&#039;active&#039;)
+                .removeData(&#039;active&#039;);
+        },
+
+        setActiveTerm: function($link) {
+            this.clearActiveTerms();
+            $link.addClass(&#039;active&#039;).data(&#039;active&#039;, 1);
+        },
+
+        openInterp: function(e) {
+            if (window.history &amp;&amp; window.history.pushState) {
+                e.preventDefault();
+
+                var sectionId = $(e.currentTarget).data(&#039;linked-section&#039;),
+                    subSectionId = $(e.currentTarget).data(&#039;linked-subsection&#039;);
+                
+                Router.navigate(sectionId + &#039;/&#039; + Dispatch.getVersion() + &#039;#&#039; + subSectionId, {trigger: true});
+            }
+        },
+
+        remove: function() {
+            Dispatch.get(&#039;sectionNav&#039;).remove();
+            Dispatch.remove(&#039;sectionNav&#039;);
+            this.$el.remove();
+            this.stopListening();
+            return this;
+        },
+
+        // when breakaway view loads
+        hideContent: function() {
+            this.$el.fadeOut(1000);
+        },
+
+        // when breakaway view unloads
+        showContent: function() {
+            this.$el.fadeIn();
+        }
+    });
+
+    return RegView;
+});</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

@@ -13,7 +13,7 @@
   <![endif]-->
 
   <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
-  <link href="../../assets/css/vendor/bootstrap-3.0.0-wip.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
   <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
   <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
   <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
@@ -26,8 +26,8 @@
 
 <div class="navbar navbar-fixed-top">
   <div class="container">
-    <a class="brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
-    <ul class="nav">
+    <a class="navbar-brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
       <li>
         <a href="../../index.html">Report Home</a>
       </li>
@@ -43,31 +43,31 @@
 
 <div class="container aggregate-stats">
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">64.83</p>
+      <p class="stat">62.36</p>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">92</p>
+      <p class="stat">165</p>
     </div>
   </div>
   <div class="row historical">
-    <div class="span6">
+    <div class="col-md-6">
       <p id="chart_historical_maint" class="chart"></p>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <p id="chart_historical_sloc" class="chart"></p>
     </div>
   </div>
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">28.20</p>
+      <p class="stat">36.74</p>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.51</p>
+      <p class="stat">1.16</p>
     </div>
   </div>
 </div>
@@ -77,11 +77,11 @@
     <h2 class="header">Function weight</h2>
   </div>
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
       <div id="fn-by-complexity" class="stat"></div>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
       <div id="fn-by-sloc" class="stat"></div>
     </div>
@@ -90,7 +90,7 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="span12">// **Usage**
+    <textarea id="file-source" class="col-md-12">// **Usage**
 // require([&#039;regs-helpers&#039;], function(RegsHelpers) {});
 //
 // Defines some globally useful helper functions
@@ -114,7 +114,7 @@ define(&#039;regs-helpers&#039;, function() {
         //
         // verbose, but much faster than the concise jquery alternatives
         // http://jsperf.com/create-dom-element/8
-        fastLink: function(href, text, classStr) {
+        fastLink: function(href, text, classStr, dataConfig) {
             var link = document.createElement(&#039;a&#039;),
                 $link;
 
@@ -123,7 +123,27 @@ define(&#039;regs-helpers&#039;, function() {
             link.innerHTML = text;
             link.className = classStr || &#039;&#039;;
 
+            // takes an array to add a data attr
+            if (typeof dataConfig !== &#039;undefined&#039;) {
+                link[dataConfig[0]] = dataConfig[1];
+            }
+
             return $link;
+        },
+
+        // **Params**
+        // ```interpParts```: Array of Strings or Numbers, entity that is 
+        // interpreted
+        //
+        // **Returns** human-readable representation of the reg section
+        interpId: function(interpParts) {
+            if (interpParts.length === 1) {
+                return &#039;Supplement I to Part &#039; + interpParts[0];
+            } else if (isNaN(interpParts[1])) {
+                return &#039;Supplement I to Appendix &#039; + interpParts[1];
+            } else {
+                return &#039;Supplement I to §&#039; + interpParts[0] + &#039;.&#039; + interpParts[1];
+            }
         },
 
         // **Params**
@@ -131,13 +151,8 @@ define(&#039;regs-helpers&#039;, function() {
         // ```p1```: String or Number, reg ID
         //
         // **Returns** human-readable representation of the reg section
-        nonNumericId: function(p0, p1) {
-            if (isNaN(parseInt(p0, 10))) {
-                return &#039;Supplement &#039; + p0 + &#039; to Part &#039; + p1;
-            }
-            else if (isNaN(parseInt(p1, 10))) {
-                return &#039;Appendix &#039; + p1 + &#039; to Part &#039; + p0;
-            }
+        appendixId: function(part, letter) {
+            return &#039;Appendix &#039; + letter  + &#039; to Part &#039; + part;
         },
 
         // **Param** dash-delimited string representation of reg entity ID
@@ -145,7 +160,7 @@ define(&#039;regs-helpers&#039;, function() {
         // **Returns** Reg entity marker formatted for human readability
         idToRef: function(id) {
             var ref = &#039;&#039;, 
-                parts, i, len, dividers, item;
+                parts, i, len, dividers, item, interpIndex;
             parts = id.split(&#039;-&#039;);
             len = parts.length - 1;
             dividers = [&#039;§ .&#039;, &#039;&#039;, &#039;( )&#039;, &#039;( )&#039;, &#039;( )&#039;, &#039;( )&#039;];
@@ -156,10 +171,14 @@ define(&#039;regs-helpers&#039;, function() {
                 return ref;
             }
 
-            /* if we have an appendix or supplement */
-            if (isNaN(parseInt(parts[0], 10)) || 
-                isNaN(parseInt(parts[1], 10))) {
-                return this.nonNumericId(parts[0], parts[1]);
+            /* if we have a supplement */
+            interpIndex = $.inArray(&#039;Interp&#039;, parts);
+            if (interpIndex &gt;= 0) {
+                return this.interpId(parts.slice(0, interpIndex));
+            }
+            /* if we have an appendix */
+            if (isNaN(parseInt(parts[1], 10))) {
+                return this.appendixId(parts[0], parts[1]);
             }
 
             /* we have a paragraph */
@@ -180,9 +199,63 @@ define(&#039;regs-helpers&#039;, function() {
         //
         // **TODO** RegModel.getParent is the same?
         findBaseSection: function(id) {
-            var parts = id.split(&#039;-&#039;);
+            var parts, base;
 
-            return parts[0] + &#039;-&#039; + parts[1];
+            if (id.indexOf(&#039;-&#039;) !== -1) {
+                parts = id.split(&#039;-&#039;);
+                base = parts[0];
+
+                if (id.indexOf(&#039;Interp&#039;) !== -1) {
+                    base += &#039;-Interp&#039;;
+                }
+                else {
+                    base += &#039;-&#039; + parts[1];
+                }
+
+                return base;
+            }
+            else {
+                return id;
+            }
+        },
+
+        findStartingContent: function() {
+            var sessionState = sessionStorage.getItem(&#039;drawerDefault&#039;);
+
+            if (sessionState) {
+                sessionStorage.removeItem(&#039;drawerDefault&#039;);
+                return sessionState;
+            }
+            else {
+                return false;
+            }
+        },
+
+        // thanks, James Padolsey http://james.padolsey.com/javascript/parsing-urls-with-the-dom/
+        parseURL: function(url) {
+            var a =  document.createElement(&#039;a&#039;);
+            a.href = url;
+            return {
+                source: url,
+                protocol: a.protocol.replace(&#039;:&#039;,&#039;&#039;),
+                host: a.hostname,
+                port: a.port,
+                query: a.search,
+                params: (function(){
+                    var ret = {},
+                        seg = a.search.replace(/^\?/,&#039;&#039;).split(&#039;&amp;&#039;),
+                        len = seg.length, i = 0, s;
+                    for (;i&lt;len;i++) {
+                        if (!seg[i]) { continue; }
+                        s = seg[i].split(&#039;=&#039;);
+                        ret[s[0]] = s[1];
+                    }
+                    return ret;
+                })(),
+                hash: a.hash.replace(&#039;#&#039;,&#039;&#039;),
+                path: a.pathname.replace(/^([^\/])/,&#039;/$1&#039;),
+                segments: a.pathname.replace(/^\//,&#039;&#039;).split(&#039;/&#039;)
+            };
         }
     };
 });</textarea>
