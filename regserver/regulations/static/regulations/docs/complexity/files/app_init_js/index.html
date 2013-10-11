@@ -13,7 +13,7 @@
   <![endif]-->
 
   <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
-  <link href="../../assets/css/vendor/bootstrap-3.0.0-wip.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
   <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
   <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
   <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
@@ -26,8 +26,8 @@
 
 <div class="navbar navbar-fixed-top">
   <div class="container">
-    <a class="brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
-    <ul class="nav">
+    <a class="navbar-brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
       <li>
         <a href="../../index.html">Report Home</a>
       </li>
@@ -43,31 +43,31 @@
 
 <div class="container aggregate-stats">
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">73.89</p>
+      <p class="stat">63.33</p>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">79</p>
+      <p class="stat">96</p>
     </div>
   </div>
   <div class="row historical">
-    <div class="span6">
+    <div class="col-md-6">
       <p id="chart_historical_maint" class="chart"></p>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <p id="chart_historical_sloc" class="chart"></p>
     </div>
   </div>
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">14.52</p>
+      <p class="stat">16.37</p>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.65</p>
+      <p class="stat">0.83</p>
     </div>
   </div>
 </div>
@@ -77,11 +77,11 @@
     <h2 class="header">Function weight</h2>
   </div>
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
       <div id="fn-by-complexity" class="stat"></div>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
       <div id="fn-by-sloc" class="stat"></div>
     </div>
@@ -90,12 +90,12 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="span12">// Module called on app load, once doc.ready
+    <textarea id="file-source" class="col-md-12">// Module called on app load, once doc.ready
 //
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require([&#039;app-init&#039;], function(app) { $(document).ready(function() { app.init(); }) })
-define([&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;reg-view&#039;, &#039;reg-model&#039;, &#039;definition-view&#039;, &#039;sub-head-view&#039;, &#039;toc-view&#039;, &#039;dispatch&#039;, &#039;sidebar-view&#039;, &#039;konami&#039;], function($, _, Backbone, RegView, RegModel, DefinitionView, SubHeadView, TOCView, Dispatch, SidebarView, Konami) {
+define([&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;main-view&#039;, &#039;reg-model&#039;, &#039;definition-view&#039;, &#039;sub-head-view&#039;, &#039;drawer-view&#039;, &#039;dispatch&#039;, &#039;sidebar-view&#039;, &#039;konami&#039;, &#039;header-view&#039;, &#039;analytics-handler&#039;, &#039;regs-helpers&#039;, &#039;./regs-router&#039;, &#039;./reg-view&#039;, &#039;search-results-view&#039;], function($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, Dispatch, SidebarView, Konami, HeaderView, AnalyticsHandler, Helpers, Router, RegView, SearchResultsView) {
     &#039;use strict&#039;;
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -122,15 +122,6 @@ define([&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;
 
         // Purgatory for DOM event bindings that should happen in a View
         bindEvents: function() {
-            // TOC class toggle
-            // **TODO:** Move this into the appropriate view
-            var $activeEls = $(&#039;#menu, #menu-link&#039;),
-            $tocToggle = $(&#039;.toc-toggle&#039;);
-
-            $tocToggle.on(&#039;click&#039;, function() {
-                $activeEls.toggleClass(&#039;active&#039;);
-                return false;
-            });
 
             /* ssshhhhh */
             new Konami(function() {
@@ -138,39 +129,65 @@ define([&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;
                 /* http://thenounproject.com/noun/carrot/#icon-No7790 */
                 document.getElementById(&#039;menu-link&#039;).className += &#039; hamburgerify&#039;;
                 $(&#039;.inline-interpretation .expand-button&#039;).addClass(&#039;carrotify&#039;);
-                $(&#039;#about-tool&#039;).html(&#039;Made with &lt;span style=&quot;color: red&quot;&gt;&lt;3&lt;/span&gt; by:&#039;);
-                $(&#039;#about-reg&#039;).html(&#039;Find our brilliant attorneys at:&#039;);
-            });
-        },
-
-        // as of sprint 6, model form images are giant and block at load
-        // incrementally loads in images once rendering is complete
-        fetchModelForms: function() {
-            var insertImg = function(tag) {
-                var $tag = $(tag),
-                    url = $tag.data(&#039;imgUrl&#039;),
-                    alt = $tag.data(&#039;imgAlt&#039;);
-
-                if (url) {
-                    $tag.parent().append(&#039;&lt;img class=&quot;reg-image&quot; src=&quot;&#039; + url + &#039;&quot; alt=&quot;&#039; + alt + &#039;&quot; /&gt;&#039;);
-                }
-            };
-
-            $(&#039;noscript&#039;).each(function() {
-                var tag = this;
-                setTimeout(function() { insertImg(tag); }, 2000, tag);
             });
         },
 
         init: function() {
-            this.getTree($(&#039;#reg-content&#039;)); 
+            var openSection,
+                regId = $(&#039;#menu&#039;).data(&#039;reg-id&#039;),
+                regSection = $(&#039;section[data-base-version]&#039;),
+                regVersion = regSection.data(&#039;base-version&#039;),
+                drawerState = Helpers.findStartingContent();
+
+            Dispatch.set(&#039;reg&#039;, regId);
+
+            if (drawerState) {
+                Dispatch.set(&#039;drawerState&#039;, drawerState);
+            }
+
+            if (window.location.pathname.indexOf(&#039;search&#039;) &gt; 0) {
+                var urlobj = Helpers.parseURL(window.location.href),
+                    params = urlobj.params;
+
+                Dispatch.setContentView(
+                    new SearchResultsView({
+                        query: params.q,
+                        version: params.version
+                    })
+                );
+            }
+            else if (typeof regSection !== &#039;undefined&#039;) {
+                openSection = regSection.attr(&#039;id&#039;);
+
+                // cache open section content
+                // version data attribute should really be on the el
+                // that encapsulates all main/reg view
+                RegModel.set(openSection, $(&#039;#content-body&#039;).html());
+
+                Dispatch.setContentView(new RegView({id: openSection}));
+            }
+
+            if (typeof regVersion !== &#039;undefined&#039;) {
+                Dispatch.set(&#039;version&#039;, regVersion);
+            }
+
+            // cache URL prefix
+            if (window.APP_PREFIX) {
+                Dispatch.set(&#039;urlprefix&#039;, window.APP_PREFIX.substring(1));
+            }
 
             // init primary Views that require only a single instance
-            window.toc = new TOCView({el: &#039;#menu&#039;});
-            window.sidebar = new SidebarView({el: &#039;#sidebar&#039;});
-            window.regContent = new RegView({el: &#039;.main-content&#039;});
+            window.Regs = {};
+            window.Regs.subhead = new SubHeadView();
+            window.Regs.drawer = new DrawerView();
+            window.Regs.sidebar = new SidebarView();
+            window.Regs.mainView = new MainView();
+            window.Regs.analytics = new AnalyticsHandler();
+            window.Regs.mainHeader = new HeaderView();
+
+            Router.start();
+
             this.bindEvents();
-            this.fetchModelForms();
         }
     };
 });</textarea>
