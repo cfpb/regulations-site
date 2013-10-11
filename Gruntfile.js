@@ -112,6 +112,11 @@ module.exports = function(grunt) {
 
     casperjs: {
         files: ['<%= env.frontEndPath %>/js/tests/functional/*.js'],
+        options: {
+            custom: {
+                url: '<%= env.testUrl %>/1005'
+            }
+        }
     },
 
     requirejs: {

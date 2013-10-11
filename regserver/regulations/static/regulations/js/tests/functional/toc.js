@@ -3,8 +3,7 @@ var casper = require('casper').create(),
 
 casper.start();
 
-//TODO: env var?
-casper.thenOpen('http://localhost:8000/1005', function() {
+casper.thenOpen(casper.cli.get('url'), function() {
 });
 
 casper.waitForSelector('.reg-header.active', function() {
