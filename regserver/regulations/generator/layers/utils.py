@@ -1,6 +1,13 @@
 from datetime import datetime
-from django.template import Context
 import re
+
+from django.template import Context
+from django.core import cache
+from django.core.urlresolvers import reverse, NoReverseMatch
+from django.template import Context
+
+from regulations.generator.node_types import to_markup_id
+
 
 def convert_to_python(data):
     """Convert raw data (e.g. from json conversion) into the appropriate
@@ -21,6 +28,36 @@ def convert_to_python(data):
     
     return data
 
+
 def render_template(template, context):
     c = Context(context)
     return template.render(c).strip('\n')
+
+
+class RegUrl(object):
+    def __init__(self):
+        self.cache = {}
+
+    @staticmethod
+    def of(citation, version, sectional):
+        url = ''
+
+        if 'Interp' in citation:
+            section = citation[0] + '-Interp'
+        else:
+            section = '-'.join(citation[:2])
+
+        if sectional:
+            try:
+                url = reverse('chrome_section_view', args=(section, version))
+            except NoReverseMatch:
+                #XXX We have some errors in our layers. Once those are fixed, we
+                #need to revisit this.
+                pass
+        return url + '#' + '-'.join(to_markup_id(citation))
+
+    def fetch(self, citation, version, sectional):
+        key = (tuple(citation), version, sectional)
+        if key not in self.cache:
+            self.cache[key] = RegUrl.of(citation, version, sectional)
+        return self.cache[key]

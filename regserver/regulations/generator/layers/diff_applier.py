@@ -1,7 +1,6 @@
 import types
 import copy
 from collections import deque
-from itertools import takewhile
 
 from regulations.generator.layers import tree_builder
 
@@ -110,33 +109,35 @@ class DiffApplier(object):
 
         self.add_nodes_to_tree(original_tree, adds)
 
-    def apply_diff(self, original, label):
+    def apply_diff_changes(self, original, diff_list):
+        self.deconstruct_text(original)
+        for d in diff_list:
+            if d[0] == self.INSERT:
+                _, pos, new_text = d
+                self.insert_text(pos, new_text)
+            if d[0] == self.DELETE:
+                _, s, e = d
+                self.delete_text(s, e)
+            if isinstance(d[0], types.ListType):
+                if d[0][0] == self.DELETE and d[1][0] == self.INSERT:
+                    # Text replace scenario.
+                    _, s, e = d[0]
+                    self.delete_text(s, e)
+
+                    _, _, new_text = d[1]
+
+                    # Place the new text at the end of the delete for
+                    # readability.
+                    self.insert_text(e, new_text)
+        return self.get_text()
+
+    def apply_diff(self, original, label, component='text'):
         if label in self.diff:
             if self.diff[label]['op'] == self.DELETED_OP:
                 return self.delete_all(original)
             if self.diff[label]['op'] == self.ADDED_OP:
                 return self.add_all(original)
-            if 'text' in self.diff[label]:
-                text_diffs = self.diff[label]['text']
-                self.deconstruct_text(original)
-
-                for d in text_diffs:
-                    if d[0] == self.INSERT:
-                        _, pos, new_text = d
-                        self.insert_text(pos, new_text)
-                    if d[0] == self.DELETE:
-                        _, s, e = d
-                        self.delete_text(s, e)
-                    if isinstance(d[0], types.ListType):
-                        if d[0][0] == self.DELETE and d[1][0] == self.INSERT:
-                            # Text replace scenario.
-                            _, s, e = d[0]
-                            self.delete_text(s, e)
-
-                            _, _, new_text = d[1]
-
-                            # Place the new text at the end of the delete for
-                            # readability.
-                            self.insert_text(e, new_text)
-                return self.get_text()
+            if component in self.diff[label]:
+                text_diffs = self.diff[label][component]
+                return self.apply_diff_changes(original, text_diffs)
         return original

@@ -1,4 +1,3 @@
-import re
 from lxml import html
 from Queue import PriorityQueue
 from HTMLParser import HTMLParser
@@ -126,7 +125,8 @@ class InlineLayersApplier(LayersBase):
         layer_elements = []
 
         for o, r, offset in layer_pairs:
-            offset_locations = [(m.start(), m.end()) for m in re.finditer(re.escape(o), original_text)] 
+            offset_locations = LocationReplace.find_all_offsets(o,
+                                                                original_text)
             locations = [offset_locations.index(offset)]
             layer_elements.append((o, r, locations))
         return layer_elements 
