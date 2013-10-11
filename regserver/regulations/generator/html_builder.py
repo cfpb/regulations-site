@@ -62,17 +62,19 @@ class HTMLBuilder():
         else:
             return (None, None)
 
-    def process_node(self, node):
+    def process_node_title(self, node):
         if 'title' in node:
             node['header'] = node['title']
             node['header'] = HTMLBuilder.section_space(node['header'])
-            match = HTMLBuilder.header_regex.match(node['header'])
-            if match:
-                node['header_marker'] = match.group(1)
-                node['header_num'] = match.group(2)
-                node['header_title'] = match.group(3)
 
+            if self.diff_applier:
+                node['header'] = self.diff_applier.apply_diff(
+                    node['header'], node['label_id'], component='title')
+                        
+    def process_node(self, node):
         node['label_id'] = '-'.join(node['label'])
+        self.process_node_title(node)
+
         node['html_label'] = to_markup_id(node['label'])
         node['markup_id'] = "-".join(node['html_label'])
         node['tree_level'] = len(node['label']) - 1
