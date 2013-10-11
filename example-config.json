@@ -1,4 +1,4 @@
 {
-    "testUrl": "URL that CasperJS should use for functional tests",
+    "testUrl": "http://consumerfinance.gov/eregulations/1005",
     "frontEndPath": "regserver/regulations/static/regulations"
 }
