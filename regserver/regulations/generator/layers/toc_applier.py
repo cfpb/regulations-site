@@ -1,8 +1,7 @@
 #vim: set fileencoding=utf-8
 import re
 
-from regulations.generator.layers.internal_citation\
-    import InternalCitationLayer
+from regulations.generator.layers.utils import RegUrl
 from regulations.generator import title_parsing
 
 
@@ -20,14 +19,9 @@ class TableOfContentsLayer(object):
 
             toc_list = []
             for data in layer_elements:
-                if self.sectional:
-                    url = InternalCitationLayer.sectional_url_for(
-                        data['index'], self.version)
-                else:
-                    url = InternalCitationLayer.hash_url_for(
-                        data['index'], self.version)
                 element = {
-                    'url': url,
+                    'url': RegUrl.of(data['index'], self.version,
+                                     self.sectional),
                     'label': data['title'],
                     'index': data['index'],
                     'section_id': '-'.join(data['index'])

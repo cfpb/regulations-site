@@ -1,5 +1,4 @@
 from django.template import loader, Context
-from django.core.urlresolvers import reverse, NoReverseMatch
 
 from ..node_types import to_markup_id
 import utils
@@ -15,35 +14,17 @@ class DefinitionsLayer(object):
             loader.get_template('layers/definition_citation.html')
         self.sectional = False
         self.version = None
-
-    def create_url(self, citation):
-        """ Create the URL for a definition. """
-
-        url = ''
-        if self.sectional:
-            try:
-                url = reverse('chrome_section_view',
-                              kwargs={'label_id': '-'.join(citation[:2]),
-                                      'version': self.version})
-            except NoReverseMatch:
-                # Error in the data
-                pass
-        return url + '#' + '-'.join(to_markup_id(citation))
-
-    @staticmethod
-    def create_definition_reference(citation):
-        """ Create a reference to a definition """
-        return '-'.join(to_markup_id(citation))
+        self.rev_urls = utils.RegUrl()
 
     def create_definition_link(self, original_text, citation):
         """ Create the link that takes you to the definition of the term. """
 
         context = {
             'citation': {
-                'url': self.create_url(citation),
+                'url': self.rev_urls.fetch(citation, self.version,
+                                           self.sectional),
                 'label': original_text,
-                'definition_reference':
-                DefinitionsLayer.create_definition_reference(citation)}}
+                'definition_reference': '-'.join(to_markup_id(citation))}}
         return utils.render_template(self.citations_template, context)
 
     def create_layer_pair(self, text, offset, layer_element):
