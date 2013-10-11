@@ -70,7 +70,7 @@ class HTMLBuilder():
             if self.diff_applier:
                 node['header'] = self.diff_applier.apply_diff(
                     node['header'], node['label_id'], component='title')
-                        
+
     def process_node(self, node):
         node['label_id'] = '-'.join(node['label'])
         self.process_node_title(node)

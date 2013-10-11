@@ -1,7 +1,6 @@
 import types
 import copy
 from collections import deque
-from itertools import takewhile
 
 from regulations.generator.layers import tree_builder
 

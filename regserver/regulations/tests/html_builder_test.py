@@ -155,7 +155,7 @@ class HTMLBuilderTest(TestCase):
         builder.process_node(node)
         self.assertTrue('header' in node)
         self.assertEqual('Some Title', node['header'])
-       
+
         node = {'text': '', 'children': [], 'label': ['99', '22'],
                 'title': u'§ 22.1 Title', 'node_type': REGTEXT}
         builder.process_node(node)
