@@ -28,7 +28,7 @@ class LocationReplace(object):
 
         list_offsets = LocationReplace.find_all_offsets(original, text)
         self.offset_counters = range(self.offset_starter, self.offset_starter + len(list_offsets))
-        self.offsets = dict(list(zip(self.offset_counters, list_offsets)))
+        self.offsets = dict(zip(self.offset_counters, list_offsets))
 
     def update_offset_starter(self):
         """ As we're navigating the XML node, we need to keep track of how many offsets we've 
@@ -43,24 +43,28 @@ class LocationReplace(object):
         self.counter += 1
         return LocationReplace.replace_at_offset(offset, replacement, text)
 
+    def location_replace_text(self, text, original, replacement, locations):
+        """Given plain text, do replacements"""
+        self.update_offsets(original, text)
+
+        while (self.counter < len(locations)
+               and locations[self.counter] in self.offsets):
+            text = self.apply_layer_to_text(original, replacement, text,
+                                            locations)
+
+        self.update_offset_starter()
+        return text
+
     def location_replace(self, xml_node, original, replacement, locations):
         """ For the xml_node, replace the locations instances of orginal with replacement."""
 
         if xml_node.text:
-            self.update_offsets(original, xml_node.text)
-
-            while self.counter < len(locations) and locations[self.counter] in self.offsets:
-                xml_node.text = self.apply_layer_to_text(original, replacement, xml_node.text, locations)
-
-            self.update_offset_starter()
+            xml_node.text = self.location_replace_text(xml_node.text,
+                original, replacement, locations)
 
         for c in xml_node.getchildren():
             self.location_replace(c, original, replacement, locations)
 
         if xml_node.tail:
-            self.update_offsets(original, xml_node.tail)
-
-            while self.counter < len(locations) and locations[self.counter] in self.offsets:
-                xml_node.tail = self.apply_layer_to_text(original, replacement, xml_node.tail, locations)
-
-            self.update_offset_starter()
+            xml_node.tail = self.location_replace_text(xml_node.tail,
+                original, replacement, locations)
