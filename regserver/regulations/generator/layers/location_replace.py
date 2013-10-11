@@ -1,5 +1,3 @@
-import re
-
 class LocationReplace(object):
     """ Applies location based layers to XML nodes. We use XML so that we only take into account the original 
     text when we're doing a replacement. """

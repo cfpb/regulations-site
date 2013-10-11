@@ -1,4 +1,3 @@
-import re
 from lxml import html
 from Queue import PriorityQueue
 from HTMLParser import HTMLParser
