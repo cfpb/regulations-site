@@ -13,6 +13,7 @@ install:
    - npm -v
    - npm install grunt-cli grunt-init casper
    - npm install
+   - sudo npm install -g
    - cp example-config.json config.json
 script:
     - cd regserver
