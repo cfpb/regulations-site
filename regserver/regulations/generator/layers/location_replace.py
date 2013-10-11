@@ -11,7 +11,14 @@ class LocationReplace(object):
 
     @staticmethod
     def find_all_offsets(pattern, text):
-        return [(m.start(), m.end()) for m in re.finditer(re.escape(pattern), text)]
+        """Don't use regular expressions as they are a tad slow"""
+        matches = []
+        pattern_len = len(pattern)
+        next_match = text.find(pattern)
+        while next_match != -1:
+            matches.append((next_match, next_match + pattern_len))
+            next_match = text.find(pattern, next_match + 1)
+        return matches
 
     @staticmethod
     def replace_at_offset(offset, replacement, text):
