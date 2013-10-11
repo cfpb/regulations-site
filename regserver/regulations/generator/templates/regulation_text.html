@@ -4,12 +4,7 @@
 
 {%if c.node_type == 'regtext' %}
 <section id="{{c.markup_id}}" class="reg-section section-focus" tabindex="0" data-permalink-section data-base-version="{{version}}">
-    {% if c.header_marker %}
-    <h2 class="section-number" tabindex="0"><span class="section-marker">{{c.header_marker|safe}}</span>{{ c.header_num }}<span class="section-title"
-        >{{ c.header_title }}</span></h2>
-    {% else %}
-    <h2 class="section-title" tabindex="0"> {{c.header}} </h2>
-    {% endif %}
+    <h2 class="section-title" tabindex="0"> {{c.header|safe}} </h2>
         {% if c.marked_up %}
         <p> 
         {{c.marked_up|safe}} 

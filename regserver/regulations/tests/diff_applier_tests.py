@@ -62,9 +62,17 @@ class DiffApplierTest(TestCase):
                         'op': ''}}
         da = diff_applier.DiffApplier(diff, None)
         da.apply_diff('acbd', '204')
-
         new_text = da.get_text()
         self.assertEquals('<del>ac</del>bd<ins>AAB</ins>', new_text)
+
+    def test_apply_diff_title(self):
+        diff = {'204': {'title': [('delete', 0, 2), ('insert', 4, 'AAC')],
+                        'text':  [('delete', 0, 2), ('insert', 4, 'AAB')],
+                        'op': ''}}
+        da = diff_applier.DiffApplier(diff, None)
+        da.apply_diff('acbd', '204', component='title')
+        new_text = da.get_text()
+        self.assertEquals('<del>ac</del>bd<ins>AAC</ins>', new_text)
 
     def test_delete_all(self):
         da = diff_applier.DiffApplier({}, None)
