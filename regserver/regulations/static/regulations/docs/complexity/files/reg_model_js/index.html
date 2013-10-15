@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>reg-model.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
+      <p class="stat">65.68</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
+      <p class="stat">73</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
+      <p class="stat">19.19</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
+      <p class="stat">0.38</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">// **Extends** MetaModel
+//
+// **Usage** ```require([&#039;reg-model&#039;], function(RegModel) {})```
+//
+// Currently represents the whole of a regulation.
+// Not really in use until there&#039;s an API.
+//
+// The idea here is that Backbone Models are created with a certain type of content in mind.
+// Content that:
+//
+// * there are many instances of with the same general properties (hence Collections)
+// * that will be updated both on the server and client, frequently
+//
+// This is not the case with our content and so this module is intended as a replacement of 
+// Backbone&#039;s Model scheme
+// The Backbone Model API should be kept as much as makes sense. Existing entities should
+// be reused to aim for the effect of a native Backbone experience, but shouldn&#039;t try so hard
+// as to be confusing. Ex. the return value of Model.fetch should be the same as in core Backbone,
+// even if the internals are different
+define(&#039;reg-model&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;, &#039;./regs-helpers&#039;, &#039;./dispatch&#039;, &#039;./meta-model&#039;], function($, _, Backbone, RegsHelpers, Dispatch, MetaModel) {
+    &#039;use strict&#039;;
+
+    // represents a whole regulation
+    Backbone.RegModel = MetaModel.extend({
+        // recurses over the parsed reg tree and creates an in-browser representation
+        // of a reg. may or may not be functional based on current tree.
+        // only in use for tests right now...
+        // refactor to parse just out of the DOM
+        parse: function(jsonObj) {
+            if (typeof jsonObj === &#039;object&#039;) {
+                for (var key in jsonObj) {
+                    if (jsonObj.hasOwnProperty(key)) {
+                        if (key === &#039;label&#039;) {
+                            this.set(jsonObj[key][&#039;text&#039;], jsonObj[&#039;text&#039;]);
+                        }
+
+                        if (RegsHelpers.isIterable(jsonObj[key])) {
+                            this.parse(jsonObj[key]);
+                        }
+                    }
+                } 
+            }
+
+            return this;
+        },
+        // **Param**
+        // ```id```: string, dash-delimited reg entity id
+        //
+        // **Returns** an array of strings, dash-delimited reg entity ids of children
+        //
+        // The magic of the flexibility of the app is that we can pass around these 
+        // dash-delimited ids and get the job done pretty seamlessly w/o worrying about
+        // what exactly we&#039;re dealing with. We just rely on a set of rules.
+        getChildren: function(id) {
+            var kids = [],
+                structureLen = this.structure.length,
+                regex = new RegExp(id + &#039;[-,a-z,0-9]&#039;);
+
+            while (structureLen--) {
+                if (regex.test(this.structure[structureLen])) {
+                    kids.push(this.structure[structureLen]);
+                } 
+            }
+
+            return kids;
+        },
+
+        // **Param**
+        // ```id```: string, dash-delimited reg entity id
+        // 
+        // **Returns** string, dash-delimited reg entity id of parent to
+        // the id passed in or boolean false if the requested id has no parent
+        //
+        // The converse of ```this.getChildren```
+        getParent: function(id) {
+            var parent, z;
+            z  = id.split(&#039;-&#039;);
+            z.pop();
+            parent = z.join(&#039;-&#039;);
+
+            if (this.structure.indexOf(parent) !== -1) {
+                return this.content[parent];
+            }
+
+            return false;
+        }
+    });
+
+    var reg = new Backbone.RegModel();
+
+    return reg;
+});</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

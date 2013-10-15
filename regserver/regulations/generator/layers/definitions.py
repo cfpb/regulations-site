@@ -1,5 +1,4 @@
 from django.template import loader, Context
-from django.core.urlresolvers import reverse, NoReverseMatch
 
 from ..node_types import to_markup_id
 import utils
@@ -15,46 +14,25 @@ class DefinitionsLayer(object):
             loader.get_template('layers/definition_citation.html')
         self.sectional = False
         self.version = None
-
-    def create_url(self, citation):
-        """ Create the URL for a definition. """
-
-        url = ''
-        if self.sectional:
-            try:
-                url = reverse('chrome_section_view',
-                              kwargs={'label_id': '-'.join(citation[:2]),
-                                      'version': self.version})
-            except NoReverseMatch:
-                # Error in the data
-                pass
-        return url + '#' + '-'.join(to_markup_id(citation))
-
-    @staticmethod
-    def create_definition_reference(citation):
-        """ Create a reference to a definition """
-        return '-'.join(to_markup_id(citation))
+        self.rev_urls = utils.RegUrl()
+        self.rendered = {}
+        # precomputation 
+        for def_struct in self.layer['referenced'].values():
+            def_struct['reference_split'] = def_struct['reference'].split('-')
 
     def create_definition_link(self, original_text, citation):
         """ Create the link that takes you to the definition of the term. """
-
-        context = {
-            'citation': {
-                'url': self.create_url(citation),
-                'label': original_text,
-                'definition_reference':
-                DefinitionsLayer.create_definition_reference(citation)}}
-        return utils.render_template(self.citations_template, context)
-
-    def create_layer_pair(self, text, offset, layer_element):
-        """ Create a single layer pair. """
-        start, end = offset
-        ot = text[int(start):int(end)]
-        ref_in_layer = layer_element['ref']
-        def_struct = self.layer['referenced'][ref_in_layer]
-        definition_reference = def_struct['reference'].split('-')
-        rt = self.create_definition_link(ot, definition_reference)
-        return (ot, rt, (start, end))
+        key = (original_text, tuple(citation))
+        if key not in self.rendered:
+            context = {
+                'citation': {
+                    'url': self.rev_urls.fetch(citation, self.version,
+                                           self.sectional),
+                    'label': original_text,
+                    'definition_reference': '-'.join(to_markup_id(citation))}}
+            rendered =  utils.render_template(self.citations_template, context)
+            self.rendered[key] = rendered
+        return self.rendered[key]
 
     def defined_terms(self, text, text_index):
         """Catch all terms which are defined elsewhere and replace them with
@@ -64,10 +42,12 @@ class DefinitionsLayer(object):
             layer_elements = self.layer[text_index]
 
             for layer_element in layer_elements:
-                for offset in layer_element['offsets']:
-                    layer_pair = self.create_layer_pair(
-                        text, offset, layer_element)
-                    layer_pairs.append(layer_pair)
+                ref = layer_element['ref']
+                ref = self.layer['referenced'][ref]['reference_split']
+                for start, end in layer_element['offsets']:
+                    ot = text[start:end]
+                    rt = self.create_definition_link(ot, ref)
+                    layer_pairs.append((ot, rt, (start, end)))
         return layer_pairs
 
     def defining_terms(self, text, text_index):

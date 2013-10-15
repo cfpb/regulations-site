@@ -15,3 +15,25 @@ class LayerUtilsTest(TestCase):
                 convert_to_python(['test', '20020304', '2008-07-20']))
         self.assertEqual({'some': 3, 'then': datetime(1999,10,21)},
                 convert_to_python({'some': 3, 'then': '1999-10-21'}))
+
+    def test_regurlof(self):
+        url = RegUrl.of(['303', '1'], 'vvv', False)
+        self.assertEquals('#303-1', url)
+
+        url = RegUrl.of(['303', '1', 'b'], 'vvv', False)
+        self.assertEquals('#303-1-b', url)
+
+        url = RegUrl.of(['303'], 'vvv', False)
+        self.assertEquals('#303', url)
+
+        url = RegUrl.of(['303', '1', 'b'], 'vvv', True)
+        self.assertEquals('/303-1/vvv#303-1-b', url)
+
+        self.assertTrue('999-88/verver#999-88-e' in 
+            RegUrl.of(['999', '88', 'e'], 'verver', True))
+        self.assertTrue('999-Interp/verver#999-88-e-Interp-1' in 
+            RegUrl.of(['999', '88', 'e', 'Interp', '1'], 'verver', True))
+        self.assertTrue('999-Interp/verver#999-Interp' in 
+            RegUrl.of(['999', 'Interp'], 'verver', True))
+        self.assertEqual('#999-88-e',
+            RegUrl.of(['999', '88', 'e'], 'verver', False))

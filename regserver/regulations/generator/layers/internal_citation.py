@@ -2,6 +2,8 @@ from django.template import loader, Context
 from django.core.urlresolvers import reverse, NoReverseMatch
 from ..node_types import to_markup_id
 
+from regulations.generator.layers.utils import RegUrl
+
 
 class InternalCitationLayer():
     shorthand = 'internal'
@@ -10,38 +12,20 @@ class InternalCitationLayer():
         self.layer = layer
         self.sectional = False
         self.version = None
+        self.rev_urls = RegUrl()
+        self.rendered = {}
 
     def render_url(
         self, label, text,
             template_name='layers/internal_citation.html'):
 
-        if self.sectional:
-            url = InternalCitationLayer.sectional_url_for(label, self.version)
-        else:
-            url = InternalCitationLayer.hash_url_for(label, self.version)
-        c = Context({'citation': {'url': url, 'label': text}})
-        template = loader.get_template(template_name)
-        return template.render(c).strip('\n')
-
-    @staticmethod
-    def sectional_url_for(label, version):
-        if 'Interp' in label:
-            section_url = label[0] + '-Interp'
-        else:
-            section_url = '-'.join(to_markup_id(label[:2]))
-        try:
-            url = reverse(
-                'chrome_section_view',
-                kwargs={'label_id': section_url, 'version': version})
-        except NoReverseMatch:
-            #XXX We have some errors in our layers. Once those are fixed, we
-            #need to revisit this.
-            url = ''
-        return url + InternalCitationLayer.hash_url_for(label, version)
-
-    @staticmethod
-    def hash_url_for(label, version):
-        return '#' + '-'.join(to_markup_id(label))
+        key = (tuple(label), text, template_name)
+        if key not in self.rendered:
+            url = self.rev_urls.fetch(label, self.version, self.sectional)
+            c = Context({'citation': {'url': url, 'label': text}})
+            template = loader.get_template(template_name)
+            self.rendered[key] = template.render(c).strip('\n')
+        return self.rendered[key]
 
     def apply_layer(self, text, text_index):
         if text_index in self.layer:
