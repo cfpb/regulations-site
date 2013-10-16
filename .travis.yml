@@ -11,8 +11,8 @@ install:
    - sed -i "s/\"grunt-casperjs\":.*/\"grunt-casperjs\":\"git:\/\/github.com\/theresaanna\/grunt-casperjs.git\",/g" package.json
    - sudo apt-get update
    - sudo apt-get install nodejs phantomjs
-   - npm install -g casper
-   - npm install grunt-cli grunt-init
+   - sudo npm install -g grunt-cli grunt-init
+   - sudo npm install -g casper
    - npm install
    - cp example-config.json config.json
 script:
