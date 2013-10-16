@@ -7,14 +7,6 @@ install:
    - pip install -r requirements.txt --use-mirrors
    - pip install -r requirements-test.txt --use-mirrors
    - cd ..
-   # We will also run the api locally
-   - git clone https://github.com/eregs/regulations-core.git
-   - cd regulations-core
-   - pip install zc.buildout
-   - buildout
-   - cd ..
-   - pwd
-   - ls -l
    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
    - sed -i "s/\"grunt-casperjs\":.*/\"grunt-casperjs\":\"git:\/\/github.com\/theresaanna\/grunt-casperjs.git\",/g" package.json
    - sudo apt-get update
@@ -28,13 +20,6 @@ script:
     - cd regserver
     - python manage.py test regulations --settings=regserver.settings.dev
     - cd ..
-    - cd regulations-core
-    - ./bin/django syncdb
-    - ./bin/django migrate
-    - ./bin/django runserver 8282 &
-    - sleep 5 # give django enough time to startup
-    - curl http://localhost:8282/notice
-    - cd ..
-    - pwd
-    - ls -l
+    - ./dummy_api/start.sh
+    - echo 'API_BASE = "http://localhost:8282/"' >> regserver/regserver/settings/local_settings.py
     - grunt test
