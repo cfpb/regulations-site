@@ -21,7 +21,7 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
             }
 
             // For browser widths above 1100px apply the 'open' class
-            if ($(window).width() > 1100) {
+            if (document.documentElement.clientWidth > 1100) {
                 $('.toc-toggle').addClass('open');
             } else {
                 this.drawerState();
