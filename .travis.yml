@@ -13,7 +13,7 @@ install:
    - sudo apt-get install nodejs phantomjs
    - sudo npm install -g grunt-cli grunt-init
    - sudo npm install -g casper
-   - npm install
+   - sudo npm install
    - cp example-config.json config.json
 script:
     - cd regserver
