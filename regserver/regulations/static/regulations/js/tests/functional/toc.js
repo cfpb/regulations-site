@@ -1,9 +1,10 @@
 var casper = require('casper').create(),
-    utils = require('utils');
+    utils = require('utils'),
+    url = casper.cli.get('url');
 
 casper.start();
 
-casper.thenOpen(casper.cli.get('url'), function() {
+casper.thenOpen(url, function() {
 });
 
 casper.waitForSelector('.reg-header.active', function() {
@@ -24,7 +25,7 @@ casper.waitForSelector('.reg-header:not(.active)', function() {
 casper.wait(5000);
 
 casper.then(function() {
-    this.test.assertEquals('http://localhost:8000/1005-4/2013-06861', this.getCurrentUrl(), 'TOC click loads reg section - routing');
+    this.test.assertEquals(url + '/1005-4/2013-06861', this.getCurrentUrl(), 'TOC click loads reg section - routing');
     this.test.assertEquals(this.getHTML('.section-title'), ' General disclosure requirements; jointly offered services.', 'TOC click loads reg section - title');
 });
 
