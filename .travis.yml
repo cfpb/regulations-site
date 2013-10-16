@@ -13,6 +13,8 @@ install:
    - pip install zc.buildout
    - buildout
    - cd ..
+   - pwd
+   - ls
    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
    - sed -i "s/\"grunt-casperjs\":.*/\"grunt-casperjs\":\"git:\/\/github.com\/theresaanna\/grunt-casperjs.git\",/g" package.json
    - sudo apt-get update
@@ -32,4 +34,6 @@ script:
     - sleep 5 # give django enough time to startup
     - curl http://localhost:8282/notice
     - cd ..
-    - sudo grunt test
+    - pwd
+    - ls
+    - grunt test
