@@ -32,4 +32,4 @@ script:
     - sleep 5 # give django enough time to startup
     - curl http://localhost:8282/notice
     - cd ..
-    - grunt test
+    - sudo grunt test
