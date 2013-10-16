@@ -14,7 +14,7 @@ install:
    - buildout
    - cd ..
    - pwd
-   - ls
+   - ls -l
    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
    - sed -i "s/\"grunt-casperjs\":.*/\"grunt-casperjs\":\"git:\/\/github.com\/theresaanna\/grunt-casperjs.git\",/g" package.json
    - sudo apt-get update
@@ -35,5 +35,5 @@ script:
     - curl http://localhost:8282/notice
     - cd ..
     - pwd
-    - ls
+    - ls -l
     - grunt test
