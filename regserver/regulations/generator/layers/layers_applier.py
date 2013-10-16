@@ -4,8 +4,9 @@ from HTMLParser import HTMLParser
 
 from regulations.generator.layers.location_replace import LocationReplace
 
+
 class LayersApplier(object):
-    """ Most layers replace content. We try to do this intelligently here, 
+    """ Most layers replace content. We try to do this intelligently here,
     so that layers don't step over each other. """
 
     def __init__(self):
@@ -19,12 +20,12 @@ class LayersApplier(object):
     def enqueue(self, layer_element):
         original, replacement, locations = layer_element
         priority = len(original)
-        item  = (original, replacement, locations)
+        item = (original, replacement, locations)
         self.queue.put((-priority, item))
 
     def replace(self, xml_node, original, replacement):
-        """ Helper method for replace_all(), this actually does the replace. This deals 
-        with XML nodes, not nodes in the tree. """
+        """ Helper method for replace_all(), this actually does the replace.
+        This deals with XML nodes, not nodes in the tree. """
         if xml_node.text:
             xml_node.text = xml_node.text.replace(original, replacement)
 
@@ -37,17 +38,16 @@ class LayersApplier(object):
         return xml_node
 
     def location_replace(self, xml_node, original, replacement, locations):
-        LocationReplace().location_replace(xml_node, original, replacement, locations) 
+        LocationReplace().location_replace(xml_node, original, replacement,
+                                           locations)
 
     def unescape_text(self):
-        """ 
-            Because of the way we do replace_all(), we need to 
-            unescape HTML entities. 
-        """
+        """ Because of the way we do replace_all(), we need to unescape HTML
+        entities.  """
         self.text = HTMLParser().unescape(self.text)
-            
+
     def replace_all(self, original, replacement):
-        """ Replace all occurrences of original with replacement. This is HTML 
+        """ Replace all occurrences of original with replacement. This is HTML
         aware. """
 
         htmlized = html.fragment_fromstring(self.text, create_parent='div')
@@ -59,25 +59,19 @@ class LayersApplier(object):
         self.unescape_text()
 
     def replace_at(self, original, replacement, locations):
-        """ Replace the occurrences of original at all the locations with replacement. """
+        """ Replace the occurrences of original at all the locations with
+        replacement. """
 
         locations.sort()
-        if '<' in self.text:
-            htmlized = html.fragment_fromstring(self.text, create_parent='div')
-            self.location_replace(htmlized, original, replacement, locations)
-            self.text = html.tostring(htmlized)
-            self.text = self.text.replace("<div>", "", 1)
-            self.text = self.text[:self.text.rfind("</div>")]
-            self.unescape_text()
-        else:
-            self.text = LocationReplace().location_replace_text(self.text,
-                original, replacement, locations)
+        self.text = LocationReplace().location_replace_text(
+            self.text, original, replacement, locations)
+        self.unescape_text()
 
     def apply_layers(self, original_text):
         self.text = original_text
 
         while not self.queue.empty():
-            priority, layer_element  = self.queue.get()
+            priority, layer_element = self.queue.get()
             original, replacement, locations = layer_element
 
             if not locations:
@@ -87,6 +81,7 @@ class LayersApplier(object):
 
         return self.text
 
+
 class LayersBase(object):
     """ Base class which keeps track of multiple laeyrs. """
     def __init__(self):
@@ -94,6 +89,7 @@ class LayersBase(object):
 
     def add_layer(self, layer):
         self.layers[layer.__class__.shorthand] = layer
+
 
 class SearchReplaceLayersApplier(LayersBase):
     def __init__(self):
@@ -108,6 +104,7 @@ class SearchReplaceLayersApplier(LayersBase):
             if applied:
                 elements += applied
         return elements
+
 
 class InlineLayersApplier(LayersBase):
     """ Apply multiple inline layers to given text (e.g. links,
@@ -124,8 +121,8 @@ class InlineLayersApplier(LayersBase):
             applied = layer.apply_layer(original_text, text_index)
             if applied:
                 layer_pairs += applied
-    
-        #convert from offset-based to a search and replace layer. 
+
+        #convert from offset-based to a search and replace layer.
         layer_elements = []
 
         for o, r, offset in layer_pairs:
@@ -133,7 +130,8 @@ class InlineLayersApplier(LayersBase):
                                                                 original_text)
             locations = [offset_locations.index(offset)]
             layer_elements.append((o, r, locations))
-        return layer_elements 
+        return layer_elements
+
 
 class ParagraphLayersApplier(LayersBase):
     """ Handle layers which apply to the whole paragraph. Layers include
