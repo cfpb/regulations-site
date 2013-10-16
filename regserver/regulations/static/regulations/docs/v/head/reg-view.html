@@ -274,7 +274,7 @@
 
             <span class="keyword">this</span>.updateWayfinding();
 
-            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+            <span class="keyword">if</span> (Dispatch.hasPushState) {
                 <span class="keyword">var</span> url = <span class="keyword">this</span>.options.id + <span class="string">'/'</span> + Dispatch.getVersion(),
                     hashPosition = (<span class="keyword">typeof</span> Backbone.history.fragment === <span class="string">'undefined'</span>) ? -<span class="number">1</span> : Backbone.history.fragment.indexOf(<span class="string">'#'</span>);</pre></div></div>
             
@@ -629,14 +629,12 @@ for an open interp, they can click &quot;hide&quot; button or header</p>
         },
 
         openInterp: <span class="keyword">function</span>(e) {
-            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
-                e.preventDefault();
+            e.preventDefault();
 
-                <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'linked-section'</span>),
-                    subSectionId = $(e.currentTarget).data(<span class="string">'linked-subsection'</span>);
-                
-                Router.navigate(sectionId + <span class="string">'/'</span> + Dispatch.getVersion() + <span class="string">'#'</span> + subSectionId, {trigger: <span class="literal">true</span>});
-            }
+            <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'linked-section'</span>),
+                subSectionId = $(e.currentTarget).data(<span class="string">'linked-subsection'</span>);
+            
+            Router.navigate(sectionId + <span class="string">'/'</span> + Dispatch.getVersion() + <span class="string">'#'</span> + subSectionId, {trigger: <span class="literal">true</span>});
         },
 
         remove: <span class="keyword">function</span>() {

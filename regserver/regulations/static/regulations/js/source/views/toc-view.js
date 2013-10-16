@@ -24,6 +24,12 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helper
 
             // **TODO** need to work out a bug where it scrolls the content section
             // $('#menu-link:not(.active)').on('click', this.scrollToActive);
+
+            // if the browser doesn't support pushState, don't 
+            // trigger click events for links
+            if (Dispatch.hasPushState === false) {
+                this.events = {};
+            }
         },
 
         // update active classes, find new active based on the reg entity id in the anchor
@@ -37,12 +43,10 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helper
         // **Event trigger**
         // when a TOC link is clicked, send an event along with the href of the clicked link
         sendClickEvent: function(e) {
-            if (window.history && window.history.pushState) {
-                e.preventDefault();
+            e.preventDefault();
 
-                var sectionId = $(e.currentTarget).data('section-id');
-                Dispatch.trigger('regSection:open', sectionId, {id: sectionId}, 'regSection');
-            }
+            var sectionId = $(e.currentTarget).data('section-id');
+            Dispatch.trigger('regSection:open', sectionId, {id: sectionId}, 'regSection');
         },
 
         // **Inactive** 

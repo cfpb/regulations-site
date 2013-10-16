@@ -13,7 +13,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
             Dispatch.trigger('searchResults:open', $results.html());
             $results.remove();
 
-            if (window.history && window.history.pushState) {
+            if (Dispatch.hasPushState) {
                 if (typeof this.options.url !== 'undefined') {
                     Router.navigate('search/' + this.options.url);
                 }
@@ -22,21 +22,25 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', '
             this.query = this.options.query;
             this.version = this.options.version;
             this.page = this.options.page || 0;
+
+            // if the browser doesn't support pushState, don't 
+            // trigger click events for links
+            if (Dispatch.hasPushState === false) {
+                this.events = {};
+            }
         },
 
         paginate: function(e) {
-            if (window.history && window.history.pushState) {
-                e.preventDefault();
+            e.preventDefault();
 
-                var page = $(e.target).hasClass('previous') ? this.page - 1 : this.page + 1,
-                    config = {
-                        query: this.query,
-                        version: this.version,
-                        page: page
-                    };
+            var page = $(e.target).hasClass('previous') ? this.page - 1 : this.page + 1,
+                config = {
+                    query: this.query,
+                    version: this.version,
+                    page: page
+                };
 
-                Dispatch.trigger('search:submitted', config, 'searchResults');
-            }
+            Dispatch.trigger('search:submitted', config, 'searchResults');
         },
 
         remove: function() {

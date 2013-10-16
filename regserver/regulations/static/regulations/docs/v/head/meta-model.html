@@ -278,16 +278,12 @@ loaded into the browser (rendered or not)</p>
               </div>
               <p><strong>Param</strong>
 id, string, dash-delimited reg entity id</p>
-<p><strong>Returns</strong> the markup string to render an entity or
-false if the entity hasn&#39;t been loaded</p>
+<p><strong>Returns</strong> boolean</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>        has: <span class="keyword">function</span>(id) {
-            <span class="keyword">if</span> (<span class="keyword">this</span>.content[id]) {
-                <span class="keyword">return</span> <span class="keyword">this</span>.content[id];
-            }
-            <span class="keyword">return</span> <span class="literal">false</span>;    
+            <span class="keyword">return</span> (<span class="keyword">this</span>.content[id]) ? <span class="literal">true</span> : <span class="literal">false</span>;
         },</pre></div></div>
             
         </li>
@@ -302,15 +298,15 @@ false if the entity hasn&#39;t been loaded</p>
               <p><strong>Params</strong></p>
 <ul>
 <li><code>id</code>: string, dash-delimited reg entity id</li>
+<li><code>callback</code>: function to be called once content is loaded</li>
 </ul>
-<p><strong>Returns</strong> representation of the reg entity requested in the format requested,</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        get: <span class="keyword">function</span>(id) {
-            <span class="keyword">var</span> obj = <span class="keyword">this</span>.has(id) || <span class="keyword">this</span>.request(id);
-            <span class="keyword">return</span> obj;
-        },</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        get: <span class="keyword">function</span>(id, callback) {
+            <span class="keyword">var</span> $promise, resolve;
+
+            Dispatch.trigger(<span class="string">'content:loading'</span>);</pre></div></div>
             
         </li>
         
@@ -321,12 +317,70 @@ false if the entity hasn&#39;t been loaded</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>Basically an alias for <code>this.get</code>, included for API continuity</p>
+              <p>if we have the requested content cached, retrieve it
+otherwise, we need to ask the server for it</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        fetch: <span class="keyword">function</span>(id) {
-            <span class="keyword">return</span> <span class="keyword">this</span>.get(id);
+            <div class="content"><div class='highlight'><pre>            $promise = (<span class="keyword">this</span>.has(id)) ? <span class="keyword">this</span>._retrieve(id) : <span class="keyword">this</span>.request(id);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>callback once the promise resolves</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            resolve = <span class="keyword">function</span>(response) {
+                <span class="keyword">if</span> (<span class="keyword">typeof</span> callback !== <span class="string">'undefined'</span>) {
+                    callback(response);
+                }
+                Dispatch.trigger(<span class="string">'content:loaded'</span>);
+            };
+
+            $promise.done(resolve);
+
+            $promise.fail(<span class="keyword">function</span>() {
+                <span class="keyword">var</span> alertNode = document.createElement(<span class="string">'div'</span>);
+
+                alertNode.innerHTML = <span class="string">'There was an issue loading your data. This may be because your device is currently offline. Please try again.'</span>;
+                alertNode.className = <span class="string">'alert'</span>;
+
+                $(alertNode).insertBefore(<span class="string">'h2.section-number'</span>);
+                Dispatch.trigger(<span class="string">'content:loaded'</span>);
+
+                callback.apply(<span class="literal">false</span>);
+            });
+
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>basically returns <code>this.content[id]</code> immediately,
+but is consistent with the interface that <code>this.request</code> provides</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        _retrieve: <span class="keyword">function</span>(id) {
+            <span class="keyword">var</span> $deferred = $.Deferred();
+
+            $deferred.resolve(<span class="keyword">this</span>.content[id]);
+
+            <span class="keyword">return</span> $deferred.promise();
         },
 
         request: <span class="keyword">function</span>(id) {
@@ -368,11 +422,11 @@ false if the entity hasn&#39;t been loaded</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>We don&#39;t have need for the following methods.
 This is my half-baked way of overriding them so that they

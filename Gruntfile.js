@@ -96,70 +96,6 @@ module.exports = function(grunt) {
     },
 
     /**
-     * Jasmine: https://github.com/gruntjs/grunt-contrib-jasmine
-     * 
-     * Run jasmine specs headlessly through PhantomJS.
-     * jQuery and Jasmine jQuery is included for your pleasure: https://github.com/velesin/jasmine-jquery
-     */
-    jasmine: {
-      all: {
-        src: '<%= env.frontEndPath %>/js/source',
-        options: {
-          template: require('grunt-template-jasmine-requirejs'),
-          specs: '<%= env.frontEndPath %>/js/tests/specs/*.js',
-          templateOptions: {
-            requireConfig: {
-              baseUrl: '<%= env.frontEndPath %>/js/source',
-              paths: {
-                underscore: './lib/underscore',
-                backbone: './lib/backbone',
-                jquery: './lib/jquery-1.9.1',
-                samplejson: '../tests/grunt/js/fixtures/sample-json',
-                'queryparams': './lib/backbone.queryparams',
-                'jquery-scrollstop': './lib/jquery.scrollstop',
-                'jquery-hoverIntent': './lib/jquery.hoverIntent',
-                'definition-view': './views/definition-view',
-                'interpretation-view': './views/interpretation-view',
-                'regs-fixed-el-view': './views/regs-fixed-el-view',
-                'sub-head-view': './views/sub-head-view',
-                'sidebar-module-view': './views/sidebar-module-view',
-                'toc-view': './views/toc-view',
-                'sidebar-view': './views/sidebar-view',
-                'sidebar-head-view': './views/sidebar-head-view',
-                'reg-view': './views/reg-view',
-                'konami': './lib/konami',
-                'analytics-handler': './views/analytics-handler-view',
-                'header-view': './views/header-view',
-                'section-footer-view': './views/section-footer-view',
-                'drawer-view': './views/drawer-view',
-                'history-view': './views/history-view',
-                'search-view': './views/search-view',
-                'sxs-list-view': './views/sxs-list-view',
-                'sidebar-list-view': './views/sidebar-list-view',
-                'sxs-view': './views/sxs-view',
-                'search-results-view': './views/search-results-view',
-                'main-view': './views/main-view',
-                'permalink-view': './views/permalink-view'
-              },
-              shim: {
-                underscore: {
-                  exports: '_'
-                },
-                backbone: {
-                  deps: ['underscore'],
-                  exports: 'Backbone'
-                },
-                konami: {
-                    exports: 'Konami'
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-
-    /**
      * https://github.com/jsoverson/grunt-plato
      * http://jscomplexity.org/complexity
      */
@@ -174,36 +110,11 @@ module.exports = function(grunt) {
         }
     },
 
-    /**
-     * Watch: https://github.com/gruntjs/grunt-contrib-watch
-     * 
-     * Run predefined tasks whenever watched file patterns are added, changed or deleted.
-     * Add files to monitor below.
-     */
-    watch: {
-      gruntfile: {
-        files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/*.less', '<%= env.frontEndPath %>/css/less/module/*.less', '<%= env.frontEndPath %>/css/less/media-queries/breakpoints/*.less'],
-        tasks: ['less']
-      }
-    },
-
-    /**
-     *
-     * https://npmjs.org/package/grunt-ghost
-     *
-     * Functional testing w/ Phantom, Casper
-     *
-     */
-    ghost: {
-        dist: {
-            filesSrc: ['<%= env.frontEndPath %>/js/tests/functional/*.js'],
-            options: {
-                args: {
-                    testUrl: '<%= env.testUrl %>'
-                },
-                direct: true,
-                verbose: true,
-                logLevel: 'debug'
+    casperjs: {
+        files: ['<%= env.frontEndPath %>/js/tests/functional/*.js'],
+        options: {
+            custom: {
+                url: '<%= env.testUrl %>'
             }
         }
     },
@@ -259,19 +170,43 @@ module.exports = function(grunt) {
                 }
             }
         }
-    }
+    },
+
+    shell: {
+      'mocha-phantomjs': {
+        command: 'mocha-phantomjs -R dot <%= env.testUrl %>/static/regulations/js/tests/browser/runner.html --verbose',
+        options: {
+          stdout: true,
+          stderr: true
+        }
+      }
+    },
+
+    /**
+     * Watch: https://github.com/gruntjs/grunt-contrib-watch
+     * 
+     * Run predefined tasks whenever watched file patterns are added, changed or deleted.
+     * Add files to monitor below.
+     */
+    watch: {
+      gruntfile: {
+        files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/*.less', '<%= env.frontEndPath %>/css/less/module/*.less', '<%= env.frontEndPath %>/css/less/media-queries/breakpoints/*.less','<%= env.frontEndPath %>/js/tests/specs/*.js', '<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js'],
+        tasks: ['less', 'shell:mocha-phantomjs']
+      }
+    },
   });
 
   /**
    * The above tasks are loaded here.
    */
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-mocha');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-ghost');
+    grunt.loadNpmTasks('grunt-casperjs');
     grunt.loadNpmTasks('grunt-docco2');
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-plato');
@@ -279,7 +214,7 @@ module.exports = function(grunt) {
     /**
     * Create task aliases by registering new tasks
     */
-    grunt.registerTask('test', ['jshint', 'jasmine']);
+    grunt.registerTask('test', ['jshint', 'shell:mocha-phantomjs', 'casperjs']);
     grunt.registerTask('build', ['test', 'requirejs', 'less', 'docco', 'plato']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };

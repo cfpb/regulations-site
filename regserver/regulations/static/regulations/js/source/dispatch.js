@@ -20,13 +20,15 @@
 // modules can remove the open definition by calling `Dispatch.remove('definition');`
 define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
     'use strict';
-    return _.extend({
+    var Dispatch = _.extend({
         // storage for entities
         // **Usage** Dispatch.open.definition
         // idea is that each entity will be stored according to its type so that any module can refer to it without knowing what
         // instance it holds. 
         // This scheme currently limits it to one value associated with each type, in theory.
         open: {},
+
+        state: {},
 
         // store a new entity in Dispatch.open
         // **Params**
@@ -35,6 +37,54 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
         // * **val**, object, new Backbone View
         set: function(key, val) {
             this.open[key] = val;
+        },
+
+        trigger: function(name) {
+            // var events: {
+            //     'content:loading': {
+            //          'args': { 
+            //              'id': 'unique id ex. 123-4',
+            //          },
+            //          'usage': 'to update state and block subsequent requests until current request is resolved'
+            //      },
+            //      'content:loaded': {
+            //          'usage': 'to update state and unblock new requests from occurring'
+            //      },
+            //      'mode:change': {
+            //          'args': {
+            //              'id': 'open content in new mode',
+            //              'type': 'new mode changed to. should correspond with this.state["mode"]'
+            //          }
+            //          'usage': 'to prompt views to make alterations based on the new state
+            //      },
+            //      'definition:remove': {
+            //          'args': {
+            //              'id': 'def reg section id'
+            //          },
+            //          'usage': 'remove active key term in body, remove sidebar header'
+            //      }
+            //      'ga-event:?': {
+            //          '?': 'event to be sent to Google Analytics'
+            //      }
+            //
+            // };
+
+            var listenTo = {
+                'content:loaded': this.setActivityStatus,
+                'content:loading': this.setActivityStatus,
+                'mode:change': this.setUIMode
+            };
+
+            // like an event listener, calls
+            // "bound" method in ```listenTo``` based
+            // on current event
+            if (listenTo.hasOwnProperty[name]) {
+                listenTo[name](arguments);
+            }
+
+            /* jshint camelcase: false */
+            // call parent ```trigger()```
+            Dispatch.__super__.trigger.apply(this, name); 
         },
 
         removeContentView: function() {
@@ -57,11 +107,37 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
             }
         },
 
+        hasPushState: function() {
+            return(this.state['pushState']);
+        },
+
+        setState: function(state) {
+            this.state['pushState'] = state;
+        },
+
+        getUIMode: function() {
+            // var options = ['regSection', 'breakaway', 'search', 'diff', 'history'];
+            return(this.state['mode']);
+        },
+
+        setUIMode: function(context) {
+            this.state['mode'] = context.type;
+        },
+
+        getActivityStatus: function() {
+            // var options = ['standby', 'init', 'loading'];
+            return(this.state['activity'] || 'standby');   
+        },
+
+        setActivityStatus: function(context) {
+            this.state['activity'] = context.type;
+        },
+
         // retrieve the id of the stored object
         // **Param** string, entity type, ex. 'definition'
         getViewId: function(type) {
             if (typeof this.open[type] === 'object') {
-                return this.open[type].model.id;
+                return this.open[type].id;
             }
             return false;
         },
@@ -106,4 +182,6 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
         }
 
     }, Backbone.Events);   
+
+    return Dispatch;
 });

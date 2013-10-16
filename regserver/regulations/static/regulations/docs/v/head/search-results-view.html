@@ -211,7 +211,7 @@
             Dispatch.trigger(<span class="string">'searchResults:open'</span>, $results.html());
             $results.remove();
 
-            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+            <span class="keyword">if</span> (Dispatch.hasPushState) {
                 <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.options.url !== <span class="string">'undefined'</span>) {
                     Router.navigate(<span class="string">'search/'</span> + <span class="keyword">this</span>.options.url);
                 }
@@ -219,22 +219,38 @@
 
             <span class="keyword">this</span>.query = <span class="keyword">this</span>.options.query;
             <span class="keyword">this</span>.version = <span class="keyword">this</span>.options.version;
-            <span class="keyword">this</span>.page = <span class="keyword">this</span>.options.page || <span class="number">0</span>;
+            <span class="keyword">this</span>.page = <span class="keyword">this</span>.options.page || <span class="number">0</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>if the browser doesn&#39;t support pushState, don&#39;t 
+trigger click events for links</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState === <span class="literal">false</span>) {
+                <span class="keyword">this</span>.events = {};
+            }
         },
 
         paginate: <span class="keyword">function</span>(e) {
-            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
-                e.preventDefault();
+            e.preventDefault();
 
-                <span class="keyword">var</span> page = $(e.target).hasClass(<span class="string">'previous'</span>) ? <span class="keyword">this</span>.page - <span class="number">1</span> : <span class="keyword">this</span>.page + <span class="number">1</span>,
-                    config = {
-                        query: <span class="keyword">this</span>.query,
-                        version: <span class="keyword">this</span>.version,
-                        page: page
-                    };
+            <span class="keyword">var</span> page = $(e.target).hasClass(<span class="string">'previous'</span>) ? <span class="keyword">this</span>.page - <span class="number">1</span> : <span class="keyword">this</span>.page + <span class="number">1</span>,
+                config = {
+                    query: <span class="keyword">this</span>.query,
+                    version: <span class="keyword">this</span>.version,
+                    page: page
+                };
 
-                Dispatch.trigger(<span class="string">'search:submitted'</span>, config, <span class="string">'searchResults'</span>);
-            }
+            Dispatch.trigger(<span class="string">'search:submitted'</span>, config, <span class="string">'searchResults'</span>);
         },
 
         remove: <span class="keyword">function</span>() {

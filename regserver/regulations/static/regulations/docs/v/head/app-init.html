@@ -274,6 +274,8 @@ API should make this obsolete.</p>
                 Dispatch.set(<span class="string">'drawerState'</span>, drawerState);
             }
 
+            Dispatch.setState(window.history &amp;&amp; window.history.pushState);
+
             <span class="keyword">if</span> (window.location.pathname.indexOf(<span class="string">'search'</span>) &gt; <span class="number">0</span>) {
                 <span class="keyword">var</span> urlobj = Helpers.parseURL(window.location.href),
                     params = urlobj.params;

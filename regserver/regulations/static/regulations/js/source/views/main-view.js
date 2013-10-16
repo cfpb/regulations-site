@@ -10,9 +10,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             Dispatch.on('mainContent:change', this.render, this);
             Dispatch.on('regSection:open', this.loadContent, this);
             Dispatch.on('search:submitted', this.assembleSearchURL, this);
-
-            Dispatch.on('loading:start', this.loading, this);
-            Dispatch.on('loading:finish', this.loaded, this);
         },
 
         modelmap: {
@@ -38,36 +35,29 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             this.loadContent(url, options, type);
         },
 
-        loadContent: function(getParam, options, type) {
-            Dispatch.trigger('loading:start');
-            var returned = this.modelmap[type].get(getParam);
+        loadContent: function(id, options, type) {
+            var returned, render;
 
-            if (typeof returned.done !== 'undefined') {
-                // @TODO: error handling
-                returned.done(function(response) {
-                    this.createView(response, options, type);
-                }.bind(this));
+            this.loading();
 
-                returned.fail(function() {
-                    var alertNode = document.createElement('div');
+            // callback to be sent to model's get method
+            // called after ajax resolves sucessfully
+            render = function(returned) {
+                this.createView(returned, options, type); 
+                this.loaded();
+            }.bind(this);
 
-                    alertNode.innerHTML = 'There was an issue loading your data. This may be because your device is currently offline. Please try again.';
-                    alertNode.className = 'alert';
+            // simplifies to
+            // this.model.get()
+            returned = this.modelmap[type].get(id, render);
 
-                    $(alertNode).insertBefore('h2.section-number');
-                    this.loaded();
-                }.bind(this));
-            }
-            else {
-               this.createView(returned, options, type); 
-            }
+            return this;
         },
 
         createView: function(html, options, type) {
             Dispatch.removeContentView();
             this.render(html, options.scrollToId);
             Dispatch.setContentView(new this.viewmap[type](options));
-            Dispatch.trigger('loading:finish');
         },
 
         render: function(html, scrollToId) {

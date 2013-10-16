@@ -206,14 +206,33 @@
             <span class="string">'click .navigation-link'</span>: <span class="string">'sendNavEvent'</span>
         },
 
-        sendNavEvent: <span class="keyword">function</span>(e) {
-            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
-                e.preventDefault();
-                <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'linked-section'</span>);
+        initialize: <span class="keyword">function</span>() {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>if the browser doesn&#39;t support pushState, don&#39;t 
+trigger click events for links</p>
 
-                Dispatch.trigger(<span class="string">'ga-event:sectionnav'</span>, sectionId);
-                Dispatch.trigger(<span class="string">'regSection:open'</span>, sectionId, {id:sectionId}, <span class="string">'regSection'</span>);
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState === <span class="literal">false</span>) {
+                <span class="keyword">this</span>.events = {};
             }
+        },
+
+        sendNavEvent: <span class="keyword">function</span>(e) {
+            e.preventDefault();
+            <span class="keyword">var</span> sectionId = $(e.currentTarget).data(<span class="string">'linked-section'</span>);
+
+            Dispatch.trigger(<span class="string">'ga-event:sectionnav'</span>, sectionId);
+            Dispatch.trigger(<span class="string">'regSection:open'</span>, sectionId, {id:sectionId}, <span class="string">'regSection'</span>);
         },
 
         remove: <span class="keyword">function</span>() {
