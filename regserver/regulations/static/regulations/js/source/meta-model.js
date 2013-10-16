@@ -48,28 +48,57 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
         // **Param**
         // id, string, dash-delimited reg entity id
         //
-        // **Returns** the markup string to render an entity or
-        // false if the entity hasn't been loaded
+        // **Returns** boolean
         has: function(id) {
-            if (this.content[id]) {
-                return this.content[id];
-            }
-            return false;    
+            return (this.content[id]) ? true : false;
         },
  
         // **Params**
         // 
         // * ```id```: string, dash-delimited reg entity id
-        //
-        // **Returns** representation of the reg entity requested in the format requested,
-        get: function(id) {
-            var obj = this.has(id) || this.request(id);
-            return obj;
+        // * ```callback```: function to be called once content is loaded
+        get: function(id, callback) {
+            var $promise, resolve;
+
+            Dispatch.trigger('content:loading');
+
+            // if we have the requested content cached, retrieve it
+            // otherwise, we need to ask the server for it
+            $promise = (this.has(id)) ? this._retrieve(id) : this.request(id);
+
+            // callback once the promise resolves
+            resolve = function(response) {
+                if (typeof callback !== 'undefined') {
+                    callback(response);
+                }
+                Dispatch.trigger('content:loaded');
+            };
+
+            $promise.done(resolve);
+
+            $promise.fail(function() {
+                var alertNode = document.createElement('div');
+
+                alertNode.innerHTML = 'There was an issue loading your data. This may be because your device is currently offline. Please try again.';
+                alertNode.className = 'alert';
+
+                $(alertNode).insertBefore('h2.section-number');
+                Dispatch.trigger('content:loaded');
+
+                callback.apply(false);
+            });
+
+            return this;
         },
 
-        // Basically an alias for ```this.get```, included for API continuity
-        fetch: function(id) {
-            return this.get(id);
+        // basically returns ```this.content[id]``` immediately,
+        // but is consistent with the interface that ```this.request``` provides
+        _retrieve: function(id) {
+            var $deferred = $.Deferred();
+
+            $deferred.resolve(this.content[id]);
+
+            return $deferred.promise();
         },
 
         request: function(id) {

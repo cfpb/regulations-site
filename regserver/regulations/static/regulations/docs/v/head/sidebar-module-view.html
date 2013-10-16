@@ -203,34 +203,21 @@
     <span class="keyword">var</span> SidebarModuleView = Backbone.View.extend({
         initialize: <span class="keyword">function</span>() {
             <span class="keyword">var</span> field;
-            <span class="keyword">this</span>.model = {};</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>looks like it basically populates the model for this view</p>
-<p><strong>TODO</strong> have to remember why or if its even in use anymore</p>
+            <span class="keyword">this</span>.model = {};
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">for</span> (field <span class="keyword">in</span> <span class="keyword">this</span>.options) {
+            <span class="keyword">for</span> (field <span class="keyword">in</span> <span class="keyword">this</span>.options) {
                 <span class="keyword">if</span> (<span class="keyword">this</span>.options.hasOwnProperty(field)) {
                     <span class="keyword">this</span>.model[field] = <span class="keyword">this</span>.options[field];
                 }
             }
 
-            <span class="keyword">this</span>.model.content = RegModel.get(<span class="keyword">this</span>.model.id);
-            <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.model.content);
-
-            <span class="keyword">this</span>.render();
+            <span class="keyword">this</span>.model.content = RegModel.get(<span class="keyword">this</span>.model.id, <span class="keyword">this</span>.render);
 
             <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        
+        render: <span class="keyword">function</span>() {
+            <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.model.content);
         }
     });
 

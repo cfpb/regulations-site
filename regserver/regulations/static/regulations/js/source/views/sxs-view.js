@@ -21,7 +21,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
                 this.render(analysis);
             }
 
-            if (window.history && window.history.pushState) {
+            if (Dispatch.hasPushState) {
                 Router.navigate('sxs/' + sxsURL);
             }
 
@@ -30,6 +30,14 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
             });
 
             Dispatch.on('sxs:close', this.closeAnalysis, this);
+
+
+            // if the browser doesn't support pushState, don't 
+            // trigger click events for links
+            if (Dispatch.hasPushState === false) {
+                this.events = {};
+            }
+
         },
 
         render: function(analysis) {
@@ -39,18 +47,16 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
         },
 
         closeAnalysis: function(e) {
-            if (window.history && window.history.pushState) {
-                if (typeof e !== 'undefined') {
-                    e.preventDefault();
-                    window.history.back();
-                }
-
-                this.$el.removeClass('open-sxs');
-                Dispatch.trigger('breakaway:close');
-                Dispatch.trigger('ga-event:sxsclose', Dispatch.getOpenSection());
-
-                Dispatch.get('sxs-analysis').remove();
+            if (typeof e !== 'undefined') {
+                e.preventDefault();
+                window.history.back();
             }
+
+            this.$el.removeClass('open-sxs');
+            Dispatch.trigger('breakaway:close');
+            Dispatch.trigger('ga-event:sxsclose', Dispatch.getOpenSection());
+
+            Dispatch.get('sxs-analysis').remove();
         },
 
         remove: function() {

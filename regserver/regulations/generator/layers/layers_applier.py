@@ -62,12 +62,16 @@ class LayersApplier(object):
         """ Replace the occurrences of original at all the locations with replacement. """
 
         locations.sort()
-        htmlized = html.fragment_fromstring(self.text, create_parent='div')
-        self.location_replace(htmlized, original, replacement, locations)
-        self.text = html.tostring(htmlized)
-        self.text = self.text.replace("<div>", "", 1)
-        self.text = self.text[:self.text.rfind("</div>")]
-        self.unescape_text()
+        if '<' in self.text:
+            htmlized = html.fragment_fromstring(self.text, create_parent='div')
+            self.location_replace(htmlized, original, replacement, locations)
+            self.text = html.tostring(htmlized)
+            self.text = self.text.replace("<div>", "", 1)
+            self.text = self.text[:self.text.rfind("</div>")]
+            self.unescape_text()
+        else:
+            self.text = LocationReplace().location_replace_text(self.text,
+                original, replacement, locations)
 
     def apply_layers(self, original_text):
         self.text = original_text

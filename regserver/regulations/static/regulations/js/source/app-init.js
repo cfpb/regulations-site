@@ -53,6 +53,8 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
                 Dispatch.set('drawerState', drawerState);
             }
 
+            Dispatch.setState(window.history && window.history.pushState);
+
             if (window.location.pathname.indexOf('search') > 0) {
                 var urlobj = Helpers.parseURL(window.location.href),
                     params = urlobj.params;

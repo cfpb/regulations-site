@@ -219,7 +219,7 @@
                 <span class="keyword">this</span>.render(analysis);
             }
 
-            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
+            <span class="keyword">if</span> (Dispatch.hasPushState) {
                 Router.navigate(<span class="string">'sxs/'</span> + sxsURL);
             }
 
@@ -227,7 +227,26 @@
                 opensxs: <span class="keyword">this</span>.options.regParagraph + <span class="string">' '</span> + <span class="keyword">this</span>.options.docNumber + <span class="string">' '</span> + <span class="keyword">this</span>.options.fromVersion
             });
 
-            Dispatch.on(<span class="string">'sxs:close'</span>, <span class="keyword">this</span>.closeAnalysis, <span class="keyword">this</span>);
+            Dispatch.on(<span class="string">'sxs:close'</span>, <span class="keyword">this</span>.closeAnalysis, <span class="keyword">this</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>if the browser doesn&#39;t support pushState, don&#39;t 
+trigger click events for links</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState === <span class="literal">false</span>) {
+                <span class="keyword">this</span>.events = {};
+            }
+
         },
 
         render: <span class="keyword">function</span>(analysis) {
@@ -237,18 +256,16 @@
         },
 
         closeAnalysis: <span class="keyword">function</span>(e) {
-            <span class="keyword">if</span> (window.history &amp;&amp; window.history.pushState) {
-                <span class="keyword">if</span> (<span class="keyword">typeof</span> e !== <span class="string">'undefined'</span>) {
-                    e.preventDefault();
-                    window.history.back();
-                }
-
-                <span class="keyword">this</span>.$el.removeClass(<span class="string">'open-sxs'</span>);
-                Dispatch.trigger(<span class="string">'breakaway:close'</span>);
-                Dispatch.trigger(<span class="string">'ga-event:sxsclose'</span>, Dispatch.getOpenSection());
-
-                Dispatch.get(<span class="string">'sxs-analysis'</span>).remove();
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> e !== <span class="string">'undefined'</span>) {
+                e.preventDefault();
+                window.history.back();
             }
+
+            <span class="keyword">this</span>.$el.removeClass(<span class="string">'open-sxs'</span>);
+            Dispatch.trigger(<span class="string">'breakaway:close'</span>);
+            Dispatch.trigger(<span class="string">'ga-event:sxsclose'</span>, Dispatch.getOpenSection());
+
+            Dispatch.get(<span class="string">'sxs-analysis'</span>).remove();
         },
 
         remove: <span class="keyword">function</span>() {

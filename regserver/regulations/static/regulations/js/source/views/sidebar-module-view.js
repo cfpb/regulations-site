@@ -7,21 +7,20 @@ define('sidebar-module-view', ['jquery', 'underscore', 'backbone', 'reg-model'],
         initialize: function() {
             var field;
             this.model = {};
-            // looks like it basically populates the model for this view
-            //
-            // **TODO** have to remember why or if its even in use anymore
+
             for (field in this.options) {
                 if (this.options.hasOwnProperty(field)) {
                     this.model[field] = this.options[field];
                 }
             }
 
-            this.model.content = RegModel.get(this.model.id);
-            this.$el.html(this.model.content);
-
-            this.render();
+            this.model.content = RegModel.get(this.model.id, this.render);
 
             return this;
+        },
+        
+        render: function() {
+            this.$el.html(this.model.content);
         }
     });
 
