@@ -15,8 +15,19 @@ install:
    - sudo npm install -g casper
    - sudo npm install
    - cp example-config.json config.json
+   # We will also run the api locally
+   - git clone https://github.com/eregs/regulations-core.git
+   - pip install zc.buildout
+   - buildout
 script:
     - cd regserver
     - python manage.py test regulations --settings=regserver.settings.dev
+    - cd ..
+    - cd regulations-core
+    - ./bin/django syncdb
+    - ./bin/django migrate
+    - ./bin/django runserver 8282 &
+    - sleep 5 # give django enough time to startup
+    - curl http://localhost:8282/notice
     - cd ..
     - grunt test
