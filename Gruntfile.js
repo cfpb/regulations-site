@@ -114,7 +114,7 @@ module.exports = function(grunt) {
         files: ['<%= env.frontEndPath %>/js/tests/functional/*.js'],
         options: {
             custom: {
-                url: '<%= env.testUrl %>/1005'
+                url: '<%= env.testUrl %>'
             }
         }
     },

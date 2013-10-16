@@ -4,7 +4,7 @@ var casper = require('casper').create(),
 
 casper.start();
 
-casper.thenOpen(url, function() {
+casper.thenOpen(url + '/1005', function() {
 });
 
 casper.waitForSelector('.reg-header.active', function() {
