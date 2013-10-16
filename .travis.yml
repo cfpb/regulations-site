@@ -7,6 +7,12 @@ install:
    - pip install -r requirements.txt --use-mirrors
    - pip install -r requirements-test.txt --use-mirrors
    - cd ..
+   # We will also run the api locally
+   - git clone https://github.com/eregs/regulations-core.git
+   - cd regulations-core
+   - pip install zc.buildout
+   - buildout
+   - cd ..
    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
    - sed -i "s/\"grunt-casperjs\":.*/\"grunt-casperjs\":\"git:\/\/github.com\/theresaanna\/grunt-casperjs.git\",/g" package.json
    - sudo apt-get update
@@ -15,10 +21,6 @@ install:
    - sudo npm install -g casper
    - sudo npm install
    - cp example-config.json config.json
-   # We will also run the api locally
-   - git clone https://github.com/eregs/regulations-core.git
-   - pip install zc.buildout
-   - buildout
 script:
     - cd regserver
     - python manage.py test regulations --settings=regserver.settings.dev
