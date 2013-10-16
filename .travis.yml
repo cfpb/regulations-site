@@ -22,6 +22,7 @@ install:
    - sudo npm install -g grunt-cli grunt-init
    - sudo npm install -g casper
    - sudo npm install -g
+   - sudo npm install -g grunt
    - cp example-config.json config.json
 script:
     - cd regserver
