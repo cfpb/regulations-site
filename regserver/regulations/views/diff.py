@@ -45,20 +45,22 @@ class PartialSectionDiffView(PartialView):
     def footer_nav(self, label, toc, old_version, new_version):
         nav = {}
         for idx, toc_entry in enumerate(toc):
-            if toc_entry['section_id'] == label:
-                p_sect = choose_previous_section(idx, toc)
-                n_sect = choose_next_section(idx, toc)
+            if toc_entry['section_id'] != label:
+                continue
 
-                if p_sect:
-                    nav['previous'] = p_sect
-                    nav['previous']['url'] = reverse('chrome_section_diff_view',
-                        args=(p_sect['section_id'], old_version,
-                            new_version))
-                if n_sect:
-                    nav['next'] = n_sect
-                    nav['next']['url'] = reverse('chrome_section_diff_view',
-                        args=(n_sect['section_id'], old_version,
-                            new_version))
+            p_sect = choose_previous_section(idx, toc)
+            n_sect = choose_next_section(idx, toc)
+
+            if p_sect:
+                nav['previous'] = p_sect
+                nav['previous']['url'] = reverse(
+                    'chrome_section_diff_view',
+                    args=(p_sect['section_id'], old_version, new_version))
+            if n_sect:
+                nav['next'] = n_sect
+                nav['next']['url'] = reverse(
+                    'chrome_section_diff_view',
+                    args=(n_sect['section_id'], old_version, new_version))
         return nav
 
     def get_context_data(self, **kwargs):
@@ -94,8 +96,8 @@ class PartialSectionDiffView(PartialView):
         old_toc = utils.table_of_contents(regpart, older, True)
         diff = generator.get_diff_json(regpart, older, newer)
         context['TOC'] = diff_toc(older, newer, old_toc, diff)
-        context['navigation'] = self.footer_nav(label_id, context['TOC'], 
-            older, newer)
+        context['navigation'] = self.footer_nav(label_id, context['TOC'],
+                                                older, newer)
         return context
 
 

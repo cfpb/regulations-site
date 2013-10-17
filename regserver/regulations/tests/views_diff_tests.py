@@ -60,7 +60,7 @@ class PartialSectionDiffViewTests(TestCase):
         toc = [{'section_id': '9898-1'}, {'section_id': '9898-5'},
                {'section_id': '9898-A'}, {'section_id': '9898-Interp'}]
         self.assertEqual({}, view.footer_nav('9898-2', toc, 'old', 'new'))
-        
+
         result = view.footer_nav('9898-1', toc, 'old', 'new')
         self.assertFalse('previous' in result)
         self.assertTrue('9898-5' in result['next']['url'])
