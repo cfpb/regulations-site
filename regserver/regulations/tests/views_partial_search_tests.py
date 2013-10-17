@@ -40,9 +40,10 @@ class PartialSearchTest(TestCase):
         self.assertTrue('111.25' in response.content)
         self.assertTrue('3333' in response.content)
 
+
     @patch('regulations.views.partial_search.api_reader')
     @patch('regulations.views.partial_search.fetch_grouped_history')
-    def test_get_no_results(self, fetch_grouped_history, api_reader):
+    def test_no_results(self, fetch_grouped_history, api_reader):
         api_reader.ApiReader.return_value.search.return_value = {
             'total_hits': 0,
             'results': []
@@ -56,7 +57,7 @@ class PartialSearchTest(TestCase):
                           'effective_on': date(2003, 4, 5)}],
              'timeline': 'timeytimey'}
         ]
-        response = Client().get('/partial/search/111?version=vvv&q=none')
+        response = Client().get('/partial/search/121?version=vvv&q=none')
         self.assertTrue('4/5/2003' in response.content)
 
     def test_get_400(self):
