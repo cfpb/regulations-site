@@ -14,7 +14,7 @@ class DefinitionsLayer(object):
         self.version = None
         self.rev_urls = utils.RegUrl()
         self.rendered = {}
-        # precomputation 
+        # precomputation
         for def_struct in self.layer['referenced'].values():
             def_struct['reference_split'] = def_struct['reference'].split('-')
 
@@ -25,10 +25,10 @@ class DefinitionsLayer(object):
             context = {
                 'citation': {
                     'url': self.rev_urls.fetch(citation, self.version,
-                                           self.sectional),
+                                               self.sectional),
                     'label': original_text,
                     'definition_reference': '-'.join(to_markup_id(citation))}}
-            rendered =  utils.render_template(self.template, context)
+            rendered = utils.render_template(self.template, context)
             self.rendered[key] = rendered
         return self.rendered[key]
 

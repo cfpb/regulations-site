@@ -101,19 +101,19 @@ class DiffLayerCreator(LayerCreator):
 
     @staticmethod
     def combine_layer_versions(older_layer, newer_layer):
-        """ Create a new layer by taking all the nodes from the older 
+        """ Create a new layer by taking all the nodes from the older
         layer, and adding to the all the new nodes from the newer layer. """
 
         combined_layer = {}
 
         for n in older_layer:
             combined_layer[n] = older_layer[n]
-            
+
         for n in newer_layer:
             if n not in combined_layer:
                 combined_layer[n] = newer_layer[n]
 
-        return combined_layer 
+        return combined_layer
 
     def get_layer_json(self, api_name, regulation, version):
         older_layer = self.api.layer(api_name, regulation, version)
@@ -121,6 +121,7 @@ class DiffLayerCreator(LayerCreator):
 
         layer_json = self.combine_layer_versions(older_layer, newer_layer)
         return layer_json
+
 
 def get_regulation(regulation, version):
     """ Get the regulation JSON tree. Manipulate the label a bit for easier
