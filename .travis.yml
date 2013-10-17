@@ -8,7 +8,6 @@ install:
    - pip install -r requirements-test.txt --use-mirrors
    - cd ..
    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
-   - sed -i "s/\"grunt-casperjs\":.*/\"grunt-casperjs\":\"git:\/\/github.com\/theresaanna\/grunt-casperjs.git\",/g" package.json
    - sudo apt-get update
    - sudo apt-get install nodejs phantomjs
    - sudo npm install -g grunt-cli grunt-init
