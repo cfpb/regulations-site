@@ -1,6 +1,7 @@
 #vim: set encoding=utf-8
-from django.views.generic.base import TemplateView
+from django.core.urlresolvers import reverse
 from django.http import Http404
+from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
@@ -62,8 +63,12 @@ class PartialSectionView(PartialView):
             nav = {}
             if p_sect:
                 nav['previous'] = navigation.parse_section_title(p_sect)
+                nav['previous']['url'] = reverse('chrome_section_view',
+                    args=(nav['previous']['section_id'], version))
             if n_sect:
                 nav['next'] = navigation.parse_section_title(n_sect)
+                nav['next']['url'] = reverse('chrome_section_view',
+                    args=(nav['next']['section_id'], version))
             return nav
 
     def transform_context(self, context, builder):

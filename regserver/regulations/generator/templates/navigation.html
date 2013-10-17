@@ -8,9 +8,10 @@
 {% if navigation.previous %}
 {% with prev=navigation.previous %}
         <li class="previous next-prev">
-            <a href="{% url 'chrome_section_view' prev.section_id version %}" class="navigation-link backward next-prev-link"
-                data-linked-section="{{prev.section_id}}"
-                ><i class="minicon-left"> </i><span class="next-prev-label">Previous section - </span>{% if prev.is_section %}&sect;&nbsp;{% endif %}{{prev.label}} </a> <span class="next-prev-title">{{prev.sub_label}}</span>
+            <a href="{{ prev.url }}"
+               class="navigation-link backward next-prev-link"
+               data-linked-section="{{prev.section_id}}"
+            ><i class="minicon-left"> </i><span class="next-prev-label">Previous section - </span>{% if prev.is_section %}&sect;&nbsp;{% endif %}{{prev.label}} </a> <span class="next-prev-title">{{prev.sub_label}}</span>
         </li>
 {% endwith %}
 {% endif %}
@@ -18,9 +19,10 @@
 {% if navigation.next %}
 {% with next=navigation.next %}
         <li class="next next-prev">
-            <a href="{% url 'chrome_section_view' next.section_id version %}" class="navigation-link forward next-prev-link"
-                data-linked-section="{{next.section_id}}"
-                ><i class="minicon-right"></i><span class="next-prev-label">Next section - </span>{% if next.is_section %}&sect;&nbsp;{% endif %}{{next.label}}</a> <span class="next-prev-title">{{next.sub_label}}</span>
+            <a href="{{ next.url }}"
+               class="navigation-link forward next-prev-link"
+               data-linked-section="{{next.section_id}}"
+            ><i class="minicon-right"></i><span class="next-prev-label">Next section - </span>{% if next.is_section %}&sect;&nbsp;{% endif %}{{next.label}}</a> <span class="next-prev-title">{{next.sub_label}}</span>
         </li>
 {% endwith %}
 {% endif %}
