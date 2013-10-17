@@ -23,9 +23,15 @@
     <div class="toc-head">
         <a href="#" id="panel-link" class="toc-toggle panel-slide"><span class="icon-text">Navigation</span></a>
         <ul class="drawer-toggles">
+            {% block sidebar-toc-link %}
             <li><a href="#table-of-contents" id="menu-link" class="toc-nav-link current" title="Table of Contents"><span class="icon-text">Table of Contents</span><span class="minicon-menu"></span></a></li>
+            {% endblock %}
+            {% block sidebar-history-link %}
             <li><a href="#history" id="history-link" class="toc-nav-link" title="History"><span class="icon-text">History</span><span class="minicon-history"></span></a></li>
+            {% endblock %}
+            {% block sidebar-search-link %}
             <li><a href="#search" id="search-link" class="toc-nav-link" title="Search"><span class="icon-text">Search</span><span class="minicon-search"></span></a></li>
+            {% endblock %}
         </ul>
     </div> <!-- /toc-head-->
     <div id="content-header" class="header-main">
