@@ -54,6 +54,6 @@ class ErrorHandlingTest(TestCase):
 
         extra_content = {'passed': 1, 'env': 'source'}
         response = error_handling.handle_missing_section_404(
-            request, '204', '2', extra_content)
+            request, '204-1', '2', extra_content)
         self.assertEqual(response, None)
         self.assertTrue(add_to_chrome.called)
