@@ -5,7 +5,7 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
 
         idMap: {
             'table-of-contents': '#menu-link',
-            'history': '#history-link',
+            'timeline': '#timeline-link',
             'search': '#search-link'
         },
 

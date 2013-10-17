@@ -23,8 +23,8 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'toc-view
                     'selector': $('#table-of-contents'),
                     'constructor': TOCView
                 },
-                'history': {
-                    'selector': $('#history'),
+                'timeline': {
+                    'selector': $('#timeline'),
                     'constructor': HistoryView
                 },
                 'search': {
