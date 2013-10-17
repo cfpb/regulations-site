@@ -1,6 +1,6 @@
 class LocationReplace(object):
-    """ Applies location based layers to XML nodes. We use XML so that we only take into account the original 
-    text when we're doing a replacement. """
+    """ Applies location based layers to XML nodes. We use XML so that we only
+    take into account the original text when we're doing a replacement. """
     def __init__(self):
         self.counter = 0
         self.offset_starter = 0
@@ -27,14 +27,29 @@ class LocationReplace(object):
         characters. Update the offsets. """
 
         list_offsets = LocationReplace.find_all_offsets(original, text)
-        self.offset_counters = range(self.offset_starter, self.offset_starter + len(list_offsets))
+
+        angles_at = []
+        lt = text.find('<')
+        while lt != -1:
+            gt = text.find('>', lt)
+            angles_at.append((lt, gt))
+            lt = text.find('<', gt)
+
+        # Ignore everything in angle brackets
+        list_offsets = [offsets for offsets in list_offsets
+                        if not any(e[0] <= offsets[0] <= e[1]
+                                   or e[1] <= offsets[1] <= e[1]
+                                   for e in angles_at)]
+
+        self.offset_counters = range(self.offset_starter,
+                                     self.offset_starter + len(list_offsets))
         self.offsets = dict(zip(self.offset_counters, list_offsets))
 
     def update_offset_starter(self):
-        """ As we're navigating the XML node, we need to keep track of how many offsets we've 
-        already seen. """
+        """ As we're navigating the XML node, we need to keep track of how many
+        offsets we've already seen. """
         if len(self.offset_counters) > 0:
-            self.offset_starter =self.offset_counters[-1] + 1
+            self.offset_starter = self.offset_counters[-1] + 1
 
     def apply_layer_to_text(self, original, replacement, text, locations):
         self.update_offsets(original, text)
@@ -56,15 +71,16 @@ class LocationReplace(object):
         return text
 
     def location_replace(self, xml_node, original, replacement, locations):
-        """ For the xml_node, replace the locations instances of orginal with replacement."""
+        """ For the xml_node, replace the locations instances of orginal with
+        replacement."""
 
         if xml_node.text:
-            xml_node.text = self.location_replace_text(xml_node.text,
-                original, replacement, locations)
+            xml_node.text = self.location_replace_text(
+                xml_node.text, original, replacement, locations)
 
         for c in xml_node.getchildren():
             self.location_replace(c, original, replacement, locations)
 
         if xml_node.tail:
-            xml_node.tail = self.location_replace_text(xml_node.tail,
-                original, replacement, locations)
+            xml_node.tail = self.location_replace_text(
+                xml_node.tail, original, replacement, locations)
