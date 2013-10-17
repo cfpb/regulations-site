@@ -9,9 +9,7 @@ class DefinitionsLayer(object):
 
     def __init__(self, layer):
         self.layer = layer
-        self.defining_template = loader.get_template('layers/defining.html')
-        self.citations_template =\
-            loader.get_template('layers/definition_citation.html')
+        self.template = loader.get_template('layers/definition_citation.html')
         self.sectional = False
         self.version = None
         self.rev_urls = utils.RegUrl()
@@ -30,11 +28,11 @@ class DefinitionsLayer(object):
                                            self.sectional),
                     'label': original_text,
                     'definition_reference': '-'.join(to_markup_id(citation))}}
-            rendered =  utils.render_template(self.citations_template, context)
+            rendered =  utils.render_template(self.template, context)
             self.rendered[key] = rendered
         return self.rendered[key]
 
-    def defined_terms(self, text, text_index):
+    def apply_layer(self, text, text_index):
         """Catch all terms which are defined elsewhere and replace them with
         a link"""
         layer_pairs = []
@@ -49,21 +47,3 @@ class DefinitionsLayer(object):
                     rt = self.create_definition_link(ot, ref)
                     layer_pairs.append((ot, rt, (start, end)))
         return layer_pairs
-
-    def defining_terms(self, text, text_index):
-        """Catch all terms which are defined in this paragraph, replace them
-        with a span"""
-        layer_pairs = []
-        for ref_struct in self.layer['referenced'].values():
-            if text_index == ref_struct['reference']:
-                pos = tuple(ref_struct['position'])
-                original = text[pos[0]:pos[1]]
-                context = Context({'term': original})
-                replacement = self.defining_template.render(context)
-                replacement = replacement.strip('\n')
-                layer_pairs.append((original, replacement, pos))
-        return layer_pairs
-
-    def apply_layer(self, text, text_index):
-        return (self.defined_terms(text, text_index)
-                + self.defining_terms(text, text_index))
