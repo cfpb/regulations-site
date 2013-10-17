@@ -7,7 +7,7 @@ table of contents and the version tab are quite different
 {% endcomment %}
 
 {% block header-secondary %}
-<span class="effective-date"><strong>Comparing:</strong>
+<span class="effective-date"><strong>Comparing:</strong></span>
     {% with older_version=version %}
         {% for version in history %} {% if version.version == older_version %}{{ version.by_date|date }}{% endif %} {% endfor %}
         to
