@@ -33,6 +33,9 @@ CSS/Javascript etc., should inherit from this template.
         <!--[if lt IE 9]>
             <script src="{%static "regulations/js/source/lib/respond.js" %}"></script>
         <![endif]--> 
+        <!--[if IE 7]>
+            <link rel="stylesheet" href="{%static "regulations/css/icon-ie7.css" %}"/>
+        <![endif]-->
     </head>
     <body>
     {% block body %}

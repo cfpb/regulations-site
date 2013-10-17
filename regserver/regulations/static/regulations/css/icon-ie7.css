@@ -1,0 +1,45 @@
+.minicon-up{
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe000;');
+}
+.minicon-search {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe001;');
+}
+.minicon-right {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe002;');
+}
+.minicon-plus {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe003;');
+}
+.minicon-minus {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe004;');
+}
+.minicon-menu {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe005;');
+}
+.minicon-left {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe006;');
+}
+.minicon-external-link {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe007;');
+}
+.minicon-down {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe008;');
+}
+.minicon-close {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe009;');
+}
+.minicon-calendar {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe00a;');
+}
+.minicon-alert {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe00b;');
+}
+.minicon-mail {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe00c;');
+}
+.minicon-phone {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe00d;');
+}
+.minicon-pdf {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe00e;');
+}
