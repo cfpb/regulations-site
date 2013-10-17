@@ -26,7 +26,7 @@
     "watch": "~0.8.0",
     "grunt-shell": "~0.4.0",
     "expect.js": "~0.2.0",
-    "grunt-casperjs": "~1.1.2",
+    "grunt-casperjs": "git://github.com/theresaanna/grunt-casperjs.git",
     "grunt-functional": "~0.2.0"
   },
   "keywords": []
