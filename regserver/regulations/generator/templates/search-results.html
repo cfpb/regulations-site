@@ -1,12 +1,9 @@
 {% comment %}
-Partial Search Results. Includes version information about the regulation
-searched as well as the results.
-
-version_timeline is one of "past", "current", and "future".
+Partial Search Results. 
 {% endcomment %}
+
 <div id="content-wrapper" class="search-results">
     <section data-base-version="{{ version }}">
-        <p class="search-version">{{ version_by_date|date }} Version - {{ version_timeline|title }} Law
         {% if not skip_count %}
         <span id="result-count">{{ results.total_hits }} result{{ results.results|pluralize }}</span>
         {% endif %}
@@ -18,7 +15,7 @@ version_timeline is one of "past", "current", and "future".
                 <p>{{result.text}}</p>
             </li>
         {% empty %}
-            <span class="no-results">Sorry, there are no results that match your search in this version.</span>
+            <span class="no-results">Sorry, there are no results in the regulation effective {{version_by_date|date}}.</span>
         {% endfor %}
         </ul>
     </section>

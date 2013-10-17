@@ -24,7 +24,7 @@
         <a href="#" id="panel-link" class="toc-toggle panel-slide"><span class="icon-text">Navigation</span></a>
         <ul class="drawer-toggles">
             <li><a href="#table-of-contents" id="menu-link" class="toc-nav-link current" title="Table of Contents"><span class="icon-text">Table of Contents</span><span class="minicon-menu"></span></a></li>
-            <li><a href="#history" id="history-link" class="toc-nav-link" title="History"><span class="icon-text">History</span><span class="minicon-history"></span></a></li>
+            <li><a href="#timeline" id="timeline-link" class="toc-nav-link" title="Regulation Timeline"><span class="icon-text">Regulation Timeline</span><span class="minicon-history"></span></a></li>
             <li><a href="#search" id="search-link" class="toc-nav-link" title="Search"><span class="icon-text">Search</span><span class="minicon-search"></span></a></li>
         </ul>
     </div> <!-- /toc-head-->
@@ -54,9 +54,9 @@
         {%endif%}
     {% endblock %}
     {% block drawer-history %}
-        <div id="history" class="history-drawer toc-container hidden">
+        <div id="timeline" class="history-drawer toc-container hidden">
             <div class="drawer-header">
-                <h2 class="toc-type">Regulation versions</h2>
+                <h2 class="toc-type">Regulation Timeline</h2>
             </div><!-- /.drawer-header -->
             <div class="drawer-content">
                 <div class="form-wrap group">
@@ -121,7 +121,7 @@
                     <input type="text" name="q" value="{{ q }}" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
                 </div><!--/.search-box-->
                 <div class="version-search">
-                    <h4>Searching version</h4>
+                    <h4>Search in regulation effective:</h4>
                     <div class="select-content">
                         <select name="version">
                         {% for version in history %}
