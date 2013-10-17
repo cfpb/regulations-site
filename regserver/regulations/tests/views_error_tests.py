@@ -47,7 +47,7 @@ class ErrorHandlingTest(TestCase):
     @patch('regulations.views.error_handling.api_reader')
     def test_handle_missing_section_404(self, api_reader, add_to_chrome):
         api_reader.ApiReader.return_value.regversions.return_value =\
-            {'versions': [{'version': '2'}]}
+            {'versions': [{'version': '2', 'by_date':'2013-03-26'}]}
         add_to_chrome.return_value = None
 
         request = RequestFactory().get('/fake-path')
