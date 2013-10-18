@@ -74,20 +74,6 @@
                   <button type="submit">Find</button>
                 </form>
                 </div><!--./date-form-->
-                <div class="group" class="diff-selector">
-                    <div class="select-content">
-                        <form action="{% url 'diff_redirect' label_id active_version %}" method="GET">
-                            <select name="new_version" onChange="this.form.submit();">
-                                <option value="default" disabled="disabled" selected="selected">Compare with:</option>
-                                {% for version in history %}
-                                    {% if active_version != version.version %}
-                                        <option value="{{version.version}}">{{version.by_date|date}}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </form>
-                    </div> <!--/.select-content-->
-                </div><!--/.diff-selector-->
                 <ul class="version-list">
                 {% for version in history %}
                     <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
@@ -106,11 +92,28 @@
                             <span class="version-date">{{ version.by_date|date }}</span>
                         </a>
                     {% endif %}
-                        <ul class="rule-list">
-                        {% for notice in version.notices %}
-                            <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
-                        {% endfor %}
-                        </ul>
+                        <div class="timeline-content-wrap">
+                            <ul class="rule-list">
+                            {% for notice in version.notices %}
+                                <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
+                            {% endfor %}
+                                </ul>
+                                <div class="group" class="diff-selector">
+                                <h4 class="compare-title">Compare this with</h4>
+                                <div class="select-content">
+                                <form action="{% url 'diff_redirect' label_id active_version %}" method="GET">
+                                    <select name="new_version" onChange="this.form.submit();">
+                                        <option value="default" disabled="disabled" selected="selected">regulation effective</option>
+                                        {% for version in history %}
+                                            {% if active_version != version.version %}
+                                                <option value="{{version.version}}">{{version.by_date|date}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </form>
+                            </div> <!--/.select-content-->
+                        </div><!--/.diff-selector-->
+                    </div><!--/.timeline-content-wrap-->
                     </li>
                 {% endfor %}
                 </ul>
