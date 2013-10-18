@@ -10,27 +10,26 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
 
         initialize: function() {
             var sxsURL = this.options.regParagraph + '/' + this.options.docNumber + '?from_version=' + this.options.fromVersion,
-                analysis = SxSModel.get(sxsURL);
+                 render;
+            //
+            // callback to be sent to model's get method
+            // called after ajax resolves sucessfully
+            render = function(returned) {
+                this.render(returned);
 
-            if (typeof analysis.done !== 'undefined') {
-                analysis.done(function(res) {
-                    this.render(res);                    
-                }.bind(this));
-            }
-            else {
-                this.render(analysis);
-            }
+                if (Dispatch.hasPushState) {
+                    Router.navigate('sxs/' + sxsURL);
+                }
 
-            if (Dispatch.hasPushState) {
-                Router.navigate('sxs/' + sxsURL);
-            }
+                Dispatch.trigger('ga-event:sxs', {
+                    opensxs: this.options.regParagraph + ' ' + this.options.docNumber + ' ' + this.options.fromVersion
+                });
 
-            Dispatch.trigger('ga-event:sxs', {
-                opensxs: this.options.regParagraph + ' ' + this.options.docNumber + ' ' + this.options.fromVersion
-            });
+            }.bind(this);
+
+            SxSModel.get(sxsURL, render),
 
             Dispatch.on('sxs:close', this.closeAnalysis, this);
-
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
