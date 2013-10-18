@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">78.41</p>
+      <p class="stat">77.73</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">89</p>
+      <p class="stat">167</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">19.50</p>
+      <p class="stat">23.13</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.43</p>
+      <p class="stat">0.73</p>
     </div>
   </div>
 </div>
@@ -112,13 +112,15 @@
 // modules can remove the open definition by calling `Dispatch.remove(&#039;definition&#039;);`
 define(&#039;dispatch&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;backbone&#039;], function($, _, Backbone) {
     &#039;use strict&#039;;
-    return _.extend({
+    var Dispatch = _.extend({
         // storage for entities
         // **Usage** Dispatch.open.definition
         // idea is that each entity will be stored according to its type so that any module can refer to it without knowing what
         // instance it holds. 
         // This scheme currently limits it to one value associated with each type, in theory.
         open: {},
+
+        state: {},
 
         // store a new entity in Dispatch.open
         // **Params**
@@ -127,6 +129,54 @@ define(&#039;dispatch&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;
         // * **val**, object, new Backbone View
         set: function(key, val) {
             this.open[key] = val;
+        },
+
+        trigger: function(name) {
+            // var events: {
+            //     &#039;content:loading&#039;: {
+            //          &#039;args&#039;: { 
+            //              &#039;id&#039;: &#039;unique id ex. 123-4&#039;,
+            //          },
+            //          &#039;usage&#039;: &#039;to update state and block subsequent requests until current request is resolved&#039;
+            //      },
+            //      &#039;content:loaded&#039;: {
+            //          &#039;usage&#039;: &#039;to update state and unblock new requests from occurring&#039;
+            //      },
+            //      &#039;mode:change&#039;: {
+            //          &#039;args&#039;: {
+            //              &#039;id&#039;: &#039;open content in new mode&#039;,
+            //              &#039;type&#039;: &#039;new mode changed to. should correspond with this.state[&quot;mode&quot;]&#039;
+            //          }
+            //          &#039;usage&#039;: &#039;to prompt views to make alterations based on the new state
+            //      },
+            //      &#039;definition:remove&#039;: {
+            //          &#039;args&#039;: {
+            //              &#039;id&#039;: &#039;def reg section id&#039;
+            //          },
+            //          &#039;usage&#039;: &#039;remove active key term in body, remove sidebar header&#039;
+            //      }
+            //      &#039;ga-event:?&#039;: {
+            //          &#039;?&#039;: &#039;event to be sent to Google Analytics&#039;
+            //      }
+            //
+            // };
+
+            var listenTo = {
+                &#039;content:loaded&#039;: this.setActivityStatus,
+                &#039;content:loading&#039;: this.setActivityStatus,
+                &#039;mode:change&#039;: this.setUIMode
+            };
+
+            // like an event listener, calls
+            // &quot;bound&quot; method in ```listenTo``` based
+            // on current event
+            if (listenTo.hasOwnProperty[name]) {
+                listenTo[name](arguments);
+            }
+
+            /* jshint camelcase: false */
+            // call parent ```trigger()```
+            Dispatch.__super__.trigger.apply(this, name); 
         },
 
         removeContentView: function() {
@@ -149,11 +199,37 @@ define(&#039;dispatch&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;
             }
         },
 
+        hasPushState: function() {
+            return(this.state[&#039;pushState&#039;]);
+        },
+
+        setState: function(state) {
+            this.state[&#039;pushState&#039;] = state;
+        },
+
+        getUIMode: function() {
+            // var options = [&#039;regSection&#039;, &#039;breakaway&#039;, &#039;search&#039;, &#039;diff&#039;, &#039;history&#039;];
+            return(this.state[&#039;mode&#039;]);
+        },
+
+        setUIMode: function(context) {
+            this.state[&#039;mode&#039;] = context.type;
+        },
+
+        getActivityStatus: function() {
+            // var options = [&#039;standby&#039;, &#039;init&#039;, &#039;loading&#039;];
+            return(this.state[&#039;activity&#039;] || &#039;standby&#039;);   
+        },
+
+        setActivityStatus: function(context) {
+            this.state[&#039;activity&#039;] = context.type;
+        },
+
         // retrieve the id of the stored object
         // **Param** string, entity type, ex. &#039;definition&#039;
         getViewId: function(type) {
             if (typeof this.open[type] === &#039;object&#039;) {
-                return this.open[type].model.id;
+                return this.open[type].id;
             }
             return false;
         },
@@ -198,6 +274,8 @@ define(&#039;dispatch&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;
         }
 
     }, Backbone.Events);   
+
+    return Dispatch;
 });</textarea>
   </div>
 </div>
