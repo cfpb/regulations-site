@@ -95,7 +95,7 @@
 
     var HistoryView = Backbone.View.extend({
 
-        el: &#039;#history:not(.diff-history)&#039;,
+        el: &#039;#timeline:not(.diff-history)&#039;,
 
         events: {
             &#039;click .version-link&#039;: &#039;setStorageItem&#039;
@@ -116,7 +116,7 @@
         },
 
         setStorageItem: function() {
-            sessionStorage.setItem(&#039;drawerDefault&#039;, &#039;history&#039;);
+            sessionStorage.setItem(&#039;drawerDefault&#039;, &#039;timeline&#039;);
         },
 
         updateLinks: function() {
