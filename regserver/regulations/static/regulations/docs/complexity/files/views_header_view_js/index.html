@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">69.47</p>
+      <p class="stat">69.75</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">69</p>
+      <p class="stat">78</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">14.17</p>
+      <p class="stat">16.02</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.51</p>
+      <p class="stat">0.57</p>
     </div>
   </div>
 </div>
@@ -97,7 +97,7 @@
 
         idMap: {
             &#039;table-of-contents&#039;: &#039;#menu-link&#039;,
-            &#039;history&#039;: &#039;#history-link&#039;,
+            &#039;timeline&#039;: &#039;#timeline-link&#039;,
             &#039;search&#039;: &#039;#search-link&#039;
         },
 
@@ -110,6 +110,13 @@
 
             if (openDrawer) {
                 this.changeActiveTab(openDrawer);
+            }
+
+            // For browser widths above 1100px apply the &#039;open&#039; class
+            if (document.documentElement.clientWidth &gt; 1100) {
+                $(&#039;.toc-toggle&#039;).addClass(&#039;open&#039;);
+            } else {
+                this.drawerState();
             }
         },
 
@@ -129,9 +136,11 @@
         openDrawer: function(e) {
             e.preventDefault();
 
-            var $target = $(e.target),
-                state = ($target.hasClass(&#039;open&#039;)) ? &#039;close&#039; : &#039;open&#039;;
+            this.drawerState();
+        },
 
+        drawerState: function() {
+            var state = ($(&#039;.toc-toggle&#039;).hasClass(&#039;open&#039;)) ? &#039;close&#039; : &#039;open&#039;;
             this.updateDrawerState(state);
         },
 
