@@ -206,7 +206,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-casperjs');
+    //grunt.loadNpmTasks('grunt-casperjs');
     grunt.loadNpmTasks('grunt-docco2');
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-plato');
@@ -214,7 +214,7 @@ module.exports = function(grunt) {
     /**
     * Create task aliases by registering new tasks
     */
-    grunt.registerTask('test', ['jshint', 'shell:mocha-phantomjs', 'casperjs']);
+    grunt.registerTask('test', ['jshint', 'shell:mocha-phantomjs', /*'casperjs'*/]);
     grunt.registerTask('build', ['test', 'requirejs', 'less', 'docco', 'plato']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };
