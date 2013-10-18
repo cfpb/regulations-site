@@ -17,6 +17,7 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
         },
 
         toSxS: function(section, version, params) {
+            /* jshint camelcase: false */
             Dispatch.trigger('sxs:route', {
                 'regParagraph': section,
                 'docNumber': version,

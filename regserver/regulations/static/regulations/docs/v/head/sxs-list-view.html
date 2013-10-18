@@ -196,7 +196,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-list-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-list-view'</span>, <span class="string">'./folder-model'</span>, <span class="string">'sxs-view'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarListView, FolderModel, SxSView) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-list-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'sidebar-list-view'</span>, <span class="string">'./folder-model'</span>, <span class="string">'sxs-view'</span>, <span class="string">'./regs-router'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SidebarListView, FolderModel, SxSView, Router) {
     <span class="string">'use strict'</span>;
     <span class="keyword">var</span> SxSListView = SidebarListView.extend({
         el: <span class="string">'#sxs-list'</span>,
@@ -210,6 +210,7 @@
             <span class="keyword">this</span>.render = _.bind(<span class="keyword">this</span>.render, <span class="keyword">this</span>);
 
             Dispatch.on(<span class="string">'regSection:open:after'</span>, <span class="keyword">this</span>.getSidebar, <span class="keyword">this</span>);
+            Dispatch.on(<span class="string">'sxs:route'</span>, <span class="keyword">this</span>.createSxSView, <span class="keyword">this</span>);
 
             <span class="keyword">this</span>.modifyListDisplay();</pre></div></div>
             
@@ -235,16 +236,35 @@ trigger click events for links</p>
         openSxS: <span class="keyword">function</span>(e) {
             e.preventDefault();
 
-            <span class="keyword">var</span> $sxsLink = $(e.target),
-                paragraphId = $sxsLink.data(<span class="string">'sxs-paragraph-id'</span>),
-                docNumber = $sxsLink.data(<span class="string">'doc-number'</span>);
+            <span class="keyword">var</span> $sxsLink = $(e.target);
+
+            <span class="keyword">this</span>.createSxSView({
+                    <span class="string">'regParagraph'</span>: $sxsLink.data(<span class="string">'sxs-paragraph-id'</span>),
+                    <span class="string">'docNumber'</span>: $sxsLink.data(<span class="string">'doc-number'</span>),
+                    <span class="string">'fromVersion'</span>: Dispatch.getVersion()
+                },
+                <span class="keyword">function</span>(sxsURL) {
+                    <span class="keyword">if</span> (Dispatch.hasPushState) {
+                        Router.navigate(<span class="string">'sxs/'</span> + sxsURL);
+                    }
+                }
+            );
+        },
+
+        createSxSView: <span class="keyword">function</span>(options, callback) {
+            <span class="keyword">var</span> sxsURL = options.regParagraph + <span class="string">'/'</span> + options.docNumber + <span class="string">'?from_version='</span> + options.fromVersion;
 
             Dispatch.set(<span class="string">'sxs-analysis'</span>, <span class="keyword">new</span> SxSView({
-                    regParagraph: paragraphId,
-                    docNumber: docNumber,
-                    fromVersion: Dispatch.getVersion()
+                    <span class="string">'regParagraph'</span>: options.paragraphId,
+                    <span class="string">'docNumber'</span>: options.docNumber,
+                    <span class="string">'fromVersion'</span>: options.version,
+                    <span class="string">'url'</span>: sxsURL
                 })
             );
+
+            <span class="keyword">if</span> (<span class="keyword">typeof</span> callback !== <span class="string">'undefined'</span>) {
+                callback(sxsURL);
+            }
         },
 
         getSidebar: <span class="keyword">function</span>(sectionId) {

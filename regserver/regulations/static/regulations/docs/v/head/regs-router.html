@@ -200,7 +200,8 @@
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> RegsRouter = Backbone.Router.extend({
-        routes: {</pre></div></div>
+        routes: {
+            <span class="string">'sxs/:section/:version'</span>: <span class="string">'toSxS'</span>,</pre></div></div>
             
         </li>
         
@@ -224,8 +225,15 @@
             options.scrollToId = Backbone.history.getHash();
 
             Dispatch.trigger(<span class="string">'regSection:open'</span>, section, options, <span class="string">'regSection'</span>); 
+        },
 
-            Dispatch.trigger(<span class="string">'sxs:close'</span>);
+        toSxS: <span class="keyword">function</span>(section, version, params) {
+            <span class="comment">/* jshint camelcase: false */</span>
+            Dispatch.trigger(<span class="string">'sxs:route'</span>, {
+                <span class="string">'regParagraph'</span>: section,
+                <span class="string">'docNumber'</span>: version,
+                <span class="string">'fromVersion'</span>: params.from_version
+            });
         },
 
         backToSearchResults: <span class="keyword">function</span>(reg, params) {

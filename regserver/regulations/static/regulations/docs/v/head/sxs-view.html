@@ -196,7 +196,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'./sxs-model'</span>, <span class="string">'./regs-router'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SxSModel, Router) {
+            <div class="content"><div class='highlight'><pre>define(<span class="string">'sxs-view'</span>, [<span class="string">'jquery'</span>, <span class="string">'underscore'</span>, <span class="string">'backbone'</span>, <span class="string">'dispatch'</span>, <span class="string">'./sxs-model'</span>], <span class="keyword">function</span>($, _, Backbone, Dispatch, SxSModel) {
     <span class="string">'use strict'</span>;
 
     <span class="keyword">var</span> SxSView = Backbone.View.extend({
@@ -207,8 +207,7 @@
         },
 
         initialize: <span class="keyword">function</span>() {
-            <span class="keyword">var</span> sxsURL = <span class="keyword">this</span>.options.regParagraph + <span class="string">'/'</span> + <span class="keyword">this</span>.options.docNumber + <span class="string">'?from_version='</span> + <span class="keyword">this</span>.options.fromVersion,
-                 render;</pre></div></div>
+            <span class="keyword">var</span> render;</pre></div></div>
             
         </li>
         
@@ -227,17 +226,13 @@ called after ajax resolves sucessfully</p>
             <div class="content"><div class='highlight'><pre>            render = <span class="keyword">function</span>(returned) {
                 <span class="keyword">this</span>.render(returned);
 
-                <span class="keyword">if</span> (Dispatch.hasPushState) {
-                    Router.navigate(<span class="string">'sxs/'</span> + sxsURL);
-                }
-
                 Dispatch.trigger(<span class="string">'ga-event:sxs'</span>, {
                     opensxs: <span class="keyword">this</span>.options.regParagraph + <span class="string">' '</span> + <span class="keyword">this</span>.options.docNumber + <span class="string">' '</span> + <span class="keyword">this</span>.options.fromVersion
                 });
 
             }.bind(<span class="keyword">this</span>);
 
-            SxSModel.get(sxsURL, render),
+            SxSModel.get(<span class="keyword">this</span>.options.url, render),
 
             Dispatch.on(<span class="string">'sxs:close'</span>, <span class="keyword">this</span>.closeAnalysis, <span class="keyword">this</span>);</pre></div></div>
             
