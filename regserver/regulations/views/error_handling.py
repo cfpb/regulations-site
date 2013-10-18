@@ -2,6 +2,7 @@ from django import http
 from django.template import RequestContext, loader
 
 from regulations.generator import api_reader
+from regulations.generator.layers.utils import convert_to_python
 from regulations.views import utils
 
 
@@ -60,11 +61,13 @@ def check_version(label_id, version):
     vr = client.regversions(reg_part)
 
     requested_version = [v for v in vr['versions'] if v['version'] == version]
-    return len(requested_version) > 0
 
+    if len(requested_version) > 0:
+        requested_version = convert_to_python(requested_version)
+        return requested_version[0]
 
 def add_to_chrome(body, context, request):
-    chrome_template = loader.get_template('chrome.html')
+    chrome_template = loader.get_template('chrome-empty-sidebar.html')
 
     context['main_content'] = body
     chrome_body = chrome_template.render(RequestContext(
@@ -76,11 +79,16 @@ def add_to_chrome(body, context, request):
 def handle_missing_section_404(
         request, label_id, version, extra_context=None):
 
-    if not check_version(label_id, version):
+    req_version = check_version(label_id, version)
+    if not req_version:
         return handle_generic_404(request)
 
+    reg_section = label_id.split('-')[1]
+
     context = {
-        'request_path': request.path
+        'request_path': request.path,
+        'reg_section':reg_section,
+        'effective_date':req_version['by_date']
     }
     context.update(extra_context)
 
