@@ -43,6 +43,7 @@ p {
  .sub-head,
  .next-prev,
  .regs-meta,
+ .sxs-back-button,
  footer {
     display: none;
  }
@@ -55,7 +56,9 @@ p {
 
 .wrap,
 .main-content,
-.secondary-content {
+.secondary-content,
+.sxs-main-content,
+.sxs-metadata {
     position: static;
     max-width: 100%;
     width: 100%;
@@ -198,5 +201,17 @@ a[href^="http://"] {
     border-top: 0px;
     margin-top: 0px;
 }
+
+/*
+ Section by Section Styles/Resets
+ ========================================================================== */
+
+ .sxs-header {
+    position: static;
+    width: 100%;
+    height: 2.125em;
+    background-color: none;
+    border-bottom: 0;
+  }
 
 } /* end /@media print media query */

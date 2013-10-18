@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">68.94</p>
+      <p class="stat">69.74</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">104</p>
+      <p class="stat">94</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">21.47</p>
+      <p class="stat">20.08</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.88</p>
+      <p class="stat">0.69</p>
     </div>
   </div>
 </div>
@@ -102,9 +102,6 @@
             Dispatch.on(&#039;mainContent:change&#039;, this.render, this);
             Dispatch.on(&#039;regSection:open&#039;, this.loadContent, this);
             Dispatch.on(&#039;search:submitted&#039;, this.assembleSearchURL, this);
-
-            Dispatch.on(&#039;loading:start&#039;, this.loading, this);
-            Dispatch.on(&#039;loading:finish&#039;, this.loaded, this);
         },
 
         modelmap: {
@@ -130,36 +127,29 @@
             this.loadContent(url, options, type);
         },
 
-        loadContent: function(getParam, options, type) {
-            Dispatch.trigger(&#039;loading:start&#039;);
-            var returned = this.modelmap[type].get(getParam);
+        loadContent: function(id, options, type) {
+            var returned, render;
 
-            if (typeof returned.done !== &#039;undefined&#039;) {
-                // @TODO: error handling
-                returned.done(function(response) {
-                    this.createView(response, options, type);
-                }.bind(this));
+            this.loading();
 
-                returned.fail(function() {
-                    var alertNode = document.createElement(&#039;div&#039;);
+            // callback to be sent to model&#039;s get method
+            // called after ajax resolves sucessfully
+            render = function(returned) {
+                this.createView(returned, options, type); 
+                this.loaded();
+            }.bind(this);
 
-                    alertNode.innerHTML = &#039;There was an issue loading your data. This may be because your device is currently offline. Please try again.&#039;;
-                    alertNode.className = &#039;alert&#039;;
+            // simplifies to
+            // this.model.get()
+            returned = this.modelmap[type].get(id, render);
 
-                    $(alertNode).insertBefore(&#039;h2.section-number&#039;);
-                    this.loaded();
-                }.bind(this));
-            }
-            else {
-               this.createView(returned, options, type); 
-            }
+            return this;
         },
 
         createView: function(html, options, type) {
             Dispatch.removeContentView();
             this.render(html, options.scrollToId);
             Dispatch.setContentView(new this.viewmap[type](options));
-            Dispatch.trigger(&#039;loading:finish&#039;);
         },
 
         render: function(html, scrollToId) {

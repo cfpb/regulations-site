@@ -19,6 +19,13 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
             if (openDrawer) {
                 this.changeActiveTab(openDrawer);
             }
+
+            // For browser widths above 1100px apply the 'open' class
+            if (document.documentElement.clientWidth > 1100) {
+                $('.toc-toggle').addClass('open');
+            } else {
+                this.drawerState();
+            }
         },
 
         events: {
@@ -37,9 +44,11 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function
         openDrawer: function(e) {
             e.preventDefault();
 
-            var $target = $(e.target),
-                state = ($target.hasClass('open')) ? 'close' : 'open';
+            this.drawerState();
+        },
 
+        drawerState: function() {
+            var state = ($('.toc-toggle').hasClass('open')) ? 'close' : 'open';
             this.updateDrawerState(state);
         },
 
