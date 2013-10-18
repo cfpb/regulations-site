@@ -1,4 +1,4 @@
-define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model', './regs-router'], function($, _, Backbone, Dispatch, SxSModel, Router) {
+define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model'], function($, _, Backbone, Dispatch, SxSModel) {
     'use strict';
 
     var SxSView = Backbone.View.extend({
@@ -9,28 +9,22 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
         },
 
         initialize: function() {
-            var sxsURL = this.options.regParagraph + '/' + this.options.docNumber + '?from_version=' + this.options.fromVersion,
-                analysis = SxSModel.get(sxsURL);
+            var render;
 
-            if (typeof analysis.done !== 'undefined') {
-                analysis.done(function(res) {
-                    this.render(res);                    
-                }.bind(this));
-            }
-            else {
-                this.render(analysis);
-            }
+            // callback to be sent to model's get method
+            // called after ajax resolves sucessfully
+            render = function(returned) {
+                this.render(returned);
 
-            if (Dispatch.hasPushState) {
-                Router.navigate('sxs/' + sxsURL);
-            }
+                Dispatch.trigger('ga-event:sxs', {
+                    opensxs: this.options.regParagraph + ' ' + this.options.docNumber + ' ' + this.options.fromVersion
+                });
 
-            Dispatch.trigger('ga-event:sxs', {
-                opensxs: this.options.regParagraph + ' ' + this.options.docNumber + ' ' + this.options.fromVersion
-            });
+            }.bind(this);
+
+            SxSModel.get(this.options.url, render),
 
             Dispatch.on('sxs:close', this.closeAnalysis, this);
-
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links

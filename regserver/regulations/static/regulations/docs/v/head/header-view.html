@@ -228,6 +228,25 @@
 
             <span class="keyword">if</span> (openDrawer) {
                 <span class="keyword">this</span>.changeActiveTab(openDrawer);
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>For browser widths above 1100px apply the &#39;open&#39; class</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (document.documentElement.clientWidth &gt; <span class="number">1100</span>) {
+                $(<span class="string">'.toc-toggle'</span>).addClass(<span class="string">'open'</span>);
+            } <span class="keyword">else</span> {
+                <span class="keyword">this</span>.drawerState();
             }
         },
 
@@ -247,9 +266,11 @@
         openDrawer: <span class="keyword">function</span>(e) {
             e.preventDefault();
 
-            <span class="keyword">var</span> $target = $(e.target),
-                state = ($target.hasClass(<span class="string">'open'</span>)) ? <span class="string">'close'</span> : <span class="string">'open'</span>;
+            <span class="keyword">this</span>.drawerState();
+        },
 
+        drawerState: <span class="keyword">function</span>() {
+            <span class="keyword">var</span> state = ($(<span class="string">'.toc-toggle'</span>).hasClass(<span class="string">'open'</span>)) ? <span class="string">'close'</span> : <span class="string">'open'</span>;
             <span class="keyword">this</span>.updateDrawerState(state);
         },
 
