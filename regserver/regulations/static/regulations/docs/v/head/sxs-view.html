@@ -208,26 +208,7 @@
 
         initialize: <span class="keyword">function</span>() {
             <span class="keyword">var</span> sxsURL = <span class="keyword">this</span>.options.regParagraph + <span class="string">'/'</span> + <span class="keyword">this</span>.options.docNumber + <span class="string">'?from_version='</span> + <span class="keyword">this</span>.options.fromVersion,
-                analysis = SxSModel.get(sxsURL);
-
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> analysis.done !== <span class="string">'undefined'</span>) {
-                analysis.done(<span class="keyword">function</span>(res) {
-                    <span class="keyword">this</span>.render(res);                    
-                }.bind(<span class="keyword">this</span>));
-            }
-            <span class="keyword">else</span> {
-                <span class="keyword">this</span>.render(analysis);
-            }
-
-            <span class="keyword">if</span> (Dispatch.hasPushState) {
-                Router.navigate(<span class="string">'sxs/'</span> + sxsURL);
-            }
-
-            Dispatch.trigger(<span class="string">'ga-event:sxs'</span>, {
-                opensxs: <span class="keyword">this</span>.options.regParagraph + <span class="string">' '</span> + <span class="keyword">this</span>.options.docNumber + <span class="string">' '</span> + <span class="keyword">this</span>.options.fromVersion
-            });
-
-            Dispatch.on(<span class="string">'sxs:close'</span>, <span class="keyword">this</span>.closeAnalysis, <span class="keyword">this</span>);</pre></div></div>
+                 render;</pre></div></div>
             
         </li>
         
@@ -237,6 +218,37 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>callback to be sent to model&#39;s get method
+called after ajax resolves sucessfully</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            render = <span class="keyword">function</span>(returned) {
+                <span class="keyword">this</span>.render(returned);
+
+                <span class="keyword">if</span> (Dispatch.hasPushState) {
+                    Router.navigate(<span class="string">'sxs/'</span> + sxsURL);
+                }
+
+                Dispatch.trigger(<span class="string">'ga-event:sxs'</span>, {
+                    opensxs: <span class="keyword">this</span>.options.regParagraph + <span class="string">' '</span> + <span class="keyword">this</span>.options.docNumber + <span class="string">' '</span> + <span class="keyword">this</span>.options.fromVersion
+                });
+
+            }.bind(<span class="keyword">this</span>);
+
+            SxSModel.get(sxsURL, render),
+
+            Dispatch.on(<span class="string">'sxs:close'</span>, <span class="keyword">this</span>.closeAnalysis, <span class="keyword">this</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>if the browser doesn&#39;t support pushState, don&#39;t 
 trigger click events for links</p>
