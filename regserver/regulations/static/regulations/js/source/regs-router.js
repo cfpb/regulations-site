@@ -3,6 +3,7 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
 
     var RegsRouter = Backbone.Router.extend({
         routes: {
+            'sxs/:section/:version': 'toSxS',
             //'search/:reg': 'backToSearchResults',
             ':section/:version': 'loadSection'
         },
@@ -15,6 +16,14 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
             Dispatch.trigger('regSection:open', section, options, 'regSection'); 
 
             Dispatch.trigger('sxs:close');
+        },
+
+        toSxS: function(section, version, params) {
+            Dispatch.trigger('sxs:route', {
+                'regParagraph': section,
+                'docNumber': version,
+                'fromVersion': params.from_version
+            });
         },
 
         backToSearchResults: function(reg, params) {
