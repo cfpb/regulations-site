@@ -19,10 +19,10 @@ class ChromeBreakawayView(ChromeView):
         #   Skip ChromeView's implementation
         context = super(ChromeView, self).get_context_data(**kwargs)
 
-        context['regulation'] = context['label_id'].split('-')[0]
+        context['reg_part'] = context['label_id'].split('-')[0]
         meta = api_reader.ApiReader().layer('meta',
-            context['regulation'], self.request.GET.get('from_version'))
-        context['meta'] = meta[context['regulation']][0]
+            context['reg_part'], self.request.GET.get('from_version'))
+        context['meta'] = meta[context['reg_part']][0]
 
         content = self.content(context)
         if isinstance(content, HttpResponse):  # error occurred
