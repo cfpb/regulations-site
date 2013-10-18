@@ -1,4 +1,4 @@
-define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model', './regs-router'], function($, _, Backbone, Dispatch, SxSModel, Router) {
+define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model'], function($, _, Backbone, Dispatch, SxSModel) {
     'use strict';
 
     var SxSView = Backbone.View.extend({
