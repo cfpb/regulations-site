@@ -3,8 +3,8 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
 
     var RegsRouter = Backbone.Router.extend({
         routes: {
-            ':section/:version': 'loadSection',
-            'search/:reg': 'backToSearchResults'
+            'search/:reg': 'backToSearchResults',
+            ':section/:version': 'loadSection'
         },
 
         loadSection: function(section) {
@@ -16,6 +16,7 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
         },
 
         backToSearchResults: function(reg, params) {
+return;
             var config = {
                 query: params.q,
                 version: params.version
