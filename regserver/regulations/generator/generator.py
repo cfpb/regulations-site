@@ -4,6 +4,7 @@ from django.conf import settings
 
 import api_reader
 from layers.analyses import SectionBySectionLayer
+from layers.defined import DefinedLayer
 from layers.definitions import DefinitionsLayer
 from layers.external_citation import ExternalCitationLayer
 from layers.internal_citation import InternalCitationLayer
@@ -23,29 +24,31 @@ import notices
 
 class LayerCreator(object):
     """ This lets us dynamically load layers by shorthand. """
-    INTERNAL = InternalCitationLayer.shorthand
-    TOC = TableOfContentsLayer.shorthand
+    DEFINED = DefinedLayer.shorthand
     EXTERNAL = ExternalCitationLayer.shorthand
-    TERMS = DefinitionsLayer.shorthand
-    SXS = SectionBySectionLayer.shorthand
-    PARAGRAPH = ParagraphMarkersLayer.shorthand
-    META = MetaLayer.shorthand
     GRAPHICS = GraphicsLayer.shorthand
+    INTERNAL = InternalCitationLayer.shorthand
     INTERP = InterpretationsLayer.shorthand
     KEY_TERMS = KeyTermsLayer.shorthand
+    META = MetaLayer.shorthand
+    PARAGRAPH = ParagraphMarkersLayer.shorthand
+    SXS = SectionBySectionLayer.shorthand
+    TERMS = DefinitionsLayer.shorthand
+    TOC = TableOfContentsLayer.shorthand
 
     LAYERS = {
-        INTERNAL: ('internal-citations', 'inline', InternalCitationLayer),
-        TOC: ('toc', 'paragraph', TableOfContentsLayer),
+        DEFINED: ('terms', 'inline', DefinedLayer),
         #EXTERNAL: ('external-citations', 'inline', ExternalCitationLayer),
-        TERMS: ('terms', 'inline', DefinitionsLayer),
-        SXS: ('analyses', 'paragraph', SectionBySectionLayer),
-        PARAGRAPH: (
-            'paragraph-markers', 'search_replace', ParagraphMarkersLayer),
-        META: ('meta', 'paragraph', MetaLayer),
         GRAPHICS: ('graphics', 'search_replace', GraphicsLayer),
+        INTERNAL: ('internal-citations', 'inline', InternalCitationLayer),
         INTERP: ('interpretations', 'paragraph', InterpretationsLayer),
         KEY_TERMS: ('keyterms', 'search_replace', KeyTermsLayer),
+        META: ('meta', 'paragraph', MetaLayer),
+        PARAGRAPH: (
+            'paragraph-markers', 'search_replace', ParagraphMarkersLayer),
+        SXS: ('analyses', 'paragraph', SectionBySectionLayer),
+        TERMS: ('terms', 'inline', DefinitionsLayer),
+        TOC: ('toc', 'paragraph', TableOfContentsLayer),
     }
 
     def __init__(self):
@@ -98,19 +101,19 @@ class DiffLayerCreator(LayerCreator):
 
     @staticmethod
     def combine_layer_versions(older_layer, newer_layer):
-        """ Create a new layer by taking all the nodes from the older 
+        """ Create a new layer by taking all the nodes from the older
         layer, and adding to the all the new nodes from the newer layer. """
 
         combined_layer = {}
 
         for n in older_layer:
             combined_layer[n] = older_layer[n]
-            
+
         for n in newer_layer:
             if n not in combined_layer:
                 combined_layer[n] = newer_layer[n]
 
-        return combined_layer 
+        return combined_layer
 
     def get_layer_json(self, api_name, regulation, version):
         older_layer = self.api.layer(api_name, regulation, version)
@@ -118,6 +121,7 @@ class DiffLayerCreator(LayerCreator):
 
         layer_json = self.combine_layer_versions(older_layer, newer_layer)
         return layer_json
+
 
 def get_regulation(regulation, version):
     """ Get the regulation JSON tree. Manipulate the label a bit for easier
