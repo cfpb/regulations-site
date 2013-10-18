@@ -21,8 +21,8 @@ class ChromeBreakawayView(ChromeView):
 
         context['regulation'] = context['label_id'].split('-')[0]
         context['version'] = self.request.GET.get('from_version')
-        meta = api_reader.ApiReader().layer('meta',
-            context['regulation'], context['version'])
+        meta = api_reader.ApiReader().layer(
+            'meta', context['regulation'], context['version'])
         context['meta'] = meta[context['regulation']][0]
 
         content = self.content(context)

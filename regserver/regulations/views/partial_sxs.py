@@ -48,7 +48,6 @@ class ParagraphSXSView(TemplateView):
             return [convert_to_python(a)
                     for a in reversed(sxs_layer_data[label_id])
                     if a['reference'] != [notice_id, label_id]]
-        
 
     def get_context_data(self, **kwargs):
         context = super(ParagraphSXSView, self).get_context_data(**kwargs)
@@ -73,7 +72,7 @@ class ParagraphSXSView(TemplateView):
         context['sxs'] = paragraph_sxs
         context['sxs']['header'] = label_to_text(label_id.split('-'))
         context['notice'] = notice
-        context['further_analyses'] = self.further_analyses(label_id,
-            notice_id, context['version'])
+        context['further_analyses'] = self.further_analyses(
+            label_id, notice_id, context['version'])
 
         return context
