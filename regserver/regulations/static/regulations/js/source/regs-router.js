@@ -14,8 +14,6 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
             options.scrollToId = Backbone.history.getHash();
 
             Dispatch.trigger('regSection:open', section, options, 'regSection'); 
-
-            Dispatch.trigger('sxs:close');
         },
 
         toSxS: function(section, version, params) {
