@@ -456,7 +456,19 @@ This contains all of the styles specific to the history
 
     .select-content {
         margin: 15px;
+        background: white url('../img/select-blue.png') no-repeat bottom right; 
     }
+
+
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .select-content {
+            background: white url('../img/select-blue@2x.png') no-repeat bottom right;
+            background-size: 32px 32px;
+        }
+    }
+
 }
 
 .js {
