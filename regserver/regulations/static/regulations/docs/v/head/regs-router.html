@@ -224,6 +224,8 @@
             options.scrollToId = Backbone.history.getHash();
 
             Dispatch.trigger(<span class="string">'regSection:open'</span>, section, options, <span class="string">'regSection'</span>); 
+
+            Dispatch.trigger(<span class="string">'sxs:close'</span>);
         },
 
         backToSearchResults: <span class="keyword">function</span>(reg, params) {
