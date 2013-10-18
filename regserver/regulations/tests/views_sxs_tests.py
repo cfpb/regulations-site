@@ -23,17 +23,19 @@ class ParagrasphSXSViewTests(TestCase):
         }
 
         psv = ParagraphSXSView()
-        self.assertEqual(psv.further_analyses('1212-31', 'doc1', 'v1'),
+        self.assertEqual(
+            psv.further_analyses('1212-31', 'doc1', 'v1'),
             convert_to_python([doc3, doc2]))
-        self.assertEqual(psv.further_analyses('1212-31', 'doc5', 'v1'),
+        self.assertEqual(
+            psv.further_analyses('1212-31', 'doc5', 'v1'),
             convert_to_python([doc3, doc2, doc1]))
-        self.assertEqual(psv.further_analyses('1212-31', 'doc3', 'v1'),
+        self.assertEqual(
+            psv.further_analyses('1212-31', 'doc3', 'v1'),
             convert_to_python([doc2, doc1]))
 
-        self.assertEqual(psv.further_analyses('1212-31-b', 'doc3', 'v1'),
+        self.assertEqual(
+            psv.further_analyses('1212-31-b', 'doc3', 'v1'),
             convert_to_python([doc4]))
-        self.assertEqual(psv.further_analyses('1212-31-b', 'doc4', 'v1'),
-            [])
+        self.assertEqual(psv.further_analyses('1212-31-b', 'doc4', 'v1'), [])
 
-        self.assertEqual(psv.further_analyses('1212-31-c', 'doc1', 'v1'),
-            [])
+        self.assertEqual(psv.further_analyses('1212-31-c', 'doc1', 'v1'), [])
