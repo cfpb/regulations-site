@@ -73,7 +73,6 @@ class PartialSearch(PartialView):
             for notice in version['notices']:
                 if notice['document_number'] == context['version']:
                     context['version_by_date'] = notice['effective_on']
-                    context['version_timeline'] = version['timeline']
 
         self.add_prev_next(page, context)
         self.final_context = context

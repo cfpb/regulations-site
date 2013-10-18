@@ -26,7 +26,6 @@ casper.wait(5000);
 
 casper.then(function() {
     this.test.assertEquals(url + '/1005-4/2013-06861', this.getCurrentUrl(), 'TOC click loads reg section - routing');
-    this.test.assertEquals(this.getHTML('.section-title'), ' General disclosure requirements; jointly offered services.', 'TOC click loads reg section - title');
 });
 
 casper.run(function() {

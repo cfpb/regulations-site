@@ -299,14 +299,18 @@ This contains all of the styles specific to the TOC
     */
 
     .modified a,
-    .added a {
-        border-right: 8px solid @green_midtone;
+    .modified a:link,
+    .modified a:visited,
+    .added a,
+    .added a:link,
+    .added a:visited {
+        border-left: 5px solid @green_midtone;
     }
 
     .deleted a,
     .deleted a:link,
     .deleted a:visited {
-        border-right: 8px solid @red_orange_50;
+        border-left: 5px solid @red_orange_80;
         text-decoration: line-through;
         color: @light_field;
     }

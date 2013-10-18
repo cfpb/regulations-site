@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">71.31</p>
+      <p class="stat">71.07</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">73</p>
+      <p class="stat">69</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">15.27</p>
+      <p class="stat">12.73</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.57</p>
+      <p class="stat">0.53</p>
     </div>
   </div>
 </div>
@@ -101,40 +101,36 @@
 
         initialize: function() {
             this.model = new FolderModel({supplementalPath: &#039;sidebar&#039;});
+            this.render = _.bind(this.render, this);
 
             Dispatch.on(&#039;regSection:open:after&#039;, this.getSidebar, this);
 
             this.modifyListDisplay();
+
+            // if the browser doesn&#039;t support pushState, don&#039;t 
+            // trigger click events for links
+            if (Dispatch.hasPushState === false) {
+                this.events = {};
+            }
         },
 
         openSxS: function(e) {
-            if (window.history &amp;&amp; window.history.pushState) {
-                e.preventDefault();
+            e.preventDefault();
 
-                var $sxsLink = $(e.target),
-                    paragraphId = $sxsLink.data(&#039;sxs-paragraph-id&#039;),
-                    docNumber = $sxsLink.data(&#039;doc-number&#039;);
+            var $sxsLink = $(e.target),
+                paragraphId = $sxsLink.data(&#039;sxs-paragraph-id&#039;),
+                docNumber = $sxsLink.data(&#039;doc-number&#039;);
 
-                Dispatch.set(&#039;sxs-analysis&#039;, new SxSView({
-                        regParagraph: paragraphId,
-                        docNumber: docNumber,
-                        fromVersion: Dispatch.getVersion()
-                    })
-                );
-            }
+            Dispatch.set(&#039;sxs-analysis&#039;, new SxSView({
+                    regParagraph: paragraphId,
+                    docNumber: docNumber,
+                    fromVersion: Dispatch.getVersion()
+                })
+            );
         },
 
         getSidebar: function(sectionId) {
-            var partial = this.model.get(sectionId);
-
-            if (typeof partial.done !== &#039;undefined&#039;) {
-                partial.done(function(sxs) {
-                    this.render(sxs);
-                }.bind(this));
-            }
-            else {
-                this.render(partial);
-            }
+            this.model.get(sectionId, this.render);
         },
 
         render: function(html) {

@@ -3,7 +3,7 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'dispatch'], functio
 
     var HistoryView = Backbone.View.extend({
 
-        el: '#history:not(.diff-history)',
+        el: '#timeline:not(.diff-history)',
 
         events: {
             'click .version-link': 'setStorageItem'
@@ -24,7 +24,7 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'dispatch'], functio
         },
 
         setStorageItem: function() {
-            sessionStorage.setItem('drawerDefault', 'history');
+            sessionStorage.setItem('drawerDefault', 'timeline');
         },
 
         updateLinks: function() {

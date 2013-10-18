@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">64.55</p>
+      <p class="stat">64.10</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">191</p>
+      <p class="stat">187</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">27.40</p>
+      <p class="stat">25.73</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">1.59</p>
+      <p class="stat">1.53</p>
     </div>
   </div>
 </div>
@@ -112,9 +112,24 @@ define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;,
         className: &#039;open-definition&#039;,
         events: {
             &#039;click .close-button.tab-activated&#039;: &#039;close&#039;,
-            &#039;click .close-button&#039;: &#039;headerButtonClose&#039;,
-            &#039;click .definition&#039;: &#039;sendDefinitionLinkEvent&#039;,
-            &#039;click .continue-link&#039;: &#039;sendContinueLinkEvent&#039;
+            &#039;click .close-button&#039;: &#039;headerButtonClose&#039;
+        },
+
+        initialize: function() {
+            var bodyText;
+
+            this.render = _.bind(this.render, this);
+            this.id = this.options.id;
+
+            // if pushState is supported, attach the
+            // appropriate event handlers
+            if (Dispatch.hasPushState) {
+                this.events[&#039;click .definition&#039;] = &#039;sendDefinitionLinkEvent&#039;;
+                this.events[&#039;click .continue-link&#039;] = &#039;sendContinueLinkEvent&#039;;
+                this.delegateEvents(this.events);
+            }
+
+            bodyText = RegModel.get(this.id, this.render);
         },
 
         formatInterpretations: function() {
@@ -177,53 +192,34 @@ define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;,
         },
 
         sendContinueLinkEvent: function(e) {
-            if (window.history &amp;&amp; window.history.pushState) {
-                e.preventDefault();
-                var $link = $(e.target),
-                    href = $link.attr(&#039;href&#039;),
-                    p = $link.data(&#039;linked-section&#039;);
+            e.preventDefault();
+            var $link = $(e.target),
+                href = $link.attr(&#039;href&#039;),
+                p = $link.data(&#039;linked-section&#039;);
 
-                this.definitionRouter(href, p, &#039;clicked continue link&#039;);
-            }
+            this.definitionRouter(href, p, &#039;clicked continue link&#039;);
         },
 
         sendDefinitionLinkEvent: function(e) {
-            if (window.history &amp;&amp; window.history.pushState) {
-                e.preventDefault();
-                var $link = $(e.target),
-                    href = $link.attr(&#039;href&#039;),
-                    p = Helpers.findBaseSection($link.data(&#039;definition&#039;));
+            e.preventDefault();
+            var $link = $(e.target),
+                href = $link.attr(&#039;href&#039;),
+                p = Helpers.findBaseSection($link.data(&#039;definition&#039;));
 
-                this.definitionRouter(href, p, &#039;clicked term inside definition&#039;);
-            }
+            this.definitionRouter(href, p, &#039;clicked term inside definition&#039;);
         },
 
-        render: function() {
-            var defHTML = RegModel.get(this.model.id);
-
-            if (typeof defHTML.done !== &#039;undefined&#039;) {
-                defHTML.done(function(res) {
-                    this.template(res);
-                }.bind(this));
-            }
-            else {
-                this.template(defHTML);
-            }
-
-            return this;
-        },
-
-        template: function(res) {
+        render: function(res) {
             var $defText, parentId, url, prefix;
             this.$el.html(&#039;&lt;div class=&quot;definition-text&quot;&gt;&#039; + res + &#039;&lt;/div&gt;&#039;);
 
             $defText = this.$el.find(&#039;.definition-text&#039;);
-            parentId = Helpers.findBaseSection(this.model.id);
+            parentId = Helpers.findBaseSection(this.id);
             this.$el.prepend(&#039;&lt;div class=&quot;sidebar-header group&quot;&gt;&lt;h4&gt;Defined Term&lt;a class=&quot;right close-button&quot; href=&quot;#&quot;&gt;Close definition&lt;/a&gt;&lt;/h4&gt;&lt;/div&gt;&#039;);
 
             prefix = Dispatch.getURLPrefix();
 
-            url = &#039;/&#039; + parentId + &#039;/&#039; + Dispatch.getVersion() + &#039;#&#039; + this.model.id;
+            url = &#039;/&#039; + parentId + &#039;/&#039; + Dispatch.getVersion() + &#039;#&#039; + this.id;
 
             if (prefix) {
                 url = &#039;/&#039; + prefix + url;
@@ -233,7 +229,7 @@ define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;,
             $defText.append(
                 Helpers.fastLink(
                     url, 
-                    Helpers.idToRef(this.model.id),
+                    Helpers.idToRef(this.id),
                     &#039;continue-link internal&#039;,
                     [&#039;data-linked-section&#039;, parentId]
                 )
@@ -262,23 +258,23 @@ define(&#039;definition-view&#039;, [&#039;jquery&#039;, &#039;underscore&#039;,
             Dispatch.remove(&#039;definition&#039;);
             Dispatch.trigger(&#039;ga-event:definition&#039;, {
                 action: &#039;closed definition by tab-revealed link&#039;,
-                context: this.model.id
+                context: this.id
             });
-            Dispatch.trigger(&#039;definition:remove&#039;, this.model.id);
+            Dispatch.trigger(&#039;definition:remove&#039;, this.id);
         },
 
         headerButtonClose: function(e) {
             e.preventDefault();
             Dispatch.remove(&#039;definition&#039;);
             Dispatch.trigger(&#039;ga-event:definition&#039;, &#039;close by header button&#039;);
-            Dispatch.trigger(&#039;definition:remove&#039;, this.model.id);
+            Dispatch.trigger(&#039;definition:remove&#039;, this.id);
         },
 
         remove: function() {
             this.stopListening();
             this.$el.remove();
             // **Event trigger** notifies app that definition is removed
-            Dispatch.trigger(&#039;sidebarModule:remove&#039;, this.model.id);
+            Dispatch.trigger(&#039;sidebarModule:remove&#039;, this.id);
 
             // return focus to the definition link once the definition is removed
             $(&#039;.definition.active&#039;).focus();

@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse, NoReverseMatch
 from django.http import HttpResponseBadRequest
 from django.views.generic.base import TemplateView
 
-from regulations.generator import generator, notices
+from regulations.generator import api_reader, generator, notices
 from regulations.generator.layers.utils import convert_to_python
 from regulations.generator.node_types import label_to_text
 from regulations.views import error_handling
@@ -29,10 +29,25 @@ class ParagraphSXSView(TemplateView):
                 'version': request.GET.get('from_version')
             }) + '#' + kwargs['label_id']
             kwargs['back_url'] = back_url
+            kwargs['version'] = request.GET.get('from_version')
             return super(ParagraphSXSView, self).get(request, *args,
                                                      **kwargs)
         except NoReverseMatch:
             return HttpResponseBadRequest("invalid from_version")
+
+    def further_analyses(self, label_id, notice_id, version):
+        """Grab other analyses for this same paragraph (limiting to those
+           visible from this regulation version.) Make them in descending
+           order"""
+        sxs_layer_data = api_reader.ApiReader().layer('analyses', label_id,
+                                                      version)
+
+        if label_id not in sxs_layer_data:
+            return []
+        else:
+            return [convert_to_python(a)
+                    for a in reversed(sxs_layer_data[label_id])
+                    if a['reference'] != [notice_id, label_id]]
 
     def get_context_data(self, **kwargs):
         context = super(ParagraphSXSView, self).get_context_data(**kwargs)
@@ -57,5 +72,7 @@ class ParagraphSXSView(TemplateView):
         context['sxs'] = paragraph_sxs
         context['sxs']['header'] = label_to_text(label_id.split('-'))
         context['notice'] = notice
+        context['further_analyses'] = self.further_analyses(
+            label_id, notice_id, context['version'])
 
         return context
