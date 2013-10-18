@@ -3,6 +3,8 @@
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
 from regulations.generator.layers.toc_applier import TableOfContentsLayer
+from regulations.generator.navigation import choose_next_section
+from regulations.generator.navigation import choose_previous_section
 from regulations.generator.node_types import EMPTYPART, REGTEXT
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views import error_handling, utils
@@ -19,7 +21,7 @@ def get_appliers(label_id, older, newer):
         raise error_handling.MissingContentException()
 
     appliers = utils.handle_diff_layers(
-        'graphics,paragraph,keyterms',
+        'graphics,paragraph,keyterms,defined',
         label_id,
         older,
         newer)
@@ -39,6 +41,27 @@ class PartialSectionDiffView(PartialView):
                                                            **kwargs)
         except error_handling.MissingContentException, e:
             return error_handling.handle_generic_404(request)
+
+    def footer_nav(self, label, toc, old_version, new_version):
+        nav = {}
+        for idx, toc_entry in enumerate(toc):
+            if toc_entry['section_id'] != label:
+                continue
+
+            p_sect = choose_previous_section(idx, toc)
+            n_sect = choose_next_section(idx, toc)
+
+            if p_sect:
+                nav['previous'] = p_sect
+                nav['previous']['url'] = reverse(
+                    'chrome_section_diff_view',
+                    args=(p_sect['section_id'], old_version, new_version))
+            if n_sect:
+                nav['next'] = n_sect
+                nav['next']['url'] = reverse(
+                    'chrome_section_diff_view',
+                    args=(n_sect['section_id'], old_version, new_version))
+        return nav
 
     def get_context_data(self, **kwargs):
         # We don't want to run the content data of PartialView -- it assumes
@@ -68,6 +91,13 @@ class PartialSectionDiffView(PartialView):
                 'node_type': EMPTYPART,
                 'children': [builder.tree]}
         context['tree'] = {'children': [child_of_root]}
+
+        regpart = label_id.split('-')[0]
+        old_toc = utils.table_of_contents(regpart, older, True)
+        diff = generator.get_diff_json(regpart, older, newer)
+        context['TOC'] = diff_toc(older, newer, old_toc, diff)
+        context['navigation'] = self.footer_nav(label_id, context['TOC'],
+                                                older, newer)
         return context
 
 
@@ -83,17 +113,11 @@ class ChromeSectionDiffView(ChromeView):
         context['left_version'] = context['version']
         context['right_version'] = \
             context['main_content_context']['newer_version']
-        diff = generator.get_diff_json(
-            context['reg_part'], context['version'], context['right_version'])
 
-        old_toc = utils.table_of_contents(
-            context['reg_part'],
-            context['version'],
-            self.partial_class.sectional_links)
-        context['TOC'] = diff_toc(context, old_toc, diff)
+        context['TOC'] = context['main_content_context']['TOC']
 
 
-def diff_toc(context, old_toc, diff):
+def diff_toc(older_version, newer_version, old_toc, diff):
     compiled_toc = list(old_toc)
     for node in (v['node'] for v in diff.values() if v['op'] == 'added'):
         if len(node['label']) == 2 and node['title']:
@@ -110,9 +134,8 @@ def diff_toc(context, old_toc, diff):
 
     modified, deleted = modified_deleted_sections(diff)
     for el in compiled_toc:
-        newer_version = context['main_content_context']['newer_version']
         el['url'] = reverse('chrome_section_diff_view', kwargs={
-            'label_id': el['section_id'], 'version': context['version'],
+            'label_id': el['section_id'], 'version': older_version,
             'newer_version': newer_version})
         # Deleted first, lest deletions in paragraphs affect the section
         if tuple(el['index']) in deleted and 'op' not in el:
