@@ -6,10 +6,6 @@ from regulations.views.diff import *
 class ChromeSectionDiffViewTests(TestCase):
     def test_diff_toc(self):
         """Integration test."""
-        context = {
-            'version': 'oldold',
-            'main_content_context': {'newer_version': 'newnew'}
-        }
         old_toc = [{'section_id': '8888-1', 'index': ['8888', '1']},
                    {'section_id': '8888-3', 'index': ['8888', '3']},
                    {'section_id': '8888-4', 'index': ['8888', '4']},
@@ -27,7 +23,7 @@ class ChromeSectionDiffViewTests(TestCase):
             '8888-B-1': {'op': 'modified'}
         }
 
-        result = diff_toc(context, old_toc, diff)
+        result = diff_toc('oldold', 'newnew', old_toc, diff)
         self.assertEqual(8, len(result))
         self.assertTrue('8888-1' in result[0]['url'])
         self.assertEqual('8888-1', result[0]['section_id'])
@@ -56,3 +52,39 @@ class ChromeSectionDiffViewTests(TestCase):
         for el in result:
             self.assertTrue('oldold', el['url'])
             self.assertTrue('newnew', el['url'])
+
+
+class PartialSectionDiffViewTests(TestCase):
+    def test_footer_nav(self):
+        view = PartialSectionDiffView()
+        toc = [{'section_id': '9898-1'}, {'section_id': '9898-5'},
+               {'section_id': '9898-A'}, {'section_id': '9898-Interp'}]
+        self.assertEqual({}, view.footer_nav('9898-2', toc, 'old', 'new'))
+
+        result = view.footer_nav('9898-1', toc, 'old', 'new')
+        self.assertFalse('previous' in result)
+        self.assertTrue('9898-5' in result['next']['url'])
+        self.assertTrue('old' in result['next']['url'])
+        self.assertTrue('new' in result['next']['url'])
+
+        result = view.footer_nav('9898-5', toc, 'old', 'new')
+        self.assertTrue('9898-1' in result['previous']['url'])
+        self.assertTrue('old' in result['previous']['url'])
+        self.assertTrue('new' in result['previous']['url'])
+        self.assertTrue('9898-A' in result['next']['url'])
+        self.assertTrue('old' in result['next']['url'])
+        self.assertTrue('new' in result['next']['url'])
+
+        result = view.footer_nav('9898-A', toc, 'old', 'new')
+        self.assertTrue('9898-5' in result['previous']['url'])
+        self.assertTrue('old' in result['previous']['url'])
+        self.assertTrue('new' in result['previous']['url'])
+        self.assertTrue('9898-Interp' in result['next']['url'])
+        self.assertTrue('old' in result['next']['url'])
+        self.assertTrue('new' in result['next']['url'])
+
+        result = view.footer_nav('9898-Interp', toc, 'old', 'new')
+        self.assertTrue('9898-A' in result['previous']['url'])
+        self.assertTrue('old' in result['previous']['url'])
+        self.assertTrue('new' in result['previous']['url'])
+        self.assertFalse('next' in result)
