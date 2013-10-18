@@ -13,7 +13,7 @@ table of contents and the version tab are quite different
         to
         {% for version in history %} {% if version.version == newer_version %}{{ version.by_date|date }}{% endif %} {% endfor %}
     {% endwith %}
-<h2> </h2>
+<h2> </h2></span>
 {% endblock %}
 
 {% block sidebar-history-link %}
@@ -42,7 +42,7 @@ table of contents and the version tab are quite different
 {% endblock %}
 
 {% block drawer-history %}
-    <div id="history" class="history-drawer toc-container hidden diff-history">
+    <div id="timeline" class="history-drawer toc-container hidden diff-history">
         <div class="drawer-header">
             <h2 class="toc-type">Regulation versions</h2>
         </div><!-- /.drawer-header -->

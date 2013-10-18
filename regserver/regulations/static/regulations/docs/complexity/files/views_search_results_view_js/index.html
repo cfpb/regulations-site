@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">65.95</p>
+      <p class="stat">65.66</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">51</p>
+      <p class="stat">55</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">17.75</p>
+      <p class="stat">17.76</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.44</p>
+      <p class="stat">0.43</p>
     </div>
   </div>
 </div>
@@ -105,7 +105,7 @@
             Dispatch.trigger(&#039;searchResults:open&#039;, $results.html());
             $results.remove();
 
-            if (window.history &amp;&amp; window.history.pushState) {
+            if (Dispatch.hasPushState) {
                 if (typeof this.options.url !== &#039;undefined&#039;) {
                     Router.navigate(&#039;search/&#039; + this.options.url);
                 }
@@ -114,21 +114,25 @@
             this.query = this.options.query;
             this.version = this.options.version;
             this.page = this.options.page || 0;
+
+            // if the browser doesn&#039;t support pushState, don&#039;t 
+            // trigger click events for links
+            if (Dispatch.hasPushState === false) {
+                this.events = {};
+            }
         },
 
         paginate: function(e) {
-            if (window.history &amp;&amp; window.history.pushState) {
-                e.preventDefault();
+            e.preventDefault();
 
-                var page = $(e.target).hasClass(&#039;previous&#039;) ? this.page - 1 : this.page + 1,
-                    config = {
-                        query: this.query,
-                        version: this.version,
-                        page: page
-                    };
+            var page = $(e.target).hasClass(&#039;previous&#039;) ? this.page - 1 : this.page + 1,
+                config = {
+                    query: this.query,
+                    version: this.version,
+                    page: page
+                };
 
-                Dispatch.trigger(&#039;search:submitted&#039;, config, &#039;searchResults&#039;);
-            }
+            Dispatch.trigger(&#039;search:submitted&#039;, config, &#039;searchResults&#039;);
         },
 
         remove: function() {
