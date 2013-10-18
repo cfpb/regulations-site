@@ -1,4 +1,4 @@
-define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar-list-view', './folder-model', 'sxs-view'], function($, _, Backbone, Dispatch, SidebarListView, FolderModel, SxSView) {
+define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar-list-view', './folder-model', 'sxs-view', './regs-router'], function($, _, Backbone, Dispatch, SidebarListView, FolderModel, SxSView, Router) {
     'use strict';
     var SxSListView = SidebarListView.extend({
         el: '#sxs-list',
@@ -12,6 +12,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
             this.render = _.bind(this.render, this);
 
             Dispatch.on('regSection:open:after', this.getSidebar, this);
+            Dispatch.on('sxs:route', this.createSxSView, this);
 
             this.modifyListDisplay();
 
@@ -25,16 +26,35 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         openSxS: function(e) {
             e.preventDefault();
 
-            var $sxsLink = $(e.target),
-                paragraphId = $sxsLink.data('sxs-paragraph-id'),
-                docNumber = $sxsLink.data('doc-number');
+            var $sxsLink = $(e.target);
+
+            this.createSxSView({
+                    'regParagraph': $sxsLink.data('sxs-paragraph-id'),
+                    'docNumber': $sxsLink.data('doc-number'),
+                    'fromVersion': Dispatch.getVersion()
+                },
+                function(sxsURL) {
+                    if (Dispatch.hasPushState) {
+                        Router.navigate('sxs/' + sxsURL);
+                    }
+                }
+            );
+        },
+
+        createSxSView: function(options, callback) {
+            var sxsURL = options.regParagraph + '/' + options.docNumber + '?from_version=' + options.fromVersion;
 
             Dispatch.set('sxs-analysis', new SxSView({
-                    regParagraph: paragraphId,
-                    docNumber: docNumber,
-                    fromVersion: Dispatch.getVersion()
+                    'regParagraph': options.paragraphId,
+                    'docNumber': options.docNumber,
+                    'fromVersion': options.version,
+                    'url': sxsURL
                 })
             );
+
+            if (typeof callback !== 'undefined') {
+                callback(sxsURL);
+            }
         },
 
         getSidebar: function(sectionId) {

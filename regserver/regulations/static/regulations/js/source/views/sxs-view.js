@@ -9,17 +9,12 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
         },
 
         initialize: function() {
-            var sxsURL = this.options.regParagraph + '/' + this.options.docNumber + '?from_version=' + this.options.fromVersion,
-                 render;
-            //
+            var render;
+
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
             render = function(returned) {
                 this.render(returned);
-
-                if (Dispatch.hasPushState) {
-                    Router.navigate('sxs/' + sxsURL);
-                }
 
                 Dispatch.trigger('ga-event:sxs', {
                     opensxs: this.options.regParagraph + ' ' + this.options.docNumber + ' ' + this.options.fromVersion
@@ -27,7 +22,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
 
             }.bind(this);
 
-            SxSModel.get(sxsURL, render),
+            SxSModel.get(this.options.url, render),
 
             Dispatch.on('sxs:close', this.closeAnalysis, this);
 
