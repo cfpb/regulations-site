@@ -5,7 +5,7 @@
 {% comment %}
     Page-level template for breakaway views with chrome. Right now, this only includes section-by-section analysis.
 {% endcomment %}
-<div class="full-breakaway">
+<section class="full-breakaway" data-base-version="{{version}}">
     <header id="site-header" class="reg-header">
         <div class="main-head">
             <div class="reg-title">
@@ -18,6 +18,6 @@
     </header>
 
     <div id="breakaway-view">{{ partial_content|safe }}</div>
-</div>
+</section>
 
 {% endblock %}
