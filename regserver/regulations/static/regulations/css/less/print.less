@@ -45,7 +45,7 @@ p {
  .regs-meta,
  .sxs-back-button,
  footer {
-    display: none;
+    display: none !important;
  }
 
  /*
@@ -62,7 +62,7 @@ p {
     position: static;
     max-width: 100%;
     width: 100%;
-    float: none;
+    float: none !important;
     margin: 0;
     padding: 0;
 }
@@ -213,5 +213,23 @@ a[href^="http://"] {
     background-color: none;
     border-bottom: 0;
   }
+
+#breakaway-view.open-sxs, 
+.full-breakaway {
+    position: static;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    min-height: auto;
+    background: none;
+}
+
+.sxs-main-content,
+.sxs-metadata {
+    overflow: visible !important;
+    margin: 0 !important;
+    height: auto !important;
+}
 
 } /* end /@media print media query */
