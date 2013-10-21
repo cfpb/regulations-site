@@ -4,8 +4,8 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
     var RegsRouter = Backbone.Router.extend({
         routes: {
             'sxs/:section/:version': 'toSxS',
-            //'search/:reg': 'backToSearchResults',
-            '/:section/:version': 'loadSection'
+            'search/:reg': 'backToSearchResults',
+            ':section/:version': 'loadSection'
         },
 
         loadSection: function(section) {
@@ -26,16 +26,17 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
         },
 
         backToSearchResults: function(reg, params) {
-            var config = {
-                query: params.q,
-                version: params.version
-            };
-
-            if (typeof params.page !== 'undefined') {
-                config.page = params.page;
-            }
-
-            Dispatch.trigger('search:submitted', config, 'searchResults');
+// for when search is dynamically loaded again
+//            var config = {
+//                query: params.q,
+//                version: params.version
+//            };
+//
+//            if (typeof params.page !== 'undefined') {
+//                config.page = params.page;
+//            }
+//
+//            Dispatch.trigger('search:submitted', config, 'searchResults');
         },
 
         start:  function() {
