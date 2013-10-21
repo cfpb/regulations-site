@@ -49,6 +49,8 @@ def label_to_text(label, include_section=True, include_marker=False):
         if suffix:
             return 'Comment for %s-%s' % (label_to_text(prefix),
                                           '.'.join(suffix))
+        elif len(prefix) == 1:
+            return 'Supplement I to Part %s' % prefix[0]
         else:
             return 'Comment for %s' % label_to_text(prefix)
     elif label[1].isalpha():
