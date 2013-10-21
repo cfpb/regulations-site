@@ -132,6 +132,13 @@ Drawer Links
             background-color: @light_field;
             border-bottom: 1px solid @medium_gray;
     }
+
+    .active-tab {
+        a:link,
+        a:visited {
+            color: #D14124;
+        }
+    }
 }
 
 /*
@@ -175,8 +182,8 @@ currently these are TOC, History, and Search
 
 .toc-nav-link {
     display: inline-block;
-    *display: inline;
     zoom: 1;
+    *display: inline;
     height: 100%;
     padding: 0;
     margin: 0;
@@ -200,6 +207,8 @@ currently these are TOC, History, and Search
 
 .drawer-toggles li {
     display: inline-block;
+    zoom: 1;
+    *display: inline;
     margin-left: -4px;
     border-right: 1px solid @medium_gray;
 }
@@ -417,6 +426,12 @@ This contains all of the styles specific to the history
         color: @dark_text;
     }
 
+    .compare-title{
+        margin: 10px 15px 0 15px;
+        padding-top: 15px;
+        border-top: 1px solid @light_field;
+    }
+
     .rule-status {
         color: @dark_text;
         text-transform: lowercase;
@@ -441,16 +456,28 @@ This contains all of the styles specific to the history
 
     .select-content {
         margin: 15px;
+        background: white url('../img/select-blue.png') no-repeat bottom right; 
     }
+
+
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .select-content {
+            background: white url('../img/select-blue@2x.png') no-repeat bottom right;
+            background-size: 32px 32px;
+        }
+    }
+
 }
 
 .js {
-   .rule-list {
-    display: none;
+   .timeline-content-wrap {
+        display: none;
    } 
 
-   .current .rule-list {
-    display: block;
+   .current .timeline-content-wrap {
+        display: block;
    }
 
    /*
