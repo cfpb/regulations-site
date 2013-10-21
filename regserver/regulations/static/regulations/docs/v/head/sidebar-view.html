@@ -240,6 +240,7 @@
             Dispatch.on(<span class="string">'regSection:open'</span>, <span class="keyword">this</span>.removeLandingSidebar, <span class="keyword">this</span>);
 
             <span class="keyword">this</span>.childViews = {};
+            <span class="keyword">this</span>.$el.definition = <span class="keyword">this</span>.$el.find(<span class="string">'#definition'</span>);
             <span class="keyword">this</span>.openRegFolders();
         },
 
@@ -290,7 +291,7 @@
         },
 
         insertDefinition: <span class="keyword">function</span>(el) {
-            <span class="keyword">this</span>.$el.prepend(el);
+            <span class="keyword">this</span>.$el.definition.html(el);
         },
 
         closeExpandables: <span class="keyword">function</span>() {
