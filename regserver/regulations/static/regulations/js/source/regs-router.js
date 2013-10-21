@@ -5,7 +5,7 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
         routes: {
             'sxs/:section/:version': 'toSxS',
             //'search/:reg': 'backToSearchResults',
-            ':section/:version': 'loadSection'
+            '/:section/:version': 'loadSection'
         },
 
         loadSection: function(section) {
