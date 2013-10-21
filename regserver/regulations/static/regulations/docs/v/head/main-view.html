@@ -255,6 +255,7 @@ called after ajax resolves sucessfully</p>
             <div class="content"><div class='highlight'><pre>            render = <span class="keyword">function</span>(returned) {
                 <span class="keyword">this</span>.createView(returned, options, type); 
                 <span class="keyword">this</span>.loaded();
+                Dispatch.trigger(<span class="string">'sxs:close'</span>);
             }.bind(<span class="keyword">this</span>);</pre></div></div>
             
         </li>
