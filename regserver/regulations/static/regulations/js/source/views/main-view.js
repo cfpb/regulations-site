@@ -45,6 +45,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             render = function(returned) {
                 this.createView(returned, options, type); 
                 this.loaded();
+                Dispatch.trigger('sxs:close');
             }.bind(this);
 
             // simplifies to
