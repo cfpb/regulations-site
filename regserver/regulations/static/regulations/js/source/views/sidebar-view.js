@@ -70,6 +70,13 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
         },
 
         insertDefinition: function(el) {
+            if (this.$el.definition.length === 0) {
+                // if the page was loaded on the landing, search or 404 page, 
+                // it won't have the content sidebar template
+                this.$el.prepend('<section id="definition"></section>');
+                this.$el.definition = this.$el.find('#definition');
+            }
+
             this.$el.definition.html(el);
         },
 
