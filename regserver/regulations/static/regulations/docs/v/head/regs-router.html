@@ -201,22 +201,9 @@
 
     <span class="keyword">var</span> RegsRouter = Backbone.Router.extend({
         routes: {
-            <span class="string">'sxs/:section/:version'</span>: <span class="string">'toSxS'</span>,</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>&#39;search/:reg&#39;: &#39;backToSearchResults&#39;,</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="string">'/:section/:version'</span>: <span class="string">'loadSection'</span>
+            <span class="string">'sxs/:section/:version'</span>: <span class="string">'toSxS'</span>,
+            <span class="string">'search/:reg'</span>: <span class="string">'backToSearchResults'</span>,
+            <span class="string">':section/:version'</span>: <span class="string">'loadSection'</span>
         },
 
         loadSection: <span class="keyword">function</span>(section) {
@@ -237,17 +224,31 @@
         },
 
         backToSearchResults: <span class="keyword">function</span>(reg, params) {
-            <span class="keyword">var</span> config = {
-                query: params.q,
-                version: params.version
-            };
+<span class="comment">/* jshint unused: false */</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>for when search is dynamically loaded again
+           var config = {
+               query: params.q,
+               version: params.version
+           };</p>
+<pre><code>       if (typeof params.page !== &#39;undefined&#39;) {
+           config.page = params.page;
+       }
 
-            <span class="keyword">if</span> (<span class="keyword">typeof</span> params.page !== <span class="string">'undefined'</span>) {
-                config.page = params.page;
-            }
+       Dispatch.trigger(&#39;search:submitted&#39;, config, &#39;searchResults&#39;);</code></pre>
 
-            Dispatch.trigger(<span class="string">'search:submitted'</span>, config, <span class="string">'searchResults'</span>);
-        },
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        },
 
         start:  <span class="keyword">function</span>() {
             <span class="keyword">var</span> root = Dispatch.getURLPrefix() || <span class="string">'/'</span>;

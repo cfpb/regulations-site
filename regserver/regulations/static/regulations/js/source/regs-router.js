@@ -26,6 +26,7 @@ define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], fun
         },
 
         backToSearchResults: function(reg, params) {
+/* jshint unused: false */
 // for when search is dynamically loaded again
 //            var config = {
 //                query: params.q,
