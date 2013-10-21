@@ -99,7 +99,7 @@
                                 <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
                             {% endfor %}
                                 </ul>
-                                <div class="group" class="diff-selector">
+                                <div class="diff-selector group">
                                 <h4 class="compare-title">Compare this with</h4>
                                 <div class="select-content">
                                 <form action="{% url 'diff_redirect' label_id active_version %}" method="GET">
