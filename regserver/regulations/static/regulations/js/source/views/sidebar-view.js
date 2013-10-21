@@ -31,6 +31,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
             Dispatch.on('regSection:open', this.removeLandingSidebar, this);
 
             this.childViews = {};
+            this.$el.definition = this.$el.find('#definition');
             this.openRegFolders();
         },
 
@@ -69,7 +70,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar
         },
 
         insertDefinition: function(el) {
-            this.$el.prepend(el);
+            this.$el.definition.html(el);
         },
 
         closeExpandables: function() {
