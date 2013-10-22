@@ -240,6 +240,7 @@
             Dispatch.on(<span class="string">'regSection:open'</span>, <span class="keyword">this</span>.removeLandingSidebar, <span class="keyword">this</span>);
 
             <span class="keyword">this</span>.childViews = {};
+            <span class="keyword">this</span>.$el.definition = <span class="keyword">this</span>.$el.find(<span class="string">'#definition'</span>);
             <span class="keyword">this</span>.openRegFolders();
         },
 
@@ -290,7 +291,27 @@
         },
 
         insertDefinition: <span class="keyword">function</span>(el) {
-            <span class="keyword">this</span>.$el.prepend(el);
+            <span class="keyword">if</span> (<span class="keyword">this</span>.$el.definition.length === <span class="number">0</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>if the page was loaded on the landing, search or 404 page, 
+it won&#39;t have the content sidebar template</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="keyword">this</span>.$el.prepend(<span class="string">'&lt;section id="definition"&gt;&lt;/section&gt;'</span>);
+                <span class="keyword">this</span>.$el.definition = <span class="keyword">this</span>.$el.find(<span class="string">'#definition'</span>);
+            }
+
+            <span class="keyword">this</span>.$el.definition.html(el);
         },
 
         closeExpandables: <span class="keyword">function</span>() {
