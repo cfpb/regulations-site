@@ -65,17 +65,6 @@
             float: left;
         }
 
-        .regs-meta:first-child {
-            border-right: none;
-        }
-
-        .regs-meta:last-child {
-            .chunk {
-                margin-left: 0;
-                border-left: none;
-            }
-        }
-
         /* reset expandable styles */
         .expandable {
             h4 {
@@ -88,6 +77,10 @@
         }
     }
 
+    .sidebar-inner > .regs-meta:nth-of-type(2) {
+        border-top: 1px solid @light_neutral;
+    }
+
     /*
     Definitions
     ------------
@@ -95,12 +88,12 @@
     */
     .open-definition {
         position: fixed;
-        top: 70%;
+        top: 60%;
         bottom: 0;
         left: 0;
         min-width: 100%;
         min-height: 200px;
-        padding: 20px 20px 80px 60px;
+        padding: 0 20px 80px 50px;
         background: @bg_gray;
         .border-top-light(@width: 2px);
         z-index: 200;
