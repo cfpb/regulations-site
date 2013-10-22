@@ -369,8 +369,21 @@ This contains all of the styles specific to the history
         z-index: 0;
     }
 
-    .current .version-link {
-        padding: 10px 15px 0px 15px;
+    /* IE8 only respects the background color on the individual elements */
+    .current {
+        .version-link {
+            padding: 10px 15px 0px 15px;
+            background: @green_light;
+        }
+
+        .timeline-content-wrap {
+            background: @green_light;
+        }
+
+        .rule-list {
+            display: block;
+            background: @green_light;
+        }
     }
 
     .version-link,
@@ -386,7 +399,8 @@ This contains all of the styles specific to the history
     .version-link:target,
     .current {
         color: @black;
-        background-color: @green_light;
+        background: @green_light;
+        display: block;
     }
 
     .compare,
@@ -452,7 +466,7 @@ This contains all of the styles specific to the history
     }
 
     .rule-list li {
-        margin: .5em 0;
+        padding: .5em 0;
     }
 
     .version-date {
