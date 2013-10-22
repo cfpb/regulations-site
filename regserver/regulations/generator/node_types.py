@@ -8,13 +8,6 @@ SUBPART = u'subpart'
 EMPTYPART = u'emptypart'
 
 
-def is_appendix(id_parts):
-    """ Inspect the id_parts to determine if this is an Appendix section. """
-    if len(id_parts) > 1:
-        return id_parts[1].isalpha()
-    return False
-
-
 def transform_part(p):
     """ Transform a part of the id of a node. """
     return p.replace('(', '').replace(')', '')
@@ -24,13 +17,22 @@ def to_markup_id(id_parts):
     """Given the id parts from the JSON tree, convert to an id that can
     be used in the front end"""
     new_id = list(id_parts)
-    if 'Interpretations' in id_parts:
-        new_id = ['I'] + new_id
-        return [transform_part(part) for part in new_id
-                if part != 'Interpretations']
-    elif is_appendix(id_parts):
+    if from_label(id_parts) in (APPENDIX, INTERP):
         return [transform_part(part) for part in new_id]
     return new_id
+
+
+def from_label(label):
+    """Given a list of label parts, determine the associated node's type"""
+    if 'Interp' in label:
+        return INTERP
+    if label[-1] == 'Subpart':
+        return EMPTYPART
+    if 'Subpart' in label:  # but not the final segment
+        return SUBPART
+    if len(label) > 1 and label[1].isalpha():
+        return APPENDIX
+    return REGTEXT
 
 
 def label_to_text(label, include_section=True, include_marker=False):

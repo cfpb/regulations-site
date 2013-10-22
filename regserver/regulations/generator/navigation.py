@@ -51,7 +51,8 @@ def parse_section_title(data):
     """ Separate the section number from the section title (this works for
     both appendix and section text. """
 
-    if node_types.is_appendix(data['index']):
+    if node_types.from_label(data['index']) in (node_types.APPENDIX,
+                                                node_types.INTERP):
         return appendix_supplement(data)
     else:
         return section(data)

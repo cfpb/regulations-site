@@ -70,7 +70,8 @@ class ParagraphSXSView(TemplateView):
         paragraph_sxs['children'] =\
             notices.filter_labeled_children(paragraph_sxs)
         context['sxs'] = paragraph_sxs
-        context['sxs']['header'] = label_to_text(label_id.split('-'))
+        context['sxs']['header'] = label_to_text(label_id.split('-'),
+                                                 include_marker=True)
         context['notice'] = notice
         context['further_analyses'] = self.further_analyses(
             label_id, notice_id, context['version'])
