@@ -42,6 +42,7 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
 
         init: function() {
             var openSection,
+                historyState,
                 regId = $('#menu').data('reg-id'),
                 regSection = $('section[data-base-version]'),
                 regVersion = regSection.data('base-version'),
@@ -53,7 +54,8 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
                 Dispatch.set('drawerState', drawerState);
             }
 
-            Dispatch.setState(window.history && window.history.pushState);
+            historyState = (window.history && window.history.pushState) ? true : false;
+            Dispatch.setState(historyState);
 
             if (window.location.pathname.indexOf('search') > 0) {
                 var urlobj = Helpers.parseURL(window.location.href),

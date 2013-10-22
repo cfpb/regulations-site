@@ -108,7 +108,7 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
         },
 
         hasPushState: function() {
-            return(this.state['pushState']);
+            return this.state['pushState'];
         },
 
         setState: function(state) {
@@ -117,7 +117,7 @@ define('dispatch', ['jquery', 'underscore', 'backbone'], function($, _, Backbone
 
         getUIMode: function() {
             // var options = ['regSection', 'breakaway', 'search', 'diff', 'history'];
-            return(this.state['mode']);
+            return this.state['mode'];
         },
 
         setUIMode: function(context) {
