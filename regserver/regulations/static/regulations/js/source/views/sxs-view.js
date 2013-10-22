@@ -28,7 +28,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
-            if (Dispatch.hasPushState === false) {
+            if (Dispatch.hasPushState() === false) {
                 this.events = {};
             }
 
