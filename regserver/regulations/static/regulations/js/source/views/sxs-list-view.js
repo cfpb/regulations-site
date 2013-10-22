@@ -18,7 +18,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
-            if (Dispatch.hasPushState === false) {
+            if (Dispatch.hasPushState() === false) {
                 this.events = {};
             }
         },
@@ -34,7 +34,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
                     'fromVersion': Dispatch.getVersion()
                 },
                 function(sxsURL) {
-                    if (Dispatch.hasPushState) {
+                    if (Dispatch.hasPushState()) {
                         Router.navigate('sxs/' + sxsURL);
                     }
                 }
