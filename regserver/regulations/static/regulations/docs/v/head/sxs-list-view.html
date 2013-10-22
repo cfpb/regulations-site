@@ -228,7 +228,7 @@ trigger click events for links</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState === <span class="literal">false</span>) {
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState() === <span class="literal">false</span>) {
                 <span class="keyword">this</span>.events = {};
             }
         },
@@ -244,7 +244,7 @@ trigger click events for links</p>
                     <span class="string">'fromVersion'</span>: Dispatch.getVersion()
                 },
                 <span class="keyword">function</span>(sxsURL) {
-                    <span class="keyword">if</span> (Dispatch.hasPushState) {
+                    <span class="keyword">if</span> (Dispatch.hasPushState()) {
                         Router.navigate(<span class="string">'sxs/'</span> + sxsURL);
                     }
                 }

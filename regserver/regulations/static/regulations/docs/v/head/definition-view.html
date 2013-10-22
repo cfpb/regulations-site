@@ -250,7 +250,7 @@ appropriate event handlers</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState) {
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState()) {
                 <span class="keyword">this</span>.events[<span class="string">'click .definition'</span>] = <span class="string">'sendDefinitionLinkEvent'</span>;
                 <span class="keyword">this</span>.events[<span class="string">'click .continue-link'</span>] = <span class="string">'sendContinueLinkEvent'</span>;
                 <span class="keyword">this</span>.delegateEvents(<span class="keyword">this</span>.events);

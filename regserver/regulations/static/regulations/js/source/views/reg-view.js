@@ -38,7 +38,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
             this.updateWayfinding();
 
-            if (Dispatch.hasPushState) {
+            if (Dispatch.hasPushState()) {
                 var url = this.options.id + '/' + Dispatch.getVersion(),
                     hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
                 //  Be sure not to lose any hash info
