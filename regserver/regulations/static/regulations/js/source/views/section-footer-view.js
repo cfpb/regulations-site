@@ -12,7 +12,7 @@ define('section-footer-view', ['jquery', 'underscore', 'backbone', 'dispatch'], 
         initialize: function() {
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
-            if (Dispatch.hasPushState === false) {
+            if (Dispatch.hasPushState() === false) {
                 this.events = {};
             }
         },
