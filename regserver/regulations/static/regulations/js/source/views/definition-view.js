@@ -31,7 +31,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
             // if pushState is supported, attach the
             // appropriate event handlers
-            if (Dispatch.hasPushState) {
+            if (Dispatch.hasPushState()) {
                 this.events['click .definition'] = 'sendDefinitionLinkEvent';
                 this.events['click .continue-link'] = 'sendContinueLinkEvent';
                 this.delegateEvents(this.events);
