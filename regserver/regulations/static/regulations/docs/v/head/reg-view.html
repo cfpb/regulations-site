@@ -274,7 +274,7 @@
 
             <span class="keyword">this</span>.updateWayfinding();
 
-            <span class="keyword">if</span> (Dispatch.hasPushState) {
+            <span class="keyword">if</span> (Dispatch.hasPushState()) {
                 <span class="keyword">var</span> url = <span class="keyword">this</span>.options.id + <span class="string">'/'</span> + Dispatch.getVersion(),
                     hashPosition = (<span class="keyword">typeof</span> Backbone.history.fragment === <span class="string">'undefined'</span>) ? -<span class="number">1</span> : Backbone.history.fragment.indexOf(<span class="string">'#'</span>);</pre></div></div>
             

@@ -211,7 +211,7 @@
             Dispatch.trigger(<span class="string">'searchResults:open'</span>, $results.html());
             $results.remove();
 
-            <span class="keyword">if</span> (Dispatch.hasPushState) {
+            <span class="keyword">if</span> (Dispatch.hasPushState()) {
                 <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.options.url !== <span class="string">'undefined'</span>) {
                     Router.navigate(<span class="string">'search/'</span> + <span class="keyword">this</span>.options.url);
                 }
@@ -235,7 +235,7 @@ trigger click events for links</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState === <span class="literal">false</span>) {
+            <div class="content"><div class='highlight'><pre>            <span class="keyword">if</span> (Dispatch.hasPushState() === <span class="literal">false</span>) {
                 <span class="keyword">this</span>.events = {};
             }
         },
