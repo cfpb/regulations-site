@@ -449,7 +449,7 @@ This contains all of the styles specific to the history
     .compare-title{
         margin: 10px 15px 0 15px;
         padding-top: 15px;
-        border-top: 1px solid @light_field;
+        border-top: 1px dashed @light_field;
     }
 
     .rule-status {
@@ -466,7 +466,11 @@ This contains all of the styles specific to the history
     }
 
     .rule-list li {
-        padding: .5em 0;
+        padding: .428571429em 0;
+    }
+
+    .rule-list li:last-child {
+        padding-bottom: .2em;
     }
 
     .version-date {
@@ -475,7 +479,7 @@ This contains all of the styles specific to the history
     }
 
     .select-content {
-        margin: 15px;
+        margin: 6px 15px 15px 15px;
         background: white url('../img/select-blue.png') no-repeat bottom right; 
     }
 
