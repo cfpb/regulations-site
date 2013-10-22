@@ -50,18 +50,21 @@
         </p>
 
         {% if further_analyses %}
-        <h4>Further Analysis:</h4>
-        <ul>
-        {% for analysis in further_analyses %}
-            <li><a 
-                href="{% url 'chrome_sxs_view' analysis.reference.1 analysis.reference.0 %}?from_version={{version}}" 
-                data-sxs-pararaph-id="{{analysis.reference.1}}"
-                data-doc-number="{{analysis.reference.0}}"
-                >{{ analysis.fr_volume }} FR {{ analysis.fr_page }}</a>
-                <br />Published {{ analysis.publication_date|date:"F j, Y" }} 
-            </li>
-        {% endfor %}
-        </ul>
+        <div class="further-analysis">
+            <h3>Further Analysis:</h3>
+            <ul class="analysis-list">
+            {% for analysis in further_analyses %}
+                <li><a 
+                    href="{% url 'chrome_sxs_view' analysis.reference.1 analysis.reference.0 %}?from_version={{version}}" 
+                    data-sxs-pararaph-id="{{analysis.reference.1}}"
+                    data-doc-number="{{analysis.reference.0}}"
+                    class="internal"
+                    >{{ analysis.fr_volume }} FR {{ analysis.fr_page }}</a>
+                    <br />Published {{ analysis.publication_date|date:"F j, Y" }} 
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
         {% endif %}
 
         {% block sxs_disclaimer %}
