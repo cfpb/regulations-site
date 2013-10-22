@@ -71,15 +71,17 @@ table of contents and the version tab are quite different
                         {% endif %}
                         <span class="version-date">{{ version.by_date|date }}</span>
                     </a>
+                    <div class="timeline-content-wrap">
                     <ul class="rule-list">
-                    {% for notice in version.notices %}
-                        <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
-                    {% endfor %}
+                        {% for notice in version.notices %}
+                            <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
+                        {% endfor %}
                     </ul>
-                    {% if version.version == left_version %}
-                    <h4 class="compare-title">Compare this with</h4>
-                    <a href="{% url 'chrome_section_view' label_id version.version %}" class="stop-button" data-version="{{ version }}">Stop Comparing</a>
-                    {% endif %}
+                        {% if version.version == left_version %}
+                        <h4 class="compare-title">Compare this with</h4>
+                        <a href="{% url 'chrome_section_view' label_id version.version %}" class="stop-button" data-version="{{ version }}">Stop Comparing</a>
+                        {% endif %}
+                    </div> <!--./timeline-content-wrap-->
                 </li>
             {% endfor %}
             </ul>
