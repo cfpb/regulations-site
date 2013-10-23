@@ -263,6 +263,7 @@ API should make this obsolete.</p>
 
         init: <span class="keyword">function</span>() {
             <span class="keyword">var</span> openSection,
+                historyState,
                 regId = $(<span class="string">'#menu'</span>).data(<span class="string">'reg-id'</span>),
                 regSection = $(<span class="string">'section[data-base-version]'</span>),
                 regVersion = regSection.data(<span class="string">'base-version'</span>),
@@ -274,7 +275,8 @@ API should make this obsolete.</p>
                 Dispatch.set(<span class="string">'drawerState'</span>, drawerState);
             }
 
-            Dispatch.setState(window.history &amp;&amp; window.history.pushState);
+            historyState = (window.history &amp;&amp; window.history.pushState) ? <span class="literal">true</span> : <span class="literal">false</span>;
+            Dispatch.setState(historyState);
 
             <span class="keyword">if</span> (window.location.pathname.indexOf(<span class="string">'search'</span>) &gt; <span class="number">0</span>) {
                 <span class="keyword">var</span> urlobj = Helpers.parseURL(window.location.href),
