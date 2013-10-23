@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from django.http import Http404
 
-from regulations.generator import api_reader
+from regulations.generator import api_reader, node_types
 from regulations.generator.layers.analyses import SectionBySectionLayer
 from regulations.generator.node_types import label_to_text
 
@@ -37,7 +37,7 @@ class SideBarView(TemplateView):
         context['permalinks'] = []
 
         def per_node(node):
-            if node['node_type'] == 'interp':
+            if node['node_type'] == node_types.INTERP:
                 section_id = node['label'][0] + '-Interp'
             else:
                 section_id = '-'.join(node['label'][:2])
