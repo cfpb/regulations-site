@@ -26,11 +26,10 @@ class ViewsSideBarViewTest(TestCase):
                  'node_type': 'regtext'},
                 {'label': ['876', '12', 'b'], 'children': [],
                  'node_type': 'regtext'},
-                {'label': ['876', '12', 'c'], 'node_type': 'regtext', 
+                {'label': ['876', '12', 'c'], 'node_type': 'regtext',
                  'children': [
-                    {'label': ['876', '12', 'c', '1'], 'children': [],
-                     'node_type': 'regtext'}
-                ]}
+                     {'label': ['876', '12', 'c', '1'], 'children': [],
+                      'node_type': 'regtext'}]}
             ]
         }
         response = Client().get('/partial/sidebar/1111-7/verver')
