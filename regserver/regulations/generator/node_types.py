@@ -17,12 +17,12 @@ def to_markup_id(id_parts):
     """Given the id parts from the JSON tree, convert to an id that can
     be used in the front end"""
     new_id = list(id_parts)
-    if from_label(id_parts) in (APPENDIX, INTERP):
+    if type_from_label(id_parts) in (APPENDIX, INTERP):
         return [transform_part(part) for part in new_id]
     return new_id
 
 
-def from_label(label):
+def type_from_label(label):
     """Given a list of label parts, determine the associated node's type"""
     if 'Interp' in label:
         return INTERP
