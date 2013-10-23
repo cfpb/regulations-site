@@ -37,10 +37,14 @@ class SideBarView(TemplateView):
         context['permalinks'] = []
 
         def per_node(node):
+            if node['node_type'] == 'interp':
+                section_id = node['label'][0] + '-Interp'
+            else:
+                section_id = '-'.join(node['label'][:2])
             if len(node['label']) > 1:
                 context['permalinks'].append({
                     'label_id': '-'.join(node['label']),
-                    'section_id': '-'.join(node['label'][:2]),
+                    'section_id': section_id,
                     'text': label_to_text(node['label'], include_section=False,
                                           include_marker=True)
                 })
