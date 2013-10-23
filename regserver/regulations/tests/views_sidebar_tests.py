@@ -2,8 +2,9 @@ import re
 from unittest import TestCase
 
 from mock import patch
-
 from django.test.client import Client
+
+from regulations.generator import node_types
 
 
 class ViewsSideBarViewTest(TestCase):
@@ -20,16 +21,16 @@ class ViewsSideBarViewTest(TestCase):
         }
         api_reader.ApiReader.return_value.regulation.return_value = {
             'label': ['876', '12'],
-            'node_type': 'regtext',
+            'node_type': node_types.REGTEXT,
             'children': [
                 {'label': ['876', '12', 'a'], 'children': [],
-                 'node_type': 'regtext'},
+                 'node_type': node_types.REGTEXT},
                 {'label': ['876', '12', 'b'], 'children': [],
-                 'node_type': 'regtext'},
-                {'label': ['876', '12', 'c'], 'node_type': 'regtext',
+                 'node_type': node_types.REGTEXT},
+                {'label': ['876', '12', 'c'], 'node_type': node_types.REGTEXT,
                  'children': [
                      {'label': ['876', '12', 'c', '1'], 'children': [],
-                      'node_type': 'regtext'}]}
+                      'node_type': node_types.REGTEXT}]}
             ]
         }
         response = Client().get('/partial/sidebar/1111-7/verver')
@@ -54,12 +55,12 @@ class ViewsSideBarViewTest(TestCase):
         api_reader.ApiReader.return_value.layer.return_value = {}
         api_reader.ApiReader.return_value.regulation.return_value = {
             'label': ['876', 'Interp'],
-            'node_type': 'interp',
+            'node_type': node_types.INTERP,
             'children': [
                 {'label': ['876', '12', 'a', 'Interp'], 'children': [],
-                 'node_type': 'interp'},
+                 'node_type': node_types.INTERP},
                 {'label': ['876', '12', 'Interp', '1'], 'children': [],
-                 'node_type': 'interp'}
+                 'node_type': node_types.INTERP}
             ]
         }
         response = Client().get('/partial/sidebar/876-Interp/verver')
