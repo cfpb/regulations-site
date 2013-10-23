@@ -1,4 +1,5 @@
 from django.http import HttpResponseBadRequest
+from django.template.defaultfilters import title
 
 from regulations.generator import api_reader
 from regulations.generator.node_types import label_to_text
@@ -61,7 +62,7 @@ class PartialSearch(PartialView):
         for result in results['results']:
             result['header'] = label_to_text(result['label'])
             if 'title' in result:
-                result['header'] += ' ' + result['title'].title()
+                result['header'] += ' ' + title(result['title'])
             if 'Interp' in result['label']:
                 result['section_id'] = '%s-%s' % (result['label'][0],
                                                   'Interp')
