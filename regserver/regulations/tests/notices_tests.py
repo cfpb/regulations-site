@@ -83,13 +83,17 @@ class NoticesTest(TestCase):
             {'label': '204-1', 'children': []},
             {'label': '204-2', 'children': [{
                 'label': '204-2-a',
-                'children': [],
+                'children': [
+                    {'label': '204-3', 'children': [], 'paragraphs': ['x']}],
                 'paragraphs': ['abc']}]}]
 
         s = notices.find_label_in_sxs(sxs_list, '204-2-a')
-        self.assertEqual({
-            'label': '204-2-a', 'children': [],
-            'paragraphs': ['abc']}, s)
+        self.assertEqual('204-2-a', s['label'])
+        self.assertEqual(['abc'], s['paragraphs'])
+
+        s = notices.find_label_in_sxs(sxs_list, '204-3')
+        self.assertEqual('204-3', s['label'])
+        self.assertEqual(['x'], s['paragraphs'])
 
     def test_non_empty_sxs(self):
         sxs = {'label': '204-2-a', 'children': [], 'paragraphs': ['abc']}
