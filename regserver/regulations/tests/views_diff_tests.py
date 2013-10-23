@@ -53,6 +53,15 @@ class ChromeSectionDiffViewTests(TestCase):
             self.assertTrue('oldold', el['url'])
             self.assertTrue('newnew', el['url'])
 
+    def test_interp_headers(self):
+        from django.template import loader, Context
+        t = loader.get_template('interp-tree.html')
+        context_dict = {'interp': {
+            'header': '<ins>My header</ins>', 'section_header': True}}
+        response = t.render(Context(context_dict))
+        tags_preserved_header = '<h3 tabindex=\"0\"> <ins>My header</ins></h3>'
+        self.assertTrue(tags_preserved_header in response)
+
 
 class PartialSectionDiffViewTests(TestCase):
     def test_footer_nav(self):
