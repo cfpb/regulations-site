@@ -70,7 +70,7 @@ def find_label_in_sxs(sxs_list, label_id):
             if s['label'] == label_id:
                 if non_empty_sxs(s):
                     return s
-            elif s['children'] and label_id.startswith(s['label']):
+            elif s['children']:
                 sxs = find_label_in_sxs(s['children'], label_id)
                 if sxs and non_empty_sxs(sxs):
                     return sxs
