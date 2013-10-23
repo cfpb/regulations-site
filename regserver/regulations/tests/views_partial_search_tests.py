@@ -17,7 +17,7 @@ class PartialSearchTest(TestCase):
         api_reader.ApiReader.return_value.search.return_value = {
             'total_hits': 3333,
             'results': [
-                {'label': ['111', '22'], 'text': 'tttt', 'version': 'vvv'},
+                {'label': ['111', '22'], 'text': 'tttt', 'version': 'vvv', 'title':"consumer's"},
                 {'label': ['111', '24', 'a'], 'text': 'o', 'version': 'vvv'},
                 {'label': ['111', '25'], 'text': 'more', 'version': 'vvv'}
             ]
@@ -39,6 +39,7 @@ class PartialSearchTest(TestCase):
         self.assertTrue('111-25' in response.content)
         self.assertTrue('111.25' in response.content)
         self.assertTrue('3333' in response.content)
+        self.assertTrue('Consumer&#39;s' in response.content)
 
 
     @patch('regulations.views.partial_search.api_reader')
