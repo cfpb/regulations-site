@@ -1,5 +1,6 @@
 from regulations.generator import generator
 from regulations.generator import node_types
+from regulations.generator.node_types import type_from_label
 from regulations.generator.title_parsing import appendix_supplement, section
 
 
@@ -51,8 +52,8 @@ def parse_section_title(data):
     """ Separate the section number from the section title (this works for
     both appendix and section text. """
 
-    if node_types.from_label(data['index']) in (node_types.APPENDIX,
-                                                node_types.INTERP):
+    if type_from_label(data['index']) in (node_types.APPENDIX,
+                                          node_types.INTERP):
         return appendix_supplement(data)
     else:
         return section(data)

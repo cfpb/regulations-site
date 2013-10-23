@@ -12,21 +12,23 @@ class NodeTypesTest(TestCase):
 
         self.assertEqual('243-A-30a', node_string)
 
-    def test_from_label(self):
-        self.assertEqual(REGTEXT, from_label(['250', '5', 'A']))
-        self.assertEqual(APPENDIX, from_label(['250', 'A']))
-        self.assertEqual(APPENDIX, from_label(['250', 'A', '3(b)']))
-        self.assertEqual(REGTEXT, from_label(['250']))
-        self.assertEqual(REGTEXT, from_label(['250', '5']))
-        self.assertEqual(REGTEXT, from_label(['250', '5', 'a', 'i', 'C']))
-        self.assertEqual(EMPTYPART, from_label(['250', 'Subpart']))
-        self.assertEqual(SUBPART, from_label(['250', 'Subpart', 'C']))
-        self.assertEqual(INTERP, from_label(['250', 'Interp']))
-        self.assertEqual(INTERP, from_label(['250', 'A', 'Interp']))
-        self.assertEqual(INTERP, from_label(['250', '5', 'Interp']))
-        self.assertEqual(INTERP, from_label(['250', '5', 'b', 'Interp']))
-        self.assertEqual(INTERP, from_label(['250', '5', 'b', 'Interp', '1']))
-        self.assertEqual(INTERP, from_label(['250', '5', 'Interp', '5', 'r']))
+    def test_type_from_label(self):
+        self.assertEqual(REGTEXT, type_from_label(['250', '5', 'A']))
+        self.assertEqual(APPENDIX, type_from_label(['250', 'A']))
+        self.assertEqual(APPENDIX, type_from_label(['250', 'A', '3(b)']))
+        self.assertEqual(REGTEXT, type_from_label(['250']))
+        self.assertEqual(REGTEXT, type_from_label(['250', '5']))
+        self.assertEqual(REGTEXT, type_from_label(['250', '5', 'a', 'i', 'C']))
+        self.assertEqual(EMPTYPART, type_from_label(['250', 'Subpart']))
+        self.assertEqual(SUBPART, type_from_label(['250', 'Subpart', 'C']))
+        self.assertEqual(INTERP, type_from_label(['250', 'Interp']))
+        self.assertEqual(INTERP, type_from_label(['250', 'A', 'Interp']))
+        self.assertEqual(INTERP, type_from_label(['250', '5', 'Interp']))
+        self.assertEqual(INTERP, type_from_label(['250', '5', 'b', 'Interp']))
+        self.assertEqual(INTERP,
+                         type_from_label(['250', '5', 'b', 'Interp', '1']))
+        self.assertEqual(INTERP,
+                         type_from_label(['250', '5', 'Interp', '5', 'r']))
 
     def test_transform_part_none(self):
         part = '30'
