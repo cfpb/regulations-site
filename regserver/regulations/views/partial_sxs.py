@@ -19,11 +19,19 @@ class ParagraphSXSView(TemplateView):
 
         return ['sxs_with_disclaimer.html', 'paragraph-sxs.html']
 
+    def get_section(self, label):
+        """ Get the section that the user came from. Special handling for 
+        an Interpretation section. """
+        label = label.split('-')
+        if 'Interp' in label:
+            return '-'.join([label[0], 'Interp'])
+        else:
+            return '-'.join(label[:2])
+
     def get(self, request, *args, **kwargs):
         """Override this method so that we can grab the GET variables"""
         try:
-            label = kwargs['label_id'].split('-')
-            section_id = '-'.join(label[:2])
+            section_id = self.get_section(kwargs['label_id'])
             back_url = reverse('chrome_section_view', kwargs={
                 'label_id': section_id,
                 'version': request.GET.get('from_version')
