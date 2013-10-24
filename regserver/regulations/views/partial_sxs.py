@@ -20,7 +20,7 @@ class ParagraphSXSView(TemplateView):
         return ['sxs_with_disclaimer.html', 'paragraph-sxs.html']
 
     def get_section(self, label):
-        """ Get the section that the user came from. Special handling for 
+        """ Get the section that the user came from. Special handling for
         an Interpretation section. """
         label = label.split('-')
         if 'Interp' in label:
