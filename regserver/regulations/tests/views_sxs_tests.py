@@ -39,3 +39,11 @@ class ParagrasphSXSViewTests(TestCase):
         self.assertEqual(psv.further_analyses('1212-31-b', 'doc4', 'v1'), [])
 
         self.assertEqual(psv.further_analyses('1212-31-c', 'doc1', 'v1'), [])
+
+    def test_section_ids(self):
+        psv = ParagraphSXSView()
+        section_id = psv.get_section('204-31-a-1')
+        self.assertEqual('204-31', section_id)
+
+        section_id = psv.get_section('204-31-a-1-Interp-1')
+        self.assertEqual('204-Interp', section_id)
