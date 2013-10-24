@@ -1,6 +1,4 @@
-// For Grunt RequireJS Optimizer, static/regulations/js/source -> static/regulations/js/built 
-({
-    "paths": {
+{
         "jquery": "./lib/jquery-1.9.1",
         "underscore": "./lib/underscore",
         "backbone": "./lib/backbone",
@@ -25,26 +23,12 @@
         "sxs-view": "./views/breakaway/sxs-view",
         "search-results-view": "./views/main/search-results-view",
         "main-view": "./views/main/main-view",
-        "permalink-view": "./views/sidebar/permalink-view"
-    },
-    "shim": {
-        "underscore": {
-            "deps": [
-                "jquery"
-            ],
-            "exports": "_"
-        },
-        "backbone": {
-            "deps": [
-                "underscore",
-                "jquery"
-            ],
-            "exports": "Backbone"
-        },
-        "konami": {
-            "exports": "Konami"
-        }
-    },
-    dir: 'static/regulations/js/built',
-    modules: [ {name: 'regulations'} ]
-});
+        "permalink-view": "./views/sidebar/permalink-view",
+        "search-model": "./models/search-model",
+        "meta-model": "./models/meta-model",
+        "reg-model": "./models/reg-model",
+        "sxs-model": "./models/sxs-model",
+        "regs-router": "./router",
+        "regs-helpers": "./helpers",
+        "folder-model": "./models/folder-model"
+    }
