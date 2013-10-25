@@ -13,5 +13,11 @@
       mocha.setup('bdd');
     </script>
     <script data-main="test.config.js" src="lib/require.js"></script>
+    <script>
+        require(['../specs/regs-helpers-spec.js', '../specs/dispatch-spec.js', '../specs/reg-model-spec.js'], function() {
+            if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+            else { mocha.run(); }
+        });
+    </script>
   </body>
 </html>

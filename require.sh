@@ -1,6 +1,17 @@
-rm -f regserver/regulations/static/regulations/js/source/require.config.js
-echo 'var require = { "paths" :' >> regserver/regulations/static/regulations/js/source/require.config.js
-cat require.paths.json >> regserver/regulations/static/regulations/js/source/require.config.js
-echo ', "shim":' >> regserver/regulations/static/regulations/js/source/require.config.js
-cat require.shim.json >> regserver/regulations/static/regulations/js/source/require.config.js
-echo '}' >> regserver/regulations/static/regulations/js/source/require.config.js
+#!/bin/bash
+UICONF=regserver/regulations/static/regulations/js/source/require.config.js
+TESTCONF=regserver/regulations/static/regulations/js/tests/browser/test.config.js
+rm -f $UICONF
+touch $UICONF
+echo 'var require = { "paths" :' >> $UICONF
+cat require.paths.json >> $UICONF
+echo ', "shim":' >> $UICONF
+cat require.shim.json >> $UICONF
+echo '}' >> $UICONF
+rm -f $TESTCONF
+touch $TESTCONF
+echo 'require.config({"baseUrl": "/static/regulations/js/source", "paths":' >> $TESTCONF
+cat require.paths.json >> $TESTCONF
+echo ', "shim":' >> $TESTCONF
+cat require.shim.json >> $TESTCONF
+echo '}' >> $TESTCONF

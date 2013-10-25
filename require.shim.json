@@ -14,5 +14,8 @@
         },
         "konami": {
             "exports": "Konami"
+        },
+        "jquery-scrollstop": {
+            "deps": ["jquery"]
         }
 }
