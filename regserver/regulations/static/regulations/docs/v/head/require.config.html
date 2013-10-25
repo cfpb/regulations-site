@@ -76,11 +76,12 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> require = {
-    <span class="string">"paths"</span>: {
+            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> require = { <span class="string">"paths"</span> :
+{
         <span class="string">"jquery"</span>: <span class="string">"./lib/jquery-1.9.1"</span>,
         <span class="string">"underscore"</span>: <span class="string">"./lib/underscore"</span>,
         <span class="string">"backbone"</span>: <span class="string">"./lib/backbone"</span>,
+        <span class="string">"samplejson"</span>: <span class="string">"../tests/grunt/js/fixtures/sample-json"</span>,
         <span class="string">"jquery-scrollstop"</span>: <span class="string">"./lib/jquery.scrollstop"</span>,
         <span class="string">"queryparams"</span>: <span class="string">"./lib/backbone.queryparams"</span>,
         <span class="string">"definition-view"</span>: <span class="string">"./views/sidebar/definition-view"</span>,
@@ -102,9 +103,17 @@
         <span class="string">"sxs-view"</span>: <span class="string">"./views/breakaway/sxs-view"</span>,
         <span class="string">"search-results-view"</span>: <span class="string">"./views/main/search-results-view"</span>,
         <span class="string">"main-view"</span>: <span class="string">"./views/main/main-view"</span>,
-        <span class="string">"permalink-view"</span>: <span class="string">"./views/sidebar/permalink-view"</span>
-    },
-    <span class="string">"shim"</span>: {
+        <span class="string">"permalink-view"</span>: <span class="string">"./views/sidebar/permalink-view"</span>,
+        <span class="string">"search-model"</span>: <span class="string">"./models/search-model"</span>,
+        <span class="string">"meta-model"</span>: <span class="string">"./models/meta-model"</span>,
+        <span class="string">"reg-model"</span>: <span class="string">"./models/reg-model"</span>,
+        <span class="string">"sxs-model"</span>: <span class="string">"./models/sxs-model"</span>,
+        <span class="string">"regs-router"</span>: <span class="string">"./router"</span>,
+        <span class="string">"regs-helpers"</span>: <span class="string">"./helpers"</span>,
+        <span class="string">"folder-model"</span>: <span class="string">"./models/folder-model"</span>
+    }
+, <span class="string">"shim"</span>:
+{
         <span class="string">"underscore"</span>: {
             <span class="string">"deps"</span>: [
                 <span class="string">"jquery"</span>
@@ -120,9 +129,12 @@
         },
         <span class="string">"konami"</span>: {
             <span class="string">"exports"</span>: <span class="string">"Konami"</span>
+        },
+        <span class="string">"jquery-scrollstop"</span>: {
+            <span class="string">"deps"</span>: [<span class="string">"jquery"</span>]
         }
-    }
-};</pre></div></div>
+}
+}</pre></div></div>
             
         </li>
         

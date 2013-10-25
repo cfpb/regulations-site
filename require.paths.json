@@ -2,6 +2,7 @@
         "jquery": "./lib/jquery-1.9.1",
         "underscore": "./lib/underscore",
         "backbone": "./lib/backbone",
+        "samplejson": "../tests/grunt/js/fixtures/sample-json",
         "jquery-scrollstop": "./lib/jquery.scrollstop",
         "queryparams": "./lib/backbone.queryparams",
         "definition-view": "./views/sidebar/definition-view",
