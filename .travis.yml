@@ -15,6 +15,7 @@ install:
    - cp example-config.json config.json
 script:
     - cd regserver
+    - ./require.sh
     - python manage.py test regulations --settings=regserver.settings.dev
     - cd ..
     - ./dummy_api/start.sh

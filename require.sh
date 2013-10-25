@@ -14,4 +14,9 @@ echo 'require.config({"baseUrl": "/static/regulations/js/source", "paths":' >> $
 cat require.paths.json >> $TESTCONF
 echo ', "shim":' >> $TESTCONF
 cat require.shim.json >> $TESTCONF
-echo '}' >> $TESTCONF
+echo '});' >> $TESTCONF
+echo "require(['../specs/regs-helpers-spec.js', '../specs/dispatch-spec.js', '../specs/reg-model-spec.js'], function() {
+            if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+            else { mocha.run(); }
+        });" >> $TESTCONF
+
