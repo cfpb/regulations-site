@@ -123,7 +123,6 @@ module.exports = function(grunt) {
         compile: {
             options: {
                 baseUrl: '<%= env.frontEndPath %>/js/source',
-                mainConfigFile: '<%= env.frontEndPath %>/js/source/build.js',
                 dir: "<%= env.frontEndPath %>/js/built",
                 modules: [ {name: "regulations"} ],
                 paths: grunt.file.readJSON('require.paths.json'),
