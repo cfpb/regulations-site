@@ -132,6 +132,10 @@ module.exports = function(grunt) {
     },
 
     shell: {
+      'build-require': {
+        command: './require.sh',
+      },
+
       'mocha-phantomjs': {
         command: 'mocha-phantomjs -R dot <%= env.testUrl %>/static/regulations/js/tests/browser/runner.html --verbose',
         options: {
@@ -174,6 +178,6 @@ module.exports = function(grunt) {
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('test', ['jshint', 'shell:mocha-phantomjs', /*'casperjs'*/]);
-    grunt.registerTask('build', ['test', 'requirejs', 'less', 'docco', 'plato']);
+    grunt.registerTask('build', ['jshint', 'shell', 'requirejs', 'less', 'docco', 'plato']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };

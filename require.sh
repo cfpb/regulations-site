@@ -19,4 +19,3 @@ echo "require(['../specs/regs-helpers-spec.js', '../specs/dispatch-spec.js', '..
             if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
             else { mocha.run(); }
         });" >> $TESTCONF
-
