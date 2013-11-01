@@ -14,6 +14,7 @@ install:
    - sudo npm install
    - cp example-config.json config.json
 script:
+    - ./require.sh
     - cd regserver
     - python manage.py test regulations --settings=regserver.settings.dev
     - cd ..
