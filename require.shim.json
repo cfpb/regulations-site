@@ -1,0 +1,21 @@
+{
+        "underscore": {
+            "deps": [
+                "jquery"
+            ],
+            "exports": "_"
+        },
+        "backbone": {
+            "deps": [
+                "underscore",
+                "jquery"
+            ],
+            "exports": "Backbone"
+        },
+        "konami": {
+            "exports": "Konami"
+        },
+        "jquery-scrollstop": {
+            "deps": ["jquery"]
+        }
+}
