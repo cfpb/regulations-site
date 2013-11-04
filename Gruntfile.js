@@ -145,6 +145,15 @@ module.exports = function(grunt) {
       }
     },
 
+    // https://github.com/yatskevich/grunt-bower-task
+    bower: {
+        install: {
+            options: {
+                targetDir: '<%= env.frontEndPath %>/js/source/lib'
+            }
+        }
+    },
+
     /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      * 
@@ -173,6 +182,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-docco2');
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-plato');
+    grunt.loadNpmTasks('grunt-bower-task');
 
     /**
     * Create task aliases by registering new tasks
