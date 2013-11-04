@@ -6,7 +6,6 @@ from regulations.generator.layers.toc_applier import TableOfContentsLayer
 from regulations.generator.navigation import choose_next_section
 from regulations.generator.navigation import choose_previous_section
 from regulations.generator.node_types import EMPTYPART, REGTEXT
-from regulations.generator.versions import fetch_grouped_history
 from regulations.views import error_handling, utils
 from regulations.views.chrome import ChromeView
 from regulations.views.partial import PartialView
@@ -108,13 +107,19 @@ class ChromeSectionDiffView(ChromeView):
     check_tree = False
     has_sidebar = False
 
-    def add_main_content(self, context):
-        super(ChromeSectionDiffView, self).add_main_content(context)
+    def add_diff_content(self, context):
+        context['from_version'] = self.request.GET.get(
+            'from_version', context['version'])
         context['left_version'] = context['version']
         context['right_version'] = \
             context['main_content_context']['newer_version']
 
         context['TOC'] = context['main_content_context']['TOC']
+        return context
+
+    def add_main_content(self, context):
+        super(ChromeSectionDiffView, self).add_main_content(context)
+        return self.add_diff_content(context)
 
 
 def diff_toc(older_version, newer_version, old_toc, diff):

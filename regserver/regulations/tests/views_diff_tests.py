@@ -1,4 +1,5 @@
 from unittest import TestCase
+from django.test import RequestFactory
 
 from regulations.views.diff import *
 
@@ -61,6 +62,20 @@ class ChromeSectionDiffViewTests(TestCase):
         response = t.render(Context(context_dict))
         tags_preserved_header = '<h3 tabindex=\"0\"> <ins>My header</ins></h3>'
         self.assertTrue(tags_preserved_header in response)
+
+    def test_add_main_content(self):
+        context = {
+            'main_content_context': {'newer_version': '1', 'TOC': 'toc'},
+            'label_id': '111-222',
+            'version': '2'}
+        request = RequestFactory().get('?new_version=1')
+        csdv = ChromeSectionDiffView()
+        csdv.request = request
+        csdv.add_diff_content(context)
+        self.assertEqual(context['from_version'], '2')
+        self.assertEqual(context['left_version'], '2')
+        self.assertEqual(context['right_version'], '1')
+        self.assertEqual(context['TOC'], 'toc')
 
 
 class PartialSectionDiffViewTests(TestCase):

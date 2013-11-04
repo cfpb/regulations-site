@@ -1,6 +1,5 @@
 from unittest import TestCase
 
-from django.http import Http404
 from django.test import RequestFactory
 from mock import patch
 
@@ -80,17 +79,23 @@ class ViewsRedirectTest(TestCase):
         request = RequestFactory().get('?new_version=3')
         response = diff_redirect(request, '1111-22', '1')
         self.assertTrue('diff/1111-22/1/3' in response['Location'])
+        self.assertTrue('from_version=1' in response['Location'])
         response = diff_redirect(request, '1111-22', '2')
         self.assertTrue('diff/1111-22/2/3' in response['Location'])
+        self.assertTrue('from_version=2' in response['Location'])
 
         request = RequestFactory().get('?new_version=2')
         response = diff_redirect(request, '1111-22', '1')
         self.assertTrue('diff/1111-22/1/2' in response['Location'])
+        self.assertTrue('from_version=1' in response['Location'])
         response = diff_redirect(request, '1111-22', '3')
         self.assertTrue('diff/1111-22/2/3' in response['Location'])
+        self.assertTrue('from_version=3' in response['Location'])
 
         request = RequestFactory().get('?new_version=1')
         response = diff_redirect(request, '1111-22', '2')
         self.assertTrue('diff/1111-22/1/2' in response['Location'])
+        self.assertTrue('from_version=2' in response['Location'])
         response = diff_redirect(request, '1111-22', '3')
         self.assertTrue('diff/1111-22/1/3' in response['Location'])
+        self.assertTrue('from_version=3' in response['Location'])
