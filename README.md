@@ -18,11 +18,21 @@ The application's UI itself uses a number of dependencies that you can see in pa
 First we will need npm. npm ships with Node.js. If you don't already have it installed, please grab and install a binary from http://nodejs.org/download/.
 
 #### Global npm packages
-You will need to install the Grunt command line interface and Bower globally using npm. 
-If you already have a different version of phantomjs installed, its probably ok. The version specified is known to work with this codebase, though.
+You will need to install the Grunt command line interface, Bower, PhantomJS and Casper globally using npm. 
+If you already have different versions of PhantomJS and Casper installed, its probably ok. The version specified is known to work with this codebase, though.
 ```
-npm install -g grunt-cli bower phantomjs@1.9.2-2
+npm install -g grunt-cli bower phantomjs@1.9.2-2 casper@0.1.1
 ```
 
-#### Casper installation
+#### Installing dependencies
+The rest of the dependencies you will need are managed by Bower and npm. Do:
+```
+npm install
+bower install
+```
 
+#### Create RequireJS module configuration files
+The UI uses [RequireJS](http://requirejs.org/) for script loading and modularity in the UI code. The configuration for RequireJS modules is needed in a couple of different locations for testing and codebase compression. There is a script in the repository that takes care of most of this for you.
+
+Run ```./require.sh``` from the root of the repository.
+If you need to make changes to modules in your instance of the application, edit [require.paths.json](https://github.com/eregs/regulations-site/blob/master/require.paths.json) and [require.shim.json](https://github.com/eregs/regulations-site/blob/master/require.shim.json) accordingly. These files map to the ```paths``` and ```shim``` objects in the RequireJS configuration object. For more information: http://requirejs.org/docs/api.html#config
