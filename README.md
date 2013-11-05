@@ -13,8 +13,16 @@ The application's UI itself uses a number of dependencies that you can see in pa
 - Phantom, a headless browser to run unit and functional tests in: http://phantomjs.org/
 - Casper, a utility to execute functional tests: http://casperjs.org/
 
-### Environment Setup
+### Environment setup
 #### Node/npm
-First we will need npm. npm ships with Node.js. If you don't already have it installed, please grab a binary from http://nodejs.org/download/.
+First we will need npm. npm ships with Node.js. If you don't already have it installed, please grab and install a binary from http://nodejs.org/download/.
 
-#### Grunt
+#### Global npm packages
+You will need to install the Grunt command line interface and Bower globally using npm. 
+If you already have a different version of phantomjs installed, its probably ok. The version specified is known to work with this codebase, though.
+```
+npm install -g grunt-cli bower phantomjs@1.9.2-2
+```
+
+#### Casper installation
+
