@@ -15,7 +15,10 @@ The application's UI itself uses a number of dependencies that you can see in pa
 
 ### Environment setup
 #### Node/npm
-First we will need npm. npm ships with Node.js. If you don't already have it installed, please grab and install a binary from http://nodejs.org/download/.
+First we will need npm. npm ships with Node.js. If you don't already have it installed, there are a few ways to get it.
+- You can grab and install a binary from http://nodejs.org/download/
+- If you're on OS X, you can use [Homebrew](http://brew.sh/) if that's your thing
+- If you are on a Debian-based flavor of Linux, ```apt-get install nodejs``` should do the trick
 
 #### Global npm packages
 You will need to install the Grunt command line interface, Bower, PhantomJS, Casper and a Mocha + PhantomJS cli globally using npm. 
