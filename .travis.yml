@@ -5,12 +5,12 @@ python:
 install:
     - pip install zc.buildout distribute
     - buildout
-   - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
-   - sudo apt-get update
-   - sudo apt-get install nodejs phantomjs
-   - sudo npm install -g grunt-cli grunt-init
-   - sudo npm install
-   - cp example-config.json config.json
+    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
+    - sudo apt-get update
+    - sudo apt-get install nodejs phantomjs
+    - sudo npm install -g grunt-cli grunt-init
+    - sudo npm install
+    - cp example-config.json config.json
 script:
     - ./require.sh
     - ./bin/test
