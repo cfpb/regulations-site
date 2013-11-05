@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from django.template import Template
 from mock import patch
 
 from regulations.views.partial_sxs import *
@@ -47,3 +48,55 @@ class ParagrasphSXSViewTests(TestCase):
 
         section_id = psv.get_section('204-31-a-1-Interp-1')
         self.assertEqual('204-Interp', section_id)
+
+    def test_footnotes(self):
+        psv = ParagraphSXSView()
+        notice = {'footnotes': {
+            '12': 'Twelve',
+            '22': 'Twenty-two',
+            '31': 'Thirty-one',
+            '45': 'Forty-five'
+        }}
+        sxs = {
+            'footnote_refs': [
+                {'reference': '12', 'paragraph': 4, 'offset': 233},
+                {'reference': '22', 'paragraph': 2, 'offset': 111}],
+            'children': [
+                {'footnote_refs': [
+                    {'reference': '45', 'paragraph': 3, 'offset': 22}],
+                 'children': []}]}
+        footnotes = psv.footnotes(notice, sxs)
+        self.assertEqual(len(footnotes), 3)
+        self.assertEqual(footnotes[0]['reference'], '12')
+        self.assertEqual(footnotes[0]['text'], 'Twelve')
+        self.assertEqual(footnotes[1]['reference'], '22')
+        self.assertEqual(footnotes[1]['text'], 'Twenty-two')
+        self.assertEqual(footnotes[2]['reference'], '45')
+        self.assertEqual(footnotes[2]['text'], 'Forty-five')
+
+    def test_footnote_refs(self):
+        psv = ParagraphSXSView()
+        psv.footnote_tpl = Template("[{{footnote.reference}}]")
+        sxs = {
+            'paragraphs': [
+                'This is paragraph 1, I mean zero',
+                'Will the real paragraph one please stand up?',
+                'I am paragraph 10. Is that good enough?'],
+            'footnote_refs': [
+                {'reference': '1', 'paragraph': 0, 'offset': 7},
+                {'reference': '2', 'paragraph': 0, 'offset': 27},
+                {'reference': '12', 'paragraph': 2, 'offset': 1}],
+            'children': [
+                {'paragraphs': ['Subparagraph here'],
+                 'footnote_refs': [
+                     {'reference': '22', 'paragraph': 0, 'offset': 12}],
+                 'children': []}]}
+        psv.footnote_refs(sxs)
+        self.assertEqual('This is[1] paragraph 1, I mean[2] zero',
+                         sxs['paragraphs'][0])
+        self.assertEqual('Will the real paragraph one please stand up?',
+                         sxs['paragraphs'][1])
+        self.assertEqual('I[12] am paragraph 10. Is that good enough?',
+                         sxs['paragraphs'][2])
+        self.assertEqual('Subparagraph[22] here',
+                         sxs['children'][0]['paragraphs'][0])

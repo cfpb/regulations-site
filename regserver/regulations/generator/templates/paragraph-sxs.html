@@ -19,9 +19,18 @@
     {% endwith %}
 {% endfor %}
 
+{% if sxs.all_footnotes %}
+<ul id="footnotes">
+    {% for footnote in sxs.all_footnotes %}
+    <li id="footnote-{{footnote.reference}}">[<a href="#footnote-jump-{{footnote.reference}}">{{footnote.reference}}</a>] {{footnote.text|safe}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 {% if sxs.label %}
       </div>
 {% endif %}
+
 
 {% if sxs.label %}
 <div id="metadata-{{sxs.label}}" class="sxs-metadata">
