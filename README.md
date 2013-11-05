@@ -36,11 +36,11 @@ sudo apt-get install python-software-properties
 
 Executables and binaries can be found for most OSes here: http://phantomjs.org/download.html.
 Instructions for Homebrew are also found there.
-For Debian-based Linux folk, the apt-get package is just fine:
-
+For Debian-based Linux folk, the apt-get package is often just fine:
 ```
 sudo apt-get install phantomjs
 ```
+However, if you run into problems with a library called "icui18n" when you attempt to run tests, try installing via one of the binaries provided on the PhantomJS site.
 
 #### Global npm packages
 You will need to install the Grunt command line interface, Bower, Casper and a Mocha + PhantomJS cli globally using npm. 
