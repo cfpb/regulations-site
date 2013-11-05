@@ -67,3 +67,6 @@ head/public/fonts
 regserver/regulations/static/regulations/docs/
 regserver/regulations/static/regulations/js/source/require.config.js
 regserver/regulations/static/regulations/js/tests/browser/test.config.js
+regserver/regulations/static/regulations/js/built/*
+!regserver/regulations/static/regulations/js/built/regulations.js
+!regserver/regulations/static/regulations/js/built/require.config.js
