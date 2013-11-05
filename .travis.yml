@@ -20,4 +20,6 @@ script:
     - cd ..
     - ./dummy_api/start.sh
     - echo 'API_BASE = "http://localhost:8282/"' >> regserver/regserver/settings/local_settings.py
+    - cd regserver
+    - ./run_server.sh
     - grunt test
