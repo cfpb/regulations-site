@@ -27,7 +27,7 @@ class ChromeBreakawayView(ChromeView):
         content = self.content(context)
         if isinstance(content, HttpResponse):  # error occurred
             return content
-        context['partial_content'] = self.content(context)
+        context['partial_content'] = content
 
         utils.add_extras(context)
         return context
