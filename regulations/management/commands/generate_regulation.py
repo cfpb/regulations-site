@@ -62,7 +62,7 @@ class Command(BaseCommand):
             #   Otherwise, copy the static dir to the output
             if path.exists(front_end_dir):
                 shutil.rmtree(front_end_dir)
-            shutil.copytree('../regserver/regulations/static/', front_end_dir)
+            shutil.copytree('../regulations/static/', front_end_dir)
 
         if not path.exists(settings.OFFLINE_OUTPUT_DIR + 'notice'):
             mkdir(settings.OFFLINE_OUTPUT_DIR + 'notice')

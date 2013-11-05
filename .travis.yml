@@ -15,5 +15,5 @@ script:
     - ./require.sh
     - ./bin/test
     - ./dummy_api/start.sh
-    - echo 'API_BASE = "http://localhost:8282/"' >> regserver/regserver/settings/local_settings.py
+    - echo 'API_BASE = "http://localhost:8282/"' >> regserver/settings/local_settings.py
     - grunt test
