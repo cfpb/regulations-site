@@ -37,6 +37,7 @@ sudo apt-get install python-software-properties
 You will need to install the Grunt command line interface, Bower, PhantomJS, Casper and a Mocha + PhantomJS cli globally using npm. 
 If you already have different versions of PhantomJS and Casper installed, its probably ok. The version specified is known to work with this codebase, though.
 ```
+cd regulations-site
 npm install -g grunt-cli bower phantomjs@1.9.2-2 casper@0.1.1 mocha-phantomjs@3.1.4
 ```
 
