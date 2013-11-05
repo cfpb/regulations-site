@@ -200,7 +200,7 @@ define(&#039;dispatch&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;
         },
 
         hasPushState: function() {
-            return(this.state[&#039;pushState&#039;]);
+            return this.state[&#039;pushState&#039;];
         },
 
         setState: function(state) {
@@ -209,7 +209,7 @@ define(&#039;dispatch&#039;, [&#039;jquery&#039;, &#039;underscore&#039;, &#039;
 
         getUIMode: function() {
             // var options = [&#039;regSection&#039;, &#039;breakaway&#039;, &#039;search&#039;, &#039;diff&#039;, &#039;history&#039;];
-            return(this.state[&#039;mode&#039;]);
+            return this.state[&#039;mode&#039;];
         },
 
         setUIMode: function(context) {
