@@ -30,7 +30,6 @@ If you receive an error about ```add-apt-repository``` not being found, do:
 
 ```
 sudo apt-get install python-software-properties
-
 ```
 
 #### Global npm packages
