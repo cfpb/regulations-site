@@ -6,7 +6,6 @@ from regulations.generator.layers.toc_applier import TableOfContentsLayer
 from regulations.generator.navigation import choose_next_section
 from regulations.generator.navigation import choose_previous_section
 from regulations.generator.node_types import EMPTYPART, REGTEXT
-from regulations.generator.versions import fetch_grouped_history
 from regulations.views import error_handling, utils
 from regulations.views.chrome import ChromeView
 from regulations.views.partial import PartialView
@@ -42,7 +41,7 @@ class PartialSectionDiffView(PartialView):
         except error_handling.MissingContentException, e:
             return error_handling.handle_generic_404(request)
 
-    def footer_nav(self, label, toc, old_version, new_version):
+    def footer_nav(self, label, toc, old_version, new_version, from_version):
         nav = {}
         for idx, toc_entry in enumerate(toc):
             if toc_entry['section_id'] != label:
@@ -53,14 +52,15 @@ class PartialSectionDiffView(PartialView):
 
             if p_sect:
                 nav['previous'] = p_sect
-                nav['previous']['url'] = reverse(
-                    'chrome_section_diff_view',
-                    args=(p_sect['section_id'], old_version, new_version))
+                nav['previous']['url'] = reverse_chrome_diff_view(
+                    p_sect['section_id'], old_version,
+                    new_version, from_version)
+
             if n_sect:
                 nav['next'] = n_sect
-                nav['next']['url'] = reverse(
-                    'chrome_section_diff_view',
-                    args=(n_sect['section_id'], old_version, new_version))
+                nav['next']['url'] = reverse_chrome_diff_view(
+                    n_sect['section_id'], old_version,
+                    new_version, from_version)
         return nav
 
     def get_context_data(self, **kwargs):
@@ -95,9 +95,10 @@ class PartialSectionDiffView(PartialView):
         regpart = label_id.split('-')[0]
         old_toc = utils.table_of_contents(regpart, older, True)
         diff = generator.get_diff_json(regpart, older, newer)
-        context['TOC'] = diff_toc(older, newer, old_toc, diff)
+        from_version = self.request.GET.get('from_version', older)
+        context['TOC'] = diff_toc(older, newer, old_toc, diff, from_version)
         context['navigation'] = self.footer_nav(label_id, context['TOC'],
-                                                older, newer)
+                                                older, newer, from_version)
         return context
 
 
@@ -108,16 +109,32 @@ class ChromeSectionDiffView(ChromeView):
     check_tree = False
     has_sidebar = False
 
-    def add_main_content(self, context):
-        super(ChromeSectionDiffView, self).add_main_content(context)
+    def add_diff_content(self, context):
+        context['from_version'] = self.request.GET.get(
+            'from_version', context['version'])
         context['left_version'] = context['version']
         context['right_version'] = \
             context['main_content_context']['newer_version']
 
         context['TOC'] = context['main_content_context']['TOC']
+        return context
+
+    def add_main_content(self, context):
+        super(ChromeSectionDiffView, self).add_main_content(context)
+        return self.add_diff_content(context)
 
 
-def diff_toc(older_version, newer_version, old_toc, diff):
+def reverse_chrome_diff_view(sect_id, left_ver, right_ver, from_version):
+    """ Reverse the URL for a chromed diff view. """
+
+    diff_url = reverse(
+        'chrome_section_diff_view',
+        args=(sect_id, left_ver, right_ver))
+    diff_url += '?from_version=%s' % from_version
+    return diff_url
+
+
+def diff_toc(older_version, newer_version, old_toc, diff, from_version):
     compiled_toc = list(old_toc)
     for node in (v['node'] for v in diff.values() if v['op'] == 'added'):
         if len(node['label']) == 2 and node['title']:
@@ -134,9 +151,8 @@ def diff_toc(older_version, newer_version, old_toc, diff):
 
     modified, deleted = modified_deleted_sections(diff)
     for el in compiled_toc:
-        el['url'] = reverse('chrome_section_diff_view', kwargs={
-            'label_id': el['section_id'], 'version': older_version,
-            'newer_version': newer_version})
+        el['url'] = reverse_chrome_diff_view(
+            el['section_id'], older_version, newer_version, from_version)
         # Deleted first, lest deletions in paragraphs affect the section
         if tuple(el['index']) in deleted and 'op' not in el:
             el['op'] = 'deleted'
