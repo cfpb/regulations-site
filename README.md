@@ -1,4 +1,33 @@
-This repository is part of a larger project. To read about it, please see http://eregs.github.io/eregulations/.
+regulations-site
+================
+
+[![Build Status](https://travis-ci.org/eregs/regulations-core.png)](https://travis-ci.org/eregs/regulations-core)
+
+An interface for viewing regulations data.
+
+This repository is part of a larger project. To read about it, please see 
+[http://eregs.github.io/eregulations/](http://eregs.github.io/eregulations/).
+
+## Buildout
+
+Buildout is a simple tool for building and distributing python applications
+quickly. We use it to get a version of the API up and running without
+needing all of the fuss usually associated with setting up Django. Just run
+
+```bash
+$ pip install zc.buildout
+$ buildout
+```
+
+After downloading the internet, you'll notice that some helpful scripts are
+located in ```bin```, including ```bin/django``` and ```bin/test```. The
+latter will run our test suite while the former is equivalent to running
+manage.py in a traditional Django environment.
+
+With that, you can start the development server:
+```bash
+$ ./bin/django runserver
+```
 
 ## JavaScript Application Environment
 The front end of the site uses a number of JavaScript libraries and frameworks to create the unique experience of navigating and reading a regulation, as you can see at http://consumerfinance.gov/eregulations. If you'd like to modify the JavaScript layer, you should set up the build and testing environment.
