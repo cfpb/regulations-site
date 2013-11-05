@@ -54,13 +54,7 @@ def redirect_by_date_get(request, label_id):
         return handle_generic_404(request)
 
 
-def diff_redirect(request, label_id, version):
-    """Handles constructing the diff url by pulling the new version from
-    GET. We check for bad data here (as we can't rely on url regex)"""
-    new_version = request.GET.get('new_version', '')
-    if not re.match(r'^[-\d\w]+$', new_version):
-        return handle_generic_404(request)
-
+def order_diff_versions(label_id, version, new_version):
     # Re-order if needed - History is sorted in reverse chronological order
     for major_version in fetch_grouped_history(label_id.split('-')[0]):
         for notice in major_version['notices']:
@@ -77,3 +71,15 @@ def diff_redirect(request, label_id, version):
     # Didn't find the versions in question. Assume this was intentional
     return redirect('chrome_section_diff_view', label_id, version,
                     new_version)
+
+
+def diff_redirect(request, label_id, version):
+    """Handles constructing the diff url by pulling the new version from
+    GET. We check for bad data here (as we can't rely on url regex)"""
+    new_version = request.GET.get('new_version', '')
+    if not re.match(r'^[-\d\w]+$', new_version):
+        return handle_generic_404(request)
+
+    response = order_diff_versions(label_id, version, new_version)
+    response['Location'] += '?from_version=%s' % version
+    return response
