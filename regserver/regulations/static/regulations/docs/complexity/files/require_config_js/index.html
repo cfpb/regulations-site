@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">49.58</p>
+      <p class="stat">47.65</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">46</p>
+      <p class="stat">59</p>
     </div>
   </div>
   <div class="row historical">
@@ -67,7 +67,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.27</p>
+      <p class="stat">0.32</p>
     </div>
   </div>
 </div>
@@ -90,52 +90,65 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">var require = {
-    paths: {
-        jquery: &#039;./lib/jquery-1.9.1&#039;,
-        underscore: &#039;./lib/underscore&#039;,
-        backbone: &#039;./lib/backbone&#039;,
-        &#039;jquery-scrollstop&#039;: &#039;./lib/jquery.scrollstop&#039;,
-        &#039;queryparams&#039;: &#039;./lib/backbone.queryparams&#039;,
-        &#039;definition-view&#039;: &#039;./views/definition-view&#039;,
-        &#039;regs-fixed-el-view&#039;: &#039;./views/regs-fixed-el-view&#039;,
-        &#039;sub-head-view&#039;: &#039;./views/sub-head-view&#039;,
-        &#039;sidebar-module-view&#039;: &#039;./views/sidebar-module-view&#039;,
-        &#039;toc-view&#039;: &#039;./views/toc-view&#039;,
-        &#039;sidebar-view&#039;: &#039;./views/sidebar-view&#039;,
-        &#039;sidebar-head-view&#039;: &#039;./views/sidebar-head-view&#039;,
-        &#039;reg-view&#039;: &#039;./views/reg-view&#039;,
-        &#039;konami&#039;: &#039;./lib/konami&#039;,
-        &#039;analytics-handler&#039;: &#039;./views/analytics-handler-view&#039;,
-        &#039;header-view&#039;: &#039;./views/header-view&#039;,
-        &#039;section-footer-view&#039;: &#039;./views/section-footer-view&#039;,
-        &#039;drawer-view&#039;: &#039;./views/drawer-view&#039;,
-        &#039;history-view&#039;: &#039;./views/history-view&#039;,
-        &#039;search-view&#039;: &#039;./views/search-view&#039;,
-        &#039;sxs-list-view&#039;: &#039;./views/sxs-list-view&#039;,
-        &#039;sidebar-list-view&#039;: &#039;./views/sidebar-list-view&#039;,
-        &#039;sxs-view&#039;: &#039;./views/sxs-view&#039;,
-        &#039;search-results-view&#039;: &#039;./views/search-results-view&#039;,
-        &#039;main-view&#039;: &#039;./views/main-view&#039;,
-        &#039;permalink-view&#039;: &#039;./views/permalink-view&#039;
-    },
-    shim: {
-        underscore: {
-            deps: [&#039;jquery&#039;],
-            exports: &#039;_&#039;
-        },
-        backbone: {
-            deps: [&#039;underscore&#039;, &#039;jquery&#039;],
-            exports: &#039;Backbone&#039;
-        },
-        &#039;jquery-scrollstop&#039;: {
-            deps: [&#039;jquery&#039;]
-        },
-        konami: {
-            exports: &#039;Konami&#039;
-        }
+    <textarea id="file-source" class="col-md-12">var require = { &quot;paths&quot; :
+{
+        &quot;jquery&quot;: &quot;./lib/jquery/jquery&quot;,
+        &quot;underscore&quot;: &quot;./lib/underscore/underscore&quot;,
+        &quot;backbone&quot;: &quot;./lib/backbone/backbone&quot;,
+        &quot;samplejson&quot;: &quot;../tests/grunt/js/fixtures/sample-json&quot;,
+        &quot;jquery-scrollstop&quot;: &quot;./lib/jquery.scrollstop/index&quot;,
+        &quot;queryparams&quot;: &quot;./lib/backbone.queryparams/index&quot;,
+        &quot;definition-view&quot;: &quot;./views/sidebar/definition-view&quot;,
+        &quot;sub-head-view&quot;: &quot;./views/header/sub-head-view&quot;,
+        &quot;sidebar-module-view&quot;: &quot;./views/sidebar/sidebar-module-view&quot;,
+        &quot;toc-view&quot;: &quot;./views/drawer/toc-view&quot;,
+        &quot;sidebar-view&quot;: &quot;./views/sidebar/sidebar-view&quot;,
+        &quot;sidebar-head-view&quot;: &quot;./views/sidebar/sidebar-head-view&quot;,
+        &quot;reg-view&quot;: &quot;./views/main/reg-view&quot;,
+        &quot;konami&quot;: &quot;./lib/konami/index&quot;,
+        &quot;analytics-handler&quot;: &quot;./views/analytics-handler-view&quot;,
+        &quot;header-view&quot;: &quot;./views/header/header-view&quot;,
+        &quot;section-footer-view&quot;: &quot;./views/main/section-footer-view&quot;,
+        &quot;drawer-view&quot;: &quot;./views/drawer/drawer-view&quot;,
+        &quot;history-view&quot;: &quot;./views/drawer/history-view&quot;,
+        &quot;search-view&quot;: &quot;./views/drawer/search-view&quot;,
+        &quot;sxs-list-view&quot;: &quot;./views/sidebar/sxs-list-view&quot;,
+        &quot;sidebar-list-view&quot;: &quot;./views/sidebar/sidebar-list-view&quot;,
+        &quot;sxs-view&quot;: &quot;./views/breakaway/sxs-view&quot;,
+        &quot;search-results-view&quot;: &quot;./views/main/search-results-view&quot;,
+        &quot;main-view&quot;: &quot;./views/main/main-view&quot;,
+        &quot;permalink-view&quot;: &quot;./views/sidebar/permalink-view&quot;,
+        &quot;search-model&quot;: &quot;./models/search-model&quot;,
+        &quot;meta-model&quot;: &quot;./models/meta-model&quot;,
+        &quot;reg-model&quot;: &quot;./models/reg-model&quot;,
+        &quot;sxs-model&quot;: &quot;./models/sxs-model&quot;,
+        &quot;regs-router&quot;: &quot;./router&quot;,
+        &quot;regs-helpers&quot;: &quot;./helpers&quot;,
+        &quot;folder-model&quot;: &quot;./models/folder-model&quot;
     }
-};</textarea>
+, &quot;shim&quot;:
+{
+        &quot;underscore&quot;: {
+            &quot;deps&quot;: [
+                &quot;jquery&quot;
+            ],
+            &quot;exports&quot;: &quot;_&quot;
+        },
+        &quot;backbone&quot;: {
+            &quot;deps&quot;: [
+                &quot;underscore&quot;,
+                &quot;jquery&quot;
+            ],
+            &quot;exports&quot;: &quot;Backbone&quot;
+        },
+        &quot;konami&quot;: {
+            &quot;exports&quot;: &quot;Konami&quot;
+        },
+        &quot;jquery-scrollstop&quot;: {
+            &quot;deps&quot;: [&quot;jquery&quot;]
+        }
+}
+}</textarea>
   </div>
 </div>
 
