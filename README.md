@@ -18,7 +18,7 @@ The application's UI itself uses a number of dependencies that you can see in pa
 First we will need npm. npm ships with Node.js. If you don't already have it installed, there are a few ways to get it.
 - You can grab and install a binary or installer from http://nodejs.org/download/
 - If you're on OS X, you can use [Homebrew](http://brew.sh/) if that's your thing
-- If you are on using Ubuntu, the default apt-get package is out of date. Do:
+- If you are using Ubuntu, the default apt-get package is out of date. Do:
 
 ```
 sudo add-apt-repository ppa:chris-lea/node.js
