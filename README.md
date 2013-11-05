@@ -32,12 +32,22 @@ If you receive an error about ```add-apt-repository``` not being found, do:
 sudo apt-get install python-software-properties
 ```
 
+#### PhantomJS
+
+Executables and binaries can be found for most OSes here: http://phantomjs.org/download.html.
+Instructions for Homebrew are also found there.
+For Debian-based Linux folk, the apt-get package is just fine:
+
+```
+sudo apt-get install phantomjs
+```
+
 #### Global npm packages
-You will need to install the Grunt command line interface, Bower, PhantomJS, Casper and a Mocha + PhantomJS cli globally using npm. 
-If you already have different versions of PhantomJS and Casper installed, its probably ok. The version specified is known to work with this codebase, though.
+You will need to install the Grunt command line interface, Bower, Casper and a Mocha + PhantomJS cli globally using npm. 
+If you already have different versions of Casper and Mocha-PhantomJS installed, its probably ok. The version specified is known to work with this codebase, though.
 ```
 cd regulations-site
-npm install -g grunt-cli bower phantomjs@1.9.2-2 casper@0.1.1 mocha-phantomjs@3.1.4
+npm install -g grunt-cli bower casper@0.1.1 mocha-phantomjs@3.1.4
 ```
 
 #### Installing dependencies
