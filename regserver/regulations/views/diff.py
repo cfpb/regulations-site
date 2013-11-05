@@ -41,7 +41,6 @@ class PartialSectionDiffView(PartialView):
         except error_handling.MissingContentException, e:
             return error_handling.handle_generic_404(request)
 
-
     def footer_nav(self, label, toc, old_version, new_version, from_version):
         nav = {}
         for idx, toc_entry in enumerate(toc):
@@ -54,13 +53,13 @@ class PartialSectionDiffView(PartialView):
             if p_sect:
                 nav['previous'] = p_sect
                 nav['previous']['url'] = reverse_chrome_diff_view(
-                    p_sect['section_id'], old_version, 
+                    p_sect['section_id'], old_version,
                     new_version, from_version)
 
             if n_sect:
                 nav['next'] = n_sect
                 nav['next']['url'] = reverse_chrome_diff_view(
-                    n_sect['section_id'], old_version, 
+                    n_sect['section_id'], old_version,
                     new_version, from_version)
         return nav
 
@@ -124,6 +123,7 @@ class ChromeSectionDiffView(ChromeView):
         super(ChromeSectionDiffView, self).add_main_content(context)
         return self.add_diff_content(context)
 
+
 def reverse_chrome_diff_view(sect_id, left_ver, right_ver, from_version):
     """ Reverse the URL for a chromed diff view. """
 
@@ -132,6 +132,7 @@ def reverse_chrome_diff_view(sect_id, left_ver, right_ver, from_version):
         args=(sect_id, left_ver, right_ver))
     diff_url += '?from_version=%s' % from_version
     return diff_url
+
 
 def diff_toc(older_version, newer_version, old_toc, diff, from_version):
     compiled_toc = list(old_toc)
