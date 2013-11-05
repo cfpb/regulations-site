@@ -1,6 +1,9 @@
 #vim: set encoding=utf-8
+from collections import defaultdict
+
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.http import HttpResponseBadRequest
+from django.template import Context, loader
 from django.views.generic.base import TemplateView
 
 from regulations.generator import api_reader, generator, notices
@@ -12,6 +15,8 @@ from regulations.views import error_handling
 class ParagraphSXSView(TemplateView):
     """ Given a regulation paragraph and a Federal Register notice number,
     display the appropriate section by section analyses."""
+    def __init__(self):
+        self.footnote_tpl = loader.get_template("layers/sxs-footnotes.html")
 
     def get_template_names(self):
         """ The disclaimer that exists on this page can be over ridden. If an
@@ -57,6 +62,35 @@ class ParagraphSXSView(TemplateView):
                     for a in reversed(sxs_layer_data[label_id])
                     if a['reference'] != [notice_id, label_id]]
 
+    def footnote_refs(self, sxs):
+        """Add footnote references to paragraph text"""
+        refs = sxs.get('footnote_refs', [])
+        ref_dict = defaultdict(list)
+        for ref in refs:
+            ref_dict[ref['paragraph']].append(ref)
+
+        for p_idx in range(len(sxs['paragraphs'])):
+            shift = 0
+            for ref in ref_dict[p_idx]:
+                p = sxs['paragraphs'][p_idx]
+                rendered = self.footnote_tpl.render(Context({'footnote': ref}))
+                offset = ref['offset'] + shift
+                sxs['paragraphs'][p_idx] = p[:offset] + rendered
+                sxs['paragraphs'][p_idx] += p[offset:]
+                shift += len(rendered)
+        for child in sxs['children']:
+            self.footnote_refs(child)
+
+    def footnotes(self, notice, sxs):
+        """Data for footnotes (which are referenced in the paragraph text)"""
+        feet = []
+        for ref in sxs.get('footnote_refs', []):
+            ref['text'] = notice['footnotes'][ref['reference']]
+            feet.append(ref)
+        for child in sxs['children']:
+            feet = feet + self.footnotes(notice, child)
+        return feet
+
     def get_context_data(self, **kwargs):
         context = super(ParagraphSXSView, self).get_context_data(**kwargs)
 
@@ -77,9 +111,12 @@ class ParagraphSXSView(TemplateView):
 
         paragraph_sxs['children'] =\
             notices.filter_labeled_children(paragraph_sxs)
+        self.footnote_refs(paragraph_sxs)
+
         context['sxs'] = paragraph_sxs
         context['sxs']['header'] = label_to_text(label_id.split('-'),
                                                  include_marker=True)
+        context['sxs']['all_footnotes'] = self.footnotes(notice, paragraph_sxs)
         context['notice'] = notice
         context['further_analyses'] = self.further_analyses(
             label_id, notice_id, context['version'])
