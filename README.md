@@ -21,7 +21,9 @@ First we will need npm. npm ships with Node.js. If you don't already have it ins
 - If you are on a Debian-based flavor of Linux, the default apt-get package is out of date. Do:
 ```
 sudo add-apt-repository ppa:chris-lea/node.js
+
 sudo apt-get update
+
 sudo apt-get install nodejs
 ```
 
