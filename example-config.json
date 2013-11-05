@@ -1,4 +1,4 @@
 {
     "testUrl": "http://www.consumerfinance.gov/eregulations",
-    "frontEndPath": "regserver/regulations/static/regulations"
+    "frontEndPath": "regulations/static/regulations"
 }
