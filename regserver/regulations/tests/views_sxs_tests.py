@@ -93,10 +93,10 @@ class ParagrasphSXSViewTests(TestCase):
                  'children': []}]}
         psv.footnote_refs(sxs)
         self.assertEqual('This is[1] paragraph 1, I mean[2] zero',
-            sxs['paragraphs'][0])
+                         sxs['paragraphs'][0])
         self.assertEqual('Will the real paragraph one please stand up?',
-            sxs['paragraphs'][1])
+                         sxs['paragraphs'][1])
         self.assertEqual('I[12] am paragraph 10. Is that good enough?',
-            sxs['paragraphs'][2])
+                         sxs['paragraphs'][2])
         self.assertEqual('Subparagraph[22] here',
-                sxs['children'][0]['paragraphs'][0])
+                         sxs['children'][0]['paragraphs'][0])
