@@ -1,5 +1,3 @@
-# Django settings for regserver project.
-
 from os.path import join, abspath, dirname
 
 here = lambda *x: join(abspath(dirname(__file__)), *x)
@@ -112,17 +110,14 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'regserver.urls'
-
-# Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'regserver.wsgi.application'
+ROOT_URLCONF = 'regulations.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     root("templates"),
-    root('regulations/static/regulations/ip/templates'),
+    root('eregsip/templates'),
     root('regulations/generator/templates'),
 )
 
@@ -158,7 +153,7 @@ EREGS_GA_SITE = ''
 #Django by default tries to setup a databse when running 
 #tests. We don't have a database, so we override the default 
 #test runner. 
-TEST_RUNNER = 'testing.DatabaselessTestRunner'
+TEST_RUNNER = 'regulations.tests.runner.DatabaselessTestRunner'
 
 CACHES = {
     'default' : {
