@@ -44,13 +44,39 @@ The application's UI itself uses a number of dependencies that you can see in pa
 
 ### Environment setup
 #### Node/npm
-First we will need npm. npm ships with Node.js. If you don't already have it installed, please grab and install a binary from http://nodejs.org/download/.
+First we will need npm. npm ships with Node.js. If you don't already have it installed, there are a few ways to get it.
+- You can grab and install a binary or installer from http://nodejs.org/download/
+- If you're on OS X, you can use [Homebrew](http://brew.sh/) if that's your thing
+- If you are using Ubuntu, the default apt-get package is out of date. Do:
+
+```
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs
+```
+
+If you receive an error about ```add-apt-repository``` not being found, do:
+
+```
+sudo apt-get install python-software-properties
+```
+
+#### PhantomJS
+
+Executables and binaries can be found for most OSes here: http://phantomjs.org/download.html.
+Instructions for Homebrew are also found there.
+For Debian-based Linux folk, the apt-get package is often just fine:
+```
+sudo apt-get install phantomjs
+```
+However, if you run into problems with a library called "icui18n" when you attempt to run tests, try installing via one of the binaries provided on the PhantomJS site.
 
 #### Global npm packages
-You will need to install the Grunt command line interface, Bower, PhantomJS and Casper globally using npm. 
-If you already have different versions of PhantomJS and Casper installed, its probably ok. The version specified is known to work with this codebase, though.
+You will need to install the Grunt command line interface, Bower, Casper and a Mocha + PhantomJS cli globally using npm. 
+If you already have different versions of Casper and Mocha-PhantomJS installed, its probably ok. The version specified is known to work with this codebase, though.
 ```
-npm install -g grunt-cli bower phantomjs@1.9.2-2 casper@0.1.1
+cd regulations-site
+npm install -g grunt-cli bower casper@0.1.1 mocha-phantomjs@3.1.4
 ```
 
 #### Installing dependencies
@@ -65,6 +91,11 @@ The UI uses [RequireJS](http://requirejs.org/) for script loading and modularity
 
 Run ```./require.sh``` from the root of the repository.
 If you need to make changes to modules in your instance of the application, edit [require.paths.json](https://github.com/eregs/regulations-site/blob/master/require.paths.json) and [require.shim.json](https://github.com/eregs/regulations-site/blob/master/require.shim.json) accordingly. These files map to the ```paths``` and ```shim``` objects in the RequireJS configuration object. For more information: http://requirejs.org/docs/api.html#config
+
+#### Configuration JSON
+In the root of the repository, copy ```example-config.json``` to ```config.json``` and edit as necessary. Grunt depends on these settings to carry out tasks.
+- ```testURL``` is an environment that Mocha tests can run off of, typically a local development environment.
+- ```frontEndPath``` is the path to the root of your codebase where the ```css/``` and ```js/``` directories are.
 
 #### Running Grunt tasks
 There are a number of tasks configured in [Gruntfile.js](https://github.com/eregs/regulations-site/blob/master/Gruntfile.js). On the last lines, you will find tasks that group subtasks into common goals. Running ```grunt build``` will run unit, functional and lint tests, compress static assets and output some information about code complexity and maintainability. Its recommended that you run this task before deploying changes. 
