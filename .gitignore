@@ -56,7 +56,7 @@ oldphantomjs/
 # Custom #
 ##########
 *.py[co]
-ip/
+eregsip/
 *.swp
 local_settings.py
 dev_local_settings.py
