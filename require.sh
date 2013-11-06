@@ -1,6 +1,6 @@
 #!/bin/bash
-UICONF=regserver/regulations/static/regulations/js/source/require.config.js
-TESTCONF=regserver/regulations/static/regulations/js/tests/browser/test.config.js
+UICONF=regulations/static/regulations/js/source/require.config.js
+TESTCONF=regulations/static/regulations/js/tests/browser/test.config.js
 rm -f $UICONF
 touch $UICONF
 echo 'var require = { "paths" :' >> $UICONF

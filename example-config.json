@@ -1,4 +1,4 @@
 {
     "testUrl": "http://localhost:8000",
-    "frontEndPath": "regserver/regulations/static/regulations"
+    "frontEndPath": "regulations/static/regulations"
 }
