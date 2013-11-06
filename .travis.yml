@@ -3,25 +3,20 @@ python:
     - "2.6"
     - "2.7"
 install:
-   - cd regserver 
-   - pip install -r requirements.txt --use-mirrors
-   - pip install -r requirements-test.txt --use-mirrors
-   - cd ..
-   - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
-   - sudo apt-get update
-   - sudo apt-get install nodejs phantomjs
-   - sudo npm install -g grunt-cli grunt-init bower
-   - sudo npm install
-   - bower install
-   - cp example-config.json config.json
+    - pip install zc.buildout distribute
+    - buildout
+    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
+    - sudo apt-get update
+    - sudo apt-get install nodejs phantomjs
+    - sudo npm install -g grunt-cli grunt-init bower
+    - sudo npm install
+    - bower install
+    - cp example-config.json config.json
 script:
     - ./require.sh
-    - cd regserver
-    - python manage.py test regulations --settings=regserver.settings.dev
-    - cd ..
+    - ./bin/test
     - ./dummy_api/start.sh
-    - echo 'API_BASE = "http://localhost:8282/"' >> regserver/regserver/settings/local_settings.py
-    - cd regserver
+    - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
     - ./run_server.sh &
     - sleep 5
     - grunt test

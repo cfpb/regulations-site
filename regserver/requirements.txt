@@ -1,4 +1,0 @@
-Django==1.5
-lxml==3.1.0
-requests==1.2.3
-simplejson==3.3.0
