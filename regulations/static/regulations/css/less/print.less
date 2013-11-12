@@ -149,7 +149,10 @@ a[href^="http://"] {
     border: 1px solid @bg_gray;
 
      .hidden {
-        display: block;
+
+        .js & {
+            display: block !important;
+        }
      }
 
      .expand-button {
@@ -164,7 +167,6 @@ a[href^="http://"] {
         display: none;
      }
 }
-
 /*
  Layout Styles/Resets
  ========================================================================== */
