@@ -1,45 +1,48 @@
 .minicon-up{
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe000;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e000');
 }
 .minicon-search {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe001;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e001');
 }
 .minicon-right {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe002;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e002');
 }
 .minicon-plus {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe003;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e003');
 }
 .minicon-minus {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe004;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e004');
 }
 .minicon-menu {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe005;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e005');
 }
 .minicon-left {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe006;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e006');
 }
 .minicon-external-link {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe007;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e007');
 }
 .minicon-down {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe008;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e008');
 }
 .minicon-close {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe009;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e009');
 }
 .minicon-calendar {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe00a;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e00a');
+}
+.minicon-history {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e00b');
 }
 .minicon-alert {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe00b;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e00b');
 }
 .minicon-mail {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe00c;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e00c');
 }
 .minicon-phone {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe00d;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e00d');
 }
 .minicon-pdf {
-  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe00e;');
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e00e');
 }

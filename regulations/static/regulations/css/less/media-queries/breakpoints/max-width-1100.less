@@ -39,10 +39,18 @@
 
     .panel-slide {
         border-bottom: 1px solid @medium_gray;
+
+        .lt-ie8 & {
+            background: url(../img/right.png) center center no-repeat;
+        }
     }
 
     .active .panel-slide {
         border-bottom: none;
+
+        .lt-ie8 & {
+            background: url(../img/left.png) center center no-repeat;
+        }
     }
 
     .panel-slide:before {
