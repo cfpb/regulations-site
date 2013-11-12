@@ -74,14 +74,25 @@ class UtilsTest(TestCase):
 
     def test_add_extras(self):
         context = {}
+        settings.EREGS_GA = {
+                'EREGS': {
+                    'ID': 'eregs-ga-id',
+                    'SITE': 'eregs'
+                },
+                'ALT': {
+                    'ID': 'alt-ga-id',
+                    'SITE': 'alt'
+                }
+            }
         add_extras(context)
 
-        self.assertTrue('EREGS_GA_EREGS_ID' in context)
-        self.assertTrue('EREGS_GA_EREGS_SITE' in context)
-        self.assertTrue('EREGS_GA_ALT_ID' in context)
-        self.assertTrue('EREGS_GA_ALT_SITE' in context)
         self.assertTrue('APP_PREFIX' in context)
         self.assertTrue('env' in context)
+
+        self.assertEquals('eregs-ga-id', context['EREGS_GA_EREGS_ID'])
+        self.assertEquals('eregs', context['EREGS_GA_EREGS_SITE'])
+        self.assertEquals('alt-ga-id', context['EREGS_GA_ALT_ID'])
+        self.assertEquals('alt', context['EREGS_GA_ALT_SITE'])
 
     def test_add_extras_gai(self):
         """Make sure we are backwards compatible with GOOGLE_* params"""
