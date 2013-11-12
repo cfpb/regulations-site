@@ -65,7 +65,7 @@ def add_extras(context):
     if prefix != '/':   # Strip final slash
         prefix = prefix[:-1]
     context['APP_PREFIX'] = prefix
-    ga_settings = getattr(settings, 'EREGS_GA', '')
+    ga_settings = getattr(settings, 'EREGS_GA', {})
 
     for site in ga_settings:
         for val in ga_settings[site]:

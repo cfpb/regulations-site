@@ -52,10 +52,10 @@ CSS/Javascript etc., should inherit from this template.
           ga('send', 'pageview');
         </script>
     {% endif %}
-    {% if EREGS_GA_CFGOV_SITE and EREGS_GA_CFGOV_ID %}
+    {% if EREGS_GA_ALT_SITE and EREGS_GA_ALT_ID %}
         <script>
-            ga('create', '{{ EREGS_GA_CFGOV_ID }}', '{{ EREGS_GA_CFGOV_SITE }}', {'name': 'cfgov'});
-            ga('cfgov.send', 'pageview');
+            ga('create', '{{ EREGS_GA_ALT_ID }}', '{{ EREGS_GA_ALT_SITE }}', {'name': 'altAcct'});
+            ga('altAcct.send', 'pageview');
         </script>
     {% endif %}
     </body>
