@@ -16,6 +16,13 @@ body {
     margin-right: 1in;
 }
 
+/* Internet Explorer garbles Avenir when saving as a PDF */
+h1, h2, h3, h4, h5, .key-term {
+    .lt-ie9 & {
+        font-family: Arial, sans-serif;
+    }
+}
+
 
 /*
  Page Breaks & Orphans
