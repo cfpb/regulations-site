@@ -16,6 +16,19 @@ body {
     margin-right: 1in;
 }
 
+/* Internet Explorer garbles Avenir when saving as a PDF */
+.avenir-next {
+    .lt-ie9 & {
+        font-family: Arial, sans-serif;
+    }
+}
+
+.avenir-next-demi {
+   .lt-ie9 & {
+        font-family: Arial, sans-serif;
+        font-weight: 600;
+    }
+}
 
 /*
  Page Breaks & Orphans
@@ -142,7 +155,10 @@ a[href^="http://"] {
     border: 1px solid @bg_gray;
 
      .hidden {
-        display: block;
+
+        .js & {
+            display: block !important;
+        }
      }
 
      .expand-button {
@@ -157,7 +173,6 @@ a[href^="http://"] {
         display: none;
      }
 }
-
 /*
  Layout Styles/Resets
  ========================================================================== */
@@ -205,6 +220,15 @@ a[href^="http://"] {
 /*
  Section by Section Styles/Resets
  ========================================================================== */
+
+.sxs {
+    padding-bottom: 0;
+}
+
+#breakaway-view.open-sxs,
+.full-breakaway {
+    overflow-y: auto;
+}
 
  .sxs-header {
     position: static;

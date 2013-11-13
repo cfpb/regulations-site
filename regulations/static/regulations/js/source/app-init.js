@@ -31,6 +31,12 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
         // Purgatory for DOM event bindings that should happen in a View
         bindEvents: function() {
 
+            // disable/hide an alert
+            $('.disable-link').on( 'click', function(e) {
+                e.preventDefault();
+                $(this).closest('.displayed').addClass('disabled');
+            });
+
             /* ssshhhhh */
             new Konami(function() {
                 /* http://thenounproject.com/noun/hamburger/#icon-No17373 */
