@@ -32,7 +32,7 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
         bindEvents: function() {
 
             // disable/hide an alert
-            $('.disable-link').on( "click", function(e) {
+            $('.disable-link').on( 'click', function(e) {
                 e.preventDefault();
                 $(this).closest('.displayed').addClass('disabled');
             });
