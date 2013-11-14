@@ -156,6 +156,10 @@ Panel Slide Button
     cursor: pointer;
     text-align: center;
     font-size: 0.875em;
+
+    .lt-ie8 & {
+        background: url(../img/left.png) center center no-repeat;
+    }
 }
 
 .panel-slide:before {
@@ -170,6 +174,10 @@ Panel Slide Button
 .active {
     .panel-slide {
         border-bottom: 1px solid @medium_gray;
+
+        .lt-ie8 & {
+            background: url(../img/right.png) center center no-repeat;
+        }
     }
 }
 

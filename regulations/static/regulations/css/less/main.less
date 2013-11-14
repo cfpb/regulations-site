@@ -48,15 +48,6 @@ Media Queries
   -moz-box-sizing: border-box;-webkit-box-sizing: border-box; box-sizing: border-box;
  }
 
-.browser-warning {
-    margin-top: 0;
-    background-color: #FAB051;
-    font-family: Arial, sans-serif;
-    font-weight: bold;
-    padding: 10px 15px;
-    z-index: 999999;
- }
-
 /*.lt-ie10 {
   *, *:before, *:after {
       box-sizing: content-box;
@@ -94,6 +85,10 @@ Media Queries
     width: 1px;
     height: 1px;
     overflow: hidden;
+}
+
+.disabled {
+    display: none;
 }
 
 .content-wrap {
@@ -164,6 +159,43 @@ img.reg-image {
     display: block;
     border: 1px solid @light_field;
 }
+
+/* IE7 browser warning message */
+.browser-warning {
+    display: block;
+    position: absolute;
+    width: 100%;
+    margin-top: 0;
+    background-color: #F6D9D3;
+    border-bottom: 2px solid #E8A091;
+    font-family: Arial, sans-serif;
+    z-index: 999999;
+
+    h2 {
+        font-size: 18px;
+        padding: 0 20px;
+    }
+
+    li {
+        display: inline;
+        font-size: 14px;
+        padding-right: 20px;
+    }
+
+    .disable-link {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        height: 20px;
+        width: 20px;
+        background: url(../img/close-gray.png) center center no-repeat;
+    }
+
+    .minicon-right {
+        font-size: 12px;
+    }
+ }
 
 /* 
 Clearfix
