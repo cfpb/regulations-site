@@ -1,37 +1,42 @@
 @media only screen and ( max-width: 480px ) {
     
     /*
+    Layout
+    ====================
+    */
+
+    .main-content {
+        padding-top: 40px;
+    }
+
+    .reg-section:before,
+    .appendix-section:before,
+    .supplement-section:before,
+    .supplement-section section:before  {
+        display: block; 
+        content: ""; 
+        height: 60px; 
+        margin: -60px 0 0; 
+        visibility: hidden;
+    }
+
+    .reg-section .level-1 li,
+    .appendix-section .level-1 li,
+    .supplement-section .level-1 li {
+        border-top: 60px solid transparent;
+        margin-top: -60px;
+        -webkit-background-clip:padding-box;
+        -moz-background-clip:padding;
+        background-clip:padding-box;
+    }
+
+    /*
     Typography
     ====================
     */
 
     .reg-text {
         margin-top: 20px;
-    }
-
-    .header-main {
-        font-size: .875em;
-        padding: 0;
-        display: block;
-        width: auto;
-        float: left;
-    }
-
-    .header-secondary {
-        font-size: .875em;
-        padding: 0;
-        display: block;
-        width: auto;
-        float: right;
-
-        /* hide the diff dates header on small screens until we make a design decision */
-        .diff-dates {
-            display: none;
-        }
-    }
-
-    .header-main {
-        padding-left: 6px;
     }
 
     .main-content,
@@ -63,28 +68,51 @@
         top: 36px; /* offset shorter header height */
     }
 
+    .header-main {
+        font-size: .875em;
+        padding: 0;
+        display: block;
+        width: auto;
+        float: left;
+    }
+
+    .header-secondary {
+        font-size: .875em;
+        padding: 0;
+        width: 100%;
+        float: none;
+        height: 28px;
+        line-height: 28px;
+    }
+
+    .header-main {
+        padding-left: 6px;
+        float: none;
+        display: block;
+        height: 28px;
+        line-height: 28px;
+    }
+
     .main-head {
         display: none;
     }
 
     .sub-head {
         border-top: 2px solid @dark_text;
-        height: 36px;
+        height: 60px;
         line-height: 34px;
-    }
-
-    .main-content {
-        padding-top: 10px;
     }
 
     .header-label,
     .effective-date {
-        font-size: 0.8em;
-        line-height: 34px;
+        font-size: .9em;
+        //line-height: 34px;
     }
 
     .effective-date {
-        margin-top: 2px;
+        display: block;
+        margin-left: 46px;
+        float: none;
     }
 
     .inline-interpretation {
