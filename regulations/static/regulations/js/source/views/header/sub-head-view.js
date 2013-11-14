@@ -15,17 +15,17 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-h
             Dispatch.on('searchResults:open', this.displayCount, this);
 
             // cache inner title DOM node for frequent reference
-            this.$activeTitle = this.$el.find('#active-title');
+            this.$activeTitle = this.$el.find('.header-label');
         },
 
         // populates subhead with new title
         changeTitle: function(id) {
-            this.$activeTitle.html('<em class="header-label">' + RegsHelpers.idToRef(id) + '</em>');
+            this.$activeTitle.html(RegsHelpers.idToRef(id));
             return this;
         },
 
         displayCount: function(resultCount) {
-            this.$activeTitle.html('<em class="header-label">Search results — ' + resultCount + '</em>');
+            this.$activeTitle.html('Search results — ' + resultCount);
         },
 
         reset: function() {
