@@ -4,8 +4,8 @@ python:
     - "2.7"
 env:
     global:
-        secure: "WTQN5bI+FVaZRoSHo4HlRFBI4kzeU84IAFEPCpikx+/pnDcxCWwmzZGMjSS3mtd/gCpPSgshDNdQki8vUxyW6hn93UW2WftGk1pilVVG2Znnek293gfCXC1DaiaxtembVKMCQgJREW59keX4tt/19H63GnDk+YL1PxulBxXyFFg="
-        secure: "RgYv4jQ1ImeDOfJ6IIpedtBtWgTD7YxqOrapoX0Fzxf7xXR3RtsKNO/jLDf86keRg28BoY87AW+BHWH7KoFj22hCVcNF0dcgJmQ1xBXK8JMkvicGvyZ+g5CbbRqsYEmgeqhZfJ+TGXHR/k6uQb0zD4VfGvpj64TWOyORZQiyrVc="
+        secure: "fuh6Jmkc4wDS7xil7CBcKg02bUImn8aRXx2jFuD4rDr9h6WQPsZwi56wxOJ5PZ6UXqbSOmjrALOQCODhusWPomIgz+8tbNsTwM5AkchuNz4lxeejPH4bq88LkuGz1G5GhenIEQh3MnMKx9Nv8OMN6kRdIjLVJV7Fqbdl5vyqvuE="
+        secure: "UzPolNJxGuhWpmiq6BPIO+or/B+i/Qo9/G4NRMBaSVcEXo5GjWoY/q/vQ/3R3Yfb7OuVS8CN1J5O+uYjfDwUAjlwbDD0H5/lAYCsXf+JZpbwwhV6d2RqFOUGEUFHQmYgE88pJ5a1wzc+LUepxhaCd4c9hawZG7EaalU08TdFlHg="
 before_script:
     - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
 install:
