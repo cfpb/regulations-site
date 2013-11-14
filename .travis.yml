@@ -2,8 +2,12 @@ language: python
 python:
     - "2.6"
     - "2.7"
+env:
+    global:
+        - secure: "Aq/FJX0vBKWycsA2PkkBYQbrqNVNKPzvuNByK+0Ptsc2KcNVtH+Um5MxzJ3c7ZrnzJwROWu4mJhHbQzI1qHqXMfghJrwFnGb9MlgRwWmn2ntzw3PHtIRyMofcUV61DJu4AOAG02tmUNr3BQVZ3ep1oJWcyB4g+JefzYMypelrZ8="
+        - secure: "N1L4isaxkPm4eFptCQUuV7T0MljOFz5J97WdfK/D8jfhgYjoes8OFwLolZD4mCMqhTHTij7ZaEklLI2gKPFh23pIH6Y/XCy/hsA+g4u54Hu+QiSfxbBrAq8bz91YAYLQhNUDxn0UHFb2dLq6TQSNEpBGlH0wB1SDMMTc2Li8EZE=" 
 install:
-    - pip install zc.buildout distribute
+    - pip install zc.buildout distribute selenium
     - buildout
     - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
     - sudo apt-get update
