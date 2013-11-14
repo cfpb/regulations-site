@@ -23,6 +23,11 @@ class ExampleTest(unittest.TestCase):
         print "Sauce Labs job: https://saucelabs.com/jobs/%s" % self.jobid
         self.driver.implicitly_wait(30)
 
+    def example_test(self):
+        self.driver.get(self.url)
+        toc_link_1005_1 = self.driver.find_element_by_xpath('//*[@id="toc"]/ol/li[1]/a')
+        self.assertEquals(toc_link_1005_1.get_attribute('data-section-id'), '1005-1')
+
     def tearDown(self):
         self.driver.quit()
         self.report_test_result()
