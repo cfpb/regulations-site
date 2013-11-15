@@ -6,13 +6,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 class ExampleTest(unittest.TestCase):
 
     def setUp(self):
-        if (os.environ.get('TRAVIS_SECURE_ENV_VARS'):
+        if (os.environ.get('TRAVIS_SECURE_ENV_VARS')):
             self.capabilities['tunnel-identifier'] = os.environ['TRAVIS_JOB_NUMBER']
             self.capabilities['build'] = os.environ['TRAVIS_BUILD_NUMBER']
             self.capabilities['browserName'] = 'chrome'
             self.capabilities['platform'] = 'LINUX'
 
-        self.name = 'Example test!!'
+        self.name = 'Example test'
         self.url = 'http://localhost:8000'
         self.username = os.environ['SAUCE_USERNAME']
         self.key = os.environ['SAUCE_ACCESS_KEY']
