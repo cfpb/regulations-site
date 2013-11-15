@@ -9,6 +9,7 @@ env:
   - secure: ezG7u8HONYLj73JJ7g8HnQ7BmkQIzcItFNolu238jJBoxnYPehFd9MwOJ/1hyFMrDlD1a82iU34+sx/oYNBvvcvv2GMgSbcsAlRxP0WY0eGIPA96Bk9jmMx2MuhHF1veOGrIhQXboG31lu9hRDOC6of1QgIjI8CkdWwnT9Lq820=
   - secure: UVNOOtSsRQt/L4ibr4Eb3EEXF3BkBV6Qvb6a+oqOgHFDYkFXxs2O3KjbnqiUS1MvlSKXJtkT1aG1Jd/YzqoPN0bm2HzdI16LuQSHsfqdDDov7ArvLZ8vTfN4ARt8Bq2WejdaozYQOi/FS9/JSoStEiwerRUB6vLmiHm21ZcPNjU=
 install:
+- echo $TRAVIS_SECURE_ENV_VARS
 - pip install zc.buildout distribute selenium
 - buildout
 - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
