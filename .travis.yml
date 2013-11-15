@@ -1,29 +1,29 @@
 language: python
 python:
-    - "2.6"
-    - "2.7"
+- '2.6'
+- '2.7'
 env:
-    global:
-        secure: "YaUzoB5H6H1vuo7zJnyEh2q4UJOjcSsbi5va9w3z9TBSU0nFxtrzjcy977lxnKSUnlGUyjMHjN0JJWbhS1GHlI+v8zctHzkbOk3BM3GMe8V3hIHm65oF/GUMJSE3AlOyeRS5V6u5iFZxwWCIuO+mqPeOD+uj6Wpl5njTvVLbAKc="
-        secure: "GIu97f0vqZN+KRADQTYtPqLdXlMx1fRMB6EaeOSoV4asY0l5TwBSEB7kURChG2RZwON4T1EtK5zam+rcTv1enu98l+AUAY55TtGDRfvTw0z0cmiDHQGnAS0YOuLat4c4+4N8/EZGRL7zacYhmFHMjG0pjgGwbdkpC37frnnMZ14="
+  global:
+  - secure: Bu9+BP5FZw3GL/4Oz4pcsFr2fm7wwiAFPDQRJpNmr9gyEVF0ZypMkgYptuojFhDUKo7Dz/Q4QfGfB8X4Yxi8jL9K6Jg5AW5cKrB8fscpG8LCRuwt25YtHEvNmrs4N8O83jyc5//ZSBIEmhFP5BU1lBqPzlvzP5xafQ1gs3587Yg=
+  - secure: MS8kc8RIALnV2VUAerc9WJRyJgdaTbn3MOrxj67Kj3H4a52aKzey79k8yr3NVnKKF/Ox+mq7oXuwpzRR3Yc6Z3cJIz1negu0+l1HY24gIi6xtbmooUsRCBR6Ddbm746/C+FYi9GGTnpPsX7o1m75NAYjCTvnJb1T4dYMAOhQL48=
 before_script:
-    - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
+- curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
 install:
-    - pip install zc.buildout distribute selenium
-    - buildout
-    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
-    - sudo apt-get update
-    - sudo apt-get install nodejs phantomjs
-    - sudo npm install -g grunt-cli grunt-init bower
-    - sudo npm install
-    - bower install
-    - cp example-config.json config.json
+- pip install zc.buildout distribute selenium
+- buildout
+- echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
+- sudo apt-get update
+- sudo apt-get install nodejs phantomjs
+- sudo npm install -g grunt-cli grunt-init bower
+- sudo npm install
+- bower install
+- cp example-config.json config.json
 script:
-    - ./require.sh
-    - ./bin/test
-    - ./dummy_api/start.sh
-    - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
-    - ./run_server.sh &
-    - sleep 5
-    - python regulations/tests/selenium/example_test.py
-    - grunt test
+- ./require.sh
+- ./bin/test
+- ./dummy_api/start.sh
+- echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
+- ./run_server.sh &
+- sleep 5
+- python regulations/tests/selenium/example_test.py
+- grunt test
