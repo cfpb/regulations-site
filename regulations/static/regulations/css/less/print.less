@@ -16,20 +16,12 @@ body {
     margin-right: 1in;
 }
 
-/* Internet Explorer garbles Avenir when saving as a PDF */
-.avenir-next {
+/* IE garbles Avenir when saving to a PDF */
+h1, h2, h3, h4, h5, .key-term, .defined-term {
     .lt-ie9 & {
-        font-family: Arial, sans-serif;
+        font-family: Arial, sans-serif !important;
     }
 }
-
-.avenir-next-demi {
-   .lt-ie9 & {
-        font-family: Arial, sans-serif;
-        font-weight: 600;
-    }
-}
-
 /*
  Page Breaks & Orphans
  ========================================================================== */
