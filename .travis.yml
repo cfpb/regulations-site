@@ -2,12 +2,12 @@ language: python
 python:
 - '2.6'
 - '2.7'
+addons:
+    sauce_connect: true
 env:
   global:
   - secure: "Bu9+BP5FZw3GL/4Oz4pcsFr2fm7wwiAFPDQRJpNmr9gyEVF0ZypMkgYptuojFhDUKo7Dz/Q4QfGfB8X4Yxi8jL9K6Jg5AW5cKrB8fscpG8LCRuwt25YtHEvNmrs4N8O83jyc5//ZSBIEmhFP5BU1lBqPzlvzP5xafQ1gs3587Yg="
   - secure: "MS8kc8RIALnV2VUAerc9WJRyJgdaTbn3MOrxj67Kj3H4a52aKzey79k8yr3NVnKKF/Ox+mq7oXuwpzRR3Yc6Z3cJIz1negu0+l1HY24gIi6xtbmooUsRCBR6Ddbm746/C+FYi9GGTnpPsX7o1m75NAYjCTvnJb1T4dYMAOhQL48="
-before_script:
-    - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
 install:
 - pip install zc.buildout distribute selenium
 - buildout
