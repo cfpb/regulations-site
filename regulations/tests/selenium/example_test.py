@@ -26,7 +26,7 @@ class ExampleTest(unittest.TestCase):
         self.driver.implicitly_wait(30)
 
     def test_sauce(self):
-        self.driver.get('http://localhost:8000')
+        self.driver.get('http://localhost:8000/1005')
         toc_link_1005_1 = self.driver.find_element_by_xpath('//*[@id="toc"]/ol/li[1]/a')
         self.assertEquals(toc_link_1005_1.get_attribute('data-section-id'), '1005-1')
 
