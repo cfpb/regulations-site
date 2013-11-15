@@ -12,7 +12,7 @@ class ExampleTest(unittest.TestCase):
             self.capabilities['browserName'] = 'chrome'
             self.capabilities['platform'] = 'LINUX'
 
-        self.name = 'Example test'
+        self.name = 'Example test!'
         self.url = 'http://localhost:8000'
         self.username = os.environ['SAUCE_USERNAME']
         self.key = os.environ['SAUCE_ACCESS_KEY']
