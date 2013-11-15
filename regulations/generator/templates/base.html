@@ -4,11 +4,7 @@ CSS/Javascript etc., should inherit from this template.
 {% endcomment %}
 
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if IE 9]>         <html class="no-js lt-ie10" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html class="no-js" lang="en">
     <head>
         {% load static from staticfiles %}
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -37,7 +33,11 @@ CSS/Javascript etc., should inherit from this template.
             <link rel="stylesheet" href="{%static "regulations/css/icon-ie7.css" %}"/>
         <![endif]-->
     </head>
-    <body>
+    <!--[if lt IE 7]>      <body class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+    <!--[if IE 7]>         <body class="lt-ie9 lt-ie8"> <![endif]-->
+    <!--[if IE 8]>         <body class="lt-ie9"> <![endif]-->
+    <!--[if IE 9]>         <body class="lt-ie10"> <![endif]-->
+    <!--[if gt IE 9]><!--><body><!--<![endif]-->
     {% block body %}
     {% endblock %}
     {% if EREGS_GA_EREGS_SITE and EREGS_GA_EREGS_ID %}
