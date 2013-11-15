@@ -15,7 +15,7 @@ class ExampleTest(unittest.TestCase):
         self.capabilities['build'] = os.environ['TRAVIS_BUILD_NUMBER']
         self.capabilities['platform'] = 'LINUX'
         self.capabilities['version'] = ''
-        self.capabilities.name = 'Example test'
+        self.capabilities['name'] = 'Example test'
         self.username = os.environ['SAUCE_USERNAME']
         self.key = os.environ['SAUCE_ACCESS_KEY']
         hub_url = "%s:%s" % (self.username, self.key)
