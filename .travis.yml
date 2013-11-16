@@ -25,5 +25,5 @@ script:
     - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
     - ./run_server.sh &
     - sleep 5
-    - python regulations/tests/selenium/example_test.py
+    - python regulations/tests/selenium/toc_test.py
     - grunt test
