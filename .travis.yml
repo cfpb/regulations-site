@@ -1,30 +1,29 @@
 language: python
 python:
-- '2.6'
-- '2.7'
+    - '2.6'
+    - '2.7'
 addons:
-  sauce_connect: true
+    sauce_connect: true
 env:
-  global:
-  - secure: ezG7u8HONYLj73JJ7g8HnQ7BmkQIzcItFNolu238jJBoxnYPehFd9MwOJ/1hyFMrDlD1a82iU34+sx/oYNBvvcvv2GMgSbcsAlRxP0WY0eGIPA96Bk9jmMx2MuhHF1veOGrIhQXboG31lu9hRDOC6of1QgIjI8CkdWwnT9Lq820=
-  - secure: UVNOOtSsRQt/L4ibr4Eb3EEXF3BkBV6Qvb6a+oqOgHFDYkFXxs2O3KjbnqiUS1MvlSKXJtkT1aG1Jd/YzqoPN0bm2HzdI16LuQSHsfqdDDov7ArvLZ8vTfN4ARt8Bq2WejdaozYQOi/FS9/JSoStEiwerRUB6vLmiHm21ZcPNjU=
+    global:
+        - secure: ezG7u8HONYLj73JJ7g8HnQ7BmkQIzcItFNolu238jJBoxnYPehFd9MwOJ/1hyFMrDlD1a82iU34+sx/oYNBvvcvv2GMgSbcsAlRxP0WY0eGIPA96Bk9jmMx2MuhHF1veOGrIhQXboG31lu9hRDOC6of1QgIjI8CkdWwnT9Lq820=
+        - secure: UVNOOtSsRQt/L4ibr4Eb3EEXF3BkBV6Qvb6a+oqOgHFDYkFXxs2O3KjbnqiUS1MvlSKXJtkT1aG1Jd/YzqoPN0bm2HzdI16LuQSHsfqdDDov7ArvLZ8vTfN4ARt8Bq2WejdaozYQOi/FS9/JSoStEiwerRUB6vLmiHm21ZcPNjU=
 install:
-- echo $TRAVIS_SECURE_ENV_VARS
-- pip install zc.buildout distribute selenium
-- buildout
-- echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
-- sudo apt-get update
-- sudo apt-get install nodejs phantomjs
-- sudo npm install -g grunt-cli grunt-init bower
-- sudo npm install
-- bower install
-- cp example-config.json config.json
+    - pip install zc.buildout distribute selenium
+    - buildout
+    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
+    - sudo apt-get update
+    - sudo apt-get install nodejs phantomjs
+    - sudo npm install -g grunt-cli grunt-init bower
+    - sudo npm install
+    - bower install
+    - cp example-config.json config.json
 script:
-- ./require.sh
-- ./bin/test
-- ./dummy_api/start.sh
-- echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
-- ./run_server.sh &
-- sleep 5
-- python regulations/tests/selenium/example_test.py
-- grunt test
+    - ./require.sh
+    - ./bin/test
+    - ./dummy_api/start.sh
+    - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
+    - ./run_server.sh &
+    - sleep 5
+    - python regulations/tests/selenium/example_test.py
+    - grunt test
