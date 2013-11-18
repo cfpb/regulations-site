@@ -196,7 +196,7 @@ Footnotes
     /* pad an inner wrapper because padding on the li causes the header offset to be ignored */
     .footnote-inner {
         position: relative;
-        padding: 1em 0;
+        padding: 1em 1.5em;
     }
 
     .reference-num {
@@ -207,12 +207,18 @@ Footnotes
     .return-link {
         position: absolute;
         top: 40%;
-        right: 0;
+        right: 24px;
     }
 
     .return-link:hover
     .return-link:active,
     .return-link:focus {
         border-bottom: none;
+    }
+
+    .highlight {
+        .footnote-inner {
+            background-color: @bg_gray;
+        }
     }
 }

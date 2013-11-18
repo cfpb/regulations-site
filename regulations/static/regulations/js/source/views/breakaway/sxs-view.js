@@ -5,7 +5,9 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
         el: '#breakaway-view',
 
         events: {
-            'click .sxs-back-button': 'closeAnalysis'
+            'click .sxs-back-button': 'closeAnalysis',
+            'click .footnote-jump-link': 'footnoteHighlight',
+            'click .return-link': 'removeHighlight'
         },
 
         initialize: function() {
@@ -38,6 +40,18 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', 'dispatch', './sxs-model
             this.$el.html(analysis);
             this.$el.addClass('open-sxs');
             Dispatch.trigger('breakaway:open');
+        },
+
+        footnoteHighlight: function(e) {
+            var target = $(e.target).attr('href');
+            // remove existing highlight
+            this.removeHighlight();
+            // highlight the selected footnote
+            $('.footnotes ' + target).toggleClass('highlight');
+        },
+
+        removeHighlight: function() {
+            $('.footnotes li').removeClass('highlight');
         },
 
         closeAnalysis: function(e) {
