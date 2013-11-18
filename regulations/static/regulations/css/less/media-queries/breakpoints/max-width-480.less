@@ -1,6 +1,36 @@
 @media only screen and ( max-width: 480px ) {
     
     /*
+    Layout
+    ====================
+    */
+
+    .main-content {
+        padding-top: 40px;
+    }
+
+    .reg-section:before,
+    .appendix-section:before,
+    .supplement-section:before,
+    .supplement-section section:before  {
+        display: block; 
+        content: ""; 
+        height: 60px; 
+        margin: -60px 0 0; 
+        visibility: hidden;
+    }
+
+    .reg-section .level-1 li,
+    .appendix-section .level-1 li,
+    .supplement-section .level-1 li {
+        border-top: 60px solid transparent;
+        margin-top: -60px;
+        -webkit-background-clip:padding-box;
+        -moz-background-clip:padding;
+        background-clip:padding-box;
+    }
+
+    /*
     Typography
     ====================
     */
@@ -9,33 +39,7 @@
         margin-top: 20px;
     }
 
-    .header-main {
-        font-size: .875em;
-        padding: 0;
-        display: block;
-        width: auto;
-        float: left;
-    }
-
-    .header-secondary {
-        font-size: .875em;
-        padding: 0;
-        display: block;
-        width: auto;
-        float: right;
-
-        /* hide the diff dates header on small screens until we make a design decision */
-        .diff-dates {
-            display: none;
-        }
-    }
-
-    .header-main {
-        padding-left: 6px;
-    }
-
     .main-content,
-    .main-head,
     .secondary-content {
         font-size: 0.875em;
     }
@@ -63,28 +67,46 @@
         top: 36px; /* offset shorter header height */
     }
 
+    .header-main {
+        display: block;
+        width: auto;
+        float: none;
+        padding: 0 0 0 14px;
+        height: 24px;
+        line-height: 24px;
+    }
+
+    .header-secondary {
+        padding: 0;
+        width: 100%;
+        float: none;
+        height: 24px;
+        line-height: 24px;
+    }
+
     .main-head {
         display: none;
     }
 
     .sub-head {
         border-top: 2px solid @dark_text;
-        height: 36px;
+        height: 54px;
         line-height: 34px;
     }
 
-    .main-content {
-        padding-top: 10px;
-    }
-
-    .header-label,
-    .effective-date {
-        font-size: 0.8em;
-        line-height: 34px;
+    /* match wayfinding padding to > icon */
+    .header-label {
+        padding-top: 4px;
     }
 
     .effective-date {
-        margin-top: 2px;
+        display: block;
+        margin-left: 60px;
+        float: none;
+
+        strong {
+            .avenir-next;
+        }
     }
 
     .inline-interpretation {
