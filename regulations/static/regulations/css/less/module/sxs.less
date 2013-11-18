@@ -168,3 +168,51 @@ Metadata info for the SxS Analysis
         margin-top: 1em;
     }
 }
+
+/* 
+Footnotes
+==================================
+*/
+
+.footnote-title {
+    margin-top: 2em;
+    color: @dark_text;
+}
+
+.footnotes {
+    .reset;
+    margin-top: 1em;
+    .border-top-medium (@width: 1px);
+
+    li {
+        .reset;
+        .border-bottom-medium (@width: 1px);
+    }
+
+    p {
+        margin: 0 4em 0 2.5em;
+    }
+
+    /* pad an inner wrapper because padding on the li causes the header offset to be ignored */
+    .footnote-inner {
+        position: relative;
+        padding: 1em 0;
+    }
+
+    .reference-num {
+        float: left;
+        .avenir-next-demi;
+    }
+
+    .return-link {
+        position: absolute;
+        top: 40%;
+        right: 0;
+    }
+
+    .return-link:hover
+    .return-link:active,
+    .return-link:focus {
+        border-bottom: none;
+    }
+}
