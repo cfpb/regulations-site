@@ -20,9 +20,16 @@
 {% endfor %}
 
 {% if sxs.all_footnotes %}
-<ul id="footnotes">
+<h4 class="footnote-title">Footnotes</h4>
+<ul class="footnotes">
     {% for footnote in sxs.all_footnotes %}
-    <li id="footnote-{{footnote.reference}}">[<a href="#footnote-jump-{{footnote.reference}}">{{footnote.reference}}</a>] {{footnote.text|safe}}</li>
+    <li id="footnote-{{footnote.reference}}">
+    <div class="footnote-inner group">
+        <span class="reference-num">{{footnote.reference}}.</span>
+        <p>{{footnote.text|safe}}</p>
+        <a href="#footnote-jump-{{footnote.reference}}" class="return-link"><span class="minicon-up"></span> <span class="icon-text">Return to Main Content</span></a>
+    </div> <!-- .footnote-inner -->
+    </li>
     {% endfor %}
 </ul>
 {% endif %}
