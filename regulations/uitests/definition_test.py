@@ -16,12 +16,12 @@ class DefinitionTest(BaseTest, unittest.TestCase):
             lambda driver: driver.find_element_by_css_selector('html.js'))
         definition_link = self.driver.find_element_by_xpath('//*[@id="1005-1-a"]/p/a')
         # term link should have correct data attr
-        self.assertIn('1005-2-a-1', definition_link.get_attribute('data-definition'))
+        self.assertTrue('1005-2-a-1' in  definition_link.get_attribute('data-definition'))
 
         definition_link.click()
 
         # term link should get active class
-        self.assertIn('active', definition_link.get_attribute('class'))
+        self.assertTrue('active' in definition_link.get_attribute('class'))
 
         definition = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]')
         definition_close_button = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[1]/h4/a')
