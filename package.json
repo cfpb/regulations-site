@@ -9,7 +9,6 @@
     "bower": "~1.2.7",
     "grunt-contrib-jshint": "~0.3.0",
     "grunt-contrib-watch": "~0.3.1",
-    "grunt-notify": "~0.1.4",
     "grunt": "~0.4.1",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-less": "~0.5.2",
