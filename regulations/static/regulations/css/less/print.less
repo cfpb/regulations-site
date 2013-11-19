@@ -16,8 +16,28 @@ body {
     margin-right: 1in;
 }
 
-/* IE garbles Avenir when saving to a PDF */
-h1, h2, h3, h4, h5, .key-term, .defined-term {
+/* IE garbles Avenir when saving to a PDF, so  we have to manually add  */
+h1, h2, h3, h4, h5, 
+.key-term, 
+.defined-term,
+.error p,
+.error li,
+.inline-interpretation .ref-num,
+.banner-text,
+.header-label,
+.landing p,
+.landing li,
+.landing-curent-link a,
+.alert a,
+.search-nav a,
+.secondary-content,
+.chunk li a,
+.open-definition ol,
+.active-term, 
+.continue-link,
+.reference-num,
+.analysis-list a,
+.sxs-metadata {
     .lt-ie9 & {
         font-family: Arial, sans-serif !important;
     }
