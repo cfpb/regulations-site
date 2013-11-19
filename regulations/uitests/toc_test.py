@@ -38,7 +38,7 @@ class TOCTest(BaseTest, unittest.TestCase):
         self.assertTrue('current' in toc_link_1005_7.get_attribute('class'))
 
         # make sure that the current class has been removed from the prev section
-        self.assertNotIn('current', toc_link_1005_1.get_attribute('class'))
+        self.assertFalse('current' in toc_link_1005_1.get_attribute('class'))
 
 if __name__ == '__main__':
     unittest.main()
