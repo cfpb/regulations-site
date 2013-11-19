@@ -14,6 +14,9 @@ INSTALLED_APPS += (
     'django_nose',
 )
 
+NOSE_ARGS = [
+    '--exclude-dir=regulations/uitests'
+]
 
 try:
     from local_settings import *
