@@ -27,14 +27,14 @@ class DefinitionTest(BaseTest, unittest.TestCase):
         definition_close_button = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[1]/h4/a')
 
         # definition should appear in sidebar
-        self.assertGreater(len(definition.text), 20)
+        self.assertTrue(len(definition.text) > 20)
         definition_term = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[2]/p/dfn')
         self.assertEquals(u'\u201cvoided tosser\u201d', 
                           definition_term.text)
 
         definition_close_button.click()
         # definition should close
-        self.assertNotIn('active', definition_link.get_attribute('class'))
+        self.assertFalse('active' in definition_link.get_attribute('class'))
 
         definition_link.click()
 
