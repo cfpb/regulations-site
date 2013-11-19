@@ -29,7 +29,7 @@ class DefinitionTest(BaseTest, unittest.TestCase):
         # definition should appear in sidebar
         self.assertGreater(len(definition.text), 20)
         definition_term = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[2]/p/dfn')
-        self.assertEquals(u'\u201cvoided tosser\u201d musks a squanders, d', 
+        self.assertEquals(u'\u201cvoided tosser\u201d', 
                           definition_term.text)
 
         definition_close_button.click()
