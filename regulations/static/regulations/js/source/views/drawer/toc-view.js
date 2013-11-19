@@ -6,7 +6,7 @@
 define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helpers'], function($, _, Backbone, Dispatch, RegsHelpers) {
     'use strict';
     var TOCView = Backbone.View.extend({
-        el: '#table-of-contents:not(.diff-toc)',
+        el: '#table-of-contents',
 
         events: {
             'click a': 'sendClickEvent'
@@ -22,12 +22,17 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helper
                 this.setActive(openSection);
             }
 
+            if (this.$el.hasClass('diff-toc')) {
+                this.diffMode = true;
+            }
+
             // **TODO** need to work out a bug where it scrolls the content section
             // $('#menu-link:not(.active)').on('click', this.scrollToActive);
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
-            if (Dispatch.hasPushState() === false) {
+            // also! if we're in diffmode, suspend events
+            if (Dispatch.hasPushState() === false || this.diffMode) {
                 this.events = {};
             }
         },
