@@ -133,10 +133,6 @@ module.exports = function(grunt) {
           stdout: true,
           stderr: true
         }
-      },
-
-      'sauce-selenium': {
-        command: '
       }
     },
 
