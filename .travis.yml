@@ -6,8 +6,8 @@ addons:
     sauce_connect: true
 env:
     global:
-        - secure: ezG7u8HONYLj73JJ7g8HnQ7BmkQIzcItFNolu238jJBoxnYPehFd9MwOJ/1hyFMrDlD1a82iU34+sx/oYNBvvcvv2GMgSbcsAlRxP0WY0eGIPA96Bk9jmMx2MuhHF1veOGrIhQXboG31lu9hRDOC6of1QgIjI8CkdWwnT9Lq820=
-        - secure: UVNOOtSsRQt/L4ibr4Eb3EEXF3BkBV6Qvb6a+oqOgHFDYkFXxs2O3KjbnqiUS1MvlSKXJtkT1aG1Jd/YzqoPN0bm2HzdI16LuQSHsfqdDDov7ArvLZ8vTfN4ARt8Bq2WejdaozYQOi/FS9/JSoStEiwerRUB6vLmiHm21ZcPNjU=
+        - secure: QomIP0hJUGhGogDSlvUmxPezabPnfHMp8tpu6yj4f/R10JpUuj7qMQteOyoduf15f2/l8ecxQVqcYnFcvieah4ky5ZZb0u1QP+2tB7FXHilj/37PdvI8geJynbcU/yt3WfCIPbzw5guahfiKGcm3BngPm0ocxevgrAU6pLgMpFY=
+        - secure: gawGht7PKM+MNKYqPROAn4LC1VDSM9UAXXAIhZtK1/CzA3g4wanikuMdXuoqJhAODaa8dmOE57LRm+Ow79qW9ATY5PnvOp7pxnMZWlOatJtxFo3tGZgMsj5KPlptdPfxl1NTXbPPgFgwQycy1EG+FkZ7U0Z5RM7mvldVeCZc9pI=
 install:
     - pip install zc.buildout distribute selenium
     - buildout
