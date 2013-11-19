@@ -25,5 +25,5 @@ script:
     - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
     - ./run_server.sh &
     - sleep 5
-    - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then nosetests regulations/uitests/*.py; fi
+    - if [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then nosetests regulations/uitests/*.py; fi
     - grunt test
