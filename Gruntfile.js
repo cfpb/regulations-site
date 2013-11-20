@@ -117,7 +117,8 @@ module.exports = function(grunt) {
                 dir: "<%= env.frontEndPath %>/js/built",
                 modules: [ {name: "regulations"} ],
                 paths: grunt.file.readJSON('require.paths.json'),
-                shim: grunt.file.readJSON('require.shim.json')
+                shim: grunt.file.readJSON('require.shim.json'),
+                skipDirOptimize: true
             }
         }
     },
@@ -134,6 +135,14 @@ module.exports = function(grunt) {
           stderr: true
         }
       }
+    },
+
+    // https://npmjs.org/package/grunt-nose
+    nose: {
+        src: 'regulations/uitests',
+        options: {
+          nocapture: true
+        }
     },
 
     // https://github.com/yatskevich/grunt-bower-task
@@ -156,7 +165,7 @@ module.exports = function(grunt) {
         files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/*.less', '<%= env.frontEndPath %>/css/less/module/*.less', '<%= env.frontEndPath %>/css/less/media-queries/breakpoints/*.less','<%= env.frontEndPath %>/js/tests/specs/*.js', '<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js', '<%= env.frontEndPath %>/js/source/views/*/*.js', '<%= env.frontEndPath %>/js/tests/functional/*.js'],
         tasks: ['less', 'test']
       }
-    },
+    }
   });
 
   /**
@@ -172,11 +181,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-plato');
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-nose');
 
     /**
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('test', ['jshint', 'shell:mocha-phantomjs']);
-    grunt.registerTask('build', ['jshint', 'shell', 'requirejs', 'less', 'docco', 'plato']);
+    grunt.registerTask('functional', ['shell:sauce-connect']);
+    grunt.registerTask('build', ['jshint', 'requirejs', 'less', 'nose']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };
