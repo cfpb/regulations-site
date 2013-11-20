@@ -104,5 +104,7 @@ There are a number of tasks configured in [Gruntfile.js](https://github.com/ereg
 There are Selenium tests written in Python and configured to run in [Sauce Labs](https://saucelabs.com). These tests run as part of the ```grunt build``` tasks. To use this, a little extra environment setup is required. The first step is to create a [Sauce Labs](https://saucelabs.com) account. Then:
 - In your bash config (probably ```~/.bash_profile```), define two variables: ```$SAUCE_USERNAME``` and ```$SAUCE_ACCESS_KEY``` which house your username and access key from Sauce Labs.
 - Download and run [Sauce Connect](https://saucelabs.com/docs/connect) if necessary. If you do need Sauce Connect, you will need to start it before running functional tests/Grunt builds.
+
 Be sure that your local server is running prior to running tests. The tests that run are located in ```regulations/uitests``` and are configured to run off of ```http://localhost:8000```. They also require having the environment serving data from ```dummy_api/```.
+
 The tests run using (nose)[http://nose.readthedocs.org/en/latest/]. If you wish to run the tests outside of the Grunt environment, you may by running ```nosetests regulations/uitests/*.py```.
