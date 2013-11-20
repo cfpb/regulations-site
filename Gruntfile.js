@@ -189,7 +189,6 @@ module.exports = function(grunt) {
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('test', ['jshint', 'shell:mocha-phantomjs']);
-    grunt.registerTask('functional', ['shell:sauce-connect']);
     grunt.registerTask('build', ['jshint', 'requirejs', 'less', 'nose']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };
