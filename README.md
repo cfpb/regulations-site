@@ -107,4 +107,4 @@ There are Selenium tests written in Python and configured to run in [Sauce Labs]
 
 Be sure that your local server is running prior to running tests. The tests that run are located in ```regulations/uitests``` and are configured to run off of ```http://localhost:8000```. They also require having the environment serving data from ```dummy_api/```.
 
-The tests run using (nose)[http://nose.readthedocs.org/en/latest/]. If you wish to run the tests outside of the Grunt environment, you may by running ```nosetests regulations/uitests/*.py```.
+The tests run using [nose](http://nose.readthedocs.org/en/latest/). If you wish to run the tests outside of the Grunt environment, you may by running ```nosetests regulations/uitests/*.py```.
