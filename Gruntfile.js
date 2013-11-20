@@ -118,7 +118,9 @@ module.exports = function(grunt) {
                 modules: [ {name: "regulations"} ],
                 paths: grunt.file.readJSON('require.paths.json'),
                 shim: grunt.file.readJSON('require.shim.json'),
-                skipDirOptimize: true
+                skipDirOptimize: true,
+                optimizeCss: 'none',
+                removeCombined: 'true'
             }
         }
     },
