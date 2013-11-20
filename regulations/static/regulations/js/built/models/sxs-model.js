@@ -1,1 +1,0 @@
-define("sxs-model",["underscore","backbone","./meta-model"],function(e,t,n){t.SxSModel=n.extend({});var r=new t.SxSModel({supplementalPath:"sxs"});return r});
