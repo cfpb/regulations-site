@@ -1,1 +1,0 @@
-define("permalink-view",["jquery","underscore","backbone","dispatch"],function(e,t,n,r){var i=n.View.extend({el:"#permalinks",initialize:function(){r.on("sidebar:update",this.update,this)},update:function(e){this.$el.html(e)}});return i});
