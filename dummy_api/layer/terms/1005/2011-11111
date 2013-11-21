@@ -1,0 +1,23 @@
+{
+    "1005-1-a": [
+        {
+            "ref": "voided tosser:1005-2-a-1",
+            "offsets": [
+                [
+                    3,
+                    12
+                ]
+            ]
+        }
+    ],
+    "referenced": {
+        "voided tosser:1005-2-a-1": {
+            "position": [
+                0,
+                20
+            ],
+            "term": "voided tosser",
+            "reference": "1005-2-a-1"
+        }
+    }
+}
