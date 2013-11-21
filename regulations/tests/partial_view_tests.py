@@ -55,7 +55,7 @@ class PartialSectionViewTests(TestCase):
 
         request = RequestFactory().get('/fake-path/?layers=meta')
         view = PartialSectionView.as_view(
-            template_name='regulation/regulation-content.html')
+            template_name='regulations/regulation-content.html')
 
         response = view(request, label_id=reg_part_section,
                         version=reg_version)
