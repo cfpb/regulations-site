@@ -20,7 +20,8 @@ class ExternalCitationLayer():
         fdsys_url_base = "http://api.fdsys.gov/link"
         fdsys_url = "%s?%s" % (fdsys_url_base, urllib.urlencode(parameters))
 
-        template = loader.get_template('layers/external_citation.html')
+        template = loader.get_template(
+            'regulations/layers/external_citation.html')
         context = {
             'citation': {
                 'url': fdsys_url,

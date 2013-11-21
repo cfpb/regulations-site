@@ -7,7 +7,7 @@
         <h2 class="appendix-title" tabindex="0"> {{c.header|safe}} </h2>
          {%if c.TOC %}
             {% with nav_class='appendix-nav' toc_items=c.TOC %}
-               {% include "toc.html" %} 
+               {% include "regulations/toc.html" %} 
             {% endwith %}
          {%endif%}
 
@@ -27,14 +27,14 @@
             {% if level_one.children %}
                 <ol class="level-{{level_one.children.0.list_level}}" type="{{level_one.children.0.list_type}}">
                 {% for node in level_one.children  %}
-                    {% include "tree-with-wrapper.html" %}
+                    {% include "regulations/tree-with-wrapper.html" %}
                 {% endfor %}
                 </ol>
             {% endif %}
 
             {% if level_one.interp %}
                 {% with interp=level_one.interp %}
-                    {% include "slide-down-interp.html" %}
+                    {% include "regulations/slide-down-interp.html" %}
                 {% endwith %}
             {% endif %}
             </section>
@@ -43,7 +43,7 @@
 
     {% if c.interp %}
         {% with interp=c.interp %}
-            {% include "slide-down-interp.html" %}
+            {% include "regulations/slide-down-interp.html" %}
         {% endwith %}
     {% endif %}
 {% endif %}

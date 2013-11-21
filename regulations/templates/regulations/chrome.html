@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "regulations/base.html" %}
 
 {% block body %}
 
@@ -21,7 +21,7 @@
     <div class="reg-title">
         <h1><a href="{% url 'regulation_landing_view' reg_part %}">{{ meta.cfr_title_number }} CFR Part {{ reg_part }} <span class="title">{{ meta.title }} {{meta.statutory_name|title}} </span>{% if meta.reg_letter %}(Regulation {{ meta.reg_letter }}){% endif %}</a></h1>
     </div> <!-- /reg-title -->
-    {% include "logo.html" %} 
+    {% include "regulations/logo.html" %} 
 </div>
 
 <div class="sub-head">
@@ -61,7 +61,7 @@
     {% block drawer-toc %}
         {%if TOC %}
             {% with nav_class='regulation-nav' toc_items=TOC top_toc=True %}
-                {% include "toc.html" %} 
+                {% include "regulations/toc.html" %} 
             {% endwith %}
         {%endif%}
     {% endblock %}
@@ -173,7 +173,7 @@
 
 </div> <!-- /.wrap -->
 
-{% include "footer.html" %}
+{% include "regulations/footer.html" %}
 
 <div class="breakaway-wrap">
     <div id="breakaway-view" class="breakaway-content"></div>

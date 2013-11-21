@@ -6,7 +6,7 @@ class DefinedLayer(object):
 
     def __init__(self, layer):
         self.layer = layer
-        self.template = loader.get_template('layers/defining.html')
+        self.template = loader.get_template('regulations/layers/defining.html')
 
     def apply_layer(self, text, text_index):
         """Catch all terms which are defined in this paragraph, replace them
