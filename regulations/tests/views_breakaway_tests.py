@@ -16,7 +16,7 @@ class ChromeSXSViewTests(TestCase):
         }
         request = RequestFactory().get('/fake-path/204-2/2013-1?from_version=2014-2')
 
-        view = ChromeSXSView.as_view(template_name='breakaway-chrome.html')
+        view = ChromeSXSView.as_view(template_name='regulations/breakaway-chrome.html')
         response = view(
             request, label_id='204-2', from_version='2014-2', notice_id='2013-1')
 

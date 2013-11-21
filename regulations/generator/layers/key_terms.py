@@ -7,7 +7,7 @@ class KeyTermsLayer(object):
 
     def __init__(self, layer):
         self.layer = layer
-        self.template = loader.get_template('layers/key_term.html')
+        self.template = loader.get_template('regulations/layers/key_term.html')
 
     def remove_punctuation(self, punctuated):
         translate_table = dict((ord(c), None) for c in string.punctuation)

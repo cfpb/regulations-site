@@ -30,7 +30,7 @@ def get_appliers(label_id, older, newer):
 
 class PartialSectionDiffView(PartialView):
     """ A diff view of a partial section. """
-    template_name = 'regulation-content.html'
+    template_name = 'regulations/regulation-content.html'
 
     def get(self, request, *args, **kwargs):
         """ Override GET so that we can catch and propagate any errors. """
@@ -104,7 +104,7 @@ class PartialSectionDiffView(PartialView):
 
 class ChromeSectionDiffView(ChromeView):
     """Search results with chrome"""
-    template_name = 'diff-chrome.html'
+    template_name = 'regulations/diff-chrome.html'
     partial_class = PartialSectionDiffView
     check_tree = False
     has_sidebar = False

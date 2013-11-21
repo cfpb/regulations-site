@@ -20,12 +20,13 @@ def markup(notice):
     """Convert a notice's JSON into associated markup"""
     #makes a copy
     context_dict = dict(notice)
-    sxs_template = loader.get_template('notice-sxs.html')
+    sxs_template = loader.get_template('regulations/notice-sxs.html')
     context_dict['sxs_markup'] = [
         sxs_markup(child, 3, sxs_template)
         for child in notice['section_by_section']]
 
-    return loader.get_template('notice.html').render(Context(context_dict))
+    return loader.get_template('regulations/notice.html').render(
+        Context(context_dict))
 
 
 def sxs_markup(sxs, depth, template):
