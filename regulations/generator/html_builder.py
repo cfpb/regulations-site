@@ -48,10 +48,10 @@ class HTMLBuilder():
             level_type_map = {1: '1', 2: 'i', 3: 'A'}
             prefix_length = parts.index('Interp')+1
         elif node_type == APPENDIX:
-            level_type_map = {1: 'a', 2: '1', 3: 'i', 4: 'A', 5: '1', 6: 'A'}
+            level_type_map = {1: 'a', 2: '1', 3: 'i', 4: 'A', 5: '1', 6: 'i'}
             prefix_length = 3
         else:
-            level_type_map = {1: 'a', 2: '1', 3: 'i', 4: 'A', 5: '1', 6: 'A'}
+            level_type_map = {1: 'a', 2: '1', 3: 'i', 4: 'A', 5: '1', 6: 'i'}
             prefix_length = 2
 
         if len(parts) > prefix_length:
