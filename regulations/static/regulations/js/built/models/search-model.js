@@ -1,1 +1,0 @@
-define("search-model",["underscore","backbone","./meta-model","dispatch"],function(e,t,n,r){t.SearchModel=n.extend({});var i=new t.SearchModel({supplementalPath:"search",getAJAXUrl:function(e){var t,n=r.getURLPrefix();return n?t="/"+n+"/partial/":t="/partial/",typeof this.supplementalPath!="undefined"&&(t+=this.supplementalPath+"/"),t+=e,t}});return i});
