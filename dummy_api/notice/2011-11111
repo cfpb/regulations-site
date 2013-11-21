@@ -1,0 +1,21 @@
+{
+    "abstract": "Abstract here",
+    "action": "Final rule; official interpretation; correction.", 
+    "agency_names": [
+        "Awesome Agency"
+    ], 
+    "cfr_part": "1005", 
+    "cfr_title": "12", 
+    "contact": "Some People",
+    "document_number": "2011-11111", 
+    "effective_on": "2011-10-28", 
+    "fr_citation": "50 FR 12345", 
+    "fr_url": "http://example.com",
+    "fr_volume": 51, 
+    "initial_effective_on": "2011-10-28", 
+    "publication_date": "2011-08-14", 
+    "regulation_id_numbers": [
+        "1234-AB55"
+    ], 
+    "section_by_section": []
+}
