@@ -1,0 +1,11 @@
+<section id="content-wrapper" class="reg-text">
+{% if tree.children %}
+    {% for c in tree.children %}
+        {%include "regulations/subpart.html" %}
+        {%include "regulations/appendix.html" %}
+        {%include "regulations/interpretations.html" %}
+        {%include "regulations/navigation.html"%}
+        </section>
+    {% endfor %}
+{% endif %}
+</section> <!-- /.reg-text -->

@@ -17,7 +17,7 @@ class InternalCitationLayer():
 
     def render_url(
         self, label, text,
-            template_name='layers/internal_citation.html'):
+            template_name='regulations/layers/internal_citation.html'):
 
         key = (tuple(label), text, template_name)
         if key not in self.rendered:

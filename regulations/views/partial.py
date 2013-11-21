@@ -52,7 +52,7 @@ class PartialView(TemplateView):
 
 class PartialSectionView(PartialView):
     """ Single section of reg text """
-    template_name = 'regulation-content.html'
+    template_name = 'regulations/regulation-content.html'
 
     def section_navigation(self, label, version):
         nav_sections = navigation.nav_sections(label, version)
@@ -89,7 +89,7 @@ class PartialSectionView(PartialView):
 class PartialParagraphView(PartialView):
     """ Single paragraph of a regtext """
 
-    template_name = "tree.html"
+    template_name = "regulations/tree.html"
 
     def transform_context(self, context, builder):
         context['node'] = builder.tree
@@ -99,7 +99,7 @@ class PartialParagraphView(PartialView):
 class PartialInterpView(PartialView):
     """ Interpretation of a reg text section/paragraph or appendix """
 
-    template_name = "interpretations.html"
+    template_name = "regulations/interpretations.html"
     inline = False
 
     def transform_context(self, context, builder):
@@ -111,7 +111,7 @@ class PartialInterpView(PartialView):
 class PartialRegulationView(PartialView):
     """ Entire regulation without chrome """
 
-    template_name = 'regulation-content.html'
+    template_name = 'regulations/regulation-content.html'
     sectional_links = False
 
     def transform_context(self, context, builder):

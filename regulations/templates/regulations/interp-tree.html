@@ -20,7 +20,7 @@
         <ol class="level-1" type="1">
             {% for par_child in interp.par_children %}
                 {% with node=par_child %}
-                    {% include "tree-with-wrapper.html" %}
+                    {% include "regulations/tree-with-wrapper.html" %}
                 {% endwith %}
             {% endfor %}
         </ol>
@@ -28,7 +28,7 @@
 
     {% if not inline and interp.header_children %}
         {% for header_child in interp.header_children %}
-            {% with interp=header_child template_name="interp-tree.html" %}
+            {% with interp=header_child template_name="regulations/interp-tree.html" %}
                 {% include template_name %}
             {% endwith %}
         {% endfor %}

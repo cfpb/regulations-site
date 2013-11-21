@@ -9,7 +9,7 @@ from regulations.views.partial_sxs import ParagraphSXSView
 
 class ChromeBreakawayView(ChromeView):
     """ Base class for views which wish to include chrome. """
-    template_name = 'breakaway-chrome.html'
+    template_name = 'regulations/breakaway-chrome.html'
 
     def content(self, context):
         """Filled in by subclasses; content for the breakaway"""

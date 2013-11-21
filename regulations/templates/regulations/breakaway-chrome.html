@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "regulations/base.html" %}
 
 {% block body %}
 
@@ -13,7 +13,7 @@
                         <span class="title">{{ meta.statutory_name|title }} </span>{% if meta.reg_letter %}(Regulation {{ meta.reg_letter }}){% endif %}
                 </a></h1>
             </div> <!-- /reg-title -->
-            {% include "logo.html" %} 
+            {% include "regulations/logo.html" %} 
         </div>
     </header>
 

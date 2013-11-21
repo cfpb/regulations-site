@@ -25,7 +25,8 @@ class PartialParagraphViewTests(TestCase):
         paragraph_id = '103-3-a'
         reg_version = '2013-10607'
         request = RequestFactory().get('/fake-path')
-        view = PartialParagraphView.as_view(template_name='tree.html')
+        view = PartialParagraphView.as_view(
+            template_name='regulations/tree.html')
         response = view(request, label_id=paragraph_id, version=reg_version)
         self.assertEqual(response.context_data['node'],
                          generator.get_tree_paragraph.return_value)
@@ -54,7 +55,7 @@ class PartialSectionViewTests(TestCase):
 
         request = RequestFactory().get('/fake-path/?layers=meta')
         view = PartialSectionView.as_view(
-            template_name='regulation-content.html')
+            template_name='regulation/regulation-content.html')
 
         response = view(request, label_id=reg_part_section,
                         version=reg_version)

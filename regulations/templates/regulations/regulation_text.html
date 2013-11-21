@@ -14,14 +14,14 @@
         <ol class="level-1" type="a">
         {% if c.children %}
             {% for node in c.children %}
-                {% include "tree-with-wrapper.html"  %}
+                {% include "regulations/tree-with-wrapper.html"  %}
             {% endfor %}
         {% endif %}
         </ol>
 
         {% if c.interp %}
             {% with interp=c.interp %}
-                {% include "slide-down-interp.html" %}
+                {% include "regulations/slide-down-interp.html" %}
             {% endwith %}
         {% endif %}
 {% endif %}

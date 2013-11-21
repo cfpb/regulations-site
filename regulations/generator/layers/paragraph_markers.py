@@ -6,7 +6,8 @@ class ParagraphMarkersLayer(object):
 
     def __init__(self, layer):
         self.layer = layer
-        self.template = loader.get_template('layers/paragraph_markers.html')
+        self.template = loader.get_template(
+            'regulations/layers/paragraph_markers.html')
 
     def apply_layer(self, text_index):
         elements = []

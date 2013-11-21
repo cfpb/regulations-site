@@ -5,7 +5,7 @@
 {% if c.node_type == 'subpart' or c.node_type == 'emptypart' %}
     {% for section in c.children %}
         {% with c=section %}
-            {% include "regulation_text.html" %}
+            {% include "regulations/regulation_text.html" %}
         {% endwith %}
     {% endfor %}
 {% endif %}

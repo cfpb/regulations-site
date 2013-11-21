@@ -63,7 +63,7 @@ class ChromeSectionDiffViewTests(TestCase):
 
     def test_interp_headers(self):
         from django.template import loader, Context
-        t = loader.get_template('interp-tree.html')
+        t = loader.get_template('regulations/interp-tree.html')
         context_dict = {'interp': {
             'header': '<ins>My header</ins>', 'section_header': True}}
         response = t.render(Context(context_dict))

@@ -14,7 +14,7 @@
 {% endfor %}
 
 {% for c in sxs.children %}
-    {% with sxs=c template_name='paragraph-sxs.html' %}
+    {% with sxs=c template_name='regulations/paragraph-sxs.html' %}
         {%include template_name  %}
     {% endwith %}
 {% endfor %}
