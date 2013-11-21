@@ -9,7 +9,8 @@ class DefinitionsLayer(object):
 
     def __init__(self, layer):
         self.layer = layer
-        self.template = loader.get_template('layers/definition_citation.html')
+        self.template = loader.get_template(
+            'regulations/layers/definition_citation.html')
         self.sectional = False
         self.version = None
         self.rev_urls = utils.RegUrl()

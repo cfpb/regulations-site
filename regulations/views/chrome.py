@@ -15,7 +15,7 @@ from regulations.views import error_handling
 
 class ChromeView(TemplateView):
     """ Base class for views which wish to include chrome. """
-    template_name = 'chrome.html'
+    template_name = 'regulations/chrome.html'
     has_sidebar = True
     check_tree = True
 
@@ -111,7 +111,7 @@ class ChromeRegulationView(ChromeView):
 
 class ChromeSearchView(ChromeView):
     """Search results with chrome"""
-    template_name = 'chrome-search.html'
+    template_name = 'regulations/chrome-search.html'
     partial_class = PartialSearch
     has_sidebar = False
     check_tree = False
@@ -133,7 +133,7 @@ class ChromeSearchView(ChromeView):
 
 class ChromeLandingView(ChromeView):
     """Landing page with chrome"""
-    template_name = 'landing-chrome.html'
+    template_name = 'regulations/landing-chrome.html'
     partial_class = PartialSectionView  # Needed to know sectional status
     has_sidebar = False
     check_tree = False

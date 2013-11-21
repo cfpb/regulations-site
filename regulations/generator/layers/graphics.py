@@ -7,7 +7,7 @@ class GraphicsLayer(object):
 
     def __init__(self, layer_data):
         self.layer_data = layer_data
-        self.template = loader.get_template('layers/graphics.html')
+        self.template = loader.get_template('regulations/layers/graphics.html')
 
     def apply_layer(self, text_index):
         """Replace all instances of graphics with an img tag"""

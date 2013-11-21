@@ -13,7 +13,7 @@ PAGE_SIZE = 10
 
 class PartialSearch(PartialView):
     """Display search results without any chrome."""
-    template_name = 'search-results.html'
+    template_name = 'regulations/search-results.html'
 
     def get(self, request, *args, **kwargs):
         """Override this method so we can return a 400 if needed"""
