@@ -12,7 +12,7 @@ class TemplateTest(TestCase):
             'meta': {'reg_letter': 'F', 'statutory_name': 'My Reg'}}
         request = RequestFactory().get('/fake-path')
         c = RequestContext(request, context)
-        t = get_template('base.html')
+        t = get_template('regulations/base.html')
         rendered = t.render(c)
 
         title = 'PART 204 - MY REG (REGULATION F)'

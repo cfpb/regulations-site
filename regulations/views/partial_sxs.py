@@ -16,13 +16,15 @@ class ParagraphSXSView(TemplateView):
     """ Given a regulation paragraph and a Federal Register notice number,
     display the appropriate section by section analyses."""
     def __init__(self):
-        self.footnote_tpl = loader.get_template("layers/sxs-footnotes.html")
+        self.footnote_tpl = loader.get_template(
+            "regulations/layers/sxs-footnotes.html")
 
     def get_template_names(self):
         """ The disclaimer that exists on this page can be over ridden. If an
         agency specfic disclaimer is provided, use that. """
 
-        return ['sxs_with_disclaimer.html', 'paragraph-sxs.html']
+        return ['regulations/sxs_with_disclaimer.html',
+                'regulations/paragraph-sxs.html']
 
     def get_section(self, label):
         """ Get the section that the user came from. Special handling for
