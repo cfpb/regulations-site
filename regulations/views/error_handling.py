@@ -33,7 +33,7 @@ class MissingSectionException(Exception):
 
 
 def handle_generic_404(request):
-    template = loader.get_template('generic_404.html')
+    template = loader.get_template('regulations/generic_404.html')
     context = {'request_path': request.path}
     utils.add_extras(context)
     body = template.render(RequestContext(
@@ -67,7 +67,8 @@ def check_version(label_id, version):
         return requested_version[0]
 
 def add_to_chrome(body, context, request):
-    chrome_template = loader.get_template('chrome-empty-sidebar.html')
+    chrome_template = loader.get_template(
+        'regulations/chrome-empty-sidebar.html')
 
     context['main_content'] = body
     chrome_body = chrome_template.render(RequestContext(
@@ -92,7 +93,7 @@ def handle_missing_section_404(
     }
     context.update(extra_context)
 
-    template = loader.get_template('missing_section_404.html')
+    template = loader.get_template('regulations/missing_section_404.html')
     body = template.render(RequestContext(
         request, context))
 

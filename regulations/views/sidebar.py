@@ -8,7 +8,7 @@ from regulations.generator.node_types import label_to_text
 
 class SideBarView(TemplateView):
     """ View for handling the right-side sidebar """
-    template_name = 'sidebar.html'
+    template_name = 'regulations/sidebar.html'
 
     def get_context_data(self, **kwargs):
         context = super(SideBarView, self).get_context_data(**kwargs)
