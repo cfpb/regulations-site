@@ -157,12 +157,15 @@ Panel Slide Button
     text-align: center;
     font-size: 0.875em;
 
+    /* use an image for IE7 and browsers that don't support @font-face */
     .lt-ie8 &,
     html.no-fontface & {
         background: url(../img/left.png) center center no-repeat;
         color: transparent;
     }
 }
+
+/* use the icon font for the drawer toggle arrow in browsers that support it */
 
 .panel-slide:before {
     .minicon;
@@ -208,12 +211,20 @@ currently these are TOC, History, and Search
     Fall back to PNG images for drawer icons when @font-face isn't supported
     */
 
+    .minicon-menu,
+    .minicon-history,
+    .minicon-search, {
+
+        html.no-fontface & {
+            background-size: 20px;
+            color: transparent;
+        }
+    }
+
     .minicon-menu {
     
         html.no-fontface & {
             background: url(../img/nav-link.png) center center no-repeat;
-            background-size: 20px;
-            color: transparent;
         }
     }
 
@@ -221,8 +232,6 @@ currently these are TOC, History, and Search
     
         html.no-fontface & {
             background: url(../img/search.png) center center no-repeat;
-            background-size: 20px;
-            color: transparent;
         }
     }
 
@@ -231,11 +240,11 @@ currently these are TOC, History, and Search
     
         html.no-fontface & {
             background: url(../img/history.png) center center no-repeat;
-            background-size: 20px;
-            color: transparent;
         }
     }
 }
+
+/* align the drawer toggle list*/
 
 .drawer-toggles {
     position: relative;
@@ -253,6 +262,8 @@ currently these are TOC, History, and Search
     border-right: 1px solid @medium_gray;
 }
 
+/* style the drawer toggle links */
+
 .toc-nav-link:link,
 .toc-nav-link:visited {
     color: @dark_gray;
@@ -264,6 +275,12 @@ currently these are TOC, History, and Search
         background-color: @light_field;
         border-bottom: 1px solid @medium_gray;
 }
+
+/*
+Drawer Behavior
+---------------
+for screens > 1100px, the drawer defaults to open
+*/
 
 @media only screen and ( min-width: 1100px ) {
 
