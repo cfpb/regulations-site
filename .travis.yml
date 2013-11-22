@@ -9,7 +9,7 @@ env:
 before_script:
     - if [ TRAVIS_PULL_REQUEST==false ] && [ SAUCE_USERNAME ] && [ SAUCE_ACCESS_KEY ]; then SAUCE_OK=1; else SAUCE_OK=0; fi 
     - function START_SAUCE_CONNECT { java -jar Sauce-Connect.jar $SAUCE_USERNAME $SAUCE_ACCESS_KEY & }
-    - if [ $SAUCE_OK==1 ]; then START_SAUCE_CONNECT; fi;
+    - if [ $SAUCE_OK == 1 ]; then START_SAUCE_CONNECT; fi;
 install:
     - pip install zc.buildout distribute selenium
     - buildout
@@ -27,5 +27,5 @@ script:
     - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
     - ./run_server.sh &
     - sleep 5
-    - if [ $SAUCE_OK==1 ]; then nosetests regulations/uitests/*.py; fi
+    - if [ $SAUCE_OK == 1 ]; then nosetests regulations/uitests/*.py; fi
     - grunt test
