@@ -40,16 +40,20 @@
     .panel-slide {
         border-bottom: 1px solid @medium_gray;
 
-        .lt-ie8 & {
+        .lt-ie8 &,
+        html.no-fontface & {
             background: url(../img/right.png) center center no-repeat;
+            color: transparent;
         }
     }
 
     .active .panel-slide {
         border-bottom: none;
 
-        .lt-ie8 & {
+        .lt-ie8 &,
+        html.no-fontface & {
             background: url(../img/left.png) center center no-repeat;
+            color: transparent;
         }
     }
 
