@@ -157,8 +157,10 @@ Panel Slide Button
     text-align: center;
     font-size: 0.875em;
 
-    .lt-ie8 & {
+    .lt-ie8 &,
+    html.no-fontface & {
         background: url(../img/left.png) center center no-repeat;
+        color: transparent;
     }
 }
 
@@ -175,8 +177,10 @@ Panel Slide Button
     .panel-slide {
         border-bottom: 1px solid @medium_gray;
 
-        .lt-ie8 & {
+        .lt-ie8 &,
+         html.no-fontface & {
             background: url(../img/right.png) center center no-repeat;
+            color: transparent;
         }
     }
 }
@@ -200,8 +204,36 @@ currently these are TOC, History, and Search
     border-right: 1px solid @medium_gray;
     vertical-align: center;
     
+    /*
+    Fall back to PNG images for drawer icons when @font-face isn't supported
+    */
+
+    .minicon-menu {
+    
+        html.no-fontface & {
+            background: url(../img/nav-link.png) center center no-repeat;
+            background-size: 20px;
+            color: transparent;
+        }
+    }
+
+    .minicon-search {
+    
+        html.no-fontface & {
+            background: url(../img/search.png) center center no-repeat;
+            background-size: 20px;
+            color: transparent;
+        }
+    }
+
     .minicon-history {
         font-size: 1.25em; /* git bump up the history minicon size because it is wider/shorter than other icons */
+    
+        html.no-fontface & {
+            background: url(../img/history.png) center center no-repeat;
+            background-size: 20px;
+            color: transparent;
+        }
     }
 }
 
