@@ -9,7 +9,7 @@ env:
 before_script:
     - if [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then SAUCE_OK=1; else SAUCE_OK=0; fi 
     - function START_SAUCE_CONNECT { java -jar Sauce-Connect.jar "$SAUCE_USERNAME" "$SAUCE_ACCESS_KEY" & }
-    - if [ "$SAUCE_OK" == 1 ]; then curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash; START_SAUCE_CONNECT; fi;
+    - if [ "$SAUCE_OK" == 1 ]; then ./sauce_connect_setup.sh; START_SAUCE_CONNECT; fi;
 install:
     - pip install zc.buildout distribute selenium
     - buildout
