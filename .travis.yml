@@ -8,8 +8,8 @@ env:
         - secure: hsMHLsw/azfPwb6j7TOrJvUubJZCANiDp4NIEvC4wEQojLhIiWfG7zfVjDS8ENLy7Ys4/PYwWuiADxxWJRLU+PnIRDT6+0LctSSV2wf8cBuqtghOIZyP0SNWbZNYBU9Q1yLbtlgN7X+hhgu4LhnRYDMeWUFfPgHLyhtYSvcB0Vg=
 before_script:
     - if [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then SAUCE_OK=1; else SAUCE_OK=0; fi 
-    - function START_SAUCE_CONNECT { java -jar Sauce-Connect.jar "$SAUCE_USERNAME" "$SAUCE_ACCESS_KEY" & }
-    - if [ "$SAUCE_OK" == 1 ]; then ./sauce_connect_setup.sh && START_SAUCE_CONNECT; fi;
+    - function START_SAUCE_CONNECT { curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash & }
+    - if [ "$SAUCE_OK" == 1 ]; then START_SAUCE_CONNECT; fi;
 install:
     - pip install zc.buildout distribute selenium
     - buildout
