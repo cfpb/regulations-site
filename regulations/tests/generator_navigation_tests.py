@@ -46,7 +46,7 @@ class NavigationTest(TestCase):
     def test_nav_sections_appendix(self, get_toc):
         get_toc.return_value = {
             '204': [
-                {'index': ['204', '1'], 'title': '§ 204.1 First'},
+                {'index': ['204', '1'], 'title': u'§ 204.1 First'},
                 {
                     'index': ['204', 'A'],
                     'title': 'Appendix A to Part 204 - Model Forms'}]}
@@ -61,3 +61,34 @@ class NavigationTest(TestCase):
         self.assertEquals('204-A', e['section_id'])
         self.assertEquals('Appendix A to Part 204', e['label'])
         self.assertEquals('Model Forms', e['sub_label'])
+
+    @patch('regulations.generator.navigation.get_toc')
+    def test_nav_sections_subparts(self, get_toc):
+        get_toc.return_value = {
+            '204': [
+                {'index': ['204', 'Subpart', 'A'], 'title': 'Subpart A'},
+                {'index': ['204', 'A'], 'title': 'Appendix A'},
+                {'index': ['204', 'Interp'], 'title': 'Interpretations'}],
+            '204-Subpart-A': [
+                {'index': ['204', '1'], 'title': u'§ 204.1 First'},
+                {'index': ['204', '2'], 'title': u'§ 204.2 Second'},
+                {'index': ['204', '3'], 'title': u'§ 204.3 Third'}]}
+        nav = navigation.nav_sections('204-1', 'ver')
+        p, n = nav
+        self.assertEquals(None, p)
+        self.assertEquals(['204', '2'], n['index'])
+
+        nav = navigation.nav_sections('204-3', 'ver')
+        p, n = nav
+        self.assertEquals(['204', '2'], p['index'])
+        self.assertEquals(['204', 'A'], n['index'])
+
+        nav = navigation.nav_sections('204-A', 'ver')
+        p, n = nav
+        self.assertEquals(['204', '3'], p['index'])
+        self.assertEquals(['204', 'Interp'], n['index'])
+
+        nav = navigation.nav_sections('204-Interp', 'ver')
+        p, n = nav
+        self.assertEquals(['204', 'A'], p['index'])
+        self.assertEquals(None, n)
