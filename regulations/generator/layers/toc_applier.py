@@ -19,16 +19,21 @@ class TableOfContentsLayer(object):
 
             toc_list = []
             for data in layer_elements:
-                element = {
-                    'url': RegUrl.of(data['index'], self.version,
-                                     self.sectional),
-                    'label': data['title'],
-                    'index': data['index'],
-                    'section_id': '-'.join(data['index'])
-                }
-                self.section(element, data)
-                self.appendix_supplement(element, data)
-                toc_list.append(element)
+                if 'Subpart' in data['index']:
+                    result = self.apply_layer('-'.join(data['index']))
+                    if result:
+                        toc_list.extend(result[1])
+                else:
+                    element = {
+                        'url': RegUrl.of(data['index'], self.version,
+                                         self.sectional),
+                        'label': data['title'],
+                        'index': data['index'],
+                        'section_id': '-'.join(data['index'])
+                    }
+                    self.section(element, data)
+                    self.appendix_supplement(element, data)
+                    toc_list.append(element)
             return ('TOC', toc_list)
 
     @staticmethod
