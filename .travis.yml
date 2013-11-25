@@ -4,8 +4,8 @@ python:
     - '2.7'
 env:
     global:
-        - secure: QsUegKVhNm7TOUNxFwirgFmk1nzALT+VyRw3FGRbbCUESl812ZmQMQutnVWNfbgVDO6vDayZbWlCxcIDYTcss+qTb7we6OwxyKg8vqslvnO58cQ2m9QtUQwCW4tIQdHCJ0k604B3C/EXaa6nVvlamVLNoh0DLjVPYZJvEBxT5Uw=
-        - secure: f8d95SWXm59L+EBjr6DJHL5Xd7qDl86Bc3fHz+ULSLG24p2siGOmqA9TDzNqUN5KiTg0z7xdQ0eKq4I9qxZG+oCWTh+KZkMpHawJN8yMeNJxFicZnFk2T0OgVjjUpPhNl+zBnguWz6c71FBavpm81rzaUhDjW6XenAfGbJZep+o=
+        - secure: QomIP0hJUGhGogDSlvUmxPezabPnfHMp8tpu6yj4f/R10JpUuj7qMQteOyoduf15f2/l8ecxQVqcYnFcvieah4ky5ZZb0u1QP+2tB7FXHilj/37PdvI8geJynbcU/yt3WfCIPbzw5guahfiKGcm3BngPm0ocxevgrAU6pLgMpFY=
+        - secure: gawGht7PKM+MNKYqPROAn4LC1VDSM9UAXXAIhZtK1/CzA3g4wanikuMdXuoqJhAODaa8dmOE57LRm+Ow79qW9ATY5PnvOp7pxnMZWlOatJtxFo3tGZgMsj5KPlptdPfxl1NTXbPPgFgwQycy1EG+FkZ7U0Z5RM7mvldVeCZc9pI=
 before_script:
     - if [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then SAUCE_OK=1; else SAUCE_OK=0; fi 
     - function START_SAUCE_CONNECT { curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash & }
