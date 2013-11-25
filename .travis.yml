@@ -4,10 +4,10 @@ python:
     - '2.7'
 env:
     global:
-        - secure: QomIP0hJUGhGogDSlvUmxPezabPnfHMp8tpu6yj4f/R10JpUuj7qMQteOyoduf15f2/l8ecxQVqcYnFcvieah4ky5ZZb0u1QP+2tB7FXHilj/37PdvI8geJynbcU/yt3WfCIPbzw5guahfiKGcm3BngPm0ocxevgrAU6pLgMpFY=
-        - secure: gawGht7PKM+MNKYqPROAn4LC1VDSM9UAXXAIhZtK1/CzA3g4wanikuMdXuoqJhAODaa8dmOE57LRm+Ow79qW9ATY5PnvOp7pxnMZWlOatJtxFo3tGZgMsj5KPlptdPfxl1NTXbPPgFgwQycy1EG+FkZ7U0Z5RM7mvldVeCZc9pI=
+        - secure: BaT6ULY2Rd4FfC2anf96wBS1AbDZlDc9EcfMpX74/1Vxg1OHCXkyI5TYUaa6HAiE0h4EIZ8dDtz+HmiCuYqHquEDcg7PTS5IeiDheQen95s7lWI4SplQF8CtC03+DH0ycEZbuyF5HYEmmAFg2H071rQPs9jxmFyTyeW6NxiifkA=
+        - secure: hsMHLsw/azfPwb6j7TOrJvUubJZCANiDp4NIEvC4wEQojLhIiWfG7zfVjDS8ENLy7Ys4/PYwWuiADxxWJRLU+PnIRDT6+0LctSSV2wf8cBuqtghOIZyP0SNWbZNYBU9Q1yLbtlgN7X+hhgu4LhnRYDMeWUFfPgHLyhtYSvcB0Vg=
 before_script:
-    - if [ "$TRAVIS_PULL_REQUEST" == true ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then SAUCE_OK=1; else SAUCE_OK=0; fi 
+    - if [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then SAUCE_OK=1; else SAUCE_OK=0; fi 
     - function START_SAUCE_CONNECT { java -jar Sauce-Connect.jar "$SAUCE_USERNAME" "$SAUCE_ACCESS_KEY" & }
     - if [ "$SAUCE_OK" == 1 ]; then curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash; START_SAUCE_CONNECT; fi;
 install:
