@@ -24,6 +24,19 @@ class TreeBuilderTest(TestCase):
         }
         return tree
 
+    def test_build_tree_hash(self):
+        tree = self.build_tree()
+        tree['children'][0]['children'] = [{
+            'text': 'child child test',
+            'children': [],
+            'label_id': '204-3-a',
+            'label': ['204', '3', 'a'],
+            'node_type': REGTEXT
+        }]
+        tree_hash = tree_builder.build_tree_hash(tree)
+        self.assertEqual(set(tree_hash.keys()),
+                         set(['204-3-a', '204-3', '204']))
+
     def test_parent_in_tree(self):
         tree = self.build_tree()
         tree_hash = tree_builder.build_tree_hash(tree)

@@ -39,13 +39,14 @@ def build_tree_hash(tree):
     have to keep walking the tree. """
     tree_hash = {}
 
-    if tree:
-        label_id = build_label(tree)
-        tree_hash[label_id] = tree
+    def per_node(node):
+        label_id = build_label(node)
+        tree_hash[label_id] = node
 
-        for c in tree['children']:
-            label_id = build_label(c)
-            tree_hash[label_id] = c
+        for c in node['children']:
+            per_node(c)
+    if tree:
+        per_node(tree)
     return tree_hash
 
 
