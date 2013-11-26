@@ -21,7 +21,7 @@ class InterpTest(BaseTest, unittest.TestCase):
         self.assertEquals(interp_dropdown.get_attribute('data-interp-id'), '1005-18-a')
 
         # should have the appropriate header
-        self.assertTrue(u'OFFICIAL INTERPRETATION TO 18' in interp_dropdown.text)
+        self.assertTrue('OFFICIAL INTERPRETATION TO 18' in interp_dropdown.text)
 
         # body should be hidden
         interp_text = self.driver.find_element_by_xpath('//*[@id="1005-2-h"]/section/section')
@@ -31,10 +31,10 @@ class InterpTest(BaseTest, unittest.TestCase):
             lambda driver: driver.find_element_by_css_selector('.inline-interpretation.open'))
 
         # header should update
-        self.assertTrue(u'HIDE' in interp_dropdown.text)
+        self.assertTrue('HIDE' in interp_dropdown.text)
 
         # should contain the appropriate reg section
-        self.assertTrue(u'clicked. A finances centripetally curiousest stronghold cemeteries' in interp_text.text)
+        self.assertTrue('clicked. A finances centripetally curiousest stronghold cemeteries' in interp_text.text)
 
         self.driver.find_element_by_xpath('//*[@id="1005-2-h"]/section/header/a').click()
 
@@ -42,7 +42,7 @@ class InterpTest(BaseTest, unittest.TestCase):
             lambda driver: driver.find_element_by_css_selector('.inline-interpretation:not(.open)'))
 
         # header should reflect close
-        self.assertTrue(u'SHOW' in interp_dropdown.text)
+        self.assertTrue('SHOW' in interp_dropdown.text)
 
 if __name__ == '__main__':
     unittest.main()
