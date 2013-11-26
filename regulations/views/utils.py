@@ -59,7 +59,10 @@ def handle_diff_layers(
 
 
 def add_extras(context):
-    context['env'] = 'source' if settings.DEBUG else 'built'
+    if getattr(settings, 'JS_DEBUG', False):
+        context['env'] = 'source'
+    else:
+        context['env'] = 'built'
     prefix = reverse('regulation_landing_view', kwargs={'label_id': '9999'})
     prefix = prefix.replace('9999', '')
     if prefix != '/':   # Strip final slash
