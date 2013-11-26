@@ -83,3 +83,24 @@ class TableOfContentsLayerTest(TestCase):
         toc.version = 'verver'
         result = toc.apply_layer('100')
         self.assertTrue('100-1/verver#100-1' in result[1][0]['url'])
+
+    def test_apply_layer_compatibility(self):
+        toc = TableOfContentsLayer({'100': [
+            {'title': '100.1 Intro', 'index': ['100', '1']},
+            {'title': 'Appendix A', 'index': ['100', 'A']},
+            {'title': 'Supplement I', 'index': ['100', 'Interp']}]})
+        _, result = toc.apply_layer('100')
+        self.assertEqual(3, len(result))
+
+        toc = TableOfContentsLayer({
+            '100': [
+                {'title': 'Subpart A', 'index': ['100', 'Subpart', 'A']},
+                {'title': 'Appendix A', 'index': ['100', 'A']},
+                {'title': 'Supplement I', 'index': ['100', 'Interp']}],
+            '100-Subpart-A': [
+                {'title': '100.1 Intro', 'index': ['100', '1']},
+                {'title': '100.2 Sec2', 'index': ['100', '2']},
+                {'title': '100.3 Sec3', 'index': ['100', '3']}]
+            })
+        _, result = toc.apply_layer('100')
+        self.assertEqual(5, len(result))
