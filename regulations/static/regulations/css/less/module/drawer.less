@@ -1,16 +1,13 @@
 /*
-Drawer
-=========================
-drawer.less contains and imports styles for the left-hand navigation drawer
-*/
-
-/*
 Regulation Drawer
-============================
-
-The regulation drawer is a slide out panel
-On large displays it is on the screen by default. It can be toggled with the "active" class.
+=========================
+* drawer.less contains and imports styles for the left-hand navigation drawer
+* On large displays it is on the screen by default. It can be toggled with the "active" class.
+* The majority of styles defined here must be reversed in drawer-small-screen.less (sorry)
 */
+
+@large: ~"only screen and (min-width: 1100px)";
+
 
 /*
 Universal drawer styles
@@ -26,8 +23,7 @@ Universal drawer styles
 
 .toc-head {
     a:hover,
-    a:active,
-    a.current {
+    a:active {
         background-color: @light_field;
     }
 }
@@ -54,41 +50,6 @@ Drawer Behavior
 
 Drawer default state
 ==================== */
-
-/*
-Drawer default closed state
----------------------------- */
-
-.panel.active {
-    left: -200px;
-    top: 200px;
-    overflow-y: hidden;
-
-/* slide content fully offscreen*/
-    .drawer-content {
-        position: absolute;
-        left: -999px;    
-    }
-
-    .drawer-header {
-        left: -260px; /*60px extra to accomodate for stacked buttons*/
-
-        .toc-type {
-            display: none;
-        }
-    }
-}
-
-.active .toc-head {
-    left: -200px;
-    margin-right: 15px;
-    height: 150px; /* extra height for TOC toggle buttons */
-}
-
-/* 
-Small resolution drawer state
-============================= */
-
 
 /*
 Panel Header
@@ -237,8 +198,23 @@ currently these are TOC, History, and Search
     }
 }
 
-/* align the drawer toggle list*/
+.active {
+    @media @large {
+       .toc-nav-link {
+            &.current {
+                background-color: @bg_gray;
+                border-bottom: none;
+            }
+        }
 
+        .toc-nav-link:hover {
+            background-color: @light_field;
+            border-bottom: none;
+        }
+    }
+}
+
+/* align the drawer toggle list*/
 .drawer-toggles {
     position: relative;
     top: 0;
@@ -271,4 +247,43 @@ currently these are TOC, History, and Search
     }
 }
 
+
+/*
+Drawer default closed state
+---------------------------- */
+
+@media @large {
+    .panel.active {
+        left: -200px;
+        top: 200px;
+        overflow-y: hidden;
+
+    /* slide content fully offscreen*/
+        .drawer-content {
+            position: absolute;
+            left: -999px;    
+        }
+
+        .drawer-header {
+            left: -260px; /*60px extra to accomodate for stacked buttons*/
+
+            .toc-type {
+                display: none;
+            }
+        }
+    }
+}
+
+.active .toc-head {
+    left: -200px;
+    margin-right: 15px;
+    height: 150px; /* extra height for TOC toggle buttons */
+}
+
+/* 
+Small resolution drawer state
+============================= */
+
+@import url(drawer-small-screen.less);
+@import url(drawer-content.less);
 
