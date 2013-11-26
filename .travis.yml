@@ -2,12 +2,14 @@ language: python
 python:
     - '2.6'
     - '2.7'
-addons:
-    sauce_connect: true
 env:
     global:
         - secure: QomIP0hJUGhGogDSlvUmxPezabPnfHMp8tpu6yj4f/R10JpUuj7qMQteOyoduf15f2/l8ecxQVqcYnFcvieah4ky5ZZb0u1QP+2tB7FXHilj/37PdvI8geJynbcU/yt3WfCIPbzw5guahfiKGcm3BngPm0ocxevgrAU6pLgMpFY=
         - secure: gawGht7PKM+MNKYqPROAn4LC1VDSM9UAXXAIhZtK1/CzA3g4wanikuMdXuoqJhAODaa8dmOE57LRm+Ow79qW9ATY5PnvOp7pxnMZWlOatJtxFo3tGZgMsj5KPlptdPfxl1NTXbPPgFgwQycy1EG+FkZ7U0Z5RM7mvldVeCZc9pI=
+before_script:
+    - if [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then SAUCE_OK=1; else SAUCE_OK=0; fi 
+    - function START_SAUCE_CONNECT { curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash & }
+    - if [ "$SAUCE_OK" == 1 ]; then START_SAUCE_CONNECT; fi;
 install:
     - pip install zc.buildout distribute selenium
     - buildout
@@ -25,5 +27,5 @@ script:
     - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
     - ./run_server.sh &
     - sleep 5
-    - if [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then nosetests regulations/uitests/*.py; fi
+    - if [ "$SAUCE_OK" == 1 ]; then nosetests regulations/uitests/*.py; fi
     - grunt test
