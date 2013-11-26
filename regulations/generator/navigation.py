@@ -40,10 +40,18 @@ def nav_sections(current, version):
     up = up_level(labels)
 
     if up in toc:
-        for i, j in enumerate(toc[up]):
-            if j['index'] == labels:
-                next_section = choose_next_section(i, toc[up])
-                previous_section = choose_previous_section(i, toc[up])
+        #   Flatten the hierarchy
+        siblings = []
+        for el in toc[up]:
+            if 'Subpart' in el['index']:
+                siblings.extend(toc['-'.join(el['index'])])
+            else:
+                siblings.append(el)
+
+        for idx, el in enumerate(siblings):
+            if el['index'] == labels:
+                next_section = choose_next_section(idx, siblings)
+                previous_section = choose_previous_section(idx, siblings)
 
                 return (previous_section, next_section)
 
