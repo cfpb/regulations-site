@@ -17,6 +17,8 @@ class UtilsTest(TestCase):
             self.eregs_gas = settings.EREGS_GA['EREGS']['SITE']
             self.cfgov_gai = settings.EREGS_GA['ALT']['ID']
             self.cfgov_gas = settings.EREGS_GA['ALT']['SITE']
+        if hasattr(settings, 'JS_DEBUG'):
+            self.old_js_debug = settings.JS_DEBUG
 
 
     def tearDown(self):
@@ -48,6 +50,9 @@ class UtilsTest(TestCase):
             del(settings.EREGS_GA_ALT_SITE)
 
 
+        if hasattr(self, 'old_js_debug'):
+            settings.JS_DEBUG = self.old_js_debug
+
     def test_get_layer_list(self):
         names = 'meta,meta,GRAPHICS,fakelayer,internal'
         layer_list = get_layer_list(names)
@@ -64,11 +69,15 @@ class UtilsTest(TestCase):
     def test_add_extras_env(self):
         context = {}
 
-        settings.DEBUG = True
+        settings.JS_DEBUG = True
         add_extras(context)
         self.assertEqual('source', context['env'])
 
-        settings.DEBUG = False
+        settings.JS_DEBUG = False
+        add_extras(context)
+        self.assertEqual('built', context['env'])
+
+        del(settings.JS_DEBUG)
         add_extras(context)
         self.assertEqual('built', context['env'])
 

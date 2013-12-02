@@ -1,6 +1,10 @@
 {% comment %}
     Template for inner paragraphs of a reg section
 {% endcomment %}
+{% if node.header %}
+<h{{ node.list_level|add:"+3" }}>{{ node.header | safe }}</h{{ node.list_level|add:"+3" }}>
+{% endif %}
+
 {%if node.marked_up %}
 <p> 
 {% if node.node_type == "appendix" %}
