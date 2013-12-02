@@ -40,7 +40,7 @@ class DiffTest(BaseTest, unittest.TestCase):
         # make sure the url is right
         self.assertTrue(self.driver.current_url == 'http://localhost:8000/diff/1005-2/2012-12121/2011-11111?from_version=2011-11111')
 
-        # open diff pane in drawer, make sure its active
+        # open diff pane in drawer
         active_drawer_button = self.get_drawer_button()
         active_drawer_button.click()
         WebDriverWait(self.driver, 30).until(
