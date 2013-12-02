@@ -54,9 +54,13 @@ class PartialSearch(PartialView):
         results = api_reader.ApiReader().search(
             context['q'], context['version'], context['regulation'], api_page)
 
-        # Ignore results found in the root (i.e. not a section)
+        # Ignore results found in the root (i.e. not a section), adjust 
+        # the number of results accordingly. 
+        original_count = len(results['results'])
         results['results'] = [r for r in results['results']
                               if len(r['label']) > 1]
+        num_results_ignored = original_count - len(results['results'])
+        results['total_hits'] -= num_results_ignored
         results['results'] = results['results'][page_idx:page_idx + PAGE_SIZE]
 
         for result in results['results']:
