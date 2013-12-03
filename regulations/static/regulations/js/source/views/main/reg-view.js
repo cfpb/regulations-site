@@ -12,8 +12,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         events: {
             'click .definition': 'termLinkHandler',
             'click .inline-interp-header': 'expandInterp',
-            'click .definition.active': 'openDefinitionLinkHandler',
-            'click .inline-interpretation .section-link': 'openInterp'
+            'click .definition.active': 'openDefinitionLinkHandler'
         },
 
         initialize: function() {
@@ -46,6 +45,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
                     url = url + Backbone.history.fragment.substr(hashPosition);
                 }
                 Router.navigate(url);
+
+                this.events['click .inline-interpretation .section-link'] = 'openInterp';
+                this.delegateEvents();
             }
 
             Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
