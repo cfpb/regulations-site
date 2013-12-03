@@ -1,4 +1,4 @@
-define('search-model', ['underscore', 'backbone', './meta-model', 'dispatch'], function(_, Backbone, MetaModel, Dispatch) {
+define('search-model', ['underscore', 'backbone', './meta-model'], function(_, Backbone, MetaModel) {
     'use strict';
 
     Backbone.SearchModel = MetaModel.extend({});

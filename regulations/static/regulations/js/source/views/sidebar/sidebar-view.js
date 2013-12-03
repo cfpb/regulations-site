@@ -3,7 +3,7 @@
 // **Usage** ```require(['sidebar-view'], function(SidebarView) {})```
 //
 // **Jurisdiction** Right sidebar content section
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar-head-view', 'sxs-list-view', 'permalink-view'], function($, _, Backbone, Dispatch, SidebarHeadView, SxSListView, PermalinkView) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view', 'sxs-list-view', 'permalink-view'], function($, _, Backbone, SidebarHeadView, SxSListView, PermalinkView) {
     'use strict';
     var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',

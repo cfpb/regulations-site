@@ -1,4 +1,4 @@
-define('search-results-view', ['jquery', 'underscore', 'backbone', 'dispatch', './search-model', './regs-router'], function($, _, Backbone, Dispatch, SearchModel, Router) {
+define('search-results-view', ['jquery', 'underscore', 'backbone', './search-model', './regs-router'], function($, _, Backbone, SearchModel, Router) {
     'use strict';
 
     var SearchResultsView = Backbone.View.extend({

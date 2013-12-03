@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['reg-view'], function(RegView) {})```
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'dispatch', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, RegModel, SectionFooterView, Router) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router) {
     'use strict';
 
     var RegView = Backbone.View.extend({

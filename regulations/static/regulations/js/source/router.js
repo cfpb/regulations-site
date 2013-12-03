@@ -1,4 +1,4 @@
-define('regs-router', ['underscore', 'backbone', 'dispatch', 'queryparams'], function(_, Backbone, Dispatch) {
+define('regs-router', ['underscore', 'backbone', 'queryparams'], function(_, Backbone) {
     'use strict';
 
     var RegsRouter = Backbone.Router.extend({

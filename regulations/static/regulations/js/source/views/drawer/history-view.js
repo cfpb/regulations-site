@@ -1,4 +1,4 @@
-define('history-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
+define('history-view', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
     'use strict';
 
     var HistoryView = Backbone.View.extend({

@@ -17,7 +17,7 @@
 // be reused to aim for the effect of a native Backbone experience, but shouldn't try so hard
 // as to be confusing. Ex. the return value of Model.fetch should be the same as in core Backbone,
 // even if the internals are different
-define('reg-model', ['jquery', 'underscore', 'backbone', './regs-helpers', './dispatch', './meta-model'], function($, _, Backbone, RegsHelpers, Dispatch, MetaModel) {
+define('reg-model', ['jquery', 'underscore', 'backbone', './regs-helpers', './meta-model'], function($, _, Backbone, RegsHelpers, MetaModel) {
     'use strict';
 
     // represents a whole regulation

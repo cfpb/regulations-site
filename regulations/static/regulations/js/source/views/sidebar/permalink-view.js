@@ -1,4 +1,4 @@
-define('permalink-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
+define('permalink-view', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
     'use strict';
 
     var PermalinkView = Backbone.View.extend({
