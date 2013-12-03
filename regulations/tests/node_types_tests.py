@@ -14,6 +14,7 @@ class NodeTypesTest(TestCase):
 
     def test_type_from_label(self):
         self.assertEqual(REGTEXT, type_from_label(['250', '5', 'A']))
+        self.assertEqual(APPENDIX, type_from_label(['250', 'A2']))
         self.assertEqual(APPENDIX, type_from_label(['250', 'A']))
         self.assertEqual(APPENDIX, type_from_label(['250', 'A', '3(b)']))
         self.assertEqual(REGTEXT, type_from_label(['250']))
