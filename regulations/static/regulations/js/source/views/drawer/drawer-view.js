@@ -10,10 +10,6 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
         el: '#menu',
 
         initialize: function() {
-            var openTab,
-                k,
-                path = Dispatch.getDrawerState();
-
             Dispatch.on('drawer:stateChange', this.changeContents, this);
 
             this.$label = $('.toc-type');
@@ -32,23 +28,33 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
                     'constructor': SearchView
                 }
             };
-
-            // sets default tab for search
-            if (path) {
-                for (k in this.childViews) {
-                    if (this.childViews.hasOwnProperty(path)) {
-                        openTab = path;
-                    }
-                }
-            }
-
-            openTab = openTab || 'table-of-contents';
-
-            // initialize child view to populate drawer
-            this.changeContents(openTab); 
         },
 
-        changeContents: function(activeId) {
+        contextmap: {
+            'changeActivePane': '_setActivePane'
+        },
+
+        // page types are more diverse and are named differently for
+        // semantic reasons, so we need to associate page types
+        // with the drawer panes they should be associated with
+        pageTypeMap: {
+            'diff': 'timeline',
+            'reg-section': 'table-of-contents',
+            'error': 'table-of-contents'
+        },
+
+        ask: function(message, context) {
+            if (typeof this.contextmap[message] !== 'undefined') {
+                this.contextmap[message].apply(context);
+            }
+        },
+
+        // activeId = page type or child view type
+        _setActivePane: function(activeId) {
+            if (typeof this.childViews[activeId] === 'undefined') {
+                activeId = this.pageTypeMap[activeId]; 
+            }
+
             // hide the content of all drawer sections
             this.$children.addClass('hidden');
 
@@ -57,7 +63,6 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
 
             // create a new childView if a view doesn't already exist
             this.childViews[activeId].view = this.childViews[activeId].view || new this.childViews[activeId].constructor();
-            Dispatch.set('drawerState', activeId);
         }
 
     });

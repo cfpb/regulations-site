@@ -1,25 +1,56 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-view'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, Drawer) {
     'use strict';
 
     var MainView = Backbone.View.extend({
         el: '#content-body',
 
         initialize: function() {
+            var childViewOptions = {},
+                $topSection = this.$el.find('section[data-page-type]'),
+                url, params;
             this.header = new SubHeadView();
 
             Dispatch.on('mainContent:change', this.render, this);
-            Dispatch.on('regSection:open', this.loadContent, this);
+            Dispatch.on('reg-section:open', this.loadContent, this);
             Dispatch.on('search:submitted', this.assembleSearchURL, this);
+
+            // which page are we starting on?
+            this.contentType = $topSection.data('page-type');
+            // what version of the reg?
+            this.regVersion = $topSection.data('base-version');
+            // what section do we have open?
+            this.sectionId = $topSection.attr('id');
+
+            // ask the drawer to set the active pane accordingly
+            Drawer.ask('changeActivePane', this.contentType);
+
+            // build options object to pass into child view constructor
+            childViewOptions.id = this.sectionId;
+            childViewOptions.version = this.regVersion;
+
+            // find search query
+            if (this.contentType === 'search') {
+                url = Helpers.parseURL(window.location.href);
+                params = url.params;
+                childViewOptions.query = params.q;
+            }
+
+            // store the contents of our $el in the model so that we 
+            // can re-render it later
+            this.modelmap[this.contentType].set(sectionId, this.$el.html());
+
+            // create new child view
+            this.childView = new this.viewmap[this.contentType](childViewOptions);
         },
 
         modelmap: {
-            'regSection': RegModel,
-            'searchResults': SearchModel
+            'reg-section': RegModel,
+            'search': SearchModel
         }, 
 
         viewmap: {
-            'regSection': RegView,
-            'searchResults': SearchResultsView
+            'reg-section': RegView,
+            'search': SearchResultsView
         },
 
         assembleSearchURL: function(options, type) {
