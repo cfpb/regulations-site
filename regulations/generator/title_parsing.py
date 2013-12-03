@@ -4,7 +4,7 @@ import re
 
 def appendix_supplement(data):
     """Handle items pointing to an appendix or supplement"""
-    if len(data['index']) == 2 and data['index'][1].isalpha():
+    if len(data['index']) == 2 and data['index'][1][:1].isalpha():
         element = {}
         if 'Interp' in data['index']:
             element['is_supplement'] = True

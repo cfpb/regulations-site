@@ -48,7 +48,7 @@ class TableOfContentsLayerTest(TestCase):
         toc.appendix_supplement(el, {'index': ['1', 'B', '3']})
         self.assertEqual({}, el)
 
-        toc.appendix_supplement(el, {'index': ['1', 'Interpretations', '3']})
+        toc.appendix_supplement(el, {'index': ['1', 'Interp', '3']})
         self.assertEqual({}, el)
 
         toc.appendix_supplement(el, {
