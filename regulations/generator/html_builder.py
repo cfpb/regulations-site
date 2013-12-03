@@ -45,7 +45,7 @@ class HTMLBuilder():
     def list_level(self, parts, node_type):
         """ Return the list level and the list type. """
         if node_type == INTERP:
-            level_type_map = {1: '1', 2: 'i', 3: 'A'}
+            level_type_map = {1: '1', 2: 'i', 3: 'A', 4: '1'}
             prefix_length = parts.index('Interp')+1
         elif node_type == APPENDIX:
             level_type_map = {1: 'a', 2: '1', 3: 'i', 4: 'A', 5: '1', 6: 'i'}
