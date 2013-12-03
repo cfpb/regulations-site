@@ -6,7 +6,7 @@
 //
 // A single inline interpretation, child of the sidebar
 // As of sprint 6, the only View that is instantiated more than once
-define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'dispatch', 'regs-helpers', './regs-router'], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, Helpers, Router) {
+define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'regs-helpers', './regs-router'], function($, _, Backbone, SidebarModuleView, RegModel, Helpers, Router) {
     'use strict';
 
     // **Constructor**

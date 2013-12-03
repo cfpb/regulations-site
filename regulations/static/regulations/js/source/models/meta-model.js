@@ -1,4 +1,4 @@
-define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbone, Dispatch) {
+define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
     'use strict';
     var MetaModel = Backbone.Model.extend({
 

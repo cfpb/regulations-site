@@ -1,4 +1,4 @@
-define('search-view', ['jquery', 'underscore', 'backbone', './dispatch'], function($, _, Backbone, Dispatch) {
+define('search-view', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
     'use strict';
 
     var SearchView = Backbone.View.extend({

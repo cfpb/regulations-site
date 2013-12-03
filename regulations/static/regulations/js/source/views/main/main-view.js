@@ -1,4 +1,4 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view'], function($, _, Backbone, Dispatch, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView) {
     'use strict';
 
     var MainView = Backbone.View.extend({

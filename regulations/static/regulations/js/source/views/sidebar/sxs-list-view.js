@@ -1,4 +1,4 @@
-define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar-list-view', './folder-model', 'sxs-view', './regs-router'], function($, _, Backbone, Dispatch, SidebarListView, FolderModel, SxSView, Router) {
+define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'sidebar-list-view', './folder-model', 'sxs-view', './regs-router'], function($, _, Backbone, SidebarListView, FolderModel, SxSView, Router) {
     'use strict';
     var SxSListView = SidebarListView.extend({
         el: '#sxs-list',
