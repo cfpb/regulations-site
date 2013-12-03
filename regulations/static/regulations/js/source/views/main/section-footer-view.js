@@ -12,7 +12,7 @@ define('section-footer-view', ['jquery', 'underscore', 'backbone'], function($, 
         initialize: function() {
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
-            if (Dispatch.hasPushState() === false || $('#table-of-contents').hasClass('diff-toc')) {
+            if (Router.hasPushState === false || $('#table-of-contents').hasClass('diff-toc')) {
                 this.events = {};
             }
         },

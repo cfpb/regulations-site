@@ -32,7 +32,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers'], functio
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
             // also! if we're in diffmode, suspend events
-            if (Dispatch.hasPushState() === false || this.diffMode) {
+            if (Router.hasPushState === false || this.diffMode) {
                 this.events = {};
             }
         },

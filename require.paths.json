@@ -25,6 +25,8 @@
         "search-results-view": "./views/main/search-results-view",
         "main-view": "./views/main/main-view",
         "permalink-view": "./views/sidebar/permalink-view",
+        "breakaway-view": "./views/breakaway/breakaway-view",
+        "drawer-tabs-view": "./views/drawer/drawer-tabs-view",
         "search-model": "./models/search-model",
         "meta-model": "./models/meta-model",
         "reg-model": "./models/reg-model",

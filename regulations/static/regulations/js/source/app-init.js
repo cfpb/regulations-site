@@ -3,7 +3,7 @@
 // **TODO**: Consolidate/minimize module dependencies
 //
 // **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
-define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers', './regs-router', './reg-view', 'search-results-view'], function($, _, Backbone, MainView, RegModel, DefinitionView, SubHeadView, DrawerView, SidebarView, Konami, HeaderView, AnalyticsHandler, Helpers, Router, RegView, SearchResultsView) {
+define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers', './regs-router', './reg-view', 'search-results-view'], function($, _, Backbone, Main, RegModel, DefinitionView, SubHeadView, DrawerView, SidebarView, Konami, HeaderView, AnalyticsHandler, Helpers, Router, RegView, SearchResultsView) {
     'use strict';
     return {
         // Temporary method. Recurses DOM and builds front end representation of content.
@@ -47,19 +47,7 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
         },
 
         init: function() {
-            window.historyState = (window.history && window.history.pushState) ? true : false;
-            
-            // init superviews
-            window.Regs = {};
-            window.Regs.subhead = new SubHeadView();
-            window.Regs.drawer = new DrawerView();
-            window.Regs.sidebar = new SidebarView();
-            window.Regs.mainView = new MainView();
-            window.Regs.analytics = new AnalyticsHandler();
-            window.Regs.mainHeader = new HeaderView();
-
             Router.start();
-
             this.bindEvents();
         }
     };

@@ -9,26 +9,32 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers'], fu
         el: '#content-header',
 
         initialize: function() {
-            // **Event listeners**
-            // when the active section changes, change the contents of the header
-            Dispatch.on('activeSection:change', this.changeTitle, this);
-            Dispatch.on('searchResults:open', this.displayCount, this);
-
             // cache inner title DOM node for frequent reference
             this.$activeTitle = this.$el.find('.header-label');
         },
 
+        contextMap: {
+            'wayfinding': '_changeTitle',
+            'search': '_displayCount'
+        },
+
+        change: function(type, content) {
+            if (typeof this.contextMap[type] !== 'undefined') {
+                this.contextMap[type](content);
+            }
+        },
+
         // populates subhead with new title
-        changeTitle: function(id) {
+        _changeTitle: function(id) {
             this.$activeTitle.html(RegsHelpers.idToRef(id));
             return this;
         },
 
-        displayCount: function(resultCount) {
+        _displayCount: function(resultCount) {
             this.$activeTitle.html('Search results — ' + resultCount);
         },
 
-        reset: function() {
+        _reset: function() {
             this.$activeTitle.html('');
         }
     });
