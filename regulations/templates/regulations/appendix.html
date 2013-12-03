@@ -3,7 +3,7 @@
 {% endcomment %}
 
 {% if c.node_type == "appendix" %}
-    <section id="{{c.markup_id}}" class="appendix-section section-focus" data-base-version="{{version}}">
+    <section id="{{c.markup_id}}" class="appendix-section section-focus" data-base-version="{{version}}" data-page-type="appendix">
         <h2 class="appendix-title" tabindex="0"> {{c.header|safe}} </h2>
          {%if c.TOC %}
             {% with nav_class='appendix-nav' toc_items=c.TOC %}

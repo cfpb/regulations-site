@@ -79,6 +79,7 @@ class PartialSectionView(PartialView):
             child_of_root = {
                 'node_type': EMPTYPART,
                 'children': [builder.tree]}
+        context['markup_page_type'] = 'reg-section'
         context['tree'] = {'children': [child_of_root]}
         context['navigation'] = self.section_navigation(
             context['label_id'], context['version'])
