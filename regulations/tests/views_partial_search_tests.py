@@ -47,9 +47,9 @@ class PartialSearchTest(TestCase):
         api_reader.ApiReader.return_value.search.return_value = {
             'total_hits': 3,
             'results': [
-                {'label': ['111', '22'], 'text': 'tttt', 'version': 'vvv', 'title':"consumer's"},
-                {'label': ['111', '24', 'a'], 'text': 'o', 'version': 'vvv'},
-                {'label': ['111'], 'text': 'more', 'version': 'vvv'}
+                {'label': ['444', '22'], 'text': 'tttt', 'version': 'vvv', 'title':"consumer's"},
+                {'label': ['444', '24', 'a'], 'text': 'o', 'version': 'vvv'},
+                {'label': ['444'], 'text': 'more', 'version': 'vvv'}
             ]
         }
         fetch_grouped_history.return_value = [
@@ -61,7 +61,7 @@ class PartialSearchTest(TestCase):
                           'effective_on': date(2003, 4, 5)}],
              'timeline': 'timeytimey'}
         ]
-        response = Client().get('/partial/search/111?version=vvv&q=none')
+        response = Client().get('/partial/search/444?version=vvv&q=none')
         self.assertTrue('2 results' in response.content)
 
     @patch('regulations.views.partial_search.api_reader')
