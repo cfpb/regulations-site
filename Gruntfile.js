@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     less: {
         development: {
             options: {
-                paths: ['<%= env.frontEndPath %>/css/less', '<%= env.frontEndPath %>/css/less/module', '<%= env.frontEndPath %>/css/less/media-queries', '<%= env.frontEndPath %>/css/less/media-queries/breakpoints'],
+                paths: ['<%= env.frontEndPath %>/css/less'],
                 yuicompress: true
             },
             files: {
