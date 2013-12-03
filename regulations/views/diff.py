@@ -91,6 +91,7 @@ class PartialSectionDiffView(PartialView):
                 'node_type': EMPTYPART,
                 'children': [builder.tree]}
         context['tree'] = {'children': [child_of_root]}
+        context['markup_page_type'] = 'diff'
 
         regpart = label_id.split('-')[0]
         old_toc = utils.table_of_contents(regpart, older, True)

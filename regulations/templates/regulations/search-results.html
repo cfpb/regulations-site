@@ -3,7 +3,7 @@ Partial Search Results.
 {% endcomment %}
 
 <div id="content-wrapper" class="search-results">
-    <section data-base-version="{{ version }}">
+    <section data-page-type="search-results" data-base-version="{{ version }}">
         {% if not skip_count %}
         <span id="result-count">{{ results.total_hits }} result{{ results.results|pluralize }}</span>
         {% endif %}
