@@ -1,0 +1,12 @@
+<li><a href="" data-section-id="{{item.section_id}}">{{item.label|safe|upper}} - {{item.sub_label|safe}} </a></li>
+
+{% if item.sub_toc %}
+    {% for item in item.sub_toc %}
+        {% if item.is_section %}
+            {% include "regulations/toc-section.html" %}
+        {% else %}
+            <li><a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
