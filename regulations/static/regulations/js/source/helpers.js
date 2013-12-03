@@ -127,18 +127,6 @@ define('regs-helpers', function() {
             }
         },
 
-        findStartingContent: function() {
-            var sessionState = sessionStorage.getItem('drawerDefault');
-
-            if (sessionState) {
-                sessionStorage.removeItem('drawerDefault');
-                return sessionState;
-            }
-            else {
-                return false;
-            }
-        },
-
         // thanks, James Padolsey http://james.padolsey.com/javascript/parsing-urls-with-the-dom/
         parseURL: function(url) {
             var a =  document.createElement('a');

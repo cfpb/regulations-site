@@ -47,54 +47,9 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
         },
 
         init: function() {
-            var openSection,
-                historyState,
-                regId = $('#menu').data('reg-id'),
-                regSection = $('section[data-base-version]'),
-                regVersion = regSection.data('base-version'),
-                drawerState = Helpers.findStartingContent();
-
-            Dispatch.set('reg', regId);
-
-            if (drawerState) {
-                Dispatch.set('drawerState', drawerState);
-            }
-
-            historyState = (window.history && window.history.pushState) ? true : false;
-            Dispatch.setState(historyState);
-
-            if (window.location.pathname.indexOf('search') > 0) {
-                var urlobj = Helpers.parseURL(window.location.href),
-                    params = urlobj.params;
-
-                Dispatch.setContentView(
-                    new SearchResultsView({
-                        query: params.q,
-                        version: params.version
-                    })
-                );
-            }
-            else if (typeof regSection !== 'undefined') {
-                openSection = regSection.attr('id');
-
-                // cache open section content
-                // version data attribute should really be on the el
-                // that encapsulates all main/reg view
-                RegModel.set(openSection, $('#content-body').html());
-
-                Dispatch.setContentView(new RegView({id: openSection}));
-            }
-
-            if (typeof regVersion !== 'undefined') {
-                Dispatch.set('version', regVersion);
-            }
-
-            // cache URL prefix
-            if (window.APP_PREFIX) {
-                Dispatch.set('urlprefix', window.APP_PREFIX.substring(1));
-            }
-
-            // init primary Views that require only a single instance
+            window.historyState = (window.history && window.history.pushState) ? true : false;
+            
+            // init superviews
             window.Regs = {};
             window.Regs.subhead = new SubHeadView();
             window.Regs.drawer = new DrawerView();

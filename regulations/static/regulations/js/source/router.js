@@ -41,7 +41,12 @@ define('regs-router', ['underscore', 'backbone', 'queryparams'], function(_, Bac
         },
 
         start:  function() {
-            var root = Dispatch.getURLPrefix() || '/';
+            var root = '/';
+
+            // if the site is running under a subdirectory, create urls accordingly
+            if (window.APP_PREFIX) {
+                root = window.APP_PREFIX.substring(1);
+            }
 
             Backbone.history.start({
                 pushState: 'pushState' in window.history,
