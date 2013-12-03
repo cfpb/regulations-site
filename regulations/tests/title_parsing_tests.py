@@ -10,6 +10,10 @@ class RegTest(TestCase):
 
     def test_appendix_supplement_ap(self):
         elements = title_parsing.appendix_supplement({
+            'index': ['204', 'A2'],
+            'title': 'Appendix A to 204-First Appendix'})
+        self.assertTrue(elements['is_appendix'])
+        elements = title_parsing.appendix_supplement({
             'index': ['204', 'A'],
             'title': 'Appendix A to 204-First Appendix'})
         self.assertTrue(elements['is_appendix'])
