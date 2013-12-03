@@ -8,11 +8,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             var childViewOptions = {},
                 $topSection = this.$el.find('section[data-page-type]'),
                 url, params;
-            this.header = new SubHeadView();
-
-            Dispatch.on('mainContent:change', this.render, this);
-            Dispatch.on('reg-section:open', this.loadContent, this);
-            Dispatch.on('search:submitted', this.assembleSearchURL, this);
 
             // which page are we starting on?
             this.contentType = $topSection.data('page-type');
@@ -21,8 +16,10 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // what section do we have open?
             this.sectionId = $topSection.attr('id');
 
-            // ask the drawer to set the active pane accordingly
-            Drawer.ask('changeActivePane', this.contentType);
+            if (this.contentType) {
+                // ask the drawer to set the active pane accordingly
+                Drawer.ask('changeActivePane', this.contentType);
+            }
 
             // build options object to pass into child view constructor
             childViewOptions.id = this.sectionId;
@@ -35,12 +32,16 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 childViewOptions.query = params.q;
             }
 
-            // store the contents of our $el in the model so that we 
-            // can re-render it later
-            this.modelmap[this.contentType].set(sectionId, this.$el.html());
+            if (this.sectionId) {
+                // store the contents of our $el in the model so that we 
+                // can re-render it later
+                this.modelmap[this.contentType].set(sectionId, this.$el.html());
+            }
 
-            // create new child view
-            this.childView = new this.viewmap[this.contentType](childViewOptions);
+            if (this.contentType) {
+                // create new child view
+                this.childView = new this.viewmap[this.contentType](childViewOptions);
+            }
         },
 
         modelmap: {
@@ -53,7 +54,21 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             'search': SearchResultsView
         },
 
-        assembleSearchURL: function(options, type) {
+        contextMap: {
+            'search-submitted': '_assembleSearchURL',
+            'open-reg-section': '_loadContent'
+        },
+
+        ask: function(message, context) {
+            if (typeof this.contextMap[message] !== 'undefined') {
+                if (typeof context.type !== 'undefined') {
+                    this.contentType = context.type;
+                }
+                this.contextMap[message].apply(context);
+            }
+        },
+
+        _assembleSearchURL: function(options) {
             var url = Dispatch.getRegId();
             url += '?q=' + options.query;
             url += '&version=' + options.version;
@@ -63,10 +78,10 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             options.url = url;
-            this.loadContent(url, options, type);
+            this.loadContent(url, options);
         },
 
-        loadContent: function(id, options, type) {
+        loadContent: function(id, options) {
             var returned, render;
 
             this.loading();
@@ -74,7 +89,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
             render = function(returned) {
-                this.createView(returned, options, type); 
+                this.createView(returned, options); 
                 this.loaded();
                 Dispatch.trigger('sxs:close');
             }.bind(this);
@@ -86,10 +101,13 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             return this;
         },
 
-        createView: function(html, options, type) {
-            Dispatch.removeContentView();
+        createView: function(html, options) {
+            this.childView.remove();
             this.render(html, options.scrollToId);
-            Dispatch.setContentView(new this.viewmap[type](options));
+            Sidebar.ask('update', {
+                'type': this.contentType,
+                'id': this.sectionId
+            });
         },
 
         render: function(html, scrollToId) {
@@ -121,6 +139,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             $('.section-focus').focus();
         }
     });
-
-    return MainView;
+    var main = new MainView();
+    return main;
 });

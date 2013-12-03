@@ -31,7 +31,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
             // if pushState is supported, attach the
             // appropriate event handlers
-            if (Dispatch.hasPushState()) {
+            if (Router.hasPushState) {
                 this.events['click .definition'] = 'sendDefinitionLinkEvent';
                 this.events['click .continue-link'] = 'sendContinueLinkEvent';
                 this.delegateEvents(this.events);
@@ -151,9 +151,6 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             this.$el.attr('tabindex', '0');
                 // make tab-activeated close button at bottom of definition content
             $defText.append('<a class="close-button tab-activated" href="#">Close definition</a>');
-
-            // **Event trigger** triggers definition open event
-            Dispatch.trigger('definition:render', this.$el);
 
             // set focus to the open definition
             this.$el.focus();

@@ -11,7 +11,7 @@ define('search-view', ['jquery', 'underscore', 'backbone'], function($, _, Backb
         initialize: function() {
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
-            if (Dispatch.hasPushState() === false) {
+            if (Router.hasPushState === false) {
                 this.events = {};
             }
         },

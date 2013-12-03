@@ -13,7 +13,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             Dispatch.trigger('searchResults:open', $results.html());
             $results.remove();
 
-            if (Dispatch.hasPushState()) {
+            if (Router.hasPushState) {
                 if (typeof this.options.url !== 'undefined') {
                     Router.navigate('search/' + this.options.url);
                 }
@@ -25,7 +25,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
-            if (Dispatch.hasPushState() === false) {
+            if (Router.hasPushState === false) {
                 this.events = {};
             }
         },
