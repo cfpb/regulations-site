@@ -36,9 +36,6 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'sidebar-list-view'
             this.$el.html(list);
 
             this.modifyListDisplay();
-
-            // @TODO: move permalink updating to somewhere sane
-            Dispatch.trigger('sidebar:update', $html.find('#permalinks'));
         },
 
         modifyListDisplay: function() {

@@ -3,7 +3,7 @@
 // **Usage** ```require(['toc-view'], function(TOCView) {})```
 //
 // **Jurisdiction** Expandable Table of Contents
-define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-view', './regs-router'], function($, _, Backbone, RegsHelpers, Drawer, Router) {
+define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-view', './regs-router', 'main-controller', 'drawer-controller'], function($, _, Backbone, RegsHelpers, Drawer, Router, MainEvents, DrawerEvents) {
     'use strict';
     var TOCView = Backbone.View.extend({
         el: '#table-of-contents',
@@ -13,7 +13,11 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-
         },
 
         initialize: function() {
-            if (typeof openSection !== 'undefined') {
+            var openSection = $('section[data-page-type]').attr('id');
+
+            MainEvents.on('section:change', this.setActive, this);
+
+            if (openSection) {
                 this.setActive(openSection);
             }
 
@@ -46,7 +50,8 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-
             e.preventDefault();
 
             var sectionId = $(e.currentTarget).data('section-id');
-            Drawer.notify('toc-click', sectionId);
+            DrawerEvents.trigger('section:change', sectionId);
+            MainEvents.trigger('section:change', sectionId, {});
         },
 
         // **Inactive** 
