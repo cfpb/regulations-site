@@ -113,3 +113,13 @@ class UtilsTest(TestCase):
             {'section_id': '204-101', 'index': ['204', '101']}]
         first = first_section('204', '2')
         self.assertEqual(first, '204-100')
+
+    @patch('regulations.views.utils.table_of_contents')
+    def test_first_section_with_subparts(self, table_of_contents):
+        table_of_contents.return_value = [{
+            'section_id': '204-Subpart-A',
+            'index': ['204', 'Subpart', '100'],
+            'sub_toc': [{'section_id': '204-100', 'index': ['204', '100']}]},
+            {'section_id': '204-Interp', 'index': ['204', 'Interp']}]
+        first = first_section('204', 'ver')
+        self.assertEqual(first, '204-100')

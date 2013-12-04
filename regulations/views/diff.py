@@ -134,14 +134,19 @@ def reverse_chrome_diff_view(sect_id, left_ver, right_ver, from_version):
     return diff_url
 
 
-def diff_toc(older_version, newer_version, old_toc, diff, from_version):
-    #We work around Subparts in the TOC for now.
+def extract_sections(toc):
     compiled_toc = []
-    for i in old_toc:
+    for i in toc:
         if 'Subpart' in i['index']:
             compiled_toc.extend(i['sub_toc'])
         else:
             compiled_toc.append(i)
+    return compiled_toc
+
+
+def diff_toc(older_version, newer_version, old_toc, diff, from_version):
+    #We work around Subparts in the TOC for now.
+    compiled_toc = extract_sections(old_toc)
 
     for node in (v['node'] for v in diff.values() if v['op'] == 'added'):
         if len(node['label']) == 2 and node['title']:
