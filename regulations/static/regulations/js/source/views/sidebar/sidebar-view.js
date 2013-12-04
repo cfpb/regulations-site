@@ -3,9 +3,9 @@
 // **Usage** ```require(['sidebar-view'], function(SidebarView) {})```
 //
 // **Jurisdiction** Right sidebar content section
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view'], function($, _, Backbone, SidebarHeadView, SxSList, PermalinkView, FolderModel, Main, Breakaway) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view', 'super-view'], function($, _, Backbone, SidebarHeadView, SxSList, PermalinkView, FolderModel, Main, Breakaway, SuperView) {
     'use strict';
-    var SidebarView = Backbone.View.extend({
+    var SidebarView = SuperView.extend({
         el: '#sidebar-content',
 
         events: {
@@ -29,7 +29,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
         },
 
         // upstream - notify()
-        superviewRouter: {
+        superviewMap: {
             'open-sxs': '_callBreakaway'
         },
 
@@ -37,29 +37,10 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
             'sxs': 'sxsModel'
         },
 
+        // ask:
         // context = {}
         // context.type = page type
         // context.id = id to open
-        ask: function(message, context) {
-            if (typeof this.contextMap[message] !== 'undefined') {
-                this.contextMap[message].apply(context);
-            }
-        },
-
-        // notify is like ask but going upstream
-        notify: function(message, context) {
-            if (typeof this.superviewRouter[message] !== 'undefined') {
-                this.superviewRouter[message].call(message, context);
-            }
-        },
-
-        _callMain: function(context) {
-            Main.ask(message, context);
-        },
-
-        _callBreakaway: function(context) {
-            Breakaway.ask(message, context);
-        },
 
         _updateChildViews: function(context) {
             switch (context.type) {

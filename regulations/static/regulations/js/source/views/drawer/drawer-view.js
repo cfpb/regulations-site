@@ -3,13 +3,14 @@
 // **Usage** ```require(['drawer-view'], function(DrawerView) {})```
 //
 // **Jurisdiction** Left panel drawer container
-define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-view', 'search-view', 'drawer-tabs-view'], function($, _, Backbone, TOCView, HistoryView, SearchView, DrawerTabs) {
+define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-view', 'search-view', 'drawer-tabs-view', 'drawer-controller'], function($, _, Backbone, TOCView, HistoryView, SearchView, DrawerTabs, DrawerEvents) {
     'use strict';
 
     var DrawerView = Backbone.View.extend({
         el: '#menu',
 
         initialize: function() {
+            DrawerEvents.on('pane:change', this._setActivePane, this);
             this.$label = $('.toc-type');
             this.$children = $('.toc-container');
             this.childViews = {
@@ -26,14 +27,8 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
                     'constructor': SearchView
                 }
             };
-        },
 
-        contextMap: {
-            'changeActivePane': '_setActivePane'
-        },
-
-        notificationMap: {
-            'pane-change': '_setActivePane'
+            this._setActivePane('table-of-contents');
         },
 
         // page types are more diverse and are named differently for
@@ -43,19 +38,6 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
             'diff': 'timeline',
             'reg-section': 'table-of-contents',
             'error': 'table-of-contents'
-        },
-
-        ask: function(message, context) {
-            if (typeof this.contextMap[message] !== 'undefined') {
-                this[this.contextMap[message]].call(this, context);
-            }
-        },
-
-        // notify is like ask but going upstream
-        notify: function(message, context) {
-            if (typeof this.notificationMap[message] !== 'undefined') {
-                this[this.notificationMap[message]].call(this, context);
-            }
         },
 
         // activeId = page type or child view type

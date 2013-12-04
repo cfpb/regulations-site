@@ -1,6 +1,6 @@
-define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './regs-router'], function($, _, Backbone, SxS, Router) {
+define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './regs-router', 'super-view'], function($, _, Backbone, SxS, Router, SuperView) {
     'use strict';
-    var BreakawayView = Backbone.View.extend({
+    var BreakawayView = SuperView.extend({
         childViews: {},
 
         contextMap: {
