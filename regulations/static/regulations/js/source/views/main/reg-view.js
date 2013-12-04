@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['reg-view'], function(RegView) {})```
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller', 'header-controller'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller', 'header-controller', 'sidebar-controller'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents) {
     'use strict';
 
     var RegView = Backbone.View.extend({
@@ -108,40 +108,24 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
 
             // if this link is already active, toggle def shut
             if ($link.data('active')) {
-                Dispatch.remove('definition');
+                SidebarEvents.trigger('definition:close');
                 this.clearActiveTerms();
             }
             else {
                 // if its the same definition, diff term link
-                if (Dispatch.getViewId('definition') === defId) {
+                if ($('.open-definition').attr('id') === defId) {
                     this.toggleDefinition($link);
                 }
                 else {
                     // close old definition, if there is one
-                    Dispatch.remove('definition');
+                    SidebarEvents.trigger('definition:close');
                     // open new definition
-                    this.openDefinition(defId, $link);
+                    this.setActiveTerm($link);
+                    SidebarEvents.trigger('definition:open', defId);
                 }
             }
 
             return this;
-        },
-
-        openDefinition: function(defId, $link) {
-            var definition = new DefinitionView({
-                id: defId,
-                $anchor: $link
-            });
-
-            Dispatch.set('definition', definition);
-            Dispatch.trigger('definition:open');
-            Dispatch.trigger('ga-event:definition', {
-                action: 'clicked key term to open definition',
-                context: defId
-            });
-            this.setActiveTerm($link);
-
-            return definition;
         },
 
         // handler for when inline interpretation is clicked

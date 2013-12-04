@@ -3,7 +3,7 @@
 // **Usage** ```require(['sidebar-view'], function(SidebarView) {})```
 //
 // **Jurisdiction** Right sidebar content section
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view', 'sidebar-controller'], function($, _, Backbone, SidebarHeadView, SxSList, PermalinkView, FolderModel, Main, Breakaway, SidebarEvents) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view', 'sidebar-controller', 'definition-view'], function($, _, Backbone, SidebarHeadView, SxSList, PermalinkView, FolderModel, Main, Breakaway, SidebarEvents, Definition) {
     'use strict';
     var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',
@@ -15,6 +15,9 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
         initialize: function() {
             this.controller = SidebarEvents;
             this.controller.on('update', this._updateChildViews, this);
+            this.controller.on('definition:open', this._openDefinition, this);
+            this.controller.on('definition:close', this._closeDefinition, this);
+
             this.childViews = {};
             this.$el.definition = this.$el.find('#definition');
             this.openRegFolders();
@@ -27,10 +30,15 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
             'sxs': 'sxsModel'
         },
 
-        // ask:
-        // context = {}
-        // context.type = page type
-        // context.id = id to open
+        _openDefinition: function(id) {
+            this.childViews.definition = new Definition({id: id});
+        },
+
+        _closeDefinition: function() {
+            if (typeof this.childViews.definition !== 'undefined') {
+                this.childViews.definition.remove();
+            }
+        },
 
         _updateChildViews: function(context) {
             switch (context.type) {
