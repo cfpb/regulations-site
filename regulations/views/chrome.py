@@ -143,6 +143,7 @@ class ChromeLandingView(ChromeView):
         response = landing_page(self.request, context['reg_part'])
         self._assert_good(response)
         context['main_content'] = response.content
+        print context['main_content']
 
     def get_context_data(self, **kwargs):
         """Add the version and replace the label_id for the chrome context"""
