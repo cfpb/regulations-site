@@ -1,4 +1,4 @@
-define('header-view', ['jquery', 'underscore', 'backbone', 'sub-head-view', 'super-view'], function($, _, Backbone, SubHead, SuperView) {
+define('header-view', ['jquery', 'underscore', 'backbone', 'sub-head-view'], function($, _, Backbone, SubHead) {
     'use strict';
     var HeaderView = Backbone.View.extend({
         el: '.reg-header',
