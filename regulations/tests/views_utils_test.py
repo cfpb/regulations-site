@@ -117,6 +117,7 @@ class UtilsTest(TestCase):
     @patch('regulations.views.utils.table_of_contents')
     def test_first_section(self, table_of_contents):
         table_of_contents.return_value = [
-            {'section_id': '204-100'}, {'section_id': '204-101'}]
+            {'section_id': '204-100', 'index':['204', '100']}, 
+            {'section_id': '204-101', 'index':['204', '101']}]
         first = first_section('204', '2')
         self.assertEqual(first, '204-100')
