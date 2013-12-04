@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['reg-view'], function(RegView) {})```
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller', 'header-controller'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents) {
     'use strict';
 
     var RegView = Backbone.View.extend({
@@ -16,6 +16,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
         },
 
         initialize: function() {
+            this.controller = MainEvents;
+
             this.on('definition:remove', this.closeDefinition, this);
             this.on('breakaway:open', this.hideContent, this);
             this.on('breakaway:close', this.showContent, this);
@@ -50,7 +52,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                         this.activeSection = this.$sections[i][0].id;
                         this.$activeSection = this.$sections[i][0];
                         // **Event** trigger active section change
-                        Dispatch.trigger('activeSection:change', this.activeSection);
+                        HeaderEvents.trigger('section:change', this.activeSection);
                         return;
                     }
                 }

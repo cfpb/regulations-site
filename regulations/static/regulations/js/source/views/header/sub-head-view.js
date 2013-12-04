@@ -3,25 +3,17 @@
 // **Usage** ```require(['sub-head-view'], function(SubHeadView) {})```
 //
 // **Jurisdiction** The gray subheader above the main content section
-define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers'], function($, _, Backbone, RegsHelpers) {
+define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'header-controller'], function($, _, Backbone, RegsHelpers, HeaderEvents) {
     'use strict';
     var SubHeadView = Backbone.View.extend({
         el: '#content-header',
 
         initialize: function() {
+            this.controller = HeaderEvents;
+
+            this.controller.on('section:change', this._changeTitle, this);
             // cache inner title DOM node for frequent reference
             this.$activeTitle = this.$el.find('.header-label');
-        },
-
-        contextMap: {
-            'wayfinding': '_changeTitle',
-            'search': '_displayCount'
-        },
-
-        change: function(type, content) {
-            if (typeof this.contextMap[type] !== 'undefined') {
-                this.contextMap[type](content);
-            }
         },
 
         // populates subhead with new title
