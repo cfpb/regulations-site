@@ -134,8 +134,20 @@ def reverse_chrome_diff_view(sect_id, left_ver, right_ver, from_version):
     return diff_url
 
 
+def extract_sections(toc):
+    compiled_toc = []
+    for i in toc:
+        if 'Subpart' in i['index']:
+            compiled_toc.extend(i['sub_toc'])
+        else:
+            compiled_toc.append(i)
+    return compiled_toc
+
+
 def diff_toc(older_version, newer_version, old_toc, diff, from_version):
-    compiled_toc = list(old_toc)
+    #We work around Subparts in the TOC for now.
+    compiled_toc = extract_sections(old_toc)
+
     for node in (v['node'] for v in diff.values() if v['op'] == 'added'):
         if len(node['label']) == 2 and node['title']:
             element = {
@@ -151,8 +163,9 @@ def diff_toc(older_version, newer_version, old_toc, diff, from_version):
 
     modified, deleted = modified_deleted_sections(diff)
     for el in compiled_toc:
-        el['url'] = reverse_chrome_diff_view(
-            el['section_id'], older_version, newer_version, from_version)
+        if not 'Subpart' in el['index']:
+            el['url'] = reverse_chrome_diff_view(
+                el['section_id'], older_version, newer_version, from_version)
         # Deleted first, lest deletions in paragraphs affect the section
         if tuple(el['index']) in deleted and 'op' not in el:
             el['op'] = 'deleted'

@@ -20,7 +20,6 @@ class UtilsTest(TestCase):
         if hasattr(settings, 'JS_DEBUG'):
             self.old_js_debug = settings.JS_DEBUG
 
-
     def tearDown(self):
         if hasattr(self, 'old_gai'):
             settings.GOOGLE_ANALYTICS_ID = self.old_gai
@@ -48,7 +47,6 @@ class UtilsTest(TestCase):
             settings.EREGS_GA_ALT_SITE = self.cfgov_gas
         elif hasattr(settings, 'EREGS_GA_ALT_SITE'):
             del(settings.EREGS_GA_ALT_SITE)
-
 
         if hasattr(self, 'old_js_debug'):
             settings.JS_DEBUG = self.old_js_debug
@@ -84,15 +82,9 @@ class UtilsTest(TestCase):
     def test_add_extras(self):
         context = {}
         settings.EREGS_GA = {
-                'EREGS': {
-                    'ID': 'eregs-ga-id',
-                    'SITE': 'eregs'
-                },
-                'ALT': {
-                    'ID': 'alt-ga-id',
-                    'SITE': 'alt'
-                }
-            }
+            'EREGS': {'ID': 'eregs-ga-id', 'SITE': 'eregs'},
+            'ALT': {'ID': 'alt-ga-id', 'SITE': 'alt'}
+        }
         add_extras(context)
 
         self.assertTrue('APP_PREFIX' in context)
@@ -117,6 +109,17 @@ class UtilsTest(TestCase):
     @patch('regulations.views.utils.table_of_contents')
     def test_first_section(self, table_of_contents):
         table_of_contents.return_value = [
-            {'section_id': '204-100'}, {'section_id': '204-101'}]
+            {'section_id': '204-100', 'index': ['204', '100']},
+            {'section_id': '204-101', 'index': ['204', '101']}]
         first = first_section('204', '2')
+        self.assertEqual(first, '204-100')
+
+    @patch('regulations.views.utils.table_of_contents')
+    def test_first_section_with_subparts(self, table_of_contents):
+        table_of_contents.return_value = [{
+            'section_id': '204-Subpart-A',
+            'index': ['204', 'Subpart', '100'],
+            'sub_toc': [{'section_id': '204-100', 'index': ['204', '100']}]},
+            {'section_id': '204-Interp', 'index': ['204', 'Interp']}]
+        first = first_section('204', 'ver')
         self.assertEqual(first, '204-100')

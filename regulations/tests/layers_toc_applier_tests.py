@@ -103,4 +103,5 @@ class TableOfContentsLayerTest(TestCase):
                 {'title': '100.3 Sec3', 'index': ['100', '3']}]
             })
         _, result = toc.apply_layer('100')
-        self.assertEqual(5, len(result))
+        self.assertEqual(3, len(result))
+        self.assertEqual(3, len(result[0]['sub_toc']))
