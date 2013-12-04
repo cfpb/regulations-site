@@ -1,11 +1,13 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-controller', 'section-footer-view', 'main-controller'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-controller', 'section-footer-view', 'main-controller', 'sidebar-controller', './regs-router'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router) {
     'use strict';
 
     var MainView = Backbone.View.extend({
         el: '#content-body',
 
         initialize: function() {
-            MainEvents.on('section:change', this._loadContent, this);
+            MainEvents.on('section:change', this.loadContent, this);
+            MainEvents.on('section:remove', this.sectionCleanup, this);
+
             var childViewOptions = {},
                 $topSection = this.$el.find('section[data-page-type]'),
                 url, params;
@@ -55,6 +57,10 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             'search': SearchResultsView
         },
 
+        sectionCleanup: function() {
+            this.sectionFooter.remove();
+        },
+
         _assembleSearchURL: function(options) {
             var url = Dispatch.getRegId();
             url += '?q=' + options.query;
@@ -76,23 +82,27 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
             render = function(returned) {
+                this.sectionId = id;
                 this.createView(returned, options); 
                 this.loaded();
                 this.route();
-                Dispatch.trigger('sxs:close');
             }.bind(this);
 
             // simplifies to
             // this.model.get()
-            returned = this.modelmap[type].get(id, render);
+            returned = this.modelmap[this.contentType].get(id, render);
 
             return this;
         },
 
         createView: function(html, options) {
+            if (typeof options.scrollToId === 'undefined') {
+                options.scrollToId = this.sectionId;
+            }
+
             this.childView.remove();
             this.render(html, options.scrollToId);
-            Sidebar.trigger('update', {
+            SidebarEvents.trigger('update', {
                 'type': this.contentType,
                 'id': this.sectionId
             });
@@ -100,7 +110,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         route: function() {
             if (Router.hasPushState) {
-                var url = this.sectionId + '/' + this.version,
+                var url = this.sectionId + '/' + this.regVersion,
                     hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
                 //  Be sure not to lose any hash info
                 if (hashPosition !== -1) {
@@ -113,7 +123,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         render: function(html, scrollToId) {
             var offsetTop, $scrollToId;
 
-            this.header.reset();
             this.$el.html(html);
 
             if (typeof scrollToId !== 'undefined') {

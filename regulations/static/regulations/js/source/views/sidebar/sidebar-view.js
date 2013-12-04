@@ -3,9 +3,9 @@
 // **Usage** ```require(['sidebar-view'], function(SidebarView) {})```
 //
 // **Jurisdiction** Right sidebar content section
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view', 'super-view'], function($, _, Backbone, SidebarHeadView, SxSList, PermalinkView, FolderModel, Main, Breakaway, SuperView) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view', 'sidebar-controller'], function($, _, Backbone, SidebarHeadView, SxSList, PermalinkView, FolderModel, Main, Breakaway, SidebarEvents) {
     'use strict';
-    var SidebarView = SuperView.extend({
+    var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',
 
         events: {
@@ -13,24 +13,13 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
         },
 
         initialize: function() {
+            SidebarEvents.on('update', this._updateChildViews, this);
             this.childViews = {};
             this.$el.definition = this.$el.find('#definition');
             this.openRegFolders();
             this.sxsModel = new FolderModel({
                 supplementalPath: 'sidebar'
             });
-        },
-
-        // downstream - ask()
-        contextMap: {
-            'update': '_updateChildViews',
-            'open-definition': 'insertDefinition',
-            'close-definition': ''
-        },
-
-        // upstream - notify()
-        superviewMap: {
-            'open-sxs': '_callBreakaway'
         },
 
         modelMap: {
@@ -47,7 +36,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
                 case 'reg-section':
                     this.openRegFolders();  
                     this._updateSxSList(context.id);
-                    this._updatePermalinks(context.id);
+                    // this._updatePermalinks(context.id);
                     break;
                 case 'search':
                     this.closeAllChildren();

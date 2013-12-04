@@ -60,8 +60,6 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
         get: function(id, callback) {
             var $promise, resolve;
 
-            Dispatch.trigger('content:loading');
-
             // if we have the requested content cached, retrieve it
             // otherwise, we need to ask the server for it
             $promise = (this.has(id)) ? this._retrieve(id) : this.request(id);
@@ -71,7 +69,6 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
                 if (typeof callback !== 'undefined') {
                     callback(response);
                 }
-                Dispatch.trigger('content:loaded');
             };
 
             $promise.done(resolve);
@@ -83,7 +80,6 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
                 alertNode.className = 'alert';
 
                 $(alertNode).insertBefore('h2.section-number');
-                Dispatch.trigger('content:loaded');
 
                 callback.apply(false);
             });
@@ -115,10 +111,10 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
 
         getAJAXUrl: function(id) {
             var url,
-                urlPrefix = Dispatch.getURLPrefix();
+                urlPrefix = window.APP_PREFIX;
 
             if (urlPrefix) {
-                url = '/' + urlPrefix + '/partial/';
+                url = urlPrefix + 'partial/';
             }
             else {
                 url = '/partial/';
@@ -131,7 +127,7 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
             url += id;
 
             if (id.indexOf('/') === -1) {
-                url += '/' + Dispatch.getVersion(); 
+                url += '/' + $('section[data-base-version]').data('base-version'); 
             }
 
             return url;

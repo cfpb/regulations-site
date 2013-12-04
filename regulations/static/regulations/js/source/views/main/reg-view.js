@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['reg-view'], function(RegView) {})```
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents) {
     'use strict';
 
     var RegView = Backbone.View.extend({
@@ -187,8 +187,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
         },
 
         remove: function() {
-            Dispatch.get('sectionNav').remove();
-            Dispatch.remove('sectionNav');
+            MainEvents.trigger('section:remove');
             this.$el.remove();
             this.stopListening();
             return this;

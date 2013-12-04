@@ -29,6 +29,7 @@
         "drawer-tabs-view": "./views/drawer/drawer-tabs-view",
         "super-view": "./views/super-view",
         "drawer-controller": "./controllers/drawer-controller",
+        "sidebar-controller": "./controllers/sidebar-controller",
         "main-controller": "./controllers/main-controller",
         "search-model": "./models/search-model",
         "meta-model": "./models/meta-model",
