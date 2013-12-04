@@ -1,6 +1,4 @@
 #vim: set fileencoding=utf-8
-import re
-
 from regulations.generator.layers.utils import RegUrl
 from regulations.generator import title_parsing
 
