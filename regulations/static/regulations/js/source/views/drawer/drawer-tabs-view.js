@@ -1,11 +1,11 @@
-define(['jquery', 'underscore', 'backbone', 'drawer-view'], function($, _, Backbone, Drawer) {
+define(['jquery', 'underscore', 'backbone', 'drawer-controller'], function($, _, Backbone, DrawerEvents) {
     'use strict';
     var DrawerTabsView = Backbone.View.extend({
         el: '.toc-head',
 
         events: {
             'click .toc-toggle': 'openDrawer',
-            'click .toc-nav-link': 'updatePaneTabs'
+            'click .toc-nav-link': '_updatePaneTabs'
         },
 
         idMap: {
@@ -15,7 +15,8 @@ define(['jquery', 'underscore', 'backbone', 'drawer-view'], function($, _, Backb
         },
 
         initialize: function() {
-            this.activeEls = $('#menu, #site-header, #content-body, #primary-footer');
+            DrawerEvents.on('pane:change', this._changeActiveTab, this);
+            this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer');
 
             // view switcher buttons - TOC, calendar, search
             this.$tocLinks = $('.toc-nav-link');
@@ -35,21 +36,24 @@ define(['jquery', 'underscore', 'backbone', 'drawer-view'], function($, _, Backb
             $(this.idMap[tab]).addClass('current');
 
             if ($('.panel').css('left') === '-200px') {
-                this.updateDrawerState('open');
+                this.openDrawer();
             }
         },
 
         // this.$activeEls are structural els that need to have
         // CSS applied to work with the drawer conditionally based
         // on its state
-        reflowUI: function(state) {
+        reflowUI: function() {
             if (typeof this.$activeEls !== 'undefined') {
                 this.$activeEls.toggleClass('active');
             }
         },
 
         openDrawer: function(e) {
-            e.preventDefault();
+            if (e) {
+                e.preventDefault();
+            }
+
             this._toggleDrawerState();
         },
 
@@ -59,21 +63,20 @@ define(['jquery', 'underscore', 'backbone', 'drawer-view'], function($, _, Backb
         // set state
         _toggleDrawerState: function() {
             var state = (this.$toggleArrow.hasClass('open')) ? 'close' : 'open';
-            this.reflowUI(state);
+            this.reflowUI();
             this.$toggleArrow.toggleClass('open');
             this.drawerState = state;
         },
 
         // update active pane based on click or external input
-        updatePaneTabs: function(e) {
+        _updatePaneTabs: function(e) {
             e.preventDefault();
 
             var $target = $(e.target),
                 linkValue = _.last($target.closest('a').attr('href').split('#'));
-            this._changeActiveTab(linkValue);
             this.activePane = linkValue;
 
-            Drawer.notify('pane-change', linkValue);
+            DrawerEvents.trigger('pane:change', linkValue);
         }
     });
 

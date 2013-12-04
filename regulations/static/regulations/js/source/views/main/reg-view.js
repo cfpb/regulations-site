@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['reg-view'], function(RegView) {})```
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main) {
     'use strict';
 
     var RegView = Backbone.View.extend({
@@ -16,15 +16,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
         },
 
         initialize: function() {
-            // **Event Listeners**
-            //
-            // * when a definition is removed, update term links
-            Dispatch.on('definition:remove', this.closeDefinition, this);
-
-            Dispatch.on('breakaway:open', this.hideContent, this);
-            Dispatch.on('breakaway:close', this.showContent, this);
-
-            Dispatch.set('section', this.options.id);
+            this.on('definition:remove', this.closeDefinition, this);
+            this.on('breakaway:open', this.hideContent, this);
+            this.on('breakaway:close', this.showContent, this);
 
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
@@ -38,22 +32,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             this.updateWayfinding();
 
             if (Router.hasPushState) {
-                var url = this.options.id + '/' + Dispatch.getVersion(),
-                    hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
-                //  Be sure not to lose any hash info
-                if (hashPosition !== -1) {
-                    url = url + Backbone.history.fragment.substr(hashPosition);
-                }
-                Router.navigate(url);
-
                 this.events['click .inline-interpretation .section-link'] = 'openInterp';
                 this.delegateEvents();
             }
-
-            Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
-
-            Dispatch.trigger('regSection:open:after', this.options.id);
-
         },
 
         // naive way to update the active table of contents link and wayfinding header

@@ -1,4 +1,4 @@
-define('search-view', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
+define('search-view', ['jquery', 'underscore', 'backbone', './regs-router'], function($, _, Backbone, Router) {
     'use strict';
 
     var SearchView = Backbone.View.extend({

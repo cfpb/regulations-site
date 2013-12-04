@@ -1,10 +1,11 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-view'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, Drawer) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-controller', 'section-footer-view', 'main-controller'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents) {
     'use strict';
 
     var MainView = Backbone.View.extend({
         el: '#content-body',
 
         initialize: function() {
+            MainEvents.on('section:change', this._loadContent, this);
             var childViewOptions = {},
                 $topSection = this.$el.find('section[data-page-type]'),
                 url, params;
@@ -16,11 +17,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // what section do we have open?
             this.sectionId = $topSection.attr('id');
 
-            if (this.contentType) {
-                // ask the drawer to set the active pane accordingly
-                Drawer.ask('changeActivePane', this.contentType);
-            }
-
             // build options object to pass into child view constructor
             childViewOptions.id = this.sectionId;
             childViewOptions.version = this.regVersion;
@@ -30,18 +26,23 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 url = Helpers.parseURL(window.location.href);
                 params = url.params;
                 childViewOptions.query = params.q;
+
+                // ask the drawer to set the active pane accordingly
+                DrawerEvents.trigger('pane:change', this.contentType);
             }
 
             if (this.sectionId) {
                 // store the contents of our $el in the model so that we 
                 // can re-render it later
-                this.modelmap[this.contentType].set(sectionId, this.$el.html());
+                this.modelmap[this.contentType].set(this.sectionId, this.$el.html());
             }
 
             if (this.contentType) {
                 // create new child view
                 this.childView = new this.viewmap[this.contentType](childViewOptions);
             }
+
+            this.sectionFooter = new SectionFooter({el: this.$el.find('.section-nav')});
         },
 
         modelmap: {
@@ -52,20 +53,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         viewmap: {
             'reg-section': RegView,
             'search': SearchResultsView
-        },
-
-        contextMap: {
-            'search-submitted': '_assembleSearchURL',
-            'open-reg-section': '_loadContent'
-        },
-
-        ask: function(message, context) {
-            if (typeof this.contextMap[message] !== 'undefined') {
-                if (typeof context.type !== 'undefined') {
-                    this.contentType = context.type;
-                }
-                this.contextMap[message].apply(context);
-            }
         },
 
         _assembleSearchURL: function(options) {
@@ -91,6 +78,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             render = function(returned) {
                 this.createView(returned, options); 
                 this.loaded();
+                this.route();
                 Dispatch.trigger('sxs:close');
             }.bind(this);
 
@@ -104,10 +92,22 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         createView: function(html, options) {
             this.childView.remove();
             this.render(html, options.scrollToId);
-            Sidebar.ask('update', {
+            Sidebar.trigger('update', {
                 'type': this.contentType,
                 'id': this.sectionId
             });
+        },
+
+        route: function() {
+            if (Router.hasPushState) {
+                var url = this.sectionId + '/' + this.version,
+                    hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
+                //  Be sure not to lose any hash info
+                if (hashPosition !== -1) {
+                    url = url + Backbone.history.fragment.substr(hashPosition);
+                }
+                Router.navigate(url);
+            }
         },
 
         render: function(html, scrollToId) {
