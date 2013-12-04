@@ -1,0 +1,25 @@
+{% comment %}
+    Partial for definitions to be displayed inline in the sidebar
+{% endcomment %}
+<div id="inline-def={{node.markup_id}}" class="open-definition" tabindex="0">
+    <div class="sidebar-header group">
+        <h4>
+            Defined Term
+            <a class="right close-button" href="#">Close definition</a>
+        </h4>
+    </div>
+
+    <div class="definition-text">
+        {% if node.marked_up %}
+            <p>
+                {{node.marked_up|safe}}
+            </p>
+
+            <a href="{% url 'chrome_section_view' node.section_id version %}#{{node.label_id}}" class="continue-link internal">{{formatted_label}}</a>
+        {% endif %}
+
+        {% if node.interp %}
+            <a href="{% url 'chrome_section_view' node.interp.section_id version %}#{{ node.interp.label_id }}" data-linked-subsection="{{ node.interp.label_id }}" data-linked-section="{{ node.interp.section_id }}" class="internal interp continue-link">Official Interpretation</a>
+        {% endif %}
+    </div>
+</div>
