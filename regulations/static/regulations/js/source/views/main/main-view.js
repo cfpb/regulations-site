@@ -5,8 +5,9 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         el: '#content-body',
 
         initialize: function() {
-            MainEvents.on('section:change', this.loadContent, this);
-            MainEvents.on('section:remove', this.sectionCleanup, this);
+            this.controller = MainEvents;
+            this.controller.on('section:change', this.loadContent, this);
+            this.controller.on('section:remove', this.sectionCleanup, this);
 
             var childViewOptions = {},
                 $topSection = this.$el.find('section[data-page-type]'),
