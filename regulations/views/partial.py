@@ -5,7 +5,7 @@ from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
-from regulations.generator.node_types import EMPTYPART, REGTEXT
+from regulations.generator.node_types import EMPTYPART, REGTEXT, label_to_text
 from regulations.views import utils
 from regulations.generator import navigation
 
@@ -96,6 +96,17 @@ class PartialParagraphView(PartialView):
         context['node'] = builder.tree
         return context
 
+class PartialDefinitionView(PartialView):
+    """ Single paragraph of a regtext formatted for display
+        as an inline interpretation """
+
+    template_name = "regulations/partial-definition.html"
+
+    def transform_context(self, context, builder):
+        context['node'] = builder.tree
+        context['formatted_label'] = label_to_text(builder.tree['label'], True, True)
+        context['node']['section_id'] = '%s-%s' % (builder.tree['label'][0], builder.tree['label'][1])
+        return context
 
 class PartialInterpView(PartialView):
     """ Interpretation of a reg text section/paragraph or appendix """
