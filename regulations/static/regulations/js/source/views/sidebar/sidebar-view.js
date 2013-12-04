@@ -13,7 +13,8 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
         },
 
         initialize: function() {
-            SidebarEvents.on('update', this._updateChildViews, this);
+            this.controller = SidebarEvents;
+            this.controller.on('update', this._updateChildViews, this);
             this.childViews = {};
             this.$el.definition = this.$el.find('#definition');
             this.openRegFolders();
