@@ -3,7 +3,7 @@
 // **Usage** ```require(['sidebar-view'], function(SidebarView) {})```
 //
 // **Jurisdiction** Right sidebar content section
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view', 'sidebar-controller', 'definition-view'], function($, _, Backbone, SidebarHeadView, SxSList, PermalinkView, FolderModel, Main, Breakaway, SidebarEvents, Definition) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view', 'sidebar-controller', 'definition-view', 'meta-model'], function($, _, Backbone, SidebarHeadView, SxSList, PermalinkView, FolderModel, Main, Breakaway, SidebarEvents, Definition, MetaModel) {
     'use strict';
     var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',
@@ -19,19 +19,21 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
             this.controller.on('definition:close', this._closeDefinition, this);
 
             this.childViews = {};
-            this.$el.definition = this.$el.find('#definition');
             this.openRegFolders();
             this.sxsModel = new FolderModel({
                 supplementalPath: 'sidebar'
             });
-        },
 
-        modelMap: {
-            'sxs': 'sxsModel'
+            this.definitionModel = new MetaModel({
+                supplementalPath: 'definition'
+            });
         },
 
         _openDefinition: function(id) {
-            this.childViews.definition = new Definition({id: id});
+            this.childViews.definition = new Definition({
+                id: id,
+                html: this.definitionModel.get(id)
+            });
         },
 
         _closeDefinition: function() {
@@ -64,7 +66,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
             }
             else {
                 // request content and render
-                this[this.modelMap.sxs].get(id, this.childViews.sxs.render);
+                this.sxsModel.get(id, this.childViews.sxs.render);
             }
         },
 

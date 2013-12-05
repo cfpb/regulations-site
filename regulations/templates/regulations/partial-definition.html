@@ -21,5 +21,7 @@
         {% if node.interp %}
             <a href="{% url 'chrome_section_view' node.interp.section_id version %}#{{ node.interp.label_id }}" data-linked-subsection="{{ node.interp.label_id }}" data-linked-section="{{ node.interp.section_id }}" class="internal interp continue-link">Official Interpretation</a>
         {% endif %}
+
+        <a class="close-button tab-activated" href="#">Close definition</a>
     </div>
 </div>
