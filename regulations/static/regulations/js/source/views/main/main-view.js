@@ -84,6 +84,8 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // called after ajax resolves sucessfully
             render = function(returned) {
                 this.sectionId = id;
+                // we need to reset this somehow
+                this.contentType = this.contentType;
                 this.createView(returned, options); 
                 this.loaded();
                 this.route();
@@ -103,6 +105,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             this.childView.remove();
             this.render(html, options.scrollToId);
+            this.childView = new this.viewmap[this.contentType]({id: this.sectionId});
             SidebarEvents.trigger('update', {
                 'type': this.contentType,
                 'id': this.sectionId

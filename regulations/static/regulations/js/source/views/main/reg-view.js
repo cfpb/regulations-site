@@ -160,7 +160,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             var sectionId = $(e.currentTarget).data('linked-section'),
                 subSectionId = $(e.currentTarget).data('linked-subsection');
             
-            Router.navigate(sectionId + '/' + Dispatch.getVersion() + '#' + subSectionId, {trigger: true});
+            Router.navigate(sectionId + '/' + $('section[data-base-version]').data('base-version') + '#' + subSectionId, {trigger: true});
         },
 
         remove: function() {
