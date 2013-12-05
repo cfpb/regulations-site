@@ -6,7 +6,7 @@
 //
 // A single inline interpretation, child of the sidebar
 // As of sprint 6, the only View that is instantiated more than once
-define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'regs-helpers', './regs-router'], function($, _, Backbone, SidebarModuleView, RegModel, Helpers, Router) {
+define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'regs-helpers', './regs-router', 'main-controller', 'sidebar-controller'], function($, _, Backbone, SidebarModuleView, RegModel, Helpers, Router, MainEvents, SidebarEvents) {
     'use strict';
 
     // **Constructor**
@@ -24,21 +24,27 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         initialize: function() {
+            this.controller = SidebarEvents;
+
             if (typeof this.options.id !== 'undefined') {
                 this.id = this.options.id;
             }
 
-            if (typeof this.options.id !== 'undefined') {
-                this.render(this.options.html);
-            }
+            // insert the spinner header to be replaced
+            // by the full def once it loads
+            this.renderHeader();
 
             // if pushState is supported, attach the
             // appropriate event handlers
             if (Router.hasPushState) {
                 this.events['click .definition'] = 'sendDefinitionLinkEvent';
-                this.events['click .continue-link'] = 'sendContinueLinkEvent';
+                this.events['click .continue-link'] = 'openFullDefinition';
                 this.delegateEvents(this.events);
             }
+        },
+
+        renderHeader: function() {
+            this.$el.html('<div class="sidebar-header group spinner"><h4>Defined Term</h4></div>');
         },
 
         render: function(html) {
@@ -51,11 +57,22 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             $('.definition.active').focus();
 
             MainEvents.trigger('definition:close');
+            this.remove();
+        },
+
+        openFullDefinition: function(e) {
+            e.preventDefault();
+            var id = this.id || $(e.target).data('linked-section'),
+                parentId = Helpers.findBaseSection(id);
+
+            MainEvents.trigger('section:change', parentId, {
+                scrollToId: id
+            }); 
         },
 
         remove: function() {
             this.stopListening();
-            this.$el.remove();
+            this.$el.html('');
             
             return this;
         }

@@ -30,10 +30,15 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
         },
 
         _openDefinition: function(id) {
+            var createDefView = function(res) {
+                this.childViews.definition.render(res);
+            }.bind(this);
+
             this.childViews.definition = new Definition({
                 id: id,
-                html: this.definitionModel.get(id)
             });
+
+            this.definitionModel.get(id, createDefView);
         },
 
         _closeDefinition: function() {
