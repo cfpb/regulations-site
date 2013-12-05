@@ -1,4 +1,4 @@
-define('regs-router', ['underscore', 'backbone', 'queryparams'], function(_, Backbone) {
+define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams'], function(_, Backbone, MainEvents) {
     'use strict';
 
     var RegsRouter = Backbone.Router.extend({
@@ -13,7 +13,7 @@ define('regs-router', ['underscore', 'backbone', 'queryparams'], function(_, Bac
 
             options.scrollToId = Backbone.history.getHash();
 
-            Dispatch.trigger('regSection:open', section, options, 'regSection'); 
+            MainEvents.trigger('section:change', section, options); 
         },
 
         toSxS: function(section, version, params) {
