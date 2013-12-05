@@ -25,11 +25,11 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
 
-            // set active section vars
-            // @TODO: how do activeSection and Dispatch.get('section') live together?
-            this.activeSection = this.options.id || '';
+            this.activeSection = this.options.id;
             this.$activeSection = '';
             this.$sections = {};
+
+            HeaderEvents.trigger('section:change', this.activeSection);
 
             this.updateWayfinding();
 
