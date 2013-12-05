@@ -18,9 +18,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
         initialize: function() {
             this.controller = MainEvents;
 
-            this.on('definition:remove', this.closeDefinition, this);
-            this.on('breakaway:open', this.hideContent, this);
-            this.on('breakaway:close', this.showContent, this);
+            this.controller.on('definition:close', this.closeDefinition, this);
+            this.controller.on('breakaway:open', this.hideContent, this);
+            this.controller.on('breakaway:close', this.showContent, this);
 
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
@@ -82,15 +82,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
         // what way the definition was closed
         closeDefinition: function() {
             this.clearActiveTerms();
-        },
-
-        // only concerned with sending GA event if the definition
-        // is closed via active term link
-        openDefinitionLinkHandler: function(e) {
-            Dispatch.trigger('ga-event:definition', {
-                action: 'clicked key term to close definition',
-                context: $(e.target).data('definition')
-            });
         },
 
         toggleDefinition: function($link) {

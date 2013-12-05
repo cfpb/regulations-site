@@ -15,7 +15,7 @@
                 {{node.marked_up|safe}}
             </p>
 
-            <a href="{% url 'chrome_section_view' node.section_id version %}#{{node.label_id}}" class="continue-link internal">{{formatted_label}}</a>
+            <a href="{% url 'chrome_section_view' node.section_id version %}#{{node.label_id}}" class="continue-link internal" data-linked-section="{{node.label_id}}">{{formatted_label}}</a>
         {% endif %}
 
         {% if node.interp %}
