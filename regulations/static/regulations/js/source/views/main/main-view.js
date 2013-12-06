@@ -10,15 +10,15 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             this.controller.on('section:remove', this.sectionCleanup, this);
 
             var childViewOptions = {},
-                $topSection = this.$el.find('section[data-page-type]'),
                 url, params;
+            this.$topSection = this.$el.find('section[data-page-type]');
 
             // which page are we starting on?
-            this.contentType = $topSection.data('page-type');
+            this.contentType = this.$topSection.data('page-type');
             // what version of the reg?
-            this.regVersion = $topSection.data('base-version');
+            this.regVersion = this.$topSection.data('base-version');
             // what section do we have open?
-            this.sectionId = $topSection.attr('id');
+            this.sectionId = this.$topSection.attr('id');
 
             // build options object to pass into child view constructor
             childViewOptions.id = this.sectionId;
@@ -35,7 +35,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             if (this.contentType === 'landing-page') {
-                this.regPart = $topSection.data('reg-part');
+                this.regPart = this.$topSection.data('reg-part');
             }
 
             if (this.sectionId) {
@@ -76,10 +76,10 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             options.url = url;
-            this.loadContent(url, options);
+            this.loadContent(url, options, 'search');
         },
 
-        loadContent: function(id, options) {
+        loadContent: function(id, options, type) {
             var returned, render;
 
             this.loading();
@@ -87,17 +87,28 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
             render = function(returned) {
+                if (typeof this.childView !== 'undefined') {
+                    this.childView.remove();
+                }
+
+                // update current subview settings
+                this.contentType = type;
                 this.sectionId = id;
-                // we need to reset this somehow
-                this.contentType = this.contentType;
+
                 this.createView(returned, options); 
+
+                // remove overlay
                 this.loaded();
+
+                // update url and title
                 this.route(options);
             }.bind(this);
 
-            // simplifies to
-            // this.model.get()
-            returned = this.modelmap[this.contentType].get(id, render);
+            if (typeof this.modelmap[type] !== 'undefined') {
+                // simplifies to
+                // this.model.get()
+                returned = this.modelmap[type].get(id, render);
+            }
 
             return this;
         },
@@ -107,7 +118,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 options.scrollToId = this.sectionId;
             }
 
-            this.childView.remove();
             this.render(html, options.scrollToId);
             this.childView = new this.viewmap[this.contentType]({id: this.sectionId});
             SidebarEvents.trigger('update', {
