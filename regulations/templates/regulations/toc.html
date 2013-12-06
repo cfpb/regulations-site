@@ -7,8 +7,8 @@
             <h2 class="toc-type">Table of Contents</h2>
         </div><!-- /.drawer-header -->
     {% endif %}
-    <nav {% if top_toc %}id="toc" {% endif %}class="{{nav_class}}" role="navigation">
-        <ol {% if top_toc %}class="drawer-content"{% endif %}>
+    <nav {% if top_toc %}id="toc" {% endif %}class="{{nav_class}} {% if top_toc %}drawer-content{% endif %}" role="navigation">
+        <ol>
             {% for item in toc_items %}
                 {% if item.is_section %}
                     {% include "regulations/toc-section.html" %}
