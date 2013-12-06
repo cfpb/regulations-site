@@ -89,3 +89,13 @@ def first_section(reg_part, version):
 
     toc = table_of_contents(reg_part, version, sectional=False)
     return toc[0]['section_id']
+
+def label_to_display_id(label_id):
+    """ Return a nicely formatted id to be used in the <title> tag
+        either part.section or part Interpretations """
+    id = label_id.split('-')
+    if id[1] == 'Interp':
+        formatted_id = ' '.join([id[0], 'Interpretations'])
+    else:
+        formatted_id = '.'.join([id[0], id[1]])
+    return formatted_id

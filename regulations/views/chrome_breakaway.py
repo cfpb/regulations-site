@@ -24,6 +24,8 @@ class ChromeBreakawayView(ChromeView):
         meta = api_reader.ApiReader().layer('meta', context['reg_part'],
                                             context['version'])
         context['meta'] = meta[context['reg_part']][0]
+        context['formatted_id'] = utils.label_to_display_id(
+                                  context['label_id'])
         content = self.content(context)
         if isinstance(content, HttpResponse):  # error occurred
             return content

@@ -115,7 +115,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         route: function(options) {
             if (Router.hasPushState) {
                 var url = this.sectionId + '/' + this.regVersion,
-                    hashPosition;
+                    hashPosition, titleParts, newTitle;
 
                 // if a hash has been passed in
                 if (options && typeof options.scrollToId !== 'undefined') {
@@ -129,6 +129,10 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                     }
                 }
                 Router.navigate(url);
+
+                titleParts = _.compact(document.title.split(" "));
+                newTitle = [titleParts[0], titleParts[1], Helpers.idToRef(this.sectionId), '|', 'eRegulations'];
+                document.title = newTitle.join(' ');
             }
         },
 
