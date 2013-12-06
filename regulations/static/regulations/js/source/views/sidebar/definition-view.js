@@ -37,12 +37,13 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             // if pushState is supported, attach the
             // appropriate event handlers
             if (Router.hasPushState) {
-                this.events['click .definition'] = 'sendDefinitionLinkEvent';
+                this.events['click .continue-link.interp'] = 'openInterpretation';
                 this.events['click .continue-link'] = 'openFullDefinition';
                 this.delegateEvents(this.events);
             }
         },
 
+        // temporary header w/spinner while definition is loading
         renderHeader: function() {
             this.$el.html('<div class="sidebar-header group spinner"><h4>Defined Term</h4></div>');
         },
@@ -68,6 +69,17 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             MainEvents.trigger('section:change', parentId, {
                 scrollToId: id
             }); 
+        },
+
+        openInterpretation: function(e) {
+            e.preventDefault();
+            var $e = $(e.target),
+                id = $e.data('linked-section'),
+                pid = $e.data('linked-subsection');
+
+            MainEvents.trigger('section:change', id, {
+                scrollToId: pid
+            });
         },
 
         remove: function() {
