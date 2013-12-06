@@ -51,7 +51,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-
 
             var sectionId = $(e.currentTarget).data('section-id');
             DrawerEvents.trigger('section:open', sectionId);
-            MainEvents.trigger('section:open', sectionId, {});
+            MainEvents.trigger('section:open', sectionId, {}, 'reg-section');
         },
 
         // **Inactive** 
