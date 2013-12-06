@@ -6,7 +6,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         initialize: function() {
             this.controller = MainEvents;
-            this.controller.on('section:change', this.loadContent, this);
+            this.controller.on('section:open', this.loadContent, this);
             this.controller.on('section:remove', this.sectionCleanup, this);
 
             var childViewOptions = {},

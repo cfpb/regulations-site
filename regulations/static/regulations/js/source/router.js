@@ -13,7 +13,7 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
 
             options.scrollToId = Backbone.history.getHash();
 
-            MainEvents.trigger('section:change', section, options); 
+            MainEvents.trigger('section:open', section, options); 
         },
 
         toSxS: function(section, version, params) {

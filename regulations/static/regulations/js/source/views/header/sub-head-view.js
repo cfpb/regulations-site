@@ -11,7 +11,7 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
         initialize: function() {
             this.controller = HeaderEvents;
 
-            this.controller.on('section:change', this._changeTitle, this);
+            this.controller.on('section:open', this._changeTitle, this);
             // cache inner title DOM node for frequent reference
             this.$activeTitle = this.$el.find('.header-label');
         },
