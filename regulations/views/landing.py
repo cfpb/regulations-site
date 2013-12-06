@@ -39,6 +39,7 @@ def regulation(request, label_id):
     context['label_id'] = label_id
     context['reg_first_section'] = utils.first_section(
         label_id, current_version['version'])
+    context['reg_part'] = label_id.split('-')[0]
 
     regulation_meta = utils.regulation_meta(
         label_id,

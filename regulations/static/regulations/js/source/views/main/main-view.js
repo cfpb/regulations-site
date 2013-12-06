@@ -34,13 +34,17 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 DrawerEvents.trigger('pane:change', this.contentType);
             }
 
+            if (this.contentType === 'landing-page') {
+                this.regPart = $topSection.data('reg-part');
+            }
+
             if (this.sectionId) {
                 // store the contents of our $el in the model so that we 
                 // can re-render it later
                 this.modelmap[this.contentType].set(this.sectionId, this.$el.html());
             }
 
-            if (this.contentType) {
+            if (this.contentType && typeof this.viewmap[this.contentType] !== 'undefined') {
                 // create new child view
                 this.childView = new this.viewmap[this.contentType](childViewOptions);
             }
