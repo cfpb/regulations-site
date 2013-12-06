@@ -88,7 +88,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 this.contentType = this.contentType;
                 this.createView(returned, options); 
                 this.loaded();
-                this.route();
+                this.route(options);
             }.bind(this);
 
             // simplifies to
@@ -112,13 +112,21 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             });
         },
 
-        route: function() {
+        route: function(options) {
             if (Router.hasPushState) {
                 var url = this.sectionId + '/' + this.regVersion,
+                    hashPosition;
+
+                // if a hash has been passed in
+                if (options && typeof options.scrollToId !== 'undefined') {
+                    url = url + '#' + options.scrollToId;
+                }
+                else {
                     hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
-                //  Be sure not to lose any hash info
-                if (hashPosition !== -1) {
-                    url = url + Backbone.history.fragment.substr(hashPosition);
+                    //  Be sure not to lose any hash info
+                    if (hashPosition !== -1) {
+                        url = url + Backbone.history.fragment.substr(hashPosition);
+                    }
                 }
                 Router.navigate(url);
             }
