@@ -29,7 +29,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             this.$activeSection = '';
             this.$sections = {};
 
-            HeaderEvents.trigger('section:change', this.activeSection);
+            HeaderEvents.trigger('section:open', this.activeSection);
 
             this.updateWayfinding();
 
@@ -52,7 +52,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                         this.activeSection = this.$sections[i][0].id;
                         this.$activeSection = this.$sections[i][0];
                         // **Event** trigger active section change
-                        HeaderEvents.trigger('section:change', this.activeSection);
+                        HeaderEvents.trigger('section:open', this.activeSection);
                         return;
                     }
                 }

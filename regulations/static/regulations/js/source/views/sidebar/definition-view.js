@@ -66,7 +66,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             var id = this.id || $(e.target).data('linked-section'),
                 parentId = Helpers.findBaseSection(id);
 
-            MainEvents.trigger('section:change', parentId, {
+            MainEvents.trigger('section:open', parentId, {
                 scrollToId: id
             }); 
         },
@@ -77,7 +77,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 id = $e.data('linked-section'),
                 pid = $e.data('linked-subsection');
 
-            MainEvents.trigger('section:change', id, {
+            MainEvents.trigger('section:open', id, {
                 scrollToId: pid
             });
         },

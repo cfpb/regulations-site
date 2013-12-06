@@ -15,7 +15,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-
         initialize: function() {
             var openSection = $('section[data-page-type]').attr('id');
 
-            MainEvents.on('section:change', this.setActive, this);
+            MainEvents.on('section:open', this.setActive, this);
 
             if (openSection) {
                 this.setActive(openSection);
@@ -50,8 +50,8 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-
             e.preventDefault();
 
             var sectionId = $(e.currentTarget).data('section-id');
-            DrawerEvents.trigger('section:change', sectionId);
-            MainEvents.trigger('section:change', sectionId, {});
+            DrawerEvents.trigger('section:open', sectionId);
+            MainEvents.trigger('section:open', sectionId, {});
         },
 
         // **Inactive** 

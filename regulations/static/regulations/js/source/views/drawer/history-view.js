@@ -12,7 +12,7 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'main-controller'], 
         initialize: function() {
             var currentVersion = $('section[data-base-version]').data('base-version');
 
-            MainEvents.on('section:change', this.updateLinks, this);
+            MainEvents.on('section:open', this.updateLinks, this);
 
             // remove the current class from all .status-list items
             this.$el.find('.status-list').removeClass('current');
