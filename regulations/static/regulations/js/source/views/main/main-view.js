@@ -53,12 +53,14 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         modelmap: {
             'reg-section': RegModel,
-            'search-results': SearchModel
+            'search-results': SearchModel,
+            'diff': DiffModel
         }, 
 
         viewmap: {
             'reg-section': RegView,
-            'search-results': SearchResultsView
+            'search-results': SearchResultsView,
+            'diff': DiffView
         },
 
         _assembleSearchURL: function(options) {
