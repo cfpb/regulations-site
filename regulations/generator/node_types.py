@@ -30,7 +30,7 @@ def type_from_label(label):
         return EMPTYPART
     if 'Subpart' in label:  # but not the final segment
         return SUBPART
-    if len(label) > 1 and label[1].isalpha():
+    if len(label) > 1 and label[1][:1].isalpha():
         return APPENDIX
     return REGTEXT
 

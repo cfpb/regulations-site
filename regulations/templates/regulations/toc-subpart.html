@@ -1,0 +1,12 @@
+<li><h3 class="subpart-heading" data-section-id="{{item.section_id}}">{{item.label|safe|upper}} - <span class="subpart-subhead">{{item.sub_label|safe}}</span></h3></li>
+
+{% if item.sub_toc %}
+    {% for item in item.sub_toc %}
+        {% if item.is_section %}
+            {% include "regulations/toc-section.html" %}
+        {% else %}
+            <li><a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+

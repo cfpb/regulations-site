@@ -1,6 +1,4 @@
 #vim: set fileencoding=utf-8
-import re
-
 from regulations.generator.layers.utils import RegUrl
 from regulations.generator import title_parsing
 
@@ -20,9 +18,8 @@ class TableOfContentsLayer(object):
             toc_list = []
             for data in layer_elements:
                 if 'Subpart' in data['index']:
-                    result = self.apply_layer('-'.join(data['index']))
-                    if result:
-                        toc_list.extend(result[1])
+                    element = self.subpart(data)
+                    toc_list.append(element)
                 else:
                     element = {
                         'url': RegUrl.of(data['index'], self.version,
@@ -35,6 +32,19 @@ class TableOfContentsLayer(object):
                     self.appendix_supplement(element, data)
                     toc_list.append(element)
             return ('TOC', toc_list)
+
+    def subpart(self, data):
+        element = {
+            'label': ' '.join(data['index'][1:]),
+            'sub_label': data['title'],
+            'index': data['index'],
+            'section_id': '-'.join(data['index']),
+            'is_subpart': True
+        }
+        result = self.apply_layer('-'.join(data['index']))
+        if result:
+            element['sub_toc'] = result[1]
+        return element
 
     @staticmethod
     def section(element, data):
