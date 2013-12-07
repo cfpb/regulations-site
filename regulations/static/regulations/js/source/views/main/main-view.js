@@ -9,6 +9,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             this.controller.on('search-results:open', this._assembleSearchURL, this);
             this.controller.on('section:open', this.loadContent, this);
             this.controller.on('section:remove', this.sectionCleanup, this);
+            this.controller.on('diff:open', this._assembleDiffURL, this);
 
             var childViewOptions = {},
                 url, params;
@@ -74,6 +75,16 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             options.url = url;
             this.loadContent(url, options, 'search-results');
+        },
+
+        // ex: diff/1005-1/2011-12121/2012-11111/?from_version=2012-11111
+        _assembleDiffURL: function(id, options) {
+            var url = 'diff/' + id + '/' + options.baseVersion;
+            url += '/' + options.newerVersion;
+            url += '?from_version=' + options.newerVersion;
+
+            options.url = url;
+            this.loadContent(url, options, 'diff');
         },
 
         loadContent: function(id, options, type) {
