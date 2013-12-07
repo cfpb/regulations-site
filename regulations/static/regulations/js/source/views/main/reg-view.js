@@ -187,6 +187,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                 }
                 Router.navigate(url);
 
+                // change page title
                 titleParts = _.compact(document.title.split(" "));
                 newTitle = [titleParts[0], titleParts[1], Helpers.idToRef(this.id), '|', 'eRegulations'];
                 document.title = newTitle.join(' ');

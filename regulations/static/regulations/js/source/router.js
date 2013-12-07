@@ -11,9 +11,10 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
         loadSection: function(section) {
             var options = {id: section};
 
+            // to scroll to paragraph if there is a hadh
             options.scrollToId = Backbone.history.getHash();
 
-            MainEvents.trigger('section:open', section, options); 
+            MainEvents.trigger('section:open', section, options, 'reg-section'); 
         },
 
         toSxS: function(section, version, params) {
@@ -26,25 +27,25 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
         },
 
         backToSearchResults: function(reg, params) {
-/* jshint unused: false */
-// for when search is dynamically loaded again
-//            var config = {
-//                query: params.q,
-//                version: params.version
-//            };
-//
-//            if (typeof params.page !== 'undefined') {
-//                config.page = params.page;
-//            }
-//
-//            Dispatch.trigger('search:submitted', config, 'searchResults');
+            /* jshint unused: false */
+            var config = {
+                query: params.q,
+                version: params.version
+            };
+
+            // if there is a page number for the query string
+            if (typeof params.page !== 'undefined') {
+                config.page = params.page;
+            }
+
+            MainEvents.trigger('search-results:open', config);
         },
 
         start:  function() {
             var root = '/';
 
             // if the site is running under a subdirectory, create urls accordingly
-            if (window.APP_PREFIX) {
+            if (window.APP_PREFIX.length > 1) {
                 root = window.APP_PREFIX.substring(1);
             }
 
