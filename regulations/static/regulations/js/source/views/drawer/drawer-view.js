@@ -10,9 +10,9 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
         el: '#menu',
 
         initialize: function() {
-            this.controller = DrawerEvents;
+            var tab;
+            DrawerEvents.on('pane:change', this._setActivePane, this);
 
-            this.controller.on('pane:change', this._setActivePane, this);
             this.$label = $('.toc-type');
             this.$children = $('.toc-container');
             this.childViews = {
@@ -30,7 +30,11 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
                 }
             };
 
-            this._setActivePane('table-of-contents');
+            for (tab in this.childViews) {
+                if (this.childViews[tab]['selector'].hasClass('current')) {
+                    this._setActivePane(tab);
+                }
+            }
         },
 
         // page types are more diverse and are named differently for
@@ -39,7 +43,8 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
         pageTypeMap: {
             'diff': 'timeline',
             'reg-section': 'table-of-contents',
-            'error': 'table-of-contents'
+            'error': 'table-of-contents',
+            'search-results': 'search'
         },
 
         // activeId = page type or child view type

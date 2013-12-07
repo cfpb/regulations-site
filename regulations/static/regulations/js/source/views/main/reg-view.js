@@ -3,7 +3,7 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['reg-view'], function(RegView) {})```
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller', 'header-controller', 'sidebar-controller'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller', 'header-controller', 'sidebar-controller', './regs-helpers', 'drawer-controller'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents, Helpers, DrawerEvents) {
     'use strict';
 
     var RegView = Backbone.View.extend({
@@ -22,9 +22,13 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             this.controller.on('breakaway:open', this.hideContent, this);
             this.controller.on('breakaway:close', this.showContent, this);
 
+            DrawerEvents.trigger('pane:change', 'table-of-contents');
+
             // * when a scroll event completes, check what the active secion is
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
 
+            this.id = this.options.id;
+            this.regVersion = this.options.regVersion;
             this.activeSection = this.options.id;
             this.$activeSection = '';
             this.$sections = {};
@@ -36,6 +40,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             if (Router.hasPushState) {
                 this.events['click .inline-interpretation .section-link'] = 'openInterp';
                 this.delegateEvents();
+
+                this.route(this.options.scrollToId);
             }
         },
 
@@ -163,8 +169,32 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             Router.navigate(sectionId + '/' + $('section[data-base-version]').data('base-version') + '#' + subSectionId, {trigger: true});
         },
 
+        route: function(options) {
+            if (Router.hasPushState) {
+                var url = this.id + '/' + this.regVersion,
+                    hashPosition, titleParts, newTitle;
+
+                // if a hash has been passed in
+                if (options && typeof options.scrollToId !== 'undefined') {
+                    url = url + '#' + options.scrollToId;
+                }
+                else {
+                    hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
+                    //  Be sure not to lose any hash info
+                    if (hashPosition !== -1) {
+                        url = url + Backbone.history.fragment.substr(hashPosition);
+                    }
+                }
+                Router.navigate(url);
+
+                titleParts = _.compact(document.title.split(" "));
+                newTitle = [titleParts[0], titleParts[1], Helpers.idToRef(this.id), '|', 'eRegulations'];
+                document.title = newTitle.join(' ');
+            }
+        },
+
         remove: function() {
-            MainEvents.trigger('section:remove');
+            $(window).off('scrollstop');
             this.$el.remove();
             this.stopListening();
             return this;

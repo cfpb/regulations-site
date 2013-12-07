@@ -6,6 +6,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         initialize: function() {
             this.controller = MainEvents;
+            this.controller.on('search-results:open', this._assembleSearchURL, this);
             this.controller.on('section:open', this.loadContent, this);
             this.controller.on('section:remove', this.sectionCleanup, this);
 
@@ -19,23 +20,17 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             this.regVersion = this.$topSection.data('base-version');
             // what section do we have open?
             this.sectionId = this.$topSection.attr('id');
+            this.regPart = $('#menu').data('reg-id');
 
             // build options object to pass into child view constructor
             childViewOptions.id = this.sectionId;
             childViewOptions.version = this.regVersion;
 
             // find search query
-            if (this.contentType === 'search') {
-                url = Helpers.parseURL(window.location.href);
-                params = url.params;
-                childViewOptions.query = params.q;
-
-                // ask the drawer to set the active pane accordingly
-                DrawerEvents.trigger('pane:change', this.contentType);
-            }
-
-            if (this.contentType === 'landing-page') {
-                this.regPart = this.$topSection.data('reg-part');
+            if (this.contentType === 'search-results') {
+                childViewOptions.id = Helpers.parseURL(window.location.href);
+                childViewOptions.params = childViewOptions.id.params;
+                childViewOptions.query = childViewOptions.id.params.q;
             }
 
             if (this.sectionId) {
@@ -54,20 +49,19 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         modelmap: {
             'reg-section': RegModel,
-            'search': SearchModel
+            'search-results': SearchModel
         }, 
 
         viewmap: {
             'reg-section': RegView,
-            'search': SearchResultsView
+            'search-results': SearchResultsView
         },
 
         sectionCleanup: function() {
-            this.sectionFooter.remove();
         },
 
         _assembleSearchURL: function(options) {
-            var url = Dispatch.getRegId();
+            var url = this.regPart;
             url += '?q=' + options.query;
             url += '&version=' + options.version;
 
@@ -76,7 +70,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             options.url = url;
-            this.loadContent(url, options, 'search');
+            this.loadContent(url, options, 'search-results');
         },
 
         loadContent: function(id, options, type) {
@@ -87,10 +81,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
             render = function(returned) {
-                if (typeof this.childView !== 'undefined') {
-                    this.childView.remove();
-                }
-
                 // update current subview settings
                 this.contentType = type;
                 this.sectionId = id;
@@ -99,9 +89,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
                 // remove overlay
                 this.loaded();
-
-                // update url and title
-                this.route(options);
             }.bind(this);
 
             if (typeof this.modelmap[type] !== 'undefined') {
@@ -114,40 +101,24 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         },
 
         createView: function(html, options) {
-            if (typeof options.scrollToId === 'undefined') {
+            if (typeof options.scrollToId === 'undefined' && this.contentType === 'reg-section') {
                 options.scrollToId = this.sectionId;
             }
 
+            if (typeof this.childView !== 'undefined') {
+                this.childView.remove();
+                this.sectionFooter.remove();
+            }
+
             this.render(html, options.scrollToId);
-            this.childView = new this.viewmap[this.contentType]({id: this.sectionId});
+            this.childView = new this.viewmap[this.contentType](_.extend({
+                id: this.sectionId,
+                regVersion: this.regVersion
+            }, options));
             SidebarEvents.trigger('update', {
                 'type': this.contentType,
                 'id': this.sectionId
             });
-        },
-
-        route: function(options) {
-            if (Router.hasPushState) {
-                var url = this.sectionId + '/' + this.regVersion,
-                    hashPosition, titleParts, newTitle;
-
-                // if a hash has been passed in
-                if (options && typeof options.scrollToId !== 'undefined') {
-                    url = url + '#' + options.scrollToId;
-                }
-                else {
-                    hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
-                    //  Be sure not to lose any hash info
-                    if (hashPosition !== -1) {
-                        url = url + Backbone.history.fragment.substr(hashPosition);
-                    }
-                }
-                Router.navigate(url);
-
-                titleParts = _.compact(document.title.split(" "));
-                newTitle = [titleParts[0], titleParts[1], Helpers.idToRef(this.sectionId), '|', 'eRegulations'];
-                document.title = newTitle.join(' ');
-            }
         },
 
         render: function(html, scrollToId) {
