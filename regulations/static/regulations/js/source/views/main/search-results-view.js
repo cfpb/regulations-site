@@ -10,8 +10,12 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
 
         initialize: function() {
             var $results = this.$el.find('#result-count');
-            HeaderEvents.trigger('search-results:open', $results.text());
-            $results.remove();
+
+            // if the results were ajaxed in, update header
+            if ($results.text().length > 0) {
+                HeaderEvents.trigger('search-results:open', $results.text());
+                $results.remove();
+            }
 
             if (Router.hasPushState) {
                 if (typeof this.options.id !== 'undefined') {
