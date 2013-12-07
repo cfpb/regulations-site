@@ -1,4 +1,4 @@
-define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'sidebar-list-view', './folder-model', 'sxs-view', './regs-router', 'sidebar-view'], function($, _, Backbone, SidebarListView, FolderModel, SxSView, Router, Sidebar) {
+define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'sidebar-list-view', './folder-model', 'sxs-view', './regs-router', 'sidebar-view', 'breakaway-controller'], function($, _, Backbone, SidebarListView, FolderModel, SxSView, Router, Sidebar, BreakawayEvents) {
     'use strict';
     var SxSListView = SidebarListView.extend({
         el: '#sxs-list',
@@ -23,7 +23,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'sidebar-list-view'
 
             var $sxsLink = $(e.target);
 
-            Sidebar.notify('open-sxs', {
+            BreakawayEvents.trigger('sxs:open', {
                 'regParagraph': $sxsLink.data('sxs-paragraph-id'),
                 'docNumber': $sxsLink.data('doc-number'),
                 'fromVersion': $('section[data-base-version]').data('base-version')
