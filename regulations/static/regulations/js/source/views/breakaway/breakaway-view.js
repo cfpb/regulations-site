@@ -1,16 +1,11 @@
-define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './regs-router'], function($, _, Backbone, SxS, Router) {
+define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './regs-router', 'breakaway-controller'], function($, _, Backbone, SxS, Router, BreakawayEvents) {
     'use strict';
     var BreakawayView = Backbone.View.extend({
         childViews: {},
 
-        contextMap: {
-            'open-sxs': '_openSxS'
-        },
-
-        ask: function(message, context) {
-            if (typeof this.contextMap[message] !== 'undefined') {
-                this.contextMap[message].apply(context);
-            }
+        initialize: function() {
+            this.controller = BreakawayEvents;
+            this.controller.on('sxs:open', this._openSxS, this);
         },
 
         _openSxS: function(context) {
