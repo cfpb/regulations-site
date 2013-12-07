@@ -116,6 +116,7 @@ class ChromeSectionDiffView(ChromeView):
         context['left_version'] = context['version']
         context['right_version'] = \
             context['main_content_context']['newer_version']
+        context['formatted_id'] = ' '.join(['Comparison of', context['formatted_id']])
 
         context['TOC'] = context['main_content_context']['TOC']
         return context

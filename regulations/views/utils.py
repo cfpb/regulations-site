@@ -1,3 +1,4 @@
+#vim: set encoding=utf-8
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
@@ -102,6 +103,7 @@ def label_to_display_id(label_id):
     if id[1] == 'Interp':
         formatted_id = ' '.join([id[0], 'Interpretations'])
     else:
-        formatted_id = '.'.join([id[0], id[1]])
+        part_with_double_s = ''.join([u'§ ', id[0]])
+        formatted_id = '.'.join([part_with_double_s, id[1]])
     return formatted_id
 
