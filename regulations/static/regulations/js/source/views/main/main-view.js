@@ -1,4 +1,4 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-controller', 'section-footer-view', 'main-controller', 'sidebar-controller', './regs-router'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-controller', 'section-footer-view', 'main-controller', 'sidebar-controller', './regs-router', 'drawer-view'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router, Drawer) {
     'use strict';
 
     var MainView = Backbone.View.extend({
@@ -55,9 +55,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         viewmap: {
             'reg-section': RegView,
             'search-results': SearchResultsView
-        },
-
-        sectionCleanup: function() {
         },
 
         _assembleSearchURL: function(options) {

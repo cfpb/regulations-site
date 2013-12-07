@@ -29,12 +29,6 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
                     'constructor': SearchView
                 }
             };
-
-            for (tab in this.childViews) {
-                if (this.childViews[tab]['selector'].hasClass('current')) {
-                    this._setActivePane(tab);
-                }
-            }
         },
 
         // page types are more diverse and are named differently for
