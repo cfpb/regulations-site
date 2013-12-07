@@ -1,4 +1,4 @@
-define('search-results-view', ['jquery', 'underscore', 'backbone', './search-model', './regs-router'], function($, _, Backbone, SearchModel, Router) {
+define('search-results-view', ['jquery', 'underscore', 'backbone', './search-model', './regs-router', 'header-controller', 'main-controller', 'drawer-controller'], function($, _, Backbone, SearchModel, Router, HeaderEvents, MainEvents, DrawerEvents) {
     'use strict';
 
     var SearchResultsView = Backbone.View.extend({
@@ -10,12 +10,12 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
 
         initialize: function() {
             var $results = this.$el.find('#result-count');
-            Dispatch.trigger('searchResults:open', $results.html());
+            HeaderEvents.trigger('search-results:open', $results.text());
             $results.remove();
 
             if (Router.hasPushState) {
-                if (typeof this.options.url !== 'undefined') {
-                    Router.navigate('search/' + this.options.url);
+                if (typeof this.options.id !== 'undefined') {
+                    Router.navigate('search/' + this.options.id);
                 }
             }
 
@@ -28,6 +28,8 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             if (Router.hasPushState === false) {
                 this.events = {};
             }
+
+            DrawerEvents.trigger('pane:change', 'search');
         },
 
         paginate: function(e) {
@@ -40,7 +42,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
                     page: page
                 };
 
-            Dispatch.trigger('search:submitted', config, 'searchResults');
+            MainEvents.trigger('search-results:open', config);
         },
 
         remove: function() {

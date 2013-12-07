@@ -1,4 +1,4 @@
-define('search-view', ['jquery', 'underscore', 'backbone', './regs-router'], function($, _, Backbone, Router) {
+define('search-view', ['jquery', 'underscore', 'backbone', './regs-router', 'main-controller'], function($, _, Backbone, Router, MainEvents) {
     'use strict';
 
     var SearchView = Backbone.View.extend({
@@ -19,15 +19,13 @@ define('search-view', ['jquery', 'underscore', 'backbone', './regs-router'], fun
         openSearchResults: function(e) {
             sessionStorage.setItem('drawerDefault', 'search');
 
-            // Temporarily removing ajax search results
-            // e.preventDefault();
+            e.preventDefault();
             var $form = $(e.target),
                 options = {};
 
             options.query = $form.find('input[name=q]')[0].value;
             options.version = $form.find('select[name=version]')[0].value;
-            // Temporarily removing ajax search results
-            // Dispatch.trigger('search:submitted', options, 'searchResults');
+            MainEvents.trigger('search-results:open', options);
         }
 
     });

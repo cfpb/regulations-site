@@ -12,6 +12,8 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
             this.controller = HeaderEvents;
 
             this.controller.on('section:open', this._changeTitle, this);
+            this.controller.on('search-results:open', this._displayCount, this);
+
             // cache inner title DOM node for frequent reference
             this.$activeTitle = this.$el.find('.header-label');
         },
@@ -19,7 +21,6 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
         // populates subhead with new title
         _changeTitle: function(id) {
             this.$activeTitle.html(RegsHelpers.idToRef(id));
-            return this;
         },
 
         _displayCount: function(resultCount) {
