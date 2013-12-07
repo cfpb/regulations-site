@@ -5,7 +5,8 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
         el: '#content-wrapper.search-results',
 
         events: {
-            'click .search-nav a': 'paginate'
+            'click .search-nav a': 'paginate',
+            'click h3 .internal': 'openResult'
         },
 
         initialize: function() {
@@ -47,6 +48,16 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
                 };
 
             MainEvents.trigger('search-results:open', config);
+        },
+
+        openResult: function(e) {
+            e.preventDefault();
+            var $resultLink = $(e.target),
+                config = {};
+
+            config.version = $resultLink.data('linked-version');
+            config.scrollToId = $resultLink.data('linked-subsection');
+            MainEvents.trigger('section:open', $resultLink.data('linked-section'), config, 'reg-section');
         },
 
         remove: function() {
