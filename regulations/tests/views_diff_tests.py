@@ -5,6 +5,30 @@ from regulations.views.diff import *
 
 
 class ChromeSectionDiffViewTests(TestCase):
+
+    def test_extract_sections_subparts(self):
+        sub = [{'section_id': '8888-1', 'index': ['8888', '1']},
+               {'section_id': '8888-3', 'index': ['8888', '3']}]
+
+        toc = [{
+            'section_id': '8888-Subpart-A',
+            'index': ['8888', 'Subpart', 'A'],
+            'sub_toc': sub},
+            {'section_id': '8888-Interp', 'index': ['8888', 'Interp']}]
+
+        sections = extract_sections(toc)
+        self.assertEqual(['8888', '1'], sections[0]['index'])
+        self.assertEqual(['8888', '3'], sections[1]['index'])
+        self.assertEqual(['8888', 'Interp'], sections[2]['index'])
+
+    def test_extract_sections(self):
+        toc = [{'section_id': '8888-1', 'index': ['8888', '1']},
+               {'section_id': '8888-3', 'index': ['8888', '3']}]
+        sections = extract_sections(toc)
+
+        self.assertEqual(['8888', '1'], sections[0]['index'])
+        self.assertEqual(['8888', '3'], sections[1]['index'])
+
     def test_diff_toc(self):
         """Integration test."""
         old_toc = [{'section_id': '8888-1', 'index': ['8888', '1']},

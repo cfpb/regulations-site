@@ -1,12 +1,16 @@
 #vim: set fileencoding=utf-8
 import re
 
+from regulations.generator import node_types
+
 
 def appendix_supplement(data):
     """Handle items pointing to an appendix or supplement"""
-    if len(data['index']) == 2 and data['index'][1].isalpha():
+    node_type = node_types.type_from_label(data['index'])
+    if len(data['index']) == 2 and node_type in (node_types.APPENDIX,
+                                                 node_types.INTERP):
         element = {}
-        if 'Interp' in data['index']:
+        if node_type == node_types.INTERP:
             element['is_supplement'] = True
         else:
             element['is_appendix'] = True

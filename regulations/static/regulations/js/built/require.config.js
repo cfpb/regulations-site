@@ -33,6 +33,7 @@ var require = { "paths" :
         "sidebar-controller": "./controllers/sidebar-controller",
         "header-controller": "./controllers/header-controller",
         "main-controller": "./controllers/main-controller",
+        "breakaway-controller": "./controllers/breakaway-controller",
         "search-model": "./models/search-model",
         "meta-model": "./models/meta-model",
         "reg-model": "./models/reg-model",
