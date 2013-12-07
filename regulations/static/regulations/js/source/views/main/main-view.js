@@ -33,6 +33,10 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 childViewOptions.query = childViewOptions.id.params.q;
             }
 
+            if (this.contentType === 'landing-page') {
+                DrawerEvents.trigger('pane:change', 'table-of-contents');
+            }
+
             if (this.sectionId) {
                 // store the contents of our $el in the model so that we 
                 // can re-render it later
