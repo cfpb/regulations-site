@@ -25,7 +25,7 @@ define('search-view', ['jquery', 'underscore', 'backbone', './regs-router', 'mai
 
             options.query = $form.find('input[name=q]')[0].value;
             options.version = $form.find('select[name=version]')[0].value;
-            MainEvents.trigger('search-results:open', options);
+            MainEvents.trigger('search-results:open', null, options, 'search-results');
         }
 
     });

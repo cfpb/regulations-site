@@ -1,7 +1,7 @@
-define('search-results-view', ['jquery', 'underscore', 'backbone', './search-model', './regs-router', 'header-controller', 'main-controller', 'drawer-controller'], function($, _, Backbone, SearchModel, Router, HeaderEvents, MainEvents, DrawerEvents) {
+define('search-results-view', ['jquery', 'underscore', 'backbone', './search-model', './regs-router', 'header-controller', 'main-controller', 'drawer-controller', 'child-view'], function($, _, Backbone, SearchModel, Router, HeaderEvents, MainEvents, DrawerEvents, ChildView) {
     'use strict';
 
-    var SearchResultsView = Backbone.View.extend({
+    var SearchResultsView = ChildView.extend({
         el: '#content-wrapper.search-results',
 
         events: {
@@ -10,6 +10,39 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
         },
 
         initialize: function() {
+            this.query = this.options.query;
+            this.version = this.options.version;
+            this.page = parseInt(this.options.page, 10) || 0;
+
+            // if the browser doesn't support pushState, don't 
+            // trigger click events for links
+            if (Router.hasPushState === false) {
+                this.events = {};
+            }
+
+            DrawerEvents.trigger('pane:change', 'search');
+
+            // if the site was loaded on the search results page
+            if (typeof this.options.rendered === 'undefined') {
+                this.options.id = this._assembleSearchURL(this.options);
+                ChildView.prototype.initialize.apply(this, arguments);
+
+            }
+        },
+
+        _assembleSearchURL: function(options) {
+            var url = options.regPart;
+            url += '?q=' + options.query;
+            url += '&version=' + options.version;
+
+            if (typeof options.page !== 'undefined') {
+                url += '&page=' + options.page;
+            }
+
+            return url;
+        },
+
+        render: function() {
             var $results = this.$el.find('#result-count');
 
             // if the results were ajaxed in, update header
@@ -23,18 +56,6 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
                     Router.navigate('search/' + this.options.id);
                 }
             }
-
-            this.query = this.options.query;
-            this.version = this.options.version;
-            this.page = parseInt(this.options.page, 10) || 0;
-
-            // if the browser doesn't support pushState, don't 
-            // trigger click events for links
-            if (Router.hasPushState === false) {
-                this.events = {};
-            }
-
-            DrawerEvents.trigger('pane:change', 'search');
         },
 
         paginate: function(e) {
