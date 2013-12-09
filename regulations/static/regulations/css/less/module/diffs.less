@@ -6,7 +6,7 @@
 
 
 del {
-    color: @light_field;
+    color: @medium_gray;
     text-decoration: line-through;
 
     img {
@@ -23,9 +23,23 @@ ins {
     .key-term {
         background-color: @green_light;
         text-decoration: none;
+        .avenir-next-demi-italic;
+
+        .level-2 &,
+        .supplement-section .level-1 & {
+          .avenir-next-demi-italic; 
+        }
     }
 
     img {
         border: 2px solid @green_light;
+    }
+}
+
+h2,
+h3,
+h4 {
+    ins {
+        .avenir-next-demi-italic
     }
 }
