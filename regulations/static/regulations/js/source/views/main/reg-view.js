@@ -3,10 +3,10 @@
 // **Jurisdiction** .main-content
 //
 // **Usage** ```require(['reg-view'], function(RegView) {})```
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller', 'header-controller', 'sidebar-controller', './regs-helpers', 'drawer-controller'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents, Helpers, DrawerEvents) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller', 'header-controller', 'sidebar-controller', './regs-helpers', 'drawer-controller', 'child-view'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents, Helpers, DrawerEvents, ChildView) {
     'use strict';
 
-    var RegView = Backbone.View.extend({
+    var RegView = ChildView.extend({
         el: '#content-wrapper',
 
         events: {
@@ -43,6 +43,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
 
                 this.route(this.options.scrollToId);
             }
+
+            ChildView.prototype.initialize.apply(this, arguments);
         },
 
         // naive way to update the active table of contents link and wayfinding header

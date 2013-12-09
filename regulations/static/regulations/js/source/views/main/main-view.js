@@ -6,8 +6,8 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         initialize: function() {
             this.controller = MainEvents;
-            this.controller.on('search-results:open', this._assembleSearchURL, this);
-            this.controller.on('section:open', this.loadContent, this);
+            this.controller.on('search-results:open', this.createView, this);
+            this.controller.on('section:open', this.createView, this);
             this.controller.on('section:remove', this.sectionCleanup, this);
             this.controller.on('diff:open', this._assembleDiffURL, this);
 
@@ -32,6 +32,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 childViewOptions.id = Helpers.parseURL(window.location.href);
                 childViewOptions.params = childViewOptions.id.params;
                 childViewOptions.query = childViewOptions.id.params.q;
+                childViewOptions.rendered = true;
             }
 
             if (this.contentType === 'landing-page') {
@@ -42,6 +43,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 // store the contents of our $el in the model so that we 
                 // can re-render it later
                 this.modelmap[this.contentType].set(this.sectionId, this.$el.html());
+                childViewOptions.model = this.modelmap[this.contentType];
             }
 
             if (this.contentType && typeof this.viewmap[this.contentType] !== 'undefined') {
@@ -64,17 +66,22 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             'diff': DiffView
         },
 
-        _assembleSearchURL: function(options) {
-            var url = this.regPart;
-            url += '?q=' + options.query;
-            url += '&version=' + options.version;
-
-            if (typeof options.page !== 'undefined') {
-                url += '&page=' + options.page;
+        createView: function(id, options, type) {
+            // update
+            this.contentType = type;
+            if (id !== null) {
+                this.sectionId = id;
             }
 
-            options.url = url;
-            this.loadContent(url, options, 'search-results');
+            options.id = id;
+            options.type = this.contentType;
+            options.regVersion = this.regVersion;
+            options.regPart = this.regPart;
+            options.model = this.modelmap[this.contentType];
+            options.cb = this.render;
+
+            this.loading();
+            this.childView = new this.viewmap[this.contentType](options);
         },
 
         // ex: diff/1005-1/2011-12121/2012-11111/?from_version=2012-11111
@@ -87,67 +94,31 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             this.loadContent(url, options, 'diff');
         },
 
-        loadContent: function(id, options, type) {
-            var returned, render;
-
-            this.loading();
-
-            // callback to be sent to model's get method
-            // called after ajax resolves sucessfully
-            render = function(returned) {
-                // update current subview settings
-                this.contentType = type;
-                this.sectionId = id;
-
-                this.createView(returned, options); 
-
-                // remove overlay
-                this.loaded();
-            }.bind(this);
-
-            if (typeof this.modelmap[type] !== 'undefined') {
-                // simplifies to
-                // this.model.get()
-                returned = this.modelmap[type].get(id, render);
-            }
-
-            return this;
-        },
-
-        createView: function(html, options) {
-            if (typeof options.scrollToId === 'undefined' && this.contentType === 'reg-section') {
-                options.scrollToId = this.sectionId;
-            }
+        render: function(html, options) {
+            var offsetTop, $scrollToId;
 
             if (typeof this.childView !== 'undefined') {
                 this.childView.remove();
                 this.sectionFooter.remove();
             }
 
-            this.render(html, options.scrollToId);
-            this.childView = new this.viewmap[this.contentType](_.extend({
-                id: this.sectionId,
-                regVersion: this.regVersion
-            }, options));
+            this.$el.html(html);
+
             SidebarEvents.trigger('update', {
                 'type': this.contentType,
                 'id': this.sectionId
             });
-        },
 
-        render: function(html, scrollToId) {
-            var offsetTop, $scrollToId;
-
-            this.$el.html(html);
-
-            if (typeof scrollToId !== 'undefined') {
-                $scrollToId = $('#' + scrollToId);
+            if (typeof options.scrollToId !== 'undefined') {
+                $scrollToId = $('#' + options.scrollToId);
                 if ($scrollToId.length > 0) {
                     offsetTop = $scrollToId.offset().top;
                 }
             }
 
             window.scrollTo(0, offsetTop || 0);
+
+            this.loaded();
         },
 
         loading: function() {
