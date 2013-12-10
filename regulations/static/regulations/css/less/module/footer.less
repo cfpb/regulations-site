@@ -23,6 +23,56 @@ Global Footer
 }
 
 /*
+Landing Page Footer
+===================
+*/
+
+
+.landing-footer {
+    margin: 2em 0;
+    padding-top: 1em;
+    .border-top-medium (@width: 2px);
+    .avenir-next;
+    font-size: 0.875em;
+
+    .logo-wrap {
+        width: 20%;
+        float: left;
+    }
+
+    .footer-links {
+        float: right;
+        width: 75%;
+    }
+}
+
+.primary-footer-list {
+    .reset;
+
+    li {
+        display: inline;
+    }
+
+    li + li::before {
+        content: " | ";
+        padding: 0 10px;
+    }
+}
+
+.secondary-footer-list {
+    .reset;
+    display: block;
+    float: left;
+    margin-right: 2em;
+    margin-top: 1em;
+
+    li {
+        .reset;
+        margin-top: .25em;
+    }
+}
+
+/*
 Next/Previous Links
 ===================
 */
