@@ -97,6 +97,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         render: function(html, options) {
             var offsetTop, $scrollToId;
 
+debugger;
             if (typeof this.childView !== 'undefined') {
                 this.childView.remove();
                 this.sectionFooter.remove();
