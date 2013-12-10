@@ -26,7 +26,6 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             if (typeof this.options.rendered === 'undefined') {
                 this.options.id = this._assembleSearchURL(this.options);
                 ChildView.prototype.initialize.apply(this, arguments);
-
             }
         },
 
@@ -56,6 +55,8 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
                     Router.navigate('search/' + this.options.id);
                 }
             }
+
+            //ChildView.prototype.render.apply(this, 
         },
 
         paginate: function(e) {

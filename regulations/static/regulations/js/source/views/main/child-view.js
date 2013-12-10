@@ -22,7 +22,9 @@ define('child-view', ['underscore', 'backbone'], function(_, Backbone) {
         },
 
         render: function(html, options, cb) {
-            cb(html, options);
+            if (typeof cb !== 'undefined') {
+                cb(html, options);
+            }
         }
     });
 
