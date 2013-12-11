@@ -49,3 +49,6 @@
 .minicon-up-alt {
   *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e010');
 }
+.minicon-right-alt {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e011');
+}
