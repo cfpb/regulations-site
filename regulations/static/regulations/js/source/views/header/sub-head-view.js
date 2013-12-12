@@ -13,6 +13,7 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
 
             this.controller.on('section:open', this._changeTitle, this);
             this.controller.on('search-results:open', this._displayCount, this);
+            this.controller.on('clear', this._reset, this);
 
             // cache inner title DOM node for frequent reference
             this.$activeTitle = this.$el.find('.header-label');

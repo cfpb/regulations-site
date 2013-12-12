@@ -13,6 +13,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             this.query = this.options.query;
             this.version = this.options.version;
             this.page = parseInt(this.options.page, 10) || 0;
+            this.title = 'Search of ' + this.options.regPart + ' for ' + this.query + ' | eRegulations';
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
