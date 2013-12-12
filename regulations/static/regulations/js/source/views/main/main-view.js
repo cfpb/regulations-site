@@ -105,6 +105,8 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             this.$el.html(html);
 
+            this.childView.attachWayfinding();
+
             SidebarEvents.trigger('update', {
                 'type': this.contentType,
                 'id': this.sectionId
@@ -133,6 +135,8 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             // change focus to main content area when new sections are loaded
             $('.section-focus').focus();
+
+            MainEvents.trigger('section:rendered');
         }
     });
     var main = new MainView();

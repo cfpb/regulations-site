@@ -1,11 +1,12 @@
-define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', './regs-router', 'header-controller', 'drawer-controller', './regs-helpers'], function($, _, Backbone, jQScroll, Router, HeaderEvents, DrawerEvents, Helpers) {
+define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', './regs-router', 'header-controller', 'drawer-controller', './regs-helpers', 'main-controller'], function($, _, Backbone, jQScroll, Router, HeaderEvents, DrawerEvents, Helpers, MainEvents) {
     'use strict';
     var ChildView = Backbone.View.extend({
         initialize: function() {
             var returned, render;
 
             this.model = this.options.model;
-
+            this.controller = MainEvents;
+            this.controller.on('section:rendrered', this.setElement, this);
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
             render = function(returned) {
@@ -21,7 +22,11 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
                 // simplifies to
                 // this.model.get()
                 returned = this.model.get(this.options.id, render);
-                this.title = this._assembleTitle();
+
+                if (typeof this.title === 'undefined') {
+                    this.title = this._assembleTitle();
+                }
+
                 this.route(this.options);
             }
 
@@ -29,21 +34,36 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
             this.activeSection = this.id;
             this.$activeSection = '';
 
-            this.updateWayfinding();
-            DrawerEvents.trigger('section:open', this.id);
+            HeaderEvents.trigger('clear');
 
-            // * when a scroll event completes, check what the active secion is
-            $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
+            if (this.id) {
+                this.updateWayfinding();
+
+                DrawerEvents.trigger('section:open', this.id);
+            }
 
             return this;
+        },
+
+        setElement: function() {
+            if (this.id) {
+                Backbone.View.prototype.setElement.call(this, '#' + this.id);
+            }
+        },
+
+        attachWayfinding: function() {
+            this.updateWayfinding();
+            // * when a scroll event completes, check what the active secion is
+            // we can't scope the scroll to this.$el because there's no localized
+            // way to grab the scroll event, even with overflow:scroll
+            $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
+
         },
 
         render: function() {
             this.updateWayfinding();
             HeaderEvents.trigger('section:open', this.id);
             DrawerEvents.trigger('section:open', this.id);
-
-
         },
 
         changeFocus: function(id) {
@@ -116,6 +136,11 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
                 Router.navigate(url);
                 document.title = this.title;
             }
+        },
+
+        remove: function() {
+            $(window).off('scrollstop');
+            Backbone.View.prototype.remove.call(this, arguments);
         }
     });
 
