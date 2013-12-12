@@ -5,11 +5,12 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         el: '#content-body',
 
         initialize: function() {
+            this.render = _.bind(this.render, this);
             this.controller = MainEvents;
             this.controller.on('search-results:open', this.createView, this);
             this.controller.on('section:open', this.createView, this);
             this.controller.on('section:remove', this.sectionCleanup, this);
-            this.controller.on('diff:open', this._assembleDiffURL, this);
+            this.controller.on('diff:open', this.createView, this);
 
             var childViewOptions = {},
                 url, params;
@@ -25,19 +26,21 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             // build options object to pass into child view constructor
             childViewOptions.id = this.sectionId;
-            childViewOptions.version = this.regVersion;
+            childViewOptions.regVersion = this.regVersion;
 
             // find search query
             if (this.contentType === 'search-results') {
                 childViewOptions.id = Helpers.parseURL(window.location.href);
                 childViewOptions.params = childViewOptions.id.params;
                 childViewOptions.query = childViewOptions.id.params.q;
-                childViewOptions.rendered = true;
             }
 
             if (this.contentType === 'landing-page') {
                 DrawerEvents.trigger('pane:change', 'table-of-contents');
             }
+
+            // we don't want to ajax in data that the page loaded with
+            childViewOptions.rendered = true;
 
             if (this.sectionId) {
                 // store the contents of our $el in the model so that we 
@@ -80,26 +83,23 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             options.model = this.modelmap[this.contentType];
             options.cb = this.render;
 
+            // diffs need some more version context
+            if (this.contentType === 'diff') {
+                options.baseVersion = this.regVersion;
+                options.newerVersion = this.$topSection.data('newer-version');
+            }
+
             this.loading();
-            this.childView = new this.viewmap[this.contentType](options);
-        },
-
-        // ex: diff/1005-1/2011-12121/2012-11111/?from_version=2012-11111
-        _assembleDiffURL: function(id, options) {
-            var url = 'diff/' + id + '/' + options.baseVersion;
-            url += '/' + options.newerVersion;
-            url += '?from_version=' + options.newerVersion;
-
-            options.url = url;
-            this.loadContent(url, options, 'diff');
+            this.newChildView = new this.viewmap[this.contentType](options);
         },
 
         render: function(html, options) {
             var offsetTop, $scrollToId;
 
-debugger;
             if (typeof this.childView !== 'undefined') {
                 this.childView.remove();
+                this.childView = this.newChildView;
+                delete(this.newChildView);
                 this.sectionFooter.remove();
             }
 
@@ -110,7 +110,7 @@ debugger;
                 'id': this.sectionId
             });
 
-            if (typeof options.scrollToId !== 'undefined') {
+            if (options && typeof options.scrollToId !== 'undefined') {
                 $scrollToId = $('#' + options.scrollToId);
                 if ($scrollToId.length > 0) {
                     offsetTop = $scrollToId.offset().top;

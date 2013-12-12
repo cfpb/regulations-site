@@ -9,14 +9,14 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-
         el: '#table-of-contents',
 
         events: {
-            'click .modified a': 'sendDiffClickEvent',
-            'click a': 'sendClickEvent'
+            'click a.diff': 'sendDiffClickEvent',
+            'click a:not(.diff)': 'sendClickEvent'
         },
 
         initialize: function() {
             var openSection = $('section[data-page-type]').attr('id');
 
-            MainEvents.on('section:open', this.setActive, this);
+            DrawerEvents.on('section:open', this.setActive, this);
 
             if (openSection) {
                 this.setActive(openSection);

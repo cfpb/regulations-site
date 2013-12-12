@@ -13,6 +13,7 @@ var require = { "paths" :
         "sidebar-view": "./views/sidebar/sidebar-view",
         "sidebar-head-view": "./views/sidebar/sidebar-head-view",
         "reg-view": "./views/main/reg-view",
+        "diff-view": "./views/main/diff-view",
         "konami": "./lib/konami/index",
         "analytics-handler": "./views/analytics-handler-view",
         "header-view": "./views/header/header-view",
@@ -25,6 +26,7 @@ var require = { "paths" :
         "sxs-view": "./views/breakaway/sxs-view",
         "search-results-view": "./views/main/search-results-view",
         "main-view": "./views/main/main-view",
+        "child-view": "./views/main/child-view",
         "permalink-view": "./views/sidebar/permalink-view",
         "breakaway-view": "./views/breakaway/breakaway-view",
         "drawer-tabs-view": "./views/drawer/drawer-tabs-view",
@@ -38,6 +40,7 @@ var require = { "paths" :
         "meta-model": "./models/meta-model",
         "reg-model": "./models/reg-model",
         "sxs-model": "./models/sxs-model",
+        "diff-model": "./models/diff-model",
         "regs-router": "./router",
         "regs-helpers": "./helpers",
         "folder-model": "./models/folder-model"

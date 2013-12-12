@@ -2,7 +2,9 @@ define('diff-model', ['underscore', 'backbone', 'meta-model'], function(_, Backb
     'use strict';
     Backbone.DiffModel = MetaModel.extend({});
 
-    var diffModel = new Backbone.DiffModel({});
+    var diffModel = new Backbone.DiffModel({
+        supplementalPath: 'diff'
+    });
 
     return diffModel;
 });
