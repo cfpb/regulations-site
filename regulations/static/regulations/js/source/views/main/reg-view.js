@@ -24,66 +24,21 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
 
             DrawerEvents.trigger('pane:change', 'table-of-contents');
 
-            // * when a scroll event completes, check what the active secion is
-            $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
-
             this.id = this.options.id;
             this.regVersion = this.options.regVersion;
             this.activeSection = this.options.id;
             this.$activeSection = '';
             this.$sections = {};
+            this.url = this.id + '/' + this.options.regVersion;
 
             HeaderEvents.trigger('section:open', this.activeSection);
-
-            this.updateWayfinding();
 
             if (Router.hasPushState) {
                 this.events['click .inline-interpretation .section-link'] = 'openInterp';
                 this.delegateEvents();
-
-                this.route(this.options.scrollToId);
             }
 
             ChildView.prototype.initialize.apply(this, arguments);
-        },
-
-        // naive way to update the active table of contents link and wayfinding header
-        // once a scroll event ends, we loop through each content section DOM node
-        // the first one whose offset is greater than the window scroll position, accounting
-        // for the fixed position header, is deemed the active section
-        checkActiveSection: function() {
-            var len = this.$contentContainer.length - 1;
-
-            for (var i = 0; i <= len; i++) {
-                if (this.$sections[i].offset().top + this.$contentHeader.height() >= $(window).scrollTop()) {
-                    if (_.isEmpty(this.activeSection) || (this.activeSection !== this.$sections[i].id)) {
-                        this.activeSection = this.$sections[i][0].id;
-                        this.$activeSection = this.$sections[i][0];
-                        // **Event** trigger active section change
-                        HeaderEvents.trigger('section:open', this.activeSection);
-                        return;
-                    }
-                }
-            }
-                 
-            return this;
-        },
-
-        updateWayfinding: function() {
-            var i, len;
-
-            // cache all sections in the DOM eligible to be the active section
-            // also cache some jQobjs that we will refer to frequently
-            this.$contentHeader = this.$contentHeader || $('header.reg-header');
-
-            // sections that are eligible for being the active section
-            this.$contentContainer = this.$el.find('.level-1 li[id], .reg-section, .appendix-section, .supplement-section');
-
-            // cache jQobjs of each reg section
-            len = this.$contentContainer.length;
-            for (i = 0; i < len; i++) {
-                this.$sections[i] = $(this.$contentContainer[i]);
-            }
         },
 
         // only concerned with resetting DOM, no matter
@@ -146,10 +101,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             return this;
         },
 
-        changeFocus: function(id) {
-            $(id).focus();
-        },
-
         // Sets DOM back to neutral state
         clearActiveTerms: function() {
             this.$el.find('.active.definition')
@@ -169,38 +120,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                 subSectionId = $(e.currentTarget).data('linked-subsection');
             
             Router.navigate(sectionId + '/' + $('section[data-base-version]').data('base-version') + '#' + subSectionId, {trigger: true});
-        },
-
-        route: function(options) {
-            if (Router.hasPushState) {
-                var url = this.id + '/' + this.regVersion,
-                    hashPosition, titleParts, newTitle;
-
-                // if a hash has been passed in
-                if (options && typeof options.scrollToId !== 'undefined') {
-                    url = url + '#' + options.scrollToId;
-                }
-                else {
-                    hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
-                    //  Be sure not to lose any hash info
-                    if (hashPosition !== -1) {
-                        url = url + Backbone.history.fragment.substr(hashPosition);
-                    }
-                }
-                Router.navigate(url);
-
-                // change page title
-                titleParts = _.compact(document.title.split(" "));
-                newTitle = [titleParts[0], titleParts[1], Helpers.idToRef(this.id), '|', 'eRegulations'];
-                document.title = newTitle.join(' ');
-            }
-        },
-
-        remove: function() {
-            $(window).off('scrollstop');
-            this.$el.remove();
-            this.stopListening();
-            return this;
         },
 
         // when breakaway view loads

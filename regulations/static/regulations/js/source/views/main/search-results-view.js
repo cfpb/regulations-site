@@ -41,7 +41,9 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             return url;
         },
 
-        render: function() {
+        render: function(html, options) {
+            this.options.cb(html, options);
+
             var $results = this.$el.find('#result-count');
 
             // if the results were ajaxed in, update header
@@ -55,8 +57,6 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
                     Router.navigate('search/' + this.options.id);
                 }
             }
-
-            //ChildView.prototype.render.apply(this, 
         },
 
         paginate: function(e) {
