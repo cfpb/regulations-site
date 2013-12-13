@@ -1,7 +1,7 @@
 // **Extends Backbone.View
 //
 // **Jurisdiction** .section-nav, regulation section navigation footer
-define('section-footer-view', ['jquery', 'underscore', 'backbone', './regs-router'], function($, _, Backbone, Router) {
+define('section-footer-view', ['jquery', 'underscore', 'backbone', './regs-router', 'main-controller'], function($, _, Backbone, Router, MainEvents) {
     'use strict';
 
     var SectionFooterView = Backbone.View.extend({
@@ -21,8 +21,7 @@ define('section-footer-view', ['jquery', 'underscore', 'backbone', './regs-route
             e.preventDefault();
             var sectionId = $(e.currentTarget).data('linked-section');
 
-            Dispatch.trigger('ga-event:sectionnav', sectionId);
-            Dispatch.trigger('regSection:open', sectionId, {id:sectionId}, 'regSection');
+            MainEvents.trigger('section:open', sectionId, {}, 'reg-section');
         },
 
         remove: function() {

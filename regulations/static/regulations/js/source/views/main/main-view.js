@@ -90,7 +90,11 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             this.loading();
-            this.childView.remove();
+
+            if (typeof this.childView !== 'undefined') {
+                this.childView.remove();
+            }
+
             this.childView = new this.viewmap[this.contentType](options);
         },
 
@@ -102,6 +106,8 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             this.$el.html(html);
+
+            MainEvents.trigger('section:rendered');
 
             this.childView.attachWayfinding();
 
@@ -133,8 +139,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             // change focus to main content area when new sections are loaded
             $('.section-focus').focus();
-
-            MainEvents.trigger('section:rendered');
         }
     });
     var main = new MainView();
