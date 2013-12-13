@@ -90,16 +90,14 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             this.loading();
-            this.newChildView = new this.viewmap[this.contentType](options);
+            this.childView.remove();
+            this.childView = new this.viewmap[this.contentType](options);
         },
 
         render: function(html, options) {
             var offsetTop, $scrollToId;
 
             if (typeof this.childView !== 'undefined') {
-                this.childView.remove();
-                this.childView = this.newChildView;
-                delete(this.newChildView);
                 this.sectionFooter.remove();
             }
 

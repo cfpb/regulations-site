@@ -6,7 +6,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
             this.model = this.options.model;
             this.controller = MainEvents;
-            this.controller.on('section:rendrered', this.setElement, this);
+            this.controller.on('section:rendered', this.setElement, this);
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
             render = function(returned) {
@@ -37,7 +37,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
             HeaderEvents.trigger('clear');
 
             if (this.id) {
-                this.updateWayfinding();
+                this.attachWayfinding();
 
                 DrawerEvents.trigger('section:open', this.id);
             }
@@ -140,7 +140,8 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
         remove: function() {
             $(window).off('scrollstop');
-            Backbone.View.prototype.remove.call(this, arguments);
+            this.stopListening();
+            return this;
         }
     });
 
