@@ -1,33 +1,15 @@
-<!DOCTYPE html>
-<html class="no-js" lang="en">
-    <head>
-        {% load static from staticfiles %}
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>eRegulations</title>
-        <link rel="shortcut icon" type="image/x-icon" href="{%static "eregsip/favicon.ico" %}"/>
-        <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
-        <script src="{%static "regulations/js/source/otherlibs/modernizr.js" %}"></script>
+{% extends "regulations/base.html" %}
 
-        <!--[if lt IE 9]>
-            <script src="{%static "regulations/js/built/lib/respond/respond.min.js" %}"></script>
-        <![endif]--> 
-        <!--[if IE 7]>
-            <link rel="stylesheet" href="{%static "regulations/css/icon-ie7.css" %}"/>
-        <![endif]-->
-    </head>
-    <!--[if lt IE 7]>      <body class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-    <!--[if IE 7]>         <body class="lt-ie9 lt-ie8"> <![endif]-->
-    <!--[if IE 8]>         <body class="lt-ie9"> <![endif]-->
-    <!--[if IE 9]>         <body class="lt-ie10"> <![endif]-->
-    <!--[if gt IE 9]><!--><body><!--<![endif]-->
-   
-   <header id="site-header" class="reg-header">
+{% block body %}
+
+{% comment %}
+    Universal application landing page
+{% endcomment %}
+
+  <header id="site-header" class="reg-header">
     <div class="main-head">
-    <div class="reg-title">
-        <h1>eRegulations</h1>
+    <div class="title">
+        <h1 class="site-title"><span class="e">e</span>Regulations</h1>
     </div> <!-- /reg-title -->
     {% include "regulations/logo.html" %} 
     </div>
@@ -41,25 +23,4 @@
     </div>
    </div>
 
-
-
-    {% if EREGS_GA_EREGS_SITE and EREGS_GA_EREGS_ID %}
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-          ga('create', 
-              '{{ EREGS_GA_EREGS_ID }}', '{{ EREGS_GA_EREGS_SITE }}');
-          ga('send', 'pageview');
-        </script>
-    {% endif %}
-    {% if EREGS_GA_ALT_SITE and EREGS_GA_ALT_ID %}
-        <script>
-            ga('create', '{{ EREGS_GA_ALT_ID }}', '{{ EREGS_GA_ALT_SITE }}', {'name': 'altAcct'});
-            ga('altAcct.send', 'pageview');
-        </script>
-    {% endif %}
-    </body>
-</html>
+{% endblock %}
