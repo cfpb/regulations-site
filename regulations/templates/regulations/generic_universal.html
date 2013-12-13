@@ -1,0 +1,28 @@
+{% extends "regulations/base.html" %}
+
+{% comment %}
+    Universal application landing page
+{% endcomment %}
+
+{% block title %}eRegulations{% endblock %}
+
+{% block body %}
+<header id="site-header" class="reg-header">
+    <div class="main-head">
+    <div class="title">
+        <h1 class="site-title"><span class="e">e</span>Regulations</h1>
+    </div> <!-- /reg-title -->
+    {% include "regulations/logo.html" %} 
+    </div>
+</header>
+
+
+  <div class="wrap group">
+    <div id="content-body" class="main-content">
+      {% comment %}
+        Content for the universal landing page goes here.
+      {% endcomment %}
+    </div> <!--/content-body-->
+  </div>
+
+{% endblock %}
