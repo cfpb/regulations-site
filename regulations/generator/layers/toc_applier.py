@@ -16,6 +16,7 @@ class TableOfContentsLayer(object):
             layer_elements = self.layer[text_index]
 
             toc_list = []
+            seen_appendix = False
             for data in layer_elements:
                 if 'Subpart' in data['index']:
                     element = self.subpart(data)
@@ -29,8 +30,9 @@ class TableOfContentsLayer(object):
                         'section_id': '-'.join(data['index'])
                     }
                     self.section(element, data)
-                    self.appendix_supplement(element, data)
+                    self.appendix_supplement(element, data, seen_appendix)
                     toc_list.append(element)
+                    seen_appendix = seen_appendix or element.get('is_appendix')
             return ('TOC', toc_list)
 
     def subpart(self, data):
@@ -53,7 +55,9 @@ class TableOfContentsLayer(object):
             element.update(title_data)
 
     @staticmethod
-    def appendix_supplement(element, data):
+    def appendix_supplement(element, data, seen_appendix=False):
         as_data = title_parsing.appendix_supplement(data)
         if as_data:
             element.update(as_data)
+        if element.get('is_appendix'):
+            element['is_first_appendix'] = not seen_appendix
