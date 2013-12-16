@@ -1,6 +1,11 @@
 {% comment %}
     For interpretations that appear in their natural place in the reg text
 {% endcomment %}
+
+{% block title %}
+{{meta.cfr_title_number}} CFR {{reg_part}} Interpretations | eRegulations
+{% endblock %}
+
 {% if c.node_type == "interp" %}
     <section {% if c.markup_id %}id="{{c.markup_id}}" class="supplement-section"{% endif %} data-base-version="{{version}}" data-page-type="interpretation">
 

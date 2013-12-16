@@ -12,11 +12,14 @@ CSS/Javascript etc., should inherit from this template.
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
-        {{meta.cfr_title_number}} CFR {{formatted_id}} | eRegulations
+        {% block title %}
+        {{meta.cfr_title_number}} CFR Part {{reg_part}} | eRegulations
+        {% endblock %}
         </title>
         <link rel="shortcut icon" type="image/x-icon" href="{%static "eregsip/favicon.ico" %}"/>
         <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
         <script src="{%static "regulations/js/source/otherlibs/modernizr.js" %}"></script>
+        {% block app_js %}
         <script src="{%static "regulations/js/"|add:env|add:"/require.config.js" %}"></script>
         <script>
             if (typeof require !== 'undefined') {
@@ -25,6 +28,7 @@ CSS/Javascript etc., should inherit from this template.
             window.APP_PREFIX = "{{ APP_PREFIX }}";
         </script>
         <script data-main="regulations" src="{%static "regulations/js/"|add:env|add:"/lib/requirejs/require.js" %}"></script>
+        {% endblock %}
 
         <!--[if lt IE 9]>
             <script src="{%static "regulations/js/built/lib/respond/respond.min.js" %}"></script>

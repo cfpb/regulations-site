@@ -6,6 +6,10 @@ the "effective date" is now a comparison, the sidebar is empty, and both the
 table of contents and the version tab are quite different
 {% endcomment %}
 
+{% block title %}
+Comparison of {{meta.cfr_title_number}} CFR {{formatted_id}} | eRegulations
+{% endblock %}
+
 {% block header-secondary %}
 <span class="effective-date diff-dates"><strong>Comparing:</strong>
     {% with older_version=version %}

@@ -5,8 +5,8 @@ from django.views.generic.base import TemplateView
 from regulations.generator import generator
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
-from regulations.views.landing import regulation_exists, get_versions
-from regulations.views.landing import regulation as landing_page
+from regulations.views.reg_landing import regulation_exists, get_versions
+from regulations.views.reg_landing import regulation as landing_page
 from regulations.views.partial import *
 from regulations.views.partial_search import PartialSearch
 from regulations.views.sidebar import SideBarView

@@ -103,7 +103,7 @@ def label_to_display_id(label_id):
     if id[1] == 'Interp':
         formatted_id = ' '.join([id[0], 'Interpretations'])
     else:
-        part_with_double_s = ''.join([u'§ ', id[0]])
+        part_with_double_s = ''.join([u'§', id[0]])
         formatted_id = '.'.join([part_with_double_s, id[1]])
     return formatted_id
 

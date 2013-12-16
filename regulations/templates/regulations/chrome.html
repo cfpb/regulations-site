@@ -18,8 +18,8 @@
 
 <header id="site-header" class="reg-header">
 <div class="main-head">
-    <div class="reg-title">
-        <h1><a href="{% url 'regulation_landing_view' reg_part %}">{{ meta.cfr_title_number }} CFR Part {{ reg_part }} <span class="title">{{ meta.title }} {{meta.statutory_name|title}} </span>{% if meta.reg_letter %}(Regulation {{ meta.reg_letter }}){% endif %}</a></h1>
+    <div class="title">
+        <h1 class="reg-title"><a href="{% url 'regulation_landing_view' reg_part %}">{{ meta.cfr_title_number }} CFR Part {{ reg_part }} <span>{{ meta.title }} {{meta.statutory_name|title}} </span>{% if meta.reg_letter %}(Regulation {{ meta.reg_letter }}){% endif %}</a></h1>
     </div> <!-- /reg-title -->
     {% include "regulations/logo.html" %} 
 </div>

@@ -15,6 +15,9 @@
                 {% elif item.is_subpart %}
                     {% include "regulations/toc-subpart.html" %}
                 {% elif item.is_appendix or item.is_supplement%}
+                    {% if item.is_first_appendix %}
+                        <li><h3 class="subpart-heading">Appendices</h3></li>
+                    {% endif %}
                     <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
                 {% else %}
                     <li><a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>

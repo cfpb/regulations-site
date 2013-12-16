@@ -13,6 +13,7 @@ from regulations.views.partial_search import PartialSearch
 from regulations.views.partial_sxs import ParagraphSXSView
 from regulations.views.redirect import diff_redirect, redirect_by_date
 from regulations.views.redirect import redirect_by_date_get
+from regulations.views.universal_landing import universal
 
 #Re-usable URL patterns.
 version_pattern = r'(?P<version>[-\d\w]+)'
@@ -27,6 +28,7 @@ notice_pattern = r'(?P<notice_id>[\d]+[-][\d]+)'
 
 urlpatterns = patterns(
     '',
+    url(r'^$', universal, name='universal_landing'),
     # Redirect to version by date (by GET)
     # Example http://.../regulation_redirect/201-3-v
     url(r'^regulation_redirect/%s$' % paragraph_pattern, redirect_by_date_get,

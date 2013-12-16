@@ -1,5 +1,9 @@
 {% extends "regulations/chrome-empty-sidebar.html" %}
 
+{% block title %}
+Search of {{reg_part}} for {{results.results}} | eRegulations
+{% endblock %}
+
 {% block active_title %}
 <em class="header-label">
 Search results — {{ results.total_hits }} result{{ results.total_hits|pluralize }}
