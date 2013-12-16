@@ -56,6 +56,7 @@ class TableOfContentsLayerTest(TestCase):
             'title': 'Appendix B - Bologna'})
         self.assertEqual(el, {
             'is_appendix': True,
+            'is_first_appendix': True,
             'label': 'Appendix B',
             'sub_label': 'Bologna',
             'section_id': '1-B'
@@ -105,3 +106,23 @@ class TableOfContentsLayerTest(TestCase):
         _, result = toc.apply_layer('100')
         self.assertEqual(3, len(result))
         self.assertEqual(3, len(result[0]['sub_toc']))
+
+    def test_apply_layer_first_appendix(self):
+        toc = TableOfContentsLayer({'100': [
+            {'title': 'Appendix A', 'index': ['100', 'A']},
+            {'title': 'Appendix B', 'index': ['100', 'B']},
+            {'title': 'Appendix C', 'index': ['100', 'C']},
+            {'title': 'Supplement I', 'index': ['100', 'Interp']}]})
+        _, result = toc.apply_layer('100')
+        self.assertEqual(4, len(result))
+        aA, aB, aC, sI = result
+        self.assertTrue(aA['is_first_appendix'])
+        self.assertFalse(aB['is_first_appendix'])
+        self.assertFalse(aC['is_first_appendix'])
+        self.assertFalse(sI.get('is_first_appendix', False))
+
+        toc = TableOfContentsLayer({'100': [
+            {'title': 'Supplement I', 'index': ['100', 'Interp']}]})
+        _, result = toc.apply_layer('100')
+        self.assertEqual(1, len(result))
+        self.assertFalse(result[0].get('is_first_appendix', False))
