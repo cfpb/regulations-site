@@ -43,7 +43,6 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
         },
 
         render: function(html, options) {
-            this.options.cb(html, options);
 
             var $results = this.$el.find('#result-count');
 
