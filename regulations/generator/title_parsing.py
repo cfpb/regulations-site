@@ -38,5 +38,5 @@ def section(data):
         element['label'] = '.'.join(data['index'])
         element['section_id'] = '-'.join(data['index'])
         element['sub_label'] = re.search(
-            element['label'] + r'[^\w]*(.*)', data['title']).group(1)
+            element['label'] + r'[^\w\[]*(.*)', data['title']).group(1)
         return element
