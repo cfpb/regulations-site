@@ -1,0 +1,190 @@
+/*
+ Universal Landing
+ ========================================================================== 
+ universal-landing.less defines styles for the application landing page
+ */
+
+/* offset the persistent header */
+.landing-content {
+    margin-top: 60px;
+    .avenir-next;
+
+    .disclaimer {
+        margin-top: 1em;
+    }
+}
+
+/* 
+ Landing Page Layout
+ ===================
+*/
+
+.inner-wrap {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 1em;
+}
+
+.primary {
+    float: left;
+    width: 65.5241935%;
+}
+
+.secondary {
+    float: right;
+    width: 31.25%;
+}
+
+/*
+ Hero
+ =======
+ the hero is the large graphic/information area
+ */
+
+.hero {
+    background-color: @green_midtone;
+    overflow: hidden;
+    .avenir-next;
+    .border-bottom-light;
+
+    .inner-wrap {
+        background: url(../img/hero.png) 96% -100% no-repeat;
+    }
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .hero .inner-wrap {
+        background: url('../img/hero@2x.png') 96% -100% no-repeat;
+        background-size: 325px 206px;
+    }
+}
+
+@media only screen and ( max-width: 875px ) {
+    .hero .inner-wrap {
+         background: none;
+    }
+
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi) {
+        .hero .inner-wrap {
+            background: none;
+        }
+    }
+}
+
+.hero-header {
+    font-size: 2.125em;
+    .avenir-next;
+}
+
+.hero-text {
+    font-size: 1.125em;
+    margin-top: 0;
+}
+
+.read-more-link {
+    margin-bottom: 2em;
+}
+
+/*
+ Regulations List
+ ================
+*/
+
+.reg-list {
+    .reset;
+    margin-top: 1em;
+    .border-top-light;
+
+    li {
+        .border-bottom-light;
+        margin: 0;
+    }
+
+    a {
+        display: block;
+        height: 94px;
+        padding: 15px;
+        width: 100%;
+    }
+
+    a:link,
+    a:visited {
+        color: @black;
+    }
+
+    a:hover,
+    a:active,
+    a:focus {
+        background-color: @bg_gray;
+    }
+
+    .title-num {
+        .reset;
+        display: block;
+        height: 100%;
+        float: left;
+        .avenir-next-demi;
+        font-size: 1.375em;
+        margin-right: 36px;
+    }
+
+    .reg-sub-title {
+        display: block;
+        float: left;
+    }
+
+    .reg-letter {
+        display: block;
+        font-size: 1.375em;
+    }
+
+    .minicon-right-alt {
+        display: block;
+        float: right;
+        line-height: 60px;
+        color: @pacific;
+        font-size: 1.25em;
+    }
+}
+
+/*
+ Sidebar
+ ========
+*/
+
+.notices {
+    .reset;
+    .avenir-next;
+    font-size: 0.875em;
+    min-height: 250px;
+}
+
+/*
+ About/Information area
+ ======================
+*/
+
+.about {
+    h3 {
+        .reset;
+    }
+}
+
+/*
+ Secondary Well
+ --------------
+*/
+
+.secondary {
+    .well {
+        font-size: 0.875em;
+
+        ul {
+            .reset;
+        }
+    }
+}
