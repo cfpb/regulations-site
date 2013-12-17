@@ -95,7 +95,11 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
                         if (typeof window.history !== 'undefined' && typeof window.history.replaceState !== 'undefined') {
                             // update hash in url
-                            window.history.replaceState(null, null, window.location.origin + window.location.pathname + '#' + this.activeSection);
+                            window.history.replaceState(
+                                null,
+                                null,
+                                window.location.origin + window.location.pathname + window.location.search + '#' + this.activeSection
+                            );
                         }
 
                         return;
@@ -119,6 +123,10 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
             // cache jQobjs of each reg section
             len = this.$contentContainer.length;
+
+            // short term solution: sometimes, back buttoning on diffs, this.$sections undefined. why?
+            this.$sections = this.$sections || {};
+
             for (i = 0; i < len; i++) {
                 this.$sections[i] = $(this.$contentContainer[i]);
             }

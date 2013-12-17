@@ -5,6 +5,7 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-controller', './r
             this.id = this.options.id;
             this.baseVersion = this.options.baseVersion;
             this.newerVersion = this.options.newerVersion;
+            this.fromVersion = this.options.fromVersion || this.newerVersion;
 
             // the model builds url off of id (?)
             this.options.id = this._assembleDiffURL(this.options);
@@ -29,7 +30,7 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-controller', './r
         _assembleDiffURL: function(options) {
             var url = options.id + '/' + options.baseVersion;
             url += '/' + options.newerVersion;
-            url += '?from_version=' + options.newerVersion;
+            url += '?from_version=' + options.fromVersion;
 
             return url;
         }

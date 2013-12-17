@@ -15,6 +15,7 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
             routes: {
                 'sxs/:section/:version': 'toSxS',
                 'search/:reg': 'backToSearchResults',
+                'diff/:section/:baseVersion/:newerVersion': 'loadDiffSection',
                 ':section/:version': 'loadSection'
             },
 
@@ -30,6 +31,18 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
                 MainEvents.trigger('section:open', section, options, 'reg-section'); 
             },
 
+            loadDiffSection: function(section, baseVersion, newerVersion, params) {
+                var options = {};
+
+                options.id = section;
+                options.baseVersion = baseVersion;
+                options.newerVersion = newerVersion;
+                options.noRoute = true;
+                options.fromVersion = params.from_version;
+
+                MainEvents.trigger('diff:open', section, options, 'diff');
+            },
+
             toSxS: function(section, version, params) {
                 /* jshint camelcase: false */
                 Dispatch.trigger('sxs:route', {
@@ -43,7 +56,7 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
                 /* jshint unused: false */
                 var config = {
                     query: params.q,
-                    version: params.version
+                    regVersion: params.regVersion
                 };
 
                 // if there is a page number for the query string
@@ -51,7 +64,7 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
                     config.page = params.page;
                 }
 
-                MainEvents.trigger('search-results:open', config);
+                MainEvents.trigger('search-results:open', null, config, 'search-results');
             },
 
             start:  function() {

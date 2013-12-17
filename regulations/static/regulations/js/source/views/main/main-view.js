@@ -89,6 +89,9 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             if (this.contentType === 'diff') {
                 options.baseVersion = this.regVersion;
                 options.newerVersion = this.$topSection.data('newer-version');
+                if (typeof options.fromVersion === 'undefined') {
+                    options.fromVersion = $('#table-of-contents').data('from-version');
+                }
             }
 
             this.loading();
