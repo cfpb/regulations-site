@@ -125,7 +125,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
         },
 
         route: function(options) {
-            if (Router.hasPushState) {
+            if (Router.hasPushState && typeof options.noRoute === 'undefined') {
                 var url = this.url,
                     hashPosition, titleParts, newTitle;
 
