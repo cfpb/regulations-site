@@ -2,7 +2,7 @@ from django.http import HttpRequest
 
 #   Don't import PartialInterpView directly; this will cause an import cycle
 from regulations import views
-from regulations.generator.node_types import to_markup_id
+from regulations.generator.node_types import label_to_text, to_markup_id
 
 
 class InterpretationsLayer(object):
@@ -37,15 +37,7 @@ class InterpretationsLayer(object):
             ref_parts = reference.split('-')[:-1]
             context['section_id'] = '%s-Interp' % ref_parts[0]
 
-            if len(ref_parts) == 2:
-                #  Part-Section/Appendix
-                context['label'] = ref_parts[1]
-            elif ref_parts[1].isalpha():
-                #  Part-Appendix-Segment
-                context['label'] = '-'.join(ref_parts[1:])
-            else:
-                #  Part-Section-Paragraphs
-                context['label'] = (ref_parts[1] + '('
-                                    + ')('.join(ref_parts[2:]) + ')')
+            context['label'] = label_to_text(text_index.split('-'),
+                                             include_section=False)
 
             return 'interp', context

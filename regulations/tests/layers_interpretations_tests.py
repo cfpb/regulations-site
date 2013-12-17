@@ -57,4 +57,26 @@ class InterpretationsLayerTest(TestCase):
         piv.as_view.return_value.return_value.content = 'content'
         il = InterpretationsLayer(layer)
 
-        self.assertEqual('Q-5', il.apply_layer('200-Q-5')[1]['label'])
+        self.assertEqual('Appendix Q-5', il.apply_layer('200-Q-5')[1]['label'])
+
+    @patch('regulations.generator.layers.interpretations.views'
+           + '.partial.PartialInterpView')
+    def test_apply_layer_section_different(self, piv):
+        layer = {
+            "200-2-a": [{
+                "reference": "200-2-a-Interp",
+                "text": "Some contents are here"
+            }],
+            "200-2-b": [{
+                "reference": "200-2-a-Interp",
+                "text": "Some contents are here"
+            }],
+        }
+        piv.as_view.return_value.return_value.content = 'content'
+        il = InterpretationsLayer(layer)
+
+        _, result = il.apply_layer('200-2-a')
+        self.assertEqual('2(a)', result['label'])
+
+        _, result = il.apply_layer('200-2-b')
+        self.assertEqual('2(b)', result['label'])
