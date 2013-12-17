@@ -56,14 +56,14 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
             });
         },
 
-        hasPushState: 'true'
+e       hasPushState: true
     });
 
     if (typeof window.history === 'undefined' && typeof window.history.pushState === 'undefined') {
         RegsRouter = function() {
             this.start = function() {};
             this.navigate = function() {};
-            hasPushState = 'false';
+            this.hasPushState = false;
         };
     }
 

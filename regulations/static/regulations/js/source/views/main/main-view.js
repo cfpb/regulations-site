@@ -7,10 +7,13 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         initialize: function() {
             this.render = _.bind(this.render, this);
             this.controller = MainEvents;
-            this.controller.on('search-results:open', this.createView, this);
-            this.controller.on('section:open', this.createView, this);
-            this.controller.on('section:remove', this.sectionCleanup, this);
-            this.controller.on('diff:open', this.createView, this);
+
+            if (Router.hasPushState) {
+                this.controller.on('search-results:open', this.createView, this);
+                this.controller.on('section:open', this.createView, this);
+                this.controller.on('section:remove', this.sectionCleanup, this);
+                this.controller.on('diff:open', this.createView, this);
+            }
 
             var childViewOptions = {},
                 url, params;
