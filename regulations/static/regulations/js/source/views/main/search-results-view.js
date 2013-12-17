@@ -24,6 +24,8 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             // if the site was loaded on the search results page
             if (typeof this.options.rendered === 'undefined') {
                 this.options.id = this._assembleSearchURL(this.options);
+                this.url = 'search/' + this.options.id;
+
                 ChildView.prototype.initialize.apply(this, arguments);
             }
 
