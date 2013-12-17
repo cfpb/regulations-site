@@ -18,7 +18,8 @@ class NavigationTest(BaseTest, unittest.TestCase):
         self.driver.execute_script('window.scrollTo(0, poffset)')
         # wayfinding header should update
         WebDriverWait(self.driver, 10).until(
-            lambda driver: driver.find_element_by_xpath('//*[@id="active-title"]').text == u'\u00A71005.5(b)(1)')
+            lambda driver: driver.find_element_by_xpath('//*[@id="active-title"]').text in 
+            (u'\u00A71005.5(b)(1)', u'\u00A71005.5(b)'))
 
         fwd_link = self.driver.find_element_by_xpath('//*[@id="1005-5"]/nav/ul/li[2]/a')
         fwd_link.click()
