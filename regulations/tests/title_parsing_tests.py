@@ -25,3 +25,10 @@ class RegTest(TestCase):
 
         self.assertTrue(elements['is_section'])
         self.assertEquals('Sauce', elements['sub_label'])
+
+        elements = title_parsing.section({
+            'index': ['204', '4'],
+            'title': '204.4 [Reserved]'})
+
+        self.assertTrue(elements['is_section'])
+        self.assertEquals('[Reserved]', elements['sub_label'])
