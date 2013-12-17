@@ -68,7 +68,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
             MainEvents.trigger('section:open', parentId, {
                 scrollToId: id
-            }); 
+            }, 'reg-section'); 
         },
 
         openInterpretation: function(e) {

@@ -13,7 +13,7 @@ define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './reg
 
             this.childViews.sxs = new SxS(context);
 
-            if (Router.hasPushState()) {
+            if (Router.hasPushState) {
                 Router.navigate('sxs/' + context.url);
             }
         }

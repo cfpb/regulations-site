@@ -1,4 +1,4 @@
-define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakaway-controller'], function($, _, Backbone, SxSModel, BreakawayEvents) {
+define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakaway-controller', 'main-controller', './regs-router'], function($, _, Backbone, SxSModel, BreakawayEvents, MainEvents, Router) {
     'use strict';
 
     var SxSView = Backbone.View.extend({
@@ -34,7 +34,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
         render: function(analysis) {
             this.$el.html(analysis);
             this.$el.addClass('open-sxs');
-            Dispatch.trigger('breakaway:open');
+            MainEvents.trigger('breakaway:open');
         },
 
         footnoteHighlight: function(e) {
@@ -56,10 +56,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
             }
 
             this.$el.removeClass('open-sxs');
-            Dispatch.trigger('breakaway:close');
-            Dispatch.trigger('ga-event:sxsclose', Dispatch.getOpenSection());
-
-            Dispatch.get('sxs-analysis').remove();
+            MainEvents.trigger('breakaway:close');
         },
 
         remove: function() {
