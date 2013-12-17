@@ -56,7 +56,7 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
             });
         },
 
-e       hasPushState: true
+        hasPushState: true
     });
 
     if (typeof window.history === 'undefined' && typeof window.history.pushState === 'undefined') {
