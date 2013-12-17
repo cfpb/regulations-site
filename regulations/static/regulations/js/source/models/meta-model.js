@@ -127,10 +127,14 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
             url += id;
 
             if (id.indexOf('/') === -1) {
-                url += '/' + $('section[data-base-version]').data('base-version'); 
+                url += '/' + this.getVersionId; 
             }
 
             return url;
+        },
+
+        getVersionId: function() {
+            return $('select[name=version] option[selected]').attr('value');
         },
 
         // We don't have need for the following methods.

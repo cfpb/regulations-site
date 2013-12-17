@@ -2,8 +2,6 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
     'use strict';
 
     var SearchResultsView = ChildView.extend({
-        el: '#content-wrapper.search-results',
-
         events: {
             'click .search-nav a': 'paginate',
             'click h3 .internal': 'openResult'
@@ -28,6 +26,11 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
                 this.options.id = this._assembleSearchURL(this.options);
                 ChildView.prototype.initialize.apply(this, arguments);
             }
+
+        },
+
+        setElement: function() {
+            Backbone.View.prototype.setElement.call(this, '#content-wrapper.search-results');            
         },
 
         _assembleSearchURL: function(options) {
