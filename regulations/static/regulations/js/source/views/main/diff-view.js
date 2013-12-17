@@ -21,7 +21,7 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-controller', './r
         _assembleTitle: function() {
             var titleParts, newTitle;
             titleParts = _.compact(document.title.split(" "));
-            newTitle = [titleParts[0], titleParts[1], 'Comparison of', Helpers.idToRef(this.id), '|', 'eRegulations'];
+            newTitle = [titleParts[0], titleParts[1], Helpers.idToRef(this.id), '|', 'eRegulations'];
             return newTitle.join(' ');
         },
 
