@@ -124,7 +124,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
                 // if a hash has been passed in
                 if (options && typeof options.scrollToId !== 'undefined') {
-                    url += options.scrollToId;
+                    url += '#' + options.scrollToId;
                 }
                 else {
                     hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');

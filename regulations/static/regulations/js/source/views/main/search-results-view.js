@@ -9,7 +9,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
 
         initialize: function() {
             this.query = this.options.query;
-            this.version = this.options.version;
+            this.regVersion = this.options.regVersion;
             this.page = parseInt(this.options.page, 10) || 0;
             this.title = 'Search of ' + this.options.regPart + ' for ' + this.query + ' | eRegulations';
 
@@ -68,7 +68,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             var page = $(e.target).hasClass('previous') ? this.page - 1 : this.page + 1,
                 config = {
                     query: this.query,
-                    version: this.version,
+                    regVersion: this.regVersion,
                     page: page
                 };
 
@@ -80,7 +80,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             var $resultLink = $(e.target),
                 config = {};
 
-            config.version = $resultLink.data('linked-version');
+            config.regVersion = $resultLink.data('linked-version');
             config.scrollToId = $resultLink.data('linked-subsection');
             MainEvents.trigger('section:open', $resultLink.data('linked-section'), config, 'reg-section');
         },

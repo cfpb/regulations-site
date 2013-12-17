@@ -127,30 +127,10 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
             url += id;
 
             if (id.indexOf('/') === -1) {
-                url += '/' + this.getVersionId; 
+                url += '/' + $('#timeline li.current').data('base-version'); 
             }
 
             return url;
-        },
-
-        getVersionId: function() {
-            return $('select[name=version] option[selected]').attr('value');
-        },
-
-        // We don't have need for the following methods.
-        // This is my half-baked way of overriding them so that they
-        // can be legally called as Backbone runs its course, but have
-        // no effect.
-        sync: function() {
-            return;
-        },
-
-        save: function() {
-            return;
-        },
-
-        destroy: function() {
-            return;
         }
     });
 
