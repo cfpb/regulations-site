@@ -5,7 +5,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
         el: '#breakaway-view',
 
         events: {
-            'click .sxs-back-button': 'closeAnalysis',
+            'click .sxs-back-button': 'remove',
             'click .footnote-jump-link': 'footnoteHighlight',
             'click .return-link': 'removeHighlight'
         },
@@ -22,7 +22,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
 
             SxSModel.get(this.options.url, render),
 
-            this.controller.on('sxs:close', this.closeAnalysis, this);
+            this.controller.on('sxs:close', this.remove, this);
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
@@ -34,7 +34,6 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
         render: function(analysis) {
             this.$el.html(analysis);
             this.$el.addClass('open-sxs');
-            MainEvents.trigger('breakaway:open');
         },
 
         footnoteHighlight: function(e) {
@@ -49,17 +48,13 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
             $('.footnotes li').removeClass('highlight');
         },
 
-        closeAnalysis: function(e) {
+        remove: function(e) {
             if (typeof e !== 'undefined') {
                 e.preventDefault();
                 window.history.back();
             }
 
             this.$el.removeClass('open-sxs');
-            MainEvents.trigger('breakaway:close');
-        },
-
-        remove: function() {
             this.$el.html('');
             this.stopListening();
             this.$el.off();

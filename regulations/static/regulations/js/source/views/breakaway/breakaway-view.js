@@ -1,4 +1,4 @@
-define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './regs-router', 'breakaway-controller'], function($, _, Backbone, SxS, Router, BreakawayEvents) {
+define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './regs-router', 'breakaway-controller', 'main-controller'], function($, _, Backbone, SxS, Router, BreakawayEvents, MainEvents) {
     'use strict';
     var BreakawayView = Backbone.View.extend({
         childViews: {},
@@ -16,6 +16,13 @@ define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './reg
             if (Router.hasPushState) {
                 Router.navigate('sxs/' + context.url);
             }
+
+            MainEvents.trigger('breakaway:open', _.bind(this._removeChild, this));
+        },
+
+        _removeChild: function() {
+            this.childViews.sxs.remove();
+            delete(this.childViews.sxs);
         }
     });
 

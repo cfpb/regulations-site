@@ -1,4 +1,4 @@
-define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams'], function(_, Backbone, MainEvents) {
+define('regs-router', ['underscore', 'backbone', 'main-controller', 'breakaway-controller', 'queryparams'], function(_, Backbone, MainEvents, BreakawayEvents) {
     'use strict';
 
     var RegsRouter;
@@ -13,8 +13,8 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
     else {
         RegsRouter = Backbone.Router.extend({
             routes: {
-                'sxs/:section/:version': 'toSxS',
-                'search/:reg': 'backToSearchResults',
+                'sxs/:section/:version': 'loadSxS',
+                'search/:reg': 'loadSearchResults',
                 'diff/:section/:baseVersion/:newerVersion': 'loadDiffSection',
                 ':section/:version': 'loadSection'
             },
@@ -43,16 +43,16 @@ define('regs-router', ['underscore', 'backbone', 'main-controller', 'queryparams
                 MainEvents.trigger('diff:open', section, options, 'diff');
             },
 
-            toSxS: function(section, version, params) {
+            loadSxS: function(section, version, params) {
                 /* jshint camelcase: false */
-                Dispatch.trigger('sxs:route', {
+                BreakawayEvents.trigger('sxs:open', {
                     'regParagraph': section,
                     'docNumber': version,
                     'fromVersion': params.from_version
                 });
             },
 
-            backToSearchResults: function(reg, params) {
+            loadSearchResults: function(reg, params) {
                 /* jshint unused: false */
                 var config = {
                     query: params.q,

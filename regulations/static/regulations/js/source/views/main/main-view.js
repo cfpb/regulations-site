@@ -13,6 +13,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 this.controller.on('section:open', this.createView, this);
                 this.controller.on('section:remove', this.sectionCleanup, this);
                 this.controller.on('diff:open', this.createView, this);
+                this.controller.on('breakaway:open', this._breakawayOpen, this);
             }
 
             var childViewOptions = {},
@@ -73,6 +74,11 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         },
 
         createView: function(id, options, type) {
+            if (typeof this.breakawayCallback !== 'undefined') {
+                this.breakawayCallback();
+                delete(this.breakawayCallaback);
+            }
+
             this.contentType = type;
             if (id !== null) {
                 this.sectionId = id;
@@ -101,6 +107,10 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             this.childView = new this.viewmap[this.contentType](options);
+        },
+
+        _breakawayOpen: function(cb) {
+            this.breakawayCallback = cb;
         },
 
         render: function(html, options) {
