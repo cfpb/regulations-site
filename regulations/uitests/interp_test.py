@@ -21,7 +21,7 @@ class InterpTest(BaseTest, unittest.TestCase):
         self.assertEquals(interp_dropdown.get_attribute('data-interp-id'), '1005-18-a')
 
         # should have the appropriate header
-        self.assertTrue('OFFICIAL INTERPRETATION TO 18' in interp_dropdown.text)
+        self.assertTrue('OFFICIAL INTERPRETATION TO 2(h)' in interp_dropdown.text)
 
         # body should be hidden
         interp_text = self.driver.find_element_by_xpath('//*[@id="1005-2-h"]/section/section')
