@@ -36,7 +36,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
         _assembleSearchURL: function(options) {
             var url = options.regPart;
             url += '?q=' + options.query;
-            url += '&version=' + options.version;
+            url += '&version=' + options.regVersion;
 
             if (typeof options.page !== 'undefined') {
                 url += '&page=' + options.page;
@@ -72,7 +72,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
                     page: page
                 };
 
-            MainEvents.trigger('search-results:open', config);
+            MainEvents.trigger('search-results:open', null, config, 'search-results');
         },
 
         openResult: function(e) {

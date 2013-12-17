@@ -70,7 +70,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         },
 
         createView: function(id, options, type) {
-            // update
             this.contentType = type;
             if (id !== null) {
                 this.sectionId = id;
