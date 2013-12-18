@@ -26,7 +26,9 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             if (typeof context.sectionId !== 'undefined') {
                 objectParts.push(context.sectionId);
             }
-            else if (typeof context.id !== 'undefined' && context.id !== null) {
+            else if (typeof context.id !== 'undefined' 
+                     && context.id !== null
+                     && context.type === 'reg-section') {
                 objectParts.push(context.id);
             }
 
@@ -37,6 +39,14 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             if (typeof context.baseVersion !== 'undefined' && typeof context.newerVersion !== 'undefined') {
                 objectParts.push('comparing:' + context.baseVersion);
                 objectParts.push(context.newerVersion);
+            }
+
+            if (typeof context.query !== 'undefined') {
+                objectParts.push('query:' + context.query);
+            }
+
+            if (typeof context.page !== 'undefined') {
+                objectParts.push('results page:' + context.page);
             }
 
             object = objectParts.join(' ');
