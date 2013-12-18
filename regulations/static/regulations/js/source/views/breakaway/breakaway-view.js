@@ -5,10 +5,10 @@ define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './reg
 
         initialize: function() {
             this.controller = BreakawayEvents;
-            this.controller.on('sxs:open', this._openSxS, this);
+            this.controller.on('sxs:open', this.openSxS, this);
         },
 
-        _openSxS: function(context) {
+        openSxS: function(context) {
             context.url = context.regParagraph + '/' + context.docNumber + '?from_version=' + context.fromVersion;
 
             this.childViews.sxs = new SxS(context);
@@ -17,10 +17,10 @@ define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './reg
                 Router.navigate('sxs/' + context.url);
             }
 
-            MainEvents.trigger('breakaway:open', _.bind(this._removeChild, this));
+            MainEvents.trigger('breakaway:open', _.bind(this.removeChild, this));
         },
 
-        _removeChild: function() {
+        removeChild: function() {
             this.childViews.sxs.remove();
             delete(this.childViews.sxs);
         }
