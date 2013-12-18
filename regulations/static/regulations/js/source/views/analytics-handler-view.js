@@ -9,6 +9,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             this.events.on('section:open', this.sendEvent, 'open');
             this.events.on('definition:open', this.sendEvent, 'open');
             this.events.on('definition:close', this.sendEvent, 'close');
+            this.events.on('interp:expand', this.sendEvent, 'expand');
         },
 
         sendEvent: function(context) {
@@ -21,7 +22,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             if (typeof context.type !== 'undefined') {
                 objectParts.push(context.type);
 
-                if (_.contains(['reg-section', 'definition'], context.type)) {
+                if (_.contains(['reg-section', 'definition', 'inline-interp'], context.type)) {
                     if (typeof context.id !== 'undefined' && context.id !== null) {
                         objectParts.push(context.id);
                     }
@@ -58,6 +59,10 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
 
             if (typeof context.by !== 'undefined') {
                 objectParts.push('by:' + context.by);
+            }
+
+            if (typeof context.to !== 'undefined') {
+                objectParts.push('to:' + context.to);
             }
 
             object = objectParts.join(' ');

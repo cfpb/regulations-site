@@ -107,6 +107,14 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             button.toggleClass('open');
             buttonText.html(section.hasClass('open') ? 'Hide' : 'Show');
 
+            if (section.hasClass('open')) {
+                GAEvents.trigger('interp:expand', {
+                    id: section.data('interp-id'),
+                    to: section.data('interp-for'),
+                    type: 'inline-interp' 
+                });
+            }
+
             return this;
         },
 
