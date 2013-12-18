@@ -4,8 +4,8 @@ define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './reg
         childViews: {},
 
         initialize: function() {
-            this.controller = BreakawayEvents;
-            this.controller.on('sxs:open', this.openSxS, this);
+            this.events = BreakawayEvents;
+            this.events.on('sxs:open', this.openSxS, this);
         },
 
         openSxS: function(context) {

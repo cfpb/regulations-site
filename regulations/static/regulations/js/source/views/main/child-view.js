@@ -5,8 +5,8 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
             var returned, render;
 
             this.model = this.options.model;
-            this.controller = MainEvents;
-            this.controller.on('section:rendered', this.setElement, this);
+            this.events = MainEvents;
+            this.events.on('section:rendered', this.setElement, this);
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
             render = function(returned) {

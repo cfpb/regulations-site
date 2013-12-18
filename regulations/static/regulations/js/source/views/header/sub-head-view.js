@@ -4,11 +4,11 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
         el: '#content-header',
 
         initialize: function() {
-            this.controller = HeaderEvents;
+            this.events = HeaderEvents;
 
-            this.controller.on('section:open', this._changeTitle, this);
-            this.controller.on('search-results:open', this._displayCount, this);
-            this.controller.on('clear', this._reset, this);
+            this.events.on('section:open', this._changeTitle, this);
+            this.events.on('search-results:open', this._displayCount, this);
+            this.events.on('clear', this._reset, this);
 
             // cache inner title DOM node for frequent reference
             this.$activeTitle = this.$el.find('.header-label');

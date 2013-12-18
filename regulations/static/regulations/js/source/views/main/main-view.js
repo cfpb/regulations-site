@@ -6,14 +6,14 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         initialize: function() {
             this.render = _.bind(this.render, this);
-            this.controller = MainEvents;
+            this.events = MainEvents;
 
             if (Router.hasPushState) {
-                this.controller.on('search-results:open', this.createView, this);
-                this.controller.on('section:open', this.createView, this);
-                this.controller.on('section:remove', this.sectionCleanup, this);
-                this.controller.on('diff:open', this.createView, this);
-                this.controller.on('breakaway:open', this.breakawayOpen, this);
+                this.events.on('search-results:open', this.createView, this);
+                this.events.on('section:open', this.createView, this);
+                this.events.on('section:remove', this.sectionCleanup, this);
+                this.events.on('diff:open', this.createView, this);
+                this.events.on('breakaway:open', this.breakawayOpen, this);
             }
 
             var childViewOptions = {};

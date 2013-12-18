@@ -16,7 +16,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         initialize: function() {
-            this.controller = SidebarEvents;
+            this.events = SidebarEvents;
 
             if (typeof this.options.id !== 'undefined') {
                 this.id = this.options.id;
