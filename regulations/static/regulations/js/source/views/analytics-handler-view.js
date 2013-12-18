@@ -86,6 +86,6 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
         }
     });
 
-    var gaHandler = new AnalyticsHandler;
+    var gaHandler = new AnalyticsHandler();
     return gaHandler;
 });

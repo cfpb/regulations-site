@@ -16,8 +16,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 this.controller.on('breakaway:open', this.breakawayOpen, this);
             }
 
-            var childViewOptions = {},
-                url, params;
+            var childViewOptions = {};
             this.$topSection = this.$el.find('section[data-page-type]');
 
             // which page are we starting on?

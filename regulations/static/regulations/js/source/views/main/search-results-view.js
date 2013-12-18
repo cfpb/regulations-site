@@ -47,8 +47,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             return url;
         },
 
-        render: function(html, options) {
-
+        render: function() {
             var $results = this.$el.find('#result-count');
 
             // if the results were ajaxed in, update header

@@ -12,7 +12,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         el: '#definition',
 
         events: {
-            'click .close-button': 'close',
+            'click .close-button': 'close'
         },
 
         initialize: function() {

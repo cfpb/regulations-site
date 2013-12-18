@@ -1,4 +1,4 @@
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model'], function($, _, Backbone, SidebarHeadView, SxSList, PermalinkView, FolderModel, Main, Breakaway, SidebarEvents, Definition, MetaModel) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model'], function($, _, Backbone, SxSList, PermalinkView, FolderModel, Main, Breakaway, SidebarEvents, Definition, MetaModel) {
     'use strict';
     var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',
@@ -30,7 +30,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
             }.bind(this);
 
             this.childViews.definition = new Definition({
-                id: id,
+                id: id
             });
 
             this.definitionModel.get(id, createDefView);
@@ -56,7 +56,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sidebar-head-view',
                     this.closeAllChildren();
             }
 
-            this.removeLandingSidebar()
+            this.removeLandingSidebar();
         },
 
         _updateSxSList: function(id) {

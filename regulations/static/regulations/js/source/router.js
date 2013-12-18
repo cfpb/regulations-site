@@ -32,6 +32,7 @@ define('regs-router', ['underscore', 'backbone', 'main-events', 'breakaway-event
             },
 
             loadDiffSection: function(section, baseVersion, newerVersion, params) {
+                /* jshint camelcase: false */
                 var options = {};
 
                 options.id = section;

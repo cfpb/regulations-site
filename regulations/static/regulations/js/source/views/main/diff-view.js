@@ -23,7 +23,7 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-events', './regs-
         // "12 CFR Comparison of §1005.1 | eRegulations"
         assembleTitle: function() {
             var titleParts, newTitle;
-            titleParts = _.compact(document.title.split(" "));
+            titleParts = _.compact(document.title.split(' '));
             newTitle = [titleParts[0], titleParts[1], Helpers.idToRef(this.id), '|', 'eRegulations'];
             return newTitle.join(' ');
         },

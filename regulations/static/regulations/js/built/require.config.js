@@ -11,7 +11,6 @@ var require = { "paths" :
         "sidebar-module-view": "./views/sidebar/sidebar-module-view",
         "toc-view": "./views/drawer/toc-view",
         "sidebar-view": "./views/sidebar/sidebar-view",
-        "sidebar-head-view": "./views/sidebar/sidebar-head-view",
         "reg-view": "./views/main/reg-view",
         "diff-view": "./views/main/diff-view",
         "konami": "./lib/konami/index",

@@ -74,7 +74,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
         assembleTitle: function() {
             var titleParts, newTitle;
-            titleParts = _.compact(document.title.split(" "));
+            titleParts = _.compact(document.title.split(' '));
             newTitle = [titleParts[0], titleParts[1], Helpers.idToRef(this.id), '|', 'eRegulations'];
             return newTitle.join(' ');
         },
@@ -137,7 +137,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
         route: function(options) {
             if (Router.hasPushState && typeof options.noRoute === 'undefined') {
                 var url = this.url,
-                    hashPosition, titleParts, newTitle;
+                    hashPosition;
 
                 // if a hash has been passed in
                 if (options && typeof options.scrollToId !== 'undefined') {
