@@ -35,6 +35,7 @@
         "header-controller": "./controllers/header-controller",
         "main-controller": "./controllers/main-controller",
         "breakaway-controller": "./controllers/breakaway-controller",
+        "ga-events": "./controllers/ga-events",
         "search-model": "./models/search-model",
         "meta-model": "./models/meta-model",
         "reg-model": "./models/reg-model",

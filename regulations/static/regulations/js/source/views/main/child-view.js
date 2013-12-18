@@ -1,4 +1,4 @@
-define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', './regs-router', 'header-controller', 'drawer-controller', './regs-helpers', 'main-controller'], function($, _, Backbone, jQScroll, Router, HeaderEvents, DrawerEvents, Helpers, MainEvents) {
+define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', './regs-router', 'header-controller', 'drawer-controller', './regs-helpers', 'main-controller', 'ga-events'], function($, _, Backbone, jQScroll, Router, HeaderEvents, DrawerEvents, Helpers, MainEvents, GAEvents) {
     'use strict';
     var ChildView = Backbone.View.extend({
         initialize: function() {
@@ -28,6 +28,8 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
                 }
 
                 this.route(this.options);
+
+                GAEvents.trigger('section:open', this.options);
             }
 
             this.$sections = {};
