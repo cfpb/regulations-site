@@ -65,6 +65,11 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             MainEvents.trigger('section:open', parentId, {
                 scrollToId: id
             }, 'reg-section'); 
+
+            GAEvents.trigger('definition:followCitation', {
+                id: id,
+                type: 'definition'
+            });
         },
 
         openInterpretation: function(e) {
@@ -75,6 +80,11 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
             MainEvents.trigger('section:open', id, {
                 scrollToId: pid
+            });
+
+            GAEvents.trigger('definition:followCitation', {
+                id: id,
+                type: 'definition'
             });
         },
 

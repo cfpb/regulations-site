@@ -134,9 +134,16 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             e.preventDefault();
 
             var sectionId = $(e.currentTarget).data('linked-section'),
-                subSectionId = $(e.currentTarget).data('linked-subsection');
+                subSectionId = $(e.currentTarget).data('linked-subsection'),
+                version = $('section[data-base-version]').data('base-version');
             
-            Router.navigate(sectionId + '/' + $('section[data-base-version]').data('base-version') + '#' + subSectionId, {trigger: true});
+            Router.navigate(sectionId + '/' + version + '#' + subSectionId, {trigger: true});
+
+            GAEvents.trigger('interp:followCitation', {
+                id: subSectionId,
+                regVersion: version,
+                type: 'inline-interp'
+            });
         },
 
         // when breakaway view loads

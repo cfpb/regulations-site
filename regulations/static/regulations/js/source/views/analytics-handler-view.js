@@ -10,6 +10,9 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             this.events.on('definition:open', this.sendEvent, 'open');
             this.events.on('definition:close', this.sendEvent, 'close');
             this.events.on('interp:expand', this.sendEvent, 'expand');
+            this.events.on('interp:followCitation', this.sendEvent, 'click citation');
+            this.events.on('definition:followCitation', this.sendEvent, 'click citation');
+            this.events.on('sxs:open', this.sendEvent, 'open');
         },
 
         sendEvent: function(context) {
@@ -22,7 +25,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             if (typeof context.type !== 'undefined') {
                 objectParts.push(context.type);
 
-                if (_.contains(['reg-section', 'definition', 'inline-interp'], context.type)) {
+                if (_.contains(['reg-section', 'definition', 'inline-interp', 'sxs'], context.type)) {
                     if (typeof context.id !== 'undefined' && context.id !== null) {
                         objectParts.push(context.id);
                     }
@@ -63,6 +66,10 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
 
             if (typeof context.to !== 'undefined') {
                 objectParts.push('to:' + context.to);
+            }
+
+            if (typeof context.docNumber !== 'undefined') {
+                objectParts.push('doc:' + context.docNumber);
             }
 
             object = objectParts.join(' ');
