@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'drawer-controller'], function($, _, Backbone, DrawerEvents) {
+define(['jquery', 'underscore', 'backbone', 'drawer-controller', 'ga-events'], function($, _, Backbone, DrawerEvents, GAEvents) {
     'use strict';
     var DrawerTabsView = Backbone.View.extend({
         el: '.toc-head',
@@ -38,6 +38,11 @@ define(['jquery', 'underscore', 'backbone', 'drawer-controller'], function($, _,
             if ($('.panel').css('left') === '-200px') {
                 this.openDrawer();
             }
+
+            GAEvents.trigger('drawer:switchTab', {
+                id: tab,
+                type: 'drawer'
+            });
         },
 
         // this.$activeEls are structural els that need to have
@@ -50,11 +55,23 @@ define(['jquery', 'underscore', 'backbone', 'drawer-controller'], function($, _,
         },
 
         openDrawer: function(e) {
+            var context = {type: 'drawer'};
+
             if (e) {
                 e.preventDefault();
             }
 
             this._toggleDrawerState();
+
+            // only send click event if there was an actual click
+            if (e) {
+                if ($(e.target).hasClass('open')) {
+                    GAEvents.trigger('drawer:open', context);
+                }
+                else {
+                    GAEvents.trigger('drawer:close', context);
+                }
+            }
         },
 
         // figure out whether drawer should open/close

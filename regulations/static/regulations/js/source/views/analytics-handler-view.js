@@ -4,15 +4,23 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
     var AnalyticsHandler = Backbone.View.extend({
         initialize: function() {
             this.events = GAEvents;
-            this.bindListeners();
 
             this.events.on('section:open', this.sendEvent, 'open');
             this.events.on('definition:open', this.sendEvent, 'open');
             this.events.on('definition:close', this.sendEvent, 'close');
             this.events.on('interp:expand', this.sendEvent, 'expand');
+            this.events.on('interp:collapse', this.sendEvent, 'collapse');
             this.events.on('interp:followCitation', this.sendEvent, 'click citation');
             this.events.on('definition:followCitation', this.sendEvent, 'click citation');
             this.events.on('sxs:open', this.sendEvent, 'open');
+            this.events.on('drawer:open', this.sendEvent, 'open');
+            this.events.on('drawer:close', this.sendEvent, 'close');
+            this.events.on('drawer:switchTab', this.sendEvent, 'switch tab');
+
+            // not sure if this works
+            $('#timeline .stop-button').on('click', function() {
+                this.sendEvent({type: 'diff'}).bind('click stop comparing');
+            }.bind(this));
         },
 
         sendEvent: function(context) {
@@ -25,7 +33,7 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             if (typeof context.type !== 'undefined') {
                 objectParts.push(context.type);
 
-                if (_.contains(['reg-section', 'definition', 'inline-interp', 'sxs'], context.type)) {
+                if (_.contains(['reg-section', 'definition', 'inline-interp', 'sxs', 'drawer'], context.type)) {
                     if (typeof context.id !== 'undefined' && context.id !== null) {
                         objectParts.push(context.id);
                     }
@@ -75,17 +83,6 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             object = objectParts.join(' ');
 
             window.ga('send', 'event', object, this);
-        },
-
-        bindListeners: function() {
-            $('#menu-link').on('click', { 
-                object: 'Table of Contents', 
-                action: function() {
-                    return $('#menu').hasClass('active') ? 'close' : 'open';
-                }
-            }, this.sendEvent);
-
-            $('#toc-close').on('click', {object: 'Table of Contents', action: 'close (bottom link)'}, this.sendEvent);
         }
     });
 

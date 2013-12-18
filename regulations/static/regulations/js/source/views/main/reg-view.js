@@ -100,7 +100,12 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             var header = $(e.currentTarget),
                 section = header.parent(),
                 button = header.find('.expand-button'),
-                buttonText = header.find('.expand-text');
+                buttonText = header.find('.expand-text'),
+                context = {
+                    id: section.data('interp-id'),
+                    to: section.data('interp-for'),
+                    type: 'inline-interp' 
+                };
 
             section.toggleClass('open');
             header.next('.hidden').slideToggle();
@@ -108,11 +113,10 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             buttonText.html(section.hasClass('open') ? 'Hide' : 'Show');
 
             if (section.hasClass('open')) {
-                GAEvents.trigger('interp:expand', {
-                    id: section.data('interp-id'),
-                    to: section.data('interp-for'),
-                    type: 'inline-interp' 
-                });
+                GAEvents.trigger('interp:expand', context);
+            }
+            else {
+                GAEvents.trigger('interp:collapse', context);
             }
 
             return this;
