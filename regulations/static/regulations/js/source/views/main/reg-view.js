@@ -1,9 +1,4 @@
-// **Extends** Backbone.View
-//
-// **Jurisdiction** .main-content
-//
-// **Usage** ```require(['reg-view'], function(RegView) {})```
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller', 'header-controller', 'sidebar-controller', './regs-helpers', 'drawer-controller', 'child-view'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents, Helpers, DrawerEvents, ChildView) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-controller', 'header-controller', 'sidebar-controller', './regs-helpers', 'drawer-controller', 'child-view', 'ga-events'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents, Helpers, DrawerEvents, ChildView, GAEvents) {
     'use strict';
 
     var RegView = ChildView.extend({
@@ -63,6 +58,10 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             // if this link is already active, toggle def shut
             if ($link.data('active')) {
                 SidebarEvents.trigger('definition:close');
+                GAEvents.trigger('definition:close', {
+                    type: 'defintion',
+                    by: 'toggling term link'
+                });
                 this.clearActiveTerms();
             }
             else {
@@ -73,9 +72,19 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                 else {
                     // close old definition, if there is one
                     SidebarEvents.trigger('definition:close');
+                    GAEvents.trigger('definition:close', {
+                        type: 'defintion',
+                        by: 'opening new definition'
+                    });
+
                     // open new definition
                     this.setActiveTerm($link);
                     SidebarEvents.trigger('definition:open', defId);
+                    GAEvents.trigger('definition:open', {
+                        id: defId,
+                        from: this.activeSection,
+                        type: 'definition'
+                    });
                 }
             }
 

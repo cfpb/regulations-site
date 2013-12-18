@@ -7,6 +7,8 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             this.bindListeners();
 
             this.events.on('section:open', this.sendEvent, 'open');
+            this.events.on('definition:open', this.sendEvent, 'open');
+            this.events.on('definition:close', this.sendEvent, 'close');
         },
 
         sendEvent: function(context) {
@@ -18,6 +20,12 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
 
             if (typeof context.type !== 'undefined') {
                 objectParts.push(context.type);
+
+                if (_.contains(['reg-section', 'definition'], context.type)) {
+                    if (typeof context.id !== 'undefined' && context.id !== null) {
+                        objectParts.push(context.id);
+                    }
+                }
             }
 
             // diffs preserve ids in sectionId because
@@ -25,11 +33,6 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             // instance cached in the model
             if (typeof context.sectionId !== 'undefined') {
                 objectParts.push(context.sectionId);
-            }
-            else if (typeof context.id !== 'undefined' 
-                     && context.id !== null
-                     && context.type === 'reg-section') {
-                objectParts.push(context.id);
             }
 
             if (typeof context.regVersion !== 'undefined') {
@@ -47,6 +50,14 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
 
             if (typeof context.page !== 'undefined') {
                 objectParts.push('results page:' + context.page);
+            }
+
+            if (typeof context.from !== 'undefined') {
+                objectParts.push('from:' + context.from);
+            }
+
+            if (typeof context.by !== 'undefined') {
+                objectParts.push('by:' + context.by);
             }
 
             object = objectParts.join(' ');

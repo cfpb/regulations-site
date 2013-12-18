@@ -1,12 +1,4 @@
-// **Extends** SidebarModuleView
-//
-// **TODO** Determine how much sense that still makes ^^
-//
-// **Usage** ```require(['definition-view'], function(DefinitionView) {})```
-//
-// A single inline interpretation, child of the sidebar
-// As of sprint 6, the only View that is instantiated more than once
-define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'regs-helpers', './regs-router', 'main-controller', 'sidebar-controller'], function($, _, Backbone, SidebarModuleView, RegModel, Helpers, Router, MainEvents, SidebarEvents) {
+define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'regs-helpers', './regs-router', 'main-controller', 'sidebar-controller', 'ga-events'], function($, _, Backbone, SidebarModuleView, RegModel, Helpers, Router, MainEvents, SidebarEvents, GAEvents) {
     'use strict';
 
     // **Constructor**
@@ -58,6 +50,10 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             $('.definition.active').focus();
 
             MainEvents.trigger('definition:close');
+            GAEvents.trigger('definition:close', {
+                type: 'definition',
+                by: 'header close button'
+            });
             this.remove();
         },
 
