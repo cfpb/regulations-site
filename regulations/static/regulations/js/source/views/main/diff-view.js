@@ -6,9 +6,11 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-controller', './r
             this.baseVersion = this.options.baseVersion;
             this.newerVersion = this.options.newerVersion;
             this.fromVersion = this.options.fromVersion || this.newerVersion;
-
+            // we preserve the section id as is in config obj because
+            this.options.sectionId = this.id;
             // the model builds url off of id (?)
             this.options.id = this._assembleDiffURL(this.options);
+
             this.url = 'diff/' + this.options.id;
             ChildView.prototype.initialize.apply(this, arguments);
 

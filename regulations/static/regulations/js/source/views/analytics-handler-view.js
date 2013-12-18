@@ -9,21 +9,37 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
             this.events.on('section:open', this.sendEvent, 'open');
         },
 
-        // TODO: standardize context on this.events events
         sendEvent: function(context) {
-            var object;
+            var object, objectParts = [];
 
             if (typeof window.ga === 'undefined') {
                 return;
             }
 
             if (typeof context.type !== 'undefined') {
-                object = context.type;
+                objectParts.push(context.type);
             }
 
-            if (typeof context.id !== 'undefined' && context.id !== null) {
-                object += ' ' + context.id;
+            // diffs preserve ids in sectionId because
+            // id has the url in order to keep a unique
+            // instance cached in the model
+            if (typeof context.sectionId !== 'undefined') {
+                objectParts.push(context.sectionId);
             }
+            else if (typeof context.id !== 'undefined' && context.id !== null) {
+                objectParts.push(context.id);
+            }
+
+            if (typeof context.regVersion !== 'undefined') {
+                objectParts.push('version:' + context.regVersion);
+            }
+
+            if (typeof context.baseVersion !== 'undefined' && typeof context.newerVersion !== 'undefined') {
+                objectParts.push('comparing:' + context.baseVersion);
+                objectParts.push(context.newerVersion);
+            }
+
+            object = objectParts.join(' ');
 
             window.ga('send', 'event', object, this);
         },
