@@ -64,13 +64,17 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         modelmap: {
             'reg-section': RegModel,
             'search-results': SearchModel,
-            'diff': DiffModel
+            'diff': DiffModel,
+            'appendix': RegModel,
+            'interpretation': RegModel
         }, 
 
         viewmap: {
             'reg-section': RegView,
             'search-results': SearchResultsView,
-            'diff': DiffView
+            'diff': DiffView,
+            'appendix': RegView,
+            'interpretation': RegView
         },
 
         createView: function(id, options, type) {
