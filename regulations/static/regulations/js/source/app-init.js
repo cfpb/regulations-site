@@ -1,8 +1,6 @@
 // Module called on app load, once doc.ready
 //
 // **TODO**: Consolidate/minimize module dependencies
-//
-// **Usage**: require(['app-init'], function(app) { $(document).ready(function() { app.init(); }) })
 define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definition-view', 'sub-head-view', 'drawer-view', 'sidebar-view', 'konami', 'header-view', 'analytics-handler', 'regs-helpers', './regs-router', './reg-view', 'search-results-view'], function($, _, Backbone, Main, RegModel, DefinitionView, SubHeadView, DrawerView, SidebarView, Konami, HeaderView, AnalyticsHandler, Helpers, Router, RegView, SearchResultsView) {
     'use strict';
     return {

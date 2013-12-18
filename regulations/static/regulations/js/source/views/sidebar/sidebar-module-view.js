@@ -1,6 +1,3 @@
-// **Extends** Backbone.View
-//
-// **Usage** ```require(['sidebar-module-view'], function(SidebarModuleView) { var thing = SidebarModuleView.extend({}); })```
 define('sidebar-module-view', ['jquery', 'underscore', 'backbone', 'reg-model'], function($, _, Backbone, RegModel) {
     'use strict';
     var SidebarModuleView = Backbone.View.extend({

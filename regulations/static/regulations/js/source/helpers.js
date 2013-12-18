@@ -1,6 +1,3 @@
-// **Usage**
-// require(['regs-helpers'], function(RegsHelpers) {});
-//
 // Defines some globally useful helper functions
 define('regs-helpers', function() {
     'use strict';

@@ -1,8 +1,3 @@
-// **Extends** Backbone.View
-//
-// **Usage** ```require(['sidebar-head-view'], function(SidebarHeadView) {})```
-//
-// **Jurisdiction** gray background sub-header above right sidebar
 define('sidebar-head-view', ['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
     'use strict';
 

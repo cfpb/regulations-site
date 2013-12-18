@@ -1,8 +1,3 @@
-// **Extends** Backbone.View
-//
-// **Usage** ```require(['sub-head-view'], function(SubHeadView) {})```
-//
-// **Jurisdiction** The gray subheader above the main content section
 define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'header-events'], function($, _, Backbone, RegsHelpers, HeaderEvents) {
     'use strict';
     var SubHeadView = Backbone.View.extend({

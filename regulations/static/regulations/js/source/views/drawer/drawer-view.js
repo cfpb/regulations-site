@@ -1,8 +1,3 @@
-// **Extends** Backbone.View
-//
-// **Usage** ```require(['drawer-view'], function(DrawerView) {})```
-//
-// **Jurisdiction** Left panel drawer container
 define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-view', 'search-view', 'drawer-tabs-view', 'drawer-events'], function($, _, Backbone, TOCView, HistoryView, SearchView, DrawerTabs, DrawerEvents) {
     'use strict';
 
