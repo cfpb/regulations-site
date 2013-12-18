@@ -1,3 +1,13 @@
+## 12/17/2013
+
+* Application wide landing page
+* Improved diff view usability
+    * Move indicator to right side of TOC
+    * Remove underlines from additions
+    * Italicize additions
+* Implement subparts in TOC
+* Make interpretation slidedowns more noticeable
+
 ## 12/03/2013
 
 * Enable drawer icons for browsers that do not support web fonts
