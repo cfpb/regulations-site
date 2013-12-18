@@ -1,4 +1,4 @@
-define('regs-router', ['underscore', 'backbone', 'main-controller', 'breakaway-controller', 'queryparams'], function(_, Backbone, MainEvents, BreakawayEvents) {
+define('regs-router', ['underscore', 'backbone', 'main-events', 'breakaway-events', 'queryparams'], function(_, Backbone, MainEvents, BreakawayEvents) {
     'use strict';
 
     var RegsRouter;

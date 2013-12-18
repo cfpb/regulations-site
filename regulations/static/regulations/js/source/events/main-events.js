@@ -1,4 +1,4 @@
-define('main-controller', ['underscore', 'backbone'], function(_, Backbone) {
+define('main-events', ['underscore', 'backbone'], function(_, Backbone) {
     'use strict';
 
     var MainEvents = _.clone(Backbone.Events);

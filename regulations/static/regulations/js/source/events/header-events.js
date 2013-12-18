@@ -1,4 +1,4 @@
-define('header-controller', ['underscore', 'backbone'], function(_, Backbone) {
+define('header-events', ['underscore', 'backbone'], function(_, Backbone) {
     'use strict';
 
     var HeaderEvents = _.clone(Backbone.Events);

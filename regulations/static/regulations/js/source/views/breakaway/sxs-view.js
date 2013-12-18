@@ -1,4 +1,4 @@
-define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakaway-controller', 'main-controller', './regs-router'], function($, _, Backbone, SxSModel, BreakawayEvents, MainEvents, Router) {
+define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakaway-events', 'main-events', './regs-router'], function($, _, Backbone, SxSModel, BreakawayEvents, MainEvents, Router) {
     'use strict';
 
     var SxSView = Backbone.View.extend({

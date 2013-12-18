@@ -1,4 +1,4 @@
-define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', './regs-router', 'header-controller', 'drawer-controller', './regs-helpers', 'main-controller', 'ga-events'], function($, _, Backbone, jQScroll, Router, HeaderEvents, DrawerEvents, Helpers, MainEvents, GAEvents) {
+define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', './regs-router', 'header-events', 'drawer-events', './regs-helpers', 'main-events', 'ga-events'], function($, _, Backbone, jQScroll, Router, HeaderEvents, DrawerEvents, Helpers, MainEvents, GAEvents) {
     'use strict';
     var ChildView = Backbone.View.extend({
         initialize: function() {
@@ -24,7 +24,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
                 returned = this.model.get(this.options.id, render);
 
                 if (typeof this.title === 'undefined') {
-                    this.title = this._assembleTitle();
+                    this.title = this.assembleTitle();
                 }
 
                 this.route(this.options);
@@ -72,7 +72,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
             $(id).focus();
         },
 
-        _assembleTitle: function() {
+        assembleTitle: function() {
             var titleParts, newTitle;
             titleParts = _.compact(document.title.split(" "));
             newTitle = [titleParts[0], titleParts[1], Helpers.idToRef(this.id), '|', 'eRegulations'];

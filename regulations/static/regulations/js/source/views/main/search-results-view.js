@@ -1,4 +1,4 @@
-define('search-results-view', ['jquery', 'underscore', 'backbone', './search-model', './regs-router', 'header-controller', 'main-controller', 'drawer-controller', 'child-view'], function($, _, Backbone, SearchModel, Router, HeaderEvents, MainEvents, DrawerEvents, ChildView) {
+define('search-results-view', ['jquery', 'underscore', 'backbone', './search-model', './regs-router', 'header-events', 'main-events', 'drawer-events', 'child-view'], function($, _, Backbone, SearchModel, Router, HeaderEvents, MainEvents, DrawerEvents, ChildView) {
     'use strict';
 
     var SearchResultsView = ChildView.extend({
@@ -23,7 +23,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
 
             // if the site was loaded on the search results page
             if (typeof this.options.rendered === 'undefined') {
-                this.options.id = this._assembleSearchURL(this.options);
+                this.options.id = this.assembleSearchURL(this.options);
                 this.url = 'search/' + this.options.id;
 
                 ChildView.prototype.initialize.apply(this, arguments);
@@ -35,7 +35,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             Backbone.View.prototype.setElement.call(this, '#content-wrapper.search-results');            
         },
 
-        _assembleSearchURL: function(options) {
+        assembleSearchURL: function(options) {
             var url = options.regPart;
             url += '?q=' + options.query;
             url += '&version=' + options.regVersion;

@@ -3,7 +3,7 @@
 // **Usage** ```require(['drawer-view'], function(DrawerView) {})```
 //
 // **Jurisdiction** Left panel drawer container
-define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-view', 'search-view', 'drawer-tabs-view', 'drawer-controller'], function($, _, Backbone, TOCView, HistoryView, SearchView, DrawerTabs, DrawerEvents) {
+define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-view', 'search-view', 'drawer-tabs-view', 'drawer-events'], function($, _, Backbone, TOCView, HistoryView, SearchView, DrawerTabs, DrawerEvents) {
     'use strict';
 
     var DrawerView = Backbone.View.extend({
@@ -11,7 +11,7 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
 
         initialize: function() {
             var tab;
-            DrawerEvents.on('pane:change', this._setActivePane, this);
+            DrawerEvents.on('pane:change', this.setActivePane, this);
 
             this.$label = $('.toc-type');
             this.$children = $('.toc-container');
@@ -42,7 +42,7 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
         },
 
         // activeId = page type or child view type
-        _setActivePane: function(activeId) {
+        setActivePane: function(activeId) {
             if (typeof this.childViews[activeId] === 'undefined') {
                 activeId = this.pageTypeMap[activeId]; 
             }

@@ -1,4 +1,4 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-controller', 'section-footer-view', 'main-controller', 'sidebar-controller', './regs-router', 'drawer-view', 'diff-model', 'diff-view'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router, Drawer, DiffModel, DiffView) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-events', 'section-footer-view', 'main-events', 'sidebar-events', './regs-router', 'drawer-view', 'diff-model', 'diff-view'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router, Drawer, DiffModel, DiffView) {
     'use strict';
 
     var MainView = Backbone.View.extend({
@@ -13,7 +13,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 this.controller.on('section:open', this.createView, this);
                 this.controller.on('section:remove', this.sectionCleanup, this);
                 this.controller.on('diff:open', this.createView, this);
-                this.controller.on('breakaway:open', this._breakawayOpen, this);
+                this.controller.on('breakaway:open', this.breakawayOpen, this);
             }
 
             var childViewOptions = {},
@@ -113,7 +113,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             this.childView = new this.viewmap[this.contentType](options);
         },
 
-        _breakawayOpen: function(cb) {
+        breakawayOpen: function(cb) {
             this.breakawayCallback = cb;
         },
 

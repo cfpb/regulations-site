@@ -1,11 +1,11 @@
-define(['jquery', 'underscore', 'backbone', 'drawer-controller', 'ga-events'], function($, _, Backbone, DrawerEvents, GAEvents) {
+define(['jquery', 'underscore', 'backbone', 'drawer-events', 'ga-events'], function($, _, Backbone, DrawerEvents, GAEvents) {
     'use strict';
     var DrawerTabsView = Backbone.View.extend({
         el: '.toc-head',
 
         events: {
             'click .toc-toggle': 'openDrawer',
-            'click .toc-nav-link': '_updatePaneTabs'
+            'click .toc-nav-link': 'updatePaneTabs'
         },
 
         idMap: {
@@ -15,7 +15,7 @@ define(['jquery', 'underscore', 'backbone', 'drawer-controller', 'ga-events'], f
         },
 
         initialize: function() {
-            DrawerEvents.on('pane:change', this._changeActiveTab, this);
+            DrawerEvents.on('pane:change', this.changeActiveTab, this);
             this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer');
 
             // view switcher buttons - TOC, calendar, search
@@ -31,7 +31,7 @@ define(['jquery', 'underscore', 'backbone', 'drawer-controller', 'ga-events'], f
             this.drawerState = (this.$toggleArrow.hasClass('open')) ? 'open' : 'closed';
         },
 
-        _changeActiveTab: function(tab) {
+        changeActiveTab: function(tab) {
             this.$tocLinks.removeClass('current');
             $(this.idMap[tab]).addClass('current');
 
@@ -61,7 +61,7 @@ define(['jquery', 'underscore', 'backbone', 'drawer-controller', 'ga-events'], f
                 e.preventDefault();
             }
 
-            this._toggleDrawerState();
+            this.toggleDrawerState();
 
             // only send click event if there was an actual click
             if (e) {
@@ -78,7 +78,7 @@ define(['jquery', 'underscore', 'backbone', 'drawer-controller', 'ga-events'], f
         // tell surrounding elements to update accordingly
         // update the open/close arrow
         // set state
-        _toggleDrawerState: function() {
+        toggleDrawerState: function() {
             var state = (this.$toggleArrow.hasClass('open')) ? 'close' : 'open';
             this.reflowUI();
             this.$toggleArrow.toggleClass('open');
@@ -86,7 +86,7 @@ define(['jquery', 'underscore', 'backbone', 'drawer-controller', 'ga-events'], f
         },
 
         // update active pane based on click or external input
-        _updatePaneTabs: function(e) {
+        updatePaneTabs: function(e) {
             e.preventDefault();
 
             var $target = $(e.target),

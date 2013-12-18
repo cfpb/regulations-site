@@ -1,4 +1,4 @@
-define('diff-view', ['jquery', 'underscore', 'backbone', 'main-controller', './regs-router', 'drawer-controller', 'child-view', 'header-controller', './regs-helpers'], function($, _, Backbone, MainEvents, Router, DrawerEvents, ChildView, HeaderEvents, Helpers) {
+define('diff-view', ['jquery', 'underscore', 'backbone', 'main-events', './regs-router', 'drawer-events', 'child-view', 'header-events', './regs-helpers'], function($, _, Backbone, MainEvents, Router, DrawerEvents, ChildView, HeaderEvents, Helpers) {
     'use strict';
     var DiffView = ChildView.extend({
         initialize: function() {
@@ -9,7 +9,7 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-controller', './r
             // we preserve the section id as is in config obj because
             this.options.sectionId = this.id;
             // the model builds url off of id (?)
-            this.options.id = this._assembleDiffURL(this.options);
+            this.options.id = this.assembleDiffURL(this.options);
 
             this.url = 'diff/' + this.options.id;
             ChildView.prototype.initialize.apply(this, arguments);
@@ -21,7 +21,7 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-controller', './r
         },
 
         // "12 CFR Comparison of §1005.1 | eRegulations"
-        _assembleTitle: function() {
+        assembleTitle: function() {
             var titleParts, newTitle;
             titleParts = _.compact(document.title.split(" "));
             newTitle = [titleParts[0], titleParts[1], Helpers.idToRef(this.id), '|', 'eRegulations'];
@@ -29,7 +29,7 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-controller', './r
         },
 
         // ex: diff/1005-1/2011-12121/2012-11111/?from_version=2012-11111
-        _assembleDiffURL: function(options) {
+        assembleDiffURL: function(options) {
             var url = options.id + '/' + options.baseVersion;
             url += '/' + options.newerVersion;
             url += '?from_version=' + options.fromVersion;

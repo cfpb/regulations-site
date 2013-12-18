@@ -3,7 +3,7 @@
 // **Usage** ```require(['toc-view'], function(TOCView) {})```
 //
 // **Jurisdiction** Expandable Table of Contents
-define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-view', './regs-router', 'main-controller', 'drawer-controller'], function($, _, Backbone, RegsHelpers, Drawer, Router, MainEvents, DrawerEvents) {
+define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-view', './regs-router', 'main-events', 'drawer-events'], function($, _, Backbone, RegsHelpers, Drawer, Router, MainEvents, DrawerEvents) {
     'use strict';
     var TOCView = Backbone.View.extend({
         el: '#table-of-contents',
