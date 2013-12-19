@@ -47,6 +47,9 @@ define(['jquery', 'underscore', 'backbone', 'main-view', 'reg-model', 'definitio
         init: function() {
             Router.start();
             this.bindEvents();
+            setTimeout(function() {
+                $('html').addClass('selenium-start');
+            }, 5000);
         }
     };
 });
