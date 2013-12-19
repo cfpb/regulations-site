@@ -17,7 +17,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             this.externalEvents.on('breakaway:open', this.hideContent, this);
             this.externalEvents.on('breakaway:close', this.showContent, this);
 
-            DrawerEvents.trigger('pane:change', 'table-of-contents');
+            DrawerEvents.trigger('pane:init', 'table-of-contents');
 
             this.id = this.options.id;
             this.regVersion = this.options.regVersion;

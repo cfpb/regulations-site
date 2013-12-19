@@ -16,6 +16,7 @@ define(['jquery', 'underscore', 'backbone', 'drawer-events', 'ga-events'], funct
 
         initialize: function() {
             DrawerEvents.on('pane:change', this.changeActiveTab, this);
+            DrawerEvents.on('pane:init', this.setStartingTab, this);
             this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer');
 
             // view switcher buttons - TOC, calendar, search
@@ -29,6 +30,10 @@ define(['jquery', 'underscore', 'backbone', 'drawer-events', 'ga-events'], funct
 
             // set initial drawer state
             this.drawerState = (this.$toggleArrow.hasClass('open')) ? 'open' : 'closed';
+        },
+
+        setStartingTab: function(tab) {
+            $(this.idMap[tab]).addClass('current');
         },
 
         changeActiveTab: function(tab) {

@@ -16,7 +16,7 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'main-events'], func
 
             // remove the current class from all .status-list items
             this.$el.find('.status-list').removeClass('current');
-            
+
             // check the data-base-version attribute of each <li> against the document
             this.$el.find('.status-list[data-base-version=' + currentVersion + ']').addClass('current');
 

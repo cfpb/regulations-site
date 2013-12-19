@@ -6,6 +6,7 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
 
         initialize: function() {
             DrawerEvents.on('pane:change', this.setActivePane, this);
+            DrawerEvents.on('pane:init', this.setActivePane, this);
 
             this.$label = $('.toc-type');
             this.$children = $('.toc-container');
