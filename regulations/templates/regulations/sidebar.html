@@ -1,3 +1,5 @@
+{% load static from staticfiles %}
+
 <div id="sidebar" class="secondary-content">
     <div id="sidebar-content" class="sidebar-inner">
         <section id="definition"></section>
@@ -8,10 +10,10 @@
             </header>
             <div class="chunk expand-drawer">
             {% if analyses %}
-                <h5>Most Recent Analysis</h5>
+                <h5 class="subtitle">Most Recent Analysis</h5>
                 <ul>
                     {% for analysis in analyses %}
-                        <li><a href="{% url 'chrome_sxs_view' analysis.label_id analysis.doc_number %}?from_version={{ version }}" class="sxs-link" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}<span class="minicon-right"></span></a></li>
+                        <li><a class="sidebar-full" href="{% url 'chrome_sxs_view' analysis.label_id analysis.doc_number %}?from_version={{ version }}" class="sxs-link" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}<span class="minicon-right"></span></a></li>
                     {% endfor %}
                 </ul>
             {% else %}
@@ -28,10 +30,51 @@
             {% if permalinks %}
                 <ul>
                     {% for permalink in permalinks %}
-                        <li><a href="{% url 'chrome_section_view' permalink.section_id version %}#{{ permalink.label_id }}">{{ permalink.text }}</a></li>
+                        <li><a class="sidebar-full" href="{% url 'chrome_section_view' permalink.section_id version %}#{{ permalink.label_id }}">{{ permalink.text }}</a></li>
                     {% endfor %}
                 </ul>
             {% endif %}
+            </div>
+        </section> <!-- /.regs-meta -->
+        <section id="permalinks" class="regs-meta">
+            <header class="expandable group">
+                <h4 tabindex="0">Help</h4>
+                <a href="#" tabindex="0"><span class="icon-text">Show/Hide Contents</span></a>
+            </header>
+            <div class="chunk expand-drawer">
+                <div class="sidebar-subsection">
+                    <h5 class="help-title">Interface Help</h5>
+                    <a class="go" href="#">What's this</a>
+
+                    <ul class="help-list">
+                        <li><span class="minicon-menu help-icon"></span>Table of contents</li>
+                        <li><span class="minicon-history help-icon"></span>Regulation Timeline</li>
+                        <li><span class="minicon-search help-icon"></span>Search</li>
+                        <li><span class="minicon-left help-icon"></span>Hide Navigation <br/>
+                            <span class="minicon-right help-icon"></span>Show Navigation</li>
+                    </ul>
+                </div> <!-- /.sidebar-subsection-->
+
+                <div class="sidebar-subsection">
+                    <h5 class="help-title">Textual Help</h5>
+                    <a class="go" href="#">What's this</a>
+
+                    <ul class="help-list">
+                        <li class="group">
+                            <div class="help-sample"><a href="#" class="definition">term</a></div>
+                            <div class="help-text">Defined Term</div>
+                        </li>
+                        <li class="group">
+                            <div class="help-sample"><a href="#" class="internal">citation</a></div>
+                            <div class="help-text">Link within a regulation <br/>
+                            (example: 1005.8(b))</div>
+                        </li>
+                        <li>
+                            <img src="{%static "regulations/img/supplement-sample.png" %}" class="block-image" />
+                            Inline interpretations/commentary from Supplement I
+                        </li>
+                    </ul>
+                </div> <!-- /.sidebar-subsection-->
             </div>
         </section> <!-- /.regs-meta -->
     </div> <!-- /#sidebar-content -->
