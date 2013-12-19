@@ -11,11 +11,11 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
         },
 
         initialize: function() {
-            this.events = MainEvents;
+            this.externalEvents = MainEvents;
 
-            this.events.on('definition:close', this.closeDefinition, this);
-            this.events.on('breakaway:open', this.hideContent, this);
-            this.events.on('breakaway:close', this.showContent, this);
+            this.externalEvents.on('definition:close', this.closeDefinition, this);
+            this.externalEvents.on('breakaway:open', this.hideContent, this);
+            this.externalEvents.on('breakaway:close', this.showContent, this);
 
             DrawerEvents.trigger('pane:change', 'table-of-contents');
 

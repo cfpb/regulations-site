@@ -12,7 +12,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
 
         initialize: function() {
             var render;
-            this.events = BreakawayEvents;
+            this.externalEvents = BreakawayEvents;
 
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
@@ -22,7 +22,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
 
             SxSModel.get(this.options.url, render),
 
-            this.events.on('sxs:close', this.remove, this);
+            this.externalEvents.on('sxs:close', this.remove, this);
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links

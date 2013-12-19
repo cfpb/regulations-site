@@ -8,10 +8,10 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
         },
 
         initialize: function() {
-            this.events = SidebarEvents;
-            this.events.on('update', this._updateChildViews, this);
-            this.events.on('definition:open', this._openDefinition, this);
-            this.events.on('definition:close', this._closeDefinition, this);
+            this.externalEvents = SidebarEvents;
+            this.externalEvents.on('update', this._updateChildViews, this);
+            this.externalEvents.on('definition:open', this._openDefinition, this);
+            this.externalEvents.on('definition:close', this._closeDefinition, this);
 
             this.childViews = {};
             this.openRegFolders();

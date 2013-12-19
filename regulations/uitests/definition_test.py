@@ -3,6 +3,8 @@ import unittest
 from base_test import BaseTest
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 class DefinitionTest(BaseTest, unittest.TestCase):
 
@@ -12,12 +14,15 @@ class DefinitionTest(BaseTest, unittest.TestCase):
 
     def test_definition(self):
         self.driver.get('http://localhost:8000/1005-1/2012-12121')
-        WebDriverWait(self.driver, 30).until(
-            lambda driver: driver.find_element_by_css_selector('html.js'))
+        WebDriverWait(self.driver, 60)
         definition_link = self.driver.find_element_by_xpath('//*[@id="1005-1-a"]/p/a')
         # term link should have correct data attr
         self.assertTrue('1005-2-a-1' in  definition_link.get_attribute('data-definition'))
 
+        # close TOC
+        toc_toggle = self.driver.find_element_by_xpath('//*[@id="panel-link"]')
+        toc_toggle.click()
+        WebDriverWait(self.driver, 10)
         definition_link.click()
 
         # term link should get active class

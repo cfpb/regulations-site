@@ -3,19 +3,19 @@ define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], f
 
     var AnalyticsHandler = Backbone.View.extend({
         initialize: function() {
-            this.events = GAEvents;
+            this.externalEvents = GAEvents;
 
-            this.events.on('section:open', this.sendEvent, 'open');
-            this.events.on('definition:open', this.sendEvent, 'open');
-            this.events.on('definition:close', this.sendEvent, 'close');
-            this.events.on('interp:expand', this.sendEvent, 'expand');
-            this.events.on('interp:collapse', this.sendEvent, 'collapse');
-            this.events.on('interp:followCitation', this.sendEvent, 'click citation');
-            this.events.on('definition:followCitation', this.sendEvent, 'click citation');
-            this.events.on('sxs:open', this.sendEvent, 'open');
-            this.events.on('drawer:open', this.sendEvent, 'open');
-            this.events.on('drawer:close', this.sendEvent, 'close');
-            this.events.on('drawer:switchTab', this.sendEvent, 'switch tab');
+            this.externalEvents.on('section:open', this.sendEvent, 'open');
+            this.externalEvents.on('definition:open', this.sendEvent, 'open');
+            this.externalEvents.on('definition:close', this.sendEvent, 'close');
+            this.externalEvents.on('interp:expand', this.sendEvent, 'expand');
+            this.externalEvents.on('interp:collapse', this.sendEvent, 'collapse');
+            this.externalEvents.on('interp:followCitation', this.sendEvent, 'click citation');
+            this.externalEvents.on('definition:followCitation', this.sendEvent, 'click citation');
+            this.externalEvents.on('sxs:open', this.sendEvent, 'open');
+            this.externalEvents.on('drawer:open', this.sendEvent, 'open');
+            this.externalEvents.on('drawer:close', this.sendEvent, 'close');
+            this.externalEvents.on('drawer:switchTab', this.sendEvent, 'switch tab');
 
             // not sure if this works
             $('#timeline .stop-button').on('click', function() {
