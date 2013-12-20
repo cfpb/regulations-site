@@ -1,12 +1,7 @@
 {% extends "regulations/chrome.html" %}
 
 {% comment %}
-Search results (and perhaps other pages) need an empty sidebar
+Search results (and perhaps other pages) need a sidebar containing only help text
 {% endcomment %}
 
-{% block chrome-sidebar %}
-<div id="sidebar" class="secondary-content">
-    <div id="sidebar-content" class="sidebar-inner">
-    </div>
-</div>
-{% endblock %}
+{% block reg-sidebar %}{% endblock %}
