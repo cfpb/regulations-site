@@ -5,25 +5,18 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
         el: '#menu',
 
         initialize: function() {
-            DrawerEvents.on('pane:change', this.setActivePane, this);
-            DrawerEvents.on('pane:init', this.setActivePane, this);
+            this.externalEvents = DrawerEvents;
+
+            this.externalEvents.on('pane:change', this.setActivePane, this);
+            this.externalEvents.on('pane:init', this.setActivePane, this);
 
             this.$label = $('.toc-type');
             this.$children = $('.toc-container');
-            this.childViews = {
-                'table-of-contents': {
-                    'selector': $('#table-of-contents'),
-                    'constructor': TOCView
-                },
-                'timeline': {
-                    'selector': $('#timeline'),
-                    'constructor': HistoryView
-                },
-                'search': {
-                    'selector': $('#search'),
-                    'constructor': SearchView
-                }
-            };
+
+            this.childViews = {};
+            this.childViews['table-of-contents'] = new TOCView();
+            this.childViews['timeline'] = new HistoryView();
+            this.childViews['search'] = new SearchView();
         },
 
         // page types are more diverse and are named differently for
@@ -46,10 +39,7 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
             this.$children.addClass('hidden');
 
             // remove the 'hidden' class from the active drawer section
-            this.childViews[activeId]['selector'].removeClass('hidden');
-
-            // create a new childView if a view doesn't already exist
-            this.childViews[activeId].view = this.childViews[activeId].view || new this.childViews[activeId].constructor();
+            this.childViews[activeId].$el.removeClass('hidden');
         }
 
     });

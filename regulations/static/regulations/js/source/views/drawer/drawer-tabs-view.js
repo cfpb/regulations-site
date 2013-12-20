@@ -15,8 +15,10 @@ define(['jquery', 'underscore', 'backbone', 'drawer-events', 'ga-events'], funct
         },
 
         initialize: function() {
-            DrawerEvents.on('pane:change', this.changeActiveTab, this);
-            DrawerEvents.on('pane:init', this.setStartingTab, this);
+            this.externalEvents = DrawerEvents;
+
+            this.externalEvents.on('pane:change', this.changeActiveTab, this);
+            this.externalEvents.on('pane:init', this.setStartingTab, this);
             this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer');
 
             // view switcher buttons - TOC, calendar, search
@@ -98,7 +100,7 @@ define(['jquery', 'underscore', 'backbone', 'drawer-events', 'ga-events'], funct
                 linkValue = _.last($target.closest('a').attr('href').split('#'));
             this.activePane = linkValue;
 
-            DrawerEvents.trigger('pane:change', linkValue);
+            this.externalEvents.trigger('pane:change', linkValue);
         }
     });
 

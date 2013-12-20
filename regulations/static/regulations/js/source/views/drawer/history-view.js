@@ -3,26 +3,15 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'main-events'], func
 
     var HistoryView = Backbone.View.extend({
 
-        el: '#timeline:not(.diff-history)',
+        el: '#timeline',
 
         events: {
             'click .version-link': 'setStorageItem'
         },
 
         initialize: function() {
-            var currentVersion = $('section[data-base-version]').data('base-version');
-
             MainEvents.on('section:open', this.updateLinks, this);
-
-            // remove the current class from all .status-list items
-            this.$el.find('.status-list').removeClass('current');
-
-            // check the data-base-version attribute of each <li> against the document
-            this.$el.find('.status-list[data-base-version=' + currentVersion + ']').addClass('current');
-
-            //  History view may not have been initialized before the section was updated;
-            //  update the links now.
-            this.updateLinks();
+            MainEvents.on('diff:open', this.updateLinks, this);
         },
 
         setStorageItem: function() {
@@ -36,9 +25,19 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'main-events'], func
             }
             // section may not be defined (e.g. on the landing page)
             if (typeof section !== 'undefined') {
-                this.$el.find('.version-link').each(function() {
+                this.$el.find('.version-link, .stop-button').each(function() {
                     var $link = $(this);
                     $link.attr('href', prefix + section + '/' + $link.data('version'));
+                });
+
+                // update diff dropdown
+                this.$el.find('.select-content form').each(function() {
+                    var $form = $(this),
+                        actionParts;
+                    
+                    // form action = diff_redirect/section/version
+                    actionParts = _.compact($form.attr('action').split('/'));
+                    $form.attr('action', '/' + actionParts[0] + '/' + section + '/' + actionParts[2]);
                 });
             }
         }

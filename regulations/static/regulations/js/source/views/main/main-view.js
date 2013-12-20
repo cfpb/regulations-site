@@ -77,12 +77,15 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
         },
 
         createView: function(id, options, type) {
+            // close breakaway if open
             if (typeof this.breakawayCallback !== 'undefined') {
                 this.breakawayCallback();
                 delete(this.breakawayCallaback);
             }
 
             this.contentType = type;
+
+            // id is null on search results as there is no section id
             if (id !== null) {
                 this.sectionId = id;
             }
