@@ -1,4 +1,6 @@
 {% extends "regulations/base.html" %}
+{% load static from staticfiles %}
+
 
 {% block body %}
 
@@ -168,7 +170,55 @@
 {% endblock %}
 
 {% block chrome-sidebar %}
-{{ sidebar_content|safe }}
+<div id="sidebar" class="secondary-content">
+    <div id="sidebar-content" class="sidebar-inner">
+    {% block reg-sidebar %}
+        {{ sidebar_content|safe }}
+    {% endblock %}
+        <section id="permalinks" class="regs-meta">
+            <header class="expandable group">
+                <h4 tabindex="0">Help</h4>
+                <a href="#" tabindex="0"><span class="icon-text">Show/Hide Contents</span></a>
+            </header>
+            <div class="chunk expand-drawer">
+                <div class="sidebar-subsection">
+                    <h5 class="help-title">Interface Help</h5>
+                    <a class="go" href="#">What's this</a>
+
+                    <ul class="help-list">
+                        <li><span class="minicon-menu help-icon"></span>Table of contents</li>
+                        <li><span class="minicon-history help-icon"></span>Regulation Timeline</li>
+                        <li><span class="minicon-search help-icon"></span>Search</li>
+                        <li><span class="minicon-left help-icon"></span>Hide Navigation <br/>
+                            <span class="minicon-right help-icon"></span>Show Navigation</li>
+                    </ul>
+                </div> <!-- /.sidebar-subsection-->
+                {% block section-help-text %}
+                <div class="sidebar-subsection">
+                    <h5 class="help-title">Textual Help</h5>
+                    <a class="go" href="#">What's this</a>
+
+                    <ul class="help-list">
+                        <li class="group">
+                            <div class="help-sample"><a class="definition">term</a></div>
+                            <div class="help-text">Defined Term</div>
+                        </li>
+                        <li class="group">
+                            <div class="help-sample"><a class="internal">citation</a></div>
+                            <div class="help-text">Link within a regulation <br/>
+                            (example: 1005.8(b))</div>
+                        </li>
+                        <li>
+                            <img src="{%static "regulations/img/supplement-sample.png" %}" class="block-image" />
+                            Inline interpretations/commentary from Supplement I
+                        </li>
+                    </ul>
+                </div> <!-- /.sidebar-subsection-->
+                {% endblock %}
+            </div>
+        </section> <!-- /.regs-meta -->
+</div>
+</div>
 {% endblock %}
 
 </div> <!-- /.wrap -->
