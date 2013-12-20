@@ -11,8 +11,11 @@ class InterpTest(BaseTest, unittest.TestCase):
 
     def test_interps(self):
         self.driver.get('http://localhost:8000/1005-2/2012-12121')
-        interp_dropdown = WebDriverWait(self.driver, 10).until(
-            lambda driver: driver.find_element_by_xpath('//*[@id="1005-2-h"]/section'))
+        html = self.driver.find_element_by_tag_name('html')
+        WebDriverWait(self.driver, 30).until(
+            lambda driver: 'selenium-start' in html.get_attribute('class'))
+
+        interp_dropdown = self.driver.find_element_by_xpath('//*[@id="1005-2-h"]/section')
 
         # interp should know who it belongs to
         self.assertEquals(interp_dropdown.get_attribute('data-interp-for'), '1005-2-h')
