@@ -40,30 +40,28 @@ This contains all of the styles specific to the TOC
         color: @black;
         background-color: @green_light;
     }
-}
 
-/*
-TOC in Diff View
------------------
-*/
+    /*
+    TOC in Diff View
+    -----------------
+    */
 
-.modified,
-.modified a,
-.modified a:link,
-.modified a:visited,
-.added a,
-.added a:link,
-.added a:visited {
-    border-right: 8px solid @green_midtone;
-}
+    .modified a,
+    .modified a:link,
+    .modified a:visited,
+    .added a,
+    .added a:link,
+    .added a:visited {
+        border-right: 8px solid @green_midtone;
+    }
 
-.deleted,
-.deleted a,
-.deleted a:link,
-.deleted a:visited {
-    border-right: 8px solid @red_orange_80;
-    text-decoration: line-through;
-    color: @80_gray;
+    .deleted a,
+    .deleted a:link,
+    .deleted a:visited {
+        border-right: 8px solid @red_orange_80;
+        text-decoration: line-through;
+        color: @80_gray;
+    }
 }
 
 /* Highlight the History tab in diff view */
