@@ -9,11 +9,11 @@ class TemplateTest(TestCase):
         context = {
             'env': 'dev',
             'reg_part': '204',
-            'meta': {'reg_letter': 'F', 'statutory_name': 'My Reg'}}
+            'meta': {'cfr_title_number': '2'}}
         request = RequestFactory().get('/fake-path')
         c = RequestContext(request, context)
         t = get_template('regulations/base.html')
         rendered = t.render(c)
 
-        title = 'PART 204 - MY REG (REGULATION F)'
+        title = '2 CFR Part 204 | eRegulations'
         self.assertTrue(title in rendered)

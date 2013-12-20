@@ -1,3 +1,4 @@
+#vim: set encoding=utf-8
 from unittest import TestCase
 from mock import patch
 
@@ -123,3 +124,14 @@ class UtilsTest(TestCase):
             {'section_id': '204-Interp', 'index': ['204', 'Interp']}]
         first = first_section('204', 'ver')
         self.assertEqual(first, '204-100')
+
+    def test_label_to_display_id(self):
+        id1 = label_to_display_id('123-1')
+        id2 = label_to_display_id('123-Interp')
+        id3 = label_to_display_id('482-32')
+        id4 = label_to_display_id('1423')
+
+        self.assertEqual(u'§123.1', id1)
+        self.assertEqual('123 Interpretations', id2)
+        self.assertEqual(u'§482.32', id3)
+        self.assertEqual('1423', id4)

@@ -100,10 +100,13 @@ def label_to_display_id(label_id):
     """ Return a nicely formatted id to be used in the <title> tag
         either part.section or part Interpretations """
     id = label_id.split('-')
-    if id[1] == 'Interp':
-        formatted_id = ' '.join([id[0], 'Interpretations'])
-    else:
-        part_with_double_s = ''.join([u'§', id[0]])
-        formatted_id = '.'.join([part_with_double_s, id[1]])
+    if len(id) < 2:
+        return label_id
+    else: 
+        if id[1] == 'Interp':
+            formatted_id = ' '.join([id[0], 'Interpretations'])
+        else:
+            part_with_double_s = ''.join([u'§', id[0]])
+            formatted_id = '.'.join([part_with_double_s, id[1]])
     return formatted_id
 
