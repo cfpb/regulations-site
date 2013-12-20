@@ -1,38 +1,35 @@
-<div id="sidebar" class="secondary-content">
-    <div id="sidebar-content" class="sidebar-inner">
-        <section id="definition"></section>
-        <section id="sxs-list" class="regs-meta">
-            <header class="expandable group">
-                <h4 tabindex="0">Section-by-section Analysis</h4>
-                <a href="#" tabindex="0"><span class="icon-text">Show/Hide Contents</span></a>
-            </header>
-            <div class="chunk expand-drawer">
-            {% if analyses %}
-                <h5>Most Recent Analysis</h5>
-                <ul>
-                    {% for analysis in analyses %}
-                        <li><a href="{% url 'chrome_sxs_view' analysis.label_id analysis.doc_number %}?from_version={{ version }}" class="sxs-link" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}<span class="minicon-right"></span></a></li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                No analyses available for {{ human_label_id }} in this tool.
-            {% endif %}
-            </div>
-        </section> <!-- /.regs-meta -->
-        <section id="permalinks" class="regs-meta">
-            <header class="expandable group">
-                <h4 tabindex="0">Bookmarks</h4>
-                <a href="#" tabindex="0"><span class="icon-text">Show/Hide Contents</span></a>
-            </header>
-            <div class="chunk expand-drawer">
-            {% if permalinks %}
-                <ul>
-                    {% for permalink in permalinks %}
-                        <li><a href="{% url 'chrome_section_view' permalink.section_id version %}#{{ permalink.label_id }}">{{ permalink.text }}</a></li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-            </div>
-        </section> <!-- /.regs-meta -->
-    </div> <!-- /#sidebar-content -->
-</div> <!-- /.secondary-content -->
+
+<section id="definition"></section>
+<section id="sxs-list" class="regs-meta">
+    <header class="expandable group">
+        <h4 tabindex="0">Section-by-section Analysis</h4>
+        <a href="#" tabindex="0"><span class="icon-text">Show/Hide Contents</span></a>
+    </header>
+    <div class="chunk expand-drawer">
+    {% if analyses %}
+        <h5 class="subtitle">Most Recent Analysis</h5>
+        <ul>
+            {% for analysis in analyses %}
+                <li><a class="sidebar-full" href="{% url 'chrome_sxs_view' analysis.label_id analysis.doc_number %}?from_version={{ version }}" class="sxs-link" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}<span class="minicon-right"></span></a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        No analyses available for {{ human_label_id }} in this tool.
+    {% endif %}
+    </div>
+</section> <!-- /.regs-meta -->
+<section id="permalinks" class="regs-meta">
+    <header class="expandable group">
+        <h4 tabindex="0">Bookmarks</h4>
+        <a href="#" tabindex="0"><span class="icon-text">Show/Hide Contents</span></a>
+    </header>
+    <div class="chunk expand-drawer">
+    {% if permalinks %}
+        <ul>
+            {% for permalink in permalinks %}
+                <li><a class="sidebar-full" href="{% url 'chrome_section_view' permalink.section_id version %}#{{ permalink.label_id }}">{{ permalink.text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+</section> <!-- /.regs-meta -->
