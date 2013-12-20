@@ -29,9 +29,8 @@ class DefinitionTest(BaseTest, unittest.TestCase):
 
         # definition should appear in sidebar
         self.assertTrue(len(definition.text) > 20)
-        definition_term = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[2]/p/dfn')
-        self.assertEquals(u'\u201cvoided tosser\u201d', 
-                          definition_term.text)
+        definition_term = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[2]/p')
+        self.assertTrue(u'\u201cvoided tosser\u201d' in definition_term.text)
 
         definition_close_button.click()
         # definition should close
