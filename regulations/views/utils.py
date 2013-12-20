@@ -66,8 +66,6 @@ def add_extras(context):
         context['env'] = 'built'
     prefix = reverse('regulation_landing_view', kwargs={'label_id': '9999'})
     prefix = prefix.replace('9999', '')
-    if prefix != '/':   # Strip final slash
-        prefix = prefix[:-1]
     context['APP_PREFIX'] = prefix
     ga_settings = getattr(settings, 'EREGS_GA', {})
 
