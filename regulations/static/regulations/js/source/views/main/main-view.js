@@ -16,7 +16,8 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 this.externalEvents.on('breakaway:open', this.breakawayOpen, this);
             }
 
-            var childViewOptions = {};
+            var childViewOptions = {},
+                appendixOrSupplement;
             this.$topSection = this.$el.find('section[data-page-type]');
 
             // which page are we starting on?
@@ -26,10 +27,18 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // what section do we have open?
             this.sectionId = this.$topSection.attr('id');
             this.regPart = $('#menu').data('reg-id');
+            this.cfrTitle = $('#menu').data('cfr-title-number');
 
             // build options object to pass into child view constructor
             childViewOptions.id = this.sectionId;
             childViewOptions.regVersion = this.regVersion;
+            childViewOptions.cfrTitle = this.cfrTitle;
+
+            appendixOrSupplement = this.isAppendixOrSupplement();
+            if (appendixOrSupplement) {
+                // so that we will know what the doc title format should be 
+                childViewOptions.subContentType = appendixOrSupplement;
+            }
 
             // find search query
             if (this.contentType === 'search-results') {
@@ -80,7 +89,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // close breakaway if open
             if (typeof this.breakawayCallback !== 'undefined') {
                 this.breakawayCallback();
-                delete(this.breakawayCallaback);
+                delete(this.breakawayCallback);
             }
 
             this.contentType = type;
@@ -96,6 +105,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             options.regPart = this.regPart;
             options.model = this.modelmap[this.contentType];
             options.cb = this.render;
+            options.cfrTitle = this.cfrTitle;
 
             // diffs need some more version context
             if (this.contentType === 'diff') {
@@ -113,6 +123,16 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             this.childView = new this.viewmap[this.contentType](options);
+        },
+
+        isAppendixOrSupplement: function() {
+            if (Helpers.isAppendix(this.sectionId)) {
+                return 'appendix';
+            }
+            else if (Helpers.isSupplement(this.sectionId)) {
+                return 'supplement';
+            }
+            return false;
         },
 
         breakawayOpen: function(cb) {

@@ -25,6 +25,12 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             this.$activeSection = '';
             this.$sections = {};
             this.url = this.id + '/' + this.options.regVersion;
+            this.regPart = this.options.regPart;
+            this.cfrTitle = this.options.cfrTitle;
+
+            if (typeof this.options.subContentType !== 'undefined') {
+                this.subContentType = this.options.subContentType;
+            }
 
             HeaderEvents.trigger('section:open', this.activeSection);
 
@@ -46,6 +52,24 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             this.setActiveTerm($link); 
 
             return this;
+        },
+
+        assembleTitle: function() {
+            var newTitle;
+            if (typeof this.subContentType !== 'undefined') {
+                if (this.subContentType === 'supplement') {
+                    newTitle = 'Supplement I to Part ' + this.regPart + ' | eRegulations';
+                }
+                else if (this.subContentType === 'appendix') {
+                    newTitle = 'Appendix ' + this.id.substr(this.id.length - 1) + ' to Part ' + this.regPart + ' | eRegulations';
+
+                }
+            }
+            else {
+                newTitle = this.cfrTitle + ' CFR ' + Helpers.idToRef(this.id) + ' | eRegulations';
+            }
+
+            return newTitle;
         },
 
         // content section key term link click handler

@@ -79,7 +79,6 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
             return newTitle.join(' ');
         },
 
-
         // naive way to update the active table of contents link and wayfinding header
         // once a scroll event ends, we loop through each content section DOM node
         // the first one whose offset is greater than the window scroll position, accounting

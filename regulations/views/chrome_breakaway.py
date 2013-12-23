@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 
 from regulations.generator import api_reader
+from regulations.generator.node_types import label_to_text
 from regulations.views import utils
 from regulations.views.chrome import ChromeView
 from regulations.views.partial_search import PartialSearch
@@ -24,8 +25,7 @@ class ChromeBreakawayView(ChromeView):
         meta = api_reader.ApiReader().layer('meta', context['reg_part'],
                                             context['version'])
         context['meta'] = meta[context['reg_part']][0]
-        context['formatted_id'] = utils.label_to_display_id(
-                                  context['label_id'])
+        context['formatted_id'] = label_to_text(context['label_id'])
 
         content = self.content(context)
         if isinstance(content, HttpResponse):  # error occurred

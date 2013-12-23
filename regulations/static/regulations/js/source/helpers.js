@@ -124,6 +124,40 @@ define('regs-helpers', function() {
             }
         },
 
+        isSupplement: function(id) {
+            var parts;
+
+            if (typeof id !== 'undefined') {
+                parts = _.compact(id.split('-'));
+                if (parts.length < 2) {
+                    return false;
+                }
+
+                if (parts[1].toLowerCase() === 'interp') {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+
+        isAppendix: function(id) {
+            var parts;
+
+            if (typeof id !== 'undefined') {
+                parts = _.compact(id.split('-'));
+                if (parts.length < 2) {
+                    return false;
+                }
+
+                if (isNaN(parts[1]) && parts[1].toLowerCase() !== 'interp') {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+
         // thanks, James Padolsey http://james.padolsey.com/javascript/parsing-urls-with-the-dom/
         parseURL: function(url) {
             var a =  document.createElement('a');

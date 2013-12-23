@@ -3,11 +3,17 @@
 
 
 {% block title %}
-{{meta.cfr_title_number}} CFR {{formatted_id}} | eRegulations
+    {% if node_type == 'appendix' %}
+        {{formatted_id}} to {{meta.cfr_title_number}} CFR {{reg_part}} | eRegulations
+    {% elif node_type == 'interp' %}
+        {{formatted_id}} | eRegulations
+    {% else %}
+        {{meta.cfr_title_number}} CFR {{formatted_id}} | eRegulations
+    {% endif %}
 {% endblock %}
 
-{% block body %}
 
+{% block body %}
 {% comment %}
     Page-level template for everything but notices.
 {% endcomment %}
@@ -63,7 +69,7 @@
     http://stackoverflow.com/questions/9633387/django-using-blocks-in-included-templates
 {% endcomment %}
 {% with active_version=version %}
-<div id="menu" class="panel" data-reg-id="{{ reg_part }}">
+<div id="menu" class="panel" data-reg-id="{{ reg_part }}" data-cfr-title-number="{{meta.cfr_title_number}}">
     {% block drawer-toc %}
         {%if TOC %}
             {% with nav_class='regulation-nav' toc_items=TOC top_toc=True %}
