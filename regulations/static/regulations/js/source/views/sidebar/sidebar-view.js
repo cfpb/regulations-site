@@ -1,4 +1,4 @@
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'permalink-view', './folder-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model'], function($, _, Backbone, SxSList, PermalinkView, FolderModel, Main, Breakaway, SidebarEvents, Definition, MetaModel) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'permalink-view', './sidebar-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model'], function($, _, Backbone, SxSList, PermalinkView, SidebarModel, Main, Breakaway, SidebarEvents, Definition, MetaModel) {
     'use strict';
     var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',
@@ -8,23 +8,25 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
         },
 
         initialize: function() {
+            this.openRegFolders = _.bind(this.openRegFolders, this);
             this.externalEvents = SidebarEvents;
-            this.externalEvents.on('update', this._updateChildViews, this);
-            this.externalEvents.on('definition:open', this._openDefinition, this);
-            this.externalEvents.on('definition:close', this._closeDefinition, this);
+            this.externalEvents.on('update', this.updateChildViews, this);
+            this.externalEvents.on('definition:open', this.openDefinition, this);
+            this.externalEvents.on('definition:close', this.closeDefinition, this);
 
             this.childViews = {};
             this.openRegFolders();
-            this.sxsModel = new FolderModel({
-                supplementalPath: 'sidebar'
-            });
+            this.model = new SidebarModel();
 
             this.definitionModel = new MetaModel({
                 supplementalPath: 'definition'
             });
+
+            // cache help folder
+            this.htmlHelp = $('#help').html();
         },
 
-        _openDefinition: function(id) {
+        openDefinition: function(id) {
             var createDefView = function(res) {
                 this.childViews.definition.render(res);
             }.bind(this);
@@ -36,21 +38,21 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
             this.definitionModel.get(id, createDefView);
         },
 
-        _closeDefinition: function() {
+        closeDefinition: function() {
             if (typeof this.childViews.definition !== 'undefined') {
                 this.childViews.definition.remove();
             }
         },
 
-        _updateChildViews: function(context) {
+        updateChildViews: function(context) {
             switch (context.type) {
                 case 'reg-section':
-                    this.openRegFolders();  
-                    this._updateSxSList(context.id);
-                    // this._updatePermalinks(context.id);
+                    this.model.get(context.id, this.openRegFolders);
                     break;
                 case 'search':
                     this.closeAllChildren();
+                    break;
+                case 'diff':
                     break;
                 default:
                     this.closeAllChildren();
@@ -59,18 +61,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
             this.removeLandingSidebar();
         },
 
-        _updateSxSList: function(id) {
-            if (typeof this.childViews.sxs === 'undefined') {
-                // just init view for existing content
-                this.childViews.sxs = new SxSList();
-            }
-            else {
-                // request content and render
-                this.sxsModel.get(id, this.childViews.sxs.render);
-            }
-        },
-
-        openRegFolders: function() {
+        openRegFolders: function(html) {
             if (this.childViews.sxs) {
                 this.childViews.sxs.remove();
             }
@@ -79,6 +70,34 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
                 this.childViews.permalink.remove();
             }
 
+            if (this.childViews.help) {
+                this.childViews.help.remove();
+            }
+
+            if (arguments.length > 0) {
+                this.insertChild(html);
+            }
+            else {
+                this.createPlaceholders();
+            }
+
+            this.childViews.sxs = new SxSList();
+            this.childViews.permalink = new PermalinkView();    
+
+            this.insertHelp();
+        },
+
+        removeLandingSidebar: function() {
+            $('.landing-sidebar').hide();
+        },
+
+        insertHelp: function() {
+            if (typeof this.helpHTML !== 'undefined') {
+                this.insertChild(this.helpHTML);
+            }
+        },
+
+        createPlaceholders: function() {
             if (this.$el.find('#sxs-list').length === 0) {
                 this.$el.append('<section id="sxs-list" class="regs-meta"></section>');
             }
@@ -87,12 +106,9 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
                 this.$el.append('<section id="permalinks" class="regs-meta"></section>');
             }
 
-            this.childViews.sxs = new SxSList();
-            this.childViews.permalink = new PermalinkView();    
-        },
-
-        removeLandingSidebar: function() {
-            $('.landing-sidebar').hide();
+            if (typeof this.helpHTML !== 'undefined') {
+                this.$el.append('<section id="help" class="regs-meta"></section>');
+            }
         },
 
         // open whatever content should populate the sidebar
