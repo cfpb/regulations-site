@@ -13,6 +13,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
             this.externalEvents.on('update', this.updateChildViews, this);
             this.externalEvents.on('definition:open', this.openDefinition, this);
             this.externalEvents.on('definition:close', this.closeDefinition, this);
+            this.externalEvents.on('section:loading', this.loading, this);
 
             this.childViews = {};
             this.openRegFolders();
@@ -70,6 +71,8 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
 
             this.childViews.sxs = new SxSList();
             this.childViews.permalink = new PermalinkView();    
+
+            this.loaded();
         },
 
         removeLandingSidebar: function() {
@@ -138,6 +141,14 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
                     this.childViews[k].remove();
                 }
             }
+        },
+
+        loading: function() {
+            this.$el.addClass('loading');
+        },
+
+        loaded: function() {
+            this.$el.removeClass('loading');
         }
     });
 

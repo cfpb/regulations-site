@@ -117,6 +117,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             this.loading();
+            SidebarEvents.trigger('section:loading');
 
             if (typeof this.childView !== 'undefined') {
                 this.childView.remove();
