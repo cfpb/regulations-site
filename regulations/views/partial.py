@@ -96,6 +96,7 @@ class PartialParagraphView(PartialView):
         context['node'] = builder.tree
         return context
 
+
 class PartialDefinitionView(PartialView):
     """ Single paragraph of a regtext formatted for display
         as an inline interpretation """
@@ -104,9 +105,12 @@ class PartialDefinitionView(PartialView):
 
     def transform_context(self, context, builder):
         context['node'] = builder.tree
-        context['formatted_label'] = label_to_text(builder.tree['label'], True, True)
-        context['node']['section_id'] = '%s-%s' % (builder.tree['label'][0], builder.tree['label'][1])
+        context['formatted_label'] = label_to_text(
+            builder.tree['label'], True, True)
+        context['node']['section_id'] = '%s-%s' % (
+            builder.tree['label'][0], builder.tree['label'][1])
         return context
+
 
 class PartialInterpView(PartialView):
     """ Interpretation of a reg text section/paragraph or appendix """
