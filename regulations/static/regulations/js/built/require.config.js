@@ -43,7 +43,7 @@ var require = { "paths" :
         "diff-model": "./models/diff-model",
         "regs-router": "./router",
         "regs-helpers": "./helpers",
-        "folder-model": "./models/folder-model"
+        "sidebar-model": "./models/sidebar-model"
     }
 , "shim":
 {
