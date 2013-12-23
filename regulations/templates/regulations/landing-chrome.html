@@ -12,3 +12,9 @@ landing page content (which also provides the sidebar).
 {% block chrome-content %}
 {{ main_content|safe }}
 {% endblock %}
+
+{% comment %}
+The landing page sidebar contains reg specific information in place of
+regulation text interactions
+{% endcomment %}
+{% block chrome-sidebar %}{% endblock %}
