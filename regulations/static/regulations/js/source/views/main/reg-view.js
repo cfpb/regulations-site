@@ -1,12 +1,7 @@
-// **Extends** Backbone.View
-//
-// **Jurisdiction** .main-content
-//
-// **Usage** ```require(['reg-view'], function(RegView) {})```
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'dispatch', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router'], function($, _, Backbone, jQScroll, Dispatch, DefinitionView, RegModel, SectionFooterView, Router) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-events', 'header-events', 'sidebar-events', './regs-helpers', 'drawer-events', 'child-view', 'ga-events'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents, Helpers, DrawerEvents, ChildView, GAEvents) {
     'use strict';
 
-    var RegView = Backbone.View.extend({
+    var RegView = ChildView.extend({
         el: '#content-wrapper',
 
         events: {
@@ -16,83 +11,35 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
         },
 
         initialize: function() {
-            // **Event Listeners**
-            //
-            // * when a definition is removed, update term links
-            Dispatch.on('definition:remove', this.closeDefinition, this);
+            this.externalEvents = MainEvents;
 
-            Dispatch.on('breakaway:open', this.hideContent, this);
-            Dispatch.on('breakaway:close', this.showContent, this);
+            this.externalEvents.on('definition:close', this.closeDefinition, this);
+            this.externalEvents.on('breakaway:open', this.hideContent, this);
+            this.externalEvents.on('breakaway:close', this.showContent, this);
 
-            Dispatch.set('section', this.options.id);
+            DrawerEvents.trigger('pane:init', 'table-of-contents');
 
-            // * when a scroll event completes, check what the active secion is
-            $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
-
-            // set active section vars
-            // @TODO: how do activeSection and Dispatch.get('section') live together?
-            this.activeSection = this.options.id || '';
+            this.id = this.options.id;
+            this.regVersion = this.options.regVersion;
+            this.activeSection = this.options.id;
             this.$activeSection = '';
             this.$sections = {};
+            this.url = this.id + '/' + this.options.regVersion;
+            this.regPart = this.options.regPart;
+            this.cfrTitle = this.options.cfrTitle;
 
-            this.updateWayfinding();
+            if (typeof this.options.subContentType !== 'undefined') {
+                this.subContentType = this.options.subContentType;
+            }
 
-            if (Dispatch.hasPushState()) {
-                var url = this.options.id + '/' + Dispatch.getVersion(),
-                    hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
-                //  Be sure not to lose any hash info
-                if (hashPosition !== -1) {
-                    url = url + Backbone.history.fragment.substr(hashPosition);
-                }
-                Router.navigate(url);
+            HeaderEvents.trigger('section:open', this.activeSection);
 
+            if (Router.hasPushState) {
                 this.events['click .inline-interpretation .section-link'] = 'openInterp';
                 this.delegateEvents();
             }
 
-            Dispatch.set('sectionNav', new SectionFooterView({el: this.$el.find('.section-nav')}));
-
-            Dispatch.trigger('regSection:open:after', this.options.id);
-
-        },
-
-        // naive way to update the active table of contents link and wayfinding header
-        // once a scroll event ends, we loop through each content section DOM node
-        // the first one whose offset is greater than the window scroll position, accounting
-        // for the fixed position header, is deemed the active section
-        checkActiveSection: function() {
-            var len = this.$contentContainer.length - 1;
-
-            for (var i = 0; i <= len; i++) {
-                if (this.$sections[i].offset().top + this.$contentHeader.height() >= $(window).scrollTop()) {
-                    if (_.isEmpty(this.activeSection) || (this.activeSection !== this.$sections[i].id)) {
-                        this.activeSection = this.$sections[i][0].id;
-                        this.$activeSection = this.$sections[i][0];
-                        // **Event** trigger active section change
-                        Dispatch.trigger('activeSection:change', this.activeSection);
-                        return;
-                    }
-                }
-            }
-                 
-            return this;
-        },
-
-        updateWayfinding: function() {
-            var i, len;
-
-            // cache all sections in the DOM eligible to be the active section
-            // also cache some jQobjs that we will refer to frequently
-            this.$contentHeader = this.$contentHeader || $('header.reg-header');
-
-            // sections that are eligible for being the active section
-            this.$contentContainer = this.$el.find('.level-1 li[id], .reg-section, .appendix-section, .supplement-section');
-
-            // cache jQobjs of each reg section
-            len = this.$contentContainer.length;
-            for (i = 0; i < len; i++) {
-                this.$sections[i] = $(this.$contentContainer[i]);
-            }
+            ChildView.prototype.initialize.apply(this, arguments);
         },
 
         // only concerned with resetting DOM, no matter
@@ -101,19 +48,28 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             this.clearActiveTerms();
         },
 
-        // only concerned with sending GA event if the definition
-        // is closed via active term link
-        openDefinitionLinkHandler: function(e) {
-            Dispatch.trigger('ga-event:definition', {
-                action: 'clicked key term to close definition',
-                context: $(e.target).data('definition')
-            });
-        },
-
         toggleDefinition: function($link) {
             this.setActiveTerm($link); 
 
             return this;
+        },
+
+        assembleTitle: function() {
+            var newTitle;
+            if (typeof this.subContentType !== 'undefined') {
+                if (this.subContentType === 'supplement') {
+                    newTitle = 'Supplement I to Part ' + this.regPart + ' | eRegulations';
+                }
+                else if (this.subContentType === 'appendix') {
+                    newTitle = 'Appendix ' + this.id.substr(this.id.length - 1) + ' to Part ' + this.regPart + ' | eRegulations';
+
+                }
+            }
+            else {
+                newTitle = this.cfrTitle + ' CFR ' + Helpers.idToRef(this.id) + ' | eRegulations';
+            }
+
+            return newTitle;
         },
 
         // content section key term link click handler
@@ -125,40 +81,38 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
 
             // if this link is already active, toggle def shut
             if ($link.data('active')) {
-                Dispatch.remove('definition');
+                SidebarEvents.trigger('definition:close');
+                GAEvents.trigger('definition:close', {
+                    type: 'defintion',
+                    by: 'toggling term link'
+                });
                 this.clearActiveTerms();
             }
             else {
                 // if its the same definition, diff term link
-                if (Dispatch.getViewId('definition') === defId) {
+                if ($('.open-definition').attr('id') === defId) {
                     this.toggleDefinition($link);
                 }
                 else {
                     // close old definition, if there is one
-                    Dispatch.remove('definition');
+                    SidebarEvents.trigger('definition:close');
+                    GAEvents.trigger('definition:close', {
+                        type: 'defintion',
+                        by: 'opening new definition'
+                    });
+
                     // open new definition
-                    this.openDefinition(defId, $link);
+                    this.setActiveTerm($link);
+                    SidebarEvents.trigger('definition:open', defId);
+                    GAEvents.trigger('definition:open', {
+                        id: defId,
+                        from: this.activeSection,
+                        type: 'definition'
+                    });
                 }
             }
 
             return this;
-        },
-
-        openDefinition: function(defId, $link) {
-            var definition = new DefinitionView({
-                id: defId,
-                $anchor: $link
-            });
-
-            Dispatch.set('definition', definition);
-            Dispatch.trigger('definition:open');
-            Dispatch.trigger('ga-event:definition', {
-                action: 'clicked key term to open definition',
-                context: defId
-            });
-            this.setActiveTerm($link);
-
-            return definition;
         },
 
         // handler for when inline interpretation is clicked
@@ -170,18 +124,26 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             var header = $(e.currentTarget),
                 section = header.parent(),
                 button = header.find('.expand-button'),
-                buttonText = header.find('.expand-text');
+                buttonText = header.find('.expand-text'),
+                context = {
+                    id: section.data('interp-id'),
+                    to: section.data('interp-for'),
+                    type: 'inline-interp' 
+                };
 
             section.toggleClass('open');
             header.next('.hidden').slideToggle();
             button.toggleClass('open');
             buttonText.html(section.hasClass('open') ? 'Hide' : 'Show');
 
-            return this;
-        },
+            if (section.hasClass('open')) {
+                GAEvents.trigger('interp:expand', context);
+            }
+            else {
+                GAEvents.trigger('interp:collapse', context);
+            }
 
-        changeFocus: function(id) {
-            $(id).focus();
+            return this;
         },
 
         // Sets DOM back to neutral state
@@ -200,17 +162,16 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'di
             e.preventDefault();
 
             var sectionId = $(e.currentTarget).data('linked-section'),
-                subSectionId = $(e.currentTarget).data('linked-subsection');
+                subSectionId = $(e.currentTarget).data('linked-subsection'),
+                version = $('section[data-base-version]').data('base-version');
             
-            Router.navigate(sectionId + '/' + Dispatch.getVersion() + '#' + subSectionId, {trigger: true});
-        },
+            Router.navigate(sectionId + '/' + version + '#' + subSectionId, {trigger: true});
 
-        remove: function() {
-            Dispatch.get('sectionNav').remove();
-            Dispatch.remove('sectionNav');
-            this.$el.remove();
-            this.stopListening();
-            return this;
+            GAEvents.trigger('interp:followCitation', {
+                id: subSectionId,
+                regVersion: version,
+                type: 'inline-interp'
+            });
         },
 
         // when breakaway view loads

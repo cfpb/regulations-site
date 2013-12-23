@@ -4,6 +4,7 @@ from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
 from regulations.generator.versions import fetch_grouped_history
+from regulations.generator.node_types import label_to_text, type_from_label
 from regulations.views import utils
 from regulations.views.reg_landing import regulation_exists, get_versions
 from regulations.views.reg_landing import regulation as landing_page
@@ -65,8 +66,11 @@ class ChromeView(TemplateView):
 
         label_id = context['label_id']
         version = context['version']
-        reg_part = label_id.split('-')[0]
+        label_id_list = label_id.split('-')
+        reg_part = label_id_list[0]
         context['q'] = self.request.GET.get('q', '')
+        context['formatted_id'] = label_to_text(label_id_list, True, True)
+        context['node_type'] = type_from_label(label_id_list)
 
         error_handling.check_regulation(reg_part)
         self.set_chrome_context(context, reg_part, version)

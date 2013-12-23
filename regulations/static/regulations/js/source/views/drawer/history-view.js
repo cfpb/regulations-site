@@ -1,43 +1,43 @@
-define('history-view', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
+define('history-view', ['jquery', 'underscore', 'backbone', 'main-events'], function($, _, Backbone, MainEvents) {
     'use strict';
 
     var HistoryView = Backbone.View.extend({
 
-        el: '#timeline:not(.diff-history)',
+        el: '#timeline',
 
         events: {
             'click .version-link': 'setStorageItem'
         },
 
         initialize: function() {
-            Dispatch.on('regSection:open:after', this.updateLinks, this);
-
-            // remove the current class from all .status-list items
-            this.$el.find('.status-list').removeClass('current');
-            
-            // check the data-base-version attribute of each <li> against the document
-            this.$el.find('.status-list[data-base-version=' + Dispatch.getVersion() + ']').addClass('current');
-
-            //  History view may not have been initialized before the section was updated;
-            //  update the links now.
-            this.updateLinks();
+            MainEvents.on('section:open', this.updateLinks, this);
+            MainEvents.on('diff:open', this.updateLinks, this);
         },
 
         setStorageItem: function() {
             sessionStorage.setItem('drawerDefault', 'timeline');
         },
 
-        updateLinks: function() {
-            var currentSection = Dispatch.getOpenSection(),
-                prefix = window.APP_PREFIX;
+        updateLinks: function(section) {
+            var prefix = window.APP_PREFIX;
             if (typeof prefix !== 'undefined' && prefix.substr(prefix.length - 1) !== '/') {
                 prefix = prefix + '/';
             }
-            // currentSection may not be defined (e.g. on the landing page)
-            if (typeof currentSection !== 'undefined') {
-                this.$el.find('.version-link').each(function() {
+            // section may not be defined (e.g. on the landing page)
+            if (typeof section !== 'undefined') {
+                this.$el.find('.version-link, .stop-button').each(function() {
                     var $link = $(this);
-                    $link.attr('href', prefix + currentSection + '/' + $link.data('version'));
+                    $link.attr('href', prefix + section + '/' + $link.data('version'));
+                });
+
+                // update diff dropdown
+                this.$el.find('.select-content form').each(function() {
+                    var $form = $(this),
+                        actionParts;
+                    
+                    // form action = diff_redirect/section/version
+                    actionParts = _.compact($form.attr('action').split('/'));
+                    $form.attr('action', '/' + actionParts[0] + '/' + section + '/' + actionParts[2]);
                 });
             }
         }

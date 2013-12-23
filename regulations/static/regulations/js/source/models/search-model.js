@@ -1,4 +1,4 @@
-define('search-model', ['underscore', 'backbone', './meta-model', 'dispatch'], function(_, Backbone, MetaModel, Dispatch) {
+define('search-model', ['underscore', 'backbone', './meta-model'], function(_, Backbone, MetaModel) {
     'use strict';
 
     Backbone.SearchModel = MetaModel.extend({});
@@ -8,10 +8,10 @@ define('search-model', ['underscore', 'backbone', './meta-model', 'dispatch'], f
 
         getAJAXUrl: function(id) {
             var url,
-                urlPrefix = Dispatch.getURLPrefix();
+                urlPrefix = window.APP_PREFIX;
 
             if (urlPrefix) {
-                url = '/' + urlPrefix + '/partial/';
+                url = urlPrefix + 'partial/';
             }
             else {
                 url = '/partial/';

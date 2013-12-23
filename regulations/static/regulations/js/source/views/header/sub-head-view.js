@@ -1,34 +1,29 @@
-// **Extends** Backbone.View
-//
-// **Usage** ```require(['sub-head-view'], function(SubHeadView) {})```
-//
-// **Jurisdiction** The gray subheader above the main content section
-define('sub-head-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helpers'], function($, _, Backbone, Dispatch, RegsHelpers) {
+define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'header-events'], function($, _, Backbone, RegsHelpers, HeaderEvents) {
     'use strict';
     var SubHeadView = Backbone.View.extend({
         el: '#content-header',
 
         initialize: function() {
-            // **Event listeners**
-            // when the active section changes, change the contents of the header
-            Dispatch.on('activeSection:change', this.changeTitle, this);
-            Dispatch.on('searchResults:open', this.displayCount, this);
+            this.externalEvents = HeaderEvents;
+
+            this.externalEvents.on('section:open', this._changeTitle, this);
+            this.externalEvents.on('search-results:open', this._displayCount, this);
+            this.externalEvents.on('clear', this._reset, this);
 
             // cache inner title DOM node for frequent reference
             this.$activeTitle = this.$el.find('.header-label');
         },
 
         // populates subhead with new title
-        changeTitle: function(id) {
+        _changeTitle: function(id) {
             this.$activeTitle.html(RegsHelpers.idToRef(id));
-            return this;
         },
 
-        displayCount: function(resultCount) {
+        _displayCount: function(resultCount) {
             this.$activeTitle.html('Search results — ' + resultCount);
         },
 
-        reset: function() {
+        _reset: function() {
             this.$activeTitle.html('');
         }
     });

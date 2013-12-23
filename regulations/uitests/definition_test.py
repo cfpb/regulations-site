@@ -12,8 +12,9 @@ class DefinitionTest(BaseTest, unittest.TestCase):
 
     def test_definition(self):
         self.driver.get('http://localhost:8000/1005-1/2012-12121')
+        html = self.driver.find_element_by_tag_name('html')
         WebDriverWait(self.driver, 30).until(
-            lambda driver: driver.find_element_by_css_selector('html.js'))
+            lambda driver: 'selenium-start' in html.get_attribute('class'))
         definition_link = self.driver.find_element_by_xpath('//*[@id="1005-1-a"]/p/a')
         # term link should have correct data attr
         self.assertTrue('1005-2-a-1' in  definition_link.get_attribute('data-definition'))
@@ -28,9 +29,8 @@ class DefinitionTest(BaseTest, unittest.TestCase):
 
         # definition should appear in sidebar
         self.assertTrue(len(definition.text) > 20)
-        definition_term = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[2]/p/dfn')
-        self.assertEquals(u'\u201cvoided tosser\u201d', 
-                          definition_term.text)
+        definition_term = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[2]/p')
+        self.assertTrue(u'\u201cvoided tosser\u201d' in definition_term.text)
 
         definition_close_button.click()
         # definition should close

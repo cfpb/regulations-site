@@ -1,12 +1,4 @@
-// **Extends** SidebarModuleView
-//
-// **TODO** Determine how much sense that still makes ^^
-//
-// **Usage** ```require(['definition-view'], function(DefinitionView) {})```
-//
-// A single inline interpretation, child of the sidebar
-// As of sprint 6, the only View that is instantiated more than once
-define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'dispatch', 'regs-helpers', './regs-router'], function($, _, Backbone, SidebarModuleView, RegModel, Dispatch, Helpers, Router) {
+define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-view', 'reg-model', 'regs-helpers', './regs-router', 'main-events', 'sidebar-events', 'ga-events'], function($, _, Backbone, SidebarModuleView, RegModel, Helpers, Router, MainEvents, SidebarEvents, GAEvents) {
     'use strict';
 
     // **Constructor**
@@ -17,176 +9,89 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
     //
     // this.options turns into this.model
     var DefinitionView = SidebarModuleView.extend({
-        className: 'open-definition',
+        el: '#definition',
+
         events: {
-            'click .close-button.tab-activated': 'close',
-            'click .close-button': 'headerButtonClose'
+            'click .close-button': 'close'
         },
 
         initialize: function() {
-            var bodyText;
+            this.externalEvents = SidebarEvents;
 
-            this.render = _.bind(this.render, this);
-            this.id = this.options.id;
+            if (typeof this.options.id !== 'undefined') {
+                this.id = this.options.id;
+            }
+
+            // insert the spinner header to be replaced
+            // by the full def once it loads
+            this.renderHeader();
 
             // if pushState is supported, attach the
             // appropriate event handlers
-            if (Dispatch.hasPushState()) {
-                this.events['click .definition'] = 'sendDefinitionLinkEvent';
-                this.events['click .continue-link'] = 'sendContinueLinkEvent';
+            if (Router.hasPushState) {
+                this.events['click .continue-link.interp'] = 'openInterpretation';
+                this.events['click .continue-link'] = 'openFullDefinition';
                 this.delegateEvents(this.events);
             }
-
-            bodyText = RegModel.get(this.id, this.render);
         },
 
-        formatInterpretations: function() {
-            var interpretation = this.$el.find('.inline-interpretation'),
-                interpretationId,
-                baseInterpId,
-                url, prefix;
-
-            if (typeof interpretation[0] !== 'undefined') {
-                interpretationId = $(interpretation[0]).data('interp-id');
-                baseInterpId = Helpers.findBaseSection(interpretationId);
-                interpretation.remove();
-                prefix = Dispatch.getURLPrefix();
-
-                url = '/' + baseInterpId + '/' + Dispatch.getVersion() + '#' + interpretationId;
-
-                if (prefix) {
-                    url = '/' + prefix + url;
-                }
-
-                this.$el.children('.definition-text').append(
-                    Helpers.fastLink(
-                        url,
-                        'Official Interpretation',
-                        'continue-link internal interp',
-                        ['data-linked-section', baseInterpId]
-                    )
-                );
-            }
+        // temporary header w/spinner while definition is loading
+        renderHeader: function() {
+            this.$el.html('<div class="sidebar-header group spinner"><h4>Defined Term</h4></div>');
         },
 
-        removeHeadings: function() {
-            var keyTerm = this.$el.find('dfn.key-term'),
-                keyTerms;
-
-            if (typeof keyTerm[0] !== 'undefined') {
-                keyTerms = keyTerm.length;
-
-                for (var i = 0; i < keyTerms; i++) {
-                    $(keyTerm[i]).remove(); 
-                }
-            }
-        },
-
-        definitionRouter: function(href, paragraph, actionText) {
-            var prefix = Dispatch.getURLPrefix(),
-                hrefParts = _.compact(href.split('/'));
-            Dispatch.trigger('ga-event:definition', {
-                action: actionText,
-                context: '#' + paragraph
-            });
-
-            // links need prefix inserted for non-pushState browsers
-            // but we don't want to route with the prefix
-            if (prefix && hrefParts[0] === prefix) {
-                href = hrefParts.slice(1).join('/');
-            }
-
-            Router.navigate(href, {'trigger': true});
-        },
-
-        sendContinueLinkEvent: function(e) {
-            e.preventDefault();
-            var $link = $(e.target),
-                href = $link.attr('href'),
-                p = $link.data('linked-section');
-
-            this.definitionRouter(href, p, 'clicked continue link');
-        },
-
-        sendDefinitionLinkEvent: function(e) {
-            e.preventDefault();
-            var $link = $(e.target),
-                href = $link.attr('href'),
-                p = Helpers.findBaseSection($link.data('definition'));
-
-            this.definitionRouter(href, p, 'clicked term inside definition');
-        },
-
-        render: function(res) {
-            var $defText, parentId, url, prefix;
-            this.$el.html('<div class="definition-text">' + res + '</div>');
-
-            $defText = this.$el.find('.definition-text');
-            parentId = Helpers.findBaseSection(this.id);
-            this.$el.prepend('<div class="sidebar-header group"><h4>Defined Term<a class="right close-button" href="#">Close definition</a></h4></div>');
-
-            prefix = Dispatch.getURLPrefix();
-
-            url = '/' + parentId + '/' + Dispatch.getVersion() + '#' + this.id;
-
-            if (prefix) {
-                url = '/' + prefix + url;
-            }
-
-            // link to definition in content body
-            $defText.append(
-                Helpers.fastLink(
-                    url, 
-                    Helpers.idToRef(this.id),
-                    'continue-link internal',
-                    ['data-linked-section', parentId]
-                )
-            );
-
-            // remove inline interpretation, add interpretation link
-            this.formatInterpretations();
-            this.removeHeadings();
-
-            // make definition tabbable
-            this.$el.attr('tabindex', '0');
-                // make tab-activeated close button at bottom of definition content
-            $defText.append('<a class="close-button tab-activated" href="#">Close definition</a>');
-
-            // **Event trigger** triggers definition open event
-            Dispatch.trigger('definition:render', this.$el);
-
-            // set focus to the open definition
-            this.$el.focus();
-
-            return this;
+        render: function(html) {
+            this.$el.html(html);
         },
 
         close: function(e) {
             e.preventDefault();
-            Dispatch.remove('definition');
-            Dispatch.trigger('ga-event:definition', {
-                action: 'closed definition by tab-revealed link',
-                context: this.id
+            // return focus to the definition link once the definition is removed
+            $('.definition.active').focus();
+
+            MainEvents.trigger('definition:close');
+            GAEvents.trigger('definition:close', {
+                type: 'definition',
+                by: 'header close button'
             });
-            Dispatch.trigger('definition:remove', this.id);
+            this.remove();
         },
 
-        headerButtonClose: function(e) {
+        openFullDefinition: function(e) {
             e.preventDefault();
-            Dispatch.remove('definition');
-            Dispatch.trigger('ga-event:definition', 'close by header button');
-            Dispatch.trigger('definition:remove', this.id);
+            var id = this.id || $(e.target).data('linked-section'),
+                parentId = Helpers.findBaseSection(id);
+
+            MainEvents.trigger('section:open', parentId, {
+                scrollToId: id
+            }, 'reg-section'); 
+
+            GAEvents.trigger('definition:followCitation', {
+                id: id,
+                type: 'definition'
+            });
+        },
+
+        openInterpretation: function(e) {
+            e.preventDefault();
+            var $e = $(e.target),
+                id = $e.data('linked-section'),
+                pid = $e.data('linked-subsection');
+
+            MainEvents.trigger('section:open', id, {
+                scrollToId: pid
+            });
+
+            GAEvents.trigger('definition:followCitation', {
+                id: id,
+                type: 'definition'
+            });
         },
 
         remove: function() {
             this.stopListening();
-            this.$el.remove();
-            // **Event trigger** notifies app that definition is removed
-            Dispatch.trigger('sidebarModule:remove', this.id);
-
-            // return focus to the definition link once the definition is removed
-            $('.definition.active').focus();
-
+            this.$el.html('');
+            
             return this;
         }
     });

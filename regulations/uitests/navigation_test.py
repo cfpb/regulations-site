@@ -11,8 +11,9 @@ class NavigationTest(BaseTest, unittest.TestCase):
 
     def test_navigation(self):
         self.driver.get('http://localhost:8000/1005-5/2012-12121')
+        html = self.driver.find_element_by_tag_name('html')
         WebDriverWait(self.driver, 30).until(
-            lambda driver: driver.find_element_by_css_selector('html.js'))
+            lambda driver: 'selenium-start' in html.get_attribute('class'))
 
         self.driver.execute_script('poffset = document.getElementById("1005-5-b-2").offsetTop')
         self.driver.execute_script('window.scrollTo(0, poffset)')

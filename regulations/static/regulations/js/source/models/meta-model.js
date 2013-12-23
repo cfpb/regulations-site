@@ -1,4 +1,4 @@
-define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbone, Dispatch) {
+define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
     'use strict';
     var MetaModel = Backbone.Model.extend({
 
@@ -60,8 +60,6 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
         get: function(id, callback) {
             var $promise, resolve;
 
-            Dispatch.trigger('content:loading');
-
             // if we have the requested content cached, retrieve it
             // otherwise, we need to ask the server for it
             $promise = (this.has(id)) ? this._retrieve(id) : this.request(id);
@@ -71,7 +69,6 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
                 if (typeof callback !== 'undefined') {
                     callback(response);
                 }
-                Dispatch.trigger('content:loaded');
             };
 
             $promise.done(resolve);
@@ -83,7 +80,6 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
                 alertNode.className = 'alert';
 
                 $(alertNode).insertBefore('h2.section-number');
-                Dispatch.trigger('content:loaded');
 
                 callback.apply(false);
             });
@@ -115,10 +111,10 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
 
         getAJAXUrl: function(id) {
             var url,
-                urlPrefix = Dispatch.getURLPrefix();
+                urlPrefix = window.APP_PREFIX;
 
             if (urlPrefix) {
-                url = '/' + urlPrefix + '/partial/';
+                url = urlPrefix + 'partial/';
             }
             else {
                 url = '/partial/';
@@ -131,26 +127,10 @@ define('meta-model', ['underscore', 'backbone', 'dispatch'], function(_, Backbon
             url += id;
 
             if (id.indexOf('/') === -1) {
-                url += '/' + Dispatch.getVersion(); 
+                url += '/' + $('#timeline li.current').data('base-version'); 
             }
 
             return url;
-        },
-
-        // We don't have need for the following methods.
-        // This is my half-baked way of overriding them so that they
-        // can be legally called as Backbone runs its course, but have
-        // no effect.
-        sync: function() {
-            return;
-        },
-
-        save: function() {
-            return;
-        },
-
-        destroy: function() {
-            return;
         }
     });
 

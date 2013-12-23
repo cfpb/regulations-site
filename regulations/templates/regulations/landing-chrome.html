@@ -1,5 +1,9 @@
 {% extends "regulations/chrome.html" %}
 
+{% block title %}
+{{meta.cfr_title_number}} CFR Part {{reg_part}} | eRegulations
+{% endblock %}
+
 {% comment %}
 Does not wrap the content in a #content-body; this is instead provided by the
 landing page content (which also provides the sidebar).

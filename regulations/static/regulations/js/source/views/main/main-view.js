@@ -1,80 +1,172 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view'], function($, _, Backbone, Dispatch, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-events', 'section-footer-view', 'main-events', 'sidebar-events', './regs-router', 'drawer-view', 'diff-model', 'diff-view'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router, Drawer, DiffModel, DiffView) {
     'use strict';
 
     var MainView = Backbone.View.extend({
         el: '#content-body',
 
         initialize: function() {
-            this.header = new SubHeadView();
+            this.render = _.bind(this.render, this);
+            this.externalEvents = MainEvents;
 
-            Dispatch.on('mainContent:change', this.render, this);
-            Dispatch.on('regSection:open', this.loadContent, this);
-            Dispatch.on('search:submitted', this.assembleSearchURL, this);
+            if (Router.hasPushState) {
+                this.externalEvents.on('search-results:open', this.createView, this);
+                this.externalEvents.on('section:open', this.createView, this);
+                this.externalEvents.on('section:remove', this.sectionCleanup, this);
+                this.externalEvents.on('diff:open', this.createView, this);
+                this.externalEvents.on('breakaway:open', this.breakawayOpen, this);
+            }
+
+            var childViewOptions = {},
+                appendixOrSupplement;
+            this.$topSection = this.$el.find('section[data-page-type]');
+
+            // which page are we starting on?
+            this.contentType = this.$topSection.data('page-type');
+            // what version of the reg?
+            this.regVersion = this.$topSection.data('base-version');
+            // what section do we have open?
+            this.sectionId = this.$topSection.attr('id');
+            this.regPart = $('#menu').data('reg-id');
+            this.cfrTitle = $('#menu').data('cfr-title-number');
+
+            // build options object to pass into child view constructor
+            childViewOptions.id = this.sectionId;
+            childViewOptions.regVersion = this.regVersion;
+            childViewOptions.cfrTitle = this.cfrTitle;
+
+            appendixOrSupplement = this.isAppendixOrSupplement();
+            if (appendixOrSupplement) {
+                // so that we will know what the doc title format should be 
+                childViewOptions.subContentType = appendixOrSupplement;
+            }
+
+            // find search query
+            if (this.contentType === 'search-results') {
+                childViewOptions.id = Helpers.parseURL(window.location.href);
+                childViewOptions.params = childViewOptions.id.params;
+                childViewOptions.query = childViewOptions.id.params.q;
+            }
+
+            if (this.contentType === 'landing-page') {
+                DrawerEvents.trigger('pane:change', 'table-of-contents');
+            }
+
+            // we don't want to ajax in data that the page loaded with
+            childViewOptions.rendered = true;
+
+            if (this.sectionId) {
+                // store the contents of our $el in the model so that we 
+                // can re-render it later
+                this.modelmap[this.contentType].set(this.sectionId, this.$el.html());
+                childViewOptions.model = this.modelmap[this.contentType];
+            }
+
+            if (this.contentType && typeof this.viewmap[this.contentType] !== 'undefined') {
+                // create new child view
+                this.childView = new this.viewmap[this.contentType](childViewOptions);
+            }
+
+            this.sectionFooter = new SectionFooter({el: this.$el.find('.section-nav')});
         },
 
         modelmap: {
-            'regSection': RegModel,
-            'searchResults': SearchModel
+            'reg-section': RegModel,
+            'search-results': SearchModel,
+            'diff': DiffModel,
+            'appendix': RegModel,
+            'interpretation': RegModel
         }, 
 
         viewmap: {
-            'regSection': RegView,
-            'searchResults': SearchResultsView
+            'reg-section': RegView,
+            'search-results': SearchResultsView,
+            'diff': DiffView,
+            'appendix': RegView,
+            'interpretation': RegView
         },
 
-        assembleSearchURL: function(options, type) {
-            var url = Dispatch.getRegId();
-            url += '?q=' + options.query;
-            url += '&version=' + options.version;
-
-            if (typeof options.page !== 'undefined') {
-                url += '&page=' + options.page;
+        createView: function(id, options, type) {
+            // close breakaway if open
+            if (typeof this.breakawayCallback !== 'undefined') {
+                this.breakawayCallback();
+                delete(this.breakawayCallback);
             }
 
-            options.url = url;
-            this.loadContent(url, options, type);
-        },
+            this.contentType = type;
 
-        loadContent: function(id, options, type) {
-            var returned, render;
+            // id is null on search results as there is no section id
+            if (id !== null) {
+                this.sectionId = id;
+            }
+
+            options.id = id;
+            options.type = this.contentType;
+            options.regVersion = this.regVersion;
+            options.regPart = this.regPart;
+            options.model = this.modelmap[this.contentType];
+            options.cb = this.render;
+            options.cfrTitle = this.cfrTitle;
+
+            // diffs need some more version context
+            if (this.contentType === 'diff') {
+                options.baseVersion = this.regVersion;
+                options.newerVersion = this.$topSection.data('newer-version');
+                if (typeof options.fromVersion === 'undefined') {
+                    options.fromVersion = $('#table-of-contents').data('from-version');
+                }
+            }
 
             this.loading();
 
-            // callback to be sent to model's get method
-            // called after ajax resolves sucessfully
-            render = function(returned) {
-                this.createView(returned, options, type); 
-                this.loaded();
-                Dispatch.trigger('sxs:close');
-            }.bind(this);
+            if (typeof this.childView !== 'undefined') {
+                this.childView.remove();
+            }
 
-            // simplifies to
-            // this.model.get()
-            returned = this.modelmap[type].get(id, render);
-
-            return this;
+            this.childView = new this.viewmap[this.contentType](options);
         },
 
-        createView: function(html, options, type) {
-            Dispatch.removeContentView();
-            this.render(html, options.scrollToId);
-            Dispatch.setContentView(new this.viewmap[type](options));
+        isAppendixOrSupplement: function() {
+            if (Helpers.isAppendix(this.sectionId)) {
+                return 'appendix';
+            }
+            else if (Helpers.isSupplement(this.sectionId)) {
+                return 'supplement';
+            }
+            return false;
         },
 
-        render: function(html, scrollToId) {
+        breakawayOpen: function(cb) {
+            this.breakawayCallback = cb;
+        },
+
+        render: function(html, options) {
             var offsetTop, $scrollToId;
 
-            this.header.reset();
+            if (typeof this.childView !== 'undefined') {
+                this.sectionFooter.remove();
+            }
+
             this.$el.html(html);
 
-            if (typeof scrollToId !== 'undefined') {
-                $scrollToId = $('#' + scrollToId);
+            MainEvents.trigger('section:rendered');
+
+            this.childView.attachWayfinding();
+
+            SidebarEvents.trigger('update', {
+                'type': this.contentType,
+                'id': this.sectionId
+            });
+
+            if (options && typeof options.scrollToId !== 'undefined') {
+                $scrollToId = $('#' + options.scrollToId);
                 if ($scrollToId.length > 0) {
                     offsetTop = $scrollToId.offset().top;
                 }
             }
 
             window.scrollTo(0, offsetTop || 0);
+
+            this.loaded();
         },
 
         loading: function() {
@@ -90,6 +182,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'search-res
             $('.section-focus').focus();
         }
     });
-
-    return MainView;
+    var main = new MainView();
+    return main;
 });

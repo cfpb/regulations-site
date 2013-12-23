@@ -1,29 +1,20 @@
-// **Extends** Backbone.View
-//
-// **Usage** ```require(['toc-view'], function(TOCView) {})```
-//
-// **Jurisdiction** Expandable Table of Contents
-define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helpers'], function($, _, Backbone, Dispatch, RegsHelpers) {
+define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-view', './regs-router', 'main-events', 'drawer-events'], function($, _, Backbone, RegsHelpers, Drawer, Router, MainEvents, DrawerEvents) {
     'use strict';
     var TOCView = Backbone.View.extend({
         el: '#table-of-contents',
 
         events: {
-            'click a': 'sendClickEvent'
+            'click a.diff': 'sendDiffClickEvent',
+            'click a:not(.diff)': 'sendClickEvent'
         },
 
         initialize: function() {
-            var openSection = Dispatch.getOpenSection();
-            // **Event Listeners**
-            // when the active section changes, highlight it in the TOC
-            Dispatch.on('regSection:open', this.setActive, this);
+            var openSection = $('section[data-page-type]').attr('id');
 
-            if (typeof openSection !== 'undefined') {
+            DrawerEvents.on('section:open', this.setActive, this);
+
+            if (openSection) {
                 this.setActive(openSection);
-            }
-
-            if (this.$el.hasClass('diff-toc')) {
-                this.diffMode = true;
             }
 
             // **TODO** need to work out a bug where it scrolls the content section
@@ -31,8 +22,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helper
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
-            // also! if we're in diffmode, suspend events
-            if (Dispatch.hasPushState() === false || this.diffMode) {
+            if (Router.hasPushState === false) {
                 this.events = {};
             }
         },
@@ -51,7 +41,22 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'regs-helper
             e.preventDefault();
 
             var sectionId = $(e.currentTarget).data('section-id');
-            Dispatch.trigger('regSection:open', sectionId, {id: sectionId}, 'regSection');
+            DrawerEvents.trigger('section:open', sectionId);
+            MainEvents.trigger('section:open', sectionId, {}, 'reg-section');
+        },
+
+        sendDiffClickEvent: function(e) {
+            e.preventDefault();
+
+            var $link = $(e.currentTarget),
+                sectionId = $link.data('section-id'),
+                config = {},
+                $metaSection = $('section[data-base-version]');
+
+            config.newerVersion = $metaSection.data('newer-version');
+            config.baseVersion = $metaSection.data('base-version');
+            DrawerEvents.trigger('section:open', sectionId);
+            MainEvents.trigger('diff:open', sectionId, config, 'diff');            
         },
 
         // **Inactive** 

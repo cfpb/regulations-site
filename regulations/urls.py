@@ -6,7 +6,7 @@ from regulations.views.chrome import ChromeSearchView, ChromeSectionView
 from regulations.views.chrome_breakaway import ChromeSXSView
 from regulations.views.sidebar import SideBarView
 from regulations.views.partial import PartialInterpView, PartialRegulationView
-from regulations.views.partial import PartialParagraphView, PartialSectionView
+from regulations.views.partial import PartialParagraphView, PartialSectionView, PartialDefinitionView
 from regulations.views.diff import ChromeSectionDiffView
 from regulations.views.diff import PartialSectionDiffView
 from regulations.views.partial_search import PartialSearch
@@ -103,7 +103,12 @@ urlpatterns = patterns(
     url(r'^partial/sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
         ParagraphSXSView.as_view(),
         name='paragraph_sxs_view'),
-    #A regulation section without chrome
+    #A definition templated to be displayed in the sidebar (without chrome)
+    #Example: http://.../partial/definition/201-2-g/2011-1738
+    url(r'^partial/definition/%s/%s$' % (paragraph_pattern, version_pattern),
+        PartialDefinitionView.as_view(),
+        name='partial_definition_view'),
+   #A regulation section without chrome
     #Example: http://.../partial/201-4/2013-10704
     url(r'^partial/%s/%s$' % (section_pattern, version_pattern),
         PartialSectionView.as_view(),

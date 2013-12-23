@@ -1,6 +1,3 @@
-// **Usage**
-// require(['regs-helpers'], function(RegsHelpers) {});
-//
 // Defines some globally useful helper functions
 define('regs-helpers', function() {
     'use strict';
@@ -127,16 +124,38 @@ define('regs-helpers', function() {
             }
         },
 
-        findStartingContent: function() {
-            var sessionState = sessionStorage.getItem('drawerDefault');
+        isSupplement: function(id) {
+            var parts;
 
-            if (sessionState) {
-                sessionStorage.removeItem('drawerDefault');
-                return sessionState;
+            if (typeof id !== 'undefined') {
+                parts = _.compact(id.split('-'));
+                if (parts.length < 2) {
+                    return false;
+                }
+
+                if (parts[1].toLowerCase() === 'interp') {
+                    return true;
+                }
             }
-            else {
-                return false;
+
+            return false;
+        },
+
+        isAppendix: function(id) {
+            var parts;
+
+            if (typeof id !== 'undefined') {
+                parts = _.compact(id.split('-'));
+                if (parts.length < 2) {
+                    return false;
+                }
+
+                if (isNaN(parts[1]) && parts[1].toLowerCase() !== 'interp') {
+                    return true;
+                }
             }
+
+            return false;
         },
 
         // thanks, James Padolsey http://james.padolsey.com/javascript/parsing-urls-with-the-dom/

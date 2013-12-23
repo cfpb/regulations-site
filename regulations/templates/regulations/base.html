@@ -13,7 +13,7 @@ CSS/Javascript etc., should inherit from this template.
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
         {% block title %}
-        PART {{reg_part}} - {{meta.statutory_name|upper}}{%if meta.reg_letter %} (REGULATION {{meta.reg_letter}}) {% endif %}
+        {{meta.cfr_title_number}} CFR Part {{reg_part}} | eRegulations
         {% endblock %}
         </title>
         <link rel="shortcut icon" type="image/x-icon" href="{%static "eregsip/favicon.ico" %}"/>

@@ -3,7 +3,7 @@ Partial Search Results.
 {% endcomment %}
 
 <div id="content-wrapper" class="search-results">
-    <section data-base-version="{{ version }}">
+    <section data-page-type="search-results" data-base-version="{{ version }}">
         {% if not skip_count %}
         <span id="result-count">{{ results.total_hits }} result{{ results.results|pluralize }}</span>
         {% endif %}
@@ -11,7 +11,7 @@ Partial Search Results.
         <ul class="result-list">
         {% for result in results.results %}
             <li>
-            <h3><a href="{% url 'chrome_section_view' result.section_id version %}#{{result.label|join:'-'}}" class="internal">{{result.header}}</a></h3>
+            <h3><a href="{% url 'chrome_section_view' result.section_id version %}#{{result.label|join:'-'}}" class="internal" data-linked-section="{{result.section_id}}" data-linked-version="{{version}}" data-linked-subsection="{{result.label|join:'-'}}">{{result.header}}</a></h3>
                 <p>{{result.text}}</p>
             </li>
         {% empty %}

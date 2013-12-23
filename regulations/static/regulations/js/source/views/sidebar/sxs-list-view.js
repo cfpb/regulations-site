@@ -1,4 +1,4 @@
-define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sidebar-list-view', './folder-model', 'sxs-view', './regs-router'], function($, _, Backbone, Dispatch, SidebarListView, FolderModel, SxSView, Router) {
+define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'sidebar-list-view', './folder-model', 'sxs-view', './regs-router', 'sidebar-view', 'breakaway-events', 'ga-events'], function($, _, Backbone, SidebarListView, FolderModel, SxSView, Router, Sidebar, BreakawayEvents, GAEvents) {
     'use strict';
     var SxSListView = SidebarListView.extend({
         el: '#sxs-list',
@@ -8,17 +8,12 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         },
 
         initialize: function() {
-            this.model = new FolderModel({supplementalPath: 'sidebar'});
             this.render = _.bind(this.render, this);
-
-            Dispatch.on('regSection:open:after', this.getSidebar, this);
-            Dispatch.on('sxs:route', this.createSxSView, this);
-
             this.modifyListDisplay();
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links
-            if (Dispatch.hasPushState() === false) {
+            if (Router.hasPushState === false) {
                 this.events = {};
             }
         },
@@ -26,39 +21,23 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
         openSxS: function(e) {
             e.preventDefault();
 
-            var $sxsLink = $(e.target);
+            var $sxsLink = $(e.target),
+                id = $sxsLink.data('sxs-paragraph-id'),
+                docNumber = $sxsLink.data('doc-number'),
+                version = $('section[data-base-version]').data('base-version');
 
-            this.createSxSView({
-                    'regParagraph': $sxsLink.data('sxs-paragraph-id'),
-                    'docNumber': $sxsLink.data('doc-number'),
-                    'fromVersion': Dispatch.getVersion()
-                },
-                function(sxsURL) {
-                    if (Dispatch.hasPushState()) {
-                        Router.navigate('sxs/' + sxsURL);
-                    }
-                }
-            );
-        },
+            BreakawayEvents.trigger('sxs:open', {
+                'regParagraph': id,
+                'docNumber': docNumber,
+                'fromVersion': version
+            });
 
-        createSxSView: function(options, callback) {
-            var sxsURL = options.regParagraph + '/' + options.docNumber + '?from_version=' + options.fromVersion;
-
-            Dispatch.set('sxs-analysis', new SxSView({
-                    'regParagraph': options.paragraphId,
-                    'docNumber': options.docNumber,
-                    'fromVersion': options.version,
-                    'url': sxsURL
-                })
-            );
-
-            if (typeof callback !== 'undefined') {
-                callback(sxsURL);
-            }
-        },
-
-        getSidebar: function(sectionId) {
-            this.model.get(sectionId, this.render);
+            GAEvents.trigger('sxs:open', {
+                id: id,
+                docNumber: docNumber,
+                regVersion: version,
+                type: 'sxs' 
+            });
         },
 
         render: function(html) {
@@ -67,9 +46,6 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'dispatch', 'sideba
             this.$el.html(list);
 
             this.modifyListDisplay();
-
-            // @TODO: move permalink updating to somewhere sane
-            Dispatch.trigger('sidebar:update', $html.find('#permalinks'));
         },
 
         modifyListDisplay: function() {

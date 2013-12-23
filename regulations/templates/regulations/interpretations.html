@@ -1,8 +1,9 @@
 {% comment %}
     For interpretations that appear in their natural place in the reg text
 {% endcomment %}
+
 {% if c.node_type == "interp" %}
-    <section {% if c.markup_id %}id="{{c.markup_id}}" class="supplement-section"{% endif %} data-base-version="{{version}}">
+    <section {% if c.markup_id %}id="{{c.markup_id}}" class="supplement-section"{% endif %} data-base-version="{{version}}" data-page-type="interpretation">
 
         {% for cc in c.children %}
             {% with interp=cc %}

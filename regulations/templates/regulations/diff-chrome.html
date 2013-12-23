@@ -6,6 +6,10 @@ the "effective date" is now a comparison, the sidebar is empty, and both the
 table of contents and the version tab are quite different
 {% endcomment %}
 
+{% block title %}
+Comparison of {{meta.cfr_title_number}} CFR {{formatted_id}} | eRegulations
+{% endblock %}
+
 {% block header-secondary %}
 <span class="effective-date diff-dates"><strong>Comparing:</strong>
     {% with older_version=version %}
@@ -21,7 +25,7 @@ table of contents and the version tab are quite different
 {% endblock %}
 
 {% block drawer-toc %}
-<div class="toc-drawer toc-container current hidden diff-toc" id="table-of-contents">
+<div class="toc-drawer toc-container current hidden diff-toc" id="table-of-contents" data-from-version="{{from_version}}">
     <div class="drawer-header">
         <h2 class="toc-type">Table of Contents</h2>
     </div><!-- /.drawer-header -->
@@ -29,11 +33,11 @@ table of contents and the version tab are quite different
         <ol class="drawer-content">
             {% for item in TOC %}
                 {% if item.is_section %}
-                <li class="{{item.op}}"><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">§&nbsp;{{item.label}}</span> {{item.sub_label|safe}}</a></li>
+                <li class="{{item.op}}"><a href="{{item.url}}" data-section-id="{{item.section_id}}" class="diff"><span class="toc-section-marker">§&nbsp;{{item.label}}</span> {{item.sub_label|safe}}</a></li>
                 {% elif item.is_appendix or item.is_supplement%}
-                <li class="{{item.op}}"><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
+                <li class="{{item.op}}"><a href="{{item.url}}" data-section-id="{{item.section_id}}" class="diff"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
                 {% else %}
-                <li class="{{item.op}}"><a href="{{item.url}}" data-section-id="{{item.section_id}}">{{item.label|safe}}</a></li>
+                <li class="{{item.op}}"><a href="{{item.url}}" data-section-id="{{item.section_id}}" class="diff">{{item.label|safe}}</a></li>
                 {% endif %}
             {% endfor %}
         </ol>

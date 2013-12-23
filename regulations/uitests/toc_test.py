@@ -11,9 +11,11 @@ class TOCTest(BaseTest, unittest.TestCase):
 
     def test_toc(self):
         self.driver.get('http://localhost:8000/1005')
-        drawer_toggle = WebDriverWait(self.driver, 10).until(
-            lambda driver: driver.find_element_by_id('panel-link'))
-        drawer_toggle.click()
+        html = self.driver.find_element_by_tag_name('html')
+        WebDriverWait(self.driver, 30).until(
+            lambda driver: 'selenium-start' in html.get_attribute('class'))
+
+        drawer_toggle = self.driver.find_element_by_id('panel-link')
 
         # toggle arrow should switch
         self.assertTrue(drawer_toggle.get_attribute('class').find('open'))

@@ -1,75 +1,91 @@
-define('analytics-handler', ['jquery', 'underscore', 'backbone', 'dispatch'], function($, _, Backbone, Dispatch) {
+define('analytics-handler', ['jquery', 'underscore', 'backbone', 'ga-events'], function($, _, Backbone, GAEvents) {
     'use strict';
 
     var AnalyticsHandler = Backbone.View.extend({
         initialize: function() {
-            this.bindListeners();
+            this.externalEvents = GAEvents;
 
-            Dispatch.on('ga-event:definition', this.sendEvent, 'Inline Definition');
-            Dispatch.on('regSection:open', this.sendEvent, 'Table of Contents');
-            Dispatch.on('interpretation:toggle', this.sendEvent, 'Inline interpretation');
-            Dispatch.on('ga-event:permalink', this.sendEvent, 'Permalink');
-            Dispatch.on('search:submitted', this.sendEvent);
-            Dispatch.on('ga-event:sxs', this.sendEvent);
-            Dispatch.on('ga-event:sxsclose', this.sendEvent, 'close SxS by back link');
-            Dispatch.on('ga-event:sectionnav', this.sendEvent, 'navigate to section by footer pagination');
+            this.externalEvents.on('section:open', this.sendEvent, 'open');
+            this.externalEvents.on('definition:open', this.sendEvent, 'open');
+            this.externalEvents.on('definition:close', this.sendEvent, 'close');
+            this.externalEvents.on('interp:expand', this.sendEvent, 'expand');
+            this.externalEvents.on('interp:collapse', this.sendEvent, 'collapse');
+            this.externalEvents.on('interp:followCitation', this.sendEvent, 'click citation');
+            this.externalEvents.on('definition:followCitation', this.sendEvent, 'click citation');
+            this.externalEvents.on('sxs:open', this.sendEvent, 'open');
+            this.externalEvents.on('drawer:open', this.sendEvent, 'open');
+            this.externalEvents.on('drawer:close', this.sendEvent, 'close');
+            this.externalEvents.on('drawer:switchTab', this.sendEvent, 'switch tab');
+
+            // not sure if this works
+            $('#timeline .stop-button').on('click', function() {
+                this.sendEvent({type: 'diff'}).bind('click stop comparing');
+            }.bind(this));
         },
 
-        // TODO: standardize context on Dispatch events
-        sendEvent: function(e) {
-            var object, action, context;
+        sendEvent: function(context) {
+            var object, objectParts = [];
 
             if (typeof window.ga === 'undefined') {
                 return;
             }
 
-            if (typeof e === 'object') {
-                // from jQ event
-                if (typeof e.data !== 'undefined') {
-                    context = e.data;
-                    action = context.action;
-                    object = context.object;
+            if (typeof context.type !== 'undefined') {
+                objectParts.push(context.type);
 
-                    if (typeof context.action === 'function') {
-                        action = context.action.call();
+                if (_.contains(['reg-section', 'definition', 'inline-interp', 'sxs', 'drawer'], context.type)) {
+                    if (typeof context.id !== 'undefined' && context.id !== null) {
+                        objectParts.push(context.id);
                     }
                 }
-                // from search event
-                else if (typeof e.query !== 'undefined') {
-                    action = 'submitted search';
-                    object = e.query + ' ' + e.version;
-                }
-                else if (typeof e.opensxs !== 'undefined') {
-                    action = 'opened SxS';
-                    object = e.opensxs;
-                }
-                // from Dispatch event
-                else {
-                    action = e.action + ' ' + e.context;
-                    object = this;
-                }
             }
 
-            // also from Dispatch event
-            else if (typeof e === 'string') {
-                action = e;
-                object = this; 
+            // diffs preserve ids in sectionId because
+            // id has the url in order to keep a unique
+            // instance cached in the model
+            if (typeof context.sectionId !== 'undefined') {
+                objectParts.push(context.sectionId);
             }
 
-            window.ga('send', 'event', object, action);
-        },
+            if (typeof context.regVersion !== 'undefined') {
+                objectParts.push('version:' + context.regVersion);
+            }
 
-        bindListeners: function() {
-            $('#menu-link').on('click', { 
-                object: 'Table of Contents', 
-                action: function() {
-                    return $('#menu').hasClass('active') ? 'close' : 'open';
-                }
-            }, this.sendEvent);
+            if (typeof context.baseVersion !== 'undefined' && typeof context.newerVersion !== 'undefined') {
+                objectParts.push('comparing:' + context.baseVersion);
+                objectParts.push(context.newerVersion);
+            }
 
-            $('#toc-close').on('click', {object: 'Table of Contents', action: 'close (bottom link)'}, this.sendEvent);
+            if (typeof context.query !== 'undefined') {
+                objectParts.push('query:' + context.query);
+            }
+
+            if (typeof context.page !== 'undefined') {
+                objectParts.push('results page:' + context.page);
+            }
+
+            if (typeof context.from !== 'undefined') {
+                objectParts.push('from:' + context.from);
+            }
+
+            if (typeof context.by !== 'undefined') {
+                objectParts.push('by:' + context.by);
+            }
+
+            if (typeof context.to !== 'undefined') {
+                objectParts.push('to:' + context.to);
+            }
+
+            if (typeof context.docNumber !== 'undefined') {
+                objectParts.push('doc:' + context.docNumber);
+            }
+
+            object = objectParts.join(' ');
+
+            window.ga('send', 'event', object, this);
         }
     });
 
-    return AnalyticsHandler;
+    var gaHandler = new AnalyticsHandler();
+    return gaHandler;
 });

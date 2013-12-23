@@ -3,7 +3,7 @@
 {% endcomment %}
 
 {%if c.node_type == 'regtext' %}
-<section id="{{c.markup_id}}" class="reg-section section-focus" tabindex="0" data-permalink-section data-base-version="{{version}}">
+<section id="{{c.markup_id}}" class="reg-section section-focus" tabindex="0" data-permalink-section data-base-version="{{version}}" data-page-type="{{markup_page_type}}" {% if newer_version %}data-newer-version="{{newer_version}}"{% endif %}>
     <h2 class="section-title" tabindex="0"> {{c.header|safe}} </h2>
         {% if c.marked_up %}
         <p> 
