@@ -21,9 +21,6 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
             this.definitionModel = new MetaModel({
                 supplementalPath: 'definition'
             });
-
-            // cache help folder
-            this.htmlHelp = $('#help').html();
         },
 
         openDefinition: function(id) {
@@ -62,17 +59,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
         },
 
         openRegFolders: function(html) {
-            if (this.childViews.sxs) {
-                this.childViews.sxs.remove();
-            }
-
-            if (this.childViews.permalink) {
-                this.childViews.permalink.remove();
-            }
-
-            if (this.childViews.help) {
-                this.childViews.help.remove();
-            }
+            this.closeAllChildren();
 
             if (arguments.length > 0) {
                 this.insertChild(html);
@@ -83,18 +70,10 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
 
             this.childViews.sxs = new SxSList();
             this.childViews.permalink = new PermalinkView();    
-
-            this.insertHelp();
         },
 
         removeLandingSidebar: function() {
             $('.landing-sidebar').hide();
-        },
-
-        insertHelp: function() {
-            if (typeof this.helpHTML !== 'undefined') {
-                this.insertChild(this.helpHTML);
-            }
         },
 
         createPlaceholders: function() {
@@ -105,15 +84,11 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
             if (this.$el.find('#permalinks').length === 0) {
                 this.$el.append('<section id="permalinks" class="regs-meta"></section>');
             }
-
-            if (typeof this.helpHTML !== 'undefined') {
-                this.$el.append('<section id="help" class="regs-meta"></section>');
-            }
         },
 
         // open whatever content should populate the sidebar
         insertChild: function(el) {
-            this.$el.append(el); 
+            this.$el.prepend(el); 
         },
 
         removeChild: function(el) {
