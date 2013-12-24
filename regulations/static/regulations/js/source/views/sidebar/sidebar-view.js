@@ -49,11 +49,14 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
                     break;
                 case 'search':
                     this.closeAllChildren();
+                    this.loaded();
                     break;
                 case 'diff':
+                    this.loaded();
                     break;
                 default:
                     this.closeAllChildren();
+                    this.loaded();
             }
 
             this.removeLandingSidebar();
