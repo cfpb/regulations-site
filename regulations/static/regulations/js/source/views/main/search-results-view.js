@@ -84,12 +84,6 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             config.regVersion = $resultLink.data('linked-version');
             config.scrollToId = $resultLink.data('linked-subsection');
             MainEvents.trigger('section:open', $resultLink.data('linked-section'), config, 'reg-section');
-        },
-
-        remove: function() {
-            this.$el.remove();
-            this.stopListening();
-            return this;
         }
     });
 
