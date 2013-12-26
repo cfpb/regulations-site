@@ -1,4 +1,4 @@
-define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'sidebar-list-view', './folder-model', 'sxs-view', './regs-router', 'sidebar-view', 'breakaway-events', 'ga-events'], function($, _, Backbone, SidebarListView, FolderModel, SxSView, Router, Sidebar, BreakawayEvents, GAEvents) {
+define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'sidebar-list-view', 'sxs-view', './regs-router', 'sidebar-view', 'breakaway-events', 'ga-events'], function($, _, Backbone, SidebarListView, SxSView, Router, Sidebar, BreakawayEvents, GAEvents) {
     'use strict';
     var SxSListView = SidebarListView.extend({
         el: '#sxs-list',

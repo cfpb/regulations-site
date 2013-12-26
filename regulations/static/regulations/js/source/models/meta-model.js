@@ -62,7 +62,7 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
 
             // if we have the requested content cached, retrieve it
             // otherwise, we need to ask the server for it
-            $promise = (this.has(id)) ? this._retrieve(id) : this.request(id);
+            $promise = (this.has(id)) ? this.retrieve(id) : this.request(id);
 
             // callback once the promise resolves
             resolve = function(response) {
@@ -89,7 +89,7 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
 
         // basically returns ```this.content[id]``` immediately,
         // but is consistent with the interface that ```this.request``` provides
-        _retrieve: function(id) {
+        retrieve: function(id) {
             var $deferred = $.Deferred();
 
             $deferred.resolve(this.content[id]);
