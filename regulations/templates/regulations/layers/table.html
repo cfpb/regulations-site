@@ -1,0 +1,13 @@
+{% comment %}
+    Used to turn markdown tables into HTML tables
+{% endcomment %}
+<table>
+    <tr>
+        {% for th in header %}<th>{{ th }}</th>{% endfor %}
+    </tr>
+    {% for row in rows %}
+    <tr>
+        {% for td in row %}<td>{{ td }}</td>{% endfor %}
+    </tr>
+    {% endfor %}
+</table>
