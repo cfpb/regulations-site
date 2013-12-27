@@ -20,6 +20,7 @@ class ParagraphMarkersLayerTest(TestCase):
         self.assertEqual([0], a[0][2])
         call_args = loader.get_template.return_value.render.call_args[0][0]
         self.assertEqual('(a)', call_args['paragraph'])
+        self.assertEqual('a', call_args['paragraph_stripped'])
 
         q = pml.apply_layer('1001-12-q')
         self.assertEqual(1, len(q))
@@ -27,3 +28,4 @@ class ParagraphMarkersLayerTest(TestCase):
         self.assertEqual([1], q[0][2])
         call_args = loader.get_template.return_value.render.call_args[0][0]
         self.assertEqual('q.', call_args['paragraph'])
+        self.assertEqual('q', call_args['paragraph_stripped'])

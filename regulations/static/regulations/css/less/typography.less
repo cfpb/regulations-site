@@ -342,8 +342,12 @@ The `<ol>` tag needs to have the appropriate list type applied
 ```
 */
 
-.main-content ol, dfn {
+.main-content ol, dfn, .stripped-marker {
   .avenir-next-demi;
+}
+
+.appendix-section ol {
+  list-style-type: none;
 }
 
 .main-content p {
@@ -351,9 +355,16 @@ The `<ol>` tag needs to have the appropriate list type applied
   font-weight: 400;
 }
 
-.paragraph-marker {
-    display: none;
+.paragraph-marker, .stripped-marker {
+  display: none;
 }
+
+.appendix-section .stripped-marker {
+  position: absolute;
+  display: inline;
+  margin-left: -20px;
+}
+
 
 /*  Definition Styles
     ==========================================================================
