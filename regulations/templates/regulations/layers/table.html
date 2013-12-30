@@ -2,12 +2,19 @@
     Used to turn markdown tables into HTML tables
 {% endcomment %}
 <table>
-    <tr>
-        {% for th in header %}<th>{{ th }}</th>{% endfor %}
-    </tr>
+    <thead>
+    {% for row in header %}
+        <tr>
+        {% for th in row %}
+            <th rowspan="{{ th.rowspan }}" colspan="{{ th.colspan }}" >{{ th.text }}</th>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    </thead>
+    <tbody>
     {% for row in rows %}
-    <tr>
-        {% for td in row %}<td>{{ td }}</td>{% endfor %}
-    </tr>
+        <tr>
+            {% for td in row %}<td>{{ td }}</td>{% endfor %}
+        </tr>
     {% endfor %}
 </table>
