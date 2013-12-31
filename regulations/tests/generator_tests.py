@@ -60,7 +60,7 @@ class GeneratorTest(TestCase):
 
     @patch('regulations.generator.generator.api_reader')
     def test_get_notice(self, api_reader):
-        notice = {'some':'notice'}
+        notice = {'some': 'notice'}
         api_reader.ApiReader.return_value.notice.return_value = notice
         n = generator.get_notice('204-1234')
         self.assertEqual(notice, n)
@@ -97,11 +97,17 @@ class GeneratorTest(TestCase):
 
     @patch('regulations.generator.generator.LayerCreator.get_layer_json')
     def test_add_layer(self, get_layer_json):
-        creator = generator.LayerCreator()
         get_layer_json.return_value = {'layer': 'layer'}
+        creator = generator.LayerCreator()
         creator.add_layer('meta', '205', 'verver')
         i, p, s = creator.get_appliers()
         self.assertEquals(len(p.layers), 1)
+
+        get_layer_json.return_value = None
+        creator = generator.LayerCreator()
+        creator.add_layer('meta', '205', 'verver')
+        i, p, s = creator.get_appliers()
+        self.assertEquals(len(p.layers), 0)
 
     @patch('regulations.generator.generator.LayerCreator.get_layer_json')
     def test_add_layers(self, get_layer_json):

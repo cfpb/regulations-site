@@ -1,3 +1,4 @@
+import logging
 import re
 
 from django.conf import settings
@@ -74,14 +75,18 @@ class LayerCreator(object):
             api_name, applier_type,\
                 layer_class = LayerCreator.LAYERS[layer_name]
             layer_json = self.get_layer_json(api_name, regulation, version)
-            layer = layer_class(layer_json)
+            if layer_json is None:
+                logging.warning("No data for %s/%s/%s"
+                                % (api_name, regulation, version))
+            else:
+                layer = layer_class(layer_json)
 
-            if sectional and hasattr(layer, 'sectional'):
-                layer.sectional = sectional
-            if hasattr(layer, 'version'):
-                layer.version = version
+                if sectional and hasattr(layer, 'sectional'):
+                    layer.sectional = sectional
+                if hasattr(layer, 'version'):
+                    layer.version = version
 
-            self.appliers[applier_type].add_layer(layer)
+                self.appliers[applier_type].add_layer(layer)
 
     def add_layers(self, layer_names, regulation, version, sectional=False):
         #This doesn't deal with sectional interpretations yet.
