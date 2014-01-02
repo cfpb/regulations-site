@@ -1,7 +1,7 @@
 # Understanding and using the eRegulations Backbone Application
 
 - [How is content identified?](#how-is-content-identified)
-- [How does eRegs’ Backbone layer receive data?](#how-does-eregs-backbone-layer-receive-data)
+- [How does eRegulations' Backbone layer receive data?](#how-does-eregulations-backbone-layer-receive-data)
 - [How is Backbone used?](#how-is-backbone-used)
 - [How should I add a new feature?](#how-should-i-add-a-new-feature)
 
@@ -12,7 +12,7 @@ Regulations are very large and structured documents. The application loads regul
 
 For example, section 1005.2(a)(3)(iii) would have the id 1005-2-a-3-iii.
 
-## How does eRegs’ Backbone layer receive data?
+## How does eRegulations’ Backbone layer receive data?
 The Backbone application does not consume an API. Everything that makes eRegulations unique relies on layers of transformations to the plain regulation text. These transformations happen server side. The application pulls in rendered partial templates from Django. The application is agnostic about the content itself but relies on ids and certain data attributes in the markup for context.
 
 ## How is Backbone used?
