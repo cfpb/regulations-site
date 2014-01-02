@@ -8,7 +8,7 @@
 ## How is content identified?
 Regulations are very large and structured documents. The application loads regulations section by section. Sections and paragraphs can also have different applications outside of the flow of reg text. For example, a paragraph will define a term, and so we sometimes display this data outside of the content area (in the sidebar) in its other context - as a definition.
 
-**The id of a piece of content is a dash-delimited string containing the section, part and paragraphs that identify the content in the regulation.** To learn about this structure, see pages 5 and 6 of (this PDF)[http://www.archives.gov/federal-register/tutorial/tutorial_060.pdf).
+**The id of a piece of content is a dash-delimited string containing the section, part and paragraphs that identify the content in the regulation.** To learn about this structure, see pages 5 and 6 of [this PDF](http://www.archives.gov/federal-register/tutorial/tutorial_060.pdf).
 
 For example, section 1005.2(a)(3)(iii) would have the id 1005-2-a-3-iii.
 
