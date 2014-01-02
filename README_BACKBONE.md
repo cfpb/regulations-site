@@ -17,10 +17,10 @@ The Backbone application does not consume an API. Everything that makes eRegulat
 
 ## How is Backbone used?
 eRegulations uses Backbone in a non-standard fashion. It uses the following Backbone components:
-- Models http://backbonejs.org/#Model
-- Views http://backbonejs.org/#View
-- Router http://backbonejs.org/#Router
-- Events http://backbonejs.org/#Events
+- [Models](http://backbonejs.org/#Model)
+- [Views](http://backbonejs.org/#View)
+- [Router](http://backbonejs.org/#Router)
+- [Events](http://backbonejs.org/#Events)
 
 ### Models
 eRegulations’ Backbone Models do not sync data in a standard Backbone way. Because data only needs to travel one direction, from the server to the client, we do not use built-in events to trigger standard data sync processes. 
@@ -47,11 +47,11 @@ There are two levels of views: content area views and content views.
 
 ##### Content area views
 There is one of these for each area of the UI:
-- Header ```header-view```
-- Drawer (left side expanding navigation) ```drawer-view```
-- Main ```main-view```
-- Sidebar ```sidebar-view```
-- Breakaway (used when opening a Section by Section Analysis) ```breakaway-view```
+- [Header](regulations/static/regulations/js/source/views/header/header-view.js)
+- [Drawer (left side expanding navigation)](regulations/static/regulations/js/source/views/drawer/drawer-view.js)
+- [Main](regulations/static/regulations/js/source/views/main/main-view.js)
+- [Sidebar](regulations/static/regulations/js/source/views/sidebar/sidebar-view.js)
+- [Breakaway (used when opening a Section by Section Analysis)](regulations/static/regulations/js/source/views/breakaway/breakaway-view.js)
 **These views are responsible for creating and removing subchildren that hold content.** It also handles loading states as applicable (ex: translucent overlays over loading content). 
 
 It builds the configuration object that is passed into the child view’s constructor. In Backbone, this is ```this.options``` in the child view’s constructor. This object is used for many things, including context to events that occur during the creation of a new child view.
@@ -59,14 +59,14 @@ It builds the configuration object that is passed into the child view’s constr
 **Content area views are, by convention, singletons.**
 
 ##### Content views (child views)
-All content views inherit from ```child-view```. **Content views are responsible for reacting to user input on the data.** A content view is created to display a particular piece of content and is removed once a user navigates away from that content.
+All content views inherit from [ChildView](regulations/static/regulations/js/source/views/child-view.js). **Content views are responsible for reacting to user input on the data.** A content view is created to display a particular piece of content and is removed once a user navigates away from that content.
 
 ### Events
 None of the events built into Backbone are used. As the flow of the eRegulations application is different from a vanilla Backbone application, we use custom events.
 
 Each content area view has an associated events router. By convention, each view - both content area and child views - know its associated event router as ```this.externalEvents```. It is intended that all communication cross-content area happen through these event routers.
 
-**To understand the cycle of any view, look at the methods bound to events in the view’s constructor.** Event handlers are bound with Backbone’s ```.on()```. Events are triggered using Backbone’s ```.trigger()```. Event names follow the Backbone convention. http://backbonejs.org/#Events-on
+**To understand the cycle of any view, look at the methods bound to events in the view’s constructor.** Event handlers are bound with Backbone’s ```.on()```. Events are triggered using [Backbone’s trigger()](http://backbonejs.org/#Events-trigger). Event names follow the [Backbone convention.](http://backbonejs.org/#Events-on)
 
 ## How should I add a new feature?
 The intention for this JS application is that, as new ways to parse, glean context and display the data become possible, it can easily flex to meet these needs.
