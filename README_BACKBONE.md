@@ -38,8 +38,8 @@ All models inherit from [meta-model](regulations/static/regulations/js/source/mo
 If not:
 - The model constructs a URL to request data from the server and makes the AJAX request and creates a Promise object
 - When the Promise resolves:
--- A callback passed from the view is called
--- The newly-fetched data is cached
+ - A callback passed from the view is called
+ - The newly-fetched data is cached
 
 If it is:
 - The model retrieves the relevant value from its key-value store by the id passed in and returns the value
