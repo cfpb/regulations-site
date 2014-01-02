@@ -1,7 +1,7 @@
 # Understanding and using the eRegulations Backbone Application
 
 - [How is content identified?](#how-is-content-identified)
-- [How does eRegs’ Backbone layer receive data?](#how-does-eregs-backbone-layer-received-data)
+- [How does eRegs’ Backbone layer receive data?](#how-does-eregs-backbone-layer-receive-data)
 - [How is Backbone used?](#how-is-backbone-used)
 - [How should I add a new feature?](#how-should-i-add-a-new-feature)
 
