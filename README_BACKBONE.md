@@ -47,20 +47,21 @@ If it is:
 ### Views
 There are two levels of views: content area views and content views. 
 
-##### Content area views
+#### Content area views
 There is one of these for each area of the UI:
 - [Header](regulations/static/regulations/js/source/views/header/header-view.js)
 - [Drawer (left side expanding navigation)](regulations/static/regulations/js/source/views/drawer/drawer-view.js)
 - [Main](regulations/static/regulations/js/source/views/main/main-view.js)
 - [Sidebar](regulations/static/regulations/js/source/views/sidebar/sidebar-view.js)
 - [Breakaway (used when opening a Section by Section Analysis)](regulations/static/regulations/js/source/views/breakaway/breakaway-view.js)
+
 **These views are responsible for creating and removing subchildren that hold content.** It also handles loading states as applicable (ex: translucent overlays over loading content). 
 
 It builds the configuration object that is passed into the child view’s constructor. In Backbone, this is ```this.options``` in the child view’s constructor. This object is used for many things, including context to events that occur during the creation of a new child view.
 
 **Content area views are, by convention, singletons.**
 
-##### Content views (child views)
+#### Content views (child views)
 All content views inherit from [ChildView](regulations/static/regulations/js/source/views/child-view.js). **Content views are responsible for reacting to user input on the data.** A content view is created to display a particular piece of content and is removed once a user navigates away from that content.
 
 ### Events
