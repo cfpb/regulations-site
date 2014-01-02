@@ -18,7 +18,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
             }.bind(this);
 
             // if the site wasn't loaded on this content
-            if (typeof this.options.rendered === 'undefined') {
+            if (this.options.render) {
                 // simplifies to
                 // this.model.get()
                 returned = this.model.get(this.options.id, render);

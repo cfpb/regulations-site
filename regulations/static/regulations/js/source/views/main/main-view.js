@@ -52,7 +52,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             // we don't want to ajax in data that the page loaded with
-            childViewOptions.rendered = true;
+            childViewOptions.render = false;
 
             if (this.sectionId) {
                 // store the contents of our $el in the model so that we 
@@ -97,6 +97,11 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // id is null on search results as there is no section id
             if (id !== null) {
                 this.sectionId = id;
+            }
+
+            if (typeof options.render === 'undefined') {
+                // tell the child view it should render
+                options.render = true;
             }
 
             options.id = id;

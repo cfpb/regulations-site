@@ -21,8 +21,8 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
 
             DrawerEvents.trigger('pane:change', 'search');
 
-            // if the site was loaded on the search results page
-            if (typeof this.options.rendered === 'undefined') {
+            // if the site wasn't loaded on the search results page
+            if (this.options.render) {
                 this.options.id = this.assembleSearchURL(this.options);
                 this.url = 'search/' + this.options.id;
 
