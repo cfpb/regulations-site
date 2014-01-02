@@ -1,3 +1,10 @@
+## 12/31/2013
+
+* Markers in appendices are no longer based on lis; use the marker in the text
+* Help text for viewing regs in the rhs
+* Help text for diffs in the rhs
+* Spinner when loading definitions
+
 ## 12/17/2013
 
 * Application wide landing page
