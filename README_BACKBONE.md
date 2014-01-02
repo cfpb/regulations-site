@@ -31,14 +31,16 @@ eRegulations’ Backbone Models do not sync data in a standard Backbone way. Bec
     ‘1005-2-a’: ‘<li id=”1005-2-a”>Paragraph content</li>’
 }```
 
-All models inherit from ```meta-model```. The cycle of a model is as follows:
-- A view is created for a piece of content. The view calls ```get``` on its model.
+All models inherit from [meta-model](regulations/static/regulations/js/source/models/meta-model.js). The cycle of a model is as follows:
+- A view is created for a piece of content. The view calls [get()](regulations/static/regulations/js/source/models/meta-model.js#L60) on its model.
 - The model checks to see if it has the content cached in memory.
+
 If not:
 - The model constructs a URL to request data from the server and makes the AJAX request and creates a Promise object
 - When the Promise resolves:
-- A callback passed from the view is called
-- The newly-fetched data is cached
+-- A callback passed from the view is called
+-- The newly-fetched data is cached
+
 If it is:
 - The model retrieves the relevant value from its key-value store by the id passed in and returns the value
 
@@ -66,7 +68,7 @@ None of the events built into Backbone are used. As the flow of the eRegulations
 
 Each content area view has an associated events router. By convention, each view - both content area and child views - know its associated event router as ```this.externalEvents```. It is intended that all communication cross-content area happen through these event routers.
 
-**To understand the cycle of any view, look at the methods bound to events in the view’s constructor.** Event handlers are bound with Backbone’s ```.on()```. Events are triggered using [Backbone’s trigger()](http://backbonejs.org/#Events-trigger). Event names follow the [Backbone convention.](http://backbonejs.org/#Events-on)
+**To understand the cycle of any view, look at the methods bound to events in the view’s constructor.** Event handlers are bound with [Backbone’s on()](http://backbonejs.org/#Events-on). Events are triggered using [Backbone’s trigger()](http://backbonejs.org/#Events-trigger). Event names follow the [Backbone convention.](http://backbonejs.org/#Events-on)
 
 ## How should I add a new feature?
 The intention for this JS application is that, as new ways to parse, glean context and display the data become possible, it can easily flex to meet these needs.
