@@ -62,7 +62,7 @@ It builds the configuration object that is passed into the child view’s constr
 **Content area views are, by convention, singletons.** They are initialized when they are first loaded as dependencies by [Require.js](http://requirejs.org/).
 
 #### Content views (child views)
-All content views inherit from [ChildView](regulations/static/regulations/js/source/views/child-view.js). **Content views are responsible for reacting to user input on the data.** A content view is created to display a particular piece of content and is removed once a user navigates away from that content.
+All main content area child views inherit from [ChildView](regulations/static/regulations/js/source/views/main/child-view.js). **Content views are responsible for reacting to user input on the data.** A content view is created to display a particular piece of content and is removed once a user navigates away from that content.
 
 ### Events
 None of the events built into Backbone are used. As the flow of the eRegulations application is different from a vanilla Backbone application, we use custom events.
