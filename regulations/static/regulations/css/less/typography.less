@@ -464,3 +464,46 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
     font-size: 0.875em; /* 14/16 = .875 */
     line-height: 1.4;
 }
+
+/* 
+  Table Styles
+ ========================================================================== */
+
+table {
+    margin: 1em 0;
+    padding: 0;
+    font-size: .875em;
+    .avenir-next;
+    background: #fff;
+    max-width: 95%;
+}
+
+th,
+td {
+    padding: 15px;
+    line-height: 20px;
+    background: #F8F8F8; /* grey-05% */
+    border: 0;
+}
+
+thead {
+    background: #515355; /* dark-grey */
+}
+
+thead th,
+thead td {
+    color: #ffffff;
+    background: #515355; /* dark-grey */
+}
+
+th {
+    font-family: "Avenir Next Demi", Arial, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    text-align: left;
+}
+
+tbody > tr:nth-child(odd) > td,
+tbody > tr:nth-child(odd) > th {
+    background: #F1F2F2; /* grey-10% */
+}
