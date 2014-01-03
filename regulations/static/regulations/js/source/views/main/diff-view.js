@@ -14,7 +14,7 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-events', './regs-
             this.url = 'diff/' + this.options.id;
             ChildView.prototype.initialize.apply(this, arguments);
 
-            if (typeof this.options.rendered !== 'undefined') {
+            if (this.options.render) {
                 // site loaded on a diff page
                 DrawerEvents.trigger('pane:change', 'timeline');
             }
