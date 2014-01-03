@@ -10,7 +10,7 @@ class FormattingLayerTest(TestCase):
     def test_apply_layer(self, loader):
         render = loader.get_template.return_value.render
 
-        table_data = {"table": "data"}
+        table_data = {'header': [{'colspan': 2, 'rowspan': 1, 'text': 'Title'}], 'rows': [['cell 11', 'cell 12'], ['cell 21', 'cell 22']]}
         data = {'111-1': [],
                 '111-2': [{}], 
                 '111-3': [{'text': 'original', 'locations': [0, 2],
@@ -27,4 +27,4 @@ class FormattingLayerTest(TestCase):
         self.assertEqual([0, 2], result[0][2])
         self.assertTrue(render.called)
         context = render.call_args[0][0]
-        self.assertEqual(context['table'], 'data')
+        self.assertEqual(context['table'], 'table_data')
