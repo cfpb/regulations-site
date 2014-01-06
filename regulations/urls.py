@@ -31,6 +31,7 @@ urlpatterns = patterns(
     '',
     url(r'^$', universal, name='universal_landing'),
     # about page
+    # about page is commented out until it is ready to be deployed
     # url(r'^about$', about, name='about'),
     # Redirect to version by date (by GET)
     # Example http://.../regulation_redirect/201-3-v
