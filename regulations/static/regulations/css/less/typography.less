@@ -284,6 +284,12 @@ a:visited {
     .reset;
 }
 
+/* for a header with no following content */
+
+.empty-header {
+    margin-bottom: 1em; 
+}
+
 /*  Sub Headings
     -----------
     <h3 class="appendix-subheading">Top Level Reg Heading</h2>
@@ -364,9 +370,10 @@ The `<ol>` tag needs to have the appropriate list type applied
 }
 
 .appendix-section .stripped-marker {
-  position: absolute;
-  display: inline;
-  margin-left: -20px;
+  display: block;
+  float: left;
+  margin-left: -32px;
+  width: 32px;
 }
 
 
