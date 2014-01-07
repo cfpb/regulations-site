@@ -16,7 +16,7 @@
     {% if c.children %}
         {% for level_one in c.children %}
             <section id="{{level_one.markup_id}}" class="appendix-section">
-            <h3 class="appendix-heading" tabindex="0"> {{level_one.header|safe}} </h3>
+            <h3 class="appendix-heading{% if not level_one.text and not level_one.children %} empty-header{% endif %}" tabindex="0"> {{level_one.header|safe}} </h3>
 
             {% if level_one.marked_up %}
             <p> 
