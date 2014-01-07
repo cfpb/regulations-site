@@ -43,5 +43,4 @@ class InterpretationsLayer(object):
 
                 context['interps'].append(interp)
 
-            print len(context['interps'])
             return 'interp', context
