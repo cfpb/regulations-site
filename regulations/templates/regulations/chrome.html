@@ -95,7 +95,7 @@
                 </div><!--./date-form-->
                 <ul class="version-list">
                 {% for version in history %}
-                    <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
+                    <li class="{% if version.version == active_version %}current {% endif %}status-list" data-base-version="{{version.version}}">
                     {% if reg_part == label_id %}
                         <a href="{% url 'chrome_regulation_view' reg_part version.version %}" class="version-link" data-version="{{ version.version }}">
                             {% if version.timeline == 'current' %}
