@@ -24,6 +24,19 @@ class PartialView(TemplateView):
 
     sectional_links = True
 
+    def determine_appliers(self, label_id, version):
+        """Figure out which layers to apply by checking the GET args"""
+        if 'layers' in self.request.GET.keys():
+            return utils.handle_specified_layers(
+                self.request.GET['layers'], label_id, version,
+                self.__class__.sectional_links)
+        else:
+            layer_creator = generator.LayerCreator()
+            layer_creator.add_layers(
+                generator.LayerCreator.LAYERS.keys(),
+                label_id, version, self.__class__.sectional_links)
+            return layer_creator.get_appliers()
+
     def get_context_data(self, **kwargs):
         context = super(PartialView, self).get_context_data(**kwargs)
 
@@ -34,17 +47,8 @@ class PartialView(TemplateView):
         if tree is None:
             raise Http404
 
-        if 'layers' in self.request.GET.keys():
-            appliers = utils.handle_specified_layers(
-                self.request.GET['layers'],
-                label_id, version, self.__class__.sectional_links)
-            inline_applier, p_applier, s_applier = appliers
-        else:
-            layer_creator = generator.LayerCreator()
-            layer_creator.add_layers(
-                generator.LayerCreator.LAYERS.keys(),
-                label_id, version, self.__class__.sectional_links)
-            inline_applier, p_applier, s_applier = layer_creator.get_appliers()
+        inline_applier, p_applier, s_applier = self.determine_appliers(
+            label_id, version)
 
         builder = generate_html(tree, (inline_applier, p_applier, s_applier))
         return self.transform_context(context, builder)

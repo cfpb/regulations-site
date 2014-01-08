@@ -10,7 +10,7 @@ from regulations.views.diff import PartialSectionDiffView
 from regulations.views.partial import PartialDefinitionView
 from regulations.views.partial import PartialParagraphView
 from regulations.views.partial import PartialRegulationView, PartialSectionView
-from regulations.views.partial_interp import PartialInterpView
+from regulations.views import partial_interp
 from regulations.views.partial_search import PartialSearch
 from regulations.views.partial_sxs import ParagraphSXSView
 from regulations.views.redirect import diff_redirect, redirect_by_date
@@ -119,10 +119,28 @@ urlpatterns = patterns(
     url(r'^partial/%s/%s$' % (section_pattern, version_pattern),
         PartialSectionView.as_view(),
         name='partial_section_view'),
+    #Interpretations of all appendices without chrome
+    #Example: http://.../partial/201-Subpart-A-Interp/2013-10706
+    url(r'^partial/(?P<label_id>[\d]+-Appendices-Interp)/%s$'
+        % version_pattern,
+        partial_interp.AppendicesView.as_view(),
+        name='partial_interp_appendices_view'),
+    #Interpretations of a subpart without chrome
+    #Example: http://.../partial/201-Subpart-A-Interp/2013-10706
+    url(r'^partial/(?P<label_id>[\d]+-Subpart-[A-Z]+-Interp)/%s$'
+        % version_pattern,
+        partial_interp.SubpartView.as_view(),
+        name='partial_interp_subpart_view'),
+    #Interpretations of an empty subpart without chrome
+    #Example: http://.../partial/201-Subpart-Interp/2013-10706
+    url(r'^partial/(?P<label_id>[\d]+-Subpart-Interp)/%s$'
+        % version_pattern,
+        partial_interp.EmptySubpartView.as_view(),
+        name='partial_interp_empty_subpart_view'),
     #An interpretation of a section/paragraph or appendix without chrome.
     #Example: http://.../partial/201-2-Interp/2013-10704
     url(r'^partial/%s/%s$' % (interp_pattern, version_pattern),
-        PartialInterpView.as_view(),
+        partial_interp.PartialInterpView.as_view(),
         name='partial_interp_view'),
     #The whole regulation without chrome; not too useful; added for symmetry
     #Example: http://.../partial/201/2013-10704
