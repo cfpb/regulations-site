@@ -1,7 +1,43 @@
 {% extends "regulations/chrome.html" %}
+{% load static from staticfiles %}
 
 {% comment %}
 Search results (and perhaps other pages) need a sidebar containing only help text
 {% endcomment %}
 
-{% block reg_sidebar %}{% endblock %}
+{% block reg_sidebar %}
+
+<section id="help" class="regs-meta">
+    {% include "regulations/generic_help.html" %} 
+
+        {% comment %}
+        The help-subsection block is used to offer contextual content in different
+        sections of the app
+        {% endcomment %}
+
+        {% block help-subsection %}
+        <div class="sidebar-subsection">
+            <h5 class="help-title">Textual Help</h5>
+            <!--<a class="go" href="#">What's this</a>-->
+
+            <ul class="help-list">
+                <li class="group">
+                    <div class="help-sample"><a class="definition">term</a></div>
+                    <div class="help-text">Defined Term</div>
+                </li>
+                <li class="group">
+                    <div class="help-sample"><a class="internal">citation</a></div>
+                    <div class="help-text">Link within a regulation <br/>
+                    (example: 1005.8(b))</div>
+                </li>
+                <li>
+                    <img src="{%static "regulations/img/supplement-sample.png" %}" class="block-image" />
+                    Inline interpretations/commentary from Supplement I
+                </li>
+            </ul>
+        </div> <!-- /.sidebar-subsection-->
+        {% endblock %}
+    </div>
+</section> <!-- /.regs-meta -->
+
+{% endblock %}
