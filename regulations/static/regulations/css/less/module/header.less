@@ -46,11 +46,19 @@
         .site-title {
             font-size: 1.325em;
             .reset;
+            display: inline;
         }
 
         .reg-title {
             .avenir-next;
             font-size: 1.125em;
+        }
+
+        .reg-title:before {
+            content: "|";
+            .avenir-next;
+            padding: 0 12px;
+            color: @medium_gray;
         }
 
         .site-title {
