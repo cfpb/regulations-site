@@ -8,8 +8,10 @@ from regulations.generator.node_types import label_to_text, type_from_label
 from regulations.views import utils
 from regulations.views.reg_landing import regulation_exists, get_versions
 from regulations.views.reg_landing import regulation as landing_page
-from regulations.views.partial import *
+from regulations.views.partial import PartialParagraphView
+from regulations.views.partial import PartialRegulationView, PartialSectionView
 from regulations.views.partial_search import PartialSearch
+from regulations.views.partial_interp import PartialInterpView
 from regulations.views.sidebar import SideBarView
 from regulations.views import error_handling
 

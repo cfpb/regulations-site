@@ -1,20 +1,22 @@
 from django.conf.urls import patterns, include, url
 
+from regulations.views.about import about
+from regulations.views.chrome_breakaway import ChromeSXSView
 from regulations.views.chrome import ChromeInterpView, ChromeLandingView
 from regulations.views.chrome import ChromeParagraphView, ChromeRegulationView
 from regulations.views.chrome import ChromeSearchView, ChromeSectionView
-from regulations.views.chrome_breakaway import ChromeSXSView
-from regulations.views.sidebar import SideBarView
-from regulations.views.partial import PartialInterpView, PartialRegulationView
-from regulations.views.partial import PartialParagraphView, PartialSectionView, PartialDefinitionView
 from regulations.views.diff import ChromeSectionDiffView
 from regulations.views.diff import PartialSectionDiffView
+from regulations.views.partial import PartialDefinitionView
+from regulations.views.partial import PartialParagraphView
+from regulations.views.partial import PartialRegulationView, PartialSectionView
+from regulations.views.partial_interp import PartialInterpView
 from regulations.views.partial_search import PartialSearch
 from regulations.views.partial_sxs import ParagraphSXSView
 from regulations.views.redirect import diff_redirect, redirect_by_date
 from regulations.views.redirect import redirect_by_date_get
+from regulations.views.sidebar import SideBarView
 from regulations.views.universal_landing import universal
-from regulations.views.about import about
 
 #Re-usable URL patterns.
 version_pattern = r'(?P<version>[-\d\w]+)'
@@ -112,7 +114,7 @@ urlpatterns = patterns(
     url(r'^partial/definition/%s/%s$' % (paragraph_pattern, version_pattern),
         PartialDefinitionView.as_view(),
         name='partial_definition_view'),
-   #A regulation section without chrome
+    #A regulation section without chrome
     #Example: http://.../partial/201-4/2013-10704
     url(r'^partial/%s/%s$' % (section_pattern, version_pattern),
         PartialSectionView.as_view(),

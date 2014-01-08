@@ -112,18 +112,6 @@ class PartialDefinitionView(PartialView):
         return context
 
 
-class PartialInterpView(PartialView):
-    """ Interpretation of a reg text section/paragraph or appendix """
-
-    template_name = "regulations/interpretations.html"
-    inline = False
-
-    def transform_context(self, context, builder):
-        context['inline'] = self.inline
-        context['c'] = {'node_type': 'interp', 'children': [builder.tree]}
-        return context
-
-
 class PartialRegulationView(PartialView):
     """ Entire regulation without chrome """
 
