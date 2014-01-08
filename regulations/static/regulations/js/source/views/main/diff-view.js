@@ -14,7 +14,9 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-events', './regs-
             this.url = 'diff/' + this.options.id;
             ChildView.prototype.initialize.apply(this, arguments);
 
-            DrawerEvents.trigger('pane:change', 'timeline');
+            if (typeof this.options.render === 'undefined') {
+                DrawerEvents.trigger('pane:change', 'timeline');
+            }
         },
 
         // "12 CFR Comparison of §1005.1 | eRegulations"
