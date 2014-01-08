@@ -3,10 +3,6 @@ define('help-view', ['jquery', 'underscore', 'backbone'], function($, _, Backbon
 
     var HelpView = Backbone.View.extend({
         el: '#help',
-
-        update: function(html) {
-            this.$el.html(html);
-        }
     });
 
     return HelpView;
