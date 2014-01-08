@@ -2,7 +2,7 @@ define('permalink-view', ['jquery', 'underscore', 'backbone'], function($, _, Ba
     'use strict';
 
     var PermalinkView = Backbone.View.extend({
-        el: '#permalinks',
+        el: '#permalinks'
     });
 
     return PermalinkView;
