@@ -27,6 +27,8 @@ class PartialSearch(PartialView):
         return super(PartialSearch, self).get(request, *args, **kwargs)
 
     def add_prev_next(self, current_page, context):
+        context['current'] = { 'page': current_page + 1,
+                                'total': context['results']['total_hits'] / PAGE_SIZE}
         if current_page > 0:
             context['previous'] = {'length': PAGE_SIZE,
                                    'page': current_page - 1}
