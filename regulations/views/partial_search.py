@@ -5,7 +5,7 @@ from regulations.generator import api_reader
 from regulations.generator.node_types import label_to_text
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views.partial import PartialView
-
+import math
 
 API_PAGE_SIZE = 50
 PAGE_SIZE = 10
@@ -28,7 +28,7 @@ class PartialSearch(PartialView):
 
     def add_prev_next(self, current_page, context):
         context['current'] = { 'page': current_page + 1,
-                                'total': context['results']['total_hits'] / PAGE_SIZE}
+                                'total': int(math.ceil(float(context['results']['total_hits']) / PAGE_SIZE))}
         if current_page > 0:
             context['previous'] = {'length': PAGE_SIZE,
                                    'page': current_page - 1}
