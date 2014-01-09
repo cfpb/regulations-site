@@ -49,14 +49,14 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
                     this.model.get(context.id, this.openRegFolders);
                     break;
                 case 'search':
-                    this.closeAllChildren();
+                    this.closeChildren();
                     this.loaded();
                     break;
                 case 'diff':
                     this.loaded();
                     break;
                 default:
-                    this.closeAllChildren();
+                    this.closeChildren();
                     this.loaded();
             }
 
@@ -64,7 +64,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
         },
 
         openRegFolders: function(html) {
-            this.closeAllChildren();
+            this.closeChildren('definition');
 
             if (arguments.length > 0) {
                 this.insertChild(html);
@@ -100,7 +100,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
 
         // open whatever content should populate the sidebar
         insertChild: function(el) {
-            this.$el.prepend(el); 
+            this.$el.append(el); 
         },
 
         removeChild: function(el) {
@@ -143,11 +143,13 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
                 .next('.chunk').slideToggle();
         },
 
-        closeAllChildren: function() {
+        closeChildren: function(except) {
             var k;
             for (k in this.childViews) {
                 if (this.childViews.hasOwnProperty(k)) {
-                    this.childViews[k].remove();
+                    if (except && except !== k) {
+                        this.childViews[k].remove();
+                    }
                 }
             }
         },
