@@ -22,6 +22,7 @@ Partial Search Results.
         </ul>
     </section>
 
+    {% if results.results %}
     <footer class="search-nav">
     {% if previous %}
     <a class="previous" href="{% url 'chrome_search' regulation %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ previous.page }}"><i class="minicon-left"></i>Previous {{ previous.length }} Results</a>
@@ -33,4 +34,5 @@ Partial Search Results.
     
     <div class="pager">Page {{ current.page }} of {{ current.total }}</div>
     </footer>
+    {% endif %}
 </div>
