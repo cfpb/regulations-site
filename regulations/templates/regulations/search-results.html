@@ -4,6 +4,8 @@ Partial Search Results.
 
 <div id="content-wrapper" class="search-results">
     <section data-page-type="search-results" data-base-version="{{ version }}">
+        <h2 class="search-term">Searching for “{{ q }}”</h2>
+        <p class="search-version">Regulation effective {{version_by_date|date}}{% if version.version == active_version %} — current law {% endif %}</p>
         {% if not skip_count %}
         <span id="result-count">{{ results.total_hits }} result{{ results.results|pluralize }}</span>
         {% endif %}
