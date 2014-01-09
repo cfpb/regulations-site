@@ -34,7 +34,14 @@
         <h1 class="site-title"><a href="/"><span class="e">e</span>Regulations</a></h1>
         <h2 class="reg-title"><a href="{% url 'regulation_landing_view' reg_part %}">{{ meta.cfr_title_number }} CFR Part {{ reg_part }} {% if meta.reg_letter %}(Regulation {{ meta.reg_letter }}){% endif %}</a></h2>
     </div> <!-- /reg-title -->
-    {% include "regulations/logo.html" %} 
+    <nav class="app-nav">
+        <ul class="app-nav-list">
+            <li class="app-nav-list-item"><a href="/">Regulations</a></li>
+            <li class="app-nav-list-item"><a href="#">About</a></li>
+            <li class="app-nav-list-item logo-list-item">{% include "regulations/logo.html" %}</li>
+            <li class="app-nav-list-item org-title">{% include "regulations/org-title.html" %}</li>
+        </ul>
+    </nav>
 </div>
 
 <div class="sub-head">

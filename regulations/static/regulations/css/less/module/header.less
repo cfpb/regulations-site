@@ -29,16 +29,8 @@
     height: 3.75em;
     overflow: hidden;
 
-    .logo {
-        display: block;
-        float: right;
-        margin-top: 13px; /* this manually centers the image based on its height and the height of the container */
-        margin-right: 15px;
-    }
-
-
     .title {
-        display: block;
+        display: inline-block;
         float: left;
         line-height: 57px;
 
@@ -120,3 +112,48 @@
     display: inline-block;
 }
 
+/*
+Application Nav
+================
+*/
+
+.app-nav {
+    display: inline-block;
+    float: right;
+}
+
+.app-nav-list {
+    .reset;
+    display: inline;
+}
+
+.app-nav-list-item {
+    float: left; // yes it's weird, but floats play nice with vertically centering the logo
+    height: 57px;
+    line-height: 57px;
+    margin: 0 0 0 24px;
+
+    a {
+        .avenir-next-demi;
+    }
+
+    a:link,
+    a:visited {
+        color: @dark_gray;
+    }
+
+    a:hover,
+    a:active,
+    a:focus {
+        color: @pacific;
+    }
+
+    .logo {
+        display: inline;
+        margin-top: 13px;
+    }
+}
+
+.org-title {
+    display: none;
+}
