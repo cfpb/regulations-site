@@ -6,8 +6,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
 
         events: {
             'click .definition': 'termLinkHandler',
-            'click .inline-interp-header': 'expandInterp',
-            'click .definition.active': 'openDefinitionLinkHandler'
+            'click .inline-interp-header': 'expandInterp'
         },
 
         initialize: function() {
@@ -40,6 +39,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             }
 
             ChildView.prototype.initialize.apply(this, arguments);
+
+            this.checkDefinitionScope();
         },
 
         // only concerned with resetting DOM, no matter
@@ -72,12 +73,36 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             return newTitle;
         },
 
+        // if an inline definition is open, check the links here to see
+        // if the definition is still in scope in this section
+        checkDefinitionScope: function() {
+            var $def = $('#definition'),
+                defTerm = $def.data('defined-term'),
+                defId = $def.find('.open-definition').data('inline-def'),
+                $termLinks;
+
+            if ($def.length > 0) {
+                $termLinks = this.$el.find('a.definition'); 
+
+                $termLinks.each(function(link) {
+                    var $link = $(link);
+                    if ($link.data('defined-term') === defTerm) {
+                        if ($link.data('definition') === defId) {
+                            SidebarEvents.trigger('definition:outOfScope');
+                            exit;
+                        }
+                    }
+                });
+            }
+        },
+
         // content section key term link click handler
         termLinkHandler: function(e) {
             e.preventDefault();
 
             var $link = $(e.target),
-                defId = $link.attr('data-definition');
+                defId = $link.data('definition'),
+                term = $link.data('defined-term');
 
             // if this link is already active, toggle def shut
             if ($link.data('active')) {
@@ -103,7 +128,10 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
 
                     // open new definition
                     this.setActiveTerm($link);
-                    SidebarEvents.trigger('definition:open', defId);
+                    SidebarEvents.trigger('definition:open', {
+            'id': defId,
+            'term': term
+        });
                     GAEvents.trigger('definition:open', {
                         id: defId,
                         from: this.activeSection,

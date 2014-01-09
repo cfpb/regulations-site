@@ -24,16 +24,17 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
             });
         },
 
-        openDefinition: function(id) {
+        openDefinition: function(config) {
             var createDefView = function(res) {
                 this.childViews.definition.render(res);
             }.bind(this);
 
             this.childViews.definition = new Definition({
-                id: id
+                id: config.id,
+                term: config.term
             });
 
-            this.definitionModel.get(id, createDefView);
+            this.definitionModel.get(config.id, createDefView);
         },
 
         closeDefinition: function() {

@@ -17,9 +17,15 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
         initialize: function() {
             this.externalEvents = SidebarEvents;
+            this.externalEvents.on('definition:outOfScope', this.displayScopeMsg, this);
 
             if (typeof this.options.id !== 'undefined') {
                 this.id = this.options.id;
+            }
+
+            if (typeof this.options.term !== 'undefined') {
+                this.term = this.options.term;
+                this.$el.data('defined-term', this.term);
             }
 
             // insert the spinner header to be replaced
@@ -55,6 +61,10 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 by: 'header close button'
             });
             this.remove();
+        },
+
+        displayScopeMsg: function() {
+            console.log('hi');
         },
 
         openFullDefinition: function(e) {
