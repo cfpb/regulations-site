@@ -23,11 +23,10 @@
 
 .main-head {
     .border-bottom-dark(@width: 3px);
-    padding: 0 15px;
     background: #fff;
     z-index: 1000;
     height: 3.75em;
-    overflow: hidden;
+    //overflow: hidden;
 
     .title {
         display: inline-block;
@@ -56,6 +55,7 @@
         .site-title {
             .avenir-next-demi;
             font-size: 1.375em;
+            padding-left: 15px;
         }
 
         .e {
@@ -118,21 +118,6 @@ Application Nav
 */
 
 .app-nav {
-    display: inline-block;
-    float: right;
-    margin-right: 15px;
-}
-
-.app-nav-list {
-    .reset;
-    display: inline;
-}
-
-.app-nav-list-item {
-    float: left; // yes it's weird, but floats play nice with vertically centering the logo
-    height: 57px;
-    line-height: 57px;
-    margin: 0 0 0 24px;
 
     a {
         .avenir-next-demi;
@@ -148,21 +133,119 @@ Application Nav
     a:focus {
         color: @pacific;
     }
+}
 
-    .logo {
-        display: inline;
-        margin-top: 13px;
+/*
+BIG SCREENS
+=============================================
+*/
+
+@media only screen and ( min-width: 860px ) {
+    .app-nav {
+        display: inline-block;
+        float: right;
+        margin-right: 15px;
     }
+
+    .app-nav-list {
+        .reset;
+        display: inline;
+    }
+
+    .app-nav-list-item {
+        float: left; // yes it's weird, but floats play nice with vertically centering the logo
+        height: 57px;
+        line-height: 57px;
+        margin: 0 0 0 24px;
+
+        .logo {
+            display: inline;
+            margin-top: 13px;
+        }
+    }
+
+    .app-nav-list-item:first-of-type {
+        margin: 0;
+    }
+
+    .org-title {
+        display: none;
+    }
+
+    .mobile-nav-trigger {
+        display: none;
+    }
+
 }
 
-.app-nav-list-item:first-of-type {
-    margin: 0;
-}
+/*
+tiny screens
+=============================================
+*/
 
-.org-title {
-    display: none;
-}
+@media only screen and ( max-width: 860px ) {
+    .org-title {
+        display: block;
 
-.mobile-nav-trigger {
-    display: none;
+        a:after {
+            content: "\e007";
+            padding-left: 6px;
+            font-size: .875em;
+            font-family: 'Minicon';
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
+
+    .app-nav-list {
+        display: none;
+        .reset;
+
+        .logo-list-item {
+            display: none;
+        }
+    }
+
+    .app-nav-list.open {
+        display: block;
+        position: fixed;
+        top: 60px;
+        width: 100%;
+        background: @bg_gray;
+        z-index: 99999;
+    }
+
+    .app-nav-list-item {
+        border-bottom: 1px solid @dark_gray;
+
+        a {
+            display: block;
+            padding: 20px 15px;
+        }
+
+        a:hover,
+        a:active,
+        a:focus {
+            background: #E6E6E6;
+        }
+    }
+
+    .mobile-nav-trigger {
+        line-height: 57px;
+        position: absolute;
+        right: 0;
+        padding: 0 15px;
+    }
+
+    .mobile-nav-trigger:hover,
+    .mobile-nav-trigger:active,
+    .mobile-nav-trigger:focus,
+    .mobile-nav-trigger.open {
+        background-color: @bg_gray;
+    }
 }
