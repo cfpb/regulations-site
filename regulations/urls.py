@@ -2,9 +2,10 @@ from django.conf.urls import patterns, include, url
 
 from regulations.views.about import about
 from regulations.views.chrome_breakaway import ChromeSXSView
-from regulations.views.chrome import ChromeInterpView, ChromeLandingView
-from regulations.views.chrome import ChromeParagraphView, ChromeRegulationView
-from regulations.views.chrome import ChromeSearchView, ChromeSectionView
+from regulations.views.chrome import (
+    ChromeInterpView, ChromeLandingView, ChromeParagraphView,
+    ChromeRegulationView, ChromeSearchView, ChromeSectionView,
+    ChromeSubterpView)
 from regulations.views.diff import ChromeSectionDiffView
 from regulations.views.diff import PartialSectionDiffView
 from regulations.views.partial import PartialDefinitionView
@@ -27,6 +28,7 @@ section_pattern = r'(?P<label_id>[\d]+[-][\w]+)'
 interp_pattern = r'(?P<label_id>[-\d\w]+[-]Interp)'
 paragraph_pattern = r'(?P<label_id>[-\d\w]+)'
 notice_pattern = r'(?P<notice_id>[\d]+[-][\d]+)'
+subterp_pattern = r'(?P<label_id>[\d]+-(Appendices|Subpart(-[A-Z]+)?)-Interp)'
 
 
 urlpatterns = patterns(
@@ -68,6 +70,13 @@ urlpatterns = patterns(
     url(r'^%s/%s$' % (section_pattern, version_pattern),
         ChromeSectionView.as_view(),
         name='chrome_section_view'),
+    # Subterp, interpretations of a while subpart, emptypart or appendices
+    # Example: http://.../201-Subpart-A-Interp/2013-10706
+    #          http://.../201-Subpart-Interp/2013-10706
+    #          http://.../201-Appendices-Interp/2013-10706
+    url(r'^%s/%s$' % (subterp_pattern, version_pattern),
+        ChromeSubterpView.as_view(),
+        name=ChromeSubterpView.version_switch_view),
     #Interpretation of a section/paragraph or appendix
     #Example: http://.../regulation/201-4-Interp/2013-10704
     url(r'^%s/%s$' % (interp_pattern, version_pattern),
@@ -119,24 +128,13 @@ urlpatterns = patterns(
     url(r'^partial/%s/%s$' % (section_pattern, version_pattern),
         PartialSectionView.as_view(),
         name='partial_section_view'),
-    #Interpretations of all appendices without chrome
-    #Example: http://.../partial/201-Subpart-A-Interp/2013-10706
-    url(r'^partial/(?P<label_id>[\d]+-Appendices-Interp)/%s$'
-        % version_pattern,
-        partial_interp.AppendicesView.as_view(),
-        name='partial_interp_appendices_view'),
-    #Interpretations of a subpart without chrome
-    #Example: http://.../partial/201-Subpart-A-Interp/2013-10706
-    url(r'^partial/(?P<label_id>[\d]+-Subpart-[A-Z]+-Interp)/%s$'
-        % version_pattern,
-        partial_interp.SubpartView.as_view(),
-        name='partial_interp_subpart_view'),
-    #Interpretations of an empty subpart without chrome
-    #Example: http://.../partial/201-Subpart-Interp/2013-10706
-    url(r'^partial/(?P<label_id>[\d]+-Subpart-Interp)/%s$'
-        % version_pattern,
-        partial_interp.EmptySubpartView.as_view(),
-        name='partial_interp_empty_subpart_view'),
+    # Subterp, interpretations of a whole subpart, emptypart or appendices
+    # Example: http://.../partial/201-Subpart-A-Interp/2013-10706
+    #          http://.../partial/201-Subpart-Interp/2013-10706
+    #          http://.../partial/201-Appendices-Interp/2013-10706
+    url(r'^partial/%s/%s$' % (subterp_pattern, version_pattern),
+        partial_interp.PartialSubterpView.as_view(),
+        name='partial_subterp_view'),
     #An interpretation of a section/paragraph or appendix without chrome.
     #Example: http://.../partial/201-2-Interp/2013-10704
     url(r'^partial/%s/%s$' % (interp_pattern, version_pattern),

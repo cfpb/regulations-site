@@ -6,12 +6,13 @@ from regulations.generator import generator
 from regulations.generator.versions import fetch_grouped_history
 from regulations.generator.node_types import label_to_text, type_from_label
 from regulations.views import utils
+from regulations.views.partial_interp import (
+    PartialInterpView, PartialSubterpView)
 from regulations.views.reg_landing import regulation_exists, get_versions
 from regulations.views.reg_landing import regulation as landing_page
 from regulations.views.partial import PartialParagraphView
 from regulations.views.partial import PartialRegulationView, PartialSectionView
 from regulations.views.partial_search import PartialSearch
-from regulations.views.partial_interp import PartialInterpView
 from regulations.views.sidebar import SideBarView
 from regulations.views import error_handling
 
@@ -21,6 +22,7 @@ class ChromeView(TemplateView):
     template_name = 'regulations/chrome.html'
     has_sidebar = True
     check_tree = True
+    version_switch_view = 'chrome_section_view'
 
     def get(self, request, *args, **kwargs):
         """Override GET so that we can catch and propagate any errors in the
@@ -46,6 +48,12 @@ class ChromeView(TemplateView):
         context['main_content_context'] = view.get_context_data(**context)
         context['main_content_template'] = view.template_name
 
+    def diff_redirect_label(self, label_id, toc):
+        """Most of the time, we want diff_redirect to link to *this*
+        section's label. This gives us an out for when we need to link
+        somewhere else."""
+        return label_id
+
     def set_chrome_context(self, context, reg_part, version):
         utils.add_extras(context)
         context['reg_part'] = reg_part
@@ -61,6 +69,9 @@ class ChromeView(TemplateView):
             reg_part,
             version,
             self.partial_class.sectional_links)
+        context['version_switch_view'] = self.version_switch_view
+        context['diff_redirect_label'] = self.diff_redirect_label(
+            context['label_id'], table_of_contents)
         context['meta'] = regulation_meta
 
     def get_context_data(self, **kwargs):
@@ -108,11 +119,33 @@ class ChromeSectionView(ChromeView):
 class ChromeParagraphView(ChromeView):
     """Regtext paragraph with chrome"""
     partial_class = PartialParagraphView
+    version_switch_view = 'chrome_paragraph_view'
 
 
 class ChromeRegulationView(ChromeView):
     """Entire regulation with chrome"""
     partial_class = PartialRegulationView
+    version_switch_view = 'chrome_regulation_view'
+
+    def diff_redirect_label(self, label_id, toc):
+        """We don't do diffs of the whole reg; instead link to the first
+        section"""
+        while toc:
+            label_id = toc[0]['section_id']
+            toc = toc[0].get('sub_toc')
+        return label_id
+
+
+class ChromeSubterpView(ChromeView):
+    """Corresponding chrome class for subterp partial view"""
+    partial_class = PartialSubterpView
+    version_switch_view = 'chrome_subterp_view'
+    check_tree = False
+
+    def diff_redirect_label(self, label_id, toc):
+        """We don't do diffs for subterps. Instead, link to diff of the
+        whole interp"""
+        return label_id.split('-', 1)[0] + '-Interp'
 
 
 class ChromeSearchView(ChromeView):
