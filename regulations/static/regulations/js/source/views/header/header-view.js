@@ -13,10 +13,7 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'sub-head-view'], fun
 
         toggleNav: function(e) {
             e.preventDefault();
-
-            var $toggleEl = $('.app-nav-list, .mobile-nav-trigger');
-            
-            $toggleEl.toggleClass('open');
+            $('.app-nav-list, .mobile-nav-trigger').toggleClass('open');
         },
 
         contextMap: {
