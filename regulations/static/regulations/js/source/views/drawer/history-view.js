@@ -30,6 +30,10 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'main-events'], func
                     $link.attr('href', prefix + section + '/' + $link.data('version'));
                 });
 
+                // diffs of interpretations are not currently more granular than the whole interpretation
+                if (section.indexOf("Interp") !== -1) {
+                    section = section.split('-')[0] + '-Interp';
+                }
                 // update diff dropdown
                 this.$el.find('.select-content form').each(function() {
                     var $form = $(this),
