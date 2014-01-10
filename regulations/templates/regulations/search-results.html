@@ -4,6 +4,7 @@ Partial Search Results.
 
 <div id="content-wrapper" class="search-results">
     <section data-page-type="search-results" data-base-version="{{ version }}">
+        <h2 class="search-term">Searching for “{{ q }}”</h2>
         {% if not skip_count %}
         <span id="result-count">{{ results.total_hits }} result{{ results.results|pluralize }}</span>
         {% endif %}
@@ -20,9 +21,8 @@ Partial Search Results.
         </ul>
     </section>
 
-    {% if previous or next %}
+    {% if results.results %}
     <footer class="search-nav">
-
     {% if previous %}
     <a class="previous" href="{% url 'chrome_search' regulation %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ previous.page }}"><i class="minicon-left"></i>Previous {{ previous.length }} Results</a>
     {% endif %}
@@ -30,7 +30,8 @@ Partial Search Results.
     {% if next %}
     <a class="next" href="{% url 'chrome_search' regulation %}?q={{ q|urlencode }}&version={{ version|urlencode }}&page={{ next.page }}"><i class="minicon-right"></i>Next {{ next.length }} Results</a>
     {% endif %}
-
+    
+    <div class="pager">Page {{ current.page }} of {{ current.total }}</div>
     </footer>
+    {% endif %}
 </div>
-{% endif %}

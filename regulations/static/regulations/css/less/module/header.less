@@ -108,5 +108,12 @@
     font-size: 1em;
     letter-spacing: 1px;
     display: inline-block;
+    .subpart {
+        .avenir-next;
+        color: @dark_gray;
+    }
+    .subpart::after {
+        content: " |";
+    }
 }
 
