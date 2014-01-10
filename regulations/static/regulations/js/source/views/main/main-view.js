@@ -106,7 +106,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             options.id = id;
             options.type = this.contentType;
-            // searching effectively switches version, so do that
             options.regVersion = this.regVersion;
             options.regPart = this.regPart;
             options.model = this.modelmap[this.contentType];
