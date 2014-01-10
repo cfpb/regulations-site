@@ -31,7 +31,7 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'main-events'], func
                 });
 
                 // diffs of interpretations are not currently more granular than the whole interpretation
-                if (section.indexOf("Interp") !== -1) {
+                if (section.indexOf('Interp') !== -1) {
                     section = section.split('-')[0] + '-Interp';
                 }
                 // update diff dropdown
