@@ -76,10 +76,10 @@ class ViewsChromeTest(TestCase):
 class ViewsChromeRegulationTest(TestCase):
     def test_diff_redirect_label(self):
         view = ChromeRegulationView()
-        toc = [{'section_id': '199-Subpart-A', 'sub_toc': [
-                    {'section_id': '199-4'}, {'section_id': '199-6'}]},
-               {'section_id': '199-Subpart-B', 'sub_toc': [
-                    {'section_id': '199-8'}, {'section_id': '199-9'}]}]
+        toc = [{'section_id': '199-Subpart-A',
+                'sub_toc': [{'section_id': '199-4'}, {'section_id': '199-6'}]},
+               {'section_id': '199-Subpart-B',
+                'sub_toc': [{'section_id': '199-8'}, {'section_id': '199-9'}]}]
         self.assertEqual('199-4', view.diff_redirect_label('199', toc))
 
 

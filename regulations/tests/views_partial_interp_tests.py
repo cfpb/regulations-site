@@ -37,6 +37,7 @@ class PartialInterpViewTest(TestCase):
                          [generator.get_tree_paragraph.return_value])
         self.assertTrue(response.context_data['inline'])
 
+
 class PartialSubterpViewTest(TestCase):
     @patch('regulations.views.partial_interp.generator')
     @patch('regulations.views.partial_interp.utils')
