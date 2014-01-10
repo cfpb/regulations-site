@@ -27,40 +27,42 @@
     z-index: 1000;
     height: 3.75em;
     //overflow: hidden;
+}
 
-    .title {
-        display: inline-block;
-        float: left;
-        line-height: 57px;
+.title {
+    display: inline-block;
+    float: left;
+    line-height: 57px;
 
-        .reg-title,
-        .site-title {
-            font-size: 1.325em;
-            .reset;
-            display: inline;
-        }
+    .reg-title,
+    .site-title {
+        font-size: 1.325em;
+        .reset;
+        display: inline;
+    }
 
-        .reg-title {
-            .avenir-next;
-            font-size: 1.125em;
-        }
+    .reg-title {
+        .avenir-next;
+        font-size: 1.125em;
+    }
 
-        .reg-title:before {
-            content: "|";
-            .avenir-next;
-            padding: 0 12px;
-            color: @medium_gray;
-        }
+    .site-title {
+        .avenir-next-demi;
+        font-size: 1.375em;
+        padding-left: 15px;
+    }
 
-        .site-title {
-            .avenir-next-demi;
-            font-size: 1.375em;
-            padding-left: 15px;
-        }
+    .e {
+        .avenir-next;
+    }
+}
 
-        .e {
-            .avenir-next;
-        }
+@media only screen and ( min-width: 480px ) {
+    .reg-title:before {
+        content: "|";
+        .avenir-next;
+        padding: 0 12px;
+        color: @medium_gray;
     }
 }
 
@@ -222,10 +224,12 @@ tiny screens
 
     .app-nav-list-item {
         border-bottom: 1px solid @dark_gray;
+        z-index: 999999;
 
         a {
             display: block;
             padding: 20px 15px;
+            z-index: 999999;
         }
 
         a:hover,
