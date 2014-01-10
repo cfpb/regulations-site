@@ -120,6 +120,11 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                     options.fromVersion = $('#table-of-contents').data('from-version');
                 }
             }
+            
+            //search needs to know which version to search and switch to that version
+            if (this.contentType === 'search-results') {
+                options.regVersion = options.searchVersion;
+            }
 
             this.loading();
             SidebarEvents.trigger('section:loading');
