@@ -124,3 +124,39 @@ class UtilsTest(TestCase):
             {'section_id': '204-Interp', 'index': ['204', 'Interp']}]
         first = first_section('204', 'ver')
         self.assertEqual(first, '204-100')
+
+    @patch('regulations.views.utils.table_of_contents')
+    def test_subterp_expansion(self, table_of_contents):
+        for label_id in ('111', '111-1', '111-A', '111-2-b', '111-Interp',
+                         '111-B-Interp'):
+            self.assertEqual([label_id], subterp_expansion('vvv', label_id))
+        self.assertFalse(table_of_contents.called)
+
+        table_of_contents.return_value = [
+            {'index': ['111', 'Subpart', 'A'],
+             'sub_toc': [{'index': ['111', '4']}, {'index': ['111', '5']}]},
+            {'index': ['111', 'C'], 'is_appendix': True},
+            {'index': ['111', 'R'], 'is_appendix': True},
+            {'index': ['111', 'Interp'],
+             'sub_toc': [
+                 {'index': ['111', 'Subpart', 'A', 'Interp']},
+                 {'index': ['111', 'Appendices', 'Interp']}]}]
+        self.assertEqual(['111-4-Interp', '111-5-Interp'],
+                         subterp_expansion('vvv', '111-Subpart-A-Interp'))
+        self.assertEqual(['111-C-Interp', '111-R-Interp'],
+                         subterp_expansion('vvv', '111-Appendices-Interp'))
+
+        table_of_contents.return_value = [
+            {'index': ['111', '1'], 'is_section': True},
+            {'index': ['111', '4'], 'is_section': True},
+            {'index': ['111', '7'], 'is_section': True},
+            {'index': ['111', 'C'], 'is_appendix': True},
+            {'index': ['111', 'R'], 'is_appendix': True},
+            {'index': ['111', 'Interp'],
+             'sub_toc': [
+                 {'index': ['111', 'Subpart', 'Interp']},
+                 {'index': ['111', 'Appendices', 'Interp']}]}]
+        self.assertEqual(['111-1-Interp', '111-4-Interp', '111-7-Interp'],
+                         subterp_expansion('vvv', '111-Subpart-Interp'))
+        self.assertEqual(['111-C-Interp', '111-R-Interp'],
+                         subterp_expansion('vvv', '111-Appendices-Interp'))

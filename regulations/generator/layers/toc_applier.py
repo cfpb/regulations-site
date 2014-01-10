@@ -37,6 +37,8 @@ class TableOfContentsLayer(object):
             return ('TOC', toc_list)
 
     def interp(self, data, toc_list):
+        """Expand the interp section of the TOC into subterps, collections of
+        interpreted subparts, empty part, and appendices"""
         segments = title_parsing.try_split(data['title'])
         if not segments:
             segments = 'Supplement I', ''
@@ -73,7 +75,7 @@ class TableOfContentsLayer(object):
                     'section_id': '-'.join(index)
                 })
 
-        if not found_subpart:
+        if not found_subpart:   # Add the empty subpart
             index = data['index'][:1] + ['Subpart', 'Interp']
             subterps.insert(0, {
                 'label': 'Regulation Text',

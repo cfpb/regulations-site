@@ -71,3 +71,22 @@ class ViewsChromeTest(TestCase):
         generator.get_tree_paragraph.return_value = None
         response = Client().get('/regulation/111/222')
         self.assertEqual(404, response.status_code)
+
+
+class ViewsChromeRegulationTest(TestCase):
+    def test_diff_redirect_label(self):
+        view = ChromeRegulationView()
+        toc = [{'section_id': '199-Subpart-A', 'sub_toc': [
+                    {'section_id': '199-4'}, {'section_id': '199-6'}]},
+               {'section_id': '199-Subpart-B', 'sub_toc': [
+                    {'section_id': '199-8'}, {'section_id': '199-9'}]}]
+        self.assertEqual('199-4', view.diff_redirect_label('199', toc))
+
+
+class ViewsChromeSubterpTest(TestCase):
+    def test_diff_redirect_label(self):
+        view = ChromeSubterpView()
+        for label in ('199-Subpart-Interp', '199-Subpart-A-Interp',
+                      '199-Appendices-Interp'):
+            self.assertEqual('199-Interp',
+                             view.diff_redirect_label(label, None))

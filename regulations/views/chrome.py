@@ -22,6 +22,7 @@ class ChromeView(TemplateView):
     template_name = 'regulations/chrome.html'
     has_sidebar = True
     check_tree = True
+    #   Which view name to use when switching versions
     version_switch_view = 'chrome_section_view'
 
     def get(self, request, *args, **kwargs):

@@ -37,3 +37,10 @@ class LayerUtilsTest(TestCase):
             RegUrl.of(['999', 'Interp'], 'verver', True))
         self.assertEqual('#999-88-e',
             RegUrl.of(['999', '88', 'e'], 'verver', False))
+
+        self.assertEqual('#999-Subpart-Interp',
+            RegUrl.of(['999', 'Subpart', 'Interp'], 'verver', False))
+        self.assertEqual('#999-Subpart-A-Interp',
+            RegUrl.of(['999', 'Subpart', 'A', 'Interp'], 'verver', False))
+        self.assertEqual('#999-Appendices-Interp',
+            RegUrl.of(['999', 'Appendices', 'Interp'], 'verver', False))
