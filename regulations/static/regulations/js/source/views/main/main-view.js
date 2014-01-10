@@ -106,7 +106,8 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             options.id = id;
             options.type = this.contentType;
-            options.regVersion = this.regVersion;
+            // searching effectively switches version, so do that
+            options.regVersion = this.searchVersion || this.regVersion;
             options.regPart = this.regPart;
             options.model = this.modelmap[this.contentType];
             options.cb = this.render;
@@ -121,11 +122,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 }
             }
             
-            //search needs to know which version to search
-            if (this.contentType === 'search-results') {
-                options.regVersion = options.version;
-            }
-
             this.loading();
             SidebarEvents.trigger('section:loading');
 
