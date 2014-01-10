@@ -26,7 +26,7 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
         
         _changeDate: function() {
             this.version = $('section[data-base-version]').data('base-version');
-            this.displayDate = $('select[name=version] option[value='+this.version+']').text()
+            this.displayDate = $('select[name=version] option[value='+this.version+']').text();
             $('.effective-date').html('<strong>Effective date:</strong> ' + this.displayDate);
         },
 
