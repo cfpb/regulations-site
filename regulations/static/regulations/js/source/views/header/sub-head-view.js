@@ -20,7 +20,7 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
         },
 
         _displayCount: function(resultCount) {
-            this.$activeTitle.html('Search results — ' + resultCount);
+            this.$activeTitle.html('<span class="subpart">Search results</span> ' + resultCount);
         },
 
         _reset: function() {
