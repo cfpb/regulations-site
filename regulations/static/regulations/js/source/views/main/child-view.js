@@ -93,6 +93,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
                         this.$activeSection = this.$sections[i][0];
                         // **Event** trigger active section change
                         HeaderEvents.trigger('section:open', this.activeSection);
+                        this.externalEvents.trigger('paragraph:active', this.activeSection);
 
                         if (typeof window.history !== 'undefined' && typeof window.history.replaceState !== 'undefined') {
                             // update hash in url

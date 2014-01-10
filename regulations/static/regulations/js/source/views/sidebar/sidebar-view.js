@@ -1,4 +1,4 @@
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'permalink-view', 'help-view', './sidebar-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model'], function($, _, Backbone, SxSList, PermalinkView, HelpView, SidebarModel, Main, Breakaway, SidebarEvents, Definition, MetaModel) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'permalink-view', 'help-view', './sidebar-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model', 'main-events'], function($, _, Backbone, SxSList, PermalinkView, HelpView, SidebarModel, Main, Breakaway, SidebarEvents, Definition, MetaModel, MainEvents) {
     'use strict';
     var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',
@@ -47,6 +47,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
             switch (context.type) {
                 case 'reg-section':
                     this.model.get(context.id, this.openRegFolders);
+                    MainEvents.trigger('definition:carriedOver');
                     break;
                 case 'search':
                     this.closeChildren();

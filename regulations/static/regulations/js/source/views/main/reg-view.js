@@ -15,6 +15,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             this.externalEvents.on('definition:close', this.closeDefinition, this);
             this.externalEvents.on('breakaway:open', this.hideContent, this);
             this.externalEvents.on('breakaway:close', this.showContent, this);
+            this.externalEvents.on('definition:carriedOver', this.checkDefinitionScope, this);
+            this.externalEvents.on('paragraph:active', this.newActiveParagraph, this);
 
             DrawerEvents.trigger('pane:init', 'table-of-contents');
 
@@ -39,8 +41,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             }
 
             ChildView.prototype.initialize.apply(this, arguments);
-
-            this.checkDefinitionScope();
         },
 
         // only concerned with resetting DOM, no matter
@@ -78,22 +78,54 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
         checkDefinitionScope: function() {
             var $def = $('#definition'),
                 defTerm = $def.data('defined-term'),
-                defId = $def.find('.open-definition').data('inline-def'),
-                $termLinks;
+                defId = $def.find('.open-definition').attr('id'),
+                $termLinks,
+                checkLinks;
 
             if ($def.length > 0) {
                 $termLinks = this.$el.find('a.definition'); 
 
-                $termLinks.each(function(link) {
-                    var $link = $(link);
-                    if ($link.data('defined-term') === defTerm) {
-                        if ($link.data('definition') === defId) {
-                            SidebarEvents.trigger('definition:outOfScope');
-                            exit;
+                checkLinks = function(paragraphs) {
+                    $termLinks.each(function(i, link) {
+                        var $link = $(link);
+
+                        if ($link.data('defined-term') === defTerm) {
+                            if ($link.data('definition') !== defId) {
+                                if (paragraphs.length === 0) {
+                                    SidebarEvents.trigger('definition:outOfScope');
+                                }
+
+                                paragraphs.push($link.closest('li[data-permalink-section]').attr('id'));
+                            }
                         }
-                    }
-                });
+                    });
+
+                    return paragraphs;
+                }
+
+                this.defScopeExclusions = checkLinks([]);
+
+                if (this.defScopeExclusions.length === 0) {
+                    SidebarEvents.trigger('definition:inScope');
+                }
             }
+        },
+
+        newActiveParagraph: function(id) {
+            if (typeof this.defScopeExclusions !== 'undefined') {
+                if (this.defScopeExclusions.indexOf(id) !== -1) {
+                    SidebarEvents.trigger('definition:deactivate');
+                }
+                else {
+                    SidebarEvents.trigger('definition:activate');
+                }
+            }
+        },
+
+        render: function() {
+            ChildView.prototype.render.apply(this, arguments);
+
+            this.checkDefinitionScope();
         },
 
         // content section key term link click handler

@@ -18,6 +18,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         initialize: function() {
             this.externalEvents = SidebarEvents;
             this.externalEvents.on('definition:outOfScope', this.displayScopeMsg, this);
+            this.externalEvents.on('definition:inScope', this.removeScopeMsg, this);
+            this.externalEvents.on('definition:activate', this.unGrayDefinition, this);
+            this.externalEvents.on('definition:deactivate', this.grayOutDefinition, this);
 
             if (typeof this.options.id !== 'undefined') {
                 this.id = this.options.id;
@@ -64,7 +67,23 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         displayScopeMsg: function() {
-            console.log('hi');
+            this.$el.find('.open-definition').prepend('<div id="scopemsg">this def might be out of scope</div>');
+        },
+
+        removeScopeMsg: function() {
+            var $msg = this.$el.find('#scopemsg');
+
+            if ($msg.length > 0) {
+                $msg.remove();
+            }
+        },
+
+        grayOutDefinition: function() {
+            this.$el.addClass('loading');
+        },
+
+        unGrayDefinition: function() {
+            this.$el.removeClass('loading');
         },
 
         openFullDefinition: function(e) {
