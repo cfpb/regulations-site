@@ -25,7 +25,7 @@ def convert_to_python(data):
         return tuple(map(convert_to_python, data))
     if isinstance(data, list):
         return list(map(convert_to_python, data))
-    
+
     return data
 
 
@@ -44,7 +44,7 @@ class RegUrl(object):
 
         view_name = 'chrome_section_view'
         # Subterps, collections of interpretations of whole subparts, etc.
-        if 'Interp' in citation and ('Subpart' in citation 
+        if 'Interp' in citation and ('Subpart' in citation
                                      or 'Appendices' in citation):
             view_name = 'chrome_subterp_view'
             label = '-'.join(citation)
@@ -57,8 +57,8 @@ class RegUrl(object):
             try:
                 url = reverse(view_name, args=(label, version))
             except NoReverseMatch:
-                #XXX We have some errors in our layers. Once those are fixed, we
-                #need to revisit this.
+                #XXX We have some errors in our layers. Once those are fixed,
+                #we need to revisit this.
                 pass
         return url + '#' + '-'.join(to_markup_id(citation))
 

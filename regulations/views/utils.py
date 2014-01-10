@@ -74,7 +74,8 @@ def add_extras(context):
             ga_index = "EREGS_GA_" + site + '_' + val
             context[ga_index] = ga_settings[site][val]
 
-    if not 'EREGS_GA_EREGS_SITE' in context and not 'EREGS_GA_EREGS_ID' in context:
+    if (not 'EREGS_GA_EREGS_SITE' in context
+            and not 'EREGS_GA_EREGS_ID' in context):
         for attr in ('GOOGLE_ANALYTICS_SITE', 'GOOGLE_ANALYTICS_ID'):
             new_index = attr.replace('GOOGLE_ANALYTICS', 'EREGS_GA_EREGS')
             context[new_index] = getattr(settings, attr, '')

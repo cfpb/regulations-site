@@ -54,7 +54,6 @@ class SideBarView(TemplateView):
             reg = client.regulation(label_id, version)
             if reg:
                 per_node(reg)
-            
 
     def get_context_data(self, **kwargs):
         context = super(SideBarView, self).get_context_data(**kwargs)

@@ -23,6 +23,7 @@ class PartialSubterpView(PartialView):
     """View of subterps - interpretations of whole subparts, regtext, or
     appendices"""
     template_name = "regulations/interpretations.html"
+
     def get_context_data(self, **kwargs):
         #   skip our parent
         context = super(PartialView, self).get_context_data(**kwargs)
@@ -30,7 +31,7 @@ class PartialSubterpView(PartialView):
         label_id = context['label_id']
         part = label_id.split('-', 1)[0]
         version = context['version']
-        
+
         section_list = utils.subterp_expansion(version, label_id)
 
         if not section_list:
