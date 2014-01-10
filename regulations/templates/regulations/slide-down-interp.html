@@ -2,14 +2,16 @@
     For expand/contractable inline interpretations.
 {% endcomment %}
 
-<section class="inline-interpretation" data-interp-for="{{interp.for_markup_id}}" data-interp-id="{{interp.label_id}}">
+<section class="inline-interpretation" data-interp-for="{{interp.for_markup_id}}" data-interp-id="{{interp.interps.0.label_id}}">
     <header class="inline-interp-header">
-        <h4 tabindex="0">Official Interpretation to <span class="ref-num">{{ interp.label }}</span></h4>
+        <h4 tabindex="0">Official Interpretation to <span class="ref-num">{{ interp.for_label }}</span></h4>
         <a href="#" class="expand-button" tabindex="0"><span class="expand-text">Show</span></a>
     </header>
+    {% for interp_content in interp.interps %}
     <section class="inline-interpretation-content hidden">
-        {{ interp.markup | safe }}
+        {{ interp_content.markup | safe }}
 
-        <p><a href="{% url 'chrome_section_view' interp.section_id version %}#{{ interp.label_id }}" data-linked-subsection="{{ interp.label_id }}" data-linked-section="{{ interp.section_id }}" class="internal section-link">See this interpretation in Supplement I</a></p>
+        <p><a href="{% url 'chrome_section_view' interp_content.section_id version %}#{{ interp_content.label_id }}" data-linked-subsection="{{ interp_content.label_id }}" data-linked-section="{{ interp_content.section_id }}" class="internal section-link">See this interpretation in Supplement I</a></p>
     </section>
+    {% endfor %}
 </section>
