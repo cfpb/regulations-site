@@ -102,7 +102,7 @@ def subterp_expansion(version, label_id):
     label = label_id.split('-')
     part = label[0]
     if (label_id in (part + '-Subpart-Interp', part + '-Appendices-Interp')
-            or (len(label) == 4 and label[0] == 'Subpart')):
+            or (len(label) == 4 and label[1] == 'Subpart')):
         trimmed = label[:-1]   # Strip "Interp"
         toc = table_of_contents(part, version, True)
         parts_list = []

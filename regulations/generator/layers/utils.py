@@ -42,14 +42,20 @@ class RegUrl(object):
     def of(citation, version, sectional):
         url = ''
 
-        if 'Interp' in citation:
-            section = citation[0] + '-Interp'
+        view_name = 'chrome_section_view'
+        # Subterps, collections of interpretations of whole subparts, etc.
+        if 'Interp' in citation and ('Subpart' in citation 
+                                     or 'Appendices' in citation):
+            view_name = 'chrome_subterp_view'
+            label = '-'.join(citation)
+        elif 'Interp' in citation:
+            label = citation[0] + '-Interp'
         else:
-            section = '-'.join(citation[:2])
+            label = '-'.join(citation[:2])
 
         if sectional:
             try:
-                url = reverse('chrome_section_view', args=(section, version))
+                url = reverse(view_name, args=(label, version))
             except NoReverseMatch:
                 #XXX We have some errors in our layers. Once those are fixed, we
                 #need to revisit this.
