@@ -36,8 +36,12 @@ class PartialSubterpView(PartialView):
         if not section_list:
             raise Http404
 
+        context['markup_page_type'] = 'reg-section'
+        html_label = node_types.to_markup_id(label_id.split('-'))
         context['c'] = {'node_type': node_types.INTERP,
-                        'children': []}
+                        'children': [],
+                        'html_label': html_label,
+                        'markup_id': '-'.join(html_label)}
         for interp_label in section_list:
             tree = generator.get_tree_paragraph(interp_label, version)
             if tree is not None:    # Not all sections will have an interp
