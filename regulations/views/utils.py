@@ -74,7 +74,8 @@ def add_extras(context):
             ga_index = "EREGS_GA_" + site + '_' + val
             context[ga_index] = ga_settings[site][val]
 
-    if not 'EREGS_GA_EREGS_SITE' in context and not 'EREGS_GA_EREGS_ID' in context:
+    if (not 'EREGS_GA_EREGS_SITE' in context
+            and not 'EREGS_GA_EREGS_ID' in context):
         for attr in ('GOOGLE_ANALYTICS_SITE', 'GOOGLE_ANALYTICS_ID'):
             new_index = attr.replace('GOOGLE_ANALYTICS', 'EREGS_GA_EREGS')
             context[new_index] = getattr(settings, attr, '')
@@ -92,3 +93,39 @@ def first_section(reg_part, version):
         return toc[0]['sub_toc'][0]['section_id']
     else:
         return toc[0]['section_id']
+
+
+def subterp_expansion(version, label_id):
+    """Convert a subterp (a grouping of interpretations of subparts,
+    regtext, or appendices) into the list of labels. If the label provided
+    is not of a subterp, this function returns a singleton list with the
+    label_id"""
+    label = label_id.split('-')
+    part = label[0]
+    if (label_id in (part + '-Subpart-Interp', part + '-Appendices-Interp')
+            or (len(label) == 4 and label[1] == 'Subpart')):
+        trimmed = label[:-1]   # Strip "Interp"
+        toc = table_of_contents(part, version, True)
+        parts_list = []
+
+        if trimmed[-1] == 'Subpart':   # Empty Subpart
+            for el in toc:
+                if el.get('is_section'):
+                    parts_list.append(el)
+        elif trimmed[-1] == 'Appendices':
+            for el in toc:
+                if el.get('is_appendix'):
+                    parts_list.append(el)
+        else:
+            subpart_toc = None
+            for el in toc:
+                if el['index'] == trimmed:
+                    subpart_toc = el
+
+            if subpart_toc:
+                parts_list = subpart_toc.get('sub_toc', [])
+            else:
+                parts_list = []
+        return ['-'.join(el['index']) + '-Interp' for el in parts_list]
+    else:
+        return [label_id]
