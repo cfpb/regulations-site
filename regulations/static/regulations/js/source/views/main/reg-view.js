@@ -85,28 +85,37 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             if ($def.length > 0) {
                 $termLinks = this.$el.find('a.definition'); 
 
-                checkLinks = function(paragraphs) {
-                    $termLinks.each(function(i, link) {
-                        var $link = $(link);
+                checkLinks = function(paragraphs, links, term, id) {
+                    var $link = $(links.last());
 
-                        if ($link.data('defined-term') === defTerm) {
-                            if ($link.data('definition') !== defId) {
-                                if (paragraphs.length === 0) {
-                                    SidebarEvents.trigger('definition:outOfScope');
-                                }
-
-                                paragraphs.push($link.closest('li[data-permalink-section]').attr('id'));
+                    if ($link.data('defined-term') === term) {
+                        if ($link.data('definition') !== id) {
+                            // don't change the DOM over and over for no reason
+                            // if there are multiple defined term links that 
+                            // are scoped to a different definition body
+                            if (paragraphs.length === 0) {
+                                SidebarEvents.trigger('definition:outOfScope');
                             }
+
+                            paragraphs.push($link.closest('li[data-permalink-section]').attr('id'));
                         }
-                    });
+                    }
 
-                    return paragraphs;
-                }
+                    links = links.not(links.last());
 
-                this.defScopeExclusions = checkLinks([]);
+                    if (links.length === 0) {
+                        this.defScopeExclusions = paragraphs;
+                        return false;
+                    }
 
-                if (this.defScopeExclusions.length === 0) {
-                    SidebarEvents.trigger('definition:inScope');
+                    checkLinks(paragraphs, links, term, id);
+                }.bind(this);
+
+                if ($termLinks.length > 0) {
+                    checkLinks([], $termLinks, defTerm, defId);
+                    if (typeof this.defScopeExclusions !== 'undefined' && this.defScopeExclusions.length === 0) {
+                        SidebarEvents.trigger('definition:inScope');
+                    }
                 }
             }
         },
