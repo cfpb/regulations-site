@@ -1,20 +1,23 @@
 from django.conf.urls import patterns, include, url
 
-from regulations.views.chrome import ChromeInterpView, ChromeLandingView
-from regulations.views.chrome import ChromeParagraphView, ChromeRegulationView
-from regulations.views.chrome import ChromeSearchView, ChromeSectionView
+from regulations.views.about import about
 from regulations.views.chrome_breakaway import ChromeSXSView
-from regulations.views.sidebar import SideBarView
-from regulations.views.partial import PartialInterpView, PartialRegulationView
-from regulations.views.partial import PartialParagraphView, PartialSectionView, PartialDefinitionView
+from regulations.views.chrome import (
+    ChromeInterpView, ChromeLandingView, ChromeParagraphView,
+    ChromeRegulationView, ChromeSearchView, ChromeSectionView,
+    ChromeSubterpView)
 from regulations.views.diff import ChromeSectionDiffView
 from regulations.views.diff import PartialSectionDiffView
+from regulations.views.partial import PartialDefinitionView
+from regulations.views.partial import PartialParagraphView
+from regulations.views.partial import PartialRegulationView, PartialSectionView
+from regulations.views import partial_interp
 from regulations.views.partial_search import PartialSearch
 from regulations.views.partial_sxs import ParagraphSXSView
 from regulations.views.redirect import diff_redirect, redirect_by_date
 from regulations.views.redirect import redirect_by_date_get
+from regulations.views.sidebar import SideBarView
 from regulations.views.universal_landing import universal
-from regulations.views.about import about
 
 #Re-usable URL patterns.
 version_pattern = r'(?P<version>[-\d\w]+)'
@@ -25,6 +28,7 @@ section_pattern = r'(?P<label_id>[\d]+[-][\w]+)'
 interp_pattern = r'(?P<label_id>[-\d\w]+[-]Interp)'
 paragraph_pattern = r'(?P<label_id>[-\d\w]+)'
 notice_pattern = r'(?P<notice_id>[\d]+[-][\d]+)'
+subterp_pattern = r'(?P<label_id>[\d]+-(Appendices|Subpart(-[A-Z]+)?)-Interp)'
 
 
 urlpatterns = patterns(
@@ -66,6 +70,13 @@ urlpatterns = patterns(
     url(r'^%s/%s$' % (section_pattern, version_pattern),
         ChromeSectionView.as_view(),
         name='chrome_section_view'),
+    # Subterp, interpretations of a while subpart, emptypart or appendices
+    # Example: http://.../201-Subpart-A-Interp/2013-10706
+    #          http://.../201-Subpart-Interp/2013-10706
+    #          http://.../201-Appendices-Interp/2013-10706
+    url(r'^%s/%s$' % (subterp_pattern, version_pattern),
+        ChromeSubterpView.as_view(),
+        name=ChromeSubterpView.version_switch_view),
     #Interpretation of a section/paragraph or appendix
     #Example: http://.../regulation/201-4-Interp/2013-10704
     url(r'^%s/%s$' % (interp_pattern, version_pattern),
@@ -112,15 +123,22 @@ urlpatterns = patterns(
     url(r'^partial/definition/%s/%s$' % (paragraph_pattern, version_pattern),
         PartialDefinitionView.as_view(),
         name='partial_definition_view'),
-   #A regulation section without chrome
+    #A regulation section without chrome
     #Example: http://.../partial/201-4/2013-10704
     url(r'^partial/%s/%s$' % (section_pattern, version_pattern),
         PartialSectionView.as_view(),
         name='partial_section_view'),
+    # Subterp, interpretations of a whole subpart, emptypart or appendices
+    # Example: http://.../partial/201-Subpart-A-Interp/2013-10706
+    #          http://.../partial/201-Subpart-Interp/2013-10706
+    #          http://.../partial/201-Appendices-Interp/2013-10706
+    url(r'^partial/%s/%s$' % (subterp_pattern, version_pattern),
+        partial_interp.PartialSubterpView.as_view(),
+        name='partial_subterp_view'),
     #An interpretation of a section/paragraph or appendix without chrome.
     #Example: http://.../partial/201-2-Interp/2013-10704
     url(r'^partial/%s/%s$' % (interp_pattern, version_pattern),
-        PartialInterpView.as_view(),
+        partial_interp.PartialInterpView.as_view(),
         name='partial_interp_view'),
     #The whole regulation without chrome; not too useful; added for symmetry
     #Example: http://.../partial/201/2013-10704

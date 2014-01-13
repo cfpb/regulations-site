@@ -15,14 +15,14 @@ def appendix_supplement(data):
         else:
             element['is_appendix'] = True
 
-        segments = try_split(data['title'], (u'—', '-'))
+        segments = try_split(data['title'])
         if segments:
             element['label'], element['sub_label'] = segments[:2]
         element['section_id'] = '-'.join(data['index'])
         return element
 
 
-def try_split(text, chars):
+def try_split(text, chars=(u'—', '-')):
     """Utility method for splitting a string by one of multiple chars"""
     for c in chars:
         segments = text.split(c)
