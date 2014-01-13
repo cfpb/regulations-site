@@ -9,17 +9,6 @@ def get_labels(current):
     return current.split('-')
 
 
-def get_toc(reg_part, version):
-    creator = generator.LayerCreator()
-    api_toc = creator.LAYERS[creator.TOC][0]
-    toc = creator.get_layer_json(api_toc, reg_part, version)
-    return toc
-
-
-def up_level(labels):
-    return '-'.join(labels[0:-1])
-
-
 def is_last(i, l):
     return i+1 == len(l)
 
@@ -48,7 +37,7 @@ def nav_sections(current, version):
     #   Add prefixes
     for el in flat_toc:
         if el.get('is_section'):
-            el['markup_prefix'] = '&sect;&nbsp'
+            el['markup_prefix'] = '&sect;&nbsp;'
         elif el.get('is_subterp'):
             el['markup_prefix'] = 'Interpretations For '
 
@@ -67,14 +56,3 @@ def nav_sections(current, version):
 
             return (previous_section, next_section)
     # Implicit return None if the section isn't in the TOC
-
-
-def parse_section_title(data):
-    """ Separate the section number from the section title (this works for
-    both appendix and section text. """
-
-    if type_from_label(data['index']) in (node_types.APPENDIX,
-                                          node_types.INTERP):
-        return appendix_supplement(data)
-    else:
-        return section(data)
