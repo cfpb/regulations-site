@@ -122,14 +122,16 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
 
         // id = active paragraph
         newActiveParagraph: function(id) {
-            var newDefId;
+            var $newDefLink, newDefId, newDefHref;
             // if there are paragraphs where the open definition is
             // out of scope, display message
             // else be sure there's no out of scope message displayed
             if (typeof this.defScopeExclusions !== 'undefined') {
                 if (this.defScopeExclusions.indexOf(id) !== -1) {
-                    newDefId = this.defScopeExclusions.indexOf(id).data('definition');
-                    SidebarEvents.trigger('definition:deactivate');
+                    $newDefLink = this.$activeSection.find('a.definition');
+                    newDefId = $newDefLink.data('definition');
+                    newDefHref = $newDefLink.attr('href');
+                    SidebarEvents.trigger('definition:deactivate', newDefId, newDefHref);
                 }
                 else {
                     SidebarEvents.trigger('definition:activate');

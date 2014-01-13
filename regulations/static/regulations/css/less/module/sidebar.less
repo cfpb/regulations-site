@@ -274,11 +274,24 @@ When open definitions appear in the right sidebar
         border-bottom: 1px solid @medium_gray;
     }
 
-    .definition-text {
+    .definition-text,
+    .notice {
         padding: 1em;
 
         p {
             margin-top: 0;
+        }
+
+        &.inactive {
+            color: @80_gray;
+        }
+    }
+
+    .notice {
+        color: @red_orange;
+
+        .minicon-warning {
+            width: 1em;
         }
     }
 }

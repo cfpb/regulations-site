@@ -35,9 +35,6 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             // by the full def once it loads
             this.renderHeader();
 
-            // for displaying scope warnings
-            this.$noticeContainer = this.$el.find('.notice');
-
             // if pushState is supported, attach the
             // appropriate event handlers
             if (Router.hasPushState) {
@@ -70,7 +67,8 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         },
 
         displayScopeMsg: function(id) {
-            var msg = 'This term has a different definition for some portions of ';
+            var msg = 'This term has a different definition for some portions of ',
+                icon = '<span class="minicon-warning"></span>';
             if (id) {
                 msg += '§' + id + '.';
             }
@@ -78,22 +76,34 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 msg += 'this section.';
             }
 
-            this.$noticeContainer(msg);
+            this.$noticeContainer = this.$noticeContainer || this.$el.find('.notice').removeClass('hidden');
+
+            this.$noticeContainer.html(icon + msg);
         },
 
         removeScopeMsg: function() {
             if (this.$noticeContainer.length > 0) {
-                this.$noticeContainer.html('');
+                this.$noticeContainer.html('').addClass('hidden');
             }
         },
 
-        grayOutDefinition: function(defId) {
-            console.log(defId);
-            this.$el.addClass('loading');
+        grayOutDefinition: function(defId, href) {
+            var $text = this.$el.find('.definition-text'),
+                linkText = 'Load the correct definition for ',
+                link;
+            linkText += (defId) ? '§' + defId : 'this section';
+            link = '<a href="' + href + '" class="replace inactive">'
+            link += linkText + '</a>';
+
+            // remove duplicates
+            this.$noticeContainer.find('a').remove();
+            this.$noticeContainer.append(link);
+            $text.addClass('inactive');
         },
 
         unGrayDefinition: function() {
-            this.$el.removeClass('loading');
+            var $text = this.$el.find('.definition-text');
+            $text.removeClass('inactive');
         },
 
         openFullDefinition: function(e) {
