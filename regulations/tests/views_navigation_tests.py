@@ -69,10 +69,9 @@ class NavigationTest(TestCase):
     def test_nav_sections_subparts(self, utils):
         utils.table_of_contents.return_value = [
             {'index': ['204', 'Subpart', 'A'], 'title': 'Subpart A',
-             'sub_toc': [
-                {'index': ['204', '1'], 'title': u'§ 204.1 First'},
-                {'index': ['204', '2'], 'title': u'§ 204.2 Second'},
-                {'index': ['204', '3'], 'title': u'§ 204.3 Third'}]},
+             'sub_toc': [{'index': ['204', '1'], 'title': u'§ 204.1 First'},
+                         {'index': ['204', '2'], 'title': u'§ 204.2 Second'},
+                         {'index': ['204', '3'], 'title': u'§ 204.3 Third'}]},
             {'index': ['204', 'A'], 'title': 'Appendix A'},
             {'index': ['204', 'Interp'], 'title': 'Interpretations',
              'sub_toc': [

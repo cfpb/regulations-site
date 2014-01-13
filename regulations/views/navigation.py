@@ -41,7 +41,6 @@ def nav_sections(current, version):
         elif el.get('is_subterp'):
             el['markup_prefix'] = 'Interpretations For '
 
-
     for idx, el in enumerate(flat_toc):
         if el['index'] == labels:
             if idx == 0:
