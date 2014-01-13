@@ -42,9 +42,11 @@ class PartialSubterpViewTest(TestCase):
     @patch('regulations.views.partial_interp.generator')
     @patch('regulations.views.partial_interp.utils')
     @patch('regulations.views.partial_interp.generate_html')
-    def test_get_context_data(self, genhtml, utils, generator):
+    @patch('regulations.views.partial.navigation')
+    def test_get_context_data(self, nav, genhtml, utils, generator):
         generator.get_tree_paragraph.return_value = None
         utils.subterp_expansion.return_value = []
+        nav.nav_sections.return_value = None, None
 
         request = RequestFactory().get('/fake-path')
         view = partial_interp.PartialSubterpView.as_view()

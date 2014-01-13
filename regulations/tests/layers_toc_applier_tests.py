@@ -64,6 +64,18 @@ class TableOfContentsLayerTest(TestCase):
 
         el = {}
         toc.appendix_supplement(el, {
+            'index': ['204', 'A'],
+            'title': 'Appendix A to Part 204 - Model Forms'})
+        self.assertEqual(el, {
+            'is_appendix': True,
+            'is_first_appendix': True,
+            'label': 'Appendix A to Part 204',
+            'sub_label': 'Model Forms',
+            'section_id': '204-A'
+        })
+
+        el = {}
+        toc.appendix_supplement(el, {
             'index': ['1', 'Interp'],
             'title': 'Supplement I to 8787 - I am Iron Man'})
         self.assertEqual(el, {
