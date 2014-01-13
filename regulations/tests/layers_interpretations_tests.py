@@ -133,9 +133,8 @@ class InterpretationsLayerTest(TestCase):
         il = InterpretationsLayer(None, 'vvv')
         views.utils.table_of_contents.return_value = [
             {'index': ['200', 'Subpart', 'A'],
-             'sub_toc': [
-                {'index': ['200', '1'], 'is_section': True},
-                {'index': ['200', '2'], 'is_section': True}]},
+             'sub_toc': [{'index': ['200', '1'], 'is_section': True},
+                         {'index': ['200', '2'], 'is_section': True}]},
             {'index': ['200', 'A'], 'is_appendix': True}]
         self.assertEqual('200-Subpart-A-Interp',
                          il.determine_section_id(['200', '1', 'Interp']))

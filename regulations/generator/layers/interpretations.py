@@ -43,7 +43,7 @@ class InterpretationsLayer(object):
     def apply_layer(self, text_index):
         """Return a pair of field-name + interpretation if one applies."""
         if text_index in self.layer and self.layer[text_index]:
-            context = {'interps': [], 
+            context = {'interps': [],
                        'for_markup_id': text_index,
                        'for_label': label_to_text(text_index.split('-'),
                                                   include_section=False)}
