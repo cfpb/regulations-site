@@ -58,3 +58,6 @@
 .minicon-document {
   *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e013');
 }
+.minicon-warning {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e014');
+}
