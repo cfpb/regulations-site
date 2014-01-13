@@ -17,6 +17,8 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
             this.childViews['table-of-contents'] = new TOCView();
             this.childViews['timeline'] = new HistoryView();
             this.childViews['search'] = new SearchView();
+
+            this.setActivePane('table-of-contents');
         },
 
         // page types are more diverse and are named differently for

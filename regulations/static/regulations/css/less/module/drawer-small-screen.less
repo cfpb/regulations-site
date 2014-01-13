@@ -16,6 +16,7 @@ The drawer defaults to being displayed offscreen */
     left: -200px;
     top: 200px;
     overflow-y: hidden;
+    z-index: 0;
 
     /* position content fully offscreen*/
     .drawer-content {
@@ -38,6 +39,7 @@ When the .active class is applied, the drawer toggles open */
     top: 94px;
     left: 0px;
     overflow-y: scroll; /* allow content to be scrollable */
+    z-index: 500;
 
     .drawer-content {
         position: static;
@@ -97,10 +99,18 @@ Drawer Nav
     left: -200px;
     margin-right: 15px;
     height: 150px;
+    border-bottom: 0;
 
     a:hover,
     a:active {
         border-bottom: none;
+    }
+}
+
+
+.active {
+    .toc-head {
+        border-bottom: 1px solid @medium_gray;
     }
 }
 

@@ -28,13 +28,8 @@
     </div>
 <![endif]-->
 
-<header id="site-header" class="reg-header">
-<div class="main-head">
-    <div class="title">
-        <h1 class="reg-title"><a href="{% url 'regulation_landing_view' reg_part %}">{{ meta.cfr_title_number }} CFR Part {{ reg_part }} <span>{{ meta.title }} {{meta.statutory_name|title}} </span>{% if meta.reg_letter %}(Regulation {{ meta.reg_letter }}){% endif %}</a></h1>
-    </div> <!-- /reg-title -->
-    {% include "regulations/logo.html" %} 
-</div>
+<header id="site-header" class="reg-header chrome-header">
+{% include "regulations/main-header.html" %} 
 
 <div class="sub-head">
     <a href="#content-wrapper" class="hidden-text">Skip to main content</a> <!-- skip to content link for screen readers-->
@@ -95,22 +90,13 @@
                 </div><!--./date-form-->
                 <ul class="version-list">
                 {% for version in history %}
-                    <li class="{{version.timeline}} status-list" data-base-version="{{version.version}}">
-                    {% if reg_part == label_id %}
-                        <a href="{% url 'chrome_regulation_view' reg_part version.version %}" class="version-link" data-version="{{ version.version }}">
-                            {% if version.timeline == 'current' %}
-                                <h4>Current Law</h4>
-                            {% endif %}
-                            <span class="version-date">{{ version.by_date|date }}</span>
-                        </a>
-                    {% else %}
-                        <a href="{% url 'chrome_section_view' label_id version.version %}" class="version-link" data-version="{{ version.version }}">
-                            {% if version.timeline == 'current' %}
-                                <h4>Current Law</h4>
-                            {% endif %}
-                            <span class="version-date">{{ version.by_date|date }}</span>
-                        </a>
-                    {% endif %}
+                    <li class="{% if version.version == active_version %}current {% endif %}status-list" data-base-version="{{version.version}}">
+                    <a href="{% url version_switch_view label_id version.version %}" class="version-link" data-version="{{ version.version }}">
+                        {% if version.timeline == 'current' %}
+                            <h4>Current Law</h4>
+                        {% endif %}
+                        <span class="version-date">{{ version.by_date|date }}</span>
+                    </a>
                         <div class="timeline-content-wrap">
                             <ul class="rule-list">
                             {% for notice in version.notices %}
@@ -120,7 +106,7 @@
                                 <div class="diff-selector group">
                                 <h4 class="compare-title">Compare this with</h4>
                                 <div class="select-content">
-                                <form action="{% url 'diff_redirect' label_id active_version %}" method="GET">
+                                <form action="{% url 'diff_redirect' diff_redirect_label active_version %}" method="GET">
                                     <select name="new_version" onChange="this.form.submit();">
                                         <option value="default" disabled="disabled" selected="selected">regulation effective</option>
                                         {% for version in history %}

@@ -16,28 +16,31 @@ class InterpretationsLayer(object):
     def apply_layer(self, text_index):
         """Return a pair of field-name + interpretation if one applies."""
         if text_index in self.layer and self.layer[text_index]:
-            layer_element = self.layer[text_index][0]
-            reference = layer_element['reference']
+            context = {'interps': [], 
+                       'for_markup_id': text_index,
+                       'for_label': label_to_text(text_index.split('-'),
+                                                  include_section=False)}
+            for layer_element in self.layer[text_index]:
+                reference = layer_element['reference']
 
-            partial_view = views.partial.PartialInterpView.as_view(inline=True)
-            request = HttpRequest()
-            request.GET['layers'] = 'terms,internal,keyterms,paragraph'
-            request.method = 'GET'
-            response = partial_view(request, label_id=reference,
-                                    version=self.version)
-            response.render()
+                partial_view = views.partial_interp.PartialInterpView.as_view(
+                    inline=True)
+                request = HttpRequest()
+                request.GET['layers'] = 'terms,internal,keyterms,paragraph'
+                request.method = 'GET'
+                response = partial_view(request, label_id=reference,
+                                        version=self.version)
+                response.render()
 
-            context = {
-                'for_markup_id': text_index,
-                'label_id': reference,
-                'markup': response.content,
-            }
+                interp = {
+                    'label_id': reference,
+                    'markup': response.content,
+                }
 
-            #  exclude 'Interp'
-            ref_parts = reference.split('-')[:-1]
-            context['section_id'] = '%s-Interp' % ref_parts[0]
+                #  exclude 'Interp'
+                ref_parts = reference.split('-')[:-1]
+                interp['section_id'] = '%s-Interp' % ref_parts[0]
 
-            context['label'] = label_to_text(text_index.split('-'),
-                                             include_section=False)
+                context['interps'].append(interp)
 
             return 'interp', context
