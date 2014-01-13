@@ -94,7 +94,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                             // if there are multiple defined term links that 
                             // are scoped to a different definition body
                             if (paragraphs.length === 0) {
-                                SidebarEvents.trigger('definition:outOfScope');
+                                SidebarEvents.trigger('definition:outOfScope', this.id);
                             }
 
                             paragraphs.push($link.closest('li[data-permalink-section]').attr('id'));
@@ -120,9 +120,15 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             }
         },
 
+        // id = active paragraph
         newActiveParagraph: function(id) {
+            var newDefId;
+            // if there are paragraphs where the open definition is
+            // out of scope, display message
+            // else be sure there's no out of scope message displayed
             if (typeof this.defScopeExclusions !== 'undefined') {
                 if (this.defScopeExclusions.indexOf(id) !== -1) {
+                    newDefId = this.defScopeExclusions.indexOf(id).data('definition');
                     SidebarEvents.trigger('definition:deactivate');
                 }
                 else {

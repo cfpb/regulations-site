@@ -35,6 +35,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             // by the full def once it loads
             this.renderHeader();
 
+            // for displaying scope warnings
+            this.$noticeContainer = this.$el.find('.notice');
+
             // if pushState is supported, attach the
             // appropriate event handlers
             if (Router.hasPushState) {
@@ -66,19 +69,26 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             this.remove();
         },
 
-        displayScopeMsg: function() {
-            this.$el.find('.open-definition').prepend('<div id="scopemsg">this def might be out of scope</div>');
+        displayScopeMsg: function(id) {
+            var msg = 'This term has a different definition for some portions of ';
+            if (id) {
+                msg += '§' + id + '.';
+            }
+            else {
+                msg += 'this section.';
+            }
+
+            this.$noticeContainer(msg);
         },
 
         removeScopeMsg: function() {
-            var $msg = this.$el.find('#scopemsg');
-
-            if ($msg.length > 0) {
-                $msg.remove();
+            if (this.$noticeContainer.length > 0) {
+                this.$noticeContainer.html('');
             }
         },
 
-        grayOutDefinition: function() {
+        grayOutDefinition: function(defId) {
+            console.log(defId);
             this.$el.addClass('loading');
         },
 
