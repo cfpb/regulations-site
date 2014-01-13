@@ -1,7 +1,7 @@
 #vim: set encoding=utf-8
 from unittest import TestCase
 from mock import patch
-from regulations.generator import navigation
+from regulations.views import navigation
 
 
 class NavigationTest(TestCase):
@@ -31,7 +31,7 @@ class NavigationTest(TestCase):
         self.assertEquals(2, navigation.choose_previous_section(2, l))
         self.assertEquals(None, navigation.choose_previous_section(0, l))
 
-    @patch('regulations.generator.navigation.get_toc')
+    @patch('regulations.views.navigation.get_toc')
     def test_nav_sections(self, get_toc):
         get_toc.return_value = {
             '204': [
@@ -42,7 +42,7 @@ class NavigationTest(TestCase):
         self.assertEquals(None, p)
         self.assertEquals({'index': ['204', '3'], 'title': '§ 204.3 Third'}, n)
 
-    @patch('regulations.generator.navigation.get_toc')
+    @patch('regulations.views.navigation.get_toc')
     def test_nav_sections_appendix(self, get_toc):
         get_toc.return_value = {
             '204': [
@@ -62,7 +62,7 @@ class NavigationTest(TestCase):
         self.assertEquals('Appendix A to Part 204', e['label'])
         self.assertEquals('Model Forms', e['sub_label'])
 
-    @patch('regulations.generator.navigation.get_toc')
+    @patch('regulations.views.navigation.get_toc')
     def test_nav_sections_subparts(self, get_toc):
         get_toc.return_value = {
             '204': [
