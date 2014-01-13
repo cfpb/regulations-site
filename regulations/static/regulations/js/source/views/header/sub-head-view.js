@@ -8,6 +8,7 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
 
             this.externalEvents.on('section:open', this._changeTitle, this);
             this.externalEvents.on('search-results:open', this._displayCount, this);
+            this.externalEvents.on('search-results:open',this._changeDate, this);
             this.externalEvents.on('clear', this._reset, this);
 
             // cache inner title DOM node for frequent reference
@@ -20,7 +21,13 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
         },
 
         _displayCount: function(resultCount) {
-            this.$activeTitle.html('Search results — ' + resultCount);
+            this.$activeTitle.html('<span class="subpart">Search results</span> ' + resultCount);
+        },
+        
+        _changeDate: function() {
+            this.version = $('section[data-base-version]').data('base-version');
+            this.displayDate = $('select[name=version] option[value='+this.version+']').text();
+            $('.effective-date').html('<strong>Effective date:</strong> ' + this.displayDate);
         },
 
         _reset: function() {

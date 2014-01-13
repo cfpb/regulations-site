@@ -7,6 +7,15 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'sub-head-view'], fun
             this.subHeadView = new SubHead();
         },
 
+        events: {
+            'click .mobile-nav-trigger': 'toggleNav'
+        },
+
+        toggleNav: function(e) {
+            e.preventDefault();
+            $('.app-nav-list, .mobile-nav-trigger').toggleClass('open');
+        },
+
         contextMap: {
             'changeSubHeadText': '_updateSubHead'
         },

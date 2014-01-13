@@ -12,15 +12,8 @@ Analysis for {{formatted_id}} | eRegulations
     where type is "sxs" or "fr-notice", etc.
 {% endcomment %}
 <section class="full-breakaway" data-base-version="{{version}}" data-page-type="breakaway-sxs">
-    <header id="site-header" class="reg-header">
-        <div class="main-head">
-            <div class="title">
-                <h1 class="reg-title"><a href="{% url 'regulation_landing_view' reg_part %}">{{ meta.cfr_title_number }} CFR Part {{ reg_part }} 
-                        <span>{{ meta.statutory_name|title }} </span>{% if meta.reg_letter %}(Regulation {{ meta.reg_letter }}){% endif %}
-                </a></h1>
-            </div> <!-- /reg-title -->
-            {% include "regulations/logo.html" %} 
-        </div>
+    <header id="site-header" class="reg-header chrome-header">
+        {% include "regulations/main-header.html" %} 
     </header>
 
     <div id="breakaway-view">{{ partial_content|safe }}</div>

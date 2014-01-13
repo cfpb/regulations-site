@@ -5,14 +5,6 @@
     ====================
     */
 
-    .main-content {
-        padding-top: 40px;
-    }
-
-    .landing-content {
-        margin-top: 0;
-    }
-
     .reg-section:before,
     .appendix-section:before,
     .supplement-section:before,
@@ -20,16 +12,16 @@
     .footnotes li:before {
         display: block; 
         content: ""; 
-        height: 60px; 
-        margin: -60px 0 0; 
+        height: 120px; 
+        margin: -120px 0 0; 
         visibility: hidden;
     }
 
     .reg-section .level-1 li,
     .appendix-section .level-1 li,
     .supplement-section .level-1 li {
-        border-top: 60px solid transparent;
-        margin-top: -60px;
+        border-top: 120px solid transparent;
+        margin-top: -120px;
         -webkit-background-clip:padding-box;
         -moz-background-clip:padding;
         background-clip:padding-box;
@@ -64,13 +56,23 @@
     ====================
     */
 
-    .panel {
-        top: 150px;
+    .chrome-header {
+        .title {
+            .site-title {
+                display: none;
+            }
+
+            .reg-title {
+                padding-left: 10px;
+                font-size: 1em;
+            }
+        }
     }
 
-    .panel.active {
-        top: 36px; /* offset shorter header height */
-    }
+    /*
+    Subhead Styles
+    ----------------------
+    */
 
     .header-main {
         display: block;
@@ -89,12 +91,8 @@
         line-height: 24px;
     }
 
-    .main-head {
-        display: none;
-    }
 
     .sub-head {
-        border-top: 2px solid @dark_text;
         height: 54px;
         line-height: 34px;
     }
@@ -113,6 +111,8 @@
             .avenir-next;
         }
     }
+
+
 
     .inline-interpretation {
          h4 {
@@ -187,22 +187,10 @@
     #breakaway-view.open-sxs,
     .full-breakaway {
         position: fixed;
-        top: 0;
-    }
-
-    .sxs-header {
-        border-top: 2px solid @dark_gray;
     }
 
     .sxs-label {
         display: none;
-    }
-
-    sxs-back-button,
-    .sxs-back-button:link,
-    .sxs-back-button:visited {
-        height: 32px;
-        line-height: 31px;
     }
 }
 

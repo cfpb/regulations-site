@@ -20,20 +20,18 @@ SxS window
 #breakaway-view.open-sxs,
 .full-breakaway {
     position: fixed;
-    top: 60px; // height of application header
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100%; 
     min-height: 100%;
     background: #fff;
-    z-index: 999999999;
-    overflow-y: scroll;
+    z-index: 9999;
+    overflow-y: auto;
 }
 
 /* offset the content to accomodate the persistent header */
 .sxs {
-    height: 100%;
-    background-color: pink;
+    //height: 100%;
     padding-bottom: 120px;
 }
 /*
@@ -42,6 +40,7 @@ SxS header
 */
 .sxs-header {
     position: fixed;
+    top: 60px;
     width: 100%;
     height: 2.125em;
     background-color: @light_orange;
@@ -109,8 +108,9 @@ Main content of the SxS Analysis
 */
 .sxs-main-content {
     float: left;
+    margin-top: 72px;
     padding-bottom: 120px; /*accomodate for persistent header*/
-    width: 70%
+    width: 70%;
 }
 
 /* 
@@ -120,7 +120,7 @@ Metadata info for the SxS Analysis
 .sxs-metadata {
     float: right;
     width: 25%;
-    margin-top: 1em;
+    margin-top: 84px;
     padding-bottom: 50px; /* prevent IE from cutting off the sidebar when it exceeds the window height */
     font-size: 0.875em;
     .avenir-next;

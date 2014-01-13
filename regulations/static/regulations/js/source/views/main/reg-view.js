@@ -201,7 +201,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                 };
 
             section.toggleClass('open');
-            header.next('.hidden').slideToggle();
+            //  may include multiple sections
+            section.find('.hidden').slideToggle();
             button.toggleClass('open');
             buttonText.html(section.hasClass('open') ? 'Hide' : 'Show');
 

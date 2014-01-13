@@ -1,0 +1,10 @@
+<li><h3 class="subpart-heading" data-section-id="{{item.section_id}}">{{item.label|safe|upper}} - <span class="subpart-subhead">{{item.sub_label|safe}}</span></h3></li>
+
+{% if item.sub_toc %}
+    {% for item in item.sub_toc %}
+        <li><span><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span>Interpretation For</span>
+            <span class="toc-section-marker">{{item.label|safe}}</span>{% if item.sub_label %} - {{item.sub_label|safe}}{% endif %}</a></li>
+    {% endfor %}
+{% endif %}
+
+
