@@ -8,7 +8,7 @@
     top: 0;
     color: @dark_field;
     .avenir-next;
-    z-index: 1000;
+    z-index: 200;
 
     ul {
         padding: 0;
@@ -23,42 +23,48 @@
 
 .main-head {
     .border-bottom-dark(@width: 3px);
-    padding: 0 15px;
     background: #fff;
     z-index: 1000;
     height: 3.75em;
+    //overflow: hidden;
+}
 
-    .logo {
-        display: block;
-        float: right;
-        margin-top: 13px; /* this manually centers the image based on its height and the height of the container */
-        margin-right: 15px;
+.title {
+    display: inline-block;
+    float: left;
+    line-height: 57px;
+
+    .reg-title,
+    .site-title {
+        font-size: 1.325em;
+        .reset;
+        display: inline;
     }
 
+    .reg-title {
+        .avenir-next;
+        font-size: 1.125em;
+    }
 
-    .title {
-        display: block;
-        float: left;
-        line-height: 57px;
+    .site-title {
+        .avenir-next-demi;
+        font-size: 1.375em;
+        padding-left: 15px;
+    }
 
-        .reg-title,
-        .site-title {
-            font-size: 1.325em;
-            .reset;
-        }
+    .e {
+        .avenir-next;
+    }
+}
 
-        .reg-title {
+@media only screen and ( min-width: 480px ) {
+    
+    .main-head {
+        .reg-title:before {
+            content: "|";
             .avenir-next;
-            font-size: 1.125em;
-        }
-
-        .site-title {
-            .avenir-next-demi;
-            font-size: 1.375em;
-        }
-
-        .e {
-            .avenir-next;
+            padding: 0 12px;
+            color: @medium_gray;
         }
     }
 }
@@ -88,7 +94,8 @@
     line-height: 33px;
     height: 2.125em;
     .border-bottom-medium(@width: 1px);
-    z-index: 1000;
+    z-index: 200;
+    overflow: hidden;
     .main {
         border-right: 1px solid @medium_gray;
     }
@@ -117,3 +124,142 @@
     }
 }
 
+/*
+Application Nav
+================
+*/
+
+.app-nav {
+
+    a {
+        .avenir-next-demi;
+    }
+
+    a:link,
+    a:visited {
+        color: @dark_gray;
+    }
+
+    a:hover,
+    a:active,
+    a:focus {
+        color: @pacific;
+    }
+}
+
+/*
+BIG SCREENS
+=============================================
+*/
+
+@media only screen and ( min-width: 860px ) {
+    .app-nav {
+        display: inline-block;
+        float: right;
+        margin-right: 15px;
+    }
+
+    .app-nav-list {
+        .reset;
+        display: inline;
+    }
+
+    .app-nav-list-item {
+        float: left; // yes it's weird, but floats play nice with vertically centering the logo
+        height: 57px;
+        line-height: 57px;
+        margin: 0 0 0 24px;
+
+        .logo {
+            display: inline;
+            margin-top: 13px;
+        }
+    }
+
+    .app-nav-list-item:first-of-type {
+        margin: 0;
+    }
+
+    .org-title {
+        display: none;
+    }
+
+    .mobile-nav-trigger {
+        display: none;
+    }
+
+}
+
+/*
+tiny screens
+=============================================
+*/
+
+@media only screen and ( max-width: 860px ) {
+    .org-title {
+        display: block;
+
+        a:after {
+            content: "\e007";
+            padding-left: 6px;
+            font-size: .875em;
+            font-family: 'Minicon';
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
+
+    .app-nav-list {
+        display: none;
+        .reset;
+
+        .logo-list-item {
+            display: none;
+        }
+    }
+
+    .app-nav-list.open {
+        display: block;
+        position: fixed;
+        top: 60px;
+        width: 100%;
+        background: @bg_gray;
+        z-index: 999999;
+    }
+
+    .app-nav-list-item {
+        border-bottom: 1px solid @dark_gray;
+        z-index: 999999;
+
+        a {
+            display: block;
+            padding: 20px 15px;
+            z-index: 999999;
+        }
+
+        a:hover,
+        a:active,
+        a:focus {
+            background: #E6E6E6;
+        }
+    }
+
+    .mobile-nav-trigger {
+        line-height: 57px;
+        position: absolute;
+        right: 0;
+        padding: 0 15px;
+    }
+
+    .mobile-nav-trigger:hover,
+    .mobile-nav-trigger:active,
+    .mobile-nav-trigger:focus,
+    .mobile-nav-trigger.open {
+        background-color: @bg_gray;
+    }
+}
