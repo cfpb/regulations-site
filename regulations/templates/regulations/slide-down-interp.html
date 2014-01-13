@@ -11,7 +11,7 @@
     <section class="inline-interpretation-content hidden">
         {{ interp_content.markup | safe }}
 
-        <p><a href="{% url 'chrome_section_view' interp_content.section_id version %}#{{ interp_content.label_id }}" data-linked-subsection="{{ interp_content.label_id }}" data-linked-section="{{ interp_content.section_id }}" class="internal section-link">See this interpretation in Supplement I</a></p>
+        <p><a href="{% url 'chrome_subterp_view' interp_content.section_id version %}#{{ interp_content.label_id }}" data-linked-subsection="{{ interp_content.label_id }}" data-linked-section="{{ interp_content.section_id }}" class="internal section-link">See this interpretation in Supplement I</a></p>
     </section>
     {% endfor %}
 </section>
