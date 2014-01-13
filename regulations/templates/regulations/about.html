@@ -1,19 +1,125 @@
-{% extends "regulations/base.html" %}
+{% extends "regulations/generic_universal.html" %}
+{% block app_js %}{% endblock %}
+{% block title %}About eRegulations{% endblock %}
+{% load static from staticfiles %}
 
 {% comment %}
     Application about page
 {% endcomment %}
 
-{% block title %}eRegulations{% endblock %}
-
 {% block body %}
 
-  <div class="wrap group">
-    <div id="content-body" class="main-content">
-      {% comment %}
-        Content for the about page goes here.
-      {% endcomment %}
-    </div> <!--/content-body-->
-  </div>
+<header id="site-header" class="reg-header">
+    {% include "regulations/main-header.html" %} 
+</header>
+
+<div class="about-content wrap">
+
+    <div class="hero">
+        <div class="inner-wrap group">
+          <h2 class="hero-heading">About eRegulations</h2>
+        </div> <!-- /.inner-wrap -->
+    </div> <!-- /.hero -->
+
+    <section class="about-section group" id="about-intro">
+
+        <div class="content-main column-l">
+            <p>eRegulations is a web-based application that makes regulations easy to read, find and understand. Something about related information, regulation timeline and easy navigation. It is continually being developed by the Consumer Financial Protection Bureau, and is a public domain work of the United States Government.</p>
+        </div>
+
+        <div class="content-sub column-r well">
+            <h4>Developers</h4>
+            <p>eRegulations is an open source project. Visit eregs.github.io to learn how you can contribute.</p>
+        </div>
+
+    </section>
+
+    <section class="about-section group" id="read">
+        <h3>Easy to Read</h3>
+
+        <div class="content-main column-l">
+            Image
+        </div>
+
+        <div class="content-sub column-r">
+            <p><strong>Clear typography</strong> makes regulations scannable and legible.</p>
+            <p><strong>Responsive design</strong> allows the tool to fit to your available screen size.</p>
+        </div>
+
+    </section>
+
+    <section class="about-section group" id="navigation">
+        <h3>Easy navigation</h3>
+
+        <div class="column-3">
+            <p>Persistent <strong>table of contents</strong> for fast access to any section of the regulation.</p>
+            <ul>
+                <li>Organized by section and supart of the regulation</li>
+                <li>Section you are in stays highlighted at all times</li>
+                <li>Something else interesting about the TOC</li>
+            </ul>
+        </div>
+
+        <div class="column-3">
+            <p><strong>Regulation timeline</strong> shows recent revisions of the regulation organized by effective date.</p>
+
+            <p>Learn more in Regulation History</p>
+        </div>
+
+        <div class="column-3">
+            <p><strong>Search</strong> function to find where specified text appears in a regulation.</p>
+            <ul>
+                <li>Can search in specific revisions of a regulation</li>
+                <li>Something else interesting about search</li>
+                <li>Something else interesting about the search</li>
+            </ul>
+        </div>
+
+        IMAGE
+
+    </section>
+
+    <section class="about-section group" id="related-info">
+
+        <div class="content-sub column-l">
+            <ul>
+                <li><strong>Defined terms</strong> are highlighted in the text and display in the right sidebar so you will not your place.</li>
+                <li>References to other parts of the regulation are <strong>linked</strong>.</li>
+                <li><strong>Official interpretations</strong> from Supplement I are brought inline with the regulation for easy access and comparisons.</li>
+                <li><strong>Section-by-section anaylsis</strong> from the preamble of Federal Register notices is available directly in the tool.
+                    <ul>
+                        <li>more information that explains what SXS is.</li>
+                        <li>more information that explains what SXS is.</li>
+                    </ul>
+                Limited section-by-section available. Check the Federal Register for more.</li>
+            </ul>
+        </div>
+
+        <div class="content-main column-r">
+            IMAGE
+        </div>
+
+    </section>
+
+    <section class="about-section group" id="timeline">
+        <h3>Regulation timeline</h3>
+
+        <div class="content-sub column-l">
+            Image
+        </div>
+
+        <div class="content-main column-r">
+            <p>The <strong>regulation timeline</strong> shows recent revisions of the regulation organized by latest effective date from restatement, when the CFPB took authority, forward.</p>
+
+            <ol>
+                <li>The <strong>date picker</strong> allows users to find what past revision was effective on a specific date.</li>
+                <li><strong>Federal Register notice(s)</strong> associated with a revision are presented and organized by publication date. These links will take you to the notice on the Federal Register’s website.</li>
+                <li><strong>Compare</strong> any two revisions of the regulation, word for word, by selecting a date in the menu.</li>
+            </ol>
+        </div>
+
+    </section>
+
+</div>
 
 {% endblock %}
