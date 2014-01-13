@@ -19,7 +19,9 @@
         {% endif %}
 
         {% if node.interp %}
-            <a href="{% url 'chrome_section_view' node.interp.section_id version %}#{{ node.interp.label_id }}" data-linked-subsection="{{ node.interp.label_id }}" data-linked-section="{{ node.interp.section_id }}" class="internal interp continue-link">Official Interpretation</a>
+            {% with interp=node.interp.interps.0 %}
+            <a href="{% url 'chrome_section_view' interp.section_id version %}#{{ interp.label_id }}" data-linked-subsection="{{ interp.label_id }}" data-linked-section="{{ interp.section_id }}" class="internal interp continue-link">Official Interpretation</a>
+            {% endwith %}
         {% endif %}
 
         <a class="close-button tab-activated" href="#">Close definition</a>
