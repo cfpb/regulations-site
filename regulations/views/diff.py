@@ -3,11 +3,11 @@
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
 from regulations.generator.layers.toc_applier import TableOfContentsLayer
-from regulations.generator.navigation import choose_next_section
-from regulations.generator.navigation import choose_previous_section
 from regulations.generator.node_types import EMPTYPART, REGTEXT
 from regulations.views import error_handling, utils
 from regulations.views.chrome import ChromeView
+from regulations.views.navigation import choose_next_section
+from regulations.views.navigation import choose_previous_section
 from regulations.views.partial import PartialView
 
 from django.core.urlresolvers import reverse
