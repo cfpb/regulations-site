@@ -110,7 +110,11 @@ define('regs-helpers', function() {
                 parts = id.split('-');
                 base = parts[0];
 
-                if (id.indexOf('Interp') !== -1) {
+                if (id.indexOf('Subpart') !== -1) {
+                    // 123-Subpart-A-Interp
+                    return id;
+                }
+                else if (id.indexOf('Interp') !== -1) {
                     base += '-Interp';
                 }
                 else {
