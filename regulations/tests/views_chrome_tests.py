@@ -90,3 +90,17 @@ class ViewsChromeSubterpTest(TestCase):
                       '199-Appendices-Interp'):
             self.assertEqual('199-Interp',
                              view.diff_redirect_label(label, None))
+
+    @patch('regulations.views.chrome.utils')
+    def test_check_tree(self, utils):
+        view = ChromeSubterpView()
+
+        utils.subterp_expansion.return_value = []
+        try:
+            view.check_tree({'version': 'vvvv', 'label_id': 'llll'})
+            self.assertTrue(False)
+        except error_handling.MissingSectionException:
+            pass
+
+        utils.subterp_expansion.return_value = ["something"]
+        view.check_tree({'version': 'vvvv', 'label_id': 'llll'})

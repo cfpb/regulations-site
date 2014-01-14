@@ -21,9 +21,16 @@ class ChromeView(TemplateView):
     """ Base class for views which wish to include chrome. """
     template_name = 'regulations/chrome.html'
     has_sidebar = True
-    check_tree = True
     #   Which view name to use when switching versions
     version_switch_view = 'chrome_section_view'
+
+    def check_tree(self, context):
+        """Throw an exception if the requested section doesn't exist"""
+        label_id, version = context['label_id'], context['version']
+        relevant_tree = generator.get_tree_paragraph(label_id, version)
+        if relevant_tree is None:
+            raise error_handling.MissingSectionException(label_id, version,
+                                                         context)
 
     def get(self, request, *args, **kwargs):
         """Override GET so that we can catch and propagate any errors in the
@@ -89,11 +96,7 @@ class ChromeView(TemplateView):
         error_handling.check_regulation(reg_part)
         self.set_chrome_context(context, reg_part, version)
 
-        if self.check_tree:
-            relevant_tree = generator.get_tree_paragraph(label_id, version)
-            if relevant_tree is None:
-                raise error_handling.MissingSectionException(label_id, version,
-                                                             context)
+        self.check_tree(context)
         self.add_main_content(context)
 
         if self.has_sidebar:
@@ -141,7 +144,14 @@ class ChromeSubterpView(ChromeView):
     """Corresponding chrome class for subterp partial view"""
     partial_class = PartialSubterpView
     version_switch_view = 'chrome_subterp_view'
-    check_tree = False
+
+    def check_tree(self, context):
+        """We can't defer to Chrome's check because Subterps are constructed
+        -site side"""
+        version, label_id = context['version'], context['label_id']
+        if not utils.subterp_expansion(version, label_id):
+            raise error_handling.MissingSectionException(label_id, version,
+                                                         context)
 
     def diff_redirect_label(self, label_id, toc):
         """We don't do diffs for subterps. Instead, link to diff of the
@@ -154,7 +164,9 @@ class ChromeSearchView(ChromeView):
     template_name = 'regulations/chrome-search.html'
     partial_class = PartialSearch
     has_sidebar = False
-    check_tree = False
+
+    def check_tree(self, context):
+        pass    # Search doesn't perform this check
 
     def get_context_data(self, **kwargs):
         """Get the version for the chrome context"""
@@ -176,7 +188,9 @@ class ChromeLandingView(ChromeView):
     template_name = 'regulations/landing-chrome.html'
     partial_class = PartialSectionView  # Needed to know sectional status
     has_sidebar = False
-    check_tree = False
+
+    def check_tree(self, context):
+        pass    # Landing page doesn't perform this check
 
     def add_main_content(self, context):
         """Landing page isn't a TemplateView"""

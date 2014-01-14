@@ -3,11 +3,11 @@
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
 from regulations.generator.layers.toc_applier import TableOfContentsLayer
-from regulations.generator.navigation import choose_next_section
-from regulations.generator.navigation import choose_previous_section
 from regulations.generator.node_types import EMPTYPART, REGTEXT
 from regulations.views import error_handling, utils
 from regulations.views.chrome import ChromeView
+from regulations.views.navigation import choose_next_section
+from regulations.views.navigation import choose_previous_section
 from regulations.views.partial import PartialView
 
 from django.core.urlresolvers import reverse
@@ -107,8 +107,10 @@ class ChromeSectionDiffView(ChromeView):
     """Search results with chrome"""
     template_name = 'regulations/diff-chrome.html'
     partial_class = PartialSectionDiffView
-    check_tree = False
     has_sidebar = False
+
+    def check_tree(self, context):
+        pass    # The tree may or may not exist in the particular version
 
     def add_diff_content(self, context):
         context['from_version'] = self.request.GET.get(

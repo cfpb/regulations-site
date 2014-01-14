@@ -6,8 +6,7 @@ from django.views.generic.base import TemplateView
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
 from regulations.generator.node_types import EMPTYPART, REGTEXT, label_to_text
-from regulations.views import utils
-from regulations.generator import navigation
+from regulations.views import navigation, utils
 
 
 def generate_html(regulation_tree, layer_appliers):
@@ -63,17 +62,7 @@ class PartialSectionView(PartialView):
         if nav_sections:
             p_sect, n_sect = nav_sections
 
-            nav = {}
-            if p_sect:
-                nav['previous'] = navigation.parse_section_title(p_sect)
-                nav['previous']['url'] = reverse(
-                    'chrome_section_view',
-                    args=(nav['previous']['section_id'], version))
-            if n_sect:
-                nav['next'] = navigation.parse_section_title(n_sect)
-                nav['next']['url'] = reverse(
-                    'chrome_section_view',
-                    args=(nav['next']['section_id'], version))
+            nav = {'previous': p_sect, 'next': n_sect}
             return nav
 
     def transform_context(self, context, builder):
