@@ -113,9 +113,9 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 this.displayScopeMsg(Helpers.findBaseSection(activeSectionId));
             }
 
-            $msg = this.$noticeContainer.find('.msg')
+            $msg = this.$noticeContainer.find('.msg');
             linkText += (defId) ? Helpers.idToRef(activeSectionId) : 'this section';
-            link = '<a href="' + href + '" class="update-definition inactive internal" data-definition="' + defId + '">'
+            link = '<a href="' + href + '" class="update-definition inactive internal" data-definition="' + defId + '">';
             link += linkText + '</a>';
 
             // remove duplicates
