@@ -12,7 +12,8 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         el: '#definition',
 
         events: {
-            'click .close-button': 'close'
+            'click .close-button': 'close',
+            'click .update-definition': 'updateDefinition'
         },
 
         initialize: function() {
@@ -66,44 +67,74 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             this.remove();
         },
 
+        updateDefinition: function(e) {
+            e.preventDefault(e);
+
+            this.externalEvents.trigger('definition:open', {
+                id: $(e.target).data('definition'),
+                term: this.term,
+                cb: function() {
+                    // update list of out of scope paragraphs for new definition
+                    MainEvents.trigger('definition:carriedOver');
+                }
+            });
+        },
+
+        // displayed when an open definition doesn't apply to the 
+        // whole open section
         displayScopeMsg: function(id) {
-            var msg = 'This term has a different definition for some portions of ',
+            var msg = '<p>This term has a different definition for some portions of ',
                 icon = '<span class="minicon-warning"></span>';
-            if (id) {
-                msg += '§' + id + '.';
-            }
-            else {
-                msg += 'this section.';
-            }
+            msg += (id) ? Helpers.idToRef(id) + '.' : 'this section.';
+            msg += '</p>';
 
             this.$noticeContainer = this.$noticeContainer || this.$el.find('.notice').removeClass('hidden');
 
-            this.$noticeContainer.html(icon + msg);
+            this.$noticeContainer.html(
+                icon + '<div class="msg">' + msg + '</div>'
+            );
         },
 
+        // when a definition is fully applicable to the section
         removeScopeMsg: function() {
-            if (this.$noticeContainer.length > 0) {
+            if (typeof this.$noticeContainer !== 'undefined' && this.$noticeContainer.length > 0) {
                 this.$noticeContainer.html('').addClass('hidden');
             }
         },
 
-        grayOutDefinition: function(defId, href) {
+        // for when the definition does not apply to the active section
+        grayOutDefinition: function(defId, href, activeSectionId) {
             var $text = this.$el.find('.definition-text'),
                 linkText = 'Load the correct definition for ',
-                link;
-            linkText += (defId) ? '§' + defId : 'this section';
-            link = '<a href="' + href + '" class="replace inactive">'
+                link,
+                $msg;
+
+            if (typeof this.$noticeContainer === 'undefined') {
+                this.displayScopeMsg(Helpers.findBaseSection(activeSectionId));
+            }
+
+            $msg = this.$noticeContainer.find('.msg')
+            linkText += (defId) ? Helpers.idToRef(activeSectionId) : 'this section';
+            link = '<a href="' + href + '" class="update-definition inactive internal" data-definition="' + defId + '">'
             link += linkText + '</a>';
 
             // remove duplicates
-            this.$noticeContainer.find('a').remove();
-            this.$noticeContainer.append(link);
+            $msg.find('a').remove();
+
+            // insert link to load applicable definition
+            $msg.append(link);
+
+            // gray out definition text
             $text.addClass('inactive');
         },
 
+        // for when a definition is not in conflict for the active section,
+        // but doesn't apply to the entire section, either
         unGrayDefinition: function() {
             var $text = this.$el.find('.definition-text');
             $text.removeClass('inactive');
+
+            this.$el.find('.notice a').remove();
         },
 
         openFullDefinition: function(e) {

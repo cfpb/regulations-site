@@ -25,7 +25,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
         },
 
         openDefinition: function(config) {
-            var createDefView = function(res) {
+            var createDefView = function(cb, res) {
                 this.childViews.definition.render(res);
             }.bind(this);
 
@@ -34,7 +34,9 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
                 term: config.term
             });
 
-            this.definitionModel.get(config.id, createDefView);
+            config.cb = config.cb || null;
+
+            this.definitionModel.get(config.id, _.partial(createDefView, config.cb));
         },
 
         closeDefinition: function() {

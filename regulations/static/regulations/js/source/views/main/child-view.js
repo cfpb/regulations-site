@@ -34,7 +34,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
             this.$sections = {};
             this.activeSection = this.id;
-            this.$activeSection = '';
+            this.$activeSection = $('#' + this.activeSection);
 
             HeaderEvents.trigger('clear');
 

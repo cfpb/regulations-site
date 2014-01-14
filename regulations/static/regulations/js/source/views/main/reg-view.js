@@ -23,7 +23,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             this.id = this.options.id;
             this.regVersion = this.options.regVersion;
             this.activeSection = this.options.id;
-            this.$activeSection = '';
+            this.$activeSection = $('#' + this.activeSection);
             this.$sections = {};
             this.url = this.id + '/' + this.options.regVersion;
             this.regPart = this.options.regPart;
@@ -128,10 +128,11 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             // else be sure there's no out of scope message displayed
             if (typeof this.defScopeExclusions !== 'undefined') {
                 if (this.defScopeExclusions.indexOf(id) !== -1) {
-                    $newDefLink = this.$activeSection.find('a.definition');
+                    $newDefLink = this.$activeSection.find('.definition[data-defined-term="' + $('#definition').data('definedTerm') + '"]').first();
                     newDefId = $newDefLink.data('definition');
                     newDefHref = $newDefLink.attr('href');
-                    SidebarEvents.trigger('definition:deactivate', newDefId, newDefHref);
+
+                    SidebarEvents.trigger('definition:deactivate', newDefId, newDefHref, this.activeSection);
                 }
                 else {
                     SidebarEvents.trigger('definition:activate');
@@ -178,9 +179,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                     // open new definition
                     this.setActiveTerm($link);
                     SidebarEvents.trigger('definition:open', {
-            'id': defId,
-            'term': term
-        });
+                        'id': defId,
+                        'term': term
+                    });
                     GAEvents.trigger('definition:open', {
                         id: defId,
                         from: this.activeSection,
