@@ -128,7 +128,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             // else be sure there's no out of scope message displayed
             if (typeof this.defScopeExclusions !== 'undefined') {
                 if (this.defScopeExclusions.indexOf(id) !== -1) {
-                    $newDefLink = this.$activeSection.find('.definition[data-defined-term="' + $('#definition').data('definedTerm') + '"]').first();
+                    $newDefLink = this.$activeSection.find(
+                        '.definition[data-defined-term="' + $('#definition').data('definedTerm') + '"]'
+                    ).first();
                     newDefId = $newDefLink.data('definition');
                     newDefHref = $newDefLink.attr('href');
 
