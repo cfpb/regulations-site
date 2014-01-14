@@ -107,8 +107,10 @@ class ChromeSectionDiffView(ChromeView):
     """Search results with chrome"""
     template_name = 'regulations/diff-chrome.html'
     partial_class = PartialSectionDiffView
-    check_tree = False
     has_sidebar = False
+
+    def check_tree(self, context):
+        pass    # The tree may or may not exist in the particular version
 
     def add_diff_content(self, context):
         context['from_version'] = self.request.GET.get(
