@@ -29,7 +29,7 @@ class DefinitionTest(BaseTest, unittest.TestCase):
 
         # definition should appear in sidebar
         self.assertTrue(len(definition.text) > 20)
-        definition_term = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[2]/p')
+        definition_term = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[3]/p/dfn')
         self.assertTrue(u'\u201cvoided tosser\u201d' in definition_term.text)
 
         definition_close_button.click()
@@ -39,7 +39,7 @@ class DefinitionTest(BaseTest, unittest.TestCase):
         definition_link.click()
 
         # continue link should load full def
-        definition_cont_link = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[2]/a[1]')
+        definition_cont_link = self.driver.find_element_by_xpath('//*[@id="1005-2-a-1"]/div[3]/a[1]')
         definition_cont_link.click()
         WebDriverWait(self.driver, 30).until(
             lambda driver: driver.find_element_by_xpath('//*[@id="1005-2"]'))
