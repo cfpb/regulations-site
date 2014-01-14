@@ -61,7 +61,7 @@ class TableOfContentsLayer(object):
                     'label': el['label'],
                     'sub_label': el['sub_label'],
                     'index': el['index'] + ['Interp'],
-                    'is_supplement': True,
+                    'is_subterp': True,
                     'section_id': '-'.join(el['index']) + '-Interp'
                 })
             elif el.get('is_appendix') and not found_appendix:
@@ -71,7 +71,7 @@ class TableOfContentsLayer(object):
                     'label': 'Appendices',
                     'url': RegUrl.of(index, self.version, self.sectional),
                     'index': index,
-                    'is_supplement': True,
+                    'is_subterp': True,
                     'section_id': '-'.join(index)
                 })
 
@@ -81,7 +81,7 @@ class TableOfContentsLayer(object):
                 'label': 'Regulation Text',
                 'index': index,
                 'url': RegUrl.of(index, self.version, self.sectional),
-                'is_supplement': True,
+                'is_subterp': True,
                 'section_id': '-'.join(index)
             })
 

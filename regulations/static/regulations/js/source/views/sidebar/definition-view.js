@@ -40,7 +40,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             // appropriate event handlers
             if (Router.hasPushState) {
                 this.events['click .continue-link.interp'] = 'openInterpretation';
-                this.events['click .continue-link'] = 'openFullDefinition';
+                this.events['click .continue-link.full-def'] = 'openFullDefinition';
                 this.delegateEvents(this.events);
             }
         },
@@ -160,7 +160,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
             MainEvents.trigger('section:open', id, {
                 scrollToId: pid
-            });
+            }, 'interpretation');
 
             GAEvents.trigger('definition:followCitation', {
                 id: id,
