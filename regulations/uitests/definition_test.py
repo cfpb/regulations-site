@@ -1,3 +1,4 @@
+#vim: set encoding=utf-8
 import os
 import unittest
 from base_test import BaseTest
@@ -11,6 +12,7 @@ class DefinitionTest(BaseTest, unittest.TestCase):
 
 
     def test_definition(self):
+        self.driver.set_window_size(1024, 600)
         self.driver.get('http://localhost:8000/1005-1/2012-12121')
         html = self.driver.find_element_by_tag_name('html')
         WebDriverWait(self.driver, 30).until(
@@ -44,6 +46,44 @@ class DefinitionTest(BaseTest, unittest.TestCase):
         WebDriverWait(self.driver, 30).until(
             lambda driver: driver.find_element_by_xpath('//*[@id="1005-2"]'))
         
+        # test definition scope notifications
+        toc_toggle = self.driver.find_element_by_xpath('//*[@id="panel-link"]')
+        toc_toggle.click()
+
+        toc_1005_3 = self.driver.find_element_by_xpath('//*[@id="toc"]/ol/li[3]/a')
+        toc_1005_3.click()
+
+        # close toc
+        toc_toggle.click()
+
+        # load 1005.3, open definition
+        new_definition_link = self.driver.find_element_by_xpath('//*[@id="1005-3-a"]/p/a[1]')
+        new_definition_link.click()
+        new_definition = self.driver.find_element_by_xpath('//*[@id="1005-2-b-1"]')
+        
+        # navigate back to 1005.1
+        toc_toggle.click()
+        self.driver.find_element_by_xpath('//*[@id="toc"]/ol/li[1]/a').click()
+        
+        # make sure that the scope notice displays
+        self.driver.find_element_by_xpath('//*[@id="1005-2-b-1"]/div[2]/div')
+
+        # go to 1005-1-a
+        toc_toggle.click()
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        wayfinding_header = self.driver.find_element_by_xpath('//*[@id="active-title"]/em')
+        self.assertTrue('1005.1(a)' in wayfinding_header.text)
+
+        definition_update_link = self.driver.find_element_by_xpath('//*[@id="1005-2-b-1"]/div[2]/div/a')
+        definition_text = self.driver.find_element_by_xpath('//*[@id="1005-2-b-1"]/div[3]')
+        
+        # make sure text is grayed out
+        self.assertTrue('inactive' in definition_text.get_attribute('class'))
+
+        # load in scope definition
+        definition_update_link.click()
+        WebDriverWait(self.driver, 10).until(
+            lambda driver: driver.find_element_by_xpath('//*[@id="1005-2-a-1"]'))
 
 if __name__ == '__main__':
     unittest.main()
