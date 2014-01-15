@@ -11,7 +11,7 @@
         <h5 class="subtitle">Most Recent Analysis</h5>
         <ul>
             {% for analysis in analyses %}
-                <li><a class="sidebar-full" href="{% url 'chrome_sxs_view' analysis.label_id analysis.doc_number %}?from_version={{ version }}" class="sxs-link" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}<span class="minicon-right"></span></a></li>
+                <li><a class="sidebar-full sxs-link" href="{% url 'chrome_sxs_view' analysis.label_id analysis.doc_number %}?from_version={{ version }}" data-sxs-paragraph-id="{{analysis.label_id}}" data-doc-number="{{analysis.doc_number}}">{{analysis.text}}<span class="minicon-right"></span></a></li>
             {% endfor %}
         </ul>
     {% else %}
@@ -28,7 +28,7 @@
     {% if permalinks %}
         <ul>
             {% for permalink in permalinks %}
-                <li><a class="sidebar-full" href="{% url 'chrome_section_view' permalink.section_id version %}#{{ permalink.label_id }}">{{ permalink.text }}</a></li>
+                <li><a class="sidebar-full sxs-link" href="{% url 'chrome_section_view' permalink.section_id version %}#{{ permalink.label_id }}">{{ permalink.text }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}
