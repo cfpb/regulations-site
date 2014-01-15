@@ -51,7 +51,8 @@ class SectionUrl(object):
 
         prefix_section = prefix[:2]
         for el in self.toc_cache[key]:
-            if el['index'] == prefix_section:   # in a section, no subpart
+            if el['index'] == prefix_section and el.get('is_section'):
+                # No subpart
                 return reg_part + '-Subpart-Interp'
             for sub in el.get('sub_toc', []):
                 #   In a subpart
