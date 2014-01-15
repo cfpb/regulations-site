@@ -38,6 +38,7 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-
             subpart = newActiveLink
                         .parent()
                         .prevAll('li[data-subpart-heading]')
+                        .first()
                         .find('.subpart-heading')
                         .attr('data-section-id');
 
