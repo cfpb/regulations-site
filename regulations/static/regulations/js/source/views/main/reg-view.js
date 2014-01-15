@@ -37,6 +37,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
 
             if (Router.hasPushState) {
                 this.events['click .inline-interpretation .section-link'] = 'openInterp';
+                this.events['click .citation.internal'] = 'openSection';
                 this.delegateEvents();
             }
 
@@ -53,6 +54,16 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             this.setActiveTerm($link); 
 
             return this;
+        },
+
+        openSection: function(e) {
+            var id = $(e.target).attr('data-section-id'),
+                config = {};
+            if (id.length > 0) {
+                e.preventDefault();
+                config.id = id;
+                this.externalEvents.trigger('section:open', id, config, 'reg-section');
+            }
         },
 
         assembleTitle: function() {
