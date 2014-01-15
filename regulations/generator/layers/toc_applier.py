@@ -1,6 +1,6 @@
 #vim: set fileencoding=utf-8
-from regulations.generator.layers.utils import RegUrl
 from regulations.generator import title_parsing
+from regulations.generator.section_url import SectionUrl
 
 
 class TableOfContentsLayer(object):
@@ -24,7 +24,7 @@ class TableOfContentsLayer(object):
                     toc_list.append(self.interp(data, toc_list))
                 else:
                     element = {
-                        'url': RegUrl.of(data['index'], self.version,
+                        'url': SectionUrl.of(data['index'], self.version,
                                          self.sectional),
                         'label': data['title'],
                         'index': data['index'],
@@ -56,7 +56,7 @@ class TableOfContentsLayer(object):
             if el.get('is_subpart'):
                 found_subpart = True
                 subterps.append({
-                    'url': RegUrl.of(el['index'] + ['Interp'], self.version,
+                    'url': SectionUrl.of(el['index'] + ['Interp'], self.version,
                                      self.sectional),
                     'label': el['label'],
                     'sub_label': el['sub_label'],
@@ -69,7 +69,7 @@ class TableOfContentsLayer(object):
                 index = el['index'][:1] + ['Appendices', 'Interp']
                 subterps.append({
                     'label': 'Appendices',
-                    'url': RegUrl.of(index, self.version, self.sectional),
+                    'url': SectionUrl.of(index, self.version, self.sectional),
                     'index': index,
                     'is_subterp': True,
                     'section_id': '-'.join(index)
@@ -80,7 +80,7 @@ class TableOfContentsLayer(object):
             subterps.insert(0, {
                 'label': 'Regulation Text',
                 'index': index,
-                'url': RegUrl.of(index, self.version, self.sectional),
+                'url': SectionUrl.of(index, self.version, self.sectional),
                 'is_subterp': True,
                 'section_id': '-'.join(index)
             })

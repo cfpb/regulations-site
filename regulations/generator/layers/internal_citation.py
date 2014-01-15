@@ -2,7 +2,7 @@ from django.template import loader, Context
 from django.core.urlresolvers import reverse, NoReverseMatch
 from ..node_types import to_markup_id
 
-from regulations.generator.layers.utils import RegUrl
+from regulations.generator.section_url import SectionUrl
 
 
 class InternalCitationLayer():
@@ -12,7 +12,7 @@ class InternalCitationLayer():
         self.layer = layer
         self.sectional = False
         self.version = None
-        self.rev_urls = RegUrl()
+        self.rev_urls = SectionUrl()
         self.rendered = {}
 
     def render_url(
