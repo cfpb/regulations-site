@@ -36,11 +36,13 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
         },
 
         renderSubpart: function(label) {
-            this.$subpartLabel.text(label);
+            this.$subpartLabel.text(label).show();
+            this.$activeTitle.addClass('with-subpart');
         },
 
         removeSubpart: function() {
-            this.$subpartLabel.text('');
+            this.$subpartLabel.text('').hide();
+            this.$activeTitle.removeClass('with-subpart');
         },
 
         reset: function() {
