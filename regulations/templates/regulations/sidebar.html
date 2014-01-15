@@ -28,7 +28,7 @@
     {% if permalinks %}
         <ul>
             {% for permalink in permalinks %}
-                <li><a class="sidebar-full" href="{% url 'chrome_section_view' permalink.section_id version %}#{{ permalink.label_id }}">{{ permalink.text }}</a></li>
+                <li><a class="sidebar-full" href="{% url permalink_view permalink.section_id version %}#{{ permalink.label_id }}">{{ permalink.text }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}
