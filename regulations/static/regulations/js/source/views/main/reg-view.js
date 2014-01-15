@@ -82,7 +82,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                 $termLinks,
                 checkLinks;
 
-            if ($def.length > 0) {
+            if (defTerm && defId && $def.length > 0) {
                 $termLinks = this.$el.find('a.definition'); 
 
                 checkLinks = function(paragraphs, links, term, id) {
