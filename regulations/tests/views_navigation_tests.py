@@ -26,25 +26,26 @@ class NavigationTest(TestCase):
         self.assertEquals(2, navigation.choose_previous_section(2, l))
         self.assertEquals(None, navigation.choose_previous_section(0, l))
 
-    @patch('regulations.views.navigation.utils')
-    def test_nav_sections(self, utils):
-        utils.table_of_contents.return_value = [
+    @patch('regulations.views.navigation.fetch_toc')
+    def test_nav_sections(self, fetch_toc):
+        fetch_toc.return_value = [
             {'index': ['204', '1'], 'title': '§ 204.1 First'},
             {'index': ['204', '3'], 'title': '§ 204.3 Third'}]
         nav = navigation.nav_sections('204-1', 'ver')
         p, n = nav
         self.assertEquals(None, p)
-        self.assertEquals({'index': ['204', '3'], 'title': '§ 204.3 Third'}, n)
+        self.assertEquals(['204', '3'], n['index'])
+        self.assertEquals('§ 204.3 Third', n['title'])
 
-    @patch('regulations.views.navigation.utils')
-    def test_nav_sections_prefix(self, utils):
-        utils.table_of_contents.return_value = [
+    @patch('regulations.views.navigation.fetch_toc')
+    @patch('regulations.views.navigation.SectionUrl')
+    def test_nav_sections_prefix(self, su, fetch_toc):
+        fetch_toc.return_value = [
             {'index': ['204', '1'], 'title': '§ 204.1 First',
              'is_section': True},
             {'index': ['204', 'A'], 'title': 'Appendix A'},
-            {'index': ['204', 'Interp'],
-             'sub_toc': [{'index': ['204', 'Subpart', 'Interp'],
-                          'title': 'Regulation Text', 'is_subterp': True}]}]
+            {'index': ['204', 'Subpart', 'Interp'],
+             'title': 'Regulation Text', 'is_subterp': True}]
         nav = navigation.nav_sections('204-A', 'ver')
         p, n = nav
         self.assertEqual(['204', '1'], p['index'])
@@ -52,33 +53,29 @@ class NavigationTest(TestCase):
         self.assertEqual(['204', 'Subpart', 'Interp'], n['index'])
         self.assertEqual('Interpretations For ', n['markup_prefix'])
 
-    @patch('regulations.views.navigation.utils')
-    def test_nav_sections_appendix(self, utils):
-        utils.table_of_contents.return_value = [
+    @patch('regulations.views.navigation.fetch_toc')
+    def test_nav_sections_appendix(self, fetch_toc):
+        fetch_toc.return_value = [
             {'index': ['204', '1'], 'title': u'§ 204.1 First'},
             {'index': ['204', 'A'],
              'title': 'Appendix A to Part 204 - Model Forms'}]
         nav = navigation.nav_sections('204-1', 'ver')
         p, n = nav
         self.assertEquals(None, p)
-        self.assertEquals({
-            'index': ['204', 'A'],
-            'title': 'Appendix A to Part 204 - Model Forms'}, n)
+        self.assertEquals(['204', 'A'], n['index'])
+        self.assertEquals('Appendix A to Part 204 - Model Forms',
+                          n['title'])
 
-    @patch('regulations.views.navigation.utils')
-    def test_nav_sections_subparts(self, utils):
-        utils.table_of_contents.return_value = [
-            {'index': ['204', 'Subpart', 'A'], 'title': 'Subpart A',
-             'sub_toc': [{'index': ['204', '1'], 'title': u'§ 204.1 First'},
-                         {'index': ['204', '2'], 'title': u'§ 204.2 Second'},
-                         {'index': ['204', '3'], 'title': u'§ 204.3 Third'}]},
+    @patch('regulations.views.navigation.fetch_toc')
+    def test_nav_sections_subparts(self, fetch_toc):
+        fetch_toc.return_value = [
+            {'index': ['204', '1'], 'title': u'§ 204.1 First'},
+            {'index': ['204', '2'], 'title': u'§ 204.2 Second'},
+            {'index': ['204', '3'], 'title': u'§ 204.3 Third'},
             {'index': ['204', 'A'], 'title': 'Appendix A'},
-            {'index': ['204', 'Interp'], 'title': 'Interpretations',
-             'sub_toc': [
-                 {'index': ['204', 'Subpart', 'A', 'Interp'],
-                  'title': 'Subpart A'},
-                 {'index': ['204', 'Appendices', 'Interp'],
-                  'title': 'Appendices'}]}]
+            {'index': ['204', 'Subpart', 'A', 'Interp'], 'title': 'Subpart A'},
+            {'index': ['204', 'Appendices', 'Interp'],
+             'title': 'Appendices'}]
         nav = navigation.nav_sections('204-1', 'ver')
         p, n = nav
         self.assertEquals(None, p)
