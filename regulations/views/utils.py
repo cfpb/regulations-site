@@ -13,21 +13,6 @@ def get_layer_list(names):
     return set(l.lower() for l in names.split(',') if l.lower() in layer_names)
 
 
-def table_of_contents(regulation_part, version, sectional=False):
-    """ Generate a Table of Contents from the toc layer, without using a tree.
-    We currently generate a section-level table of contents.  """
-
-    layer_manager = generator.LayerCreator()
-    layer_manager.add_layer(
-        TableOfContentsLayer.shorthand, regulation_part, version, sectional)
-
-    p_applier = layer_manager.appliers['paragraph']
-    toc_layer = p_applier.layers[TableOfContentsLayer.shorthand]
-    applied_layer = toc_layer.apply_layer(regulation_part)
-
-    return applied_layer[1]
-
-
 def regulation_meta(regulation_part, version, sectional=False):
     """ Return the contents of the meta layer, without using a tree. """
 
