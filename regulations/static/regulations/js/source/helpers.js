@@ -121,9 +121,11 @@ define('regs-helpers', function() {
                     return id;
                 }
                 else if (id.indexOf('Interp') !== -1) {
+                    // 123-Interp
                     base += '-Interp';
                 }
                 else {
+                    // includes 123-Appendices-Interp
                     base += '-' + parts[1];
                 }
 
