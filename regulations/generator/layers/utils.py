@@ -32,38 +32,3 @@ def convert_to_python(data):
 def render_template(template, context):
     c = Context(context)
     return template.render(c).strip('\n')
-
-
-class RegUrl(object):
-    def __init__(self):
-        self.cache = {}
-
-    @staticmethod
-    def of(citation, version, sectional):
-        url = ''
-
-        view_name = 'chrome_section_view'
-        # Subterps, collections of interpretations of whole subparts, etc.
-        if 'Interp' in citation and ('Subpart' in citation
-                                     or 'Appendices' in citation):
-            view_name = 'chrome_subterp_view'
-            label = '-'.join(citation)
-        elif 'Interp' in citation:
-            label = citation[0] + '-Interp'
-        else:
-            label = '-'.join(citation[:2])
-
-        if sectional:
-            try:
-                url = reverse(view_name, args=(label, version))
-            except NoReverseMatch:
-                #XXX We have some errors in our layers. Once those are fixed,
-                #we need to revisit this.
-                pass
-        return url + '#' + '-'.join(to_markup_id(citation))
-
-    def fetch(self, citation, version, sectional):
-        key = (tuple(citation), version, sectional)
-        if key not in self.cache:
-            self.cache[key] = RegUrl.of(citation, version, sectional)
-        return self.cache[key]

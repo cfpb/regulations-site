@@ -1,5 +1,6 @@
 from django.template import loader, Context
 
+from regulations.generator.section_url import SectionUrl
 from ..node_types import to_markup_id
 import utils
 
@@ -13,7 +14,7 @@ class DefinitionsLayer(object):
             'regulations/layers/definition_citation.html')
         self.sectional = False
         self.version = None
-        self.rev_urls = utils.RegUrl()
+        self.rev_urls = SectionUrl()
         self.rendered = {}
         # precomputation
         for def_struct in self.layer['referenced'].values():
