@@ -10,8 +10,10 @@ class DefinitionsLayerTest(TestCase):
             'referenced': {'account:202-2-a': {'reference': '202-2-a'}}
             }
         dl = DefinitionsLayer(layer)
-        definition_link = dl.create_definition_link('account', ['202', '3'])
+        definition_link = dl.create_definition_link('account',
+                                            ['202', '3'], 'account')
 
         url = '<a href="#202-3" class="citation definition" '
-        url += 'data-definition="202-3">account</a>'
+        url += 'data-definition="202-3" data-defined-term="account">'
+        url += 'account</a>'
         self.assertEquals(definition_link, url)

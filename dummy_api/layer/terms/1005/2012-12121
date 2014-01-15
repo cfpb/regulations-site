@@ -10,6 +10,17 @@
             ]
         }
     ],
+    "1005-3-a": [
+        {
+            "ref": "voided tosser:1005-2-b-1",
+            "offsets": [
+                [
+                    3,
+                    13
+                ]
+            ]
+        }
+    ],
     "referenced": {
         "voided tosser:1005-2-a-1": {
             "position": [
@@ -18,6 +29,14 @@
             ],
             "term": "voided tosser",
             "reference": "1005-2-a-1"
+        },
+        "voided tosser:1005-2-b-1": {
+            "position": [
+                5,
+                13
+            ],
+            "term": "voided tosser",
+            "reference": "1005-2-b-1"
         }
     }
 }

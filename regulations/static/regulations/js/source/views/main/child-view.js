@@ -34,7 +34,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
             this.$sections = {};
             this.activeSection = this.id;
-            this.$activeSection = '';
+            this.$activeSection = $('#' + this.activeSection);
 
             HeaderEvents.trigger('clear');
 
@@ -90,9 +90,10 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
                 if (this.$sections[i].offset().top + this.$contentHeader.height() >= $(window).scrollTop()) {
                     if (_.isEmpty(this.activeSection) || (this.activeSection !== this.$sections[i].id)) {
                         this.activeSection = this.$sections[i][0].id;
-                        this.$activeSection = this.$sections[i][0];
+                        this.$activeSection = $(this.$sections[i][0]);
                         // **Event** trigger active section change
                         HeaderEvents.trigger('section:open', this.activeSection);
+                        this.externalEvents.trigger('paragraph:active', this.activeSection);
 
                         if (typeof window.history !== 'undefined' && typeof window.history.replaceState !== 'undefined') {
                             // update hash in url

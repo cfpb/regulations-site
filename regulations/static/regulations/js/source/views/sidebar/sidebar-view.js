@@ -1,4 +1,4 @@
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'permalink-view', 'help-view', './sidebar-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model'], function($, _, Backbone, SxSList, PermalinkView, HelpView, SidebarModel, Main, Breakaway, SidebarEvents, Definition, MetaModel) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'permalink-view', 'help-view', './sidebar-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model', 'main-events'], function($, _, Backbone, SxSList, PermalinkView, HelpView, SidebarModel, Main, Breakaway, SidebarEvents, Definition, MetaModel, MainEvents) {
     'use strict';
     var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',
@@ -24,16 +24,19 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
             });
         },
 
-        openDefinition: function(id) {
-            var createDefView = function(res) {
+        openDefinition: function(config) {
+            var createDefView = function(cb, res) {
                 this.childViews.definition.render(res);
             }.bind(this);
 
             this.childViews.definition = new Definition({
-                id: id
+                id: config.id,
+                term: config.term
             });
 
-            this.definitionModel.get(id, createDefView);
+            config.cb = config.cb || null;
+
+            this.definitionModel.get(config.id, _.partial(createDefView, config.cb));
         },
 
         closeDefinition: function() {
@@ -46,16 +49,17 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
             switch (context.type) {
                 case 'reg-section':
                     this.model.get(context.id, this.openRegFolders);
+                    MainEvents.trigger('definition:carriedOver');
                     break;
                 case 'search':
-                    this.closeAllChildren();
+                    this.closeChildren();
                     this.loaded();
                     break;
                 case 'diff':
                     this.loaded();
                     break;
                 default:
-                    this.closeAllChildren();
+                    this.closeChildren();
                     this.loaded();
             }
 
@@ -63,7 +67,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
         },
 
         openRegFolders: function(html) {
-            this.closeAllChildren();
+            this.closeChildren('definition');
 
             if (arguments.length > 0) {
                 this.insertChild(html);
@@ -99,7 +103,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
 
         // open whatever content should populate the sidebar
         insertChild: function(el) {
-            this.$el.prepend(el); 
+            this.$el.append(el); 
         },
 
         removeChild: function(el) {
@@ -142,11 +146,13 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
                 .next('.chunk').slideToggle();
         },
 
-        closeAllChildren: function() {
+        closeChildren: function(except) {
             var k;
             for (k in this.childViews) {
                 if (this.childViews.hasOwnProperty(k)) {
-                    this.childViews[k].remove();
+                    if (except && except !== k) {
+                        this.childViews[k].remove();
+                    }
                 }
             }
         },

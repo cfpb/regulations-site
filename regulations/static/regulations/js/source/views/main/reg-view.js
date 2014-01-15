@@ -6,8 +6,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
 
         events: {
             'click .definition': 'termLinkHandler',
-            'click .inline-interp-header': 'expandInterp',
-            'click .definition.active': 'openDefinitionLinkHandler'
+            'click .inline-interp-header': 'expandInterp'
         },
 
         initialize: function() {
@@ -16,13 +15,15 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             this.externalEvents.on('definition:close', this.closeDefinition, this);
             this.externalEvents.on('breakaway:open', this.hideContent, this);
             this.externalEvents.on('breakaway:close', this.showContent, this);
+            this.externalEvents.on('definition:carriedOver', this.checkDefinitionScope, this);
+            this.externalEvents.on('paragraph:active', this.newActiveParagraph, this);
 
             DrawerEvents.trigger('pane:init', 'table-of-contents');
 
             this.id = this.options.id;
             this.regVersion = this.options.regVersion;
             this.activeSection = this.options.id;
-            this.$activeSection = '';
+            this.$activeSection = $('#' + this.activeSection);
             this.$sections = {};
             this.url = this.id + '/' + this.options.regVersion;
             this.regPart = this.options.regPart;
@@ -72,12 +73,88 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             return newTitle;
         },
 
+        // if an inline definition is open, check the links here to see
+        // if the definition is still in scope in this section
+        checkDefinitionScope: function() {
+            var $def = $('#definition'),
+                defTerm = $def.data('defined-term'),
+                defId = $def.find('.open-definition').attr('id'),
+                $termLinks,
+                checkLinks;
+
+            if ($def.length > 0) {
+                $termLinks = this.$el.find('a.definition'); 
+
+                checkLinks = function(paragraphs, links, term, id) {
+                    var $link = $(links.last());
+
+                    if ($link.data('defined-term') === term) {
+                        if ($link.data('definition') !== id) {
+                            // don't change the DOM over and over for no reason
+                            // if there are multiple defined term links that 
+                            // are scoped to a different definition body
+                            if (paragraphs.length === 0) {
+                                SidebarEvents.trigger('definition:outOfScope', this.id);
+                            }
+
+                            paragraphs.push($link.closest('li[data-permalink-section]').attr('id'));
+                        }
+                    }
+
+                    links = links.not(links.last());
+
+                    if (links.length === 0) {
+                        this.defScopeExclusions = paragraphs;
+                        return false;
+                    }
+
+                    checkLinks(paragraphs, links, term, id);
+                }.bind(this);
+
+                if ($termLinks.length > 0) {
+                    checkLinks([], $termLinks, defTerm, defId);
+                    if (typeof this.defScopeExclusions !== 'undefined' && this.defScopeExclusions.length === 0) {
+                        SidebarEvents.trigger('definition:inScope');
+                    }
+                }
+            }
+        },
+
+        // id = active paragraph
+        newActiveParagraph: function(id) {
+            var $newDefLink, newDefId, newDefHref;
+            // if there are paragraphs where the open definition is
+            // out of scope, display message
+            // else be sure there's no out of scope message displayed
+            if (typeof this.defScopeExclusions !== 'undefined') {
+                if (this.defScopeExclusions.indexOf(id) !== -1) {
+                    $newDefLink = this.$activeSection.find(
+                        '.definition[data-defined-term="' + $('#definition').data('definedTerm') + '"]'
+                    ).first();
+                    newDefId = $newDefLink.data('definition');
+                    newDefHref = $newDefLink.attr('href');
+
+                    SidebarEvents.trigger('definition:deactivate', newDefId, newDefHref, this.activeSection);
+                }
+                else {
+                    SidebarEvents.trigger('definition:activate');
+                }
+            }
+        },
+
+        render: function() {
+            ChildView.prototype.render.apply(this, arguments);
+
+            this.checkDefinitionScope();
+        },
+
         // content section key term link click handler
         termLinkHandler: function(e) {
             e.preventDefault();
 
             var $link = $(e.target),
-                defId = $link.attr('data-definition');
+                defId = $link.data('definition'),
+                term = $link.data('defined-term');
 
             // if this link is already active, toggle def shut
             if ($link.data('active')) {
@@ -103,7 +180,10 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
 
                     // open new definition
                     this.setActiveTerm($link);
-                    SidebarEvents.trigger('definition:open', defId);
+                    SidebarEvents.trigger('definition:open', {
+                        'id': defId,
+                        'term': term
+                    });
                     GAEvents.trigger('definition:open', {
                         id: defId,
                         from: this.activeSection,
