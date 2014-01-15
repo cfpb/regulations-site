@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from regulations.generator import generator
 from regulations.generator.layers.toc_applier import TableOfContentsLayer
 from regulations.generator.layers.meta import MetaLayer
+from regulations.generator.toc import fetch_toc
 
 
 def get_layer_list(names):
@@ -87,12 +88,8 @@ def first_section(reg_part, version):
     first section of the regulation. In most regulations, this is -1, but in
     some it's -101. """
 
-    toc = table_of_contents(reg_part, version, sectional=False)
-
-    if 'Subpart' in toc[0]['index']:
-        return toc[0]['sub_toc'][0]['section_id']
-    else:
-        return toc[0]['section_id']
+    toc = fetch_toc(reg_part, version, flatten=True)
+    return toc[0]['section_id']
 
 
 def subterp_expansion(version, label_id):
