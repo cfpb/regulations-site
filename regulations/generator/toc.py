@@ -40,6 +40,9 @@ def toc_sect_appendix(data, so_far):
     if title_data:
         data.update(title_data)
 
+    if 'label' not in data:
+        data['label'] = data['title']
+
     if data.get('is_appendix'):
         seen_appendix = any(el.get('is_appendix') for el in so_far)
         data['is_first_appendix'] = not seen_appendix
