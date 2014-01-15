@@ -168,6 +168,17 @@ define('regs-helpers', function() {
             return false;
         },
 
+        formatSubpartLabel: function(id) {
+            // accepts 123-Subpart-C
+            var parts = id.split('-'),
+                label = 'Subpart ';
+            if (isNaN(parts[0]) === false && parts[1] === 'Subpart') {
+                label += parts[2];
+            }
+
+            return label;
+        },
+
         // thanks, James Padolsey http://james.padolsey.com/javascript/parsing-urls-with-the-dom/
         parseURL: function(url) {
             var a =  document.createElement('a');

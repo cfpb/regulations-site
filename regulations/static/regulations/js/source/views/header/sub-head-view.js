@@ -10,9 +10,14 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
             this.externalEvents.on('search-results:open', this.displayCount, this);
             this.externalEvents.on('search-results:open',this.changeDate, this);
             this.externalEvents.on('clear', this.reset, this);
+            this.externalEvents.on('subpart:present', this.renderSubpart,this);
+            this.externalEvents.on('subpart:absent', this.removeSubpart, this);
 
             // cache inner title DOM node for frequent reference
             this.$activeTitle = this.$el.find('.header-label');
+
+            // same for subpart label
+            this.$subpartLabel = this.$el.find('.subpart');
         },
 
         // populates subhead with new title
@@ -28,6 +33,14 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
             this.version = $('section[data-base-version]').data('base-version');
             this.displayDate = $('select[name=version] option[value='+this.version+']').text();
             $('.effective-date').html('<strong>Effective date:</strong> ' + this.displayDate);
+        },
+
+        renderSubpart: function(label) {
+            this.$subpartLabel.text(label);
+        },
+
+        removeSubpart: function() {
+            this.$subpartLabel.text('');
         },
 
         reset: function() {

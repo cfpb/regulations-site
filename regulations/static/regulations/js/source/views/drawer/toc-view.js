@@ -1,4 +1,4 @@
-define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-view', './regs-router', 'main-events', 'drawer-events'], function($, _, Backbone, RegsHelpers, Drawer, Router, MainEvents, DrawerEvents) {
+define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-view', './regs-router', 'main-events', 'drawer-events', 'header-events'], function($, _, Backbone, Helpers, Drawer, Router, MainEvents, DrawerEvents, HeaderEvents) {
     'use strict';
     var TOCView = Backbone.View.extend({
         el: '#table-of-contents',
@@ -29,8 +29,24 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-
 
         // update active classes, find new active based on the reg entity id in the anchor
         setActive: function(id) {
+            var newActiveLink, subpart;
+
+            newActiveLink = this.$el.find('a[data-section-id=' + Helpers.findBaseSection(id) + ']');
+
             this.$el.find('.current').removeClass('current');
-            this.$el.find('a[data-section-id=' + RegsHelpers.findBaseSection(id) + ']').addClass('current');
+            newActiveLink.addClass('current');
+            subpart = newActiveLink
+                        .parent()
+                        .prevAll('li[data-subpart-heading]')
+                        .find('.subpart-heading')
+                        .attr('data-section-id');
+
+            if (subpart && subpart.length > 0) {
+                HeaderEvents.trigger('subpart:present', Helpers.formatSubpartLabel(subpart));
+            }
+            else {
+                HeaderEvents.trigger('subpart:absent');
+            }
 
             return this;
         },
