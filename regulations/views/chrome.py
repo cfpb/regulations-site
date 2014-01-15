@@ -3,8 +3,10 @@ from datetime import date
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
-from regulations.generator.versions import fetch_grouped_history
 from regulations.generator.node_types import label_to_text, type_from_label
+from regulations.generator.section_url import SectionUrl
+from regulations.generator.toc import fetch_toc
+from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
 from regulations.views.partial_interp import (
     PartialInterpView, PartialSubterpView)
@@ -67,11 +69,14 @@ class ChromeView(TemplateView):
         context['reg_part'] = reg_part
         context['history'] = fetch_grouped_history(reg_part)
 
-        table_of_contents = utils.table_of_contents(
-            reg_part,
-            version,
-            self.partial_class.sectional_links)
-        context['TOC'] = table_of_contents
+        toc = fetch_toc(reg_part, version)
+        for el in toc:
+            el['url'] = SectionUrl().of(
+                el['index'], version, self.partial_class.sectional_links)
+            for sub in el.get('sub_toc', []):
+                sub['url'] = SectionUrl().of(
+                    sub['index'], version, self.partial_class.sectional_links)
+        context['TOC'] = toc
 
         regulation_meta = utils.regulation_meta(
             reg_part,
@@ -79,7 +84,7 @@ class ChromeView(TemplateView):
             self.partial_class.sectional_links)
         context['version_switch_view'] = self.version_switch_view
         context['diff_redirect_label'] = self.diff_redirect_label(
-            context['label_id'], table_of_contents)
+            context['label_id'], toc)
         context['meta'] = regulation_meta
 
     def get_context_data(self, **kwargs):
