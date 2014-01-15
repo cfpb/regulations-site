@@ -107,4 +107,3 @@ class InterpretationsLayerTest(TestCase):
 
         _, result = il.apply_layer('200-2-b')
         self.assertEqual('2(b)', result['for_label'])
-

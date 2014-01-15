@@ -70,7 +70,7 @@ class SideBarView(TemplateView):
             #   Subterp
             interp = client.regulation(label[0] + '-Interp', version)
             if interp:
-                tree_nodes = filter_by_subterp(interp['children'], label, 
+                tree_nodes = filter_by_subterp(interp['children'], label,
                                                version)
         else:
             node = client.regulation('-'.join(label), version)

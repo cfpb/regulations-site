@@ -32,7 +32,7 @@ class SectionUrlTest(TestCase):
                          SectionUrl().interp(['200', 'A', 'Interp'], 'vvvv'))
         self.assertTrue('200-Subpart-A',
                         SectionUrl().interp(['200', '2', 'e', 'Interp', '1'],
-                                           'verver'))
+                                            'verver'))
 
     def test_of(self):
         url = SectionUrl.of(['303', '1'], 'vvv', False)

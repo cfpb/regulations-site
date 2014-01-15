@@ -157,7 +157,7 @@ class ChromeSubterpView(ChromeView):
         version, label_id = context['version'], context['label_id']
         label = label_id.split('-')
         reg_part = label[0]
-        
+
         interp = generator.get_tree_paragraph(reg_part + '-Interp', version)
         if not interp:
             raise error_handling.MissingSectionException(label_id, version,
