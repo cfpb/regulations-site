@@ -62,7 +62,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             if (id.length > 0) {
                 e.preventDefault();
                 config.id = id;
-                this.externalEvents.trigger('section:open', id, config, 'reg-section');
+                this.externalEvents.trigger('section:open', Helpers.findBaseSection(id), config, 'reg-section');
             }
         },
 
