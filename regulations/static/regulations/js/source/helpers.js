@@ -43,11 +43,11 @@ define('regs-helpers', function() {
         // **Returns** human-readable representation of the reg section
         interpId: function(interpParts) {
             if (interpParts.length === 1) {
-                return 'Supplement I to Part ' + interpParts[0];
+                return 'Supplement I to Part ';
             } else if (isNaN(interpParts[1])) {
-                return 'Supplement I to Appendix ' + interpParts[1];
+                return 'Supplement I to Appendix ';
             } else {
-                return 'Supplement I to §' + interpParts[0] + '.' + interpParts[1];
+                return 'Supplement I to ';
             }
         },
 
@@ -65,7 +65,7 @@ define('regs-helpers', function() {
         // **Returns** Reg entity marker formatted for human readability
         idToRef: function(id) {
             var ref = '', 
-                parts, i, len, dividers, item, interpIndex;
+                parts, i, len, dividers, item, interpIndex, interpParts;
             parts = id.split('-');
             len = parts.length - 1;
             dividers = ['§ .', '', '( )', '( )', '( )', '( )'];
@@ -79,11 +79,17 @@ define('regs-helpers', function() {
             /* if we have a supplement */
             interpIndex = $.inArray('Interp', parts);
             if (interpIndex >= 0) {
-                return this.interpId(parts.slice(0, interpIndex));
+                interpParts = parts.slice(0, interpIndex);
+                ref += this.interpId(interpParts);
             }
             /* if we have an appendix */
             if (isNaN(parseInt(parts[1], 10))) {
                 return this.appendixId(parts[0], parts[1]);
+            }
+
+            if (interpParts) {
+                parts = _.compact(interpParts);
+                len = parts.length -1;
             }
 
             /* we have a paragraph */
