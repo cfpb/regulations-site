@@ -20,7 +20,7 @@ def appendix_supplement(data):
             element['label'], element['sub_label'] = segments[:2]
         elif '[' in data['title']:
             position = data['title'].find('[')
-            element['label'] = data['title'][:position]
+            element['label'] = data['title'][:position].strip()
             element['sub_label'] = data['title'][position:]
         else:
             element['label'] = data['title']
