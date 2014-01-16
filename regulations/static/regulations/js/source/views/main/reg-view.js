@@ -57,11 +57,21 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
         },
 
         openSection: function(e) {
-            var id = $(e.target).attr('data-section-id'),
-                config = {};
+            var $e = $(e.target),
+                id = $e.attr('data-section-id'),
+                href = $e.attr('href'),
+                config = {},
+                paragraphId,
+                hashIndex = href.indexOf('#');
+
             if (id.length > 0) {
                 e.preventDefault();
                 config.id = id;
+
+                if (hashIndex !== -1) {
+                    config.scrollToId = href.substr(hashIndex + 1);
+                }
+
                 this.externalEvents.trigger('section:open', Helpers.findBaseSection(id), config, 'reg-section');
             }
         },

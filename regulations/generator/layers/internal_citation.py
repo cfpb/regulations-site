@@ -22,7 +22,8 @@ class InternalCitationLayer():
         key = (tuple(label), text, template_name)
         if key not in self.rendered:
             url = self.rev_urls.fetch(label, self.version, self.sectional)
-            c = Context({'citation': {'url': url, 'label': text, 'label_id': '-'.join(label)}})
+            c = Context({'citation': {'url': url, 'label': text,
+                'label_id': self.rev_urls.subterp_label(label, self.version)}})
             template = loader.get_template(template_name)
             self.rendered[key] = template.render(c).strip('\n')
         return self.rendered[key]
