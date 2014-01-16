@@ -1,8 +1,9 @@
 from django.http import Http404
 
 from regulations.generator import generator, node_types
-from regulations.views import utils
-from regulations.views.partial import PartialView, generate_html
+from regulations.generator.subterp import filter_by_subterp
+from regulations.views.partial import (
+    PartialSectionView, PartialView, generate_html)
 
 
 class PartialInterpView(PartialView):
@@ -19,37 +20,35 @@ class PartialInterpView(PartialView):
         return context
 
 
-class PartialSubterpView(PartialView):
+class PartialSubterpView(PartialSectionView):
     """View of subterps - interpretations of whole subparts, regtext, or
     appendices"""
-    template_name = "regulations/interpretations.html"
-
     def get_context_data(self, **kwargs):
         #   skip our parent
         context = super(PartialView, self).get_context_data(**kwargs)
 
         label_id = context['label_id']
-        part = label_id.split('-', 1)[0]
+        label = label_id.split('-')
+        reg_part = label[0]
         version = context['version']
 
-        section_list = utils.subterp_expansion(version, label_id)
+        context['navigation'] = self.section_navigation(label_id, version)
 
-        if not section_list:
+        interp = generator.get_tree_paragraph(reg_part + '-Interp', version)
+        if not interp:
+            raise Http404
+
+        subterp_sects = filter_by_subterp(interp['children'], label, version)
+        if not subterp_sects:
             raise Http404
 
         context['markup_page_type'] = 'reg-section'
         html_label = node_types.to_markup_id(label_id.split('-'))
-        context['c'] = {'node_type': node_types.INTERP,
-                        'children': [],
-                        'html_label': html_label,
-                        'markup_id': '-'.join(html_label)}
-        for interp_label in section_list:
-            tree = generator.get_tree_paragraph(interp_label, version)
-            if tree is not None:    # Not all sections will have an interp
-                inline_applier, p_applier, s_applier = self.determine_appliers(
-                    interp_label, version)
-                builder = generate_html(tree,
-                                        (inline_applier, p_applier, s_applier))
-                context['c']['children'].append(builder.tree)
-
+        interp['children'] = subterp_sects
+        inline_applier, p_applier, s_applier = self.determine_appliers(
+            reg_part + '-Interp', version)
+        builder = generate_html(interp, (inline_applier, p_applier, s_applier))
+        interp = builder.tree
+        interp['html_label'] = html_label
+        context['tree'] = {'children': [interp]}
         return context

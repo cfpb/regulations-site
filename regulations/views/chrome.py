@@ -3,8 +3,11 @@ from datetime import date
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
-from regulations.generator.versions import fetch_grouped_history
 from regulations.generator.node_types import label_to_text, type_from_label
+from regulations.generator.section_url import SectionUrl
+from regulations.generator.subterp import filter_by_subterp
+from regulations.generator.toc import fetch_toc
+from regulations.generator.versions import fetch_grouped_history
 from regulations.views import utils
 from regulations.views.partial_interp import (
     PartialInterpView, PartialSubterpView)
@@ -21,9 +24,16 @@ class ChromeView(TemplateView):
     """ Base class for views which wish to include chrome. """
     template_name = 'regulations/chrome.html'
     has_sidebar = True
-    check_tree = True
     #   Which view name to use when switching versions
     version_switch_view = 'chrome_section_view'
+
+    def check_tree(self, context):
+        """Throw an exception if the requested section doesn't exist"""
+        label_id, version = context['label_id'], context['version']
+        relevant_tree = generator.get_tree_paragraph(label_id, version)
+        if relevant_tree is None:
+            raise error_handling.MissingSectionException(label_id, version,
+                                                         context)
 
     def get(self, request, *args, **kwargs):
         """Override GET so that we can catch and propagate any errors in the
@@ -60,11 +70,14 @@ class ChromeView(TemplateView):
         context['reg_part'] = reg_part
         context['history'] = fetch_grouped_history(reg_part)
 
-        table_of_contents = utils.table_of_contents(
-            reg_part,
-            version,
-            self.partial_class.sectional_links)
-        context['TOC'] = table_of_contents
+        toc = fetch_toc(reg_part, version)
+        for el in toc:
+            el['url'] = SectionUrl().of(
+                el['index'], version, self.partial_class.sectional_links)
+            for sub in el.get('sub_toc', []):
+                sub['url'] = SectionUrl().of(
+                    sub['index'], version, self.partial_class.sectional_links)
+        context['TOC'] = toc
 
         regulation_meta = utils.regulation_meta(
             reg_part,
@@ -72,7 +85,7 @@ class ChromeView(TemplateView):
             self.partial_class.sectional_links)
         context['version_switch_view'] = self.version_switch_view
         context['diff_redirect_label'] = self.diff_redirect_label(
-            context['label_id'], table_of_contents)
+            context['label_id'], toc)
         context['meta'] = regulation_meta
 
     def get_context_data(self, **kwargs):
@@ -89,11 +102,7 @@ class ChromeView(TemplateView):
         error_handling.check_regulation(reg_part)
         self.set_chrome_context(context, reg_part, version)
 
-        if self.check_tree:
-            relevant_tree = generator.get_tree_paragraph(label_id, version)
-            if relevant_tree is None:
-                raise error_handling.MissingSectionException(label_id, version,
-                                                             context)
+        self.check_tree(context)
         self.add_main_content(context)
 
         if self.has_sidebar:
@@ -141,7 +150,23 @@ class ChromeSubterpView(ChromeView):
     """Corresponding chrome class for subterp partial view"""
     partial_class = PartialSubterpView
     version_switch_view = 'chrome_subterp_view'
-    check_tree = False
+
+    def check_tree(self, context):
+        """We can't defer to Chrome's check because Subterps are constructed
+        -site side"""
+        version, label_id = context['version'], context['label_id']
+        label = label_id.split('-')
+        reg_part = label[0]
+
+        interp = generator.get_tree_paragraph(reg_part + '-Interp', version)
+        if not interp:
+            raise error_handling.MissingSectionException(label_id, version,
+                                                         context)
+
+        subterp_sects = filter_by_subterp(interp['children'], label, version)
+        if not subterp_sects:
+            raise error_handling.MissingSectionException(label_id, version,
+                                                         context)
 
     def diff_redirect_label(self, label_id, toc):
         """We don't do diffs for subterps. Instead, link to diff of the
@@ -154,7 +179,9 @@ class ChromeSearchView(ChromeView):
     template_name = 'regulations/chrome-search.html'
     partial_class = PartialSearch
     has_sidebar = False
-    check_tree = False
+
+    def check_tree(self, context):
+        pass    # Search doesn't perform this check
 
     def get_context_data(self, **kwargs):
         """Get the version for the chrome context"""
@@ -176,7 +203,9 @@ class ChromeLandingView(ChromeView):
     template_name = 'regulations/landing-chrome.html'
     partial_class = PartialSectionView  # Needed to know sectional status
     has_sidebar = False
-    check_tree = False
+
+    def check_tree(self, context):
+        pass    # Landing page doesn't perform this check
 
     def add_main_content(self, context):
         """Landing page isn't a TemplateView"""

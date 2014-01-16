@@ -240,12 +240,22 @@ Definitions
 When open definitions appear in the right sidebar
 */
 
+.sidebar-inner .open-definition,
+.spinner {
+    .border-bottom-light;
+}
+
 .open-definition ol,
 .active-term {
     .avenir-next-demi;
 }
 
 .open-definition {
+
+    .sidebar-header {
+      .border-bottom-light;  
+    }
+    
     .close-button {
         cursor: pointer;
 
@@ -274,12 +284,44 @@ When open definitions appear in the right sidebar
         border-bottom: 1px solid @medium_gray;
     }
 
-    .definition-text {
+    .definition-text,
+    .notice {
         padding: 1em;
 
         p {
             margin-top: 0;
         }
+
+        &.inactive,
+        &.inactive a.continue-link.internal,
+        &.inactive a.citation.definition {
+            color: @80_gray;
+        }
+    }
+
+    .notice {
+        color: @red_orange;
+
+        p {
+            .avenir-next-demi;
+            font-size: .9em;
+        }
+
+        .minicon-warning {
+            float: left;
+            margin: .25em .5em 0 0;
+        }
+    }
+
+    .msg {
+        width: 85%;
+        float: left;
+        border-bottom: 1px solid @light_field;
+        padding-bottom: 1em;
+    }
+
+    .update-definition {
+        display: inline;
     }
 }
 
@@ -289,7 +331,8 @@ When open definitions appear in the right sidebar
 
 /* 
 continue links */
-.continue-link {
+.continue-link,
+.update-definition {
     .avenir-next-demi;
     display: inline-block;
     margin: 0 15px 0 0;

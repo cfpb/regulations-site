@@ -10,7 +10,6 @@ from regulations.views.partial import *
 
 
 class PartialParagraphViewTests(TestCase):
-
     @patch('regulations.views.partial.generator')
     def test_get_context_data(self, generator):
         generator.LayerCreator.return_value.get_appliers.return_value = (
@@ -40,9 +39,11 @@ class PartialParagraphViewTests(TestCase):
 
 class PartialSectionViewTests(TestCase):
     @patch('regulations.views.partial.generator')
+    @patch('regulations.views.partial.navigation')
     @patch('regulations.generator.generator.LayerCreator.get_layer_json')
-    def test_get_context_data(self, get_layer_json, generator):
+    def test_get_context_data(self, get_layer_json, navigation, generator):
         get_layer_json.return_value = {'layer': 'layer'}
+        navigation.nav_sections.return_value = None, None
         generator.get_tree_paragraph.return_value = {
             'text': 'Some Text',
             'children': [],

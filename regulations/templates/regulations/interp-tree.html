@@ -1,7 +1,7 @@
 {% comment %}
     Template for each level of the interpretation tree
 {% endcomment %}
-<section {% if not inline %}id="{{interp.markup_id}}"{% endif %}>
+<section {% if not inline %}id="{{interp.markup_id}}"{% endif %} data-permalink-section>
     {% if inline %}
         <h5> {{ interp.header|safe }}</h5>
     {% elif interp.section_header %}

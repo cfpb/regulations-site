@@ -67,6 +67,10 @@
             color: @medium_gray;
         }
     }
+
+    .header-main {
+        max-width: 100%;
+    }
 }
 
 .title a:link,
@@ -85,6 +89,15 @@
     li {
         height: 2.125em;
         line-height: 2.125em;
+    }
+
+    .subpart {
+        .avenir-next;
+        color: @dark_gray;
+    }
+    .subpart::after {
+        content: " |";
+        padding-left: 1%;
     }
 }
 
@@ -110,18 +123,14 @@
 
 .header-label {
     display: inline-block;
-    margin-left: 45px;
+    margin-left: 0;
     .avenir-next-demi;
     font-size: 1em;
     letter-spacing: 1px;
-    display: inline-block;
-    .subpart {
-        .avenir-next;
-        color: @dark_gray;
-    }
-    .subpart::after {
-        content: " |";
-    }
+}
+
+.header-label.with-subpart {
+    margin-left: 0;
 }
 
 /*
@@ -173,6 +182,7 @@ BIG SCREENS
         .logo {
             display: inline;
             margin-top: 13px;
+            margin-left: 15px;
         }
     }
 
@@ -250,10 +260,10 @@ tiny screens
     }
 
     .mobile-nav-trigger {
-        line-height: 57px;
+        height: 57px;
         position: absolute;
         right: 0;
-        padding: 0 15px;
+        padding: 19px 15px 0 15px;
     }
 
     .mobile-nav-trigger:hover,

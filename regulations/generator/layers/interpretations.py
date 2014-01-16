@@ -1,8 +1,9 @@
 from django.http import HttpRequest
 
-#   Don't import PartialInterpView directly; this will cause an import cycle
+#   Don't import PartialInterpView or utils directly; causes an import cycle
 from regulations import views
-from regulations.generator.node_types import label_to_text, to_markup_id
+from regulations.generator.node_types import label_to_text
+from regulations.generator.section_url import SectionUrl
 
 
 class InterpretationsLayer(object):
@@ -12,11 +13,12 @@ class InterpretationsLayer(object):
     def __init__(self, layer, version=None):
         self.layer = layer
         self.version = version
+        self.section_url = SectionUrl()
 
     def apply_layer(self, text_index):
         """Return a pair of field-name + interpretation if one applies."""
         if text_index in self.layer and self.layer[text_index]:
-            context = {'interps': [], 
+            context = {'interps': [],
                        'for_markup_id': text_index,
                        'for_label': label_to_text(text_index.split('-'),
                                                   include_section=False)}
@@ -37,9 +39,9 @@ class InterpretationsLayer(object):
                     'markup': response.content,
                 }
 
-                #  exclude 'Interp'
-                ref_parts = reference.split('-')[:-1]
-                interp['section_id'] = '%s-Interp' % ref_parts[0]
+                ref_parts = reference.split('-')
+                interp['section_id'] = self.section_url.interp(
+                    ref_parts, self.version)
 
                 context['interps'].append(interp)
 

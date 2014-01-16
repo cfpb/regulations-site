@@ -12,7 +12,9 @@ class InterpretationsLayerTest(TestCase):
 
     @patch('regulations.generator.layers.interpretations.views'
            + '.partial_interp.PartialInterpView')
-    def test_apply_layer_extra_fields(self, piv):
+    @patch('regulations.generator.layers.interpretations.SectionUrl')
+    def test_apply_layer_extra_fields(self, su, piv):
+        su.return_value.interp.return_value = '200-Subpart-Interp'
         layer = {
             "200-2-b-3-i": [{
                 'reference': '200-2-b-3-i-Interp',
@@ -29,12 +31,13 @@ class InterpretationsLayerTest(TestCase):
             'interps': [{
                 'label_id': '200-2-b-3-i-Interp',
                 'markup': 'content',
-                'section_id': '200-Interp'}]
+                'section_id': '200-Subpart-Interp'}]
         }))
 
     @patch('regulations.generator.layers.interpretations.views'
            + '.partial_interp.PartialInterpView')
-    def test_apply_layer_section(self, piv):
+    @patch('regulations.generator.layers.interpretations.SectionUrl')
+    def test_apply_layer_section(self, su, piv):
         layer = {
             "200-2": [{
                 "reference": "200-2-Interp",
@@ -48,7 +51,8 @@ class InterpretationsLayerTest(TestCase):
 
     @patch('regulations.generator.layers.interpretations.views'
            + '.partial_interp.PartialInterpView')
-    def test_apply_layer_multiple_matches(self, piv):
+    @patch('regulations.generator.layers.interpretations.SectionUrl')
+    def test_apply_layer_multiple_matches(self, su, piv):
         layer = {
             "200-2": [{
                 "reference": "200-2-Interp",
@@ -67,7 +71,8 @@ class InterpretationsLayerTest(TestCase):
 
     @patch('regulations.generator.layers.interpretations.views'
            + '.partial_interp.PartialInterpView')
-    def test_apply_layer_appendix(self, piv):
+    @patch('regulations.generator.layers.interpretations.SectionUrl')
+    def test_apply_layer_appendix(self, su, piv):
         layer = {
             "200-Q-5": [{
                 "reference": "200-Q-5-Interp",
@@ -82,7 +87,8 @@ class InterpretationsLayerTest(TestCase):
 
     @patch('regulations.generator.layers.interpretations.views'
            + '.partial_interp.PartialInterpView')
-    def test_apply_layer_section_different(self, piv):
+    @patch('regulations.generator.layers.interpretations.SectionUrl')
+    def test_apply_layer_section_different(self, su, piv):
         layer = {
             "200-2-a": [{
                 "reference": "200-2-a-Interp",
