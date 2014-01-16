@@ -22,27 +22,6 @@ define('reg-model', ['jquery', 'underscore', 'backbone', './regs-helpers', './me
 
     // represents a whole regulation
     Backbone.RegModel = MetaModel.extend({
-        // recurses over the parsed reg tree and creates an in-browser representation
-        // of a reg. may or may not be functional based on current tree.
-        // only in use for tests right now...
-        // refactor to parse just out of the DOM
-        parse: function(jsonObj) {
-            if (typeof jsonObj === 'object') {
-                for (var key in jsonObj) {
-                    if (jsonObj.hasOwnProperty(key)) {
-                        if (key === 'label') {
-                            this.set(jsonObj[key]['text'], jsonObj['text']);
-                        }
-
-                        if (RegsHelpers.isIterable(jsonObj[key])) {
-                            this.parse(jsonObj[key]);
-                        }
-                    }
-                } 
-            }
-
-            return this;
-        },
         // **Param**
         // ```id```: string, dash-delimited reg entity id
         //
