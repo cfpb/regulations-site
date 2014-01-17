@@ -11,7 +11,7 @@ class SectionUrl(object):
         self.rev_cache = {}
         self.toc_cache = {}
 
-    def subterp_label(self, citation, version):
+    def view_label_id(self, citation, version):
         # Subterps, collections of interps of whole subparts, etc.
         if 'Interp' in citation and ('Subpart' in citation
                                      or 'Appendices' in citation):
@@ -31,7 +31,7 @@ class SectionUrl(object):
                 view_name = 'chrome_section_view'
                 if 'Interp' in citation:
                     view_name = 'chrome_subterp_view'
-                label = self.subterp_label(citation, version)
+                label = self.view_label_id(citation, version)
 
                 try:
                     url = reverse(view_name, args=(label, version))
