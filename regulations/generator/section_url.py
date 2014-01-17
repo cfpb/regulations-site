@@ -11,6 +11,17 @@ class SectionUrl(object):
         self.rev_cache = {}
         self.toc_cache = {}
 
+    def view_label_id(self, citation, version):
+        # Subterps, collections of interps of whole subparts, etc.
+        if 'Interp' in citation and ('Subpart' in citation
+                                     or 'Appendices' in citation):
+            label = '-'.join(citation)
+        elif 'Interp' in citation:
+            label = self.interp(citation, version)
+        else:
+            label = '-'.join(citation[:2])
+        return label
+
     def fetch(self, citation, version, sectional):
         key = (tuple(citation), version, sectional)
         if key not in self.rev_cache:
@@ -18,16 +29,9 @@ class SectionUrl(object):
 
             if sectional:
                 view_name = 'chrome_section_view'
-                # Subterps, collections of interps of whole subparts, etc.
-                if 'Interp' in citation and ('Subpart' in citation
-                                             or 'Appendices' in citation):
+                if 'Interp' in citation:
                     view_name = 'chrome_subterp_view'
-                    label = '-'.join(citation)
-                elif 'Interp' in citation:
-                    view_name = 'chrome_subterp_view'
-                    label = self.interp(citation, version)
-                else:
-                    label = '-'.join(citation[:2])
+                label = self.view_label_id(citation, version)
 
                 try:
                     url = reverse(view_name, args=(label, version))
