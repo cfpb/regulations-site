@@ -19,21 +19,6 @@
     {% endif %}
     </div>
 </section> <!-- /.regs-meta -->
-<section id="permalinks" class="regs-meta">
-    <header class="expandable group">
-        <h4 tabindex="0">Bookmarks</h4>
-        <a href="#" tabindex="0"><span class="icon-text">Show/Hide Contents</span></a>
-    </header>
-    <div class="chunk expand-drawer">
-    {% if permalinks %}
-        <ul>
-            {% for permalink in permalinks %}
-                <li><a class="sidebar-full" href="{% url permalink_view permalink.section_id version %}#{{ permalink.label_id }}">{{ permalink.text }}</a></li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    </div>
-</section> <!-- /.regs-meta -->
 <section id="help" class="regs-meta">
      {% include "regulations/generic_help.html" %} 
         <div class="sidebar-subsection">

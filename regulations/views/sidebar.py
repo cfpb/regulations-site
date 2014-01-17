@@ -40,27 +40,6 @@ class SideBarView(TemplateView):
         return ('Interp' in label and ('Subpart' in label
                                        or 'Appendices' in label))
 
-    def add_permalinks(self, tree_nodes, context):
-        """Retrieves the whole reg and walks it, finding all of the labels.
-        Adds them to the context"""
-        context['permalinks'] = []
-        if self.is_subterp(context['label_id'].split('-')):
-            context['permalink_view'] = 'chrome_subterp_view'
-        else:
-            context['permalink_view'] = 'chrome_section_view'
-
-        def per_node(node):    # Need pre-order traversal; don't rely on walk
-            context['permalinks'].append({
-                'label_id': '-'.join(node['label']),
-                'section_id': context['label_id'],
-                'text': label_to_text(node['label'], include_section=False,
-                                      include_marker=True)})
-            for child in node['children']:
-                per_node(child)
-
-        for node in tree_nodes:
-            per_node(node)
-
     def _get_node_trees(self, client, label, version):
         """If using subterps, we might be getting a list of relevant trees
         rather than a single node."""
@@ -88,6 +67,5 @@ class SideBarView(TemplateView):
         node_trees = self._get_node_trees(client, label, context['version'])
 
         self.add_sxs(client, node_trees, context)
-        self.add_permalinks(node_trees, context)
 
         return context
