@@ -27,12 +27,11 @@ SxS window
     background: #fff;
     z-index: 9999;
     overflow-y: auto;
+    padding-bottom: 120px; //offset persistent header for scroll
 }
 
-/* offset the content to accomodate the persistent header */
 #breakaway-view.open-sxs {
     top: 60px;
-    padding-bottom: 120px;
 }
 
 /*
@@ -103,6 +102,12 @@ SxS content wrapper
     padding: 30px 15px;
 }
 
+#breakaway-view.open-sxs {
+    .sxs-content {
+        padding: 0px 15px; //decrease additional padding with ajax loaded sxs
+    }
+}
+
 /* 
 Main content of the SxS Analysis
 ================================
@@ -110,7 +115,6 @@ Main content of the SxS Analysis
 .sxs-main-content {
     float: left;
     margin-top: 72px;
-    padding-bottom: 120px; /*accomodate for persistent header*/
     width: 70%;
 }
 
