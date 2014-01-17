@@ -107,33 +107,51 @@ define('regs-helpers', function() {
         },
 
         // Finds parent-most reg paragraph
-        //
-        // **TODO** RegModel.getParent is the same?
         findBaseSection: function(id) {
-            var parts, base;
+            var parts, interpIndex;
 
             if (id.indexOf('-') !== -1) {
                 parts = id.split('-');
-                base = parts[0];
-
-                if (id.indexOf('Subpart') !== -1) {
-                    // 123-Subpart-A-Interp
-                    return id;
-                }
-                else if (id.indexOf('Interp') !== -1) {
-                    // 123-Interp
-                    base += '-Interp';
-                }
-                else {
-                    // includes 123-Appendices-Interp
-                    base += '-' + parts[1];
-                }
-
-                return base;
             }
             else {
                 return id;
             }
+
+            // if what has been passed in is a base section already
+            // catches:
+            // 123
+            // 123-1
+            // 123-A
+            // 123-Interp
+            if (parts.length <= 2) {
+                return id;
+            }
+
+            interpIndex = parts.indexOf('Interp');
+
+            if (interpIndex !== -1) {
+                // catches 123-Interp-h1
+                if (parts[1] === 'Interp') {
+                    return id;
+                }
+                // catches:
+                // 123-4-Interp
+                // 123-4-Interp-5
+                // 123-Subpart-Interp
+                // 123-Subpart-A-Interp
+                // 123-Subpart-Interp-4
+                // 123-Subpart-A-Interp-4
+                // 123-Appendices-Interp
+                // 123-Appendices-Interp-4
+                else {
+                    return parts.slice(0, interpIndex + 1);
+                }
+            }
+
+            // catches:
+            // 123-4-*
+            // 123-A-*
+            return parts[0] + '-' + parts[1];
         },
 
         isSupplement: function(id) {
