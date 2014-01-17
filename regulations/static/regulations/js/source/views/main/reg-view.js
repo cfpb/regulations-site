@@ -61,7 +61,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                 id = $e.attr('data-section-id'),
                 href = $e.attr('href'),
                 config = {},
-                paragraphId,
                 hashIndex = href.indexOf('#');
 
             if (id.length > 0) {
