@@ -131,6 +131,15 @@ class ChromeParagraphView(ChromeView):
     partial_class = PartialParagraphView
     version_switch_view = 'chrome_paragraph_view'
 
+    def diff_redirect_label(self, label_id, toc):
+        """We don't do diffs for individual paragraphs; instead, link to the
+        containing section"""
+        label = label_id.split('-')
+        if 'Interp' in label:
+            return label[0] + '-Interp'
+        else:
+            return '-'.join(label[:2])
+
 
 class ChromeRegulationView(ChromeView):
     """Entire regulation with chrome"""
