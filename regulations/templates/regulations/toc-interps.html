@@ -3,7 +3,7 @@
 {% if item.sub_toc %}
     {% for item in item.sub_toc %}
         <li><span><a href="{{item.url}}" data-section-id="{{item.section_id}}">
-            <span class="toc-interp-heading">Interpretations For</span>
+            <span class="toc-interp-heading">Interpretations{% if item.is_subterp %}For{% endif %}</span>
             <span class="toc-section-marker">{{item.label|safe}}
             {% if item.sub_label %} - </span><span class="toc-interp-title">{{item.sub_label|safe}}</span>{% else %}</span>{% endif %}</a></li>
     {% endfor %}
