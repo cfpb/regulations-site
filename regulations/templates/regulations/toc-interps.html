@@ -2,10 +2,16 @@
 
 {% if item.sub_toc %}
     {% for item in item.sub_toc %}
+        {% if item.is_subterp %}
         <li><span><a href="{{item.url}}" data-section-id="{{item.section_id}}">
-            <span class="toc-interp-heading">Interpretations{% if item.is_subterp %}For{% endif %}</span>
+            <span class="toc-interp-heading">Interpretations For</span>
             <span class="toc-section-marker">{{item.label|safe}}
-            {% if item.sub_label %} - </span><span class="toc-interp-title">{{item.sub_label|safe}}</span>{% else %}</span>{% endif %}</a></li>
+            {% if item.sub_label %} - </span><span class="toc-interp-title">{{item.sub_label|safe}}</span>{% else %}</span>{% endif %}</a></span></li>
+        {% else %}
+        <li><span><a href="{{item.url}}" data-section-id="{{item.section_id}}">
+            <span class="toc-interp-heading">{{item.label}}</span>
+            <span class="toc-section-marker">{{item.sub_label|safe}}</span></a></span></li>
+        {% endif %}
     {% endfor %}
 {% endif %}
 

@@ -113,7 +113,8 @@ class TocTest(TestCase):
         self.assertEqual(2, len(result['sub_toc']))
 
         h1, subpart = result['sub_toc']
-        self.assertEqual('Intro', h1['label'])
+        self.assertEqual('Interpretations', h1['label'])
+        self.assertEqual('Intro', h1['sub_label'])
         self.assertFalse(h1.get('is_subterp', False))
         self.assertEqual('1001-Interp-h1', h1['section_id'])
         self.assertEqual(['1001', 'Interp', 'h1'], h1['index'])

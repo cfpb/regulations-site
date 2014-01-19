@@ -94,7 +94,8 @@ def intro_interps(toc, reg_part):
     for el in toc.get(reg_part + '-Interp', []):
         if el['index'][1] == 'Interp':
             elements.append({
-                'label': el['title'],
+                'label': 'Interpretations',
+                'sub_label': el['title'],
                 'index': el['index'],
                 'section_id': '-'.join(el['index'])})
     return elements
