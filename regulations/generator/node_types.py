@@ -44,15 +44,24 @@ def label_to_text(label, include_section=True, include_marker=False):
 
     if len(label) == 1:
         return 'Regulation %s' % label[0]
+    elif label[1:] == ['Subpart', 'Interp']:
+        return 'Commentary for Regulation Text of Part ' + label[0]
+    elif label[1:] == ['Appendices', 'Interp']:
+        return 'Commentary for Appendices of Part ' + label[0]
+    elif len(label) == 4 and label[1] == 'Subpart' and label[3] == 'Interp':
+        return 'Commentary for Subpart ' + label[2] + ' of Part ' + label[0]
     elif 'Interp' in label:
         # Interpretation
         prefix = list(takewhile(lambda l: l != 'Interp', label))
         suffix = label[label.index('Interp')+1:]
-        if suffix:
-            return 'Comment for %s-%s' % (label_to_text(prefix),
-                                          '.'.join(suffix))
+        if len(prefix) == 1 and suffix:
+            # Interpretation introduction; for now we cop out
+            return 'This Section'
         elif len(prefix) == 1:
             return 'Supplement I to Part %s' % prefix[0]
+        elif suffix:
+            return 'Comment for %s-%s' % (label_to_text(prefix),
+                                          '.'.join(suffix))
         else:
             return 'Comment for %s' % label_to_text(prefix)
     elif label[1].isalpha():
