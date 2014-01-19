@@ -29,7 +29,9 @@ class SectionUrl(object):
 
             if sectional:
                 view_name = 'chrome_section_view'
-                if 'Interp' in citation:
+                if len(citation) > 1 and citation[1] == 'Interp':
+                    view_name = 'chrome_paragraph_view'
+                elif 'Interp' in citation:
                     view_name = 'chrome_subterp_view'
                 label = self.view_label_id(citation, version)
 

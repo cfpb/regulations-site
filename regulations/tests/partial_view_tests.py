@@ -1,40 +1,42 @@
 from unittest import TestCase
-from mock import patch
+from mock import Mock, patch
 
 from django.test import RequestFactory
 from django.test.client import Client
 
 from regulations.generator.layers.layers_applier import *
-from regulations.generator.node_types import REGTEXT
+from regulations.generator.node_types import EMPTYPART, INTERP, REGTEXT
 from regulations.views.partial import *
 
 
 class PartialParagraphViewTests(TestCase):
-    @patch('regulations.views.partial.generator')
-    def test_get_context_data(self, generator):
-        generator.LayerCreator.return_value.get_appliers.return_value = (
-            InlineLayersApplier(), ParagraphLayersApplier(),
-            SearchReplaceLayersApplier())
-        generator.get_tree_paragraph.return_value = {
-            'text': 'Some Text',
-            'children': [],
-            'label': ['867', '53', 'q'],
-            'node_type': REGTEXT
-        }
-        paragraph_id = '103-3-a'
-        reg_version = '2013-10607'
-        request = RequestFactory().get('/fake-path')
-        view = PartialParagraphView.as_view(
-            template_name='regulations/tree.html')
-        response = view(request, label_id=paragraph_id, version=reg_version)
-        self.assertEqual(response.context_data['node'],
-                         generator.get_tree_paragraph.return_value)
+    @patch.object(PartialParagraphView, 'section_navigation')
+    def test_transform_context(self, sn):
+        ppv = PartialParagraphView()
+        builder = Mock()
+        builder.tree = {'label': ['1111', '22', 'a', '5'],
+                        'node_type': REGTEXT}
+        ctx = {'label_id': '1111-22-a-5-i', 'version': 'vvvv'}
+        ppv.transform_context(ctx, builder)
+        self.assertEqual(ctx['tree'], {
+            'node_type': REGTEXT, 'label': ['1111'],
+            'children': [{
+                'node_type': EMPTYPART, 'label': ['1111', 'Subpart'],
+                'children': [{
+                    'node_type': REGTEXT, 'label': ['1111', '22'],
+                    'children': [{
+                        'node_type': REGTEXT, 'label': ['1111', '22', 'a'],
+                        'children': [builder.tree]}]}]}]})
 
-    @patch('regulations.views.partial.generator')
-    def test_get_404(self, generator):
-        generator.get_tree_paragraph.return_value = None
-        response = Client().get('/partial/202-4/ver')
-        self.assertEqual(404, response.status_code)
+        builder.tree = {'label': ['1111', 'Interp', 'h1'],
+                        'node_type': INTERP}
+        ctx = {'label_id': '1111-Interp-h1', 'version': 'vvvv'}
+        ppv.transform_context(ctx, builder)
+        self.assertEqual(ctx['tree'], {
+            'node_type': REGTEXT, 'label': ['1111'],
+            'children': [{
+                'node_type': INTERP, 'label': ['1111', 'Interp'],
+                'children': [builder.tree]}]})
 
 
 class PartialSectionViewTests(TestCase):
