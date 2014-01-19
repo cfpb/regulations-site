@@ -91,7 +91,7 @@ class PartialParagraphView(PartialSectionView):
                     'label': node['label'][:-1]}
         # One more layer for regtext
         if node['node_type'] == REGTEXT:
-            node = {'node_type': EMPTYPART, 
+            node = {'node_type': EMPTYPART,
                     'children': [node],
                     'label': node['label'][:1] + ['Subpart']}
 
