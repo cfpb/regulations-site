@@ -22,7 +22,7 @@ class TableOfContentsLayer(object):
                 if 'Subpart' in data['index']:
                     toc_list.append(toc_subpart(data, toc_list, self.layer))
                 elif 'Interp' in data['index']:
-                    toc_list.append(toc_interp(data, toc_list))
+                    toc_list.append(toc_interp(data, toc_list, self.layer))
                 else:
                     toc_list.append(toc_sect_appendix(data, toc_list))
 
