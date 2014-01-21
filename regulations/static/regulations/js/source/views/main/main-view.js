@@ -102,7 +102,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // this is a triage measure. I don't know how this could 
             // ever be null, but apparently somewhere along the line it is
             if (this.regVersion === null) {
-                this.regVersion = this.$topSection.data('base-version');
+                this.regVersion = this.$el.find('section[data-page-type]').data('base-section');
             }
 
             if (typeof options.render === 'undefined') {
