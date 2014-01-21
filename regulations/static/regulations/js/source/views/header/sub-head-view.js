@@ -9,6 +9,7 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
             this.externalEvents.on('section:open', this.changeTitle, this);
             this.externalEvents.on('search-results:open', this.displayCount, this);
             this.externalEvents.on('search-results:open',this.changeDate, this);
+            this.externalEvents.on('search-results:open',this.removeSubpart, this);
             this.externalEvents.on('clear', this.reset, this);
             this.externalEvents.on('subpart:present', this.renderSubpart,this);
             this.externalEvents.on('subpart:absent', this.removeSubpart, this);
