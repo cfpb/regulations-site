@@ -61,3 +61,6 @@
 .minicon-warning {
   *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e014');
 }
+.minicon-octocat {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '\e015');
+}

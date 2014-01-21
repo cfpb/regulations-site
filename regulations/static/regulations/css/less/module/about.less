@@ -1,0 +1,196 @@
+/*
+ About
+ ========================================================================== 
+ about.less defines the visual appearance of the eRegulations about page
+ */
+
+/* about-content is the same as landing-content, these should be unified into one class */
+.about-content { 
+    margin-top: 60px;
+    .avenir-next;
+
+    img { 
+        max-width: 100%;
+    }
+}
+
+/*
+hero
+------------------
+*/
+
+.title-hero {
+    background-color: @green_midtone;
+    .border-bottom-light;
+    margin-bottom: 2em;
+
+    h2 {
+        font-size: 34px;
+        padding: 24px 0;
+        margin: 0;
+        .avenir-next;
+    }
+}
+
+.about-section {
+    border-bottom: 1px solid @medium_gray;
+    padding-bottom: 1em;
+}
+
+.about-section:last-child {
+    border-bottom: 0px;
+}
+
+/* 
+layout
+------------------
+todo: unify with landing page layout
+*/
+
+.content-primary {
+    width: 65.5241935%;
+}
+
+.content-secondary {
+    width: 31.25%;
+}
+
+.column-l {
+    float: left;
+}
+
+.column-r {
+    float: right;
+}
+
+.column-3 {
+    display: inline-block;
+    width: 30%;
+    vertical-align: top;
+}
+
+.column-3+.column-3 {
+    margin-left: 4.5%;
+}
+
+.about-section {
+    .inner-wrap {
+        padding: 1em;
+    }
+}
+
+/*
+dev well
+------------------
+*/
+
+
+.dev-well {
+
+    h4 {
+        .reset;
+    }
+
+    p {
+        .reset;
+        font-size: 0.875em;
+    }
+
+    .minicon-octocat {
+        float: left;
+        display: block;
+        height: 100px;
+        margin-right: 16px;
+        font-size: 1.5em;
+        color: @dark_gray;
+    }
+
+}
+
+/*
+snazzy ordered lists
+------------------
+*/
+
+
+.about-ol{
+    counter-reset: li;
+    list-style: none;
+    *list-style: decimal; /* use default numbering for IE6/7 */
+    position: relative;
+}
+
+.about-ol > li {
+    margin: 1em 0 3em 0;
+}
+
+.about-ol > li:before{
+    content: counter(li);
+    counter-increment: li;
+    background: @green;
+    color: #fff;
+    font-size: 12px;
+    position: absolute;
+    text-align: center;
+    left: -1em;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    border-radius: 20px;
+}
+
+/*
+custom styles
+------------------
+*/
+
+.easy-nav {
+    padding-left: 60px;
+    position: relative;
+}
+
+.icon-callout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 46px;
+    height: 46px;
+    line-height: 46px;
+    border-radius: 4px;
+    text-align: center;
+    background: @bg_gray;
+    color: @80_gray;
+    font-size: 22px;
+}
+
+.icon-callout.minicon-history {
+    font-size: 24px; // and it's smaller than the rest
+}
+
+.about-screenshot {
+    margin-bottom: -38px;
+}
+
+.about-timeline {
+    margin-left: 20px;
+}
+
+.about-timeline:before {
+    font-family: 'Minicon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    content: "\e00b";
+    color: @green;
+    margin-left: -35px;
+    padding-right: 12px;
+    font-size: 20px;
+}
+
+small.disclaimer {
+    color: @80_gray;
+}
