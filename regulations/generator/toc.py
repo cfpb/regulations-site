@@ -16,7 +16,7 @@ def fetch_toc(reg_part, version, flatten=False):
         if 'Subpart' in data['index']:
             toc_list.append(toc_subpart(data, toc_list, toc))
         elif 'Interp' in data['index']:
-            toc_list.append(toc_interp(data, toc_list))
+            toc_list.append(toc_interp(data, toc_list, toc))
         else:
             toc_list.append(toc_sect_appendix(data, toc_list))
     if flatten:
@@ -64,7 +64,7 @@ def toc_subpart(data, so_far, toc):
     return element
 
 
-def toc_interp(data, so_far):
+def toc_interp(data, so_far, toc):
     """Transforms a subpart, expanding it into subterps (collections of
     interpreted subparts, empty part, and appendices"""
     segments = title_parsing.try_split(data['title'])
@@ -78,13 +78,40 @@ def toc_interp(data, so_far):
         'is_supplement': True,
         'sub_toc': []
     }
+
+    reg_part = data['index'][0]
+    element['sub_toc'].extend(intro_interps(toc, reg_part))
+    element['sub_toc'].extend(subterps(so_far, reg_part))
+    return element
+
+
+def intro_interps(toc, reg_part):
+    """Logic to fill in any introduction headers for the entire
+    interpretations. Note that at some point, we might have headers randomly
+    appear elsewhere in the interpretations, unrelated to a specific
+    section. That's a @todo."""
+    elements = []
+    for el in toc.get(reg_part + '-Interp', []):
+        if el['index'][1] == 'Interp':
+            elements.append({
+                'label': 'Interpretations',
+                'sub_label': el['title'],
+                'index': el['index'],
+                'section_id': '-'.join(el['index'])})
+    return elements
+
+
+def subterps(so_far, reg_part):
+    """Logic to build subterps, collections of interpretations for subparts,
+    the empty subpart, or appendices"""
+    elements = []
     found_subpart = False
     found_appendix = False
     for el in so_far:
         if el.get('is_subpart'):
             found_subpart = True
             index = el['index'] + ['Interp']
-            element['sub_toc'].append({
+            elements.append({
                 'label': el['label'],
                 'sub_label': el['sub_label'],
                 'index': index,
@@ -94,7 +121,7 @@ def toc_interp(data, so_far):
         elif el.get('is_appendix') and not found_appendix:
             found_appendix = True
             index = el['index'][:1] + ['Appendices', 'Interp']
-            element['sub_toc'].append({
+            elements.append({
                 'label': 'Appendices',
                 'index': index,
                 'is_subterp': True,
@@ -102,11 +129,11 @@ def toc_interp(data, so_far):
             })
 
     if not found_subpart:   # Add the empty subpart
-        index = data['index'][:1] + ['Subpart', 'Interp']
-        element['sub_toc'].insert(0, {
+        index = [reg_part, 'Subpart', 'Interp']
+        elements.insert(0, {
             'label': 'Regulation Text',
             'index': index,
             'is_subterp': True,
             'section_id': '-'.join(index)
         })
-    return element
+    return elements

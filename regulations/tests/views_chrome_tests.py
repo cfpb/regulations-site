@@ -83,6 +83,21 @@ class ViewsChromeRegulationTest(TestCase):
         self.assertEqual('199-4', view.diff_redirect_label('199', toc))
 
 
+class ViewsChromeParagraphView(TestCase):
+    def test_diff_redirect_label(self):
+        view = ChromeParagraphView()
+        self.assertEqual('199-4', view.diff_redirect_label('199-4-b', []))
+        self.assertEqual('199-4', view.diff_redirect_label('199-4-b-3', []))
+        self.assertEqual('199-A', view.diff_redirect_label('199-A', []))
+        self.assertEqual('199-A', view.diff_redirect_label('199-A-14B', []))
+        self.assertEqual('199-Interp',
+                         view.diff_redirect_label('199-Interp', []))
+        self.assertEqual('199-Interp',
+                         view.diff_redirect_label('199-Interp-h1', []))
+        self.assertEqual('199-Interp',
+                         view.diff_redirect_label('199-12-Interp-2', []))
+
+
 class ViewsChromeSubterpTest(TestCase):
     def test_diff_redirect_label(self):
         view = ChromeSubterpView()

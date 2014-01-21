@@ -1,4 +1,4 @@
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'permalink-view', 'help-view', './sidebar-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model', 'main-events'], function($, _, Backbone, SxSList, PermalinkView, HelpView, SidebarModel, Main, Breakaway, SidebarEvents, Definition, MetaModel, MainEvents) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'help-view', './sidebar-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model', 'main-events'], function($, _, Backbone, SxSList, HelpView, SidebarModel, Main, Breakaway, SidebarEvents, Definition, MetaModel, MainEvents) {
     'use strict';
     var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',
@@ -77,7 +77,6 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
             }
 
             this.childViews.sxs = new SxSList();
-            this.childViews.permalink = new PermalinkView();
             this.childViews.help = new HelpView();
 
             this.loaded();
@@ -90,10 +89,6 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'pe
         createPlaceholders: function() {
             if (this.$el.find('#sxs-list').length === 0) {
                 this.$el.append('<section id="sxs-list" class="regs-meta"></section>');
-            }
-
-            if (this.$el.find('#permalinks').length === 0) {
-                this.$el.append('<section id="permalinks" class="regs-meta"></section>');
             }
 
             if (this.$el.find('#help').length === 0) {
