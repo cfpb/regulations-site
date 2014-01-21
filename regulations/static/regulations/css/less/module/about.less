@@ -34,6 +34,11 @@ hero
 
 .about-section {
     border-bottom: 1px solid @medium_gray;
+    padding-bottom: 1em;
+}
+
+.about-section:last-child {
+    border-bottom: 0px;
 }
 
 /* 
@@ -66,4 +71,38 @@ todo: unify with landing page layout
 
 .column-3+.column-3 {
     margin-left: 4.5%;
+}
+
+.about-section {
+    .inner-wrap {
+        padding: 1em;
+    }
+}
+
+/*
+dev well
+------------------
+*/
+
+
+.dev-well {
+
+    h4 {
+        .reset;
+    }
+
+    p {
+        .reset;
+        font-size: 0.875em;
+    }
+
+}
+
+/*
+custom styles
+------------------
+*/
+
+.about-screenshot {
+    margin-bottom: -38px;
 }
