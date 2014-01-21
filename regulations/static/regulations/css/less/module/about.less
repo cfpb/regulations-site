@@ -108,15 +108,20 @@ dev well
 }
 
 /*
-custom styles
+snazzy ordered lists
 ------------------
 */
 
-ol{
+
+.about-ol{
     counter-reset: li;
     list-style: none;
     *list-style: decimal; /* use default numbering for IE6/7 */
     position: relative;
+}
+
+.about-ol > li {
+    margin: 1em 0 3em 0;
 }
 
 .about-ol > li:before{
@@ -134,8 +139,33 @@ ol{
     border-radius: 20px;
 }
 
+/*
+custom styles
+------------------
+*/
+
 .about-screenshot {
     margin-bottom: -38px;
+}
+
+.about-timeline {
+    margin-left: 20px;
+}
+
+.about-timeline:before {
+    font-family: 'Minicon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    content: "\e00b";
+    color: @green;
+    margin-left: -35px;
+    padding-right: 12px;
+    font-size: 20px;
 }
 
 small.disclaimer {
