@@ -68,7 +68,8 @@ class TocTest(TestCase):
             {'index': ['1001', 'B'], 'is_appendix': True}]
         data = {'title': 'Supplement II - Official Interps',
                 'index': ['1001', 'Interp']}
-        result = toc.toc_interp(data, so_far)
+        toc_data = {'1001-Interp': []}
+        result = toc.toc_interp(data, so_far, toc_data)
         self.assertEqual('Supplement II', result['label'])
         self.assertEqual('Official Interps', result['sub_label'])
         self.assertTrue(result.get('is_supplement'))
@@ -91,7 +92,7 @@ class TocTest(TestCase):
              'sub_toc': [{'index': ['1001', '1']}, {'index': ['1001', '2']}]}]
         data = {'title': 'Unparsable',
                 'index': ['1001', 'Interp']}
-        result = toc.toc_interp(data, so_far)
+        result = toc.toc_interp(data, so_far, toc_data)
         self.assertEqual('Supplement I', result['label'])
         self.assertEqual('', result['sub_label'])
         self.assertTrue(result.get('is_supplement'))
@@ -100,6 +101,23 @@ class TocTest(TestCase):
         subpart = result['sub_toc'][0]
         self.assertEqual('Subpart C', subpart['label'])
         self.assertEqual('Awesome Sauce', subpart['sub_label'])
+        self.assertTrue(subpart.get('is_subterp'))
+        self.assertEqual(['1001', 'Subpart', 'C', 'Interp'], subpart['index'])
+        self.assertEqual('1001-Subpart-C-Interp', subpart['section_id'])
+
+        toc_data = {'1001-Interp': [{'title': 'Intro',
+                                     'index': ['1001', 'Interp', 'h1']},
+                                    {'title': 'Section 1',
+                                     'index': ['1001', '1', 'Interp']}]}
+        result = toc.toc_interp(data, so_far, toc_data)
+        self.assertEqual(2, len(result['sub_toc']))
+
+        h1, subpart = result['sub_toc']
+        self.assertEqual('Interpretations', h1['label'])
+        self.assertEqual('Intro', h1['sub_label'])
+        self.assertFalse(h1.get('is_subterp', False))
+        self.assertEqual('1001-Interp-h1', h1['section_id'])
+        self.assertEqual(['1001', 'Interp', 'h1'], h1['index'])
         self.assertTrue(subpart.get('is_subterp'))
         self.assertEqual(['1001', 'Subpart', 'C', 'Interp'], subpart['index'])
         self.assertEqual('1001-Subpart-C-Interp', subpart['section_id'])

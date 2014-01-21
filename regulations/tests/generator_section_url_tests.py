@@ -23,13 +23,22 @@ class SectionUrlTest(TestCase):
             {'index': ['200', 'Subpart', 'A'], 'is_subpart': True,
              'sub_toc': [{'index': ['200', '1'], 'is_section': True},
                          {'index': ['200', '2'], 'is_section': True}]},
-            {'index': ['200', 'A'], 'is_appendix': True}]
+            {'index': ['200', 'A'], 'is_appendix': True},
+            {'index': ['200', 'Interp'], 'is_supplement': True,
+             'sub_toc': [{'index': ['200', 'Interp', 'h1'],
+                          'section_id': '200-Interp-h1'},
+                         {'index': ['200', 'Subpart', 'A', 'Interp'],
+                          'is_subterp': True},
+                         {'index': ['200', 'Appendices', 'Interp'],
+                          'is_subterp': True}]}]
         self.assertEqual('200-Subpart-A-Interp',
                          SectionUrl().interp(['200', '1', 'Interp'], 'vvvv'))
         self.assertEqual('200-Subpart-A-Interp',
                          SectionUrl().interp(['200', '2', 'Interp'], 'vvvv'))
         self.assertEqual('200-Appendices-Interp',
                          SectionUrl().interp(['200', 'A', 'Interp'], 'vvvv'))
+        self.assertEqual('200-Interp-h1',
+                         SectionUrl().interp(['200', 'Interp', 'h1'], 'vvvv'))
         self.assertTrue('200-Subpart-A',
                         SectionUrl().interp(['200', '2', 'e', 'Interp', '1'],
                                             'verver'))

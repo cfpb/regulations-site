@@ -29,7 +29,9 @@ class SectionUrl(object):
 
             if sectional:
                 view_name = 'chrome_section_view'
-                if 'Interp' in citation:
+                if len(citation) > 1 and citation[1] == 'Interp':
+                    view_name = 'chrome_paragraph_view'
+                elif 'Interp' in citation:
                     view_name = 'chrome_subterp_view'
                 label = self.view_label_id(citation, version)
 
@@ -65,6 +67,9 @@ class SectionUrl(object):
                 #   In a subterp
                 if sub['index'] == prefix:
                     return '-'.join(prefix)
+                #   Full match: interpretation header
+                if sub['index'] == citation:
+                    return sub['section_id']
         # Couldn't find it; most likely in the appendix
         return reg_part + '-Appendices-Interp'
 

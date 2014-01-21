@@ -80,13 +80,26 @@ class PartialSectionView(PartialView):
         return context
 
 
-class PartialParagraphView(PartialView):
+class PartialParagraphView(PartialSectionView):
     """ Single paragraph of a regtext """
-
-    template_name = "regulations/tree.html"
-
     def transform_context(self, context, builder):
-        context['node'] = builder.tree
+        node = builder.tree
+        # Wrap with layers until we reach a section
+        while len(node['label']) > 2:
+            node = {'node_type': node['node_type'],
+                    'children': [node],
+                    'label': node['label'][:-1]}
+        # One more layer for regtext
+        if node['node_type'] == REGTEXT:
+            node = {'node_type': EMPTYPART,
+                    'children': [node],
+                    'label': node['label'][:1] + ['Subpart']}
+
+        context['markup_page_type'] = 'reg-section'
+        context['tree'] = {'children': [node], 'label': node['label'][:1],
+                           'node_type': REGTEXT}
+        context['navigation'] = self.section_navigation(
+            context['label_id'], context['version'])
         return context
 
 
