@@ -87,22 +87,6 @@
     color: @pacific;
 }
 
-#content-header {
-    li {
-        height: 2.125em;
-        line-height: 2.125em;
-    }
-
-    .subpart {
-        .avenir-next;
-        color: @dark_gray;
-    }
-    .subpart::after {
-        content: " |";
-        padding-left: 1%;
-    }
-}
-
 .sub-head {
     background: @grey;
     color: @black;
@@ -116,11 +100,21 @@
     }
 }
 
-.effective-date {
-    float: right;
-    font-size: .75em;
-    padding-right: 15px;
-    text-transform: uppercase;
+#content-header {
+    li {
+        height: 2.125em;
+        line-height: 2.125em;
+    }
+
+    .subpart {
+        .avenir-next-demi;
+        color: @dark_gray;
+    }
+    .with-subpart:before {
+        content: " |";
+        .avenir-next;
+        margin: 0 10px;
+    }
 }
 
 .header-label {
@@ -134,6 +128,14 @@
 .header-label.with-subpart {
     margin-left: 0;
 }
+
+.effective-date {
+    float: right;
+    font-size: .75em;
+    padding-right: 15px;
+    text-transform: uppercase;
+}
+
 
 /*
 Application Nav
