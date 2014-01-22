@@ -99,8 +99,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             var $def = $('#definition'),
                 defTerm = $def.data('defined-term'),
                 defId = $def.find('.open-definition').attr('id'),
-                $termLinks,
-                checkLinks;
+                $termLinks;
 
             if (defTerm && defId && $def.length > 0) {
                 this.defScopeExclusions = this.defScopeExclusions || [];

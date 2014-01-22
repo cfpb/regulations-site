@@ -88,17 +88,17 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             msg += (id) ? Helpers.idToRef(id) + '.' : 'this section.';
             msg += '</p>';
 
-            this.$noticeContainer = this.$noticeContainer || this.$el.find('.notice').removeClass('hidden');
+            this.$warningContainer = this.$warningContainer || this.$el.find('.definition-warning').removeClass('hidden');
 
-            this.$noticeContainer.html(
+            this.$warningContainer.html(
                 icon + '<div class="msg">' + msg + '</div>'
             );
         },
 
         // when a definition is fully applicable to the section
         removeScopeMsg: function() {
-            if (typeof this.$noticeContainer !== 'undefined' && this.$noticeContainer.length > 0) {
-                this.$noticeContainer.html('').addClass('hidden');
+            if (typeof this.$warningContainer !== 'undefined' && this.$warningContainer.length > 0) {
+                this.$warningContainer.html('').addClass('hidden');
             }
         },
 
@@ -109,11 +109,11 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
                 link,
                 $msg;
 
-            if (typeof this.$noticeContainer === 'undefined') {
+            if (typeof this.$warningContainer === 'undefined') {
                 this.displayScopeMsg(Helpers.findBaseSection(activeSectionId));
             }
 
-            $msg = this.$noticeContainer.find('.msg');
+            $msg = this.$warningContainer.find('.msg');
             linkText += (defId) ? Helpers.idToRef(activeSectionId) : 'this section';
             link = '<a href="' + href + '" class="update-definition inactive internal" data-definition="' + defId + '">';
             link += linkText + '</a>';
@@ -134,7 +134,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             var $text = this.$el.find('.definition-text');
             $text.removeClass('inactive');
 
-            this.$el.find('.notice a').remove();
+            this.$el.find('.definition-warning a').remove();
         },
 
         openFullDefinition: function(e) {
