@@ -65,15 +65,29 @@ define('regs-helpers', function() {
         // **Returns** Reg entity marker formatted for human readability
         idToRef: function(id) {
             var ref = '', 
-                parts, i, len, dividers, item, interpIndex, interpParts;
+                parts, i, len, dividers, item, interpIndex, interpParts, subpartIndex;
             parts = id.split('-');
             len = parts.length - 1;
+            subpartIndex = parts.indexOf('Subpart');
             dividers = ['§ .', '', '( )', '( )', '( )', '( )'];
 
             /* if we've got only the reg part number */
             if (len === 0) {
                 ref = parts[0];
                 return ref;
+            }
+
+            /* if there is a subpart */
+            if (subpartIndex !== -1) {
+                parts.splice(1, subpartIndex);
+
+                // subpartIndex is now the next part after "Subpart"
+                // removes subpart letter
+                if (isNaN(parts[subpartIndex]) && parts[subpartIndex] !== 'Interp') {
+                    parts.splice(1, subpartIndex);
+                }
+
+                len = parts.length - 1;
             }
 
             /* if we have a supplement */
@@ -83,7 +97,7 @@ define('regs-helpers', function() {
                 ref += this.interpId(interpParts);
             }
             /* if we have an appendix */
-            if (isNaN(parseInt(parts[1], 10))) {
+            else if (isNaN(parseInt(parts[1], 10))) {
                 return this.appendixId(parts[0], parts[1]);
             }
 
@@ -92,8 +106,19 @@ define('regs-helpers', function() {
                 len = parts.length -1;
             }
 
-            /* we have a paragraph */
+            /* we have a subpart interpretation to appendices */
+            if (parts.indexOf('Appendices') !== -1) {
+                return 'Supplement I to Appendices';
+            }
+
+            /* we have a paragraph, can also be the second part of a supplement*/
             for (i = 0; i <= len; i++) {
+                // return part number alone
+                if (len <= 1) {
+                    return ref += parts[i]
+                }
+
+                // top paragraph has no punctuation
                 if (i === 1) {
                     ref += parts[i];
                 }
