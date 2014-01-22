@@ -115,7 +115,7 @@ define('regs-helpers', function() {
             for (i = 0; i <= len; i++) {
                 // return part number alone
                 if (len <= 1) {
-                    return ref += parts[i]
+                    return ref += parts[i];
                 }
 
                 // top paragraph has no punctuation
