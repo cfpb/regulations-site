@@ -26,7 +26,6 @@ var require = { "paths" :
         "search-results-view": "./views/main/search-results-view",
         "main-view": "./views/main/main-view",
         "child-view": "./views/main/child-view",
-        "permalink-view": "./views/sidebar/permalink-view",
         "help-view": "./views/sidebar/help-view",
         "breakaway-view": "./views/breakaway/breakaway-view",
         "drawer-tabs-view": "./views/drawer/drawer-tabs-view",
