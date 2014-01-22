@@ -100,42 +100,30 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                 defTerm = $def.data('defined-term'),
                 defId = $def.find('.open-definition').attr('id'),
                 $termLinks,
-                checkLinks;
+                eventTriggered = false;
 
             if (defTerm && defId && $def.length > 0) {
+                this.defScopeExclusions = this.defScopeExclusions || [];
                 $termLinks = this.$el.find('a.definition'); 
 
-                checkLinks = function(paragraphs, links, term, id) {
-                    var $link = $(links.last());
+                $termLinks.each(function(i, link) {
+                    var $link = $(link);
 
-                    if ($link.data('defined-term') === term) {
-                        if ($link.data('definition') !== id) {
-                            // don't change the DOM over and over for no reason
-                            // if there are multiple defined term links that 
-                            // are scoped to a different definition body
-                            if (paragraphs.length === 0) {
-                                SidebarEvents.trigger('definition:outOfScope', this.id);
-                            }
-
-                            paragraphs.push($link.closest('li[data-permalink-section]').attr('id'));
+                    if ($link.data('defined-term') === defTerm && $link.data('definition') !== defId) {
+                        // don't change the DOM over and over for no reason
+                        // if there are multiple defined term links that 
+                        // are scoped to a different definition body
+                        if (!eventTriggered) {
+                            SidebarEvents.trigger('definition:outOfScope', this.id);
+                            eventTriggered = true;
                         }
+                        
+                        this.defScopeExclusions.push($link.closest('li[data-permalink-section]').attr('id'));
                     }
+                }.bind(this));
 
-                    links = links.not(links.last());
-
-                    if (links.length === 0) {
-                        this.defScopeExclusions = paragraphs;
-                        return false;
-                    }
-
-                    checkLinks(paragraphs, links, term, id);
-                }.bind(this);
-
-                if ($termLinks.length > 0) {
-                    checkLinks([], $termLinks, defTerm, defId);
-                    if (typeof this.defScopeExclusions !== 'undefined' && this.defScopeExclusions.length === 0) {
-                        SidebarEvents.trigger('definition:inScope');
-                    }
+                if (this.defScopeExclusions.length === 0) {
+                    SidebarEvents.trigger('definition:inScope');
                 }
             }
         },
