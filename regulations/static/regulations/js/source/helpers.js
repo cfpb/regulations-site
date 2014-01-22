@@ -144,7 +144,7 @@ define('regs-helpers', function() {
                 // 123-Appendices-Interp
                 // 123-Appendices-Interp-4
                 else {
-                    return parts.slice(0, interpIndex + 1);
+                    return parts.slice(0, interpIndex + 1).join('-');
                 }
             }
 
