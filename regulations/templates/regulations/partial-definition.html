@@ -12,7 +12,11 @@
     {% comment %}
         Used to display scope warnings
     {% endcomment %}
-    <div class="definition-warning hidden group"></div>
+    <div class="definition-warning hidden group">
+        <span class="minicon-warning"></span>
+        <div class="msg">
+        </div>
+    </div>
 
     <div class="definition-text">
         {% if node.marked_up %}

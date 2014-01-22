@@ -83,22 +83,19 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
         // displayed when an open definition doesn't apply to the 
         // whole open section
         displayScopeMsg: function(id) {
-            var msg = '<p>This term has a different definition for some portions of ',
-                icon = '<span class="minicon-warning"></span>';
+            var msg = '<p>This term has a different definition for some portions of ';
             msg += (id) ? Helpers.idToRef(id) + '.' : 'this section.';
             msg += '</p>';
 
             this.$warningContainer = this.$warningContainer || this.$el.find('.definition-warning').removeClass('hidden');
 
-            this.$warningContainer.html(
-                icon + '<div class="msg">' + msg + '</div>'
-            );
+            this.$warningContainer.find('.msg').html(msg);
         },
 
         // when a definition is fully applicable to the section
         removeScopeMsg: function() {
             if (typeof this.$warningContainer !== 'undefined' && this.$warningContainer.length > 0) {
-                this.$warningContainer.html('').addClass('hidden');
+                this.$warningContainer.addClass('hidden').find('.msg').html('');
             }
         },
 

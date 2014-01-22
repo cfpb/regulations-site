@@ -70,6 +70,7 @@ class DefinitionTest(BaseTest, unittest.TestCase):
 
         # go to 1005-1-a
         toc_toggle.click()
+        WebDriverWait(self.driver, 10)
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         wayfinding_header = self.driver.find_element_by_xpath('//*[@id="active-title"]/em')
         self.assertTrue('1005.1(a)' in wayfinding_header.text)

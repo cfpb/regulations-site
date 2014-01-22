@@ -99,7 +99,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             var $def = $('#definition'),
                 defTerm = $def.data('defined-term'),
                 defId = $def.find('.open-definition').attr('id'),
-                $termLinks;
+                $termLinks,
+                eventTriggered = false;
 
             if (defTerm && defId && $def.length > 0) {
                 this.defScopeExclusions = this.defScopeExclusions || [];
@@ -112,8 +113,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
                         // don't change the DOM over and over for no reason
                         // if there are multiple defined term links that 
                         // are scoped to a different definition body
-                        if (this.defScopeExclusions.length === 0) {
+                        if (!eventTriggered) {
                             SidebarEvents.trigger('definition:outOfScope', this.id);
+                            eventTriggered = true;
                         }
                         
                         this.defScopeExclusions.push($link.closest('li[data-permalink-section]').attr('id'));
