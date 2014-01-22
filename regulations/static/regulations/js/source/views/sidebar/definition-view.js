@@ -87,9 +87,10 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             msg += (id) ? Helpers.idToRef(id) + '.' : 'this section.';
             msg += '</p>';
 
-            this.$warningContainer = this.$warningContainer || this.$el.find('.definition-warning').removeClass('hidden');
+            this.$warningContainer = this.$warningContainer || this.$el.find('.definition-warning');
 
-            this.$warningContainer.find('.msg').html(msg);
+            this.$warningContainer.removeClass('hidden')
+                                  .find('.msg').html(msg);
         },
 
         // when a definition is fully applicable to the section
@@ -97,6 +98,8 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             if (typeof this.$warningContainer !== 'undefined' && this.$warningContainer.length > 0) {
                 this.$warningContainer.addClass('hidden').find('.msg').html('');
             }
+
+            this.unGrayDefinition();
         },
 
         // for when the definition does not apply to the active section
