@@ -128,7 +128,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
             
             //search needs to know which version to search and switch to that version
-            if (this.contentType === 'search-results') {
+            if (this.contentType === 'search-results' && typeof options.searchVersion !== 'undefined') {
                 options.regVersion = options.searchVersion;
             }
 
