@@ -1,6 +1,41 @@
 // Defines some globally useful helper functions
 define('regs-helpers', function() {
     'use strict';
+    
+    // indexOf polyfill 
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+    // to do: this may make sense to move elsewhere
+    if (!Array.prototype.indexOf) {
+      Array.prototype.indexOf = function (searchElement, fromIndex) {
+        if ( this === undefined || this === null ) {
+          throw new TypeError( '"this" is null or not defined' );
+        }
+
+        var length = this.length >>> 0; // Hack to convert object.length to a UInt32
+
+        fromIndex = +fromIndex || 0;
+
+        if (Math.abs(fromIndex) === Infinity) {
+          fromIndex = 0;
+        }
+
+        if (fromIndex < 0) {
+          fromIndex += length;
+          if (fromIndex < 0) {
+            fromIndex = 0;
+          }
+        }
+
+        for (;fromIndex < length; fromIndex++) {
+          if (this[fromIndex] === searchElement) {
+            return fromIndex;
+          }
+        }
+
+        return -1;
+      };
+    }
+
     return {
         isIterable: function(obj) {
             if (typeof obj === 'array' || typeof obj === 'object') {
