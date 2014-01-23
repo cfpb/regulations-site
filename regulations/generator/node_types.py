@@ -49,11 +49,11 @@ def _l2t_subterp(label):
     """Helper function converting subterp labels to text. Assumes label has
     more then one segment"""
     if label[1:] == ['Subpart', 'Interp']:
-        return 'Commentary for Regulation Text of Part ' + label[0]
+        return 'Interpretations for Regulation Text of Part ' + label[0]
     elif label[1:] == ['Appendices', 'Interp']:
-        return 'Commentary for Appendices of Part ' + label[0]
+        return 'Interpretations for Appendices of Part ' + label[0]
     elif len(label) == 4 and label[1] == 'Subpart' and label[3] == 'Interp':
-        return 'Commentary for Subpart ' + label[2] + ' of Part ' + label[0]
+        return 'Interpretations for Subpart ' + label[2] + ' of Part ' + label[0]
 
 
 def _l2t_interp(label):
