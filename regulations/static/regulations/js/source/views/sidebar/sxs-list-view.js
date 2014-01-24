@@ -50,7 +50,7 @@ define('sxs-list-view', ['jquery', 'underscore', 'backbone', 'sidebar-list-view'
 
         modifyListDisplay: function() {
             var $folderContent = this.$el.find('.expand-drawer');
-            if ($folderContent.children().length > 0) {
+            if ($folderContent.children().length > 1) {
                 this.highlightHeader();
             }
         },
