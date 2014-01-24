@@ -170,6 +170,24 @@ Application Nav
 }
 
 /*
+mid-sized (tablet) screens
+=============================================
+*/
+
+@media only screen and (min-width: 480px) and (max-width: 860px) {
+    .subpart {
+        font-size: 0;
+    }
+
+    #content-header {
+        .with-subpart:before {
+            content: "";
+            margin: 0;
+        }
+    }
+}
+
+/*
 BIG SCREENS
 =============================================
 */
