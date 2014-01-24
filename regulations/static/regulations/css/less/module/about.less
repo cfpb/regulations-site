@@ -12,6 +12,10 @@
     img { 
         max-width: 100%;
     }
+
+    h3 {
+        margin: 0 0 30px 0;
+    }
 }
 
 /*
@@ -49,7 +53,7 @@ layout
 
 .about-section {
     .inner-wrap {
-        padding: 1em;
+        padding: 2em 1em;
     }
 }
 
@@ -96,6 +100,10 @@ snazzy ordered lists
 
 .about-ol > li {
     margin: 1em 0 3em 0;
+}
+
+.about-ol > li:last-child {
+    margin-bottom: 0;
 }
 
 .about-ol > li:before{
@@ -160,11 +168,13 @@ custom styles
     -webkit-font-smoothing: antialiased;
     content: "\e00b";
     color: @green;
-    margin-left: -35px;
+    margin-left: -37px;
     padding-right: 12px;
-    font-size: 20px;
+    font-size: 24px;
 }
 
-small.disclaimer {
+.small-disclaimer {
+    display: block;
     color: @80_gray;
+    line-height: 1.4;
 }
