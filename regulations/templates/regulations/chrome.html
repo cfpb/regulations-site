@@ -99,9 +99,10 @@
                         <span class="version-date">{{ version.by_date|date }}</span>
                     </a>
                         <div class="timeline-content-wrap">
+                            <h5 class="final-rule">Final Rule</h5>
                             <ul class="rule-list">
                             {% for notice in version.notices %}
-                                <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
+                                <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Published {{notice.publication_date|date}}</a></li>
                             {% endfor %}
                                 </ul>
                                 <div class="diff-selector group">
