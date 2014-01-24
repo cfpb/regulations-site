@@ -149,7 +149,7 @@ define('regs-helpers', function() {
             /* we have a paragraph, can also be the second part of a supplement*/
             for (i = 0; i <= len; i++) {
                 // return part number alone
-                if (len <= 1) {
+                if (len < 1) {
                     return ref += parts[i];
                 }
 

@@ -18,7 +18,7 @@
                     {% include "regulations/toc-interps.html" %}
                 {% else %}
                     {% if item.is_first_appendix %}
-                        <li><h3 class="subpart-heading">Appendices</h3></li>
+                        <li data-subpart-heading><h3 class="subpart-heading">Appendices</h3></li>
                     {% endif %}
                     <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
                 {% endif %}
