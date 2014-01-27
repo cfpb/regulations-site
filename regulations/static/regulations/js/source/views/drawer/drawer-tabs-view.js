@@ -42,10 +42,6 @@ define(['jquery', 'underscore', 'backbone', 'drawer-events', 'ga-events'], funct
             this.$tocLinks.removeClass('current');
             $(this.idMap[tab]).addClass('current');
 
-            if ($('.panel').css('left') === '-200px') {
-                this.openDrawer();
-            }
-
             GAEvents.trigger('drawer:switchTab', {
                 id: tab,
                 type: 'drawer'
@@ -99,6 +95,10 @@ define(['jquery', 'underscore', 'backbone', 'drawer-events', 'ga-events'], funct
             var $target = $(e.target),
                 linkValue = _.last($target.closest('a').attr('href').split('#'));
             this.activePane = linkValue;
+
+            if ($('.panel').css('left') === '-200px') {
+                this.openDrawer();
+            }
 
             this.externalEvents.trigger('pane:change', linkValue);
         }
