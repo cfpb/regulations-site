@@ -91,7 +91,7 @@ snazzy ordered lists
 */
 
 
-.about-ol{
+.about-ol {
     counter-reset: li;
     list-style: none;
     *list-style: decimal; /* use default numbering for IE6/7 */
@@ -177,4 +177,65 @@ custom styles
     display: block;
     color: @80_gray;
     line-height: 1.4;
+}
+
+
+/*
+Smaller Screen Styles
+======================
+*/
+
+@media only screen and ( max-width: 780px ) {
+
+    /* 
+    hidden 
+    ----------------- */
+    .responsive-img {
+        display: none;
+    }
+
+    /* Spacing
+    ----------------- */
+    .title-hero {
+        margin-bottom: 0;
+    }
+
+    .easy-nav {
+        margin-bottom: 2em;
+    }
+
+    .learn-more {
+        margin-top: -1em;
+    }
+
+    .about-ol {
+        margin-left: 1em;
+    }
+
+    .about-timeline {
+        padding-left: 1em;
+    }
+
+    /* styles
+    ------------------- */
+    .about-section {
+        border-bottom: 0px;
+    }
+
+}
+
+/*
+Smallest Screen Styles
+======================
+*/
+
+@media only screen and ( max-width: 460px ) {
+
+    .title-hero {
+        h2 {
+            font-size: 26px;
+            padding: 12px 0;
+        }
+    }
+
 }
