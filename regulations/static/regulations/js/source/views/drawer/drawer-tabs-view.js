@@ -32,7 +32,6 @@ define(['jquery', 'underscore', 'backbone', 'drawer-events', 'ga-events'], funct
 
             // set initial drawer state
             this.drawerState = (this.$toggleArrow.hasClass('open')) ? 'open' : 'closed';
-
         },
 
         setStartingTab: function(tab) {
