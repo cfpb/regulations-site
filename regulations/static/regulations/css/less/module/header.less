@@ -4,11 +4,8 @@
 
 .reg-header {
     width: 100%;
-    position: fixed;
-    top: 0;
     color: @dark_field;
     .avenir-next;
-    z-index: 200;
 
     ul {
         padding: 0;
@@ -24,9 +21,11 @@
 .main-head {
     .border-bottom-dark(@width: 3px);
     background: #fff;
+    position: fixed;
+    top: 0;
+    width: 100%;
     z-index: 1000;
     height: 3.75em;
-    //overflow: hidden;
 }
 
 .title {
@@ -95,13 +94,15 @@
 }
 
 .sub-head {
+    position: fixed;
+    top: 60px;
+    min-width: 100%;
     background: @grey;
     color: @black;
     line-height: 33px;
     height: 2.125em;
     .border-bottom-medium(@width: 1px);
     z-index: 200;
-    overflow: hidden;
     .main {
         border-right: 1px solid @medium_gray;
     }
