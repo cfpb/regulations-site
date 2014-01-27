@@ -1,7 +1,7 @@
 regulations-site
 ================
 
-[![Build Status](https://travis-ci.org/eregs/regulations-core.png)](https://travis-ci.org/eregs/regulations-core)
+[![Build Status](https://travis-ci.org/eregs/regulations-site.png?branch=master)](https://travis-ci.org/eregs/regulations-site)
 
 An interface for viewing regulations data.
 
