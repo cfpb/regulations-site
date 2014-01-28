@@ -101,7 +101,7 @@
     min-width: 100%;
     background: @grey;
     color: @black;
-    line-height: 33px;
+    line-height: 34px;
     height: 2.125em;
     .border-bottom-medium(@width: 1px);
     z-index: 200;
@@ -115,16 +115,19 @@
 
     li {
         height: 2.125em;
-        line-height: 2.125em;
+        line-height: 34px;
     }
 
     .subpart {
         .avenir-next-demi;
         color: @dark_gray;
+        display: inline;
     }
     .with-subpart:before {
-        content: " |";
+        content: "|";
         .avenir-next;
+        color: @dark_gray;
+        display: inline-block;
         margin: 0 10px;
     }
 }
@@ -135,6 +138,7 @@
     .avenir-next-demi;
     font-size: 1em;
     letter-spacing: 1px;
+    display: inline;
 }
 
 .header-label.with-subpart {
@@ -215,8 +219,7 @@ BIG SCREENS
 
         .logo {
             display: inline;
-            margin-top: 13px;
-            margin-left: 15px;
+            margin: 13px 10px 0 15px;
         }
     }
 
