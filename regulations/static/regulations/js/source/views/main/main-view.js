@@ -26,6 +26,10 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             this.regVersion = this.$topSection.data('base-version');
             // what section do we have open?
             this.sectionId = this.$topSection.attr('id');
+            if (typeof this.sectionId === 'undefined') {
+                //  Find the first child which *does* have a label
+                this.sectionId = this.$topSection.find('section[id]').attr('id');
+            }
             this.regPart = $('#menu').data('reg-id');
             this.cfrTitle = $('#menu').data('cfr-title-number');
 
