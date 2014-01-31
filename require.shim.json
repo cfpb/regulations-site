@@ -17,5 +17,8 @@
         },
         "jquery-scrollstop": {
             "deps": ["jquery"]
+        },
+        "unveil": {
+            "deps": ["jquery"]
         }
 }

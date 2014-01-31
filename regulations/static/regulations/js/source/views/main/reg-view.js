@@ -1,4 +1,4 @@
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-events', 'header-events', 'sidebar-events', './regs-helpers', 'drawer-events', 'child-view', 'ga-events'], function($, _, Backbone, jQScroll, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents, Helpers, DrawerEvents, ChildView, GAEvents) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'unveil', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-events', 'header-events', 'sidebar-events', './regs-helpers', 'drawer-events', 'child-view', 'ga-events'], function($, _, Backbone, jQScroll, jQUnveil, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents, Helpers, DrawerEvents, ChildView, GAEvents) {
     'use strict';
 
     var RegView = ChildView.extend({
@@ -42,6 +42,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             }
 
             ChildView.prototype.initialize.apply(this, arguments);
+
+            this.loadImages();
         },
 
         // only concerned with resetting DOM, no matter
@@ -154,6 +156,8 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
             ChildView.prototype.render.apply(this, arguments);
 
             this.checkDefinitionScope();
+
+            this.loadImages();
         },
 
         // content section key term link click handler
@@ -271,6 +275,11 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'de
         // when breakaway view unloads
         showContent: function() {
             this.$el.fadeIn();
+        },
+
+        // lazy load images as the user scrolls
+        loadImages: function() {
+            $('.reg-image').unveil();
         }
     });
 
