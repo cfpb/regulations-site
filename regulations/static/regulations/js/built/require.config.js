@@ -6,6 +6,7 @@ var require = { "paths" :
         "samplejson": "../tests/grunt/js/fixtures/sample-json",
         "jquery-scrollstop": "./lib/jquery.scrollstop/index",
         "queryparams": "./lib/backbone.queryparams/index",
+        "unveil": "./lib/unveil/jquery.unveil",
         "definition-view": "./views/sidebar/definition-view",
         "sub-head-view": "./views/header/sub-head-view",
         "sidebar-module-view": "./views/sidebar/sidebar-module-view",
@@ -64,6 +65,9 @@ var require = { "paths" :
             "exports": "Konami"
         },
         "jquery-scrollstop": {
+            "deps": ["jquery"]
+        },
+        "unveil": {
             "deps": ["jquery"]
         }
 }

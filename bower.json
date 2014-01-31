@@ -10,6 +10,7 @@
     "underscore": "1.4.4",
     "requirejs": "2.1.6",
     "jquery.scrollstop": "https://raw.github.com/ssorallen/jquery-scrollstop/v1.0.1/jquery.scrollstop.js",
-    "konami": "https://raw.github.com/snaptortoise/konami-js/ece43a541bbd455ac7811732cb833ffad10ef386/konami.js"
+    "konami": "https://raw.github.com/snaptortoise/konami-js/ece43a541bbd455ac7811732cb833ffad10ef386/konami.js",
+    "unveil": "~1.3.0"
   }
 }
