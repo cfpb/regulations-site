@@ -1,4 +1,9 @@
+{% load static from staticfiles %}
+
 {% comment %}
     Model form images
 {% endcomment %}
-<a href="{{ url }}"><img class="reg-image" alt="{{ alt }}" src="{{ url }}" /></a>
+<a href="{{ url }}">
+    <img class="reg-image" alt="{{ alt }}" src="{%static "regulations/img/bg.gif" %}" data-src="{{ url }}"/>
+    <noscript><img class="reg-image" alt="{{ alt }}" src="{{ url }}" /></noscript>
+</a>
