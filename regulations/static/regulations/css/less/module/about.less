@@ -52,8 +52,9 @@ layout
 
 
 .about-section {
+    padding: 4em 0;
     .inner-wrap {
-        padding: 2em 1em;
+        padding: 0 1em;
     }
 }
 
@@ -154,8 +155,10 @@ custom styles
     line-height: 40px; // needs to be adjusted to center the icon
 }
 
-.about-screenshot {
-    margin-bottom: -38px;
+@media only screen and ( min-width: 780px ) {
+    .about-screenshot {
+        margin-bottom: -70px; /*align with border on larger screens */
+    }
 }
 
 .about-timeline {
@@ -191,6 +194,14 @@ Smaller Screen Styles
 */
 
 @media only screen and ( max-width: 780px ) {
+
+    /* 
+    less section padding 
+    -------------------- */
+    .about-section {
+        padding: 2em 0;
+    }
+
 
     /* 
     hidden 
