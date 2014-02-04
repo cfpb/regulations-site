@@ -16,6 +16,15 @@
     h3 {
         margin: 0 0 30px 0;
     }
+
+    // offset persistent header
+    .inner-wrap:before {
+        display: block; 
+        content: ""; 
+        height: 60px; 
+        margin-top: -60px; 
+        visibility: hidden;
+    }
 }
 
 /*
@@ -59,15 +68,6 @@ layout
 
 .easy-read {
     margin-top: 4em;
-}
-
-// offset persistent header
-.inner-wrap:before {
-    display: block; 
-    content: ""; 
-    height: 60px; 
-    margin-top: -60px; 
-    visibility: hidden;
 }
 
 /*
