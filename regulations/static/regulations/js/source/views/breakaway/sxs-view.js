@@ -18,6 +18,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
             // called after ajax resolves sucessfully
             render = function(returned) {
                 this.render(returned);
+                this.$el.addClass('open-sxs');
             }.bind(this);
 
             SxSModel.get(this.options.url, render),
@@ -33,7 +34,6 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
 
         render: function(analysis) {
             this.$el.html(analysis);
-            this.$el.addClass('open-sxs');
         },
 
         footnoteHighlight: function(e) {
