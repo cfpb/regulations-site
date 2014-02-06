@@ -45,7 +45,7 @@ class NodeTypesTest(TestCase):
         self.assertEqual(u'§ 2323.1',
                          label_to_text(['2323', '1'], True, True))
         self.assertEqual(u'§ 1', label_to_text(['2323', '1'], False, True))
-        self.assertEqual('Appendix A', label_to_text(['2323', 'A']))
+        self.assertEqual('Appendix A to Part 2323', label_to_text(['2323', 'A']))
         self.assertEqual('Appendix A-4', label_to_text(['2323', 'A', '4']))
         self.assertEqual('Appendix A-4(b)(2)',
                          label_to_text(['2323', 'A', '4', 'b', '2']))
@@ -53,7 +53,7 @@ class NodeTypesTest(TestCase):
                          label_to_text(['2323', '5', 'Interp']))
         self.assertEqual('Comment for 2323.7(b)-1.v',
                          label_to_text(['2323', '7', 'b', 'Interp', '1', 'v']))
-        self.assertEqual('Comment for Appendix Z',
+        self.assertEqual('Comment for Appendix Z to Part 2323',
                          label_to_text(['2323', 'Z', 'Interp']))
         self.assertEqual('Regulation 204', label_to_text(['204']))
         self.assertEqual('Supplement I to Part 204',
