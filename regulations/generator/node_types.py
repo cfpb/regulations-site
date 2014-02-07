@@ -81,7 +81,7 @@ def _l2t_appendix(label):
     if label[1].isalpha():
         # Appendix
         if len(label) == 2:  # e.g. 225-B
-            return 'Appendix ' + label[1]
+            return 'Appendix ' + label[1] + ' to Part ' + label[0]
         elif len(label) == 3:  # e.g. 225-B-3
             return 'Appendix %s-%s' % tuple(label[1:])
         else:  # e.g. 225-B-3-a-4-i
