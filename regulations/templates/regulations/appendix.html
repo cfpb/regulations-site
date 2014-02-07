@@ -11,24 +11,39 @@
             {% endwith %}
          {%endif%}
 
-            {% if c.marked_up %}
+{{ c.marked_up|safe|linebreaksbr }}
+
+    {% if c.children %}
+        {% for level_one in c.children %}
+            <section id="{{level_one.markup_id}}" class="appendix-section">
+            <h3 class="appendix-heading{% if not level_one.text and not level_one.children %} empty-header{% endif %}" tabindex="0"> {{level_one.header|safe}} </h3>
+
+            {% if level_one.marked_up %}
             <p> 
-                {{c.marked_up|safe|linebreaksbr}} 
+                {{level_one.marked_up|safe|linebreaksbr}} 
             </p>
             {% endif %}
 
-            {% if c.children %}
+            {% if level_one.children %}
                 <ol class="level-{{level_one.children.0.list_level}}" type="{{level_one.children.0.list_type}}">
-                {% for node in c.children  %}
+                {% for node in level_one.children  %}
                     {% include "regulations/tree-with-wrapper.html" %}
                 {% endfor %}
                 </ol>
             {% endif %}
 
-            {% if c.interp %}
-                {% with interp=c.interp %}
+            {% if level_one.interp %}
+                {% with interp=level_one.interp %}
                     {% include "regulations/slide-down-interp.html" %}
                 {% endwith %}
             {% endif %}
             </section>
+        {% endfor %}
+    {% endif %}
+
+    {% if c.interp %}
+        {% with interp=c.interp %}
+            {% include "regulations/slide-down-interp.html" %}
+        {% endwith %}
+    {% endif %}
 {% endif %}
