@@ -4,6 +4,7 @@
     Model form images
 {% endcomment %}
 <a href="{{ url }}">
-    <img class="reg-image" alt="{{ alt }}" src="{%static "regulations/img/bg.gif" %}" data-src="{{ url }}"/>
+    {{ thumb_url }}
+    <img class="reg-image" alt="{{ alt }}" src="{%static "regulations/img/bg.gif" %}" data-src="{% if thumb_url %}{{ thumb_url }}{% else %}{{ url }}{% endif %}"/>
     <noscript><img class="reg-image" alt="{{ alt }}" src="{{ url }}" /></noscript>
 </a>
