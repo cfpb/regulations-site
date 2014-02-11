@@ -19,6 +19,10 @@ class GraphicsLayer(object):
                     'url': graphic_info['url'],
                     'alt': graphic_info['alt']
                 }
+
+                if 'thumb_url' in graphic_info:
+                    context['thumb_url'] = graphic_info['thumb_url']
+
                 replacement = utils.render_template(self.template, context)
                 layer_pairs.append((
                     graphic_info['text'], replacement,
