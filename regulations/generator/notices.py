@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.template import loader, Context
 
 from regulations.generator.layers.utils import convert_to_python
