@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
 from regulations.views.about import about
 from regulations.views.chrome_breakaway import ChromeSXSView
