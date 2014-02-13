@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.template import loader, Context
 
 from regulations.generator.layers.utils import convert_to_python
@@ -67,11 +66,9 @@ def find_label_in_sxs(sxs_list, label_id):
     label_id. """
 
     for s in sxs_list:
-        if 'label' in s:
-            if s['label'] == label_id:
-                if non_empty_sxs(s):
-                    return s
-            elif s['children']:
-                sxs = find_label_in_sxs(s['children'], label_id)
-                if sxs and non_empty_sxs(sxs):
-                    return sxs
+        if s.get('label') == label_id and non_empty_sxs(s):
+            return s
+        elif s['children']:
+            sxs = find_label_in_sxs(s['children'], label_id)
+            if sxs and non_empty_sxs(sxs):
+                return sxs
