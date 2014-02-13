@@ -1,6 +1,7 @@
 from unittest import TestCase
 from django.core.urlresolvers import reverse, resolve
 
+
 class UrlTests(TestCase):
     def test_about(self):
         r = reverse('regulations.views.about.about')
