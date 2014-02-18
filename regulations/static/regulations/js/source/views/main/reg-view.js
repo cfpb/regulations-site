@@ -38,6 +38,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'un
             if (Router.hasPushState) {
                 this.events['click .inline-interpretation .section-link'] = 'openInterp';
                 this.events['click .citation.internal'] = 'openSection';
+                this.events['click .section-nav .navigation-link'] = 'openSection';
                 this.delegateEvents();
             }
 
@@ -60,7 +61,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'un
 
         openSection: function(e) {
             var $e = $(e.target),
-                id = $e.attr('data-section-id'),
+                id = $e.attr('data-section-id') || $e.attr('data-linked-section'),
                 href = $e.attr('href'),
                 config = {},
                 hashIndex = href.indexOf('#');

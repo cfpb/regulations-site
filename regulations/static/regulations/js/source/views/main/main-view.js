@@ -1,10 +1,11 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-events', 'section-footer-view', 'main-events', 'sidebar-events', './regs-router', 'drawer-view', 'diff-model', 'diff-view'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router, Drawer, DiffModel, DiffView) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-events', 'section-footer-view', 'main-events', 'sidebar-events', './regs-router', 'drawer-view', 'diff-model', 'diff-view', 'header-events'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router, Drawer, DiffModel, DiffView, HeaderEvents) {
     'use strict';
 
     var MainView = Backbone.View.extend({
         el: '#content-body',
 
         initialize: function() {
+            this.render = _.bind(this.render, this);
             this.render = _.bind(this.render, this);
             this.externalEvents = MainEvents;
 
@@ -14,6 +15,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
                 this.externalEvents.on('section:remove', this.sectionCleanup, this);
                 this.externalEvents.on('diff:open', this.createView, this);
                 this.externalEvents.on('breakaway:open', this.breakawayOpen, this);
+                this.externalEvents.on('section:error', this.displayError, this);
             }
 
             var childViewOptions = {},
@@ -158,6 +160,21 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         breakawayOpen: function(cb) {
             this.breakawayCallback = cb;
+        },
+
+        displayError: function() {
+            // get ID of still rendered last section
+            var oldId = this.$el.find('section[data-page-type]').attr('id'),
+                $error = this.$el.prepend('<div class="error"><span class="minicon-warning"></span>Due to a network error, we were unable to retrieve the requested information.</div>'); 
+
+            DrawerEvents.trigger('section:open', oldId);
+            HeaderEvents.trigger('section:open', oldId);
+
+            this.loaded();
+            SidebarEvents.trigger('section:error');
+
+            window.scrollTo($error.offset().top, 0);
+
         },
 
         render: function(html, options) {

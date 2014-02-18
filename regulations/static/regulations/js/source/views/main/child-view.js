@@ -2,47 +2,48 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
     'use strict';
     var ChildView = Backbone.View.extend({
         initialize: function() {
-            var returned, render;
+            var cb;
 
             this.model = this.options.model;
             this.externalEvents = MainEvents;
             this.externalEvents.on('section:rendered', this.setElement, this);
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
-            render = function(returned) {
-                if (typeof this.options.cb !== 'undefined') {
-                    this.options.cb(returned, this.options);
-                }
+            cb = function(success, returned) {
+                if (success) {
+                    if (typeof this.options.cb !== 'undefined') {
+                        this.options.cb(returned, this.options);
+                    }
 
-                this.render();
+                    if (typeof this.title === 'undefined') {
+                        this.title = this.assembleTitle();
+                    }
+
+                    this.route(this.options);
+
+                    GAEvents.trigger('section:open', this.options);
+
+                    this.attachWayfinding();
+                    this.render();
+                }
+                else {
+                    this.externalEvents.trigger('section:error');
+                }
             }.bind(this);
 
             // if the site wasn't loaded on this content
             if (this.options.render) {
-                // simplifies to
-                // this.model.get()
-                returned = this.model.get(this.options.id, render);
-
-                if (typeof this.title === 'undefined') {
-                    this.title = this.assembleTitle();
-                }
-
-                this.route(this.options);
-
-                GAEvents.trigger('section:open', this.options);
+                this.model.get(this.options.id, cb);
             }
-
-            this.$sections = {};
-            this.activeSection = this.id;
-            this.$activeSection = $('#' + this.activeSection);
-
-            HeaderEvents.trigger('clear');
-
-            if (this.id) {
+            else if (this.options.id) {
                 this.attachWayfinding();
 
                 DrawerEvents.trigger('section:open', this.id);
             }
+
+            this.$sections = this.$sections || {};
+            this.activeSection = this.id;
+            this.$activeSection = $('#' + this.activeSection);
 
             return this;
         },
@@ -59,7 +60,6 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
             // we can't scope the scroll to this.$el because there's no localized
             // way to grab the scroll event, even with overflow:scroll
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
-
         },
 
         render: function() {
