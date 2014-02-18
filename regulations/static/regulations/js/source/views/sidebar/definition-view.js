@@ -58,7 +58,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
             this.$el.html('');
             this.renderHeader();
             this.$el.children().removeClass('spinner');
-            this.$el.append('<div class="definition-error">' + error + '</div>');
+            this.$el.append('<div class="error"><span class="minicon-warning"></span>' + error + '</div>');
         },
 
         close: function(e) {
