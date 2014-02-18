@@ -2,14 +2,14 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
     'use strict';
     var ChildView = Backbone.View.extend({
         initialize: function() {
-            var returned, render;
+            var cb;
 
             this.model = this.options.model;
             this.externalEvents = MainEvents;
             this.externalEvents.on('section:rendered', this.setElement, this);
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
-            render = function(success, returned) {
+            cb = function(success, returned) {
                 if (success) {
                     if (typeof this.options.cb !== 'undefined') {
                         this.options.cb(returned, this.options);
@@ -32,17 +32,15 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
             // if the site wasn't loaded on this content
             if (this.options.render) {
-                this.model.get(this.options.id, render);
+                this.model.get(this.options.id, cb);
             }
-            else {
-                if (this.id) {
-                    this.attachWayfinding();
+            else if (this.options.id) {
+                this.attachWayfinding();
 
-                    DrawerEvents.trigger('section:open', this.id);
-                }
+                DrawerEvents.trigger('section:open', this.id);
             }
 
-            this.$sections = {};
+            this.$sections = this.$sections || {};
             this.activeSection = this.id;
             this.$activeSection = $('#' + this.activeSection);
 
@@ -61,7 +59,6 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
             // we can't scope the scroll to this.$el because there's no localized
             // way to grab the scroll event, even with overflow:scroll
             $(window).on('scrollstop', (_.bind(this.checkActiveSection, this)));
-
         },
 
         render: function() {
