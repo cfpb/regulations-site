@@ -27,8 +27,16 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
 
         openDefinition: function(config) {
             var createDefView = function(cb, success, res) {
+                var errorMsg;
+
                 if (success) {
                     this.childViews.definition.render(res);
+                }
+                else {
+                    errorMsg = 'We tried to load that definition, but something went wrong. ';
+                    errorMsg += '<a href="#" class="update-definition inactive internal" data-definition="' + this.childViews.definition.id + '">Try again?</a>';
+
+                    this.childViews.definition.renderError(errorMsg);
                 }
             }.bind(this);
 
