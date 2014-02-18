@@ -23,6 +23,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
                     GAEvents.trigger('section:open', this.options);
 
+                    this.attachWayfinding();
                     this.render();
                 }
                 else {
