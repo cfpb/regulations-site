@@ -9,40 +9,42 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
             this.externalEvents.on('section:rendered', this.setElement, this);
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
-            render = function(returned) {
-                if (typeof this.options.cb !== 'undefined') {
-                    this.options.cb(returned, this.options);
-                }
+            render = function(success, returned) {
+                if (success) {
+                    if (typeof this.options.cb !== 'undefined') {
+                        this.options.cb(returned, this.options);
+                    }
 
-                this.render();
+                    if (typeof this.title === 'undefined') {
+                        this.title = this.assembleTitle();
+                    }
+
+                    this.route(this.options);
+
+                    GAEvents.trigger('section:open', this.options);
+
+                    this.render();
+                }
+                else {
+                    this.externalEvents.trigger('section:error');
+                }
             }.bind(this);
 
             // if the site wasn't loaded on this content
             if (this.options.render) {
-                // simplifies to
-                // this.model.get()
-                returned = this.model.get(this.options.id, render);
+                this.model.get(this.options.id, render);
+            }
+            else {
+                if (this.id) {
+                    this.attachWayfinding();
 
-                if (typeof this.title === 'undefined') {
-                    this.title = this.assembleTitle();
+                    DrawerEvents.trigger('section:open', this.id);
                 }
-
-                this.route(this.options);
-
-                GAEvents.trigger('section:open', this.options);
             }
 
             this.$sections = {};
             this.activeSection = this.id;
             this.$activeSection = $('#' + this.activeSection);
-
-            HeaderEvents.trigger('clear');
-
-            if (this.id) {
-                this.attachWayfinding();
-
-                DrawerEvents.trigger('section:open', this.id);
-            }
 
             return this;
         },
