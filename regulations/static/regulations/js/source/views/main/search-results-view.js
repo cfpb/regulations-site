@@ -9,7 +9,9 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
 
         initialize: function() {
             this.query = this.options.query;
-            this.regVersion = this.options.regVersion;
+            // the TOC may link to a different reg version than this.options.resultsRegVersion
+            // because the user can select a different version to pull search results from
+            this.resultsRegVersion = this.options.regVersion;
             this.page = parseInt(this.options.page, 10) || 0;
             this.title = 'Search of ' + this.options.regPart + ' for ' + this.query + ' | eRegulations';
 
@@ -69,7 +71,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
             var page = $(e.target).hasClass('previous') ? this.page - 1 : this.page + 1,
                 config = {
                     query: this.query,
-                    regVersion: this.regVersion,
+                    regVersion: this.resultsRegVersion,
                     page: page
                 };
 
@@ -77,13 +79,18 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
         },
 
         openResult: function(e) {
-            e.preventDefault();
-            var $resultLink = $(e.target),
-                config = {};
+            // TOC version retains the version the reg was loaded on whereas the content base section
+            // changes to match the search results
+            // page should reload if the TOC version doesn't match the searched version
+            if (this.resultsRegVersion === $('nav#toc').attr('data-toc-version')) {
+                e.preventDefault();
+                var $resultLink = $(e.target),
+                    config = {};
 
-            config.regVersion = $resultLink.data('linked-version');
-            config.scrollToId = $resultLink.data('linked-subsection');
-            MainEvents.trigger('section:open', $resultLink.data('linked-section'), config, 'reg-section');
+                config.regVersion = $resultLink.data('linked-version');
+                config.scrollToId = $resultLink.data('linked-subsection');
+                MainEvents.trigger('section:open', $resultLink.data('linked-section'), config, 'reg-section');
+            }
         }
     });
 
