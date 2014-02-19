@@ -120,7 +120,7 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
             url += id;
 
             if (id.indexOf('/') === -1) {
-                url += '/' + $('#timeline li.current').data('base-version'); 
+                url += '/' + $('nav#toc').attr('data-toc-version'); 
             }
 
             return url;

@@ -64,7 +64,11 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'un
                 id = $e.attr('data-section-id') || $e.attr('data-linked-section'),
                 href = $e.attr('href'),
                 config = {},
+                hashIndex;
+
+            if (typeof href !== 'undefined') {
                 hashIndex = href.indexOf('#');
+            }
 
             if (id.length > 0) {
                 e.preventDefault();
