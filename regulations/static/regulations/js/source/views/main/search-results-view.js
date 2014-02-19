@@ -81,6 +81,7 @@ define('search-results-view', ['jquery', 'underscore', 'backbone', './search-mod
         openResult: function(e) {
             // TOC version retains the version the reg was loaded on whereas the content base section
             // changes to match the search results
+            // page should reload if the TOC version doesn't match the searched version
             if (this.resultsRegVersion === $('nav#toc').attr('data-toc-version')) {
                 e.preventDefault();
                 var $resultLink = $(e.target),
