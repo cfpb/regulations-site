@@ -4,7 +4,7 @@ define('diff-view', ['jquery', 'underscore', 'backbone', 'main-events', './regs-
         initialize: function() {
             this.id = this.options.id;
             this.baseVersion = this.options.baseVersion;
-            this.newerVersion = this.options.newerVersion;
+            this.newerVersion = this.options.newerVersion || Helpers.findDiffVersion(this.baseVersion);
             this.fromVersion = this.options.fromVersion || this.newerVersion;
             // we preserve the section id as is in config obj because
             this.options.sectionId = this.id;

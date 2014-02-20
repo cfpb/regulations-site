@@ -214,6 +214,40 @@ define('regs-helpers', function() {
             return parts[0] + '-' + parts[1];
         },
 
+        // these next two are a little desperate and heavy handed
+        // the next step, if the app were going to do more
+        // interesting things, is to introduce the concept of reg
+        // version and/or effective dates to the architecture
+        // at that time, this should be removed
+        findVersion: function() {
+            var version;
+
+            version = $('nav#toc').attr('data-toc-version') ||
+                      $('section[data-base-version]').attr('data-base-version');
+
+            // includes .stop-button to be sure its not the comparison
+            // version in diff mode
+            if (!version) {
+                version = $('#timeline li.current').find('.stop-button').attr('data-version');
+            }
+
+            return version;
+        },
+
+        findDiffVersion: function(currentVersion) {
+            var version;
+
+            version = $("#table-of-contents").attr('data-from-version');
+
+            if (!version) {
+                version = $('#timeline li.current').filter(function(i) {
+                    return $(this).find('.version-link').attr('data-version') !== currentVersion;
+                });
+            }
+
+            return version;
+        },
+
         isSupplement: function(id) {
             var parts;
 

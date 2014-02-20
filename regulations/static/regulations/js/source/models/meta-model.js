@@ -1,4 +1,4 @@
-define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
+define('meta-model', ['underscore', 'backbone', './regs-helpers'], function(_, Backbone, Helpers) {
     'use strict';
     var MetaModel = Backbone.Model.extend({
 
@@ -120,7 +120,7 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
             url += id;
 
             if (id.indexOf('/') === -1) {
-                url += '/' + $('nav#toc').attr('data-toc-version'); 
+                url += '/' + Helpers.findVersion(); 
             }
 
             return url;
