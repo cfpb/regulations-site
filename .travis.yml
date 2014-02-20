@@ -8,7 +8,7 @@ env:
         - secure: gawGht7PKM+MNKYqPROAn4LC1VDSM9UAXXAIhZtK1/CzA3g4wanikuMdXuoqJhAODaa8dmOE57LRm+Ow79qW9ATY5PnvOp7pxnMZWlOatJtxFo3tGZgMsj5KPlptdPfxl1NTXbPPgFgwQycy1EG+FkZ7U0Z5RM7mvldVeCZc9pI=
 before_script:
     - if [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then SAUCE_OK=1; else SAUCE_OK=0; fi 
-    - function START_SAUCE_CONNECT { curl https://gist.githubusercontent.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash & }
+    - function START_SAUCE_CONNECT { curl -L https://gist.githubusercontent.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash & }
     - if [ "$SAUCE_OK" == 1 ]; then START_SAUCE_CONNECT; fi;
 install:
     - pip install zc.buildout distribute selenium
