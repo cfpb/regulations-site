@@ -19,20 +19,32 @@
     </div>
 
     <div class="definition-text">
-        {% if node.marked_up %}
+        {% if node.children %}
+            <p>
+                This definition is best viewed in its original location.
+            </p>
+        {% elif node.marked_up %}
             <p>
                 {{node.marked_up|safe}}
             </p>
+        {% endif  %}
 
-            <a href="{% url 'chrome_section_view' node.section_id version %}#{{node.label_id}}" class="continue-link full-def internal" data-linked-section="{{node.label_id}}">{{formatted_label}}</a>
-        {% endif %}
+        <a  href="{% url 'chrome_section_view' node.section_id version %}#{{node.label_id}}"
+            class="continue-link full-def internal"
+            data-linked-section="{{node.label_id}}">{{formatted_label}}</a>
 
-        {% if node.interp %}
-            {% with interp=node.interp.interps.0 %}
-            <a href="{% url 'chrome_subterp_view' interp.section_id version %}#{{ interp.label_id }}" data-linked-subsection="{{ interp.label_id }}" data-linked-section="{{ interp.section_id }}" class="internal interp continue-link">Official Interpretation</a>
-            {% endwith %}
+        {% if not node.children %}
+            {% if node.interp %}
+                {% with interp=node.interp.interps.0 %}
+                <a  href="{% url 'chrome_subterp_view' interp.section_id version %}#{{ interp.label_id }}"
+                    data-linked-subsection="{{ interp.label_id }}"
+                    data-linked-section="{{ interp.section_id }}"
+                    class="internal interp continue-link">Official Interpretation</a>
+                {% endwith %}
+            {% endif %}
         {% endif %}
 
         <a class="close-button tab-activated" href="#">Close definition</a>
     </div>
+
 </div>
