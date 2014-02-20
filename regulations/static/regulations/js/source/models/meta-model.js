@@ -67,21 +67,14 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
             // callback once the promise resolves
             resolve = function(response) {
                 if (typeof callback !== 'undefined') {
-                    callback(response);
+                    callback(true, response);
                 }
             };
 
             $promise.done(resolve);
 
             $promise.fail(function() {
-                var alertNode = document.createElement('div');
-
-                alertNode.innerHTML = 'There was an issue loading your data. This may be because your device is currently offline. Please try again.';
-                alertNode.className = 'alert';
-
-                $(alertNode).insertBefore('h2.section-number');
-
-                callback.apply(false);
+                callback(false);
             });
 
             return this;
@@ -127,7 +120,7 @@ define('meta-model', ['underscore', 'backbone'], function(_, Backbone) {
             url += id;
 
             if (id.indexOf('/') === -1) {
-                url += '/' + $('#timeline li.current').data('base-version'); 
+                url += '/' + $('nav#toc').attr('data-toc-version'); 
             }
 
             return url;

@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
 from regulations.views.about import about
 from regulations.views.chrome_breakaway import ChromeSXSView
@@ -20,14 +20,15 @@ from regulations.views.sidebar import SideBarView
 from regulations.views.universal_landing import universal
 
 #Re-usable URL patterns.
-version_pattern = r'(?P<version>[-\d\w]+)'
-newer_version_pattern = r'(?P<newer_version>[-\d\w]+)'
+meta_version = r'(?P<%s>[-\d\w_]+)'
+version_pattern = meta_version % 'version'
+newer_version_pattern = meta_version % 'newer_version'
+notice_pattern = meta_version % 'notice_id'
 
 reg_pattern = r'(?P<label_id>[\d]+)'
 section_pattern = r'(?P<label_id>[\d]+[-][\w]+)'
 interp_pattern = r'(?P<label_id>[-\d\w]+[-]Interp)'
 paragraph_pattern = r'(?P<label_id>[-\d\w]+)'
-notice_pattern = r'(?P<notice_id>[\d]+[-][\d]+)'
 subterp_pattern = r'(?P<label_id>[\d]+-(Appendices|Subpart(-[A-Z]+)?)-Interp)'
 
 

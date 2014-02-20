@@ -1,5 +1,4 @@
 from unittest import TestCase
-from datetime import datetime
 
 from mock import Mock, patch
 
@@ -90,6 +89,16 @@ class NoticesTest(TestCase):
         s = notices.find_label_in_sxs(sxs_list, '204-2-a')
         self.assertEqual('204-2-a', s['label'])
         self.assertEqual(['abc'], s['paragraphs'])
+
+        s = notices.find_label_in_sxs(sxs_list, '204-3')
+        self.assertEqual('204-3', s['label'])
+        self.assertEqual(['x'], s['paragraphs'])
+
+    def test_find_label_in_sxs_top_no_label(self):
+        sxs_list = [
+            {'title': 'Awesome, SXS title here', 'children': [
+                {'label': '204-3', 'children': [], 'paragraphs': ['x']}],
+                'paragraphs': ['abc']}]
 
         s = notices.find_label_in_sxs(sxs_list, '204-3')
         self.assertEqual('204-3', s['label'])
