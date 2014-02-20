@@ -10,6 +10,7 @@ class FormattingLayer(object):
     def __init__(self, layer_data):
         self.layer_data = layer_data
         self.table_tpl = loader.get_template('regulations/layers/table.html')
+        self.note_tpl = loader.get_template('regulations/layers/note.html')
 
     def render_table(self, table):
         max_width = 0
@@ -29,6 +30,13 @@ class FormattingLayer(object):
         #   Remove new lines so that they don't get escaped on display
         return self.table_tpl.render(context).replace('\n', '')
 
+    def render_note(self, fence_data):
+        lines = fence_data.get('lines', [])
+        lines = [l for l in lines
+                 if l.replace('Note:', '').replace('Notes:', '').strip()]
+        context = Context({'lines': lines})
+        return self.note_tpl.render(context).replace('\n', '')
+
     def apply_layer(self, text_index):
         """Convert all plaintext tables into html tables"""
         layer_pairs = []
@@ -38,4 +46,9 @@ class FormattingLayer(object):
                     layer_pairs.append((data['text'],
                                         self.render_table(data['table_data']),
                                         data['locations']))
+                if data.get('fence_data', {}).get('type') == 'note':
+                    layer_pairs.append((data['text'],
+                                        self.render_note(data['fence_data']),
+                                        data['locations']))
+
         return layer_pairs
