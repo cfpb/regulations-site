@@ -16,8 +16,14 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
 
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
-            render = function(returned) {
-                this.render(returned);
+            render = function(success, returned) {
+                if (success) {
+                    this.render(returned);
+                }
+                else {
+                    this.render('<div class="error"><span class="minicon-warning"></span>Due to a network error, we were unable to retrieve the requested information.</div>'); 
+                }
+
                 this.$el.addClass('open-sxs');
             }.bind(this);
 
