@@ -1,0 +1,11 @@
+{% comment %}
+    "Notes" found in appendices
+{% endcomment %}
+<div class="appendix-note">
+    <span>Note{{ lines|pluralize }}:</span>
+    <ol>
+        {% for line in lines %}
+        <li>{{ line }}</li>
+        {% endfor %}
+    </ol>
+</div>
