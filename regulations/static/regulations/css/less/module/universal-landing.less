@@ -133,8 +133,10 @@
         font-size: 0.875em;
         margin-left: 100px;
         .border-top-light;
-        margin-bottom: 0.5em;
+        margin-bottom: 0.875em;
         padding-top: 0.5em;
+        clear: both;
+        overflow: auto;
         
         a {
             display: inline-block;
@@ -144,6 +146,10 @@
             padding: 0;
             height: auto;
             width: auto;
+            
+            &:hover {
+                background-color: inherit;
+            }
         }
     }
 }
