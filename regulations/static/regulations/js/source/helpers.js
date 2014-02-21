@@ -237,10 +237,10 @@ define('regs-helpers', function() {
         findDiffVersion: function(currentVersion) {
             var version;
 
-            version = $("#table-of-contents").attr('data-from-version');
+            version = $('#table-of-contents').attr('data-from-version');
 
             if (!version) {
-                version = $('#timeline li.current').filter(function(i) {
+                version = $('#timeline li.current').filter(function() {
                     return $(this).find('.version-link').attr('data-version') !== currentVersion;
                 });
             }
