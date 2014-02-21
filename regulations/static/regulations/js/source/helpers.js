@@ -217,7 +217,7 @@ define('regs-helpers', function() {
         // these next two are a little desperate and heavy handed
         // the next step, if the app were going to do more
         // interesting things, is to introduce the concept of reg
-        // version and/or effective dates to the architecture
+        // version and maybe effective dates to the architecture
         // at that time, this should be removed
         findVersion: function() {
             var version;
