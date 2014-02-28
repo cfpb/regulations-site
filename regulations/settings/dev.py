@@ -15,6 +15,8 @@ INSTALLED_APPS += (
 )
 
 NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=regulations',
     '--exclude-dir=regulations/uitests'
 ]
 
