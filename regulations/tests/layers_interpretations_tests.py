@@ -107,3 +107,13 @@ class InterpretationsLayerTest(TestCase):
 
         _, result = il.apply_layer('200-2-b')
         self.assertEqual('2(b)', result['for_label'])
+
+    @patch('regulations.generator.layers.interpretations.generator.generator')
+    def test_preprocess_root(self, generator):
+        node = {'text': 'tttt', 'children': [], 'node_type': 'regtext',
+                'label': ['1234', '56', 'a']}
+        il = InterpretationsLayer({})
+        il.preprocess_root(node)
+        self.assertTrue(generator.get_tree_paragraph.called)
+        self.assertEqual(generator.get_tree_paragraph.call_args[0][0],
+                         '1234-56-a-Interp')

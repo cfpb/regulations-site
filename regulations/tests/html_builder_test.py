@@ -234,3 +234,26 @@ class HTMLBuilderTest(TestCase):
         builder.process_node_title(node)
         self.assertTrue('header' in node)
         self.assertEqual(node['title'], 'abcd')
+
+    def test_generate_html(self):
+        exex = Mock(spec=[])        # no attributes
+        p_applier = Mock()
+        p_applier.layers = {'exex': exex}
+        p_applier.apply_layers.side_effect = lambda n: n    # identity
+        builder = HTMLBuilder(None, p_applier, None)
+        builder.tree = {'label': ['1234'], 'children': [],
+                        'node_type': 'regtext', 'text': ''}
+        builder.generate_html()
+        #   No explosion so far means this works for most layers
+
+        exex = Mock()               # "includes" any attribute
+        p_applier = Mock()
+        p_applier.layers = {'exex': exex}
+        p_applier.apply_layers.side_effect = lambda n: n    # identity
+        builder = HTMLBuilder(None, p_applier, None)
+        builder.tree = {'label': ['1234'], 'children': [],
+                        'node_type': 'regtext', 'text': ''}
+        builder.generate_html()
+        self.assertTrue(exex.preprocess_root.called)
+        self.assertEqual(exex.preprocess_root.call_args[0][0],
+                         builder.tree)

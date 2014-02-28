@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 
 #   Don't import PartialInterpView or utils directly; causes an import cycle
-from regulations import views
+from regulations import generator, views
 from regulations.generator.node_types import label_to_text
 from regulations.generator.section_url import SectionUrl
 
@@ -14,6 +14,12 @@ class InterpretationsLayer(object):
         self.layer = layer
         self.version = version
         self.section_url = SectionUrl()
+
+    def preprocess_root(self, root_node):
+        """To prevent a set of calls per interpretation, make a single call
+        for the root interpretation (for the requested section/paragraph)"""
+        generator.generator.get_tree_paragraph(
+            '-'.join(root_node['label'] + ['Interp']), self.version)
 
     def apply_layer(self, text_index):
         """Return a pair of field-name + interpretation if one applies."""
