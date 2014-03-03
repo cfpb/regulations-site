@@ -172,6 +172,5 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
         }
     });
 
-    var sidebar = new SidebarView();
-    return sidebar;
+    return SidebarView;
 });

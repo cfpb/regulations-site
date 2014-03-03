@@ -6,7 +6,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         initialize: function() {
             this.render = _.bind(this.render, this);
-            this.render = _.bind(this.render, this);
             this.externalEvents = MainEvents;
 
             if (Router.hasPushState) {
@@ -220,6 +219,5 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             $('.section-focus').focus();
         }
     });
-    var main = new MainView();
-    return main;
+    return MainView;
 });
