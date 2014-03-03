@@ -1,4 +1,4 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'section-footer-view', 'main-events', 'sidebar-events', './regs-router', 'drawer-view', 'diff-model', 'diff-view', 'header-events'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router, DiffModel, DiffView, HeaderEvents) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-events', 'section-footer-view', 'main-events', 'sidebar-events', './regs-router', 'diff-model', 'diff-view', 'header-events'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router, DiffModel, DiffView, HeaderEvents) {
     'use strict';
 
     var MainView = Backbone.View.extend({
