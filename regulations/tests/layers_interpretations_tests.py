@@ -108,6 +108,23 @@ class InterpretationsLayerTest(TestCase):
         _, result = il.apply_layer('200-2-b')
         self.assertEqual('2(b)', result['for_label'])
 
+    @patch('regulations.generator.layers.interpretations.generator')
+    @patch('regulations.generator.layers.interpretations.SectionUrl')
+    @patch('regulations.generator.layers.interpretations.views')
+    def test_apply_layer_cache(self, views, secturl, generator):
+        il = InterpretationsLayer({
+            '1234-56-a': [{'reference': '1234-56-a-Interp'}]}, version='vvvv')
+        il.root_interp_label = '1234-56-Interp'
+        il.apply_layer('1234-56')
+        self.assertFalse(generator.generator.get_tree_paragraph.called)
+
+        il.apply_layer('1234-56-a')
+        self.assertTrue(generator.generator.get_tree_paragraph.called)
+        args = generator.generator.get_tree_paragraph.call_args[0]
+        # Note that this is grabbing the section's interps
+        self.assertEqual('1234-56-Interp', args[0])
+        self.assertEqual('vvvv', args[1])
+
     @patch('regulations.generator.layers.interpretations.get_cache')
     def test_preprocess_root(self, get_cache):
         node = {'text': 'tttt', 'children': [], 'node_type': 'regtext',
