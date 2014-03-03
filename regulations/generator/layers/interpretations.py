@@ -21,7 +21,7 @@ class InterpretationsLayer(object):
     def preprocess_root(self, root):
         """Store the label for the root node ('s interpretation) for later
         use. We'll try to fetch it when we need a slide-down interp to cache
-        it for future interps. Don't do this is the cache isn't set up or if
+        it for future interps. Don't do this if the cache isn't set up or if
         we are processing an interp (which therefore has no interps)."""
         cache = get_cache('api_cache')
         if (root['node_type'] != 'interp'
