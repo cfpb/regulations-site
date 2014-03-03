@@ -157,8 +157,10 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'api_cache_memory',
         'TIMEOUT': 3600,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        },
     }
-
 }
 
 CACHE_MIDDLEWARE_ALIAS = 'default'

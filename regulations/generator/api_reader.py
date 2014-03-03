@@ -30,15 +30,18 @@ class ApiReader(object):
             ['regversions', label],
             'regulation/%s' % label)
 
-    def add_regulation_tree(self, reg_tree, version):
-        """ Add keys for all labels of the regulation. """
-
+    def cache_root_and_interps(self, reg_tree, version):
+        """We will re-use the root tree at multiple points during page
+        rendering, so cache it now. If caching an interpretation, also store
+        child interpretations (so that, when rendering slide-down
+        interpretations, we don't perform additional fetches)"""
         tree_id = '-'.join(reg_tree['label'])
         cache_key = self.cache.generate_key(['regulation', tree_id, version])
         self.cache.set(cache_key, reg_tree)
 
         for child in reg_tree['children']:
-            self.add_regulation_tree(child, version)
+            if child['label'][-1] == 'Interp':
+                self.cache_root_and_interps(child, version)
 
     def regulation(self, label, version):
         cache_key = self.cache.generate_key(['regulation', label, version])
@@ -50,7 +53,7 @@ class ApiReader(object):
             regulation = self.client.get('regulation/%s/%s' % (label, version))
             #Add the tree to the cache
             if regulation:
-                self.add_regulation_tree(regulation, version)
+                self.cache_root_and_interps(regulation, version)
                 return regulation
 
     def _get(self, cache_key_elements, api_suffix, api_params={}):

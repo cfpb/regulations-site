@@ -106,24 +106,47 @@ class ClientTest(TestCase):
         child = {
             'text': 'child',
             'children': [],
-            'label': ['923', 'a']
+            'label': ['923', 'a', 'Interp']
+        }
+        child2 = {
+            'text': 'child2',
+            'children': [],
+            'label': ['923', 'Interp', '1']
         }
         to_return = {
             'text': 'parent',
-            'label': ['923'],
-            'children': [child]
+            'label': ['923', 'Interp'],
+            'children': [child, child2]
         }
-        api_client.ApiClient.return_value.get.return_value = to_return
+        get = api_client.ApiClient.return_value.get
+        get.return_value = to_return
         reader = ApiReader()
 
-        self.assertEqual(to_return, reader.regulation('923', 'ver'))
-        self.assertEqual(to_return, reader.regulation('923', 'ver'))
-        self.assertEqual(child, reader.regulation('923-a', 'ver'))
-        get = api_client.ApiClient.return_value.get
+        reader.regulation('923-Interp', 'ver')
+        reader.regulation('923-Interp', 'ver')
+        reader.regulation('923-a-Interp', 'ver')
         self.assertEqual(1, get.call_count)
 
+        get.return_value = child2
+        reader.regulation('923-Interp-1', 'ver')
+        self.assertEqual(2, get.call_count)
+
+        child = {
+            'text': 'child',
+            'children': [],
+            'label': ['923', '1', 'a']
+        }
+        to_return = {
+            'text': 'parent',
+            'label': ['923', '1'],
+            'children': [child]
+        }
+        get.reset_mock()
         get.return_value = to_return
-        reader.regulation('923-b', 'ver')
+        reader.regulation('923-1', 'ver')
+        reader.regulation('923-1', 'ver')
+        reader.regulation('923-1-a', 'ver')
+        get = api_client.ApiClient.return_value.get
         self.assertEqual(2, get.call_count)
 
     @patch('regulations.generator.api_reader.api_client')
