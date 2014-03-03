@@ -30,6 +30,9 @@ class HTMLBuilder():
     def generate_html(self):
         if self.diff_applier:
             self.diff_applier.tree_changes(self.tree)
+        for layer in self.p_applier.layers.values():
+            if hasattr(layer, 'preprocess_root'):
+                layer.preprocess_root(self.tree)
         self.process_node(self.tree)
 
     def parse_doc_title(self, reg_title):
