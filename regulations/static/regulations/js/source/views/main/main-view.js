@@ -1,11 +1,10 @@
-define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-events', 'section-footer-view', 'main-events', 'sidebar-events', './regs-router', 'drawer-view', 'diff-model', 'diff-view', 'header-events'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router, Drawer, DiffModel, DiffView, HeaderEvents) {
+define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 'reg-view', 'reg-model', 'search-model', 'sub-head-view', './regs-helpers', 'drawer-events', 'section-footer-view', 'main-events', 'sidebar-events', './regs-router', 'diff-model', 'diff-view', 'header-events'], function($, _, Backbone, SearchResultsView, RegView, RegModel, SearchModel, SubHeadView, Helpers, DrawerEvents, SectionFooter, MainEvents, SidebarEvents, Router, DiffModel, DiffView, HeaderEvents) {
     'use strict';
 
     var MainView = Backbone.View.extend({
         el: '#content-body',
 
         initialize: function() {
-            this.render = _.bind(this.render, this);
             this.render = _.bind(this.render, this);
             this.externalEvents = MainEvents;
 
@@ -220,6 +219,5 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             $('.section-focus').focus();
         }
     });
-    var main = new MainView();
-    return main;
+    return MainView;
 });

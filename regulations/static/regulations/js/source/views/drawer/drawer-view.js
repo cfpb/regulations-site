@@ -46,6 +46,5 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
 
     });
 
-    var drawer = new DrawerView();
-    return drawer;
+    return DrawerView;
 });

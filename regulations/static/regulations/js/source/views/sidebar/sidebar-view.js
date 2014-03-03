@@ -1,4 +1,4 @@
-define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'help-view', './sidebar-model', 'main-view', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model', 'main-events'], function($, _, Backbone, SxSList, HelpView, SidebarModel, Main, Breakaway, SidebarEvents, Definition, MetaModel, MainEvents) {
+define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'help-view', './sidebar-model', 'breakaway-view', 'sidebar-events', 'definition-view', 'meta-model', 'main-events'], function($, _, Backbone, SxSList, HelpView, SidebarModel, Breakaway, SidebarEvents, Definition, MetaModel, MainEvents) {
     'use strict';
     var SidebarView = Backbone.View.extend({
         el: '#sidebar-content',
@@ -172,6 +172,5 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
         }
     });
 
-    var sidebar = new SidebarView();
-    return sidebar;
+    return SidebarView;
 });

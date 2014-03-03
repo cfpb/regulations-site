@@ -36,6 +36,5 @@ define('header-view', ['jquery', 'underscore', 'backbone', 'sub-head-view'], fun
         }
     });
 
-    var header = new HeaderView();
-    return header;
+    return HeaderView;
 });

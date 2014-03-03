@@ -1,4 +1,4 @@
-define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'unveil', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-view', 'main-events', 'header-events', 'sidebar-events', './regs-helpers', 'drawer-events', 'child-view', 'ga-events'], function($, _, Backbone, jQScroll, jQUnveil, DefinitionView, RegModel, SectionFooterView, Router, Main, MainEvents, HeaderEvents, SidebarEvents, Helpers, DrawerEvents, ChildView, GAEvents) {
+define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'unveil', 'definition-view', 'reg-model', 'section-footer-view', 'regs-router', 'main-events', 'header-events', 'sidebar-events', './regs-helpers', 'drawer-events', 'child-view', 'ga-events'], function($, _, Backbone, jQScroll, jQUnveil, DefinitionView, RegModel, SectionFooterView, Router, MainEvents, HeaderEvents, SidebarEvents, Helpers, DrawerEvents, ChildView, GAEvents) {
     'use strict';
 
     var RegView = ChildView.extend({
