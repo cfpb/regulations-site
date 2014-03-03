@@ -1,4 +1,4 @@
-define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'drawer-view', './regs-router', 'main-events', 'drawer-events', 'header-events'], function($, _, Backbone, Helpers, Drawer, Router, MainEvents, DrawerEvents, HeaderEvents) {
+define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', './regs-router', 'main-events', 'drawer-events', 'header-events'], function($, _, Backbone, Helpers, Router, MainEvents, DrawerEvents, HeaderEvents) {
     'use strict';
     var TOCView = Backbone.View.extend({
         el: '#table-of-contents',

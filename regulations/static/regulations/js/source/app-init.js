@@ -1,7 +1,7 @@
 // Module called on app load, once doc.ready
 //
 /* jshint unused: false */
-define(['jquery', 'underscore', 'backbone', 'main-view', './regs-router', 'sidebar-view', 'header-view', 'drawer-view'], function($, _, Backbone, Main, Router, Sidebar, Header, Drawer) {
+define(['jquery', 'underscore', 'backbone', 'main-view', './regs-router', 'sidebar-view', 'header-view', 'drawer-view'], function($, _, Backbone, MainView, Router, SidebarView, HeaderView, DrawerView) {
     'use strict';
     return {
         // Purgatory for DOM event bindings that should happen in a View
@@ -17,10 +17,10 @@ define(['jquery', 'underscore', 'backbone', 'main-view', './regs-router', 'sideb
         init: function() {
             Router.start();
             this.bindEvents();
-            var main = new Main(),
-                sidebar = new Sidebar(),
-                drawer = new Drawer(),
-                header = new Header();
+            var main = new MainView(),
+                sidebar = new SidebarView(),
+                drawer = new DrawerView(),
+                header = new HeaderView();
             setTimeout(function() {
                 $('html').addClass('selenium-start');
             }, 5000);
