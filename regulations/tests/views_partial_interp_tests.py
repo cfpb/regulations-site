@@ -72,5 +72,5 @@ class PartialSubterpViewTest(TestCase):
         view(request, label_id='lablab', version='verver')
         self.assertTrue(genhtml.called)
         args = genhtml.call_args[0]
-        self.assertEqual({'children': ['sec1', 'sec2', 'sec3']},
-                         args[0])
+        self.assertEqual({'children': ['sec1', 'sec2', 'sec3']
+                         'label': ['lablab']}, args[0])
