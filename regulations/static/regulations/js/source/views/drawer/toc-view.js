@@ -67,11 +67,10 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', './regs-
 
             var $link = $(e.currentTarget),
                 sectionId = $link.data('section-id'),
-                config = {},
-                $metaSection = $('section[data-base-version]');
+                config = {};
 
-            config.newerVersion = $metaSection.data('newer-version');
-            config.baseVersion = $metaSection.data('base-version');
+            config.newerVersion = Helpers.findDiffVersion();
+            config.baseVersion = Helpers.findVersion();
             DrawerEvents.trigger('section:open', sectionId);
             MainEvents.trigger('diff:open', sectionId, config, 'diff');            
         },

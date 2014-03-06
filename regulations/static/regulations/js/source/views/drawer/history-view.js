@@ -37,11 +37,15 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'main-events'], func
                 // update diff dropdown
                 this.$el.find('.select-content form').each(function() {
                     var $form = $(this),
-                        actionParts;
+                        actionParts,
+                        actionPath;
                     
                     // form action = diff_redirect/section/version
                     actionParts = _.compact($form.attr('action').split('/'));
-                    $form.attr('action', '/' + actionParts[0] + '/' + section + '/' + actionParts[2]);
+                    // remove section ID
+                    actionParts.splice(-2, 1, section);
+                    actionPath = '/' + actionParts.join('/');
+                    $form.attr('action', actionPath);
                 });
             }
         }

@@ -24,7 +24,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             // which page are we starting on?
             this.contentType = this.$topSection.data('page-type');
             // what version of the reg?
-            this.regVersion = this.$topSection.data('base-version');
+            this.regVersion = Helpers.findVersion();
             // what section do we have open?
             this.sectionId = this.$topSection.attr('id');
             if (typeof this.sectionId === 'undefined') {
@@ -125,8 +125,8 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             // diffs need some more version context
             if (this.contentType === 'diff') {
-                options.baseVersion = this.regVersion;
-                options.newerVersion = this.$topSection.data('newer-version');
+                options.baseVersion = this.regVersion || Helpers.findVersion();
+                options.newerVersion = Helpers.findDiffVersion();
                 if (typeof options.fromVersion === 'undefined') {
                     options.fromVersion = $('#table-of-contents').data('from-version');
                 }
