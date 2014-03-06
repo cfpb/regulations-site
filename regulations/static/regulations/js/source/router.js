@@ -69,12 +69,7 @@ define('regs-router', ['underscore', 'backbone', 'main-events', 'breakaway-event
             },
 
             start:  function() {
-                var root = '/';
-
-                // if the site is running under a subdirectory, create urls accordingly
-                if (window.APP_PREFIX.length > 1) {
-                    root = window.APP_PREFIX.substring(1);
-                }
+                var root = window.APP_PREFIX;
 
                 Backbone.history.start({
                     pushState: 'pushState' in window.history,

@@ -234,15 +234,17 @@ define('regs-helpers', function() {
             return version;
         },
 
+        // returns newer version. findVersion will return base version
         findDiffVersion: function(currentVersion) {
             var version;
+            currentVersion = currentVersion || this.findVersion();
 
             version = $('#table-of-contents').attr('data-from-version');
 
-            if (!version) {
-                version = $('#timeline li.current').filter(function() {
-                    return $(this).find('.version-link').attr('data-version') !== currentVersion;
-                });
+            if (!version || version === currentVersion) {
+                version = $('#timeline li.current .version-link').filter(function() {
+                    return $(this).attr('data-version') !== currentVersion;
+                }).attr('data-version');
             }
 
             return version;
