@@ -15,7 +15,9 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
             this.externalEvents = BreakawayEvents;
 
             this.el.addEventListener('transitionend', function() {
-                this.$el.find('.sxs-header').css('position', 'fixed');
+                var $header  = this.$el.find('.sxs-header');
+                $header.css('position', 'fixed');
+                this.$el.find('.sxs-content').css('margin-top', '0');
             }.bind(this), true);
 
             // callback to be sent to model's get method
