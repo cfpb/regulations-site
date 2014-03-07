@@ -57,6 +57,10 @@ SxS header
     }
 }
 
+.full-breakaway .sxs-header {
+    position: fixed;
+}
+
 /*
 Back link
 ---------
@@ -99,12 +103,12 @@ SxS content wrapper
     min-height: 100%;
     height: 100%;
     padding: 30px 15px;
-    margin-top: -2.125em;
 }
 
 #breakaway-view.open-sxs {
     .sxs-content {
         padding: 0px 15px; //decrease additional padding with ajax loaded sxs
+        margin-top: -2.125em; // set to 0px in JS, sxs-view
     }
 }
 

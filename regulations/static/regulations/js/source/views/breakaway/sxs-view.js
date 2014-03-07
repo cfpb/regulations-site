@@ -14,6 +14,13 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
             var render;
             this.externalEvents = BreakawayEvents;
 
+            // the sxs header wasn't always displaying properly when
+            // loaded by ajax. it was because the css transition and 
+            // having position: fixed on the header did not play
+            // nicely. we add positioning after the transition is done.
+            // also, the content was jumping as the header was taken
+            // out of the DOM flow by being fixed position, so we
+            // balance that out to prevent a jump
             this.el.addEventListener('transitionend', function() {
                 var $header  = this.$el.find('.sxs-header');
                 $header.css('position', 'fixed');
