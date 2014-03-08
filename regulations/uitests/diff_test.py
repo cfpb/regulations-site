@@ -16,7 +16,7 @@ class DiffTest(BaseTest, unittest.TestCase):
     def test_diffs(self):
         self.driver.get('http://localhost:8000/1005-2/2011-11111')
         html = self.driver.find_element_by_tag_name('html')
-        WebDriverWait(self.driver, 30).until(
+        WebDriverWait(self.driver, 60).until(
             lambda driver: 'selenium-start' in html.get_attribute('class'))
 
         WebDriverWait(self.driver, 50)
