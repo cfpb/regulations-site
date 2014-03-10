@@ -180,16 +180,31 @@ def diff_toc(older_version, newer_version, old_toc, diff, from_version):
 
 
 def sort_toc(toc):
-    def normalize(label):
+    def identify(element_type, element):
+        return element_type in element and element[element_type]
+        
+    def normalize(element):
+        #General order of the different types of sections
+        SECTION = 0
+        APPENDIX = 1
+        INTERPRETATION = 2
+
         normalized = []
-        for part in label:
-            try:
+        if identify('is_section', element):
+            normalized.append(SECTION)
+        elif identify('is_appendix', element):
+            normalized.append(APPENDIX)
+        elif identify('is_supplement', element):
+            normalized.append(INTERPRETATION)
+
+        for part in element['index']:
+            if part.isdigit():
                 normalized.append(int(part))
-            except ValueError:
+            else:
                 normalized.append(part)
         return normalized
 
-    return sorted(toc, key=lambda el: tuple(normalize(el['index'])))
+    return sorted(toc, key=lambda el: tuple(normalize(el)))
 
 
 def modified_deleted_sections(diff):
