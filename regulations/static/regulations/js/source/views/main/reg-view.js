@@ -14,7 +14,6 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'un
 
             this.externalEvents.on('definition:close', this.closeDefinition, this);
             this.externalEvents.on('breakaway:open', this.hideContent, this);
-            this.externalEvents.on('breakaway:close', this.showContent, this);
             this.externalEvents.on('definition:carriedOver', this.checkDefinitionScope, this);
             this.externalEvents.on('paragraph:active', this.newActiveParagraph, this);
 
@@ -275,11 +274,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'un
         // when breakaway view loads
         hideContent: function() {
             this.$el.fadeOut(1000);
-        },
-
-        // when breakaway view unloads
-        showContent: function() {
-            this.$el.fadeIn();
+            this.externalEvents.trigger('section:remove');
         },
 
         // lazy load images as the user scrolls

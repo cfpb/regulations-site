@@ -1,4 +1,4 @@
-define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './regs-router', 'breakaway-events', 'main-events'], function($, _, Backbone, SxS, Router, BreakawayEvents, MainEvents) {
+define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './regs-router', 'breakaway-events', 'main-events', 'sidebar-events'], function($, _, Backbone, SxS, Router, BreakawayEvents, MainEvents, SidebarEvents) {
     'use strict';
     var BreakawayView = Backbone.View.extend({
         childViews: {},
@@ -18,6 +18,7 @@ define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './reg
             }
 
             MainEvents.trigger('breakaway:open', _.bind(this.removeChild, this));
+            SidebarEvents.trigger('breakaway:open');
         },
 
         removeChild: function() {
