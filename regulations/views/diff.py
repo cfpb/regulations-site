@@ -180,10 +180,14 @@ def diff_toc(older_version, newer_version, old_toc, diff, from_version):
 
 
 def sort_toc(toc):
+    """ Sort the Table of Contents elements. """
+
     def identify(element_type, element):
         return element_type in element and element[element_type]
-        
+
     def normalize(element):
+        """ Return a sorting order for a TOC element, primarily based
+        on the index, and the type of content. """
         #General order of the different types of sections
         SECTION = 0
         APPENDIX = 1
