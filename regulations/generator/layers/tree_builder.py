@@ -1,4 +1,3 @@
-import re
 import itertools
 
 
@@ -102,21 +101,44 @@ def roman_nums():
 
 
 def make_label_sortable(label, roman=False):
-    """ Appendices have labels that look like 30(a), we make those
+    """ Make labels sortable, but converting them as appropriate.
+    Also, appendices have labels that look like 30(a), we make those
     appropriately sortable. """
 
     if label.isdigit():
         return (int(label),)
-    if label.isalpha():
-        if roman:
-            #If the label is all letters, it's a roman numeral
-            romans = list(itertools.islice(roman_nums(), 0, 50))
-            return 1 + romans.index(label)
+    if roman:
+        romans = list(itertools.islice(roman_nums(), 0, 50))
+        return (1 + romans.index(label),)
+
+    # segment the label piece into component parts
+    # e.g. 45Ai33b becomes (45, 'A', 'i', 33, 'b')
+    INT, UPPER, LOWER = 1, 2, 3
+    segments, segment, seg_type = [], "", None
+    for ch in label:
+        if ch.isdigit():
+            ch_type = INT
+        elif ch.isalpha() and ch == ch.upper():
+            ch_type = UPPER
+        elif ch.isalpha() and ch == ch.lower():
+            ch_type = LOWER
         else:
-            return (label,)
-    else:
-        m = re.match(r"([0-9]+)([\(])([a-z]+)([\)])", label, re.I)
-        return (int(m.groups()[0]), m.groups()[2])
+            # other character, e.g. parens, guarantee segmentation
+            ch_type = None
+
+        if ch_type != seg_type and segment:     # new type of character
+            segments.append(segment)
+            segment = ""
+
+        seg_type = ch_type
+        if ch_type:
+            segment += ch
+
+    if segment:    # ended with something other than a paren
+        segments.append(segment)
+
+    segments = [int(seg) if seg.isdigit() else seg for seg in segments]
+    return tuple(segments)
 
 
 def add_child(parent_node, node):
@@ -126,13 +148,21 @@ def add_child(parent_node, node):
     for c in parent_node['children']:
         if c['node_type'].upper() == 'INTERP':
             if c['label'][-1] == 'Interp':
-                c['sortable'] = make_label_sortable(
+                sortable = make_label_sortable(
                     c['label'][-2], roman=(len(c['label']) == 6))
             else:
                 paragraph = list(itertools.dropwhile(lambda l: l != 'Interp',
                                                      c['label']))[1:]
-                c['sortable'] = make_label_sortable(
+                sortable = make_label_sortable(
                     paragraph[-1], roman=(len(paragraph) == 2))
+
+            if len(parent_node['label']) == 2:
+                #Highest interpretation node in the land
+                p = len(list(itertools.takewhile(lambda l: l != 'Interp',
+                                                 c['label'])))
+                prefix_length = (p, )
+                sortable = prefix_length + sortable
+            c['sortable'] = sortable
         else:
             c['sortable'] = make_label_sortable(c['label'][-1],
                                                 roman=(len(c['label']) == 5))

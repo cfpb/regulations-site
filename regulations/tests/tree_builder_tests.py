@@ -66,7 +66,7 @@ class TreeBuilderTest(TestCase):
     def test_make_label_sortable_roman(self):
         label = "iv"
         sortable = tree_builder.make_label_sortable(label, roman=True)
-        self.assertEquals(sortable, 4)
+        self.assertEquals(sortable, (4,))
 
     def test_make_label_sortable_not_roman(self):
         label = "iv"
@@ -153,38 +153,53 @@ class TreeBuilderTest(TestCase):
         parent = {'children': [
             {'node_type': 'INTERP', 'label': ['204', '4', 'Interp']},
             {'node_type': 'INTERP', 'label': ['204', '2', 'Interp']}
-        ]}
+        ], 'label': ['204', 'Interp']}
         tree_builder.add_child(parent, {'node_type': 'INTERP',
                                         'label': ['204', '3', 'Interp']})
-        self.assertEqual([(2,), (3,), (4,)],
+        self.assertEqual([(2, 2), (2, 3), (2, 4)],
                          [c['sortable'] for c in parent['children']])
 
         prefix = ['204', '4', 'a', '2']
         parent = {'children': [
             {'node_type': 'INTERP', 'label': prefix + ['v', 'Interp']},
             {'node_type': 'INTERP', 'label': prefix + ['iv', 'Interp']}
-        ]}
+        ], 'label': ['204', '4', 'a', '2', 'Interp']}
         tree_builder.add_child(parent, {'node_type': 'INTERP',
                                         'label': prefix + ['ix', 'Interp']})
-        self.assertEqual([4, 5, 9],
+        self.assertEqual([(4,), (5,), (9,)],
                          [c['sortable'] for c in parent['children']])
 
         prefix = ['204', '4', 'Interp']
         parent = {'children': [
             {'node_type': 'INTERP', 'label': prefix + ['1']},
             {'node_type': 'INTERP', 'label': prefix + ['3']}
-        ]}
+        ], 'label': ['204', 'Interp']}
         tree_builder.add_child(parent, {'node_type': 'INTERP',
                                         'label': prefix + ['2']})
-        self.assertEqual([(1,), (2,), (3,)],
+        self.assertEqual([(2, 1), (2, 2), (2, 3)],
                          [c['sortable'] for c in parent['children']])
 
         prefix = ['204', 'Interp', '2']
         parent = {'children': [
             {'node_type': 'INTERP', 'label': prefix + ['v']},
             {'node_type': 'INTERP', 'label': prefix + ['iv']}
-        ]}
+        ], 'label': prefix}
         tree_builder.add_child(parent, {'node_type': 'INTERP',
                                         'label': prefix + ['ix']})
-        self.assertEqual([4, 5, 9],
+        self.assertEqual([(4,), (5,), (9,)],
+                         [c['sortable'] for c in parent['children']])
+
+    def test_add_child_root_interp(self):
+        """ Let's add an introductory paragraph child to a root interpretation
+        node and ensure that the children are sorted correctly. """
+
+        parent = {'children': [
+            {'node_type': 'INTERP', 'label': ['204', '4', 'Interp']},
+            {'node_type': 'INTERP', 'label': ['204', '2', 'Interp']}
+        ], 'label': ['204', 'Interp']}
+
+        tree_builder.add_child(parent, {'node_type': 'INTERP',
+                                        'label': ['204', 'Interp', 'h1']})
+
+        self.assertEqual([(1, 'h', 1), (2, 2), (2, 4)],
                          [c['sortable'] for c in parent['children']])
