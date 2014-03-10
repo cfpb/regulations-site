@@ -15,6 +15,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
             this.externalEvents.on('definition:close', this.closeDefinition, this);
             this.externalEvents.on('section:loading', this.loading, this);
             this.externalEvents.on('section:error', this.loaded, this);
+            this.externalEvents.on('breakaway:open', this.hideChildren, this);
 
             this.childViews = {};
             this.openRegFolders();
@@ -169,6 +170,12 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
 
         loaded: function() {
             this.$el.removeClass('loading');
+        },
+
+        // when breakaway view loads
+        // will unhide by virtue of routing back to reg
+        hideChildren: function() {
+            this.$el.children().fadeOut(1000);
         }
     });
 
