@@ -272,9 +272,9 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'un
         },
 
         // when breakaway view loads
-        // will unhide by virtue of routing back to reg
         hideContent: function() {
             this.$el.fadeOut(1000);
+            this.externalEvents.trigger('section:remove');
         },
 
         // lazy load images as the user scrolls

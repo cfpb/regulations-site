@@ -173,9 +173,9 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
         },
 
         // when breakaway view loads
-        // will unhide by virtue of routing back to reg
         hideChildren: function() {
             this.$el.children().fadeOut(1000);
+            this.closeChildren();
         }
     });
 
