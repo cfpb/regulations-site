@@ -1,4 +1,3 @@
-import re
 import itertools
 
 
@@ -159,7 +158,8 @@ def add_child(parent_node, node):
 
             if len(parent_node['label']) == 2:
                 #Highest interpretation node in the land
-                p = len(list(itertools.takewhile(lambda l: l != 'Interp', c['label'])))
+                p = len(list(itertools.takewhile(lambda l: l != 'Interp',
+                                                 c['label'])))
                 prefix_length = (p, )
                 sortable = prefix_length + sortable
             c['sortable'] = sortable
