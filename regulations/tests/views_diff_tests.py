@@ -31,7 +31,7 @@ class ChromeSectionDiffViewTests(TestCase):
 
     def test_diff_toc(self):
         """Integration test."""
-        old_toc = [{'section_id': '8888-1','index': ['8888', '1'],
+        old_toc = [{'section_id': '8888-1', 'index': ['8888', '1'],
                     'is_section':True},
                    {'section_id': '8888-3', 'index': ['8888', '3'],
                     'is_section':True},
@@ -56,7 +56,6 @@ class ChromeSectionDiffViewTests(TestCase):
 
         result = diff_toc('oldold', 'newnew', old_toc, diff, 'from_ver')
         self.assertEqual(8, len(result))
-        print result
         self.assertTrue('8888-1' in result[0]['url'])
         self.assertTrue('?from_version=from_ver' in result[0]['url'])
         self.assertEqual('8888-1', result[0]['section_id'])
