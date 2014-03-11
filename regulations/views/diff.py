@@ -187,7 +187,7 @@ def sort_toc(toc):
         on the index, and the type of content. """
 
         # The general order of a regulation is: regulation text sections,
-        # appendices, and then the interpretations. 
+        # appendices, and then the interpretations.
 
         normalized = []
         if element.get('is_section'):
