@@ -31,12 +31,18 @@ class ChromeSectionDiffViewTests(TestCase):
 
     def test_diff_toc(self):
         """Integration test."""
-        old_toc = [{'section_id': '8888-1', 'index': ['8888', '1']},
-                   {'section_id': '8888-3', 'index': ['8888', '3']},
-                   {'section_id': '8888-4', 'index': ['8888', '4']},
-                   {'section_id': '8888-A', 'index': ['8888', 'A']},
-                   {'section_id': '8888-B', 'index': ['8888', 'B']},
-                   {'section_id': '8888-Interp', 'index': ['8888', 'Interp']}]
+        old_toc = [{'section_id': '8888-1', 'index': ['8888', '1'],
+                    'is_section':True},
+                   {'section_id': '8888-3', 'index': ['8888', '3'],
+                    'is_section':True},
+                   {'section_id': '8888-4', 'index': ['8888', '4'],
+                    'is_section':True},
+                   {'section_id': '8888-A', 'index': ['8888', 'A'],
+                    'is_appendix':True},
+                   {'section_id': '8888-B', 'index': ['8888', 'B'],
+                    'is_appendix':True},
+                   {'section_id': '8888-Interp', 'index': ['8888', 'Interp'],
+                    'is_supplement':True}]
         diff = {
             '8888-2': {'op': 'added',
                        'node': {'title': '8888.2', 'label': ['8888', '2']}},
