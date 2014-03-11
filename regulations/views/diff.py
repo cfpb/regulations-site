@@ -180,16 +180,31 @@ def diff_toc(older_version, newer_version, old_toc, diff, from_version):
 
 
 def sort_toc(toc):
-    def normalize(label):
+    """ Sort the Table of Contents elements. """
+
+    def normalize(element):
+        """ Return a sorting order for a TOC element, primarily based
+        on the index, and the type of content. """
+
+        # The general order of a regulation is: regulation text sections,
+        # appendices, and then the interpretations.
+
         normalized = []
-        for part in label:
-            try:
+        if element.get('is_section'):
+            normalized.append(0)
+        elif element.get('is_appendix'):
+            normalized.append(1)
+        elif element.get('is_supplement'):
+            normalized.append(2)
+
+        for part in element['index']:
+            if part.isdigit():
                 normalized.append(int(part))
-            except ValueError:
+            else:
                 normalized.append(part)
         return normalized
 
-    return sorted(toc, key=lambda el: tuple(normalize(el['index'])))
+    return sorted(toc, key=lambda el: tuple(normalize(el)))
 
 
 def modified_deleted_sections(diff):
