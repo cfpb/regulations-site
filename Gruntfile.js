@@ -136,15 +136,24 @@ module.exports = function(grunt) {
           stdout: true,
           stderr: true
         }
-      }
-    },
+      },
 
-    // https://npmjs.org/package/grunt-nose
-    nose: {
-        src: 'regulations/uitests',
+      'nose-chrome': {
+        command: 'nosetests -s <%= env.testPath %> --tc=webdriver.browser:chrome',
         options: {
-          nocapture: true
+            stdout: true,
+            stderr: true
         }
+      },
+
+      'nose-ie10': {
+        command: 'nosetests -s <%= env.testPath %> --tc=webdriver.browser:ie10',
+        options: {
+            stdout: true,
+            stderr: true
+        }
+      }
+
     },
 
     // https://github.com/yatskevich/grunt-bower-task
@@ -183,11 +192,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-plato');
     grunt.loadNpmTasks('grunt-bower-task');
-    grunt.loadNpmTasks('grunt-nose');
 
     /**
     * Create task aliases by registering new tasks
     */
+    grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
     grunt.registerTask('test', ['jshint', 'shell:mocha-phantomjs']);
     grunt.registerTask('build', ['jshint', 'requirejs', 'less', 'nose']);
     grunt.registerTask('squish', ['requirejs', 'less']);
