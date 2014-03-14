@@ -174,7 +174,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
 
         // when breakaway view loads
         hideChildren: function() {
-            this.$el.children().fadeOut(1000);
+            this.$el.children().fadeOut(750);
             this.closeChildren();
         }
     });

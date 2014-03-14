@@ -273,7 +273,7 @@ define('reg-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', 'un
 
         // when breakaway view loads
         hideContent: function() {
-            this.$el.fadeOut(1000);
+            this.$el.fadeOut(750);
             this.externalEvents.trigger('section:remove');
         },
 
