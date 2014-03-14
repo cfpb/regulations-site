@@ -27,5 +27,4 @@ script:
     - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
     - ./run_server.sh &
     - sleep 5
-    - if [ "$SAUCE_OK" == 1 ]; then nosetests regulations/uitests/*.py; fi
-    - grunt test
+    - if [ "$SAUCE_OK" == 1 ]; then grunt nose; fi
