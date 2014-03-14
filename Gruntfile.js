@@ -31,18 +31,6 @@ module.exports = function(grunt) {
         }
     },
 
-    /**
-     * Docco is that nifty biz that Backbone has for its annotated source
-     *
-     * https://github.com/eliias/grunt-docco
-     */
-    docco: {
-        src: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js'],
-        options: {
-            output: '<%= env.frontEndPath %>/docs/v/head'
-        }
-    },
-
     styleguide: {
             dist: {
                 options: {
@@ -95,21 +83,6 @@ module.exports = function(grunt) {
       all: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js', '<%= env.frontEndPath %>/js/source/views/*/*.js', '!<%= env.frontEndPath %>/js/source/require.config.js']
     },
 
-    /**
-     * https://github.com/jsoverson/grunt-plato
-     * http://jscomplexity.org/complexity
-     */
-    plato: {
-        all: {
-            options: {
-                jshint: grunt.file.readJSON('.jshintrc')
-            },
-            files: {
-                '<%= env.frontEndPath %>/docs/complexity': ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js']
-            }
-        }
-    },
-
     requirejs: {
         compile: {
             options: {
@@ -128,14 +101,6 @@ module.exports = function(grunt) {
     shell: {
       'build-require': {
         command: './require.sh',
-      },
-
-      'mocha-phantomjs': {
-        command: 'mocha-phantomjs -R dot <%= env.testUrl %>/static/regulations/js/tests/browser/runner.html --verbose',
-        options: {
-          stdout: true,
-          stderr: true
-        }
       },
 
       'nose-chrome': {
@@ -188,16 +153,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-docco2');
     grunt.loadNpmTasks('grunt-styleguide');
-    grunt.loadNpmTasks('grunt-plato');
     grunt.loadNpmTasks('grunt-bower-task');
 
     /**
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
-    grunt.registerTask('test', ['jshint', 'shell:mocha-phantomjs']);
-    grunt.registerTask('build', ['jshint', 'requirejs', 'less', 'nose']);
+    grunt.registerTask('test', ['jshint', 'nose']);
+    grunt.registerTask('build', ['squish', 'test']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };
