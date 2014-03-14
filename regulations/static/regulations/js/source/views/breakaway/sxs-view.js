@@ -1,4 +1,4 @@
-define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakaway-events', 'main-events', './regs-router'], function($, _, Backbone, SxSModel, BreakawayEvents, MainEvents, Router) {
+define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakaway-events', 'main-events', './regs-router', 'sidebar-events'], function($, _, Backbone, SxSModel, BreakawayEvents, MainEvents, Router, SidebarEvents) {
     'use strict';
 
     var SxSView = Backbone.View.extend({
@@ -73,6 +73,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
                 window.history.back();
             }
 
+            SidebarEvents.trigger('breakaway:close');
             this.$el.removeClass('open-sxs');
             this.$el.html('');
             this.stopListening();

@@ -16,6 +16,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
             this.externalEvents.on('section:loading', this.loading, this);
             this.externalEvents.on('section:error', this.loaded, this);
             this.externalEvents.on('breakaway:open', this.hideChildren, this);
+            this.externalEvents.on('breakaway:close', this.unhideDefinition, this);
 
             // in order to avoid acrobatics when loading a sidebar partial,
             // the definition container is added here instead of in django tmpl
@@ -186,6 +187,12 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
         hideChildren: function() {
             this.$el.children().fadeOut(750);
             this.closeChildren();
+        },
+
+        // the other child views will be reinitialized
+        // but the definition container needs to be manually unhidden
+        unhideDefinition: function() {
+            this.$el.find('#definition').show();
         }
     });
 
