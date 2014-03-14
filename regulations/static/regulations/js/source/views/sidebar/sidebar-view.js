@@ -17,8 +17,13 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
             this.externalEvents.on('section:error', this.loaded, this);
             this.externalEvents.on('breakaway:open', this.hideChildren, this);
 
+            // in order to avoid acrobatics when loading a sidebar partial,
+            // the definition container is added here instead of in django tmpl
+            this.$el.prepend('<section id="definition"></section>');
+
             this.childViews = {};
             this.openRegFolders();
+
             this.model = new SidebarModel();
 
             this.definitionModel = new MetaModel({
@@ -79,15 +84,20 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
         },
 
         openRegFolders: function(success, html) {
+            var len;
+
+            // close all except definition
             this.closeChildren('definition');
 
-            if (arguments.length > 0) {
+            if (arguments.length > 1) {
+                // if we've already downloaded the sidebar
                 this.insertChild(html);
             }
             else {
                 this.createPlaceholders();
             }
 
+            // new views to bind to new html
             this.childViews.sxs = new SxSList();
             this.childViews.help = new HelpView();
 
@@ -157,7 +167,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
             var k;
             for (k in this.childViews) {
                 if (this.childViews.hasOwnProperty(k)) {
-                    if (except && except !== k) {
+                    if (!except || except && except !== k) {
                         this.childViews[k].remove();
                     }
                 }
