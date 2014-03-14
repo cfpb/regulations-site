@@ -33,13 +33,18 @@ class TOCTest(BaseTest, unittest.TestCase):
         # toc link should be highlighted
         self.assertTrue('current' in toc_link_1005_1.get_attribute('class'))
 
-        # test another section
-        toc_link_1005_7 = self.driver.find_element_by_xpath('//*[@id="toc"]/ol/li[7]/a')
-        self.assertEquals(toc_link_1005_7.get_attribute('data-section-id'), '1005-7')
-        toc_link_1005_7.click()
+        WebDriverWait(self.driver, 90)
 
-        self.assertTrue('roentgenologist zest' in self.driver.find_element_by_class_name('section-title').text)
-        self.assertTrue('current' in toc_link_1005_7.get_attribute('class'))
+        # test another section
+        toc_link_1005_3 = self.driver.find_element_by_xpath('//*[@id="toc"]/ol/li[3]/a')
+        self.assertEquals(toc_link_1005_3.get_attribute('data-section-id'), '1005-3')
+
+        toc_link_1005_3.click()
+        # toc link should be highlighted
+        self.assertTrue('current' in toc_link_1005_3.get_attribute('class'))
+
+        self.assertTrue('clicked' in self.driver.find_element_by_class_name('section-title').text)
+        self.assertTrue('current' in toc_link_1005_3.get_attribute('class'))
 
         # make sure that the current class has been removed from the prev section
         self.assertFalse('current' in toc_link_1005_1.get_attribute('class'))

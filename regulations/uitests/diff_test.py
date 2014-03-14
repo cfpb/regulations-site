@@ -33,9 +33,10 @@ class DiffTest(BaseTest, unittest.TestCase):
         # select version to compare to
         diff_field.select_by_value('2012-12121')
 
-        # wait until diff view has loaded w/ JS
-        WebDriverWait(self.driver, 30).until(
-             lambda driver: driver.find_element_by_css_selector('html.js'))
+        # wait until diff view has loaded
+        html = self.driver.find_element_by_tag_name('html')
+        WebDriverWait(self.driver, 90).until(
+             lambda driver: 'selenium-start' in html.get_attribute('class'))
 
         WebDriverWait(self.driver, 60)
         # make sure the url is right

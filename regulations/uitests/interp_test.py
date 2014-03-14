@@ -26,11 +26,14 @@ class InterpTest(BaseTest, unittest.TestCase):
         # should have the appropriate header
         self.assertTrue('OFFICIAL INTERPRETATION TO 2(h)' in interp_dropdown.text)
 
+        self.driver.execute_script('p10052h = document.getElementById("1005-2-h").offsetTop')
+        self.driver.execute_script('window.scrollTo(0, p10052h)')
+
         # body should be hidden
         interp_text = self.driver.find_element_by_xpath('//*[@id="1005-2-h"]/section/section')
         interp_dropdown.click()
 
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, 90).until(
             lambda driver: driver.find_element_by_css_selector('.inline-interpretation.open'))
 
         # header should update
