@@ -78,21 +78,21 @@ class SectionBySectionLayerTest(TestCase):
         """ Here we ensure that roman numerals are sorted correctly. """
         analyses = [
             {'label_id': '200-20-d-2-viii'},
-            {'label_id': '200-20-d-2-ix'}, 
-            {'label_id': '200-20-d-2-iv'}, 
-            {'label_id': '200-20-d-2-v'}, 
-            {'label_id': '200-20-d-2-vi'}, 
-            {'label_id': '200-20-d-2-x'}, 
-            {'label_id': '200-20-d-2-xi'}, 
+            {'label_id': '200-20-d-2-ix'},
+            {'label_id': '200-20-d-2-iv'},
+            {'label_id': '200-20-d-2-v'},
+            {'label_id': '200-20-d-2-vi'},
+            {'label_id': '200-20-d-2-x'},
+            {'label_id': '200-20-d-2-xi'},
         ]
 
         sorted_analyses = sort_analyses(analyses)
         labels = [a['label_id'] for a in sorted_analyses]
         self.assertEqual([
-                '200-20-d-2-iv',
-                '200-20-d-2-v',
-                '200-20-d-2-vi',
-                '200-20-d-2-viii',
-                '200-20-d-2-ix', 
-                '200-20-d-2-x', 
-                '200-20-d-2-xi'], labels)
+            '200-20-d-2-iv',
+            '200-20-d-2-v',
+            '200-20-d-2-vi',
+            '200-20-d-2-viii',
+            '200-20-d-2-ix',
+            '200-20-d-2-x',
+            '200-20-d-2-xi'], labels)
