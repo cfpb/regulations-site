@@ -2,6 +2,7 @@ from django.http import Http404
 
 from regulations.generator import generator, node_types
 from regulations.generator.subterp import filter_by_subterp
+from regulations.views import utils
 from regulations.views.partial import (
     PartialSectionView, PartialView, generate_html)
 
@@ -12,6 +13,17 @@ class PartialInterpView(PartialView):
 
     template_name = "regulations/interpretations.html"
     inline = False
+    appliers = []
+
+    @staticmethod
+    def mk_appliers(root_label, version):
+        """Function to generate a shared set of appliers"""
+        return utils.handle_specified_layers(
+            'terms,internal,keyterms,paragraph', root_label, version, True)
+
+    def determine_appliers(self, label_id, version):
+        """Don't generate new appliers"""
+        return self.appliers
 
     def transform_context(self, context, builder):
         context['inline'] = self.inline

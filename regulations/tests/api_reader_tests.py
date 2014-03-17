@@ -105,18 +105,28 @@ class ClientTest(TestCase):
     def test_reg_cache(self, api_client):
         child = {
             'text': 'child',
+            'node_type': 'interp',
             'children': [],
-            'label': ['923', 'a', 'Interp']
+            'label': ['923', 'a', 'Interp'],
+            'title': 'Some title'
         }
         child2 = {
             'text': 'child2',
+            'node_type': 'interp',
             'children': [],
             'label': ['923', 'Interp', '1']
         }
+        child3 = {
+            'text': 'child',
+            'node_type': 'interp',
+            'children': [],
+            'label': ['923', 'b', 'Interp'],
+        }
         to_return = {
             'text': 'parent',
+            'node_type': 'interp',
             'label': ['923', 'Interp'],
-            'children': [child, child2]
+            'children': [child, child2, child3]
         }
         get = api_client.ApiClient.return_value.get
         get.return_value = to_return
@@ -130,6 +140,10 @@ class ClientTest(TestCase):
         get.return_value = child2
         reader.regulation('923-Interp-1', 'ver')
         self.assertEqual(2, get.call_count)
+
+        get.return_value = child3
+        reader.regulation('923-b-Interp', 'ver')
+        self.assertEqual(3, get.call_count)
 
         child = {
             'text': 'child',
@@ -156,19 +170,20 @@ class ClientTest(TestCase):
             'label': ['1024'],
             'children': []
         }
-        get = api_client.ApiClient.return_value.get 
+        get = api_client.ApiClient.return_value.get
         get.return_value = to_return
         reader = ApiReader()
 
         result = reader.regulation('1024', 'ver')
         self.assertEqual(to_return, result)
         child = {
-            'text':'child',
-            'children':[], 
-            'label':['1024', 'a']
+            'text': 'child',
+            'children': [],
+            'label': ['1024', 'a']
         }
         result['children'] = [child]
 
         second = reader.regulation('1024', 'ver')
         self.assertEqual(1, get.call_count)
-        self.assertEqual(second, {'text':'parent', 'label':['1024'], 'children':[]})
+        self.assertEqual(second, {'text': 'parent', 'label': ['1024'],
+                                  'children': []})
