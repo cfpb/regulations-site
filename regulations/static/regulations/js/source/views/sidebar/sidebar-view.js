@@ -17,10 +17,6 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
             this.externalEvents.on('section:error', this.loaded, this);
             this.externalEvents.on('breakaway:open', this.hideChildren, this);
 
-            // in order to avoid acrobatics when loading a sidebar partial,
-            // the definition container is added here instead of in django tmpl
-            this.$el.prepend('<section id="definition"></section>');
-
             this.childViews = {};
             this.openRegFolders();
 
@@ -64,10 +60,17 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
         },
 
         updateChildViews: function(context) {
+            var $definition = $definition || this.$el.find('#definition');
             switch (context.type) {
                 case 'reg-section':
                     this.model.get(context.id, this.openRegFolders);
                     MainEvents.trigger('definition:carriedOver');
+
+                    // definition container is hidden when SxS opens
+                    if ($definition.is(':hidden')) {
+                        $definition.show();
+                    }
+
                     break;
                 case 'search':
                     this.closeChildren();

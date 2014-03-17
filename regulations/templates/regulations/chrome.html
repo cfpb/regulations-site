@@ -170,9 +170,10 @@
 {% block chrome-sidebar %}
 <div id="sidebar" class="secondary-content">
     <div id="sidebar-content" class="sidebar-inner">
-    {% block reg_sidebar %}
-        {{ sidebar_content|safe }}
-    {% endblock %}
+        <section id="definition"></section>
+        {% block reg_sidebar %}
+            {{ sidebar_content|safe }}
+        {% endblock %}
     </div>
 </div>
 {% endblock %}
