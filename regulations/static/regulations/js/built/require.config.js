@@ -1,6 +1,6 @@
 var require = { "paths" :
 {
-        "jquery": "./lib/jquery/dist/jquery.min",
+        "jquery": "./lib/jquery/dist/jquery",
         "underscore": "./lib/underscore/underscore",
         "backbone": "./lib/backbone/backbone",
         "samplejson": "../tests/grunt/js/fixtures/sample-json",
