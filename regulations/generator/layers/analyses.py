@@ -1,7 +1,8 @@
 from itertools import takewhile
 
 from regulations.generator.node_types import label_to_text
-from regulations.generator.layers.tree_builder import make_label_sortable 
+from regulations.generator.layers.tree_builder import make_label_sortable
+
 
 def sort_regtext_label(label):
     """ Make a regtext label sortable """
@@ -10,15 +11,16 @@ def sort_regtext_label(label):
         sortable[4] = make_label_sortable(sortable[4], roman=True)[0]
     return sortable
 
+
 def sort_analyses(analyses):
-    """ Sort the labels, so that the list of section-by-section analyses 
+    """ Sort the labels, so that the list of section-by-section analyses
     can be displayed in the correct order. """
     if analyses:
         for a in analyses:
             label = a['label_id'].split('-')
             if 'Interp' not in a['label_id']:
                 sortable = sort_regtext_label(label)
-            else: 
+            else:
                 prefix = label[:label.index('Interp')]
                 suffix = label[label.index('Interp') + 1:]
 
@@ -35,6 +37,7 @@ def sort_analyses(analyses):
             if 'sortable' in a:
                 del a['sortable']
         return sorted_analyses
+
 
 class SectionBySectionLayer(object):
     shorthand = 'sxs'
