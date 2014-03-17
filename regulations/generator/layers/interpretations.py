@@ -1,5 +1,3 @@
-from django.core.cache import get_cache
-from django.core.cache.backends.dummy import DummyCache
 from django.http import HttpRequest
 
 #   Don't import PartialInterpView or utils directly; causes an import cycle
@@ -17,16 +15,16 @@ class InterpretationsLayer(object):
         self.version = version
         self.section_url = SectionUrl()
         self.root_interp_label = None
+        self.partial_view = None
 
     def preprocess_root(self, root):
-        """Store the label for the root node ('s interpretation) for later
-        use. We'll try to fetch it when we need a slide-down interp to cache
-        it for future interps. Don't do this if the cache isn't set up or if
-        we are processing an interp (which therefore has no interps)."""
-        cache = get_cache('api_cache')
-        if (root['node_type'] != 'interp'
-                and not isinstance(cache, DummyCache)):
-            self.root_interp_label = '-'.join(root['label'] + ['Interp'])
+        """The root label will allow us to use a single set of layer
+        appliers and grab all interp data at once."""
+        self.root_interp_label = '-'.join(root['label'] + ['Interp'])
+        view_class = views.partial_interp.PartialInterpView
+        self.partial_view = view_class.as_view(
+            inline=True, appliers=view_class.mk_appliers(
+                self.root_interp_label, self.version))
 
     def apply_layer(self, text_index):
         """Return a pair of field-name + interpretation if one applies."""
@@ -37,19 +35,15 @@ class InterpretationsLayer(object):
                                                   include_section=False)}
             #   Force caching of a few nodes up -- should prevent a request
             #   per interpretation if caching is on
-            if self.root_interp_label:
-                generator.generator.get_tree_paragraph(
-                        self.root_interp_label, self.version)
+            generator.generator.get_tree_paragraph(
+                self.root_interp_label, self.version)
             for layer_element in self.layer[text_index]:
                 reference = layer_element['reference']
 
-                partial_view = views.partial_interp.PartialInterpView.as_view(
-                    inline=True)
                 request = HttpRequest()
-                request.GET['layers'] = 'terms,internal,keyterms,paragraph'
                 request.method = 'GET'
-                response = partial_view(request, label_id=reference,
-                                        version=self.version)
+                response = self.partial_view(request, label_id=reference,
+                                             version=self.version)
                 response.render()
 
                 interp = {
