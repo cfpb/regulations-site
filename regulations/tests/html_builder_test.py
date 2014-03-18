@@ -238,7 +238,8 @@ class HTMLBuilderTest(TestCase):
         }
         builder.diff_applier = da
         builder.process_node_title(node)
-        self.assertEqual(u'§&nbsp;101.6<del> a</del>b<ins>AAC</ins>cd', node['header'])
+        self.assertEqual(
+            u'§&nbsp;101.6<del> a</del>b<ins>AAC</ins>cd', node['header'])
 
     def test_node_title_no_diff(self):
         builder = HTMLBuilder(None, None, None)
