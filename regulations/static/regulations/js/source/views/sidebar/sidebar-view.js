@@ -20,7 +20,6 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
             this.childViews = {};
             this.openRegFolders();
 
-
             this.model = new SidebarModel();
 
             this.definitionModel = new MetaModel({
