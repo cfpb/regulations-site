@@ -224,6 +224,22 @@ class HTMLBuilderTest(TestCase):
         builder.process_node_title(node)
         self.assertEqual('<del>ab</del>cd<ins>AAC</ins>', node['header'])
 
+    def test_process_node_title_section_space_diff(self):
+        """" Diffs and sections spaces need to place nicely together. """
+        builder = HTMLBuilder(None, None, None)
+        diff = {'204': {'title': [('delete', 7, 9), ('insert', 10, 'AAC')],
+                        'text':  [('delete', 0, 2), ('insert', 4, 'AAB')],
+                        'op': ''}}
+        da = diff_applier.DiffApplier(diff, None)
+        node = {
+            "label_id": u"204",
+            "title": u"§ 101.6 abcd",
+            'node_type': APPENDIX
+        }
+        builder.diff_applier = da
+        builder.process_node_title(node)
+        self.assertEqual(u'§&nbsp;101.6<del> a</del>b<ins>AAC</ins>cd', node['header'])
+
     def test_node_title_no_diff(self):
         builder = HTMLBuilder(None, None, None)
         node = {
