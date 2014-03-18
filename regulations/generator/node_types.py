@@ -78,7 +78,7 @@ def _l2t_interp(label):
 def _l2t_appendix(label):
     """Helper function converting appendix labels to text. Assumes
     _l2t_subterp and _l2t_interp failed"""
-    if label[1].isalpha():
+    if type_from_label(label) == APPENDIX:
         # Appendix
         if len(label) == 2:  # e.g. 225-B
             return 'Appendix ' + label[1] + ' to Part ' + label[0]
