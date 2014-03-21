@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from mock import patch
+from mock import Mock, patch
 
 from regulations.generator.layers.formatting import FormattingLayer
 
@@ -34,7 +34,14 @@ class FormattingLayerTest(TestCase):
 
     @patch('regulations.generator.layers.formatting.loader')
     def test_apply_layer_note(self, loader):
-        render = loader.get_template.return_value.render
+        mocks = {'table': Mock(), 'note': Mock(), 'code': Mock()}
+        def ret_mock(arg):
+            for key in mocks:
+                if key in arg:
+                    return mocks[key]
+
+        loader.get_template.side_effect = ret_mock
+        render = mocks['note'].render
 
         fence_data = {'type': 'note',
                       'lines': ['Note:', '1. Content1', '2. Content2']}
@@ -56,11 +63,17 @@ class FormattingLayerTest(TestCase):
         context = render.call_args[0][0]
         self.assertEqual(context['lines'],
                          ['1. Content1', '2. Content2'])
-        self.assertTrue('note.html' in loader.get_template.call_args[0][0])
 
     @patch('regulations.generator.layers.formatting.loader')
     def test_apply_layer_code(self, loader):
-        render = loader.get_template.return_value.render
+        mocks = {'table': Mock(), 'note': Mock(), 'code': Mock()}
+        def ret_mock(arg):
+            for key in mocks:
+                if key in arg:
+                    return mocks[key]
+
+        loader.get_template.side_effect = ret_mock
+        render = mocks['code'].render
 
         fence_data = {'type': 'python',
                       'lines': ['def double(x):', '    return x + x']}
@@ -82,4 +95,3 @@ class FormattingLayerTest(TestCase):
         context = render.call_args[0][0]
         self.assertEqual(context['lines'],
                          ['def double(x):', '    return x + x'])
-        self.assertTrue('code.html' in loader.get_template.call_args[0][0])
