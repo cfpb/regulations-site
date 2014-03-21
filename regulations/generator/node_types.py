@@ -53,7 +53,8 @@ def _l2t_subterp(label):
     elif label[1:] == ['Appendices', 'Interp']:
         return 'Interpretations for Appendices of Part ' + label[0]
     elif len(label) == 4 and label[1] == 'Subpart' and label[3] == 'Interp':
-        return 'Interpretations for Subpart ' + label[2] + ' of Part ' + label[0]
+        interpretations_for = 'Interpretations for Subpart '
+        return interpretations_for + label[2] + ' of Part ' + label[0]
 
 
 def _l2t_interp(label):
@@ -78,7 +79,7 @@ def _l2t_interp(label):
 def _l2t_appendix(label):
     """Helper function converting appendix labels to text. Assumes
     _l2t_subterp and _l2t_interp failed"""
-    if label[1].isalpha():
+    if type_from_label(label) == APPENDIX:
         # Appendix
         if len(label) == 2:  # e.g. 225-B
             return 'Appendix ' + label[1] + ' to Part ' + label[0]

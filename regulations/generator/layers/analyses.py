@@ -1,6 +1,42 @@
 from itertools import takewhile
 
 from regulations.generator.node_types import label_to_text
+from regulations.generator.layers.tree_builder import make_label_sortable
+
+
+def sort_regtext_label(label):
+    """ Make a regtext label sortable """
+    sortable = [make_label_sortable(l)[0] for l in label]
+    if len(sortable) > 4:
+        sortable[4] = make_label_sortable(sortable[4], roman=True)[0]
+    return sortable
+
+
+def sort_analyses(analyses):
+    """ Sort the labels, so that the list of section-by-section analyses
+    can be displayed in the correct order. """
+    if analyses:
+        for a in analyses:
+            label = a['label_id'].split('-')
+            if 'Interp' not in a['label_id']:
+                sortable = sort_regtext_label(label)
+            else:
+                prefix = label[:label.index('Interp')]
+                suffix = label[label.index('Interp') + 1:]
+
+                prefix_sortable = sort_regtext_label(prefix)
+
+                suffix_sortable = [make_label_sortable(l)[0] for l in suffix]
+                if len(suffix_sortable) > 1:
+                    suffix_sortable[1] = make_label_sortable(
+                        suffix_sortable[1], roman=True)[0]
+                sortable = prefix_sortable + suffix_sortable
+            a['sortable'] = tuple(sortable)
+        sorted_analyses = sorted(analyses, key=lambda a: a['sortable'])
+        for a in sorted_analyses:
+            if 'sortable' in a:
+                del a['sortable']
+        return sorted_analyses
 
 
 class SectionBySectionLayer(object):
@@ -49,5 +85,6 @@ class SectionBySectionLayer(object):
                   and ('Interp' in requested) == key_is_interp):
                 analyses.extend(self.to_template_dict(key))
 
+        analyses = sort_analyses(analyses)
         if analyses:
-            return 'analyses', sorted(analyses, key=lambda a: a['label_id'])
+            return 'analyses', analyses

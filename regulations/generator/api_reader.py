@@ -30,18 +30,20 @@ class ApiReader(object):
             ['regversions', label],
             'regulation/%s' % label)
 
-    def cache_root_and_interps(self, reg_tree, version):
+    def cache_root_and_interps(self, reg_tree, version, is_root=True):
         """We will re-use the root tree at multiple points during page
         rendering, so cache it now. If caching an interpretation, also store
-        child interpretations (so that, when rendering slide-down
+        child interpretations with titles (so that, when rendering slide-down
         interpretations, we don't perform additional fetches)"""
-        tree_id = '-'.join(reg_tree['label'])
-        cache_key = self.cache.generate_key(['regulation', tree_id, version])
-        self.cache.set(cache_key, reg_tree)
+        if is_root or reg_tree.get('title'):
+            tree_id = '-'.join(reg_tree['label'])
+            cache_key = self.cache.generate_key(['regulation', tree_id,
+                                                 version])
+            self.cache.set(cache_key, reg_tree)
 
         for child in reg_tree['children']:
-            if child['label'][-1] == 'Interp':
-                self.cache_root_and_interps(child, version)
+            if child.get('node_type') == 'interp':
+                self.cache_root_and_interps(child, version, False)
 
     def regulation(self, label, version):
         cache_key = self.cache.generate_key(['regulation', label, version])

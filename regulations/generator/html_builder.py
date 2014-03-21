@@ -68,11 +68,11 @@ class HTMLBuilder():
     def process_node_title(self, node):
         if 'title' in node:
             node['header'] = node['title']
-            node['header'] = HTMLBuilder.section_space(node['header'])
-
             if self.diff_applier:
                 node['header'] = self.diff_applier.apply_diff(
                     node['header'], node['label_id'], component='title')
+
+            node['header'] = HTMLBuilder.section_space(node['header'])
 
     def process_node(self, node):
         node['label_id'] = '-'.join(node['label'])
