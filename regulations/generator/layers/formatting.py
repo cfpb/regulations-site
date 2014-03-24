@@ -12,21 +12,23 @@ class FormattingLayer(object):
         self.table_tpl = loader.get_template('regulations/layers/table.html')
         self.note_tpl = loader.get_template('regulations/layers/note.html')
         self.code_tpl = loader.get_template('regulations/layers/code.html')
+        self.subscript_tpl = loader.get_template(
+            'regulations/layers/subscript.html')
 
     def render_table(self, table):
         max_width = 0
         for header_row in table['header']:
             width = sum(cell['colspan'] for cell in header_row)
             max_width = max(max_width, width)
-         
+
         #  Just in case a row is longer than the header
         row_max = max(len(row) for row in table['rows'])
         max_width = max(max_width, row_max)
-         
+
         #  Now pad rows if needed
         for row in table['rows']:
             row.extend([''] * (max_width - len(row)))
-            
+
         context = Context(table)
         #   Remove new lines so that they don't get escaped on display
         return self.table_tpl.render(context).replace('\n', '')
@@ -61,5 +63,11 @@ class FormattingLayer(object):
                     layer_pairs.append((data['text'],
                                         self.render_code(data['fence_data']),
                                         data['locations']))
+                if 'subscript_data' in data:
+                    layer_pairs.append((
+                        data['text'],
+                        self.subscript_tpl.render(Context(
+                            data['subscript_data'])).replace('\n', ''),
+                        data['locations']))
 
         return layer_pairs
