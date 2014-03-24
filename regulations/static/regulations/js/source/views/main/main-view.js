@@ -11,7 +11,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             if (Router.hasPushState) {
                 this.externalEvents.on('search-results:open', this.createView, this);
                 this.externalEvents.on('section:open', this.createView, this);
-                this.externalEvents.on('section:remove', this.removeView, this);
                 this.externalEvents.on('diff:open', this.createView, this);
                 this.externalEvents.on('breakaway:open', this.breakawayOpen, this);
                 this.externalEvents.on('section:error', this.displayError, this);
@@ -145,10 +144,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             }
 
             this.childView = new this.viewmap[this.contentType](options);
-        },
-
-        removeView: function() {
-            this.childView.remove();
         },
 
         isAppendixOrSupplement: function() {
