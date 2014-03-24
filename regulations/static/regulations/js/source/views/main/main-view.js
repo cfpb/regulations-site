@@ -163,10 +163,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         breakawayOpen: function(cb) {
             this.breakawayCallback = cb;
-
-            // nice fade out of content
-            this.$el.children().fadeOut(750);
-            this.childView.remove();
+            this.loading();
         },
 
         displayError: function() {
