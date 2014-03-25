@@ -53,7 +53,7 @@ class ParagraphSXSView(TemplateView):
         except NoReverseMatch:
             return HttpResponseBadRequest("invalid from_version")
 
-    def further_analyses(self, label_id, notice_id, version):
+    def further_analyses(self, label_id, notice_id, fr_page, version):
         """Grab other analyses for this same paragraph (limiting to those
            visible from this regulation version.) Make them in descending
            order"""
@@ -65,7 +65,8 @@ class ParagraphSXSView(TemplateView):
         else:
             return [convert_to_python(a)
                     for a in reversed(sxs_layer_data[label_id])
-                    if a['reference'] != [notice_id, label_id]]
+                    if (a['reference'] != [notice_id, label_id]
+                        or a['fr_page'] != fr_page)]
 
     def footnote_refs(self, sxs):
         """Add footnote references to paragraph text"""
@@ -127,6 +128,6 @@ class ParagraphSXSView(TemplateView):
         context['sxs']['all_footnotes'] = self.footnotes(notice, paragraph_sxs)
         context['notice'] = notice
         context['further_analyses'] = self.further_analyses(
-            label_id, notice_id, context['version'])
+            label_id, notice_id, paragraph_sxs['page'], context['version'])
 
         return context

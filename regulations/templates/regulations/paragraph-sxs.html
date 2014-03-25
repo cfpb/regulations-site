@@ -71,7 +71,7 @@
             <ul class="analysis-list">
             {% for analysis in further_analyses %}
                 <li><a 
-                    href="{% url 'chrome_sxs_view' analysis.reference.1 analysis.reference.0 %}?from_version={{version}}" 
+                    href="{% url 'chrome_sxs_view' analysis.reference.1 analysis.reference.0 %}?from_version={{version}}&fr_page={{analysis.fr_page}}" 
                     data-sxs-pararaph-id="{{analysis.reference.1}}"
                     data-doc-number="{{analysis.reference.0}}"
                     class="internal"

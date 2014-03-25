@@ -25,21 +25,39 @@ class ParagrasphSXSViewTests(TestCase):
 
         psv = ParagraphSXSView()
         self.assertEqual(
-            psv.further_analyses('1212-31', 'doc1', 'v1'),
+            psv.further_analyses('1212-31', 'doc1', 98989, 'v1'),
             convert_to_python([doc3, doc2]))
         self.assertEqual(
-            psv.further_analyses('1212-31', 'doc5', 'v1'),
+            psv.further_analyses('1212-31', 'doc5', 0, 'v1'),
             convert_to_python([doc3, doc2, doc1]))
         self.assertEqual(
-            psv.further_analyses('1212-31', 'doc3', 'v1'),
+            psv.further_analyses('1212-31', 'doc3', 90123, 'v1'),
             convert_to_python([doc2, doc1]))
 
         self.assertEqual(
-            psv.further_analyses('1212-31-b', 'doc3', 'v1'),
+            psv.further_analyses('1212-31-b', 'doc3', 90123, 'v1'),
             convert_to_python([doc4]))
-        self.assertEqual(psv.further_analyses('1212-31-b', 'doc4', 'v1'), [])
+        self.assertEqual(psv.further_analyses('1212-31-b', 'doc4', 98888,
+                                              'v1'), [])
+        self.assertEqual(psv.further_analyses('1212-31-c', 'doc1', 98989,
+                                              'v1'), [])
 
-        self.assertEqual(psv.further_analyses('1212-31-c', 'doc1', 'v1'), [])
+        # Same notice + label. Different page
+        doc5 = {'publication_date': '2009-04-05', 'fr_volume': 21,
+                'fr_page': 10101, 'reference': ['doc1', '1212-31']}
+        api_reader.ApiReader.return_value.layer.return_value = {
+            '1212-31': [doc1, doc2, doc3, doc5],
+            '1212-31-b': [doc4]
+        }
+        self.assertEqual(
+            psv.further_analyses('1212-31', 'doc1', 98989, 'v1'),
+            convert_to_python([doc5, doc3, doc2]))
+        self.assertEqual(
+            psv.further_analyses('1212-31', 'doc1', 10101, 'v1'),
+            convert_to_python([doc3, doc2, doc1]))
+        self.assertEqual(
+            psv.further_analyses('1212-31', 'doc3', 90123, 'v1'),
+            convert_to_python([doc5, doc2, doc1]))
 
     def test_section_ids(self):
         psv = ParagraphSXSView()
@@ -109,6 +127,7 @@ class ParagrasphSXSViewTests(TestCase):
         generator.get_sxs.return_value = {
             'labels': ['lablab', 'another-label'],
             'children': [],
+            'page': 1234,
             'paragraphs': ['some', 'content']
         }
         context = psv.get_context_data(label_id='lablab', notice_id='nnnn',
