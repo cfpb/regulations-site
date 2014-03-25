@@ -45,6 +45,9 @@ class ParagraphSXSView(TemplateView):
             }) + '#' + kwargs['label_id']
             kwargs['back_url'] = back_url
             kwargs['version'] = request.GET.get('from_version')
+            kwargs['fr_page'] = request.GET.get('fr_page')
+            if kwargs['fr_pages'].isdigit():
+                kwargs['fr_pages'] = int(kwargs['fr_pages'])
             return super(ParagraphSXSView, self).get(request, *args,
                                                      **kwargs)
         except NoReverseMatch:
@@ -98,13 +101,14 @@ class ParagraphSXSView(TemplateView):
 
         label_id = context['label_id']
         notice_id = context['notice_id']
+        fr_page = context.get('fr_page')
 
         notice = generator.get_notice(notice_id)
         if not notice:
             raise error_handling.MissingContentException()
         notice = convert_to_python(notice)
 
-        paragraph_sxs = generator.get_sxs(label_id, notice)
+        paragraph_sxs = generator.get_sxs(label_id, notice, fr_page)
 
         if paragraph_sxs is None:
             raise error_handling.MissingContentException()
