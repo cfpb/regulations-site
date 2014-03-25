@@ -17,8 +17,8 @@ define(['jquery', 'underscore', 'backbone', 'drawer-events', 'ga-events'], funct
         initialize: function() {
             this.externalEvents = DrawerEvents;
 
-            this.externalEvents.on('pane:change', this.changeActiveTab, this);
-            this.externalEvents.on('pane:init', this.setStartingTab, this);
+            this.listenTo(this.externalEvents, 'pane:change', this.changeActiveTab);
+            this.listenTo(this.externalEvents, 'pane:init', this.setStartingTab);
             this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer');
 
             // view switcher buttons - TOC, calendar, search

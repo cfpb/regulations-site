@@ -5,7 +5,7 @@ define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './reg
 
         initialize: function() {
             this.externalEvents = BreakawayEvents;
-            this.externalEvents.on('sxs:open', this.openSxS, this);
+            this.listenTo(this.externalEvents, 'sxs:open', this.openSxS);
         },
 
         openSxS: function(context) {

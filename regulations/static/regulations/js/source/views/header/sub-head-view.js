@@ -6,13 +6,13 @@ define('sub-head-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', 'he
         initialize: function() {
             this.externalEvents = HeaderEvents;
 
-            this.externalEvents.on('section:open', this.changeTitle, this);
-            this.externalEvents.on('search-results:open', this.displayCount, this);
-            this.externalEvents.on('search-results:open',this.changeDate, this);
-            this.externalEvents.on('search-results:open',this.removeSubpart, this);
-            this.externalEvents.on('clear', this.reset, this);
-            this.externalEvents.on('subpart:present', this.renderSubpart,this);
-            this.externalEvents.on('subpart:absent', this.removeSubpart, this);
+            this.listenTo(this.externalEvents, 'section:open', this.changeTitle);
+            this.listenTo(this.externalEvents, 'search-results:open', this.displayCount);
+            this.listenTo(this.externalEvents, 'search-results:open', this.changeDate);
+            this.listenTo(this.externalEvents, 'search-results:open', this.removeSubpart);
+            this.listenTo(this.externalEvents, 'clear', this.reset);
+            this.listenTo(this.externalEvents, 'subpart:present', this.renderSubpart);
+            this.listenTo(this.externalEvents, 'subpart:absent', this.removeSubpart);
 
             // cache inner title DOM node for frequent reference
             this.$activeTitle = this.$el.find('.header-label');

@@ -10,8 +10,8 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'main-events'], func
         },
 
         initialize: function() {
-            MainEvents.on('section:open', this.updateLinks, this);
-            MainEvents.on('diff:open', this.updateLinks, this);
+            this.listenTo(MainEvents, 'section:open', this.updateLinks);
+            this.listenTo(MainEvents, 'diff:open', this.updateLinks);
         },
 
         setStorageItem: function() {

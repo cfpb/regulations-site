@@ -6,7 +6,8 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
 
             this.model = this.options.model;
             this.externalEvents = MainEvents;
-            this.externalEvents.on('section:rendered', this.setElement, this);
+            this.listenTo(this.externalEvents, 'section:rendered', this.setElement);
+
             // callback to be sent to model's get method
             // called after ajax resolves sucessfully
             cb = function(success, returned) {
@@ -158,6 +159,7 @@ define('child-view', ['jquery', 'underscore', 'backbone', 'jquery-scrollstop', '
         remove: function() {
             $(window).off('scrollstop');
             this.stopListening();
+            this.off();
             return this;
         }
     });

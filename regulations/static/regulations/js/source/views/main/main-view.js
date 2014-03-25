@@ -11,7 +11,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             if (Router.hasPushState) {
                 this.externalEvents.on('search-results:open', this.createView, this);
                 this.externalEvents.on('section:open', this.createView, this);
-                this.externalEvents.on('section:remove', this.sectionCleanup, this);
                 this.externalEvents.on('diff:open', this.createView, this);
                 this.externalEvents.on('breakaway:open', this.breakawayOpen, this);
                 this.externalEvents.on('section:error', this.displayError, this);
@@ -142,6 +141,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             if (typeof this.childView !== 'undefined') {
                 this.childView.remove();
+                delete(this.childView);
             }
 
             this.childView = new this.viewmap[this.contentType](options);
@@ -159,6 +159,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
         breakawayOpen: function(cb) {
             this.breakawayCallback = cb;
+            this.loading();
         },
 
         displayError: function() {
@@ -186,8 +187,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             this.$el.html(html);
 
             MainEvents.trigger('section:rendered');
-
-            this.childView.attachWayfinding();
 
             SidebarEvents.trigger('update', {
                 'type': this.contentType,

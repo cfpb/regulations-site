@@ -42,7 +42,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
 
             SxSModel.get(this.options.url, render),
 
-            this.externalEvents.on('sxs:close', this.remove, this);
+            this.listenTo(this.externalEvents, 'sxs:close', this.remove);
 
             // if the browser doesn't support pushState, don't 
             // trigger click events for links

@@ -1,5 +1,5 @@
 // Defines some globally useful helper functions
-define('regs-helpers', function() {
+define('regs-helpers', ['jquery'], function($) {
     'use strict';
     
     // indexOf polyfill 
