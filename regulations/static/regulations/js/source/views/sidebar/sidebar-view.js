@@ -168,7 +168,7 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
             var k;
             for (k in this.childViews) {
                 if (this.childViews.hasOwnProperty(k)) {
-                    if (!except || except && except !== k) {
+                    if (!except || except !== k) {
                         this.childViews[k].remove();
                     }
                 }
