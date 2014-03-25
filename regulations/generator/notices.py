@@ -66,7 +66,7 @@ def find_label_in_sxs(sxs_list, label_id):
     label_id. """
 
     for s in sxs_list:
-        if s.get('label') == label_id and non_empty_sxs(s):
+        if label_id in s.get('labels', [s.get('label')]) and non_empty_sxs(s):
             return s
         elif s['children']:
             sxs = find_label_in_sxs(s['children'], label_id)

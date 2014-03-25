@@ -66,6 +66,8 @@ class LocationReplace(object):
                and locations[self.counter] in self.offsets):
             text = self.apply_layer_to_text(original, replacement, text,
                                             locations)
+            if original not in replacement:
+                self.offset_starter += 1
 
         self.update_offset_starter()
         return text
