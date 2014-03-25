@@ -100,3 +100,18 @@ class ParagrasphSXSViewTests(TestCase):
                          sxs['paragraphs'][2])
         self.assertEqual('Subparagraph[22] here',
                          sxs['children'][0]['paragraphs'][0])
+
+    @patch('regulations.views.partial_sxs.generator')
+    @patch('regulations.views.partial_sxs.notices')
+    @patch.object(ParagraphSXSView, 'further_analyses')
+    def test_get_context_data(self, further_analyses, notices, generator):
+        psv = ParagraphSXSView()
+        generator.get_sxs.return_value = {
+            'labels': ['lablab', 'another-label'],
+            'children': [],
+            'paragraphs': ['some', 'content']
+        }
+        context = psv.get_context_data(label_id='lablab', notice_id='nnnn',
+                                       version='vvv')
+        self.assertTrue('sxs' in context)
+        self.assertTrue('label' in context['sxs'])
