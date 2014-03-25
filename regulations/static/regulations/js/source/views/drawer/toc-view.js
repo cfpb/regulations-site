@@ -11,7 +11,8 @@ define('toc-view', ['jquery', 'underscore', 'backbone', 'regs-helpers', './regs-
         initialize: function() {
             var openSection = $('section[data-page-type]').attr('id');
 
-            DrawerEvents.on('section:open', this.setActive, this);
+            this.externalEvents = DrawerEvents;
+            this.listenTo(this.externalEvents, 'section:open', this.setActive);
 
             if (openSection) {
                 this.setActive(openSection);

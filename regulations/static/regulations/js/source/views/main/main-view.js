@@ -141,6 +141,7 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
 
             if (typeof this.childView !== 'undefined') {
                 this.childView.remove();
+                delete(this.childView);
             }
 
             this.childView = new this.viewmap[this.contentType](options);
@@ -186,8 +187,6 @@ define('main-view', ['jquery', 'underscore', 'backbone', 'search-results-view', 
             this.$el.html(html);
 
             MainEvents.trigger('section:rendered');
-
-            this.childView.attachWayfinding();
 
             SidebarEvents.trigger('update', {
                 'type': this.contentType,

@@ -18,10 +18,10 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
         initialize: function() {
             this.externalEvents = SidebarEvents;
-            this.externalEvents.on('definition:outOfScope', this.displayScopeMsg, this);
-            this.externalEvents.on('definition:inScope', this.removeScopeMsg, this);
-            this.externalEvents.on('definition:activate', this.unGrayDefinition, this);
-            this.externalEvents.on('definition:deactivate', this.grayOutDefinition, this);
+            this.listenTo(this.externalEvents, 'definition:outOfScope', this.displayScopeMsg);
+            this.listenTo(this.externalEvents, 'definition:inScope', this.removeScopeMsg);
+            this.listenTo(this.externalEvents, 'definition:activate', this.unGrayDefinition);
+            this.listenTo(this.externalEvents, 'definition:deactivate', this.grayOutDefinition);
 
             if (typeof this.options.id !== 'undefined') {
                 this.id = this.options.id;
@@ -177,6 +177,7 @@ define('definition-view', ['jquery', 'underscore', 'backbone', 'sidebar-module-v
 
         remove: function() {
             this.stopListening();
+            this.off();
             this.$el.html('');
             
             return this;

@@ -10,12 +10,12 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
         initialize: function() {
             this.openRegFolders = _.bind(this.openRegFolders, this);
             this.externalEvents = SidebarEvents;
-            this.externalEvents.on('update', this.updateChildViews, this);
-            this.externalEvents.on('definition:open', this.openDefinition, this);
-            this.externalEvents.on('definition:close', this.closeDefinition, this);
-            this.externalEvents.on('section:loading', this.loading, this);
-            this.externalEvents.on('section:error', this.loaded, this);
-            this.externalEvents.on('breakaway:open', this.hideChildren, this);
+            this.listenTo(this.externalEvents, 'update', this.updateChildViews);
+            this.listenTo(this.externalEvents, 'definition:open', this.openDefinition);
+            this.listenTo(this.externalEvents, 'definition:close', this.closeDefinition);
+            this.listenTo(this.externalEvents, 'section:loading', this.loading);
+            this.listenTo(this.externalEvents, 'section:error', this.loaded);
+            this.listenTo(this.externalEvents, 'breakaway:open', this.hideChildren);
 
             this.childViews = {};
             this.openRegFolders();
@@ -87,8 +87,6 @@ define('sidebar-view', ['jquery', 'underscore', 'backbone', 'sxs-list-view', 'he
         },
 
         openRegFolders: function(success, html) {
-            var len;
-
             // close all except definition
             this.closeChildren('definition');
 

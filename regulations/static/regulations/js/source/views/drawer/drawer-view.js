@@ -7,8 +7,8 @@ define('drawer-view', ['jquery', 'underscore', 'backbone', 'toc-view', 'history-
         initialize: function() {
             this.externalEvents = DrawerEvents;
 
-            this.externalEvents.on('pane:change', this.setActivePane, this);
-            this.externalEvents.on('pane:init', this.setActivePane, this);
+            this.listenTo(this.externalEvents, 'pane:change', this.setActivePane);
+            this.listenTo(this.externalEvents, 'pane:init', this.setActivePane);
 
             this.$label = $('.toc-type');
             this.$children = $('.toc-container');
