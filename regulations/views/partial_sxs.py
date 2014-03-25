@@ -116,6 +116,8 @@ class ParagraphSXSView(TemplateView):
         self.footnote_refs(paragraph_sxs)
 
         context['sxs'] = paragraph_sxs
+        # Template assumes a single label
+        context['sxs']['label'] = context['label_id']
         context['sxs']['header'] = label_to_text(label_id.split('-'),
                                                  include_marker=True)
         context['sxs']['all_footnotes'] = self.footnotes(notice, paragraph_sxs)
