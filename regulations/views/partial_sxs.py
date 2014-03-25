@@ -46,8 +46,8 @@ class ParagraphSXSView(TemplateView):
             kwargs['back_url'] = back_url
             kwargs['version'] = request.GET.get('from_version')
             kwargs['fr_page'] = request.GET.get('fr_page')
-            if kwargs['fr_pages'].isdigit():
-                kwargs['fr_pages'] = int(kwargs['fr_pages'])
+            if kwargs['fr_page'] and kwargs['fr_page'].isdigit():
+                kwargs['fr_page'] = int(kwargs['fr_page'])
             return super(ParagraphSXSView, self).get(request, *args,
                                                      **kwargs)
         except NoReverseMatch:

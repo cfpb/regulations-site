@@ -72,7 +72,7 @@ def find_label_in_sxs(sxs_list, label_id, fr_page=None):
         if label_id in s.get('labels', [s.get('label')]) and non_empty_sxs(s):
             matches.append(s)
         elif s['children']:
-            sxs = find_label_in_sxs(s['children'], label_id)
+            sxs = find_label_in_sxs(s['children'], label_id, fr_page)
             if sxs and non_empty_sxs(sxs):
                 matches.append(sxs)
 

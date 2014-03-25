@@ -138,6 +138,8 @@ class NoticesTest(TestCase):
             {'labels': ['204-3'], 'page': 3456, 'paragraphs': ['c'],
              'children': [
                 {'labels': ['204-3-a'], 'page': 3457, 'paragraphs': ['d'],
+                 'children': []},
+                {'labels': ['204-3-a'], 'page': 3460, 'paragraphs': ['e'],
                  'children': []}]}]
 
         s = notices.find_label_in_sxs(sxs_list, '204-3')
@@ -157,6 +159,8 @@ class NoticesTest(TestCase):
         self.assertEqual(['b'], s['paragraphs'])
         s = notices.find_label_in_sxs(sxs_list, '204-3-a', 3457)
         self.assertEqual(['d'], s['paragraphs'])
+        s = notices.find_label_in_sxs(sxs_list, '204-3-a', 3460)
+        self.assertEqual(['e'], s['paragraphs'])
 
     def test_non_empty_sxs(self):
         sxs = {'label': '204-2-a', 'children': [], 'paragraphs': ['abc']}
