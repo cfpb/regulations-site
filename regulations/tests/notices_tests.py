@@ -129,6 +129,39 @@ class NoticesTest(TestCase):
         self.assertEqual(['204-3'], s['labels'])
         self.assertEqual(['x'], s['paragraphs'])
 
+    def test_find_label_in_sxs_page(self):
+        sxs_list = [
+            {'labels': ['204-3'], 'page': 1234, 'paragraphs': ['a'],
+             'children': [
+                {'labels': ['204-3-a'], 'page': 1234, 'paragraphs': ['b'],
+                 'children': []}]},
+            {'labels': ['204-3'], 'page': 3456, 'paragraphs': ['c'],
+             'children': [
+                {'labels': ['204-3-a'], 'page': 3457, 'paragraphs': ['d'],
+                 'children': []},
+                {'labels': ['204-3-a'], 'page': 3460, 'paragraphs': ['e'],
+                 'children': []}]}]
+
+        s = notices.find_label_in_sxs(sxs_list, '204-3')
+        self.assertEqual(['a'], s['paragraphs'])
+        s = notices.find_label_in_sxs(sxs_list, '204-3', 1234)
+        self.assertEqual(['a'], s['paragraphs'])
+        s = notices.find_label_in_sxs(sxs_list, '204-3', 9999)
+        self.assertEqual(['a'], s['paragraphs'])
+        s = notices.find_label_in_sxs(sxs_list, '204-3', 3456)
+        self.assertEqual(['c'], s['paragraphs'])
+
+        s = notices.find_label_in_sxs(sxs_list, '204-3-a')
+        self.assertEqual(['b'], s['paragraphs'])
+        s = notices.find_label_in_sxs(sxs_list, '204-3-a', 1234)
+        self.assertEqual(['b'], s['paragraphs'])
+        s = notices.find_label_in_sxs(sxs_list, '204-3-a', 9999)
+        self.assertEqual(['b'], s['paragraphs'])
+        s = notices.find_label_in_sxs(sxs_list, '204-3-a', 3457)
+        self.assertEqual(['d'], s['paragraphs'])
+        s = notices.find_label_in_sxs(sxs_list, '204-3-a', 3460)
+        self.assertEqual(['e'], s['paragraphs'])
+
     def test_non_empty_sxs(self):
         sxs = {'label': '204-2-a', 'children': [], 'paragraphs': ['abc']}
         self.assertTrue(notices.non_empty_sxs(sxs))

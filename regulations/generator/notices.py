@@ -61,14 +61,23 @@ def add_depths(sxs, starting_depth):
         add_depths(s, starting_depth+1)
 
 
-def find_label_in_sxs(sxs_list, label_id):
+def find_label_in_sxs(sxs_list, label_id, fr_page=None):
     """ Given a tree of SXS sections, find a non-empty sxs that matches
-    label_id. """
+    label_id. Some notices may have the same label appearing multiple times;
+    use fr_page to distinguish, defaulting to the first"""
+
+    matches = []
 
     for s in sxs_list:
         if label_id in s.get('labels', [s.get('label')]) and non_empty_sxs(s):
-            return s
+            matches.append(s)
         elif s['children']:
-            sxs = find_label_in_sxs(s['children'], label_id)
+            sxs = find_label_in_sxs(s['children'], label_id, fr_page)
             if sxs and non_empty_sxs(sxs):
-                return sxs
+                matches.append(sxs)
+
+    perfect_match = [m for m in matches if m.get('page') == fr_page]
+    if perfect_match:
+        return perfect_match[0]
+    if matches:
+        return matches[0]
