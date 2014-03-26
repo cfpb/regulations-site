@@ -5,7 +5,8 @@ from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
-from regulations.generator.node_types import EMPTYPART, REGTEXT, label_to_text
+from regulations.generator.node_types import (EMPTYPART, REGTEXT, 
+    label_to_text, to_markup_id)
 from regulations.views import navigation, utils
 
 
@@ -89,6 +90,11 @@ class PartialParagraphView(PartialSectionView):
             node = {'node_type': node['node_type'],
                     'children': [node],
                     'label': node['label'][:-1]}
+
+        # added to give the proper parent container ID
+        # when interp headers are rendered
+        node['markup_id'] = context['label_id']
+
         # One more layer for regtext
         if node['node_type'] == REGTEXT:
             node = {'node_type': EMPTYPART,
