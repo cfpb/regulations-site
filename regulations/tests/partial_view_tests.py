@@ -24,6 +24,7 @@ class PartialParagraphViewTests(TestCase):
                 'node_type': EMPTYPART, 'label': ['1111', 'Subpart'],
                 'children': [{
                     'node_type': REGTEXT, 'label': ['1111', '22'],
+                    'markup_id': '1111-22-a-5-i',
                     'children': [{
                         'node_type': REGTEXT, 'label': ['1111', '22', 'a'],
                         'children': [builder.tree]}]}]}]})
@@ -36,6 +37,7 @@ class PartialParagraphViewTests(TestCase):
             'node_type': REGTEXT, 'label': ['1111'],
             'children': [{
                 'node_type': INTERP, 'label': ['1111', 'Interp'],
+                'markup_id': '1111-Interp-h1',
                 'children': [builder.tree]}]})
 
 
