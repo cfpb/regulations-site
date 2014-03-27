@@ -14,7 +14,7 @@ var require = { "paths" :
         "sidebar-view": "./views/sidebar/sidebar-view",
         "reg-view": "./views/main/reg-view",
         "diff-view": "./views/main/diff-view",
-        "konami": "./lib/konami/index",
+        "konami": "./lib/konami/konami",
         "analytics-handler": "./views/analytics-handler-view",
         "header-view": "./views/header/header-view",
         "section-footer-view": "./views/main/section-footer-view",
@@ -62,7 +62,8 @@ var require = { "paths" :
             "exports": "Backbone"
         },
         "konami": {
-            "exports": "Konami"
+            "exports": "__konami__",
+            "deps": ["jquery"]
         },
         "jquery-scrollstop": {
             "deps": ["jquery"]

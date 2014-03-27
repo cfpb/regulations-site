@@ -13,7 +13,8 @@
             "exports": "Backbone"
         },
         "konami": {
-            "exports": "Konami"
+            "exports": "__konami__",
+            "deps": ["jquery"]
         },
         "jquery-scrollstop": {
             "deps": ["jquery"]
