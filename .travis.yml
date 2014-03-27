@@ -20,6 +20,7 @@ install:
     - sudo npm install
     - bower install
     - cp example-config.json config.json
+    - if [ "$SAUCE_OK" == 1 ]; then pip install nose-testconfig; fi
 script:
     - ./require.sh
     - ./bin/test
