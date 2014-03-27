@@ -20,6 +20,7 @@
         </div> <!-- /.inner-wrap -->
     </div> <!-- /.hero -->
 
+    {% block about-intro %}
     <section class="about-section group" id="about-intro">
     <div class="inner-wrap group">
         <div class="content-primary column-l">
@@ -46,6 +47,8 @@
         </div>
     </div>
     </section>
+    {% endblock %}
+    {% block about-navigation %}
     <section class="about-section group" id="navigation">
         <div class="inner-wrap">
         <h3>Easy to navigate</h3>
@@ -91,7 +94,9 @@
         <img src="{%static "regulations/img/nav-wayfinding.gif" %}" class="bump responsive-img" alt="eRegulations navigation screenshot">
     </div>
     </section>
+    {% endblock %}
 
+    {% block about-related-info %}
     <section class="about-section group" id="related-info">
         <div class="inner-wrap">
         <h3>Related information</h3>
@@ -117,7 +122,9 @@
 
     </div>
     </section>
+    {% endblock %}
 
+    {% block about-timeline %}
     <section class="about-section group" id="timeline">
         <div class="inner-wrap">
         <h3>Regulation timeline</h3>
@@ -127,7 +134,7 @@
         </div>
 
         <div class="content-primary column-r">
-            <p class="about-timeline">The <strong>regulation timeline</strong> shows recent revisions of the regulation organized by latest effective date. Revisions are available from restatement (when the CFPB took authority) forward.</p>
+            <p class="about-timeline">The <strong>regulation timeline</strong> shows recent revisions of the regulation organized by latest effective date.</p>
 
             <ol class="about-ol bump">
                 <li>The <strong>date picker</strong> allows users to find what past revision was effective on a specific date.</li>
@@ -139,6 +146,7 @@
         </div>
     </div>
     </section>
+    {% endblock %}
 
 </div>
 
