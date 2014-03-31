@@ -8,5 +8,6 @@ def about(request):
    utils.add_extras(context)
    c = RequestContext(request, context)
    t = select_template([
+        'regulations/custom-about.html',
         'regulations/about.html'])
    return HttpResponse(t.render(c))

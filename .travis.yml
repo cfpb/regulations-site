@@ -11,7 +11,7 @@ before_script:
     - function START_SAUCE_CONNECT { curl -L https://gist.githubusercontent.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash & }
     - if [ "$SAUCE_OK" == 1 ]; then START_SAUCE_CONNECT; fi;
 install:
-    - pip install zc.buildout distribute selenium
+    - pip install zc.buildout distribute selenium nose-testconfig
     - buildout
     - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
     - sudo apt-get update
