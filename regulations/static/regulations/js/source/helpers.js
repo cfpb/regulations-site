@@ -1,5 +1,5 @@
 // Defines some globally useful helper functions
-define('regs-helpers', ['jquery'], function($) {
+define('regs-helpers', ['jquery', 'underscore'], function($, _) {
     'use strict';
     
     // indexOf polyfill 
@@ -42,33 +42,6 @@ define('regs-helpers', ['jquery'], function($) {
                 return true;
             }
             return false;
-        },
-
-        // **Params**
-        // ```href```: String, url
-        // ```text```: String, link text 
-        // ```classStr```: String, optional, class name
-        //
-        // **Returns**
-        // jQobj: new link
-        //
-        // verbose, but much faster than the concise jquery alternatives
-        // http://jsperf.com/create-dom-element/8
-        fastLink: function(href, text, classStr, dataConfig) {
-            var link = document.createElement('a'),
-                $link;
-
-            $link = $(link);
-            link.href = href;
-            link.innerHTML = text;
-            link.className = classStr || '';
-
-            // takes an array to add a data attr
-            if (typeof dataConfig !== 'undefined') {
-                link[dataConfig[0]] = dataConfig[1];
-            }
-
-            return $link;
         },
 
         // **Params**
@@ -146,20 +119,26 @@ define('regs-helpers', ['jquery'], function($) {
                 return 'Supplement I to Appendices';
             }
 
-            /* we have a paragraph, can also be the second part of a supplement*/
-            for (i = 0; i <= len; i++) {
-                // return part number alone
-                if (len < 1) {
-                    return ref += parts[i];
-                }
+            /* the second part of a supplement to an appendix */
+            if (len === 1 && isNaN(parts[1])) {
+                return ref += parts[1];
+            }
+            else {
+                /* we have a paragraph */
+                for (i = 0; i <= len; i++) {
+                    // return part number alone
+                    if (len < 1) {
+                        return ref += parts[i];
+                    }
 
-                // top paragraph has no punctuation
-                if (i === 1) {
-                    ref += parts[i];
-                }
-                else {
-                    item = dividers[i].split(' '); 
-                    ref += item[0] + parts[i] + item[1];
+                    // top paragraph has no punctuation
+                    if (i === 1) {
+                        ref += parts[i];
+                    }
+                    else {
+                        item = dividers[i].split(' '); 
+                        ref += item[0] + parts[i] + item[1];
+                    }
                 }
             }
 

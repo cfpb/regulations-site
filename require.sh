@@ -1,6 +1,6 @@
 #!/bin/bash
 UICONF=regulations/static/regulations/js/source/require.config.js
-TESTCONF=regulations/static/regulations/js/tests/browser/test.config.js
+TESTCONF=regulations/static/regulations/js/unittests/test.config.js
 rm -f $UICONF
 touch $UICONF
 echo 'var require = { "paths" :' >> $UICONF
@@ -15,7 +15,7 @@ cat require.paths.json >> $TESTCONF
 echo ', "shim":' >> $TESTCONF
 cat require.shim.json >> $TESTCONF
 echo '});' >> $TESTCONF
-echo "require(['../specs/regs-helpers-spec.js', '../specs/dispatch-spec.js', '../specs/reg-model-spec.js'], function() {
+echo "require(['specs/helpers-spec.js'], function() {
             if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
             else { mocha.run(); }
         });" >> $TESTCONF

@@ -1,4 +1,4 @@
-var require = { "paths" :
+require.config({"baseUrl": "/static/regulations/js/source", "paths":
 {
         "jquery": "./lib/jquery/dist/jquery",
         "underscore": "./lib/underscore/underscore",
@@ -70,4 +70,8 @@ var require = { "paths" :
             "deps": ["jquery"]
         }
 }
-}
+});
+require(['specs/helpers-spec.js'], function() {
+            if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+            else { mocha.run(); }
+        });
