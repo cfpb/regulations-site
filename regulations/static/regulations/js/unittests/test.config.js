@@ -3,7 +3,6 @@ require.config({"baseUrl": "/static/regulations/js/source", "paths":
         "jquery": "./lib/jquery/dist/jquery",
         "underscore": "./lib/underscore/underscore",
         "backbone": "./lib/backbone/backbone",
-        "samplejson": "../tests/grunt/js/fixtures/sample-json",
         "jquery-scrollstop": "./lib/jquery.scrollstop/index",
         "queryparams": "./lib/backbone.queryparams/index",
         "unveil": "./lib/unveil/jquery.unveil",
@@ -14,7 +13,7 @@ require.config({"baseUrl": "/static/regulations/js/source", "paths":
         "sidebar-view": "./views/sidebar/sidebar-view",
         "reg-view": "./views/main/reg-view",
         "diff-view": "./views/main/diff-view",
-        "konami": "./lib/konami/konami",
+        "konami": "./lib/konami/index",
         "analytics-handler": "./views/analytics-handler-view",
         "header-view": "./views/header/header-view",
         "section-footer-view": "./views/main/section-footer-view",
@@ -62,8 +61,7 @@ require.config({"baseUrl": "/static/regulations/js/source", "paths":
             "exports": "Backbone"
         },
         "konami": {
-            "exports": "__konami__",
-            "deps": ["jquery"]
+            "exports": "Konami",
         },
         "jquery-scrollstop": {
             "deps": ["jquery"]
@@ -73,7 +71,7 @@ require.config({"baseUrl": "/static/regulations/js/source", "paths":
         }
 }
 });
-require(['specs/regs-helpers-spec.js'], function() {
+require(['../specs/regs-helpers-spec.js'], function() {
             if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
             else { mocha.run(); }
         });

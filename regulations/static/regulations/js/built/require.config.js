@@ -3,7 +3,6 @@ var require = { "paths" :
         "jquery": "./lib/jquery/dist/jquery",
         "underscore": "./lib/underscore/underscore",
         "backbone": "./lib/backbone/backbone",
-        "samplejson": "../tests/grunt/js/fixtures/sample-json",
         "jquery-scrollstop": "./lib/jquery.scrollstop/index",
         "queryparams": "./lib/backbone.queryparams/index",
         "unveil": "./lib/unveil/jquery.unveil",
@@ -14,7 +13,7 @@ var require = { "paths" :
         "sidebar-view": "./views/sidebar/sidebar-view",
         "reg-view": "./views/main/reg-view",
         "diff-view": "./views/main/diff-view",
-        "konami": "./lib/konami/konami",
+        "konami": "./lib/konami/index",
         "analytics-handler": "./views/analytics-handler-view",
         "header-view": "./views/header/header-view",
         "section-footer-view": "./views/main/section-footer-view",
@@ -62,8 +61,7 @@ var require = { "paths" :
             "exports": "Backbone"
         },
         "konami": {
-            "exports": "__konami__",
-            "deps": ["jquery"]
+            "exports": "Konami",
         },
         "jquery-scrollstop": {
             "deps": ["jquery"]
