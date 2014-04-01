@@ -3,10 +3,67 @@ regulations-site
 
 [![Build Status](https://travis-ci.org/eregs/regulations-site.png?branch=master)](https://travis-ci.org/eregs/regulations-site)
 
-An interface for viewing regulations data.
+An interface for viewing regulations data. This project combines all of the
+data from a parsed regulation and generates navigable, accessible HTML,
+complete with associated information.
 
 This repository is part of a larger project. To read about it, please see 
 [http://eregs.github.io/eregulations/](http://eregs.github.io/eregulations/).
+
+## Features
+
+* Navigability: Instead of the monolithic text usually used to represent
+  regulations, proper indentation, spacing, etc. presents the text in a
+  clean, readable form.
+* Inline Interpretations: Associated interpretations are displayed right
+  along side the paragraph/section/appendix they are interpreting.
+* Definitions: Defined terms are highlighted in the regulation text;
+  clicking them opens the term's definition in the sidebar.
+* Internal Citations: Citations to other parts of the same regulation are
+  clickable links, allowing easy navigation within a regulation
+* Alternate Versions of the Regulation: Quick access to versions of the
+  regulation by browsing effective dates, or typing in an arbitrary date is
+  provided.
+* Comparing Versions: A "Diff-view" is provided to highlight additions and
+  deletions between versions of the regulation.
+* Section-by-Section Analysis: Analysis for regulation
+  paragraphs/sections/appendices are provided in the sidebar. This analysis
+  comes from Federal Register notice preambles.
+* Additional Formatting Concerns: Tables, subscripts, notes, and even source
+  code found within the regulation are rendered as appropriate markup.
+* Responsive Design: The application design is responsive, adjusting to the
+  device and screen size of the user.
+
+## Screenshot
+
+![eRegs](/regulations/static/regulations/img/easy-01.png)
+
+## Requirements
+
+This application lives in two worlds, roughly translating to a Python,
+Django app, and a Backbone, Javascript app, which communicate through the
+Django templates. To get started quickly, we provide a default, pre-compiled
+version of the Javascript assets.
+
+### Python
+
+Requirements are retrieved and/or build automatically via buildout (see
+below).
+
+* zc-buildout - Tool used for building the application and handling
+  dependencies
+* lxml - Used to convert strings into XML for processing
+* requests - Client library for reading data from an API
+
+If running tests:
+
+* mock - makes constructing mock objects/functions easy
+* django-nose - provides nosetest as a test runner
+* nose-exclude - allows certain directories to be excluded from nose
+* nose-testconfig - pass configuration data to tests; used to configure
+  selenium tests
+* coverage - provides test-coverage metrics
+* selenium - functional testing via a headless web browser
 
 ## Buildout
 
