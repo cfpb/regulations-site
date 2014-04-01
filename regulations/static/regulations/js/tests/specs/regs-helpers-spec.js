@@ -9,7 +9,7 @@ define(['jquery', 'regs-helpers'], function($, RegsHelpers) {
 
             expect('Supplement I to Part 13').to.be(RegsHelpers.idToRef('13-Interp'));
 
-            expect('Supplement I to §13.4').to.be(RegsHelpers.idToRef('13-4-a-Interp-1'));
+            expect('Supplement I to §13.4(a)').to.be(RegsHelpers.idToRef('13-4-a-Interp-1'));
 
             expect('Supplement I to Appendix G').to.be(RegsHelpers.idToRef('13-G-Interp-1'));
 
