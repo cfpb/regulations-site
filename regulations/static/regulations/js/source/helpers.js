@@ -133,7 +133,6 @@ define('regs-helpers', ['jquery', 'underscore'], function($, _) {
             }
             /* if we have an appendix */
             else if (isNaN(parseInt(parts[1], 10))) {
-debugger;
                 return this.appendixId(parts[0], parts[1]);
             }
 
@@ -147,20 +146,26 @@ debugger;
                 return 'Supplement I to Appendices';
             }
 
-            /* we have a paragraph, can also be the second part of a supplement*/
-            for (i = 0; i <= len; i++) {
-                // return part number alone
-                if (len < 1) {
-                    return ref += parts[i];
-                }
+            /* the second part of a supplement to an appendix */
+            if (len === 1 && isNaN(parts[1])) {
+                return ref += parts[1];
+            }
+            else {
+                /* we have a paragraph */
+                for (i = 0; i <= len; i++) {
+                    // return part number alone
+                    if (len < 1) {
+                        return ref += parts[i];
+                    }
 
-                // top paragraph has no punctuation
-                if (i === 1) {
-                    ref += parts[i];
-                }
-                else {
-                    item = dividers[i].split(' '); 
-                    ref += item[0] + parts[i] + item[1];
+                    // top paragraph has no punctuation
+                    if (i === 1) {
+                        ref += parts[i];
+                    }
+                    else {
+                        item = dividers[i].split(' '); 
+                        ref += item[0] + parts[i] + item[1];
+                    }
                 }
             }
 

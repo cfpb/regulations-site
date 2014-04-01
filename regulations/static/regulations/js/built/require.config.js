@@ -61,7 +61,7 @@ var require = { "paths" :
             "exports": "Backbone"
         },
         "konami": {
-            "exports": "Konami",
+            "exports": "Konami"
         },
         "jquery-scrollstop": {
             "deps": ["jquery"]
