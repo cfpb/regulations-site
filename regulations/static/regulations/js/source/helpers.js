@@ -45,33 +45,6 @@ define('regs-helpers', ['jquery', 'underscore'], function($, _) {
         },
 
         // **Params**
-        // ```href```: String, url
-        // ```text```: String, link text 
-        // ```classStr```: String, optional, class name
-        //
-        // **Returns**
-        // jQobj: new link
-        //
-        // verbose, but much faster than the concise jquery alternatives
-        // http://jsperf.com/create-dom-element/8
-        fastLink: function(href, text, classStr, dataConfig) {
-            var link = document.createElement('a'),
-                $link;
-
-            $link = $(link);
-            link.href = href;
-            link.innerHTML = text;
-            link.className = classStr || '';
-
-            // takes an array to add a data attr
-            if (typeof dataConfig !== 'undefined') {
-                link[dataConfig[0]] = dataConfig[1];
-            }
-
-            return $link;
-        },
-
-        // **Params**
         // ```interpParts```: Array of Strings or Numbers, entity that is 
         // interpreted
         //

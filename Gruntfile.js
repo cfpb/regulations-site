@@ -147,7 +147,6 @@ module.exports = function(grunt) {
   /**
    * The above tasks are loaded here.
    */
-    grunt.loadNpmTasks('grunt-mocha');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-shell');
