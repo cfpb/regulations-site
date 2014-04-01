@@ -61,7 +61,7 @@ require.config({"baseUrl": "/static/regulations/js/source", "paths":
             "exports": "Backbone"
         },
         "konami": {
-            "exports": "Konami",
+            "exports": "Konami"
         },
         "jquery-scrollstop": {
             "deps": ["jquery"]
@@ -71,7 +71,7 @@ require.config({"baseUrl": "/static/regulations/js/source", "paths":
         }
 }
 });
-require(['../specs/regs-helpers-spec.js'], function() {
+require(['../specs/helpers-spec.js'], function() {
             if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
             else { mocha.run(); }
         });

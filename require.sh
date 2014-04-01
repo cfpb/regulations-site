@@ -15,7 +15,7 @@ cat require.paths.json >> $TESTCONF
 echo ', "shim":' >> $TESTCONF
 cat require.shim.json >> $TESTCONF
 echo '});' >> $TESTCONF
-echo "require(['../specs/regs-helpers-spec.js'], function() {
+echo "require(['../specs/helpers-spec.js'], function() {
             if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
             else { mocha.run(); }
         });" >> $TESTCONF
