@@ -133,6 +133,7 @@ define('regs-helpers', ['jquery', 'underscore'], function($, _) {
             }
             /* if we have an appendix */
             else if (isNaN(parseInt(parts[1], 10))) {
+debugger;
                 return this.appendixId(parts[0], parts[1]);
             }
 
