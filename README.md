@@ -13,7 +13,7 @@ This repository is part of a larger project. To read about it, please see
 ## Features
 
 * Navigability: Instead of the monolithic text usually used to represent
-  regulations, proper indentation, spacing, etc. presents the text in a
+  regulations, proper indentation, spacing, etc., this presents the text in a
   clean, readable form.
 * Inline Interpretations: Associated interpretations are displayed right
   along side the paragraph/section/appendix they are interpreting.
@@ -30,7 +30,7 @@ This repository is part of a larger project. To read about it, please see
   paragraphs/sections/appendices are provided in the sidebar. This analysis
   comes from Federal Register notice preambles.
 * Additional Formatting Concerns: Tables, subscripts, notes, and even source
-  code found within the regulation are rendered as appropriate markup.
+  code found within a regulation are rendered as appropriate markup.
 * Responsive Design: The application design is responsive, adjusting to the
   device and screen size of the user.
 
