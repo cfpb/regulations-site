@@ -146,8 +146,8 @@ def all_children_are_roman(parent_node):
     Return true if all the children of the parent node have roman labels
     """
     romans = list(itertools.islice(roman_nums(), 0, 50))
-    roman_children = [c['label'][-1] in romans for c in parent_node['children']]
-    return len(roman_children) > 0  and all(roman_children)
+    is_roman = [c['label'][-1] in romans for c in parent_node['children']]
+    return len(is_roman) > 0 and all(is_roman)
 
 
 def add_child(parent_node, node):

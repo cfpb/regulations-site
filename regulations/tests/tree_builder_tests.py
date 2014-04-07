@@ -205,20 +205,20 @@ class TreeBuilderTest(TestCase):
                          [c['sortable'] for c in parent['children']])
 
     def test_all_children_are_roman(self):
-        parent_node = {'children':[
-            {'label':['201', '4', 'i']},
-            {'label':['201', '4', 'ii']},
-            {'label':['201', '4', 'iii']},
-            {'label':['201', '4', 'iv']},
-            {'label':['201', '4', 'v']},
+        parent_node = {'children': [
+            {'label': ['201', '4', 'i']},
+            {'label': ['201', '4', 'ii']},
+            {'label': ['201', '4', 'iii']},
+            {'label': ['201', '4', 'iv']},
+            {'label': ['201', '4', 'v']},
         ]}
 
         self.assertTrue(tree_builder.all_children_are_roman(parent_node))
 
-        parent_node = {'children':[
-            {'label':['201', '4', 'a']},
-            {'label':['201', '4', 'i']},
-            {'label':['201', '4', 'v']},
+        parent_node = {'children': [
+            {'label': ['201', '4', 'a']},
+            {'label': ['201', '4', 'i']},
+            {'label': ['201', '4', 'v']},
         ]}
 
         self.assertFalse(tree_builder.all_children_are_roman(parent_node))
@@ -228,7 +228,7 @@ class TreeBuilderTest(TestCase):
         node and ensure that the children are sorted correctly. """
 
         parent = {'children': [
-            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'b','i']},
+            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'b', 'i']},
             {'node_type': 'appendix', 'label': ['204', 'A', '4', 'b', 'v']}
             ], 'label': ['204', 'appendix']}
 
