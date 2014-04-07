@@ -203,3 +203,48 @@ class TreeBuilderTest(TestCase):
 
         self.assertEqual([(1, 'h', 1), (2, 2), (2, 4)],
                          [c['sortable'] for c in parent['children']])
+
+    def test_all_children_are_roman(self):
+        parent_node = {'children':[
+            {'label':['201', '4', 'i']},
+            {'label':['201', '4', 'ii']},
+            {'label':['201', '4', 'iii']},
+            {'label':['201', '4', 'iv']},
+            {'label':['201', '4', 'v']},
+        ]}
+
+        self.assertTrue(tree_builder.all_children_are_roman(parent_node))
+
+        parent_node = {'children':[
+            {'label':['201', '4', 'a']},
+            {'label':['201', '4', 'i']},
+            {'label':['201', '4', 'v']},
+        ]}
+
+        self.assertFalse(tree_builder.all_children_are_roman(parent_node))
+
+    def test_add_child_root_appendix(self):
+        """ Let's add an introductory paragraph child to a root interpretation
+        node and ensure that the children are sorted correctly. """
+
+        parent = {'children': [
+            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'i']},
+            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'iii']}
+            ], 'label': ['204', 'appendix']}
+
+        tree_builder.add_child(parent, {'node_type': 'appendix',
+                                        'label': ['204', 'A', '4', 'ii']})
+
+        self.assertEqual([(1,), (2,), (3,)],
+                         [c['sortable'] for c in parent['children']])
+
+        parent = {'children': [
+            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'b']},
+            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'i']}
+            ], 'label': ['204', 'appendix']}
+
+        tree_builder.add_child(parent, {'node_type': 'appendix',
+                                        'label': ['204', 'A', '4', 'g']})
+
+        self.assertEqual([('b',), ('g',), ('i',)],
+                         [c['sortable'] for c in parent['children']])
