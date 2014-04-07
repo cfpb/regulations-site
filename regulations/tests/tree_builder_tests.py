@@ -228,14 +228,14 @@ class TreeBuilderTest(TestCase):
         node and ensure that the children are sorted correctly. """
 
         parent = {'children': [
-            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'i']},
-            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'iii']}
+            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'b','i']},
+            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'b', 'v']}
             ], 'label': ['204', 'appendix']}
 
         tree_builder.add_child(parent, {'node_type': 'appendix',
-                                        'label': ['204', 'A', '4', 'ii']})
+                                        'label': ['204', 'A', '4', 'b', 'ii']})
 
-        self.assertEqual([(1,), (2,), (3,)],
+        self.assertEqual([(1,), (2,), (5,)],
                          [c['sortable'] for c in parent['children']])
 
         parent = {'children': [
