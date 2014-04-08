@@ -204,21 +204,39 @@ class TreeBuilderTest(TestCase):
         self.assertEqual([(1, 'h', 1), (2, 2), (2, 4)],
                          [c['sortable'] for c in parent['children']])
 
+    def test_add_child_odd_sort(self):
+        """Appendices may have some strange orderings. Make sure they keep
+        order."""
+        parent = {'children': [], 'label': ['204', 'A'],
+                  'node_type': 'appendix',
+                  'child_labels': ['204-A-p1', '204-A-X', '204-A-L',
+                                   '204-A-h1']}
+
+        def mknode(label):
+            return {'node_type': 'appendix', 'label': label.split('-')}
+        tree_builder.add_child(parent, mknode('204-A-X'))
+        tree_builder.add_child(parent, mknode('204-A-L'))
+        tree_builder.add_child(parent, mknode('204-A-h1'))
+        tree_builder.add_child(parent, mknode('204-A-p1'))
+        self.assertEqual([['204', 'A', 'p1'], ['204', 'A', 'X'],
+                          ['204', 'A', 'L'], ['204', 'A', 'h1']],
+                         [c['label'] for c in parent['children']])
+
     def test_all_children_are_roman(self):
-        parent_node = {'children':[
-            {'label':['201', '4', 'i']},
-            {'label':['201', '4', 'ii']},
-            {'label':['201', '4', 'iii']},
-            {'label':['201', '4', 'iv']},
-            {'label':['201', '4', 'v']},
+        parent_node = {'children': [
+            {'label': ['201', '4', 'i']},
+            {'label': ['201', '4', 'ii']},
+            {'label': ['201', '4', 'iii']},
+            {'label': ['201', '4', 'iv']},
+            {'label': ['201', '4', 'v']},
         ]}
 
         self.assertTrue(tree_builder.all_children_are_roman(parent_node))
 
-        parent_node = {'children':[
-            {'label':['201', '4', 'a']},
-            {'label':['201', '4', 'i']},
-            {'label':['201', '4', 'v']},
+        parent_node = {'children': [
+            {'label': ['201', '4', 'a']},
+            {'label': ['201', '4', 'i']},
+            {'label': ['201', '4', 'v']},
         ]}
 
         self.assertFalse(tree_builder.all_children_are_roman(parent_node))
@@ -228,7 +246,7 @@ class TreeBuilderTest(TestCase):
         node and ensure that the children are sorted correctly. """
 
         parent = {'children': [
-            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'b','i']},
+            {'node_type': 'appendix', 'label': ['204', 'A', '4', 'b', 'i']},
             {'node_type': 'appendix', 'label': ['204', 'A', '4', 'b', 'v']}
             ], 'label': ['204', 'appendix']}
 
