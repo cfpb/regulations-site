@@ -67,8 +67,8 @@ class SectionUrl(object):
                 #   In a subterp
                 if sub['index'] == prefix:
                     return '-'.join(prefix)
-                #   Full match: interpretation header
-                if sub['index'] == citation:
+                #   Other match: interpretation header
+                if sub['index'] == citation[:len(sub['index'])]:
                     return sub['section_id']
         # Couldn't find it; most likely in the appendix
         return reg_part + '-Appendices-Interp'

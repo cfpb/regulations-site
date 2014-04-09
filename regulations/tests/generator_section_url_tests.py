@@ -38,6 +38,9 @@ class SectionUrlTest(TestCase):
         self.assertEqual('200-Appendices-Interp',
                          SectionUrl().interp(['200', 'A', 'Interp'], 'vvvv'))
         self.assertEqual('200-Interp-h1',
+                         SectionUrl().interp(['200', 'Interp', 'h1', 'p1'],
+                         'vvvv'))
+        self.assertEqual('200-Interp-h1',
                          SectionUrl().interp(['200', 'Interp', 'h1'], 'vvvv'))
         self.assertTrue('200-Subpart-A',
                         SectionUrl().interp(['200', '2', 'e', 'Interp', '1'],
