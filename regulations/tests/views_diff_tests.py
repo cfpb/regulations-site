@@ -1,5 +1,7 @@
 from unittest import TestCase
+
 from django.test import RequestFactory
+from mock import patch
 
 from regulations.views.diff import *
 
@@ -100,7 +102,17 @@ class ChromeSectionDiffViewTests(TestCase):
         tags_preserved_header = '<h3 tabindex=\"0\"> <ins>My header</ins></h3>'
         self.assertTrue(tags_preserved_header in response)
 
-    def test_add_main_content(self):
+    @patch('regulations.views.diff.fetch_toc')
+    @patch('regulations.views.diff.SectionUrl')
+    def test_add_main_content(self, SectionUrl, fetch_toc):
+        fetch_toc.return_value = [
+            {'index': ['1111', '222'], 'is_section': True},
+            {'index': ['1111', 'B'], 'is_appendix': True},
+            {'index': ['1111', 'Interp'], 'is_supplement': True,
+             'sub_toc': [
+                 {'index': ['1111', 'Interp', 'h1']},
+                 {'index': ['1111', 'Subpart', 'Interp']},
+                 {'index': ['1111', 'A', 'Interp']}]}]
         context = {
             'main_content_context': {'newer_version': '1', 'TOC': 'toc'},
             'label_id': '111-222',
@@ -108,11 +120,16 @@ class ChromeSectionDiffViewTests(TestCase):
         request = RequestFactory().get('?new_version=1')
         csdv = ChromeSectionDiffView()
         csdv.request = request
+        
         csdv.add_diff_content(context)
         self.assertEqual(context['from_version'], '2')
         self.assertEqual(context['left_version'], '2')
         self.assertEqual(context['right_version'], '1')
         self.assertEqual(context['TOC'], 'toc')
+        self.assertTrue('first_subterp' in context)
+        self.assertEqual(['1111', 'Interp', 'h1'],
+                         context['first_subterp']['index'])
+        self.assertTrue('url' in context['first_subterp'])
 
 
 class PartialSectionDiffViewTests(TestCase):

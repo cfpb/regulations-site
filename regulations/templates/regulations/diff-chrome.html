@@ -83,7 +83,13 @@ Comparison of {{meta.cfr_title_number}} CFR {{formatted_id}} | eRegulations
                     </ul>
                         {% if version.version == left_version %}
                         <h4 class="compare-title">Compare this with</h4>
-                        <a href="{% url 'chrome_section_view' label_id from_version %}" class="stop-button" data-version="{{ from_version }}">Stop Comparing</a>
+                        <a data-first-subterp="{{first_subterp.section_id}}" class="stop-button" data-version="{{ from_version }}"
+                            {% if "Interp" in label_id %}
+                            href="{{first_subterp.url}}"
+                            {% else %}
+                            href="{% url 'chrome_section_view' label_id from_version %}"
+                            {% endif %}
+                        >Stop Comparing</a>
                         {% endif %}
                     </div> <!--./timeline-content-wrap-->
                 </li>
