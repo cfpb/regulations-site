@@ -99,7 +99,7 @@ class PartialSearchTest(TestCase):
              'timeline': 'timeytimey'}
         ]
 
-        response = Client().get('/partial/search/444?version=vvv&q=none')
+        response = Client().get('/partial/search/444?version=vvv&q=other')
         self.assertTrue('444-Subpart-B-Interp' in response.content)
         self.assertTrue('444-Interp-h1' in response.content)
 
