@@ -1,5 +1,6 @@
 import logging
 import re
+from threading import Thread
 
 from django.conf import settings
 
@@ -89,11 +90,45 @@ class LayerCreator(object):
                 self.appliers[applier_type].add_layer(layer)
 
     def add_layers(self, layer_names, regulation, version, sectional=False):
+        """Request a list of layers. As this might spawn multiple HTTP
+        requests, we wrap the requests in threads so they can proceed
+        concurrently."""
         #This doesn't deal with sectional interpretations yet.
         #we'll have to do that.
-
+        layer_names = set(filter(lambda l: l.lower() in LayerCreator.LAYERS,
+                                 layer_names))
+        results = []
+        procs = []
+ 
+        def one_layer(layer_name):
+            api_name, applier_type,\
+                layer_class = LayerCreator.LAYERS[layer_name]
+            layer_json = self.get_layer_json(api_name, regulation, version)
+            results.append((api_name, applier_type, layer_class, layer_json))
+ 
+        #   Spawn threads
         for layer_name in layer_names:
-            self.add_layer(layer_name, regulation, version, sectional)
+            proc = Thread(target=one_layer, args=(layer_name,))
+            procs.append(proc)
+            proc.start()
+ 
+        #   Join them (once their work is done)
+        for proc in procs:
+            proc.join()
+            
+        for api_name, applier_type, layer_class, layer_json in results:
+            if layer_json is None:
+                logging.warning("No data for %s/%s/%s"
+                                % (api_name, regulation, version))
+            else:
+                layer = layer_class(layer_json)
+ 
+                if sectional and hasattr(layer, 'sectional'):
+                    layer.sectional = sectional
+                if hasattr(layer, 'version'):
+                    layer.version = version
+ 
+                self.appliers[applier_type].add_layer(layer)
 
     def get_appliers(self):
         """ Return the appliers. """
