@@ -146,40 +146,50 @@ def all_children_are_roman(parent_node):
     Return true if all the children of the parent node have roman labels
     """
     romans = list(itertools.islice(roman_nums(), 0, 50))
-    roman_children = [c['label'][-1] in romans for c in parent_node['children']]
-    return len(roman_children) > 0  and all(roman_children)
+    roman_children = [c['label'][-1] in romans
+                      for c in parent_node['children']]
+    return len(roman_children) > 0 and all(roman_children)
 
 
 def add_child(parent_node, node):
     "Add a child node to a parent, maintaining the order of the children."
 
-    parent_node['children'].append(node)
+    children = parent_node['children']
+    children.append(node)
+    order = parent_node.get('child_labels', [])
 
-    for c in parent_node['children']:
-        if c['node_type'].upper() == 'INTERP':
-            if c['label'][-1] == 'Interp':
-                sortable = make_label_sortable(
-                    c['label'][-2], roman=(len(c['label']) == 6))
+    if (len(order) == len(children) and
+            set(order) == set('-'.join(c['label']) for c in children)):
+        lookup = {}
+        for c in children:
+            lookup['-'.join(c['label'])] = c
+        parent_node['children'] = [lookup[label_id] for label_id in order]
+    else:   # Explicit sort order not present/doesn't match nodes
+        for c in parent_node['children']:
+            if c['node_type'].upper() == 'INTERP':
+                if c['label'][-1] == 'Interp':
+                    sortable = make_label_sortable(
+                        c['label'][-2], roman=(len(c['label']) == 6))
+                else:
+                    paragraph = list(itertools.dropwhile(
+                        lambda l: l != 'Interp', c['label']))[1:]
+                    sortable = make_label_sortable(
+                        paragraph[-1], roman=(len(paragraph) == 2))
+
+                if len(parent_node['label']) == 2:
+                    #Highest interpretation node in the land
+                    p = len(list(itertools.takewhile(lambda l: l != 'Interp',
+                                                     c['label'])))
+                    prefix_length = (p, )
+                    sortable = prefix_length + sortable
+                c['sortable'] = sortable
+            elif c['node_type'].upper() == 'APPENDIX':
+                roman_children = all_children_are_roman(parent_node)
+                c['sortable'] = make_label_sortable(c['label'][-1],
+                                                    roman=roman_children)
+
             else:
-                paragraph = list(itertools.dropwhile(lambda l: l != 'Interp',
-                                                     c['label']))[1:]
-                sortable = make_label_sortable(
-                    paragraph[-1], roman=(len(paragraph) == 2))
+                c['sortable'] = make_label_sortable(
+                    c['label'][-1], roman=(len(c['label']) == 5))
 
-            if len(parent_node['label']) == 2:
-                #Highest interpretation node in the land
-                p = len(list(itertools.takewhile(lambda l: l != 'Interp',
-                                                 c['label'])))
-                prefix_length = (p, )
-                sortable = prefix_length + sortable
-            c['sortable'] = sortable
-        elif c['node_type'].upper() == 'APPENDIX':
-            roman_children = all_children_are_roman(parent_node)
-            c['sortable'] = make_label_sortable(c['label'][-1],
-                                                roman=roman_children)
-
-        else:
-            c['sortable'] = make_label_sortable(c['label'][-1],
-                                                roman=(len(c['label']) == 5))
-
-    parent_node['children'].sort(key=lambda x: x['sortable'])
+        parent_node['children'].sort(key=lambda x: x['sortable'])
