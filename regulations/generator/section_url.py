@@ -7,6 +7,12 @@ from regulations.generator.toc import fetch_toc
 
 
 class SectionUrl(object):
+    """With few exceptions, users are expected to browse the regulation by
+    traversing regtext sections, appendices, and subterps (split
+    interpretations). This object will deduce, from a version and citation,
+    to which section/appendix/subterp to link, a task greatly complicated by
+    subterps. Importantly, this object keeps a cache of looked up info;
+    reusing an instance is significantly faster than using static methods."""
     def __init__(self):
         self.rev_cache = {}
         self.toc_cache = {}
