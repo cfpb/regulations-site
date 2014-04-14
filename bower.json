@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "backbone.queryparams": "https://raw.github.com/jhudson8/backbone-query-parameters/b62a0a5e67a8c63fe95990f18fd8ed59687ff471/backbone.queryparams.js",
-    "jquery": "1.11.x",
+    "jquery": "1.11.0",
     "backbone": "1.0.0",
     "html5shiv": "3.6.2",
     "respond": "1.1.0",

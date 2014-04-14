@@ -4,6 +4,7 @@ from regulations.generator import generator
 from regulations.generator.html_builder import HTMLBuilder
 from regulations.generator.layers.toc_applier import TableOfContentsLayer
 from regulations.generator.node_types import EMPTYPART, REGTEXT
+from regulations.generator.section_url import SectionUrl
 from regulations.generator.toc import fetch_toc
 from regulations.views import error_handling, utils
 from regulations.views.chrome import ChromeView
@@ -119,8 +120,19 @@ class ChromeSectionDiffView(ChromeView):
         context['left_version'] = context['version']
         context['right_version'] = \
             context['main_content_context']['newer_version']
+        from_version = self.request.GET.get('from_version', context['version'])
 
         context['TOC'] = context['main_content_context']['TOC']
+
+        #   Add reference to the first subterp, so we know how to redirect
+        toc = fetch_toc(context['label_id'].split('-')[0], from_version)
+        for entry in toc:
+            if entry.get('is_supplement') and entry.get('sub_toc'):
+                el = entry['sub_toc'][0]
+                el['url'] = SectionUrl().of(
+                    el['index'], from_version,
+                    self.partial_class.sectional_links)
+                context['first_subterp'] = el
         return context
 
     def add_main_content(self, context):

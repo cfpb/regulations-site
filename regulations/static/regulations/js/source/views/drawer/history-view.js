@@ -25,9 +25,19 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'main-events'], func
             }
             // section may not be defined (e.g. on the landing page)
             if (typeof section !== 'undefined') {
-                this.$el.find('.version-link, .stop-button').each(function() {
+                this.$el.find('.version-link').each(function() {
                     var $link = $(this);
                     $link.attr('href', prefix + section + '/' + $link.data('version'));
+                });
+                this.$el.find('.stop-button').each(function() {
+                    var $link = $(this);
+                    //  Interpretations are split into "subterps" outside of diff view - link to the first
+                    if (section.indexOf('Interp') !== -1) {
+                        $link.attr('href', prefix + $link.data('first-subterp') + '/' + $link.data('version'));
+                    }
+                    else {
+                        $link.attr('href', prefix + section + '/' + $link.data('version'));
+                    }
                 });
 
                 // diffs of interpretations are not currently more granular than the whole interpretation
