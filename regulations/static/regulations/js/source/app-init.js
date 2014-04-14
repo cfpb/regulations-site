@@ -42,8 +42,8 @@ define(['jquery', 'underscore', 'backbone', 'main-view', './regs-router', 'sideb
             this.bindEvents();
             var main = new MainView(),
                 sidebar = new SidebarView(),
-                drawer = new DrawerView(),
-                header = new HeaderView();
+                header = new HeaderView(),  // Header before Drawer as Drawer sends Header events
+                drawer = new DrawerView();
             setTimeout(function() {
                 $('html').addClass('selenium-start');
             }, 5000);
