@@ -117,8 +117,15 @@ module.exports = function(grunt) {
             stdout: true,
             stderr: true
         }
-      }
+      },
 
+      'run-mocha-tests': {
+        command: '<%= env.frontEndPath %>/js/unittests/sauce_unit_tests.sh',
+        options: {
+            stdout: true,
+            stderr: true
+        }
+      }
     },
 
     // https://github.com/yatskevich/grunt-bower-task
@@ -159,7 +166,7 @@ module.exports = function(grunt) {
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
-    grunt.registerTask('test', ['jshint', 'nose']);
+    grunt.registerTask('test', ['jshint', 'nose', 'shell:run-mocha-tests']);
     grunt.registerTask('build', ['squish', 'test']);
     grunt.registerTask('squish', ['requirejs', 'less']);
 };
