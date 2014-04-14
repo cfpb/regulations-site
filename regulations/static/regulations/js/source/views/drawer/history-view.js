@@ -32,9 +32,10 @@ define('history-view', ['jquery', 'underscore', 'backbone', 'main-events'], func
                 this.$el.find('.stop-button').each(function() {
                     var $link = $(this);
                     //  Interpretations are split into "subterps" outside of diff view - link to the first
-                    if (section.indexOf("Interp") != -1) {
+                    if (section.indexOf('Interp') !== -1) {
                         $link.attr('href', prefix + $link.data('first-subterp') + '/' + $link.data('version'));
-                    } else {
+                    }
+                    else {
                         $link.attr('href', prefix + section + '/' + $link.data('version'));
                     }
                 });

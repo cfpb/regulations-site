@@ -52,9 +52,11 @@ define('regs-helpers', ['jquery', 'underscore'], function($, _) {
         interpId: function(interpParts) {
             if (interpParts.length === 1) {
                 return 'Supplement I to Part ';
-            } else if (isNaN(interpParts[1])) {
+            }
+            else if (isNaN(interpParts[1])) {
                 return 'Supplement I to Appendix ';
-            } else {
+            }
+            else {
                 return 'Supplement I to ';
             }
         },

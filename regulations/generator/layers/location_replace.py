@@ -8,13 +8,14 @@ class LocationReplace(object):
         self.offsets = None
 
     @staticmethod
-    def find_all_offsets(pattern, text):
+    def find_all_offsets(pattern, text, offset=0):
         """Don't use regular expressions as they are a tad slow"""
         matches = []
         pattern_len = len(pattern)
         next_match = text.find(pattern)
         while next_match != -1:
-            matches.append((next_match, next_match + pattern_len))
+            matches.append((next_match + offset,
+                            next_match + pattern_len + offset))
             next_match = text.find(pattern, next_match + 1)
         return matches
 
@@ -25,21 +26,17 @@ class LocationReplace(object):
     def update_offsets(self, original, text):
         """ Offsets change everytime we replace the text, since we add more
         characters. Update the offsets. """
-
-        list_offsets = LocationReplace.find_all_offsets(original, text)
-
-        angles_at = []
+        list_offsets = []
         lt = text.find('<')
+        gt = -1
         while lt != -1:
+            subtext = text[gt+1: lt]
+            list_offsets.extend(LocationReplace.find_all_offsets(
+                original, subtext, gt + 1))
             gt = text.find('>', lt)
-            angles_at.append((lt, gt))
             lt = text.find('<', gt)
-
-        # Ignore everything in angle brackets
-        list_offsets = [offsets for offsets in list_offsets
-                        if not any(e[0] <= offsets[0] <= e[1]
-                                   or e[1] <= offsets[1] <= e[1]
-                                   for e in angles_at)]
+        list_offsets.extend(LocationReplace.find_all_offsets(
+            original, text[gt+1:], gt + 1))
 
         self.offset_counters = range(self.offset_starter,
                                      self.offset_starter + len(list_offsets))
