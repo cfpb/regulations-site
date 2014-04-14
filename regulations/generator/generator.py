@@ -4,7 +4,6 @@ import re
 from django.conf import settings
 
 import api_reader
-from layers.analyses import SectionBySectionLayer
 from layers.defined import DefinedLayer
 from layers.definitions import DefinitionsLayer
 from layers.external_citation import ExternalCitationLayer
@@ -34,7 +33,6 @@ class LayerCreator(object):
     KEY_TERMS = KeyTermsLayer.shorthand
     META = MetaLayer.shorthand
     PARAGRAPH = ParagraphMarkersLayer.shorthand
-    SXS = SectionBySectionLayer.shorthand
     FORMATTING = FormattingLayer.shorthand
     TERMS = DefinitionsLayer.shorthand
     TOC = TableOfContentsLayer.shorthand
@@ -49,7 +47,6 @@ class LayerCreator(object):
         META: ('meta', 'paragraph', MetaLayer),
         PARAGRAPH: (
             'paragraph-markers', 'search_replace', ParagraphMarkersLayer),
-        SXS: ('analyses', 'paragraph', SectionBySectionLayer),
         FORMATTING: ('formatting', 'search_replace', FormattingLayer),
         TERMS: ('terms', 'inline', DefinitionsLayer),
         TOC: ('toc', 'paragraph', TableOfContentsLayer),
