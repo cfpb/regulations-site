@@ -48,30 +48,36 @@ class LocationReplace(object):
         if len(self.offset_counters) > 0:
             self.offset_starter = self.offset_counters[-1] + 1
 
-    def apply_layer_to_text(self, original, replacement, text, locations):
-        self.update_offsets(original, text)
-        offset = self.offsets[locations[self.counter]]
-
-        self.counter += 1
-        return LocationReplace.replace_at_offset(offset, replacement, text)
-
     def location_replace_text(self, text, original, replacement, locations):
         """Given plain text, do replacements"""
         self.update_offsets(original, text)
 
-        while (self.counter < len(locations)
-               and locations[self.counter] in self.offsets):
-            text = self.apply_layer_to_text(original, replacement, text,
-                                            locations)
-            if original not in replacement:
-                self.offset_starter += 1
+        text_segments = []
+        relevant_locations = sorted(self.offsets.keys())
+        relevant_locations = [l for l in relevant_locations if l in locations]
+        text_begin = 0
+        for location in relevant_locations:
+            start, end = self.offsets[location]
+            # unrelated text
+            text_segments.append(text[text_begin:start])
+            # s/original/replacement
+            text_segments.append(replacement)
+            text_begin = end
+        # tail of unrelated text
+        text_segments.append(text[text_begin:])
+
+        # offset_starter is shared between segments of xml nodes (in 
+        # location_replace, below)
+        if original not in replacement:
+            self.offset_starter += len(locations)
 
         self.update_offset_starter()
-        return text
+        return "".join(text_segments)
 
     def location_replace(self, xml_node, original, replacement, locations):
         """ For the xml_node, replace the locations instances of orginal with
-        replacement."""
+        replacement.
+        @todo: This doesn't appear to be used anymore?"""
 
         if xml_node.text:
             xml_node.text = self.location_replace_text(
