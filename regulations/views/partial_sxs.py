@@ -1,7 +1,7 @@
 #vim: set encoding=utf-8
 from collections import defaultdict
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseBadRequest
 from django.template import Context, loader
 from django.views.generic.base import TemplateView
@@ -9,6 +9,7 @@ from django.views.generic.base import TemplateView
 from regulations.generator import api_reader, generator, notices
 from regulations.generator.layers.utils import convert_to_python
 from regulations.generator.node_types import label_to_text
+from regulations.generator.section_url import SectionUrl
 from regulations.views import error_handling
 
 
@@ -26,32 +27,16 @@ class ParagraphSXSView(TemplateView):
         return ['regulations/sxs_with_disclaimer.html',
                 'regulations/paragraph-sxs.html']
 
-    def get_section(self, label):
-        """ Get the section that the user came from. Special handling for
-        an Interpretation section. """
-        label = label.split('-')
-        if 'Interp' in label:
-            return '-'.join([label[0], 'Interp'])
-        else:
-            return '-'.join(label[:2])
-
     def get(self, request, *args, **kwargs):
         """Override this method so that we can grab the GET variables"""
-        try:
-            section_id = self.get_section(kwargs['label_id'])
-            back_url = reverse('chrome_section_view', kwargs={
-                'label_id': section_id,
-                'version': request.GET.get('from_version')
-            }) + '#' + kwargs['label_id']
-            kwargs['back_url'] = back_url
-            kwargs['version'] = request.GET.get('from_version')
-            kwargs['fr_page'] = request.GET.get('fr_page')
-            if kwargs['fr_page'] and kwargs['fr_page'].isdigit():
-                kwargs['fr_page'] = int(kwargs['fr_page'])
-            return super(ParagraphSXSView, self).get(request, *args,
-                                                     **kwargs)
-        except NoReverseMatch:
-            return HttpResponseBadRequest("invalid from_version")
+        kwargs['version'] = request.GET.get('from_version')
+        kwargs['back_url'] = SectionUrl.of(
+            kwargs['label_id'].split('-'), kwargs['version'], sectional=True)
+        kwargs['fr_page'] = request.GET.get('fr_page')
+        if kwargs['fr_page'] and kwargs['fr_page'].isdigit():
+            kwargs['fr_page'] = int(kwargs['fr_page'])
+        return super(ParagraphSXSView, self).get(request, *args,
+                                                 **kwargs)
 
     def further_analyses(self, label_id, notice_id, fr_page, version):
         """Grab other analyses for this same paragraph (limiting to those

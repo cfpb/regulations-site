@@ -3,6 +3,7 @@ from django.template.defaultfilters import title
 
 from regulations.generator import api_reader
 from regulations.generator.node_types import label_to_text
+from regulations.generator.section_url import SectionUrl
 from regulations.generator.versions import fetch_grouped_history
 from regulations.views.partial import PartialView
 import math
@@ -65,15 +66,16 @@ class PartialSearch(PartialView):
         results['total_hits'] -= num_results_ignored
         results['results'] = results['results'][page_idx:page_idx + PAGE_SIZE]
 
+        section_url = SectionUrl()
+
         for result in results['results']:
             result['header'] = label_to_text(result['label'])
             if 'title' in result:
                 result['header'] += ' ' + title(result['title'])
-            if 'Interp' in result['label']:
-                result['section_id'] = '%s-%s' % (result['label'][0],
-                                                  'Interp')
-            else:
-                result['section_id'] = '-'.join(result['label'][:2])
+            result['section_id'] = section_url.view_label_id(
+                result['label'], context['version'])
+            result['url'] = section_url.fetch(
+                result['label'], context['version'], sectional=True)
         context['results'] = results
 
         for version in fetch_grouped_history(context['regulation']):
