@@ -12,6 +12,7 @@ class TableOfContentsLayer(object):
         self.layer = layer
         self.sectional = False
         self.version = None
+        self.section_url = SectionUrl()
 
     def apply_layer(self, text_index):
         if text_index in self.layer:
@@ -27,11 +28,11 @@ class TableOfContentsLayer(object):
                     toc_list.append(toc_sect_appendix(data, toc_list))
 
             for el in toc_list:
-                el['url'] = SectionUrl.of(el['index'], self.version,
-                                          self.sectional)
+                el['url'] = self.section_url.fetch(
+                    el['index'], self.version, self.sectional)
                 for sub in el.get('sub_toc', []):
-                    sub['url'] = SectionUrl.of(sub['index'], self.version,
-                                               self.sectional)
+                    sub['url'] = self.section_url.fetch(
+                        sub['index'], self.version, self.sectional)
             return ('TOC', toc_list)
 
     @staticmethod

@@ -59,14 +59,6 @@ class ParagrasphSXSViewTests(TestCase):
             psv.further_analyses('1212-31', 'doc3', 90123, 'v1'),
             convert_to_python([doc5, doc2, doc1]))
 
-    def test_section_ids(self):
-        psv = ParagraphSXSView()
-        section_id = psv.get_section('204-31-a-1')
-        self.assertEqual('204-31', section_id)
-
-        section_id = psv.get_section('204-31-a-1-Interp-1')
-        self.assertEqual('204-Interp', section_id)
-
     def test_footnotes(self):
         psv = ParagraphSXSView()
         notice = {'footnotes': {
