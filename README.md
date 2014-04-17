@@ -100,8 +100,6 @@ The application's UI itself uses a number of dependencies that you can see in pa
 - npm, a package manager to install dependencies in the development environment: https://npmjs.org/
 - Grunt, a task runner that modules to build and run tests depend on: http://gruntjs.com/
 - Bower, a utility to fetch dependencies for the: UI http://bower.io/
-- Phantom, a headless browser to run unit and functional tests in: http://phantomjs.org/
-- Casper, a utility to execute functional tests: http://casperjs.org/
 
 ### Environment setup
 #### Node/npm
@@ -122,22 +120,11 @@ If you receive an error about ```add-apt-repository``` not being found, do:
 sudo apt-get install python-software-properties
 ```
 
-#### PhantomJS
-
-Executables and binaries can be found for most OSes here: http://phantomjs.org/download.html.
-Instructions for Homebrew are also found there.
-For Debian-based Linux folk, the apt-get package is often just fine:
-```
-sudo apt-get install phantomjs
-```
-However, if you run into problems with a library called "icui18n" when you attempt to run tests, try installing via one of the binaries provided on the PhantomJS site.
-
 #### Global npm packages
-You will need to install the Grunt command line interface, Bower, Casper and a Mocha + PhantomJS cli globally using npm. 
-If you already have different versions of Casper and Mocha-PhantomJS installed, its probably ok. The version specified is known to work with this codebase, though.
+You will need to install the Grunt command line interface and Bower globally using npm. 
 ```
 cd regulations-site
-npm install -g grunt-cli bower casper@0.1.1 mocha-phantomjs@3.1.4
+npm install -g grunt-cli bower
 ```
 
 #### Installing dependencies
@@ -155,17 +142,27 @@ If you need to make changes to modules in your instance of the application, edit
 
 #### Configuration JSON
 In the root of the repository, copy ```example-config.json``` to ```config.json``` and edit as necessary. Grunt depends on these settings to carry out tasks.
-- ```testURL``` is an environment that Mocha tests can run off of, typically a local development environment.
+- ```testURL``` is the environment that you would like tests to run on.
 - ```frontEndPath``` is the path to the root of your codebase where the ```css/``` and ```js/``` directories are.
+- ```testPath``` is the path to the functional test specs.
 
 #### Running Grunt tasks
-There are a number of tasks configured in [Gruntfile.js](https://github.com/eregs/regulations-site/blob/master/Gruntfile.js). On the last lines, you will find tasks that group subtasks into common goals. Running ```grunt build``` will run unit, functional and lint tests, compress static assets and output some information about code complexity and maintainability. Its recommended that you run this task before deploying changes. 
+There are a number of tasks configured in [Gruntfile.js](https://github.com/eregs/regulations-site/blob/master/Gruntfile.js). On the last lines, you will find tasks that group subtasks into common goals. Running ```grunt build``` will run unit, functional and lint tests, and compress static assets. Its recommended that you run this task before deploying changes. 
 
-#### Sauce Labs and Selenium integration
-There are Selenium tests written in Python and configured to run in [Sauce Labs](https://saucelabs.com). These tests run as part of the ```grunt build``` tasks. To use this, a little extra environment setup is required. The first step is to create a [Sauce Labs](https://saucelabs.com) account. Then:
+#### Unit and Functional Tests
+The Grunt build will run a suite of Selenium tests written in Python and a small suite of [Mocha.js](http://visionmedia.github.io/mocha/) unit tests. All tests run in [Sauce Labs](https://saucelabs.com). These tests run as part of the ```grunt build``` tasks. To use these, a little extra environment setup is required.
+
+##### Sauce Labs Configuration
+After you create a [Sauce Labs](https://saucelabs.com) account:
 - In your bash config (probably ```~/.bash_profile```), define two variables: ```$SAUCE_USERNAME``` and ```$SAUCE_ACCESS_KEY``` which house your username and access key from Sauce Labs.
-- Download and run [Sauce Connect](https://saucelabs.com/docs/connect) if necessary. If you do need Sauce Connect, you will need to start it before running functional tests/Grunt builds.
+- If you want to test a local or otherwise not publically available environment, download and run [Sauce Connect](https://saucelabs.com/docs/connect). If you do need Sauce Connect, you will need to start it before running tests/Grunt builds.
+- Be sure that the Django server is running in the environment you want to test. 
 
-Be sure that your local server is running prior to running tests. The tests that run are located in ```regulations/uitests``` and are configured to run off of ```http://localhost:8000```. They also require having the environment serving data from ```dummy_api/```.
+###### For functional tests
+- They also require having the environment serving data from ```dummy_api/```. To start the dummy API, from the root of your repo, run ```./dummy_api/start.sh 0.0.0.0:8282```.
+- The tests run using [nose](http://nose.readthedocs.org/en/latest/). If you wish to run the tests outside of the Grunt environment, you may by running ```nosetests regulations/uitests/*.py``` from the root of the repo.
 
-The tests run using [nose](http://nose.readthedocs.org/en/latest/). If you wish to run the tests outside of the Grunt environment, you may by running ```nosetests regulations/uitests/*.py```.
+###### For unit tests
+- To run unit tests individually: ```regulations/static/regulations/js/unittests/sauce_unit_tests.sh http://url.of/test/site``` from the root of the repo.
+- Unit tests do not require running the dummy API.
+- You may also run the unit tests locally with no additional configuration by loading the following URL in a web browser: ```http://your.site/static/regulations/js/unittests/runner.html```.

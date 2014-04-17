@@ -14,7 +14,7 @@ class DiffTest(BaseTest, unittest.TestCase):
         return self.driver.find_element_by_xpath('//*[@id="timeline-link"]')
 
     def test_diffs(self):
-        self.driver.get('http://localhost:8000/1005-2/2011-11111')
+        self.driver.get(self.test_url + '/1005-2/2011-11111')
         html = self.driver.find_element_by_tag_name('html')
         WebDriverWait(self.driver, 60).until(
             lambda driver: 'selenium-start' in html.get_attribute('class'))
@@ -40,7 +40,7 @@ class DiffTest(BaseTest, unittest.TestCase):
 
         WebDriverWait(self.driver, 60)
         # make sure the url is right
-        self.assertTrue(self.driver.current_url == 'http://localhost:8000/diff/1005-2/2012-12121/2011-11111?from_version=2011-11111')
+        self.assertTrue(self.driver.current_url == self.test_url + '/diff/1005-2/2012-12121/2011-11111?from_version=2011-11111')
 
         WebDriverWait(self.driver, 60)
 
@@ -61,7 +61,7 @@ class DiffTest(BaseTest, unittest.TestCase):
 
         # wait until 1005.3 diff loads
         WebDriverWait(self.driver, 30).until(
-            lambda driver: driver.current_url == 'http://localhost:8000/diff/1005-3/2012-12121/2011-11111?from_version=2011-11111')
+            lambda driver: driver.current_url == self.test_url + '/diff/1005-3/2012-12121/2011-11111?from_version=2011-11111')
 
         # make sure new section is greened
         new_section = self.driver.find_element_by_xpath('//*[@id="1005-3-b-1-vi"]')
@@ -79,7 +79,7 @@ class DiffTest(BaseTest, unittest.TestCase):
 
         # make sure it goes back to the right place
         WebDriverWait(self.driver, 30).until(
-            lambda driver: driver.current_url == 'http://localhost:8000/1005-3/2011-11111')
+            lambda driver: driver.current_url == self.test_url + '/1005-3/2011-11111')
 
 if __name__ == '__main__':
     unittest.main()

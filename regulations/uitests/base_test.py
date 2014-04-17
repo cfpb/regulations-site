@@ -21,6 +21,7 @@ class BaseTest():
 
     def setUp(self):
         selenium_config = self.config_map(config['webdriver']['browser'])
+        self.test_url = config['testUrl']
         self.capabilities = selenium_config['driver']
         if os.environ.get('TRAVIS') and os.environ.get('TRAVIS_SECURE_ENV_VARS'):
             self.capabilities['tunnel-identifier'] = os.environ['TRAVIS_JOB_NUMBER']
