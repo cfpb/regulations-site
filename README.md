@@ -155,7 +155,7 @@ The Grunt build will run a suite of Selenium tests written in Python and a small
 After you create a [Sauce Labs](https://saucelabs.com) account:
 - In your bash config (probably ```~/.bash_profile```), define two variables: ```$SAUCE_USERNAME``` and ```$SAUCE_ACCESS_KEY``` which house your username and access key from Sauce Labs.
 - If you want to test a local or otherwise not publically available environment, download and run [Sauce Connect](https://saucelabs.com/docs/connect). If you do need Sauce Connect, you will need to start it before running tests/Grunt builds.
-- Be sure that your the server is running in the environment you want to test. 
+- Be sure that the Django server is running in the environment you want to test. 
 
 ###### For functional tests
 - The tests that run are located in ```regulations/uitests```. The test files, named in this format: ```*_test.py``` run against ```http://localhost:8000```. You may need to change this to point to your desired location.
