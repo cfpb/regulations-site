@@ -104,7 +104,7 @@ module.exports = function(grunt) {
       },
 
       'nose-chrome': {
-        command: 'nosetests -s <%= env.testPath %> --tc=webdriver.browser:chrome',
+        command: 'nosetests -s <%= env.testPath %> --tc=webdriver.browser:chrome --tc=testUrl:<%= env.testUrl %>',
         options: {
             stdout: true,
             stderr: true
@@ -112,7 +112,7 @@ module.exports = function(grunt) {
       },
 
       'nose-ie10': {
-        command: 'nosetests -s <%= env.testPath %> --tc=webdriver.browser:ie10',
+        command: 'nosetests -s <%= env.testPath %> --tc=webdriver.browser:ie10 --tc=testUrl:<%= env.testUrl %>',
         options: {
             stdout: true,
             stderr: true
@@ -120,7 +120,7 @@ module.exports = function(grunt) {
       },
 
       'run-mocha-tests': {
-        command: '<%= env.frontEndPath %>/js/unittests/sauce_unit_tests.sh',
+        command: '<%= env.frontEndPath %>/js/unittests/sauce_unit_tests.sh <%= env.testUrl %>',
         options: {
             stdout: true,
             stderr: true

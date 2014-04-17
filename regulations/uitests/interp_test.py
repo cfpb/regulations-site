@@ -10,7 +10,7 @@ class InterpTest(BaseTest, unittest.TestCase):
         return 'Interp test'
 
     def test_interps(self):
-        self.driver.get('http://localhost:8000/1005-2/2012-12121')
+        self.driver.get(self.test_url + '/1005-2/2012-12121')
         html = self.driver.find_element_by_tag_name('html')
         WebDriverWait(self.driver, 30).until(
             lambda driver: 'selenium-start' in html.get_attribute('class'))
