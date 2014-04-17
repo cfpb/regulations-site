@@ -9,8 +9,10 @@
     <script type="text/javascript" src="lib/expect.js"></script>
     <script type="text/javascript" src="lib/mocha.js"></script>
     <script type="text/javascript">
-      // MOCHA SETUP
-      mocha.setup('bdd');
+        mocha.setup({
+            'ui': 'bdd',
+            'reporter': 'html'
+        });
     </script>
     <script data-main="test.config.js" src="lib/require.js"></script>
   </body>
