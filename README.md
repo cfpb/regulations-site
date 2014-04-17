@@ -142,8 +142,9 @@ If you need to make changes to modules in your instance of the application, edit
 
 #### Configuration JSON
 In the root of the repository, copy ```example-config.json``` to ```config.json``` and edit as necessary. Grunt depends on these settings to carry out tasks.
-- ```testURL``` is an environment that Mocha tests can run off of, typically a local development environment.
+- ```testURL``` is the environment that you would like tests to run on.
 - ```frontEndPath``` is the path to the root of your codebase where the ```css/``` and ```js/``` directories are.
+- ```testPath``` is the path to the functional test specs.
 
 #### Running Grunt tasks
 There are a number of tasks configured in [Gruntfile.js](https://github.com/eregs/regulations-site/blob/master/Gruntfile.js). On the last lines, you will find tasks that group subtasks into common goals. Running ```grunt build``` will run unit, functional and lint tests, and compress static assets. Its recommended that you run this task before deploying changes. 
@@ -158,12 +159,10 @@ After you create a [Sauce Labs](https://saucelabs.com) account:
 - Be sure that the Django server is running in the environment you want to test. 
 
 ###### For functional tests
-- The tests that run are located in ```regulations/uitests```. The test files, named in this format: ```*_test.py``` run against ```http://localhost:8000```. You may need to change this to point to your desired location.
 - They also require having the environment serving data from ```dummy_api/```. To start the dummy API, from the root of your repo, run ```./dummy_api/start.sh 0.0.0.0:8282```.
 - The tests run using [nose](http://nose.readthedocs.org/en/latest/). If you wish to run the tests outside of the Grunt environment, you may by running ```nosetests regulations/uitests/*.py``` from the root of the repo.
 
 ###### For unit tests
-- To run unit tests individually: ```regulations/static/regulations/js/unittests/sauce_unit_tests.sh``` from the root of the repo.
-- The above script also points to ```http://localhost:8000```. Change it to point to the environment you want tested.
+- To run unit tests individually: ```regulations/static/regulations/js/unittests/sauce_unit_tests.sh http://url.of/test/site``` from the root of the repo.
 - Unit tests do not require running the dummy API.
 - You may also run the unit tests locally with no additional configuration by loading the following URL in a web browser: ```http://your.site/static/regulations/js/unittests/runner.html```.
