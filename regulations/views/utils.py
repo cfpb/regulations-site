@@ -9,7 +9,9 @@ from regulations.generator.layers.meta import MetaLayer
 from regulations.generator.layers.tree_builder import roman_nums
 from regulations.generator.toc import fetch_toc
 
+
 def to_roman(number):
+    """ Convert an integer to a roman numeral """
     romans = list(itertools.islice(roman_nums(), 0, number + 1))
     return romans[number - 1]
 

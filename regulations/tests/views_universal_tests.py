@@ -6,6 +6,7 @@ from mock import patch
 
 from regulations.views import universal_landing as universal
 
+
 class UniversalLandingTest(TestCase):
     """ Tests for the view that drives the main (universal) landing page. """
 
@@ -15,15 +16,15 @@ class UniversalLandingTest(TestCase):
 
         today = datetime.today()
         for i in xrange(1, 5):
-            future_date = today  + timedelta(days=i)
-            v = {'by_date':future_date}
+            future_date = today + timedelta(days=i)
+            v = {'by_date': future_date}
             versions.append(v)
             futures.append(v)
 
-        for i in xrange(1,3):
+        for i in xrange(1, 3):
             past_date = today - timedelta(days=i)
-            versions.append({'by_date':past_date})
-    
+            versions.append({'by_date': past_date})
+
         random.shuffle(versions)
 
         self.assertEqual(len(versions), 6)
