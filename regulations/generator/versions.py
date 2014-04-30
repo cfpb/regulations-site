@@ -1,5 +1,4 @@
 from datetime import datetime
-from collections import defaultdict
 
 from regulations.generator import api_reader
 from regulations.generator.layers.utils import convert_to_python
@@ -12,7 +11,7 @@ def fetch_regulations_and_future_versions():
     all_versions = client.all_regulations_versions()
     all_versions = convert_to_python(all_versions)
 
-    regulations_future = defaultdict(list)
+    regulations_future = {}
 
     #We're only interested in future endpoint versions
     for v in all_versions['versions']:
