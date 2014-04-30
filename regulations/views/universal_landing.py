@@ -14,20 +14,14 @@ def filter_future_amendments(versions):
     amendments.sort(key=lambda v: v['by_date'])
     return amendments
 
-def universal(request):
-    context = {} 
-    utils.add_extras(context)
-
-    all_versions = versions.fetch_regulations_and_future_versions()
-    reg_parts = sorted(all_versions.keys())
+def get_regulations_list(all_versions):
     regs = []
-    today = datetime.today()
+    reg_parts = sorted(all_versions.keys())
 
     for part in reg_parts:
         version = all_versions.get(part)[0]['version']
         reg_meta = utils.regulation_meta(part, version, True)
         first_section = utils.first_section(part, version)
-
         amendments = filter_future_amendments(all_versions.get(part, None))
         
         reg = {'part': part, 
@@ -36,6 +30,14 @@ def universal(request):
                'amendments': amendments}
 
         regs.append(reg)
+    return regs
+
+def universal(request):
+    context = {} 
+    utils.add_extras(context)
+
+    all_versions = versions.fetch_regulations_and_future_versions()
+    regs = get_regulations_list(all_versions)
 
     context['regulations'] = regs
     context['cfr_title_text'] = regs[0]['meta']['cfr_title_text']
