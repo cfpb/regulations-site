@@ -1,4 +1,10 @@
 {% extends "regulations/base.html" %}
+{% load static from staticfiles %}
+
+{% comment %} 
+    The empty app_js block excludes things from base.html 
+{% endcomment %}
+{% block app_js %}{% endblock %}
 
 {% comment %}
     Universal application landing page
@@ -11,13 +17,83 @@
     {% include "regulations/main-header.html" %} 
 </header>
 
+<div class="landing-content">
 
-  <div class="wrap group">
-    <div id="content-body" class="main-content">
-      {% comment %}
-        Content for the universal landing page goes here.
-      {% endcomment %}
-    </div> <!--/content-body-->
-  </div>
+<div class="hero">
+    <div class="inner-wrap group">
+      <div class="primary">
+        <h2 class="hero-header">A platform to read regulations.</h2>
+        <p class="hero-text">eRegulations makes regulations easy to find, read, and understand.</p>
+
+        <p class="read-more-link"><a href="{% url 'about' %}" class="go">About eRegulations</a></p>
+      </div>
+    </div> <!-- /.inner-wrap -->
+</div> <!-- /.hero -->
+
+<div class="landing-main" role="main">
+  <div class="inner-wrap">
+
+    <div class="group">
+      <div class="content-primary column-l bump">
+        <h2 class="small-header light-header">
+            Title {{cfr_title_number|upper}} {{cfr_title_text}}
+        </h2>
+
+        <ul class="reg-list">
+            {% for regulation in regulations %}
+                <li>
+                    <a href="{% url 'regulation_landing_view' regulation.part %}">
+                        <span class="title-num">{{regulation.part}}</span>
+                        <div class="reg-sub-title">
+                            <span class="reg-letter">Regulation {{regulation.meta.reg_letter}}</span>
+                            <span class="reg-title">{{regulation.meta.statutory_name|title}}</span>
+                        </div>
+                        <span class="minicon-right-alt"></span>
+                    </a>
+
+                    {% for amendment in regulation.amendments %}
+                        <div class="mini-alert important">
+                            New amendment effective {{amendment.by_date|date:'n/j/Y'}}
+                            <a href="{% url 'chrome_section_view' regulation.reg_first_section amendment.version %}" class="go">View new amendment</a>
+                        </div>
+                    {% endfor %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        {% block moreregulations %}
+        {% endblock %}
+      </div> <!-- /.primary -->
+
+        {% block secondcolumn_notices %}
+        {% endblock %}
+    </div> <!-- /.group -->
+
+      <section class="about bump group">
+        <h2 class="light-header">About eRegulations</h2>
+        <div class="content-primary column-l">
+
+          <p>eRegulations is a web-based tool that makes regulations easy
+          to find, read and understand with features such as inline
+          official interpretations, highlighted defined terms, and a
+          revision comparison view.</p> 
+          
+          <p><a href="{% url 'about' %}" class="go">Learn more about eRegulations&#8217; features</a></p>
+        </div> <!-- /.primart -->
+
+        {% block orgcontact %}
+        {% endblock %}
+
+        {% block legal %}
+        {% endblock %}
+      </section> <!-- /.about -->
+  </div> <!-- /.inner-wrap -->
+</div> <!-- /.landing-main -->
+
+</div> <!-- /.landing-content -->
+
+
+{% block endscripts %}
+{% endblock %}
 
 {% endblock %}
