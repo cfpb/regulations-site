@@ -25,6 +25,10 @@ class ApiReader(object):
         self.cache = ApiCache()
         self.client = api_client.ApiClient()
 
+    def all_regulations_versions(self):
+        """ Get all versions, for all regulations. """
+        return self._get(['all_regulations_versions'], 'regulation')
+
     def regversions(self, label):
         return self._get(
             ['regversions', label],
