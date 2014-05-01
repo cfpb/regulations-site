@@ -9,7 +9,8 @@ from regulations.generator.subterp import filter_by_subterp
 
 class SideBarView(TemplateView):
     """ View for handling the right-side sidebar """
-    template_name = 'regulations/sidebar.html'
+    def get_template_names(self):
+        return ['regulations/custom-sidebar.html', 'regulations/sidebar.html']
 
     def add_sxs(self, client, node_trees, context):
         """Finds sxs associated with this section, adds them to the
