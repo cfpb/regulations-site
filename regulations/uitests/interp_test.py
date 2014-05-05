@@ -33,7 +33,7 @@ class InterpTest(BaseTest, unittest.TestCase):
         interp_text = self.driver.find_element_by_xpath('//*[@id="1005-2-h"]/section/section')
         interp_dropdown.click()
 
-        WebDriverWait(self.driver, 90).until(
+        WebDriverWait(self.driver, 120).until(
             lambda driver: driver.find_element_by_css_selector('.inline-interpretation.open'))
 
         # header should update

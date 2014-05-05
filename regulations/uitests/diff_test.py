@@ -19,7 +19,7 @@ class DiffTest(BaseTest, unittest.TestCase):
         WebDriverWait(self.driver, 60).until(
             lambda driver: 'selenium-start' in html.get_attribute('class'))
 
-        WebDriverWait(self.driver, 50)
+        WebDriverWait(self.driver, 60)
         drawer_button = self.get_drawer_button()
         drawer_button.click()
 
