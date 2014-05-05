@@ -2,7 +2,7 @@
 //
 /* jshint unused: false */
 /* jshint camelcase: false */
-define(['jquery', 'underscore', 'backbone', 'main-view', './regs-router', 'sidebar-view', 'header-view', 'drawer-view', 'konami'], function($, _, Backbone, MainView, Router, SidebarView, HeaderView, DrawerView, Konami) {
+define(['jquery', 'underscore', 'backbone', 'main-view', './regs-router', 'sidebar-view', 'header-view', 'drawer-view', 'konami', 'analytics-handler'], function($, _, Backbone, MainView, Router, SidebarView, HeaderView, DrawerView, Konami, AnalyticsHandler) {
     'use strict';
     return {
         // Purgatory for DOM event bindings that should happen in a View
@@ -40,7 +40,8 @@ define(['jquery', 'underscore', 'backbone', 'main-view', './regs-router', 'sideb
         init: function() {
             Router.start();
             this.bindEvents();
-            var main = new MainView(),
+            var gaview = new AnalyticsHandler(),
+                main = new MainView(),
                 sidebar = new SidebarView(),
                 header = new HeaderView(),  // Header before Drawer as Drawer sends Header events
                 drawer = new DrawerView();
