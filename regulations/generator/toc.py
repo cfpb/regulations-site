@@ -59,7 +59,7 @@ def toc_subpart(data, so_far, toc):
         'is_subpart': True,
         'sub_toc': []
     }
-    for sub in toc['-'.join(data['index'])]:
+    for sub in toc.get('-'.join(data['index']), []):
         element['sub_toc'].append(toc_sect_appendix(sub, so_far))
     return element
 

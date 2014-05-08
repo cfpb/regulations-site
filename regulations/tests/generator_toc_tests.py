@@ -60,6 +60,20 @@ class TocTest(TestCase):
         self.assertEqual('Other', s2['sub_label'])
         self.assertEqual(['1001', '2'], s2['index'])
 
+    def test_toc_subpart_reserved(self):
+        layer = {'1001-Subpart-A': [{'title': '1001.1 - Content',
+                                     'index': ['1001', '1']},
+                                    {'title': '1001.2 - Other',
+                                     'index': ['1001', '2']}]}
+        data = {'title': u'[Reserved]', 'index': ['1001', 'Subpart', 'B']}
+        result = toc.toc_subpart(data, [], layer)
+        self.assertEqual('Subpart B', result['label'])
+        self.assertEqual('[Reserved]', result['sub_label'])
+        self.assertEqual(['1001', 'Subpart', 'B'], result['index'])
+        self.assertEqual('1001-Subpart-B', result['section_id'])
+        self.assertTrue(result.get('is_subpart'))
+        self.assertEqual(0, len(result['sub_toc']))
+
     def test_toc_interp(self):
         so_far = [
             {'index': ['1001', '1']},
