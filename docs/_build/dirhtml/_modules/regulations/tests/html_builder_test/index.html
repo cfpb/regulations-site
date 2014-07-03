@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.html_builder_test &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.html_builder_test</h1><div class="highlight"><pre>
+<span class="c">#vim: set encoding=utf-8</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">Mock</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator.html_builder</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.layers.layers_applier</span> <span class="kn">import</span> <span class="n">InlineLayersApplier</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.layers.layers_applier</span> <span class="kn">import</span> <span class="n">ParagraphLayersApplier</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.node_types</span> <span class="kn">import</span> <span class="n">REGTEXT</span><span class="p">,</span> <span class="n">APPENDIX</span><span class="p">,</span> <span class="n">INTERP</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.layers</span> <span class="kn">import</span> <span class="n">diff_applier</span>
+
+
+<div class="viewcode-block" id="HTMLBuilderTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest">[docs]</a><span class="k">class</span> <span class="nc">HTMLBuilderTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HTMLBuilderTest.test_process_node_appliers"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_process_node_appliers">[docs]</a>    <span class="k">def</span> <span class="nf">test_process_node_appliers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;text&quot;</span><span class="p">:</span> <span class="s">&quot;Text text text.&quot;</span><span class="p">,</span>
+            <span class="s">&quot;children&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s">&quot;label&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;aaa&quot;</span><span class="p">],</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span>
+        <span class="p">}</span>
+
+        <span class="n">inline</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">inline</span><span class="o">.</span><span class="n">get_layer_pairs</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">par</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">par</span><span class="o">.</span><span class="n">apply_layers</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="n">sr</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">sr</span><span class="o">.</span><span class="n">get_layer_pairs</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="n">inline</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">process_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">inline</span><span class="o">.</span><span class="n">get_layer_pairs</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;123-aaa&quot;</span><span class="p">,</span>
+                         <span class="n">inline</span><span class="o">.</span><span class="n">get_layer_pairs</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;Text text text.&quot;</span><span class="p">,</span>
+                         <span class="n">inline</span><span class="o">.</span><span class="n">get_layer_pairs</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">apply_layers</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">apply_layers</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_header_parsing"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_header_parsing">[docs]</a>    <span class="k">def</span> <span class="nf">test_header_parsing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;label&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;234&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;1&quot;</span><span class="p">],</span>
+            <span class="s">&quot;title&quot;</span><span class="p">:</span> <span class="s">&quot;Title (Regulation R)&quot;</span><span class="p">,</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">APPENDIX</span>
+        <span class="p">}</span>
+        <span class="n">titleless_node</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;title&quot;</span><span class="p">:</span> <span class="s">&quot;Title&quot;</span><span class="p">,</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span>
+        <span class="p">}</span>
+
+        <span class="n">parsed_title</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">parse_doc_title</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">])</span>
+        <span class="n">no_title</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">parse_doc_title</span><span class="p">(</span><span class="n">titleless_node</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;(Regulation R)&quot;</span><span class="p">,</span> <span class="n">parsed_title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">no_title</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_list_level_interpretations"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_list_level_interpretations">[docs]</a>    <span class="k">def</span> <span class="nf">test_list_level_interpretations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;101&#39;</span><span class="p">,</span> <span class="s">&#39;12&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">]</span>
+        <span class="n">node_type</span> <span class="o">=</span> <span class="n">INTERP</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">))</span>
+
+        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;j&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">))</span>
+
+        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_list_level_appendices"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_list_level_appendices">[docs]</a>    <span class="k">def</span> <span class="nf">test_list_level_appendices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;101&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">]</span>
+        <span class="n">node_type</span> <span class="o">=</span> <span class="n">APPENDIX</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">))</span>
+
+        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;2&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">))</span>
+
+        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;k&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">))</span>
+
+        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_list_level_regulations"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_list_level_regulations">[docs]</a>    <span class="k">def</span> <span class="nf">test_list_level_regulations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;101&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">]</span>
+        <span class="n">node_type</span> <span class="o">=</span> <span class="n">REGTEXT</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">))</span>
+
+        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;2&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">))</span>
+
+        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;k&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">))</span>
+
+        <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_list_level_regulations_no_level"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_list_level_regulations_no_level">[docs]</a>    <span class="k">def</span> <span class="nf">test_list_level_regulations_no_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;101&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">]</span>
+        <span class="n">node_type</span> <span class="o">=</span> <span class="n">REGTEXT</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_interp_node_with_citations"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_interp_node_with_citations">[docs]</a>    <span class="k">def</span> <span class="nf">test_interp_node_with_citations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">inline</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">(),</span> <span class="n">Mock</span><span class="p">(),</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="n">inline</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;Interpretation with a link&#39;</span><span class="p">,</span>
+            <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">INTERP</span><span class="p">,</span>
+            <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;999&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">apply_layers</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="n">inline</span><span class="o">.</span><span class="n">get_layer_pairs</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">sr</span><span class="o">.</span><span class="n">get_layer_pairs</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">process_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">layer_parameters</span> <span class="o">=</span> <span class="n">inline</span><span class="o">.</span><span class="n">get_layer_pairs</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Interpretation with a link&#39;</span><span class="p">,</span> <span class="n">layer_parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;999-5-Interp&#39;</span><span class="p">,</span> <span class="n">layer_parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_process_node_header"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_process_node_header">[docs]</a>    <span class="k">def</span> <span class="nf">test_process_node_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">ParagraphLayersApplier</span><span class="p">(),</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;99&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">],</span>
+                <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span><span class="p">}</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">process_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="s">&#39;header&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">)</span>
+
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;99&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">],</span>
+                <span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;Some Title&#39;</span><span class="p">,</span> <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span><span class="p">}</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">process_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;header&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Some Title&#39;</span><span class="p">,</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">])</span>
+
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;99&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">],</span>
+                <span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">u&#39;§ 22.1 Title&#39;</span><span class="p">,</span> <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span><span class="p">}</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">process_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;header&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_no_section_sign"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_no_section_sign">[docs]</a>    <span class="k">def</span> <span class="nf">test_no_section_sign</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="o">.</span><span class="n">section_space</span><span class="p">(</span><span class="s">&#39; abc&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s">&#39; abc&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_modify_interp_node"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_modify_interp_node">[docs]</a>    <span class="k">def</span> <span class="nf">test_modify_interp_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">INTERP</span><span class="p">,</span>
+            <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span>
+            <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">]},</span>
+                         <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                         <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]}]</span>
+        <span class="p">}</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">modify_interp_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;section_header&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;header_children&#39;</span><span class="p">],</span>
+                         <span class="p">[{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                          <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]}])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;par_children&#39;</span><span class="p">],</span>
+                         <span class="p">[{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">]}])</span>
+
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;222&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">modify_interp_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;section_header&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_modify_interp_node_header"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_modify_interp_node_header">[docs]</a>    <span class="k">def</span> <span class="nf">test_modify_interp_node_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s">&#39;header&#39;</span><span class="p">:</span> <span class="s">&#39;This interprets 22(a), a paragraph&#39;</span><span class="p">,</span>
+            <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">INTERP</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">icl</span> <span class="o">=</span> <span class="n">InternalCitationLayer</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+        <span class="n">icl</span><span class="o">.</span><span class="n">sectional</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">ila</span> <span class="o">=</span> <span class="n">InlineLayersApplier</span><span class="p">()</span>
+        <span class="n">ila</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">icl</span><span class="p">)</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="n">ila</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="n">builder</span><span class="o">.</span><span class="n">modify_interp_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;This interprets &#39;</span>
+                         <span class="o">+</span> <span class="n">icl</span><span class="o">.</span><span class="n">render_url</span><span class="p">([</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">],</span> <span class="s">&#39;22(a)&#39;</span><span class="p">)</span>
+                         <span class="o">+</span> <span class="s">&#39;, a paragraph&#39;</span><span class="p">,</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;header_markup&#39;</span><span class="p">])</span>
+
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;872&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">]</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">modify_interp_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;header_markup&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_process_node_title_diff"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_process_node_title_diff">[docs]</a>    <span class="k">def</span> <span class="nf">test_process_node_title_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;204&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s">&#39;delete&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;insert&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s">&#39;AAC&#39;</span><span class="p">)],</span>
+                        <span class="s">&#39;text&#39;</span><span class="p">:</span>  <span class="p">[(</span><span class="s">&#39;delete&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;insert&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s">&#39;AAB&#39;</span><span class="p">)],</span>
+                        <span class="s">&#39;op&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">}}</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">diff_applier</span><span class="o">.</span><span class="n">DiffApplier</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;label_id&quot;</span><span class="p">:</span> <span class="s">&quot;204&quot;</span><span class="p">,</span>
+            <span class="s">&quot;title&quot;</span><span class="p">:</span> <span class="s">&quot;abcd&quot;</span><span class="p">,</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">APPENDIX</span>
+        <span class="p">}</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">diff_applier</span> <span class="o">=</span> <span class="n">da</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">process_node_title</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;&lt;del&gt;ab&lt;/del&gt;cd&lt;ins&gt;AAC&lt;/ins&gt;&#39;</span><span class="p">,</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_process_node_title_section_space_diff"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_process_node_title_section_space_diff">[docs]</a>    <span class="k">def</span> <span class="nf">test_process_node_title_section_space_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;&quot; Diffs and sections spaces need to place nicely together. &quot;&quot;&quot;</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;204&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="s">&#39;delete&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;insert&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s">&#39;AAC&#39;</span><span class="p">)],</span>
+                        <span class="s">&#39;text&#39;</span><span class="p">:</span>  <span class="p">[(</span><span class="s">&#39;delete&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;insert&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s">&#39;AAB&#39;</span><span class="p">)],</span>
+                        <span class="s">&#39;op&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">}}</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">diff_applier</span><span class="o">.</span><span class="n">DiffApplier</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;label_id&quot;</span><span class="p">:</span> <span class="s">u&quot;204&quot;</span><span class="p">,</span>
+            <span class="s">&quot;title&quot;</span><span class="p">:</span> <span class="s">u&quot;§ 101.6 abcd&quot;</span><span class="p">,</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">APPENDIX</span>
+        <span class="p">}</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">diff_applier</span> <span class="o">=</span> <span class="n">da</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">process_node_title</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="s">u&#39;§&amp;nbsp;101.6&lt;del&gt; a&lt;/del&gt;b&lt;ins&gt;AAC&lt;/ins&gt;cd&#39;</span><span class="p">,</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_node_title_no_diff"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_node_title_no_diff">[docs]</a>    <span class="k">def</span> <span class="nf">test_node_title_no_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;label_id&quot;</span><span class="p">:</span> <span class="s">&quot;204&quot;</span><span class="p">,</span>
+            <span class="s">&quot;title&quot;</span><span class="p">:</span> <span class="s">&quot;abcd&quot;</span><span class="p">,</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">APPENDIX</span>
+        <span class="p">}</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">process_node_title</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;header&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">],</span> <span class="s">&#39;abcd&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilderTest.test_generate_html"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.html_builder_test.HTMLBuilderTest.test_generate_html">[docs]</a>    <span class="k">def</span> <span class="nf">test_generate_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">exex</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="p">[])</span>        <span class="c"># no attributes</span>
+        <span class="n">p_applier</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">p_applier</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;exex&#39;</span><span class="p">:</span> <span class="n">exex</span><span class="p">}</span>
+        <span class="n">p_applier</span><span class="o">.</span><span class="n">apply_layers</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span>    <span class="c"># identity</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">p_applier</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1234&#39;</span><span class="p">],</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                        <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="s">&#39;regtext&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">}</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">generate_html</span><span class="p">()</span>
+        <span class="c">#   No explosion so far means this works for most layers</span>
+
+        <span class="n">exex</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>               <span class="c"># &quot;includes&quot; any attribute</span>
+        <span class="n">p_applier</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">p_applier</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;exex&#39;</span><span class="p">:</span> <span class="n">exex</span><span class="p">}</span>
+        <span class="n">p_applier</span><span class="o">.</span><span class="n">apply_layers</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span>    <span class="c"># identity</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">p_applier</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1234&#39;</span><span class="p">],</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                        <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="s">&#39;regtext&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">}</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">generate_html</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">exex</span><span class="o">.</span><span class="n">preprocess_root</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">exex</span><span class="o">.</span><span class="n">preprocess_root</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="n">builder</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

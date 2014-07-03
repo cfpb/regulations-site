@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.uitests.diff_test &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.uitests.diff_test</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">base_test</span> <span class="kn">import</span> <span class="n">BaseTest</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support.ui</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support.select</span> <span class="kn">import</span> <span class="n">Select</span>
+
+<div class="viewcode-block" id="DiffTest"><a class="viewcode-back" href="../../../../regulations.uitests/#regulations.uitests.diff_test.DiffTest">[docs]</a><span class="k">class</span> <span class="nc">DiffTest</span><span class="p">(</span><span class="n">BaseTest</span><span class="p">,</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DiffTest.job_name"><a class="viewcode-back" href="../../../../regulations.uitests/#regulations.uitests.diff_test.DiffTest.job_name">[docs]</a>    <span class="k">def</span> <span class="nf">job_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;Diff test&#39;</span>
+</div>
+<div class="viewcode-block" id="DiffTest.get_drawer_button"><a class="viewcode-back" href="../../../../regulations.uitests/#regulations.uitests.diff_test.DiffTest.get_drawer_button">[docs]</a>    <span class="k">def</span> <span class="nf">get_drawer_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;timeline-link&quot;]&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DiffTest.test_diffs"><a class="viewcode-back" href="../../../../regulations.uitests/#regulations.uitests.diff_test.DiffTest.test_diffs">[docs]</a>    <span class="k">def</span> <span class="nf">test_diffs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_url</span> <span class="o">+</span> <span class="s">&#39;/1005-2/2011-11111&#39;</span><span class="p">)</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_tag_name</span><span class="p">(</span><span class="s">&#39;html&#39;</span><span class="p">)</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">driver</span><span class="p">:</span> <span class="s">&#39;selenium-start&#39;</span> <span class="ow">in</span> <span class="n">html</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">))</span>
+
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="n">drawer_button</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_drawer_button</span><span class="p">()</span>
+        <span class="n">drawer_button</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">driver</span><span class="p">:</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s">&#39;#timeline:not(.hidden)&#39;</span><span class="p">))</span>
+
+        <span class="c"># drawer button should be active</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;current&#39;</span> <span class="ow">in</span> <span class="n">drawer_button</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">))</span>
+
+        <span class="n">diff_field</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;timeline&quot;]/div[2]/ul/li[1]/div/div/div/form/select&#39;</span><span class="p">))</span>
+        <span class="c"># select version to compare to</span>
+        <span class="n">diff_field</span><span class="o">.</span><span class="n">select_by_value</span><span class="p">(</span><span class="s">&#39;2012-12121&#39;</span><span class="p">)</span>
+
+        <span class="c"># wait until diff view has loaded</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_tag_name</span><span class="p">(</span><span class="s">&#39;html&#39;</span><span class="p">)</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+             <span class="k">lambda</span> <span class="n">driver</span><span class="p">:</span> <span class="s">&#39;selenium-start&#39;</span> <span class="ow">in</span> <span class="n">html</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">))</span>
+
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="c"># make sure the url is right</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">current_url</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_url</span> <span class="o">+</span> <span class="s">&#39;/diff/1005-2/2012-12121/2011-11111?from_version=2011-11111&#39;</span><span class="p">)</span>
+
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+        <span class="c"># open diff pane in drawer</span>
+        <span class="n">active_drawer_button</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_drawer_button</span><span class="p">()</span>
+        <span class="n">active_drawer_button</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">driver</span><span class="p">:</span> <span class="s">&#39;current&#39;</span> <span class="ow">in</span> <span class="n">active_drawer_button</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">))</span>
+
+        <span class="c"># navigate to 1005.3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;menu-link&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">driver</span><span class="p">:</span> <span class="s">&#39;current&#39;</span> <span class="ow">in</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;table-of-contents&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">))</span>
+        <span class="n">toc_link_1005_3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;toc&quot;]/ol/li[3]&#39;</span><span class="p">)</span>
+        <span class="c"># drawer should have green bar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;modified&#39;</span> <span class="ow">in</span> <span class="n">toc_link_1005_3</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">))</span>
+        <span class="n">toc_link_1005_3</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+        <span class="c"># wait until 1005.3 diff loads</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">driver</span><span class="p">:</span> <span class="n">driver</span><span class="o">.</span><span class="n">current_url</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_url</span> <span class="o">+</span> <span class="s">&#39;/diff/1005-3/2012-12121/2011-11111?from_version=2011-11111&#39;</span><span class="p">)</span>
+
+        <span class="c"># make sure new section is greened</span>
+        <span class="n">new_section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-3-b-1-vi&quot;]&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">new_section</span><span class="o">.</span><span class="n">find_element_by_tag_name</span><span class="p">(</span><span class="s">&#39;ins&#39;</span><span class="p">))</span>
+
+        <span class="c"># make sure changed paragraph has insertions and deletions</span>
+        <span class="n">changed_section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-3-b-2-ii&quot;]&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">changed_section</span><span class="o">.</span><span class="n">find_elements_by_tag_name</span><span class="p">(</span><span class="s">&#39;ins&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">changed_section</span><span class="o">.</span><span class="n">find_elements_by_tag_name</span><span class="p">(</span><span class="s">&#39;del&#39;</span><span class="p">)))</span>
+
+        <span class="c"># go back into diff pane in drawer, stop comparing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_drawer_button</span><span class="p">()</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="n">stop_button</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;timeline&quot;]/div[2]/ul/li[2]/div/a&#39;</span><span class="p">)</span>
+        <span class="n">stop_button</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+        <span class="c"># make sure it goes back to the right place</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">driver</span><span class="p">:</span> <span class="n">driver</span><span class="o">.</span><span class="n">current_url</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_url</span> <span class="o">+</span> <span class="s">&#39;/1005-3/2011-11111&#39;</span><span class="p">)</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

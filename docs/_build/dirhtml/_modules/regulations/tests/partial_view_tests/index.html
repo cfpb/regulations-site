@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.partial_view_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.partial_view_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">RequestFactory</span>
+<span class="kn">from</span> <span class="nn">django.test.client</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator.layers.layers_applier</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.node_types</span> <span class="kn">import</span> <span class="n">EMPTYPART</span><span class="p">,</span> <span class="n">INTERP</span><span class="p">,</span> <span class="n">REGTEXT</span>
+<span class="kn">from</span> <span class="nn">regulations.views.partial</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="PartialParagraphViewTests"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.partial_view_tests.PartialParagraphViewTests">[docs]</a><span class="k">class</span> <span class="nc">PartialParagraphViewTests</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@patch.object</span><span class="p">(</span><span class="n">PartialParagraphView</span><span class="p">,</span> <span class="s">&#39;section_navigation&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="PartialParagraphViewTests.test_transform_context"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.partial_view_tests.PartialParagraphViewTests.test_transform_context">[docs]</a>    <span class="k">def</span> <span class="nf">test_transform_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sn</span><span class="p">):</span>
+        <span class="n">ppv</span> <span class="o">=</span> <span class="n">PartialParagraphView</span><span class="p">()</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">],</span>
+                        <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span><span class="p">}</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;label_id&#39;</span><span class="p">:</span> <span class="s">&#39;1111-22-a-5-i&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;vvvv&#39;</span><span class="p">}</span>
+        <span class="n">ppv</span><span class="o">.</span><span class="n">transform_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">builder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;tree&#39;</span><span class="p">],</span> <span class="p">{</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span><span class="p">,</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">],</span>
+            <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">EMPTYPART</span><span class="p">,</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">],</span>
+                <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                    <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span><span class="p">,</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">],</span>
+                    <span class="s">&#39;markup_id&#39;</span><span class="p">:</span> <span class="s">&#39;1111-22-a-5-i&#39;</span><span class="p">,</span>
+                    <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                        <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span><span class="p">,</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">],</span>
+                        <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">builder</span><span class="o">.</span><span class="n">tree</span><span class="p">]}]}]}]})</span>
+
+        <span class="n">builder</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">],</span>
+                        <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">INTERP</span><span class="p">}</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;label_id&#39;</span><span class="p">:</span> <span class="s">&#39;1111-Interp-h1&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;vvvv&#39;</span><span class="p">}</span>
+        <span class="n">ppv</span><span class="o">.</span><span class="n">transform_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">builder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ctx</span><span class="p">[</span><span class="s">&#39;tree&#39;</span><span class="p">],</span> <span class="p">{</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span><span class="p">,</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">],</span>
+            <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">INTERP</span><span class="p">,</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span>
+                <span class="s">&#39;markup_id&#39;</span><span class="p">:</span> <span class="s">&#39;1111-Interp-h1&#39;</span><span class="p">,</span>
+                <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">builder</span><span class="o">.</span><span class="n">tree</span><span class="p">]}]})</span>
+
+</div></div>
+<div class="viewcode-block" id="PartialSectionViewTests"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.partial_view_tests.PartialSectionViewTests">[docs]</a><span class="k">class</span> <span class="nc">PartialSectionViewTests</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.partial.generator&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.partial.navigation&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.generator.LayerCreator.get_layer_json&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="PartialSectionViewTests.test_get_context_data"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.partial_view_tests.PartialSectionViewTests.test_get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">get_layer_json</span><span class="p">,</span> <span class="n">navigation</span><span class="p">,</span> <span class="n">generator</span><span class="p">):</span>
+        <span class="n">get_layer_json</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;layer&#39;</span><span class="p">:</span> <span class="s">&#39;layer&#39;</span><span class="p">}</span>
+        <span class="n">navigation</span><span class="o">.</span><span class="n">nav_sections</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
+        <span class="n">generator</span><span class="o">.</span><span class="n">get_tree_paragraph</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;Some Text&#39;</span><span class="p">,</span>
+            <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;205&#39;</span><span class="p">],</span>
+            <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span>
+        <span class="p">}</span>
+
+        <span class="n">reg_part_section</span> <span class="o">=</span> <span class="s">&#39;205&#39;</span>
+        <span class="n">reg_version</span> <span class="o">=</span> <span class="s">&#39;2013-10608&#39;</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">RequestFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/fake-path/?layers=meta&#39;</span><span class="p">)</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="n">PartialSectionView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span>
+            <span class="n">template_name</span><span class="o">=</span><span class="s">&#39;regulations/regulation-content.html&#39;</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">view</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">label_id</span><span class="o">=</span><span class="n">reg_part_section</span><span class="p">,</span>
+                        <span class="n">version</span><span class="o">=</span><span class="n">reg_version</span><span class="p">)</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">context_data</span><span class="p">[</span><span class="s">&#39;tree&#39;</span><span class="p">]</span>
+        <span class="n">subpart</span> <span class="o">=</span> <span class="n">root</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">subpart</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="n">generator</span><span class="o">.</span><span class="n">get_tree_paragraph</span><span class="o">.</span><span class="n">return_value</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="PartialViewTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.partial_view_tests.PartialViewTest">[docs]</a><span class="k">class</span> <span class="nc">PartialViewTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PartialViewTest.test_generate_html"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.partial_view_tests.PartialViewTest.test_generate_html">[docs]</a>    <span class="k">def</span> <span class="nf">test_generate_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">regulation_tree</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8675&#39;</span><span class="p">],</span>
+                           <span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;Regulation R&#39;</span><span class="p">,</span> <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="n">REGTEXT</span><span class="p">}</span>
+        <span class="n">i_applier</span> <span class="o">=</span> <span class="n">InlineLayersApplier</span><span class="p">()</span>
+        <span class="n">p_applier</span> <span class="o">=</span> <span class="n">ParagraphLayersApplier</span><span class="p">()</span>
+        <span class="n">sr_applier</span> <span class="o">=</span> <span class="n">SearchReplaceLayersApplier</span><span class="p">()</span>
+        <span class="n">appliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">i_applier</span><span class="p">,</span> <span class="n">p_applier</span><span class="p">,</span> <span class="n">sr_applier</span><span class="p">)</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">generate_html</span><span class="p">(</span><span class="n">regulation_tree</span><span class="p">,</span> <span class="n">appliers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span> <span class="n">regulation_tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">inline_applier</span><span class="p">,</span> <span class="n">i_applier</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">p_applier</span><span class="p">,</span> <span class="n">p_applier</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">search_applier</span><span class="p">,</span> <span class="n">sr_applier</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

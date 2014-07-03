@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.management.commands.generate_regulation &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../../" />
+    <link rel="up" title="Module code" href="../../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.management.commands.generate_regulation</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">mkdir</span><span class="p">,</span> <span class="n">path</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="kn">from</span> <span class="nn">django.core.management.base</span> <span class="kn">import</span> <span class="n">BaseCommand</span><span class="p">,</span> <span class="n">CommandError</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpRequest</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">Context</span><span class="p">,</span> <span class="n">loader</span>
+<span class="kn">from</span> <span class="nn">optparse</span> <span class="kn">import</span> <span class="n">make_option</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator</span> <span class="kn">import</span> <span class="n">generator</span> 
+<span class="kn">from</span> <span class="nn">regulations.generator</span> <span class="kn">import</span> <span class="n">notices</span>
+<span class="kn">from</span> <span class="nn">regulations.views.chrome</span> <span class="kn">import</span> <span class="n">ChromeRegulationView</span>
+
+<div class="viewcode-block" id="Command"><a class="viewcode-back" href="../../../../../regulations.management.commands/#regulations.management.commands.generate_regulation.Command">[docs]</a><span class="k">class</span> <span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="s">&quot;--regulation &lt;regulation part&gt; --reg_version=&lt;regulation version&gt;&quot;</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s">&#39;Write out the full version of a regulation to disk.&#39;</span>
+
+    <span class="n">option_list</span> <span class="o">=</span> <span class="n">BaseCommand</span><span class="o">.</span><span class="n">option_list</span> <span class="o">+</span> <span class="p">(</span>
+        <span class="n">make_option</span><span class="p">(</span><span class="s">&#39;--regulation&#39;</span><span class="p">,</span> 
+            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
+            <span class="n">dest</span><span class="o">=</span><span class="s">&#39;regulation_part&#39;</span><span class="p">,</span> 
+            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Regulation required.&#39;</span><span class="p">),</span> 
+        <span class="n">make_option</span><span class="p">(</span><span class="s">&#39;--reg_version&#39;</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span> 
+            <span class="n">dest</span><span class="o">=</span><span class="s">&#39;regulation_version&#39;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Regulation version required.&#39;</span><span class="p">))</span>
+
+<div class="viewcode-block" id="Command.write_file"><a class="viewcode-back" href="../../../../../regulations.management.commands/#regulations.management.commands.generate_regulation.Command.write_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">markup</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Write out a file using the UTF-8 codec. &quot;&quot;&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">markup</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Command.get_regulation_version"><a class="viewcode-back" href="../../../../../regulations.management.commands/#regulations.management.commands.generate_regulation.Command.get_regulation_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_regulation_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the regulation part and regulation version from the command line arguments. &quot;&quot;&quot;</span>
+        <span class="n">regulation_part</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;regulation_part&#39;</span><span class="p">)</span>
+        <span class="n">regulation_version</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;regulation_version&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">regulation_part</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">regulation_version</span><span class="p">:</span>
+            <span class="n">usage_string</span> <span class="o">=</span> <span class="s">&quot;Usage: python manage.py generate_regulation  </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span>  <span class="o">%</span> <span class="n">Command</span><span class="o">.</span><span class="n">args</span>
+            <span class="k">raise</span> <span class="n">CommandError</span><span class="p">(</span><span class="n">usage_string</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">regulation_part</span><span class="p">,</span> <span class="n">regulation_version</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Command.handle"><a class="viewcode-back" href="../../../../../regulations.management.commands/#regulations.management.commands.generate_regulation.Command.handle">[docs]</a>    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="n">part</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_regulation_version</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
+        <span class="n">view</span> <span class="o">=</span> <span class="n">ChromeRegulationView</span><span class="p">()</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">HttpRequest</span><span class="p">()</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="s">&#39;GET&#39;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="n">label_id</span><span class="o">=</span><span class="n">part</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="n">ChromeRegulationView</span><span class="o">.</span><span class="n">template_name</span><span class="p">)</span>
+        <span class="n">markup</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">Context</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>
+
+       <span class="c"># markup = builder.render_markup()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_file</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">OFFLINE_OUTPUT_DIR</span> <span class="o">+</span> <span class="s">&#39;rege.html&#39;</span><span class="p">,</span> <span class="n">markup</span><span class="p">)</span>
+        <span class="n">front_end_dir</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">OFFLINE_OUTPUT_DIR</span> <span class="o">+</span> <span class="s">&#39;static&#39;</span>
+
+        <span class="c">#   If any dir in the path is symlinked, don&#39;t replace it</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">front_end_dir</span><span class="p">):</span>
+            <span class="c">#   Otherwise, copy the static dir to the output</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">front_end_dir</span><span class="p">):</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">front_end_dir</span><span class="p">)</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s">&#39;../regulations/static/&#39;</span><span class="p">,</span> <span class="n">front_end_dir</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">OFFLINE_OUTPUT_DIR</span> <span class="o">+</span> <span class="s">&#39;notice&#39;</span><span class="p">):</span>
+            <span class="n">mkdir</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">OFFLINE_OUTPUT_DIR</span> <span class="o">+</span> <span class="s">&#39;notice&#39;</span><span class="p">)</span>
+
+        <span class="n">all_notices</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">get_all_notices</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">notice</span> <span class="ow">in</span> <span class="n">all_notices</span><span class="p">:</span> <span class="c">#notices.fetch_all(api):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_file</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">OFFLINE_OUTPUT_DIR</span> <span class="o">+</span> <span class="s">&#39;notice/&#39;</span> <span class="o">+</span> 
+                <span class="n">notice</span><span class="p">[</span><span class="s">&#39;document_number&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.html&quot;</span><span class="p">,</span> <span class="n">notices</span><span class="o">.</span><span class="n">markup</span><span class="p">(</span><span class="n">notice</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.layers_formatting_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.layers_formatting_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator.layers.formatting</span> <span class="kn">import</span> <span class="n">FormattingLayer</span>
+
+
+<div class="viewcode-block" id="FormattingLayerTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_formatting_tests.FormattingLayerTest">[docs]</a><span class="k">class</span> <span class="nc">FormattingLayerTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.formatting.loader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="FormattingLayerTest.test_apply_layer"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_formatting_tests.FormattingLayerTest.test_apply_layer">[docs]</a>    <span class="k">def</span> <span class="nf">test_apply_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">):</span>
+        <span class="n">render</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">render</span>
+
+        <span class="n">table_data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;header&#39;</span><span class="p">:</span> <span class="p">[[{</span><span class="s">&#39;colspan&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&#39;rowspan&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                                   <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;Title&#39;</span><span class="p">}]],</span>
+                      <span class="s">&#39;rows&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s">&#39;cell 11&#39;</span><span class="p">,</span> <span class="s">&#39;cell 12&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;cell 21&#39;</span><span class="p">,</span> <span class="s">&#39;cell 22&#39;</span><span class="p">]]}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;111-1&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s">&#39;111-2&#39;</span><span class="p">:</span> <span class="p">[{}],</span>
+                <span class="s">&#39;111-3&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;original&#39;</span><span class="p">,</span> <span class="s">&#39;locations&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                                   <span class="s">&#39;table_data&#39;</span><span class="p">:</span> <span class="n">table_data</span><span class="p">}]}</span>
+        <span class="n">fl</span> <span class="o">=</span> <span class="n">FormattingLayer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-0&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-1&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-2&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">render</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-3&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;original&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">render</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">render</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">],</span>
+                         <span class="p">[[{</span><span class="s">&#39;colspan&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&#39;rowspan&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;Title&#39;</span><span class="p">}]])</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.formatting.loader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="FormattingLayerTest.test_apply_layer_note"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_formatting_tests.FormattingLayerTest.test_apply_layer_note">[docs]</a>    <span class="k">def</span> <span class="nf">test_apply_layer_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">):</span>
+        <span class="n">mocks</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;table&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">(),</span> <span class="s">&#39;note&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">(),</span> <span class="s">&#39;code&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">(),</span>
+                 <span class="s">&#39;subscript&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">()}</span>
+
+        <span class="k">def</span> <span class="nf">ret_mock</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">mocks</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">arg</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">mocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">ret_mock</span>
+        <span class="n">render</span> <span class="o">=</span> <span class="n">mocks</span><span class="p">[</span><span class="s">&#39;note&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">render</span>
+
+        <span class="n">fence_data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;type&#39;</span><span class="p">:</span> <span class="s">&#39;note&#39;</span><span class="p">,</span>
+                      <span class="s">&#39;lines&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;Note:&#39;</span><span class="p">,</span> <span class="s">&#39;1. Content1&#39;</span><span class="p">,</span> <span class="s">&#39;2. Content2&#39;</span><span class="p">]}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;111-1&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s">&#39;111-2&#39;</span><span class="p">:</span> <span class="p">[{}],</span>
+                <span class="s">&#39;111-3&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;original&#39;</span><span class="p">,</span> <span class="s">&#39;locations&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                           <span class="s">&#39;fence_data&#39;</span><span class="p">:</span> <span class="n">fence_data</span><span class="p">}]}</span>
+        <span class="n">fl</span> <span class="o">=</span> <span class="n">FormattingLayer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-0&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-1&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-2&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">render</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-3&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;original&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">render</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">render</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;lines&#39;</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&#39;1. Content1&#39;</span><span class="p">,</span> <span class="s">&#39;2. Content2&#39;</span><span class="p">])</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.formatting.loader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="FormattingLayerTest.test_apply_layer_code"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_formatting_tests.FormattingLayerTest.test_apply_layer_code">[docs]</a>    <span class="k">def</span> <span class="nf">test_apply_layer_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">):</span>
+        <span class="n">mocks</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;table&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">(),</span> <span class="s">&#39;note&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">(),</span> <span class="s">&#39;code&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">(),</span>
+                 <span class="s">&#39;subscript&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">()}</span>
+
+        <span class="k">def</span> <span class="nf">ret_mock</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">mocks</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">arg</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">mocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">ret_mock</span>
+        <span class="n">render</span> <span class="o">=</span> <span class="n">mocks</span><span class="p">[</span><span class="s">&#39;code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">render</span>
+
+        <span class="n">fence_data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;type&#39;</span><span class="p">:</span> <span class="s">&#39;python&#39;</span><span class="p">,</span>
+                      <span class="s">&#39;lines&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;def double(x):&#39;</span><span class="p">,</span> <span class="s">&#39;    return x + x&#39;</span><span class="p">]}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;111-1&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s">&#39;111-2&#39;</span><span class="p">:</span> <span class="p">[{}],</span>
+                <span class="s">&#39;111-3&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;original&#39;</span><span class="p">,</span> <span class="s">&#39;locations&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                           <span class="s">&#39;fence_data&#39;</span><span class="p">:</span> <span class="n">fence_data</span><span class="p">}]}</span>
+        <span class="n">fl</span> <span class="o">=</span> <span class="n">FormattingLayer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-0&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-1&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-2&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">render</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-3&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;original&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">render</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">render</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;lines&#39;</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&#39;def double(x):&#39;</span><span class="p">,</span> <span class="s">&#39;    return x + x&#39;</span><span class="p">])</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.formatting.loader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="FormattingLayerTest.test_apply_layer_subscript"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_formatting_tests.FormattingLayerTest.test_apply_layer_subscript">[docs]</a>    <span class="k">def</span> <span class="nf">test_apply_layer_subscript</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">):</span>
+        <span class="n">mocks</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;table&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">(),</span> <span class="s">&#39;note&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">(),</span> <span class="s">&#39;code&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">(),</span>
+                 <span class="s">&#39;subscript&#39;</span><span class="p">:</span> <span class="n">Mock</span><span class="p">()}</span>
+
+        <span class="k">def</span> <span class="nf">ret_mock</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">mocks</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">arg</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">mocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">ret_mock</span>
+        <span class="n">render</span> <span class="o">=</span> <span class="n">mocks</span><span class="p">[</span><span class="s">&#39;subscript&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">render</span>
+
+        <span class="n">subscript_data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;variable&#39;</span><span class="p">:</span> <span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;subscript&#39;</span><span class="p">:</span> <span class="s">&#39;123&#39;</span><span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;111-1&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s">&#39;111-2&#39;</span><span class="p">:</span> <span class="p">[{}],</span>
+                <span class="s">&#39;111-3&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;abc_{123}&#39;</span><span class="p">,</span> <span class="s">&#39;locations&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                           <span class="s">&#39;subscript_data&#39;</span><span class="p">:</span> <span class="n">subscript_data</span><span class="p">}]}</span>
+        <span class="n">fl</span> <span class="o">=</span> <span class="n">FormattingLayer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-0&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-1&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-2&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">render</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fl</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;111-3&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;abc_{123}&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">render</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">render</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;variable&#39;</span><span class="p">],</span> <span class="s">&#39;abc&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;subscript&#39;</span><span class="p">],</span> <span class="s">&#39;123&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

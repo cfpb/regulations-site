@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.views.redirect &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.views.redirect</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">redirect</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator.api_reader</span> <span class="kn">import</span> <span class="n">ApiReader</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.versions</span> <span class="kn">import</span> <span class="n">fetch_grouped_history</span>
+<span class="kn">from</span> <span class="nn">regulations.views.error_handling</span> <span class="kn">import</span> <span class="n">handle_generic_404</span>
+
+
+<div class="viewcode-block" id="redirect_by_date"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.redirect.redirect_by_date">[docs]</a><span class="k">def</span> <span class="nf">redirect_by_date</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;If a user requests a date as the version, find the version which was</span>
+<span class="sd">    current as of that date&quot;&quot;&quot;</span>
+    <span class="n">date_versions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">ApiReader</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">struct</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">regversions</span><span class="p">(</span><span class="n">label_id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="s">&#39;versions&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="s">&#39;by_date&#39;</span> <span class="ow">in</span> <span class="n">struct</span><span class="p">:</span>
+            <span class="n">date_versions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">struct</span><span class="p">[</span><span class="s">&#39;by_date&#39;</span><span class="p">],</span> <span class="n">struct</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">]))</span>
+
+    <span class="n">date_versions</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">date_versions</span><span class="p">)</span>
+    <span class="n">last_version</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">date_str</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">-</span><span class="si">%s</span><span class="s">-</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">date_versions</span> <span class="ow">and</span> <span class="n">date_versions</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">date_str</span><span class="p">:</span>
+        <span class="n">last_version</span> <span class="o">=</span> <span class="n">date_versions</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">date_versions</span> <span class="o">=</span> <span class="n">date_versions</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="n">label_parts</span> <span class="o">=</span> <span class="n">label_id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">last_version</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">label_parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;chrome_section_view&#39;</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span> <span class="n">last_version</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">last_version</span> <span class="ow">and</span> <span class="n">label_parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Interp&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;chrome_section_view&#39;</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span> <span class="n">last_version</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">last_version</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">label_parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;chrome_regulation_view&#39;</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span> <span class="n">last_version</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">last_version</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;chrome_paragraph_view&#39;</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span> <span class="n">last_version</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">handle_generic_404</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="redirect_by_date_get"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.redirect.redirect_by_date_get">[docs]</a><span class="k">def</span> <span class="nf">redirect_by_date_get</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">label_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles date, etc. if they are part of the GET variable. We check for</span>
+<span class="sd">    bad data here (as we can&#39;t rely on url regex)&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">year</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;year&#39;</span><span class="p">)))</span>
+        <span class="n">month</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;month&#39;</span><span class="p">)))</span>
+        <span class="n">day</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;day&#39;</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="n">year</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>  <span class="c"># Assume two-digit years are for 2000</span>
+            <span class="n">year</span> <span class="o">=</span> <span class="mi">2000</span> <span class="o">+</span> <span class="n">year</span>
+
+        <span class="k">return</span> <span class="n">redirect_by_date</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%04d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">year</span><span class="p">,</span>
+                                <span class="s">&quot;</span><span class="si">%02d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">month</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%02d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">day</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">handle_generic_404</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="order_diff_versions"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.redirect.order_diff_versions">[docs]</a><span class="k">def</span> <span class="nf">order_diff_versions</span><span class="p">(</span><span class="n">label_id</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">new_version</span><span class="p">):</span>
+    <span class="c"># Re-order if needed - History is sorted in reverse chronological order</span>
+    <span class="k">for</span> <span class="n">major_version</span> <span class="ow">in</span> <span class="n">fetch_grouped_history</span><span class="p">(</span><span class="n">label_id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">notice</span> <span class="ow">in</span> <span class="n">major_version</span><span class="p">[</span><span class="s">&#39;notices&#39;</span><span class="p">]:</span>
+            <span class="c"># Hit the &quot;old&quot; version first, meaning it&#39;s not actually the old</span>
+            <span class="c"># version</span>
+            <span class="k">if</span> <span class="n">notice</span><span class="p">[</span><span class="s">&#39;document_number&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">version</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;chrome_section_diff_view&#39;</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span>
+                                <span class="n">new_version</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+            <span class="c"># Hit the new version first -- sort is correct</span>
+            <span class="k">elif</span> <span class="n">notice</span><span class="p">[</span><span class="s">&#39;document_number&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">new_version</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;chrome_section_diff_view&#39;</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span>
+                                <span class="n">version</span><span class="p">,</span> <span class="n">new_version</span><span class="p">)</span>
+
+    <span class="c"># Didn&#39;t find the versions in question. Assume this was intentional</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;chrome_section_diff_view&#39;</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span>
+                    <span class="n">new_version</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="diff_redirect"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.redirect.diff_redirect">[docs]</a><span class="k">def</span> <span class="nf">diff_redirect</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles constructing the diff url by pulling the new version from</span>
+<span class="sd">    GET. We check for bad data here (as we can&#39;t rely on url regex)&quot;&quot;&quot;</span>
+    <span class="n">new_version</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;new_version&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r&#39;^[-\d\w]+$&#39;</span><span class="p">,</span> <span class="n">new_version</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">handle_generic_404</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">order_diff_versions</span><span class="p">(</span><span class="n">label_id</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">new_version</span><span class="p">)</span>
+    <span class="n">response</span><span class="p">[</span><span class="s">&#39;Location&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="s">&#39;?from_version=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">version</span>
+    <span class="k">return</span> <span class="n">response</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

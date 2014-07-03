@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.views_diff_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.views_diff_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">RequestFactory</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">regulations.views.diff</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="ChromeSectionDiffViewTests"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_diff_tests.ChromeSectionDiffViewTests">[docs]</a><span class="k">class</span> <span class="nc">ChromeSectionDiffViewTests</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ChromeSectionDiffViewTests.test_extract_sections_subparts"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_diff_tests.ChromeSectionDiffViewTests.test_extract_sections_subparts">[docs]</a>    <span class="k">def</span> <span class="nf">test_extract_sections_subparts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-1&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">]},</span>
+               <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-3&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">]}]</span>
+
+        <span class="n">toc</span> <span class="o">=</span> <span class="p">[{</span>
+            <span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-Subpart-A&#39;</span><span class="p">,</span>
+            <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">],</span>
+            <span class="s">&#39;sub_toc&#39;</span><span class="p">:</span> <span class="n">sub</span><span class="p">},</span>
+            <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-Interp&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]}]</span>
+
+        <span class="n">sections</span> <span class="o">=</span> <span class="n">extract_sections</span><span class="p">(</span><span class="n">toc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">],</span> <span class="n">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;index&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">],</span> <span class="n">sections</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;index&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="n">sections</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s">&#39;index&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="ChromeSectionDiffViewTests.test_extract_sections"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_diff_tests.ChromeSectionDiffViewTests.test_extract_sections">[docs]</a>    <span class="k">def</span> <span class="nf">test_extract_sections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">toc</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-1&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">]},</span>
+               <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-3&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">]}]</span>
+        <span class="n">sections</span> <span class="o">=</span> <span class="n">extract_sections</span><span class="p">(</span><span class="n">toc</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">],</span> <span class="n">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;index&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">],</span> <span class="n">sections</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;index&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="ChromeSectionDiffViewTests.test_diff_toc"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_diff_tests.ChromeSectionDiffViewTests.test_diff_toc">[docs]</a>    <span class="k">def</span> <span class="nf">test_diff_toc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Integration test.&quot;&quot;&quot;</span>
+        <span class="n">old_toc</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-1&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">],</span>
+                    <span class="s">&#39;is_section&#39;</span><span class="p">:</span><span class="bp">True</span><span class="p">},</span>
+                   <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-3&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">],</span>
+                    <span class="s">&#39;is_section&#39;</span><span class="p">:</span><span class="bp">True</span><span class="p">},</span>
+                   <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-4&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">],</span>
+                    <span class="s">&#39;is_section&#39;</span><span class="p">:</span><span class="bp">True</span><span class="p">},</span>
+                   <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-A&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">],</span>
+                    <span class="s">&#39;is_appendix&#39;</span><span class="p">:</span><span class="bp">True</span><span class="p">},</span>
+                   <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-B&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">],</span>
+                    <span class="s">&#39;is_appendix&#39;</span><span class="p">:</span><span class="bp">True</span><span class="p">},</span>
+                   <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;8888-Interp&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span>
+                    <span class="s">&#39;is_supplement&#39;</span><span class="p">:</span><span class="bp">True</span><span class="p">}]</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;8888-2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;op&#39;</span><span class="p">:</span> <span class="s">&#39;added&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;node&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;8888.2&#39;</span><span class="p">,</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">]}},</span>
+            <span class="s">&#39;8888-C&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;op&#39;</span><span class="p">:</span> <span class="s">&#39;added&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;node&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;App C&#39;</span><span class="p">,</span> <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;8888&#39;</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">]}},</span>
+            <span class="s">&#39;8888-1-a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;op&#39;</span><span class="p">:</span> <span class="s">&#39;modified&#39;</span><span class="p">},</span>
+            <span class="s">&#39;8888-B&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;op&#39;</span><span class="p">:</span> <span class="s">&#39;deleted&#39;</span><span class="p">},</span>
+            <span class="s">&#39;8888-3-b&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;op&#39;</span><span class="p">:</span> <span class="s">&#39;deleted&#39;</span><span class="p">},</span>
+            <span class="s">&#39;8888-B-1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;op&#39;</span><span class="p">:</span> <span class="s">&#39;modified&#39;</span><span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">diff_toc</span><span class="p">(</span><span class="s">&#39;oldold&#39;</span><span class="p">,</span> <span class="s">&#39;newnew&#39;</span><span class="p">,</span> <span class="n">old_toc</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="s">&#39;from_ver&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;8888-1&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from_ver&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;8888-1&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;section_id&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;modified&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;op&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;8888-2&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from_ver&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;8888-2&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;section_id&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;added&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;op&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;8888-3&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from_ver&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;8888-3&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s">&#39;section_id&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;modified&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s">&#39;op&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;8888-4&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from_ver&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;8888-4&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s">&#39;section_id&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="s">&#39;op&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;8888-A&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from_ver&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;8888-A&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="s">&#39;section_id&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="s">&#39;op&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;8888-B&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from_ver&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;8888-B&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s">&#39;section_id&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s">&#39;op&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;8888-C&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from_ver&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;8888-C&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="s">&#39;section_id&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;added&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="s">&#39;op&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;8888-Interp&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">7</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;8888-Interp&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">7</span><span class="p">][</span><span class="s">&#39;section_id&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="s">&#39;op&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;oldold&#39;</span><span class="p">,</span> <span class="n">el</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;newnew&#39;</span><span class="p">,</span> <span class="n">el</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="ChromeSectionDiffViewTests.test_interp_headers"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_diff_tests.ChromeSectionDiffViewTests.test_interp_headers">[docs]</a>    <span class="k">def</span> <span class="nf">test_interp_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">loader</span><span class="p">,</span> <span class="n">Context</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s">&#39;regulations/interp-tree.html&#39;</span><span class="p">)</span>
+        <span class="n">context_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;interp&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&#39;header&#39;</span><span class="p">:</span> <span class="s">&#39;&lt;ins&gt;My header&lt;/ins&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;section_header&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}}</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">Context</span><span class="p">(</span><span class="n">context_dict</span><span class="p">))</span>
+        <span class="n">tags_preserved_header</span> <span class="o">=</span> <span class="s">&#39;&lt;h3 tabindex=</span><span class="se">\&quot;</span><span class="s">0</span><span class="se">\&quot;</span><span class="s">&gt; &lt;ins&gt;My header&lt;/ins&gt;&lt;/h3&gt;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">tags_preserved_header</span> <span class="ow">in</span> <span class="n">response</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.diff.fetch_toc&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.diff.SectionUrl&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ChromeSectionDiffViewTests.test_add_main_content"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_diff_tests.ChromeSectionDiffViewTests.test_add_main_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_main_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SectionUrl</span><span class="p">,</span> <span class="n">fetch_toc</span><span class="p">):</span>
+        <span class="n">fetch_toc</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;222&#39;</span><span class="p">],</span> <span class="s">&#39;is_section&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">],</span> <span class="s">&#39;is_appendix&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;is_supplement&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+             <span class="s">&#39;sub_toc&#39;</span><span class="p">:</span> <span class="p">[</span>
+                 <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">]},</span>
+                 <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                 <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]}]}]</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;main_content_context&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;newer_version&#39;</span><span class="p">:</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;TOC&#39;</span><span class="p">:</span> <span class="s">&#39;toc&#39;</span><span class="p">},</span>
+            <span class="s">&#39;label_id&#39;</span><span class="p">:</span> <span class="s">&#39;111-222&#39;</span><span class="p">,</span>
+            <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;2&#39;</span><span class="p">}</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">RequestFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;?new_version=1&#39;</span><span class="p">)</span>
+        <span class="n">csdv</span> <span class="o">=</span> <span class="n">ChromeSectionDiffView</span><span class="p">()</span>
+        <span class="n">csdv</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span>
+        
+        <span class="n">csdv</span><span class="o">.</span><span class="n">add_diff_content</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;from_version&#39;</span><span class="p">],</span> <span class="s">&#39;2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;left_version&#39;</span><span class="p">],</span> <span class="s">&#39;2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;right_version&#39;</span><span class="p">],</span> <span class="s">&#39;1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;TOC&#39;</span><span class="p">],</span> <span class="s">&#39;toc&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;first_subterp&#39;</span> <span class="ow">in</span> <span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;1111&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">],</span>
+                         <span class="n">context</span><span class="p">[</span><span class="s">&#39;first_subterp&#39;</span><span class="p">][</span><span class="s">&#39;index&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;url&#39;</span> <span class="ow">in</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;first_subterp&#39;</span><span class="p">])</span>
+
+</div></div>
+<div class="viewcode-block" id="PartialSectionDiffViewTests"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_diff_tests.PartialSectionDiffViewTests">[docs]</a><span class="k">class</span> <span class="nc">PartialSectionDiffViewTests</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="PartialSectionDiffViewTests.test_footer_nav"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_diff_tests.PartialSectionDiffViewTests.test_footer_nav">[docs]</a>    <span class="k">def</span> <span class="nf">test_footer_nav</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="n">PartialSectionDiffView</span><span class="p">()</span>
+        <span class="n">toc</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;9898-1&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;9898-5&#39;</span><span class="p">},</span>
+               <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;9898-A&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;9898-Interp&#39;</span><span class="p">}]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">({},</span> <span class="n">view</span><span class="o">.</span><span class="n">footer_nav</span><span class="p">(</span>
+            <span class="s">&#39;9898-2&#39;</span><span class="p">,</span> <span class="n">toc</span><span class="p">,</span> <span class="s">&#39;old&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="s">&#39;from&#39;</span><span class="p">))</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">footer_nav</span><span class="p">(</span><span class="s">&#39;9898-1&#39;</span><span class="p">,</span> <span class="n">toc</span><span class="p">,</span> <span class="s">&#39;old&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="s">&#39;from&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="s">&#39;previous&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;9898-5&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;old&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;new&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">footer_nav</span><span class="p">(</span><span class="s">&#39;9898-5&#39;</span><span class="p">,</span> <span class="n">toc</span><span class="p">,</span> <span class="s">&#39;old&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="s">&#39;from&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;9898-1&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;old&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;new&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;9898-A&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;old&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;new&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">footer_nav</span><span class="p">(</span><span class="s">&#39;9898-A&#39;</span><span class="p">,</span> <span class="n">toc</span><span class="p">,</span> <span class="s">&#39;old&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="s">&#39;from&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;9898-5&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;old&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;new&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;9898-Interp&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;old&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;new&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">footer_nav</span><span class="p">(</span><span class="s">&#39;9898-Interp&#39;</span><span class="p">,</span> <span class="n">toc</span><span class="p">,</span> <span class="s">&#39;old&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="s">&#39;from&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;9898-A&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;old&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;new&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;?from_version=from&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="s">&#39;next&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

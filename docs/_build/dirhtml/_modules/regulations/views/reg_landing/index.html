@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.views.reg_landing &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.views.reg_landing</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">RequestContext</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">select_template</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator</span> <span class="kn">import</span> <span class="n">api_reader</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.versions</span> <span class="kn">import</span> <span class="n">fetch_grouped_history</span>
+<span class="kn">from</span> <span class="nn">regulations.views</span> <span class="kn">import</span> <span class="n">utils</span>
+
+
+<div class="viewcode-block" id="regulation_exists"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.reg_landing.regulation_exists">[docs]</a><span class="k">def</span> <span class="nf">regulation_exists</span><span class="p">(</span><span class="n">label_id</span><span class="p">):</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="p">()</span>
+    <span class="n">vr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">regversions</span><span class="p">(</span><span class="n">label_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">vr</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">vr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_versions"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.reg_landing.get_versions">[docs]</a><span class="k">def</span> <span class="nf">get_versions</span><span class="p">(</span><span class="n">label_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Get the current and next version of the regulation. &quot;&quot;&quot;</span>
+    <span class="n">history</span> <span class="o">=</span> <span class="n">fetch_grouped_history</span><span class="p">(</span><span class="n">label_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">history</span><span class="p">:</span>
+        <span class="n">future</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">history</span> <span class="k">if</span> <span class="n">h</span><span class="p">[</span><span class="s">&#39;timeline&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;future&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">future</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">next_version</span> <span class="o">=</span> <span class="n">future</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_version</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="n">current</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">history</span> <span class="k">if</span> <span class="n">h</span><span class="p">[</span><span class="s">&#39;timeline&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;current&#39;</span><span class="p">]</span>
+        <span class="n">current_version</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">current_version</span><span class="p">,</span> <span class="n">next_version</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="regulation"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.reg_landing.regulation">[docs]</a><span class="k">def</span> <span class="nf">regulation</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">label_id</span><span class="p">):</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">current_version</span><span class="p">,</span> <span class="n">new_version</span> <span class="o">=</span> <span class="n">get_versions</span><span class="p">(</span><span class="n">label_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_version</span><span class="p">:</span>
+        <span class="n">context</span><span class="p">[</span><span class="s">&#39;new_version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_version</span>
+    <span class="n">context</span><span class="p">[</span><span class="s">&#39;current_version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_version</span>
+
+    <span class="n">context</span><span class="p">[</span><span class="s">&#39;label_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_id</span>
+    <span class="n">context</span><span class="p">[</span><span class="s">&#39;reg_first_section&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">first_section</span><span class="p">(</span>
+        <span class="n">label_id</span><span class="p">,</span> <span class="n">current_version</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">])</span>
+    <span class="n">context</span><span class="p">[</span><span class="s">&#39;reg_part&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">regulation_meta</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">regulation_meta</span><span class="p">(</span>
+        <span class="n">label_id</span><span class="p">,</span>
+        <span class="n">current_version</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">],</span>
+        <span class="bp">True</span><span class="p">)</span>
+    <span class="n">context</span><span class="p">[</span><span class="s">&#39;meta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">regulation_meta</span>
+
+
+    <span class="n">c</span> <span class="o">=</span> <span class="n">RequestContext</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">select_template</span><span class="p">([</span>
+        <span class="s">&#39;regulations/landing_</span><span class="si">%s</span><span class="s">.html&#39;</span> <span class="o">%</span> <span class="n">label_id</span><span class="p">,</span>
+        <span class="s">&#39;regulations/landing_base.html&#39;</span><span class="p">,</span>
+        <span class="s">&#39;regulations/generic_landing.html&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">c</span><span class="p">))</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.layers_location_replace_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.layers_location_replace_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator.layers.location_replace</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="LayersLocationReplaceTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_location_replace_tests.LayersLocationReplaceTest">[docs]</a><span class="k">class</span> <span class="nc">LayersLocationReplaceTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="LayersLocationReplaceTest.test_update_offsets_html"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_location_replace_tests.LayersLocationReplaceTest.test_update_offsets_html">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_offsets_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lr</span> <span class="o">=</span> <span class="n">LocationReplace</span><span class="p">()</span>
+        <span class="n">lr</span><span class="o">.</span><span class="n">update_offsets</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;This is a test. It is only a test&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">offsets</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="mi">1</span><span class="p">:</span> <span class="p">(</span><span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">)})</span>
+        <span class="n">lr</span><span class="o">.</span><span class="n">update_offsets</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;This is a test. &lt;a href=&#39;something&#39;&gt;link&lt;/a&gt;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">offsets</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">)})</span>
+</div>
+<div class="viewcode-block" id="LayersLocationReplaceTest.test_location_replace_text"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_location_replace_tests.LayersLocationReplaceTest.test_location_replace_text">[docs]</a>    <span class="k">def</span> <span class="nf">test_location_replace_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lr</span> <span class="o">=</span> <span class="n">LocationReplace</span><span class="p">()</span>
+        <span class="n">replaced</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">location_replace_text</span><span class="p">(</span><span class="s">&#39;Bunch of as as as&#39;</span><span class="p">,</span>
+                                            <span class="s">&#39;as&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;sub&gt;as&lt;/sub&gt;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Bunch of &lt;sub&gt;as&lt;/sub&gt; as &lt;sub&gt;as&lt;/sub&gt;&#39;</span><span class="p">,</span> <span class="n">replaced</span><span class="p">)</span>
+
+        <span class="n">lr</span> <span class="o">=</span> <span class="n">LocationReplace</span><span class="p">()</span>
+        <span class="n">replaced</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">location_replace_text</span><span class="p">(</span><span class="s">&#39;Bunch of as as as&#39;</span><span class="p">,</span>
+                                            <span class="s">&#39;as&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;sub&gt;b&lt;/sub&gt;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Bunch of &lt;sub&gt;b&lt;/sub&gt; as &lt;sub&gt;b&lt;/sub&gt;&#39;</span><span class="p">,</span> <span class="n">replaced</span><span class="p">)</span>
+
+        <span class="n">lr</span> <span class="o">=</span> <span class="n">LocationReplace</span><span class="p">()</span>
+        <span class="n">replaced</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">location_replace_text</span><span class="p">(</span><span class="s">&#39;Bunch of a_{s} a_{s} a_{s}&#39;</span><span class="p">,</span>
+                                            <span class="s">&#39;a_{s}&#39;</span><span class="p">,</span> <span class="s">&#39;a&lt;sub&gt;s&lt;/sub&gt;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Bunch of a&lt;sub&gt;s&lt;/sub&gt; a_{s} a&lt;sub&gt;s&lt;/sub&gt;&#39;</span><span class="p">,</span>
+                         <span class="n">replaced</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

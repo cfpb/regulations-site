@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.generator.layers.tree_builder &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../../" />
+    <link rel="up" title="Module code" href="../../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.generator.layers.tree_builder</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+
+<div class="viewcode-block" id="AddQueue"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.AddQueue">[docs]</a><span class="k">class</span> <span class="nc">AddQueue</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Maintain a sorted list of nodes to add. This maintains a sorted queue</span>
+<span class="sd">    of (label, node) tuples. &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="AddQueue.sort"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.AddQueue.sort">[docs]</a>    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="AddQueue.insert"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.AddQueue.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="AddQueue.insert_all"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.AddQueue.insert_all">[docs]</a>    <span class="k">def</span> <span class="nf">insert_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">+=</span> <span class="n">items</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="AddQueue.find"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.AddQueue.find">[docs]</a>    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="n">found_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="k">if</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">label</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">found_nodes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">found_nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="AddQueue.delete"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.AddQueue.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="n">node_removed</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="k">if</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">label</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">node_removed</span>
+
+</div></div>
+<div class="viewcode-block" id="build_label"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.build_label">[docs]</a><span class="k">def</span> <span class="nf">build_label</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="build_tree_hash"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.build_tree_hash">[docs]</a><span class="k">def</span> <span class="nf">build_tree_hash</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Build a hash map of a tree&#39;s nodes, so that we don&#39;t</span>
+<span class="sd">    have to keep walking the tree. &quot;&quot;&quot;</span>
+    <span class="n">tree_hash</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">per_node</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="n">label_id</span> <span class="o">=</span> <span class="n">build_label</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">tree_hash</span><span class="p">[</span><span class="n">label_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span>
+
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">]:</span>
+            <span class="n">per_node</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tree</span><span class="p">:</span>
+        <span class="n">per_node</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_hash</span>
+
+</div>
+<div class="viewcode-block" id="parent_label"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.parent_label">[docs]</a><span class="k">def</span> <span class="nf">parent_label</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is not perfect. It can not handle children of subparts, for</span>
+<span class="sd">    example&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;node_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;INTERP&#39;</span><span class="p">:</span>
+        <span class="n">interpreting</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">takewhile</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span> <span class="o">!=</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]))</span>
+        <span class="n">paragraph</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">interpreting</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="n">paragraph</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">interpreting</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;Interp&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">paragraph</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">interpreting</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>    <span class="c"># Root of interpretations</span>
+            <span class="k">return</span> <span class="n">interpreting</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">interpreting</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;Interp&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="parent_in_tree"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.parent_in_tree">[docs]</a><span class="k">def</span> <span class="nf">parent_in_tree</span><span class="p">(</span><span class="n">parent_label</span><span class="p">,</span> <span class="n">tree_hash</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Return True if the parent of node_label is in the tree &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">parent_label</span> <span class="ow">in</span> <span class="n">tree_hash</span>
+
+</div>
+<div class="viewcode-block" id="add_node_to_tree"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.add_node_to_tree">[docs]</a><span class="k">def</span> <span class="nf">add_node_to_tree</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">parent_label</span><span class="p">,</span> <span class="n">tree_hash</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Add the node to the tree by adding it to it&#39;s parent in order. &quot;&quot;&quot;</span>
+    <span class="n">parent_node</span> <span class="o">=</span> <span class="n">tree_hash</span><span class="p">[</span><span class="n">parent_label</span><span class="p">]</span>
+    <span class="n">add_child</span><span class="p">(</span><span class="n">parent_node</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_hash</span>
+
+</div>
+<div class="viewcode-block" id="roman_nums"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.roman_nums">[docs]</a><span class="k">def</span> <span class="nf">roman_nums</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Generator for roman numerals.&quot;&quot;&quot;</span>
+    <span class="n">mapping</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;iv&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s">&#39;ix&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="s">&#39;xl&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="s">&#39;xc&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s">&#39;cd&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="s">&#39;cm&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;m&#39;</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">next_str</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="n">remaining_int</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">remaining_mapping</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">remaining_mapping</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">chars</span><span class="p">)</span> <span class="o">=</span> <span class="n">remaining_mapping</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">while</span> <span class="n">remaining_int</span> <span class="o">&gt;=</span> <span class="n">amount</span><span class="p">:</span>
+                <span class="n">next_str</span> <span class="o">+=</span> <span class="n">chars</span>
+                <span class="n">remaining_int</span> <span class="o">-=</span> <span class="n">amount</span>
+        <span class="k">yield</span> <span class="n">next_str</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+</div>
+<div class="viewcode-block" id="make_label_sortable"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.make_label_sortable">[docs]</a><span class="k">def</span> <span class="nf">make_label_sortable</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">roman</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Make labels sortable, but converting them as appropriate.</span>
+<span class="sd">    Also, appendices have labels that look like 30(a), we make those</span>
+<span class="sd">    appropriately sortable. &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">label</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">),)</span>
+    <span class="k">if</span> <span class="n">roman</span><span class="p">:</span>
+        <span class="n">romans</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">roman_nums</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">romans</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">label</span><span class="p">),)</span>
+
+    <span class="c"># segment the label piece into component parts</span>
+    <span class="c"># e.g. 45Ai33b becomes (45, &#39;A&#39;, &#39;i&#39;, 33, &#39;b&#39;)</span>
+    <span class="n">INT</span><span class="p">,</span> <span class="n">UPPER</span><span class="p">,</span> <span class="n">LOWER</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
+    <span class="n">segments</span><span class="p">,</span> <span class="n">segment</span><span class="p">,</span> <span class="n">seg_type</span> <span class="o">=</span> <span class="p">[],</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="bp">None</span>
+    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ch</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="n">ch_type</span> <span class="o">=</span> <span class="n">INT</span>
+        <span class="k">elif</span> <span class="n">ch</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">and</span> <span class="n">ch</span> <span class="o">==</span> <span class="n">ch</span><span class="o">.</span><span class="n">upper</span><span class="p">():</span>
+            <span class="n">ch_type</span> <span class="o">=</span> <span class="n">UPPER</span>
+        <span class="k">elif</span> <span class="n">ch</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">and</span> <span class="n">ch</span> <span class="o">==</span> <span class="n">ch</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">ch_type</span> <span class="o">=</span> <span class="n">LOWER</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># other character, e.g. parens, guarantee segmentation</span>
+            <span class="n">ch_type</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="n">ch_type</span> <span class="o">!=</span> <span class="n">seg_type</span> <span class="ow">and</span> <span class="n">segment</span><span class="p">:</span>     <span class="c"># new type of character</span>
+            <span class="n">segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
+            <span class="n">segment</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+        <span class="n">seg_type</span> <span class="o">=</span> <span class="n">ch_type</span>
+        <span class="k">if</span> <span class="n">ch_type</span><span class="p">:</span>
+            <span class="n">segment</span> <span class="o">+=</span> <span class="n">ch</span>
+
+    <span class="k">if</span> <span class="n">segment</span><span class="p">:</span>    <span class="c"># ended with something other than a paren</span>
+        <span class="n">segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
+
+    <span class="n">segments</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span> <span class="k">if</span> <span class="n">seg</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">seg</span> <span class="k">for</span> <span class="n">seg</span> <span class="ow">in</span> <span class="n">segments</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="all_children_are_roman"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.all_children_are_roman">[docs]</a><span class="k">def</span> <span class="nf">all_children_are_roman</span><span class="p">(</span><span class="n">parent_node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return true if all the children of the parent node have roman labels</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">romans</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">roman_nums</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+    <span class="n">roman_children</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">romans</span>
+                      <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">parent_node</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">roman_children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">roman_children</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="add_child"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.tree_builder.add_child">[docs]</a><span class="k">def</span> <span class="nf">add_child</span><span class="p">(</span><span class="n">parent_node</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="s">&quot;Add a child node to a parent, maintaining the order of the children.&quot;</span>
+
+    <span class="n">children</span> <span class="o">=</span> <span class="n">parent_node</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">]</span>
+    <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">parent_node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;child_labels&#39;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="nb">set</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">children</span><span class="p">)):</span>
+        <span class="n">lookup</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+            <span class="n">lookup</span><span class="p">[</span><span class="s">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])]</span> <span class="o">=</span> <span class="n">c</span>
+        <span class="n">parent_node</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">lookup</span><span class="p">[</span><span class="n">label_id</span><span class="p">]</span> <span class="k">for</span> <span class="n">label_id</span> <span class="ow">in</span> <span class="n">order</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>   <span class="c"># Explicit sort order not present/doesn&#39;t match nodes</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">parent_node</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s">&#39;node_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;INTERP&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Interp&#39;</span><span class="p">:</span>
+                    <span class="n">sortable</span> <span class="o">=</span> <span class="n">make_label_sortable</span><span class="p">(</span>
+                        <span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">roman</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">6</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">paragraph</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">dropwhile</span><span class="p">(</span>
+                        <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span> <span class="o">!=</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]))[</span><span class="mi">1</span><span class="p">:]</span>
+                    <span class="n">sortable</span> <span class="o">=</span> <span class="n">make_label_sortable</span><span class="p">(</span>
+                        <span class="n">paragraph</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">roman</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">paragraph</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent_node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="c">#Highest interpretation node in the land</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span> <span class="o">!=</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span>
+                                                     <span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])))</span>
+                    <span class="n">prefix_length</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">)</span>
+                    <span class="n">sortable</span> <span class="o">=</span> <span class="n">prefix_length</span> <span class="o">+</span> <span class="n">sortable</span>
+                <span class="n">c</span><span class="p">[</span><span class="s">&#39;sortable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sortable</span>
+            <span class="k">elif</span> <span class="n">c</span><span class="p">[</span><span class="s">&#39;node_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;APPENDIX&#39;</span><span class="p">:</span>
+                <span class="n">roman_children</span> <span class="o">=</span> <span class="n">all_children_are_roman</span><span class="p">(</span><span class="n">parent_node</span><span class="p">)</span>
+                <span class="n">c</span><span class="p">[</span><span class="s">&#39;sortable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_label_sortable</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                    <span class="n">roman</span><span class="o">=</span><span class="n">roman_children</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">c</span><span class="p">[</span><span class="s">&#39;sortable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_label_sortable</span><span class="p">(</span>
+                    <span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">roman</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">5</span><span class="p">))</span>
+
+        <span class="n">parent_node</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;sortable&#39;</span><span class="p">])</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

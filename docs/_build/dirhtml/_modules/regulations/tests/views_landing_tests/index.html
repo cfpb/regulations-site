@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.views_landing_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.views_landing_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">regulations.views</span> <span class="kn">import</span> <span class="n">reg_landing</span>
+
+
+<div class="viewcode-block" id="LandingViewTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_landing_tests.LandingViewTest">[docs]</a><span class="k">class</span> <span class="nc">LandingViewTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.reg_landing.api_reader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="LandingViewTest.test_regulation_exists_not"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_landing_tests.LandingViewTest.test_regulation_exists_not">[docs]</a>    <span class="k">def</span> <span class="nf">test_regulation_exists_not</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">):</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">regversions</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">reg_versions</span> <span class="o">=</span> <span class="n">reg_landing</span><span class="o">.</span><span class="n">regulation_exists</span><span class="p">(</span><span class="s">&#39;204&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">reg_versions</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.reg_landing.api_reader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="LandingViewTest.test_regulation_exists"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_landing_tests.LandingViewTest.test_regulation_exists">[docs]</a>    <span class="k">def</span> <span class="nf">test_regulation_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">):</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">regversions</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;version&#39;</span><span class="p">:</span><span class="s">&#39;exists&#39;</span><span class="p">}]</span>
+        <span class="n">reg_versions</span> <span class="o">=</span> <span class="n">reg_landing</span><span class="o">.</span><span class="n">regulation_exists</span><span class="p">(</span><span class="s">&#39;204&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">reg_versions</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.reg_landing.fetch_grouped_history&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="LandingViewTest.test_get_versions"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_landing_tests.LandingViewTest.test_get_versions">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_versions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch_grouped_history</span><span class="p">):</span>
+        <span class="n">fetch_grouped_history</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;timeline&#39;</span><span class="p">:</span> <span class="s">&#39;future&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;a&#39;</span><span class="p">},</span> 
+            <span class="p">{</span><span class="s">&#39;timeline&#39;</span><span class="p">:</span> <span class="s">&#39;current&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;b&#39;</span><span class="p">}]</span>
+        <span class="n">current_ver</span><span class="p">,</span> <span class="n">next_ver</span> <span class="o">=</span> <span class="n">reg_landing</span><span class="o">.</span><span class="n">get_versions</span><span class="p">(</span><span class="s">&#39;204&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">({</span><span class="s">&#39;timeline&#39;</span><span class="p">:</span> <span class="s">&#39;current&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;b&#39;</span><span class="p">},</span> <span class="n">current_ver</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">({</span><span class="s">&#39;timeline&#39;</span><span class="p">:</span> <span class="s">&#39;future&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;a&#39;</span><span class="p">},</span> <span class="n">next_ver</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.reg_landing.fetch_grouped_history&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="LandingViewTest.test_get_versions_no_next"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_landing_tests.LandingViewTest.test_get_versions_no_next">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_versions_no_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch_grouped_history</span><span class="p">):</span>
+        <span class="n">fetch_grouped_history</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;timeline&#39;</span><span class="p">:</span> <span class="s">&#39;current&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;b&#39;</span><span class="p">}]</span>
+        <span class="n">current_ver</span><span class="p">,</span> <span class="n">next_ver</span> <span class="o">=</span> <span class="n">reg_landing</span><span class="o">.</span><span class="n">get_versions</span><span class="p">(</span><span class="s">&#39;204&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">({</span><span class="s">&#39;timeline&#39;</span><span class="p">:</span> <span class="s">&#39;current&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;b&#39;</span><span class="p">},</span> <span class="n">current_ver</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">next_ver</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

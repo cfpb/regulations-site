@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.views_utils_test &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.views_utils_test</h1><div class="highlight"><pre>
+<span class="c">#vim: set encoding=utf-8</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+
+<span class="kn">from</span> <span class="nn">regulations.views.utils</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="UtilsTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_utils_test.UtilsTest">[docs]</a><span class="k">class</span> <span class="nc">UtilsTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="UtilsTest.setUp"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_utils_test.UtilsTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;GOOGLE_ANALYTICS_ID&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">old_gai</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">GOOGLE_ANALYTICS_ID</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;GOOGLE_ANALYTICS_SITE&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">old_gas</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">GOOGLE_ANALYTICS_SITE</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;EREGS_GA&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eregs_gai</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA</span><span class="p">[</span><span class="s">&#39;EREGS&#39;</span><span class="p">][</span><span class="s">&#39;ID&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eregs_gas</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA</span><span class="p">[</span><span class="s">&#39;EREGS&#39;</span><span class="p">][</span><span class="s">&#39;SITE&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cfgov_gai</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA</span><span class="p">[</span><span class="s">&#39;ALT&#39;</span><span class="p">][</span><span class="s">&#39;ID&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cfgov_gas</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA</span><span class="p">[</span><span class="s">&#39;ALT&#39;</span><span class="p">][</span><span class="s">&#39;SITE&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;JS_DEBUG&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">old_js_debug</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">JS_DEBUG</span>
+</div>
+<div class="viewcode-block" id="UtilsTest.tearDown"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_utils_test.UtilsTest.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;old_gai&#39;</span><span class="p">):</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">GOOGLE_ANALYTICS_ID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_gai</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;GOOGLE_ANALYTICS_ID&#39;</span><span class="p">):</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">GOOGLE_ANALYTICS_ID</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;old_gas&#39;</span><span class="p">):</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">GOOGLE_ANALYTICS_SITE</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_gas</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;GOOGLE_ANALYTICS_SITE&#39;</span><span class="p">):</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">GOOGLE_ANALYTICS_SITE</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;eregs_gai&#39;</span><span class="p">):</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA_EREGS_ID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eregs_gai</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;EREGS_GA_EREGS_ID&#39;</span><span class="p">):</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA_EREGS_ID</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;eregs_gas&#39;</span><span class="p">):</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA_EREGS_SITE</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eregs_gas</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;EREGS_GA_EREGS_SITE&#39;</span><span class="p">):</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA_EREGS_SITE</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;cfgov_gai&#39;</span><span class="p">):</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA_ALT_ID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfgov_gai</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;EREGS_GA_ALT_ID&#39;</span><span class="p">):</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA_ALT_ID</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;cfgov_gas&#39;</span><span class="p">):</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA_ALT_SITE</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfgov_gas</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;EREGS_GA_ALT_SITE&#39;</span><span class="p">):</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA_ALT_SITE</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;old_js_debug&#39;</span><span class="p">):</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">JS_DEBUG</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_js_debug</span>
+</div>
+<div class="viewcode-block" id="UtilsTest.test_get_layer_list"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_utils_test.UtilsTest.test_get_layer_list">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_layer_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="s">&#39;meta,meta,GRAPHICS,fakelayer,internal&#39;</span>
+        <span class="n">layer_list</span> <span class="o">=</span> <span class="n">get_layer_list</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="s">&#39;meta&#39;</span><span class="p">,</span> <span class="s">&#39;internal&#39;</span><span class="p">,</span> <span class="s">&#39;graphics&#39;</span><span class="p">]),</span> <span class="n">layer_list</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.generator.LayerCreator.get_layer_json&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="UtilsTest.test_handle_specified_layers"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_utils_test.UtilsTest.test_handle_specified_layers">[docs]</a>    <span class="k">def</span> <span class="nf">test_handle_specified_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">get_layer_json</span><span class="p">):</span>
+        <span class="n">get_layer_json</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;layer&#39;</span><span class="p">:</span> <span class="s">&#39;layer&#39;</span><span class="p">}</span>
+
+        <span class="n">layer_names</span> <span class="o">=</span> <span class="s">&#39;graphics,meta&#39;</span>
+        <span class="n">appliers</span> <span class="o">=</span> <span class="n">handle_specified_layers</span><span class="p">(</span><span class="n">layer_names</span><span class="p">,</span> <span class="s">&#39;205&#39;</span><span class="p">,</span> <span class="s">&#39;2013-1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">appliers</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="UtilsTest.test_add_extras_env"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_utils_test.UtilsTest.test_add_extras_env">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_extras_env</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">settings</span><span class="o">.</span><span class="n">JS_DEBUG</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">add_extras</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;env&#39;</span><span class="p">])</span>
+
+        <span class="n">settings</span><span class="o">.</span><span class="n">JS_DEBUG</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">add_extras</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;built&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;env&#39;</span><span class="p">])</span>
+
+        <span class="k">del</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">JS_DEBUG</span><span class="p">)</span>
+        <span class="n">add_extras</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;built&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;env&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="UtilsTest.test_add_extras"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_utils_test.UtilsTest.test_add_extras">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_extras</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;EREGS&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;ID&#39;</span><span class="p">:</span> <span class="s">&#39;eregs-ga-id&#39;</span><span class="p">,</span> <span class="s">&#39;SITE&#39;</span><span class="p">:</span> <span class="s">&#39;eregs&#39;</span><span class="p">},</span>
+            <span class="s">&#39;ALT&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;ID&#39;</span><span class="p">:</span> <span class="s">&#39;alt-ga-id&#39;</span><span class="p">,</span> <span class="s">&#39;SITE&#39;</span><span class="p">:</span> <span class="s">&#39;alt&#39;</span><span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">add_extras</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;APP_PREFIX&#39;</span> <span class="ow">in</span> <span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;env&#39;</span> <span class="ow">in</span> <span class="n">context</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&#39;eregs-ga-id&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;EREGS_GA_EREGS_ID&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&#39;eregs&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;EREGS_GA_EREGS_SITE&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&#39;alt-ga-id&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;EREGS_GA_ALT_ID&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&#39;alt&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;EREGS_GA_ALT_SITE&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="UtilsTest.test_add_extras_gai"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_utils_test.UtilsTest.test_add_extras_gai">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_extras_gai</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make sure we are backwards compatible with GOOGLE_* params&quot;&quot;&quot;</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">GOOGLE_ANALYTICS_ID</span> <span class="o">=</span> <span class="s">&#39;googid&#39;</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">GOOGLE_ANALYTICS_SITE</span> <span class="o">=</span> <span class="s">&#39;googsite&#39;</span>
+        <span class="k">del</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">EREGS_GA</span><span class="p">)</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">add_extras</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;googid&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;EREGS_GA_EREGS_ID&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;googsite&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;EREGS_GA_EREGS_SITE&#39;</span><span class="p">])</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.utils.fetch_toc&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="UtilsTest.test_first_section"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_utils_test.UtilsTest.test_first_section">[docs]</a>    <span class="k">def</span> <span class="nf">test_first_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch_toc</span><span class="p">):</span>
+        <span class="n">fetch_toc</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;204-100&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;100&#39;</span><span class="p">]},</span>
+            <span class="p">{</span><span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;204-101&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;101&#39;</span><span class="p">]}]</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">first_section</span><span class="p">(</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="s">&#39;204-100&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

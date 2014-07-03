@@ -1,0 +1,1006 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.views package &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../" />
+    <link rel="up" title="regulations package" href="../regulations/" />
+    <link rel="prev" title="regulations.uitests package" href="../regulations.uitests/" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../regulations.uitests/" title="regulations.uitests package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../regulations/" accesskey="U">regulations package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="regulations-views-package">
+<h1>regulations.views package<a class="headerlink" href="#regulations-views-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-regulations.views.about">
+<span id="regulations-views-about-module"></span><h2>regulations.views.about module<a class="headerlink" href="#module-regulations.views.about" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regulations.views.about.about">
+<tt class="descclassname">regulations.views.about.</tt><tt class="descname">about</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/about/#about"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.about.about" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.chrome">
+<span id="regulations-views-chrome-module"></span><h2>regulations.views.chrome module<a class="headerlink" href="#module-regulations.views.chrome" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="regulations.views.chrome.BadComponentException">
+<em class="property">exception </em><tt class="descclassname">regulations.views.chrome.</tt><tt class="descname">BadComponentException</tt><big>(</big><em>response</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#BadComponentException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.BadComponentException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>Allows us to propagate errors in loaded partials</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.chrome.ChromeInterpView">
+<em class="property">class </em><tt class="descclassname">regulations.views.chrome.</tt><tt class="descname">ChromeInterpView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeInterpView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeInterpView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.chrome.ChromeView" title="regulations.views.chrome.ChromeView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.chrome.ChromeView</span></tt></a></p>
+<p>Interpretation of regtext section/paragraph or appendix with chrome</p>
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeInterpView.partial_class">
+<tt class="descname">partial_class</tt><a class="headerlink" href="#regulations.views.chrome.ChromeInterpView.partial_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">PartialInterpView</span></tt></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.chrome.ChromeLandingView">
+<em class="property">class </em><tt class="descclassname">regulations.views.chrome.</tt><tt class="descname">ChromeLandingView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeLandingView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeLandingView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.chrome.ChromeView" title="regulations.views.chrome.ChromeView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.chrome.ChromeView</span></tt></a></p>
+<p>Landing page with chrome</p>
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeLandingView.add_main_content">
+<tt class="descname">add_main_content</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeLandingView.add_main_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeLandingView.add_main_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Landing page isn&#8217;t a TemplateView</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeLandingView.check_tree">
+<tt class="descname">check_tree</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeLandingView.check_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeLandingView.check_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeLandingView.get_context_data">
+<tt class="descname">get_context_data</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeLandingView.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeLandingView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the version and replace the label_id for the chrome context</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeLandingView.has_sidebar">
+<tt class="descname">has_sidebar</tt><em class="property"> = False</em><a class="headerlink" href="#regulations.views.chrome.ChromeLandingView.has_sidebar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeLandingView.partial_class">
+<tt class="descname">partial_class</tt><a class="headerlink" href="#regulations.views.chrome.ChromeLandingView.partial_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">PartialSectionView</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeLandingView.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/landing-chrome.html'</em><a class="headerlink" href="#regulations.views.chrome.ChromeLandingView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.chrome.ChromeParagraphView">
+<em class="property">class </em><tt class="descclassname">regulations.views.chrome.</tt><tt class="descname">ChromeParagraphView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeParagraphView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeParagraphView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.chrome.ChromeView" title="regulations.views.chrome.ChromeView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.chrome.ChromeView</span></tt></a></p>
+<p>Regtext paragraph with chrome</p>
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeParagraphView.diff_redirect_label">
+<tt class="descname">diff_redirect_label</tt><big>(</big><em>label_id</em>, <em>toc</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeParagraphView.diff_redirect_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeParagraphView.diff_redirect_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>We don&#8217;t do diffs for individual paragraphs; instead, link to the
+containing section</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeParagraphView.partial_class">
+<tt class="descname">partial_class</tt><a class="headerlink" href="#regulations.views.chrome.ChromeParagraphView.partial_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">PartialParagraphView</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeParagraphView.version_switch_view">
+<tt class="descname">version_switch_view</tt><em class="property"> = 'chrome_paragraph_view'</em><a class="headerlink" href="#regulations.views.chrome.ChromeParagraphView.version_switch_view" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.chrome.ChromeRegulationView">
+<em class="property">class </em><tt class="descclassname">regulations.views.chrome.</tt><tt class="descname">ChromeRegulationView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeRegulationView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeRegulationView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.chrome.ChromeView" title="regulations.views.chrome.ChromeView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.chrome.ChromeView</span></tt></a></p>
+<p>Entire regulation with chrome</p>
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeRegulationView.diff_redirect_label">
+<tt class="descname">diff_redirect_label</tt><big>(</big><em>label_id</em>, <em>toc</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeRegulationView.diff_redirect_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeRegulationView.diff_redirect_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>We don&#8217;t do diffs of the whole reg; instead link to the first
+section</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeRegulationView.partial_class">
+<tt class="descname">partial_class</tt><a class="headerlink" href="#regulations.views.chrome.ChromeRegulationView.partial_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">PartialRegulationView</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeRegulationView.version_switch_view">
+<tt class="descname">version_switch_view</tt><em class="property"> = 'chrome_regulation_view'</em><a class="headerlink" href="#regulations.views.chrome.ChromeRegulationView.version_switch_view" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.chrome.ChromeSearchView">
+<em class="property">class </em><tt class="descclassname">regulations.views.chrome.</tt><tt class="descname">ChromeSearchView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeSearchView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeSearchView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.chrome.ChromeView" title="regulations.views.chrome.ChromeView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.chrome.ChromeView</span></tt></a></p>
+<p>Search results with chrome</p>
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeSearchView.add_main_content">
+<tt class="descname">add_main_content</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeSearchView.add_main_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeSearchView.add_main_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this so that we have access to the main content&#8217;s
+results field</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeSearchView.check_tree">
+<tt class="descname">check_tree</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeSearchView.check_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeSearchView.check_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeSearchView.get_context_data">
+<tt class="descname">get_context_data</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeSearchView.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeSearchView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the version for the chrome context</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeSearchView.has_sidebar">
+<tt class="descname">has_sidebar</tt><em class="property"> = False</em><a class="headerlink" href="#regulations.views.chrome.ChromeSearchView.has_sidebar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeSearchView.partial_class">
+<tt class="descname">partial_class</tt><a class="headerlink" href="#regulations.views.chrome.ChromeSearchView.partial_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">PartialSearch</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeSearchView.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/chrome-search.html'</em><a class="headerlink" href="#regulations.views.chrome.ChromeSearchView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.chrome.ChromeSectionView">
+<em class="property">class </em><tt class="descclassname">regulations.views.chrome.</tt><tt class="descname">ChromeSectionView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeSectionView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeSectionView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.chrome.ChromeView" title="regulations.views.chrome.ChromeView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.chrome.ChromeView</span></tt></a></p>
+<p>Regtext section with chrome</p>
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeSectionView.partial_class">
+<tt class="descname">partial_class</tt><a class="headerlink" href="#regulations.views.chrome.ChromeSectionView.partial_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">PartialSectionView</span></tt></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.chrome.ChromeSubterpView">
+<em class="property">class </em><tt class="descclassname">regulations.views.chrome.</tt><tt class="descname">ChromeSubterpView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeSubterpView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeSubterpView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.chrome.ChromeView" title="regulations.views.chrome.ChromeView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.chrome.ChromeView</span></tt></a></p>
+<p>Corresponding chrome class for subterp partial view</p>
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeSubterpView.check_tree">
+<tt class="descname">check_tree</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeSubterpView.check_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeSubterpView.check_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>We can&#8217;t defer to Chrome&#8217;s check because Subterps are constructed
+-site side</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeSubterpView.diff_redirect_label">
+<tt class="descname">diff_redirect_label</tt><big>(</big><em>label_id</em>, <em>toc</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeSubterpView.diff_redirect_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeSubterpView.diff_redirect_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>We don&#8217;t do diffs for subterps. Instead, link to diff of the
+whole interp</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeSubterpView.partial_class">
+<tt class="descname">partial_class</tt><a class="headerlink" href="#regulations.views.chrome.ChromeSubterpView.partial_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">PartialSubterpView</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeSubterpView.version_switch_view">
+<tt class="descname">version_switch_view</tt><em class="property"> = 'chrome_subterp_view'</em><a class="headerlink" href="#regulations.views.chrome.ChromeSubterpView.version_switch_view" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.chrome.ChromeView">
+<em class="property">class </em><tt class="descclassname">regulations.views.chrome.</tt><tt class="descname">ChromeView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.views.generic.base.TemplateView</span></tt></p>
+<p>Base class for views which wish to include chrome.</p>
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeView.add_main_content">
+<tt class="descname">add_main_content</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeView.add_main_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeView.add_main_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeView.check_tree">
+<tt class="descname">check_tree</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeView.check_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeView.check_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Throw an exception if the requested section doesn&#8217;t exist</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeView.diff_redirect_label">
+<tt class="descname">diff_redirect_label</tt><big>(</big><em>label_id</em>, <em>toc</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeView.diff_redirect_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeView.diff_redirect_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Most of the time, we want diff_redirect to link to <em>this</em>
+section&#8217;s label. This gives us an out for when we need to link
+somewhere else.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeView.get">
+<tt class="descname">get</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeView.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override GET so that we can catch and propagate any errors in the
+included partial(s)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeView.get_context_data">
+<tt class="descname">get_context_data</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeView.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeView.has_sidebar">
+<tt class="descname">has_sidebar</tt><em class="property"> = True</em><a class="headerlink" href="#regulations.views.chrome.ChromeView.has_sidebar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome.ChromeView.set_chrome_context">
+<tt class="descname">set_chrome_context</tt><big>(</big><em>context</em>, <em>reg_part</em>, <em>version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome/#ChromeView.set_chrome_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome.ChromeView.set_chrome_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeView.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/chrome.html'</em><a class="headerlink" href="#regulations.views.chrome.ChromeView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome.ChromeView.version_switch_view">
+<tt class="descname">version_switch_view</tt><em class="property"> = 'chrome_section_view'</em><a class="headerlink" href="#regulations.views.chrome.ChromeView.version_switch_view" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.chrome_breakaway">
+<span id="regulations-views-chrome-breakaway-module"></span><h2>regulations.views.chrome_breakaway module<a class="headerlink" href="#module-regulations.views.chrome_breakaway" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.views.chrome_breakaway.ChromeBreakawayView">
+<em class="property">class </em><tt class="descclassname">regulations.views.chrome_breakaway.</tt><tt class="descname">ChromeBreakawayView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome_breakaway/#ChromeBreakawayView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome_breakaway.ChromeBreakawayView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.chrome.ChromeView" title="regulations.views.chrome.ChromeView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.chrome.ChromeView</span></tt></a></p>
+<p>Base class for views which wish to include chrome.</p>
+<dl class="method">
+<dt id="regulations.views.chrome_breakaway.ChromeBreakawayView.content">
+<tt class="descname">content</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome_breakaway/#ChromeBreakawayView.content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome_breakaway.ChromeBreakawayView.content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filled in by subclasses; content for the breakaway</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.chrome_breakaway.ChromeBreakawayView.get_context_data">
+<tt class="descname">get_context_data</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome_breakaway/#ChromeBreakawayView.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome_breakaway.ChromeBreakawayView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.chrome_breakaway.ChromeBreakawayView.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/breakaway-chrome.html'</em><a class="headerlink" href="#regulations.views.chrome_breakaway.ChromeBreakawayView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.chrome_breakaway.ChromeSXSView">
+<em class="property">class </em><tt class="descclassname">regulations.views.chrome_breakaway.</tt><tt class="descname">ChromeSXSView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome_breakaway/#ChromeSXSView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome_breakaway.ChromeSXSView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.chrome_breakaway.ChromeBreakawayView" title="regulations.views.chrome_breakaway.ChromeBreakawayView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.chrome_breakaway.ChromeBreakawayView</span></tt></a></p>
+<p>SXS content</p>
+<dl class="method">
+<dt id="regulations.views.chrome_breakaway.ChromeSXSView.content">
+<tt class="descname">content</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/chrome_breakaway/#ChromeSXSView.content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.chrome_breakaway.ChromeSXSView.content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.diff">
+<span id="regulations-views-diff-module"></span><h2>regulations.views.diff module<a class="headerlink" href="#module-regulations.views.diff" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.views.diff.ChromeSectionDiffView">
+<em class="property">class </em><tt class="descclassname">regulations.views.diff.</tt><tt class="descname">ChromeSectionDiffView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#ChromeSectionDiffView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.ChromeSectionDiffView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.chrome.ChromeView" title="regulations.views.chrome.ChromeView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.chrome.ChromeView</span></tt></a></p>
+<p>Search results with chrome</p>
+<dl class="method">
+<dt id="regulations.views.diff.ChromeSectionDiffView.add_diff_content">
+<tt class="descname">add_diff_content</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#ChromeSectionDiffView.add_diff_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.ChromeSectionDiffView.add_diff_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.diff.ChromeSectionDiffView.add_main_content">
+<tt class="descname">add_main_content</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#ChromeSectionDiffView.add_main_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.ChromeSectionDiffView.add_main_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.diff.ChromeSectionDiffView.check_tree">
+<tt class="descname">check_tree</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#ChromeSectionDiffView.check_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.ChromeSectionDiffView.check_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.diff.ChromeSectionDiffView.has_sidebar">
+<tt class="descname">has_sidebar</tt><em class="property"> = False</em><a class="headerlink" href="#regulations.views.diff.ChromeSectionDiffView.has_sidebar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.diff.ChromeSectionDiffView.partial_class">
+<tt class="descname">partial_class</tt><a class="headerlink" href="#regulations.views.diff.ChromeSectionDiffView.partial_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#regulations.views.diff.PartialSectionDiffView" title="regulations.views.diff.PartialSectionDiffView"><tt class="xref py py-class docutils literal"><span class="pre">PartialSectionDiffView</span></tt></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.diff.ChromeSectionDiffView.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/diff-chrome.html'</em><a class="headerlink" href="#regulations.views.diff.ChromeSectionDiffView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.diff.PartialSectionDiffView">
+<em class="property">class </em><tt class="descclassname">regulations.views.diff.</tt><tt class="descname">PartialSectionDiffView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#PartialSectionDiffView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.PartialSectionDiffView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.partial.PartialView" title="regulations.views.partial.PartialView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.partial.PartialView</span></tt></a></p>
+<p>A diff view of a partial section.</p>
+<dl class="method">
+<dt id="regulations.views.diff.PartialSectionDiffView.footer_nav">
+<tt class="descname">footer_nav</tt><big>(</big><em>label</em>, <em>toc</em>, <em>old_version</em>, <em>new_version</em>, <em>from_version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#PartialSectionDiffView.footer_nav"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.PartialSectionDiffView.footer_nav" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.diff.PartialSectionDiffView.get">
+<tt class="descname">get</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#PartialSectionDiffView.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.PartialSectionDiffView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override GET so that we can catch and propagate any errors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.diff.PartialSectionDiffView.get_context_data">
+<tt class="descname">get_context_data</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#PartialSectionDiffView.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.PartialSectionDiffView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.diff.PartialSectionDiffView.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/regulation-content.html'</em><a class="headerlink" href="#regulations.views.diff.PartialSectionDiffView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.diff.diff_toc">
+<tt class="descclassname">regulations.views.diff.</tt><tt class="descname">diff_toc</tt><big>(</big><em>older_version</em>, <em>newer_version</em>, <em>old_toc</em>, <em>diff</em>, <em>from_version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#diff_toc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.diff_toc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.diff.extract_sections">
+<tt class="descclassname">regulations.views.diff.</tt><tt class="descname">extract_sections</tt><big>(</big><em>toc</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#extract_sections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.extract_sections" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.diff.get_appliers">
+<tt class="descclassname">regulations.views.diff.</tt><tt class="descname">get_appliers</tt><big>(</big><em>label_id</em>, <em>older</em>, <em>newer</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#get_appliers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.get_appliers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.diff.modified_deleted_sections">
+<tt class="descclassname">regulations.views.diff.</tt><tt class="descname">modified_deleted_sections</tt><big>(</big><em>diff</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#modified_deleted_sections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.modified_deleted_sections" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.diff.reverse_chrome_diff_view">
+<tt class="descclassname">regulations.views.diff.</tt><tt class="descname">reverse_chrome_diff_view</tt><big>(</big><em>sect_id</em>, <em>left_ver</em>, <em>right_ver</em>, <em>from_version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#reverse_chrome_diff_view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.reverse_chrome_diff_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reverse the URL for a chromed diff view.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.diff.sort_toc">
+<tt class="descclassname">regulations.views.diff.</tt><tt class="descname">sort_toc</tt><big>(</big><em>toc</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/diff/#sort_toc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.diff.sort_toc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the Table of Contents elements.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.error_handling">
+<span id="regulations-views-error-handling-module"></span><h2>regulations.views.error_handling module<a class="headerlink" href="#module-regulations.views.error_handling" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="regulations.views.error_handling.MissingContentException">
+<em class="property">exception </em><tt class="descclassname">regulations.views.error_handling.</tt><tt class="descname">MissingContentException</tt><a class="reference internal" href="../_modules/regulations/views/error_handling/#MissingContentException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.error_handling.MissingContentException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>This is essentially a generic 404.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="regulations.views.error_handling.MissingSectionException">
+<em class="property">exception </em><tt class="descclassname">regulations.views.error_handling.</tt><tt class="descname">MissingSectionException</tt><big>(</big><em>label_id</em>, <em>version</em>, <em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/error_handling/#MissingSectionException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.error_handling.MissingSectionException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>&#8221; This is for when we suspect that we have the version requested, but
+maybe just not the label_id.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.error_handling.add_to_chrome">
+<tt class="descclassname">regulations.views.error_handling.</tt><tt class="descname">add_to_chrome</tt><big>(</big><em>body</em>, <em>context</em>, <em>request</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/error_handling/#add_to_chrome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.error_handling.add_to_chrome" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.error_handling.check_regulation">
+<tt class="descclassname">regulations.views.error_handling.</tt><tt class="descname">check_regulation</tt><big>(</big><em>reg_part</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/error_handling/#check_regulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.error_handling.check_regulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>If versions of the reg_part given don&#8217;t exist, raise
+a MissingContentException().</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.error_handling.check_version">
+<tt class="descclassname">regulations.views.error_handling.</tt><tt class="descname">check_version</tt><big>(</big><em>label_id</em>, <em>version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/error_handling/#check_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.error_handling.check_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>We check if the version of this regulation exists, and the user is only
+referencing a section that does not exist.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.error_handling.handle_generic_404">
+<tt class="descclassname">regulations.views.error_handling.</tt><tt class="descname">handle_generic_404</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/error_handling/#handle_generic_404"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.error_handling.handle_generic_404" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.error_handling.handle_missing_section_404">
+<tt class="descclassname">regulations.views.error_handling.</tt><tt class="descname">handle_missing_section_404</tt><big>(</big><em>request</em>, <em>label_id</em>, <em>version</em>, <em>extra_context=None</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/error_handling/#handle_missing_section_404"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.error_handling.handle_missing_section_404" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.navigation">
+<span id="regulations-views-navigation-module"></span><h2>regulations.views.navigation module<a class="headerlink" href="#module-regulations.views.navigation" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regulations.views.navigation.choose_next_section">
+<tt class="descclassname">regulations.views.navigation.</tt><tt class="descname">choose_next_section</tt><big>(</big><em>i</em>, <em>toc_up</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/navigation/#choose_next_section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.navigation.choose_next_section" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.navigation.choose_previous_section">
+<tt class="descclassname">regulations.views.navigation.</tt><tt class="descname">choose_previous_section</tt><big>(</big><em>i</em>, <em>toc_up</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/navigation/#choose_previous_section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.navigation.choose_previous_section" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.navigation.get_labels">
+<tt class="descclassname">regulations.views.navigation.</tt><tt class="descname">get_labels</tt><big>(</big><em>current</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/navigation/#get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.navigation.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.navigation.is_last">
+<tt class="descclassname">regulations.views.navigation.</tt><tt class="descname">is_last</tt><big>(</big><em>i</em>, <em>l</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/navigation/#is_last"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.navigation.is_last" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.navigation.nav_sections">
+<tt class="descclassname">regulations.views.navigation.</tt><tt class="descname">nav_sections</tt><big>(</big><em>current</em>, <em>version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/navigation/#nav_sections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.navigation.nav_sections" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.partial">
+<span id="regulations-views-partial-module"></span><h2>regulations.views.partial module<a class="headerlink" href="#module-regulations.views.partial" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.views.partial.PartialDefinitionView">
+<em class="property">class </em><tt class="descclassname">regulations.views.partial.</tt><tt class="descname">PartialDefinitionView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialDefinitionView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialDefinitionView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.partial.PartialView" title="regulations.views.partial.PartialView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.partial.PartialView</span></tt></a></p>
+<p>Single paragraph of a regtext formatted for display
+as an inline interpretation</p>
+<dl class="attribute">
+<dt id="regulations.views.partial.PartialDefinitionView.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/partial-definition.html'</em><a class="headerlink" href="#regulations.views.partial.PartialDefinitionView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial.PartialDefinitionView.transform_context">
+<tt class="descname">transform_context</tt><big>(</big><em>context</em>, <em>builder</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialDefinitionView.transform_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialDefinitionView.transform_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.partial.PartialParagraphView">
+<em class="property">class </em><tt class="descclassname">regulations.views.partial.</tt><tt class="descname">PartialParagraphView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialParagraphView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialParagraphView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.partial.PartialSectionView" title="regulations.views.partial.PartialSectionView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.partial.PartialSectionView</span></tt></a></p>
+<p>Single paragraph of a regtext</p>
+<dl class="method">
+<dt id="regulations.views.partial.PartialParagraphView.transform_context">
+<tt class="descname">transform_context</tt><big>(</big><em>context</em>, <em>builder</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialParagraphView.transform_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialParagraphView.transform_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.partial.PartialRegulationView">
+<em class="property">class </em><tt class="descclassname">regulations.views.partial.</tt><tt class="descname">PartialRegulationView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialRegulationView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialRegulationView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.partial.PartialView" title="regulations.views.partial.PartialView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.partial.PartialView</span></tt></a></p>
+<p>Entire regulation without chrome</p>
+<dl class="attribute">
+<dt id="regulations.views.partial.PartialRegulationView.sectional_links">
+<tt class="descname">sectional_links</tt><em class="property"> = False</em><a class="headerlink" href="#regulations.views.partial.PartialRegulationView.sectional_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.partial.PartialRegulationView.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/regulation-content.html'</em><a class="headerlink" href="#regulations.views.partial.PartialRegulationView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial.PartialRegulationView.transform_context">
+<tt class="descname">transform_context</tt><big>(</big><em>context</em>, <em>builder</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialRegulationView.transform_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialRegulationView.transform_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.partial.PartialSectionView">
+<em class="property">class </em><tt class="descclassname">regulations.views.partial.</tt><tt class="descname">PartialSectionView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialSectionView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialSectionView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.partial.PartialView" title="regulations.views.partial.PartialView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.partial.PartialView</span></tt></a></p>
+<p>Single section of reg text</p>
+<dl class="method">
+<dt id="regulations.views.partial.PartialSectionView.section_navigation">
+<tt class="descname">section_navigation</tt><big>(</big><em>label</em>, <em>version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialSectionView.section_navigation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialSectionView.section_navigation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.partial.PartialSectionView.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/regulation-content.html'</em><a class="headerlink" href="#regulations.views.partial.PartialSectionView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial.PartialSectionView.transform_context">
+<tt class="descname">transform_context</tt><big>(</big><em>context</em>, <em>builder</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialSectionView.transform_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialSectionView.transform_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.partial.PartialView">
+<em class="property">class </em><tt class="descclassname">regulations.views.partial.</tt><tt class="descname">PartialView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.views.generic.base.TemplateView</span></tt></p>
+<p>Base class of various partial markup views. sectional_links indicates
+whether this view should use section links (url to a path) or just hash
+links (to an anchor on the page)</p>
+<dl class="method">
+<dt id="regulations.views.partial.PartialView.determine_appliers">
+<tt class="descname">determine_appliers</tt><big>(</big><em>label_id</em>, <em>version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialView.determine_appliers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialView.determine_appliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Figure out which layers to apply by checking the GET args</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial.PartialView.get_context_data">
+<tt class="descname">get_context_data</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#PartialView.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.PartialView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.partial.PartialView.sectional_links">
+<tt class="descname">sectional_links</tt><em class="property"> = True</em><a class="headerlink" href="#regulations.views.partial.PartialView.sectional_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.partial.generate_html">
+<tt class="descclassname">regulations.views.partial.</tt><tt class="descname">generate_html</tt><big>(</big><em>regulation_tree</em>, <em>layer_appliers</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial/#generate_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial.generate_html" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.partial_interp">
+<span id="regulations-views-partial-interp-module"></span><h2>regulations.views.partial_interp module<a class="headerlink" href="#module-regulations.views.partial_interp" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.views.partial_interp.PartialInterpView">
+<em class="property">class </em><tt class="descclassname">regulations.views.partial_interp.</tt><tt class="descname">PartialInterpView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_interp/#PartialInterpView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_interp.PartialInterpView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.partial.PartialView" title="regulations.views.partial.PartialView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.partial.PartialView</span></tt></a></p>
+<p>Interpretation of a reg text section/paragraph or appendix. Used for
+in-line interpretations</p>
+<dl class="attribute">
+<dt id="regulations.views.partial_interp.PartialInterpView.appliers">
+<tt class="descname">appliers</tt><em class="property"> = []</em><a class="headerlink" href="#regulations.views.partial_interp.PartialInterpView.appliers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial_interp.PartialInterpView.determine_appliers">
+<tt class="descname">determine_appliers</tt><big>(</big><em>label_id</em>, <em>version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_interp/#PartialInterpView.determine_appliers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_interp.PartialInterpView.determine_appliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Don&#8217;t generate new appliers</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.partial_interp.PartialInterpView.inline">
+<tt class="descname">inline</tt><em class="property"> = False</em><a class="headerlink" href="#regulations.views.partial_interp.PartialInterpView.inline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="regulations.views.partial_interp.PartialInterpView.mk_appliers">
+<em class="property">static </em><tt class="descname">mk_appliers</tt><big>(</big><em>root_label</em>, <em>version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_interp/#PartialInterpView.mk_appliers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_interp.PartialInterpView.mk_appliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to generate a shared set of appliers</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.partial_interp.PartialInterpView.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/interpretations.html'</em><a class="headerlink" href="#regulations.views.partial_interp.PartialInterpView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial_interp.PartialInterpView.transform_context">
+<tt class="descname">transform_context</tt><big>(</big><em>context</em>, <em>builder</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_interp/#PartialInterpView.transform_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_interp.PartialInterpView.transform_context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.views.partial_interp.PartialSubterpView">
+<em class="property">class </em><tt class="descclassname">regulations.views.partial_interp.</tt><tt class="descname">PartialSubterpView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_interp/#PartialSubterpView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_interp.PartialSubterpView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.partial.PartialSectionView" title="regulations.views.partial.PartialSectionView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.partial.PartialSectionView</span></tt></a></p>
+<p>View of subterps - interpretations of whole subparts, regtext, or
+appendices</p>
+<dl class="method">
+<dt id="regulations.views.partial_interp.PartialSubterpView.get_context_data">
+<tt class="descname">get_context_data</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_interp/#PartialSubterpView.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_interp.PartialSubterpView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.partial_search">
+<span id="regulations-views-partial-search-module"></span><h2>regulations.views.partial_search module<a class="headerlink" href="#module-regulations.views.partial_search" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.views.partial_search.PartialSearch">
+<em class="property">class </em><tt class="descclassname">regulations.views.partial_search.</tt><tt class="descname">PartialSearch</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_search/#PartialSearch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_search.PartialSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.views.partial.PartialView" title="regulations.views.partial.PartialView"><tt class="xref py py-class docutils literal"><span class="pre">regulations.views.partial.PartialView</span></tt></a></p>
+<p>Display search results without any chrome.</p>
+<dl class="method">
+<dt id="regulations.views.partial_search.PartialSearch.add_prev_next">
+<tt class="descname">add_prev_next</tt><big>(</big><em>current_page</em>, <em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_search/#PartialSearch.add_prev_next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_search.PartialSearch.add_prev_next" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial_search.PartialSearch.get">
+<tt class="descname">get</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_search/#PartialSearch.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_search.PartialSearch.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method so we can return a 400 if needed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial_search.PartialSearch.get_context_data">
+<tt class="descname">get_context_data</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_search/#PartialSearch.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_search.PartialSearch.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.views.partial_search.PartialSearch.template_name">
+<tt class="descname">template_name</tt><em class="property"> = 'regulations/search-results.html'</em><a class="headerlink" href="#regulations.views.partial_search.PartialSearch.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.partial_sxs">
+<span id="regulations-views-partial-sxs-module"></span><h2>regulations.views.partial_sxs module<a class="headerlink" href="#module-regulations.views.partial_sxs" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.views.partial_sxs.ParagraphSXSView">
+<em class="property">class </em><tt class="descclassname">regulations.views.partial_sxs.</tt><tt class="descname">ParagraphSXSView</tt><a class="reference internal" href="../_modules/regulations/views/partial_sxs/#ParagraphSXSView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_sxs.ParagraphSXSView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.views.generic.base.TemplateView</span></tt></p>
+<p>Given a regulation paragraph and a Federal Register notice number,
+display the appropriate section by section analyses.</p>
+<dl class="method">
+<dt id="regulations.views.partial_sxs.ParagraphSXSView.footnote_refs">
+<tt class="descname">footnote_refs</tt><big>(</big><em>sxs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_sxs/#ParagraphSXSView.footnote_refs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_sxs.ParagraphSXSView.footnote_refs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add footnote references to paragraph text</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial_sxs.ParagraphSXSView.footnotes">
+<tt class="descname">footnotes</tt><big>(</big><em>notice</em>, <em>sxs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_sxs/#ParagraphSXSView.footnotes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_sxs.ParagraphSXSView.footnotes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data for footnotes (which are referenced in the paragraph text)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial_sxs.ParagraphSXSView.further_analyses">
+<tt class="descname">further_analyses</tt><big>(</big><em>label_id</em>, <em>notice_id</em>, <em>fr_page</em>, <em>version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_sxs/#ParagraphSXSView.further_analyses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_sxs.ParagraphSXSView.further_analyses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grab other analyses for this same paragraph (limiting to those
+visible from this regulation version.) Make them in descending
+order</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial_sxs.ParagraphSXSView.get">
+<tt class="descname">get</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_sxs/#ParagraphSXSView.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_sxs.ParagraphSXSView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method so that we can grab the GET variables</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial_sxs.ParagraphSXSView.get_context_data">
+<tt class="descname">get_context_data</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_sxs/#ParagraphSXSView.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_sxs.ParagraphSXSView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.partial_sxs.ParagraphSXSView.get_template_names">
+<tt class="descname">get_template_names</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/regulations/views/partial_sxs/#ParagraphSXSView.get_template_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.partial_sxs.ParagraphSXSView.get_template_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>The disclaimer that exists on this page can be over ridden. If an
+agency specfic disclaimer is provided, use that.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.redirect">
+<span id="regulations-views-redirect-module"></span><h2>regulations.views.redirect module<a class="headerlink" href="#module-regulations.views.redirect" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regulations.views.redirect.diff_redirect">
+<tt class="descclassname">regulations.views.redirect.</tt><tt class="descname">diff_redirect</tt><big>(</big><em>request</em>, <em>label_id</em>, <em>version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/redirect/#diff_redirect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.redirect.diff_redirect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles constructing the diff url by pulling the new version from
+GET. We check for bad data here (as we can&#8217;t rely on url regex)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.redirect.order_diff_versions">
+<tt class="descclassname">regulations.views.redirect.</tt><tt class="descname">order_diff_versions</tt><big>(</big><em>label_id</em>, <em>version</em>, <em>new_version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/redirect/#order_diff_versions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.redirect.order_diff_versions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.redirect.redirect_by_date">
+<tt class="descclassname">regulations.views.redirect.</tt><tt class="descname">redirect_by_date</tt><big>(</big><em>request</em>, <em>label_id</em>, <em>year</em>, <em>month</em>, <em>day</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/redirect/#redirect_by_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.redirect.redirect_by_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>If a user requests a date as the version, find the version which was
+current as of that date</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.redirect.redirect_by_date_get">
+<tt class="descclassname">regulations.views.redirect.</tt><tt class="descname">redirect_by_date_get</tt><big>(</big><em>request</em>, <em>label_id</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/redirect/#redirect_by_date_get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.redirect.redirect_by_date_get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles date, etc. if they are part of the GET variable. We check for
+bad data here (as we can&#8217;t rely on url regex)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.reg_landing">
+<span id="regulations-views-reg-landing-module"></span><h2>regulations.views.reg_landing module<a class="headerlink" href="#module-regulations.views.reg_landing" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regulations.views.reg_landing.get_versions">
+<tt class="descclassname">regulations.views.reg_landing.</tt><tt class="descname">get_versions</tt><big>(</big><em>label_id</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/reg_landing/#get_versions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.reg_landing.get_versions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current and next version of the regulation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.reg_landing.regulation">
+<tt class="descclassname">regulations.views.reg_landing.</tt><tt class="descname">regulation</tt><big>(</big><em>request</em>, <em>label_id</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/reg_landing/#regulation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.reg_landing.regulation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.reg_landing.regulation_exists">
+<tt class="descclassname">regulations.views.reg_landing.</tt><tt class="descname">regulation_exists</tt><big>(</big><em>label_id</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/reg_landing/#regulation_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.reg_landing.regulation_exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.sidebar">
+<span id="regulations-views-sidebar-module"></span><h2>regulations.views.sidebar module<a class="headerlink" href="#module-regulations.views.sidebar" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.views.sidebar.SideBarView">
+<em class="property">class </em><tt class="descclassname">regulations.views.sidebar.</tt><tt class="descname">SideBarView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/sidebar/#SideBarView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.sidebar.SideBarView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.views.generic.base.TemplateView</span></tt></p>
+<p>View for handling the right-side sidebar</p>
+<dl class="method">
+<dt id="regulations.views.sidebar.SideBarView.add_sxs">
+<tt class="descname">add_sxs</tt><big>(</big><em>client</em>, <em>node_trees</em>, <em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/sidebar/#SideBarView.add_sxs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.sidebar.SideBarView.add_sxs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds sxs associated with this section, adds them to the
+context</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.sidebar.SideBarView.get_context_data">
+<tt class="descname">get_context_data</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/sidebar/#SideBarView.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.sidebar.SideBarView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.sidebar.SideBarView.get_template_names">
+<tt class="descname">get_template_names</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/regulations/views/sidebar/#SideBarView.get_template_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.sidebar.SideBarView.get_template_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.views.sidebar.SideBarView.is_subterp">
+<tt class="descname">is_subterp</tt><big>(</big><em>label</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/sidebar/#SideBarView.is_subterp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.sidebar.SideBarView.is_subterp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.universal_landing">
+<span id="regulations-views-universal-landing-module"></span><h2>regulations.views.universal_landing module<a class="headerlink" href="#module-regulations.views.universal_landing" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regulations.views.universal_landing.filter_future_amendments">
+<tt class="descclassname">regulations.views.universal_landing.</tt><tt class="descname">filter_future_amendments</tt><big>(</big><em>versions</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/universal_landing/#filter_future_amendments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.universal_landing.filter_future_amendments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a list of amendments, and only return a list of those that 
+are in the future.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.universal_landing.get_regulations_list">
+<tt class="descclassname">regulations.views.universal_landing.</tt><tt class="descname">get_regulations_list</tt><big>(</big><em>all_versions</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/universal_landing/#get_regulations_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.universal_landing.get_regulations_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of regulation versions, add data about those regulations
+to that list.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.universal_landing.universal">
+<tt class="descclassname">regulations.views.universal_landing.</tt><tt class="descname">universal</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/universal_landing/#universal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.universal_landing.universal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views.utils">
+<span id="regulations-views-utils-module"></span><h2>regulations.views.utils module<a class="headerlink" href="#module-regulations.views.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regulations.views.utils.add_extras">
+<tt class="descclassname">regulations.views.utils.</tt><tt class="descname">add_extras</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/utils/#add_extras"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.utils.add_extras" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.utils.first_section">
+<tt class="descclassname">regulations.views.utils.</tt><tt class="descname">first_section</tt><big>(</big><em>reg_part</em>, <em>version</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/utils/#first_section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.utils.first_section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the table of contents for a regulation, to get the label of the
+first section of the regulation. In most regulations, this is -1, but in
+some it&#8217;s -101.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.utils.get_layer_list">
+<tt class="descclassname">regulations.views.utils.</tt><tt class="descname">get_layer_list</tt><big>(</big><em>names</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/utils/#get_layer_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.utils.get_layer_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.utils.handle_diff_layers">
+<tt class="descclassname">regulations.views.utils.</tt><tt class="descname">handle_diff_layers</tt><big>(</big><em>layer_names</em>, <em>regulation_id</em>, <em>older</em>, <em>newer</em>, <em>sectional=False</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/utils/#handle_diff_layers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.utils.handle_diff_layers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.utils.handle_specified_layers">
+<tt class="descclassname">regulations.views.utils.</tt><tt class="descname">handle_specified_layers</tt><big>(</big><em>layer_names</em>, <em>regulation_id</em>, <em>version</em>, <em>sectional=False</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/utils/#handle_specified_layers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.utils.handle_specified_layers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.utils.regulation_meta">
+<tt class="descclassname">regulations.views.utils.</tt><tt class="descname">regulation_meta</tt><big>(</big><em>regulation_part</em>, <em>version</em>, <em>sectional=False</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/utils/#regulation_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.utils.regulation_meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the contents of the meta layer, without using a tree.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.views.utils.to_roman">
+<tt class="descclassname">regulations.views.utils.</tt><tt class="descname">to_roman</tt><big>(</big><em>number</em><big>)</big><a class="reference internal" href="../_modules/regulations/views/utils/#to_roman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.views.utils.to_roman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an integer to a roman numeral</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.views">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-regulations.views" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">regulations.views package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-regulations.views.about">regulations.views.about module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.chrome">regulations.views.chrome module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.chrome_breakaway">regulations.views.chrome_breakaway module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.diff">regulations.views.diff module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.error_handling">regulations.views.error_handling module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.navigation">regulations.views.navigation module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.partial">regulations.views.partial module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.partial_interp">regulations.views.partial_interp module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.partial_search">regulations.views.partial_search module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.partial_sxs">regulations.views.partial_sxs module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.redirect">regulations.views.redirect module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.reg_landing">regulations.views.reg_landing module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.sidebar">regulations.views.sidebar module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.universal_landing">regulations.views.universal_landing module</a></li>
+<li><a class="reference internal" href="#module-regulations.views.utils">regulations.views.utils module</a></li>
+<li><a class="reference internal" href="#module-regulations.views">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../regulations.uitests/"
+                        title="previous chapter">regulations.uitests package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/regulations.views.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../regulations.uitests/" title="regulations.uitests package"
+             >previous</a> |</li>
+        <li><a href="../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../regulations/" >regulations package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

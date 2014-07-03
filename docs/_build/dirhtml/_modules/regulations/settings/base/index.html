@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.settings.base &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.settings.base</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">dirname</span>
+
+<span class="n">here</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">join</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="n">PROJECT_ROOT</span> <span class="o">=</span> <span class="n">here</span><span class="p">(</span><span class="s">&quot;..&quot;</span><span class="p">,</span> <span class="s">&quot;..&quot;</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">join</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="n">PROJECT_ROOT</span><span class="p">),</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">False</span> 
+
+<span class="n">ADMINS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># (&#39;Your Name&#39;, &#39;your_email@example.com&#39;),</span>
+<span class="p">)</span>
+
+<span class="n">MANAGERS</span> <span class="o">=</span> <span class="n">ADMINS</span>
+
+<span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c">#DATABASES = {</span>
+<span class="c">#    &#39;default&#39;: {</span>
+<span class="c">#        &#39;ENGINE&#39;: &#39;django.db.backends.&#39;, # Add &#39;postgresql_psycopg2&#39;, &#39;mysql&#39;, &#39;sqlite3&#39; or &#39;oracle&#39;.</span>
+<span class="c">#        &#39;NAME&#39;: &#39;&#39;,                      # Or path to database file if using sqlite3.</span>
+        <span class="c"># The following settings are not used with sqlite3:</span>
+<span class="c">#        &#39;USER&#39;: &#39;&#39;,</span>
+<span class="c">#        &#39;PASSWORD&#39;: &#39;&#39;,</span>
+<span class="c">#        &#39;HOST&#39;: &#39;&#39;,                      # Empty for localhost through domain sockets or &#39;127.0.0.1&#39; for localhost through TCP.</span>
+<span class="c">#        &#39;PORT&#39;: &#39;&#39;,                      # Set to empty string for default.</span>
+<span class="c">#    }</span>
+<span class="c">#}</span>
+
+<span class="c"># Hosts/domain names that are valid for this site; required if DEBUG is False</span>
+<span class="c"># See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts</span>
+<span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c"># Local time zone for this installation. Choices can be found here:</span>
+<span class="c"># http://en.wikipedia.org/wiki/List_of_tz_zones_by_name</span>
+<span class="c"># although not all choices may be available on all operating systems.</span>
+<span class="c"># In a Windows environment this must be set to your system time zone.</span>
+<span class="n">TIME_ZONE</span> <span class="o">=</span> <span class="s">&#39;America/Chicago&#39;</span>
+
+<span class="c"># Language code for this installation. All choices can be found here:</span>
+<span class="c"># http://www.i18nguy.com/unicode/language-identifiers.html</span>
+<span class="n">LANGUAGE_CODE</span> <span class="o">=</span> <span class="s">&#39;en-us&#39;</span>
+
+<span class="n">SITE_ID</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c"># If you set this to False, Django will make some optimizations so as not</span>
+<span class="c"># to load the internationalization machinery.</span>
+<span class="n">USE_I18N</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c"># If you set this to False, Django will not format dates, numbers and</span>
+<span class="c"># calendars according to the current locale.</span>
+<span class="n">USE_L10N</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c"># If you set this to False, Django will not use timezone-aware datetimes.</span>
+<span class="n">USE_TZ</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c"># Absolute filesystem path to the directory that will hold user-uploaded files.</span>
+<span class="c"># Example: &quot;/var/www/example.com/media/&quot;</span>
+<span class="n">MEDIA_ROOT</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+<span class="c"># URL that handles the media served from MEDIA_ROOT. Make sure to use a</span>
+<span class="c"># trailing slash.</span>
+<span class="c"># Examples: &quot;http://example.com/media/&quot;, &quot;http://media.example.com/&quot;</span>
+<span class="n">MEDIA_URL</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+<span class="c"># Absolute path to the directory static files should be collected to.</span>
+<span class="c"># Don&#39;t put anything in this directory yourself; store your static files</span>
+<span class="c"># in apps&#39; &quot;static/&quot; subdirectories and in STATICFILES_DIRS.</span>
+<span class="c"># Example: &quot;/var/www/example.com/static/&quot;</span>
+<span class="n">STATIC_ROOT</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+<span class="c"># URL prefix for static files.</span>
+<span class="c"># Example: &quot;http://example.com/static/&quot;, &quot;http://static.example.com/&quot;</span>
+<span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s">&#39;/static/&#39;</span>
+
+<span class="c"># Additional locations of static files</span>
+<span class="n">STATICFILES_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># Put strings here, like &quot;/home/html/static&quot; or &quot;C:/www/django/static&quot;.</span>
+    <span class="c"># Always use forward slashes, even on Windows.</span>
+    <span class="c"># Don&#39;t forget to use absolute paths, not relative paths.</span>
+<span class="p">)</span>
+
+<span class="c"># List of finder classes that know how to find static files in</span>
+<span class="c"># various locations.</span>
+<span class="n">STATICFILES_FINDERS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;django.contrib.staticfiles.finders.FileSystemFinder&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.staticfiles.finders.AppDirectoriesFinder&#39;</span><span class="p">,</span>
+<span class="c">#    &#39;django.contrib.staticfiles.finders.DefaultStorageFinder&#39;,</span>
+<span class="p">)</span>
+
+<span class="c"># Make this unique, and don&#39;t share it with anybody.</span>
+<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">&#39;&amp;cdbo5qx4d9(*mi%yl49)2g%2+wgl=vvq9y-de1=0(g3%yc2$5&#39;</span>
+
+<span class="c"># List of callables that know how to import templates from various sources.</span>
+<span class="n">TEMPLATE_LOADERS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&#39;django.template.loaders.cached.Loader&#39;</span><span class="p">,</span> <span class="p">(</span>
+    <span class="s">&#39;django.template.loaders.filesystem.Loader&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.template.loaders.app_directories.Loader&#39;</span><span class="p">,)),</span>
+<span class="c">#     &#39;django.template.loaders.eggs.Loader&#39;,</span>
+<span class="p">)</span>
+
+<span class="n">MIDDLEWARE_CLASSES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;django.middleware.common.CommonMiddleware&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.sessions.middleware.SessionMiddleware&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.middleware.csrf.CsrfViewMiddleware&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.auth.middleware.AuthenticationMiddleware&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.messages.middleware.MessageMiddleware&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.middleware.cache.UpdateCacheMiddleware&#39;</span><span class="p">,</span> 
+    <span class="s">&#39;django.middleware.common.CommonMiddleware&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.middleware.cache.FetchFromCacheMiddleware&#39;</span><span class="p">,</span>
+    <span class="c"># Uncomment the next line for simple clickjacking protection:</span>
+    <span class="c"># &#39;django.middleware.clickjacking.XFrameOptionsMiddleware&#39;,</span>
+<span class="p">)</span>
+
+<span class="n">ROOT_URLCONF</span> <span class="o">=</span> <span class="s">&#39;regulations.urls&#39;</span>
+
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c">#&#39;django.contrib.auth&#39;,</span>
+    <span class="c">#&#39;django.contrib.contenttypes&#39;,</span>
+    <span class="s">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="c">#&#39;django.contrib.sites&#39;,</span>
+    <span class="s">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+    <span class="c"># Uncomment the next line to enable the admin:</span>
+    <span class="c"># &#39;django.contrib.admin&#39;,</span>
+    <span class="c"># Uncomment the next line to enable admin documentation:</span>
+    <span class="c"># &#39;django.contrib.admindocs&#39;,</span>
+    <span class="s">&#39;regulations&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c">#eregs specific settings</span>
+
+<span class="c">#The base URL for the API that we use to access layers and the regulation. </span>
+<span class="n">API_BASE</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+<span class="c">#When we generate an full HTML version of the regulation, we want to </span>
+<span class="c">#write it out somewhere. This is where. </span>
+<span class="n">OFFLINE_OUTPUT_DIR</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+<span class="n">DATE_FORMAT</span> <span class="o">=</span> <span class="s">&#39;n/j/Y&#39;</span>
+
+<span class="n">EREGS_GA_ID</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="n">EREGS_GA_SITE</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+<span class="c">#   Use the &#39;source&#39; directory; useful for development</span>
+<span class="n">JS_DEBUG</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="c">#Django by default tries to setup a databse when running </span>
+<span class="c">#tests. We don&#39;t have a database, so we override the default </span>
+<span class="c">#test runner. </span>
+<span class="n">TEST_RUNNER</span> <span class="o">=</span> <span class="s">&#39;regulations.tests.runner.DatabaselessTestRunner&#39;</span>
+
+<span class="n">CACHES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;default&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;BACKEND&#39;</span><span class="p">:</span> <span class="s">&#39;django.core.cache.backends.filebased.FileBasedCache&#39;</span><span class="p">,</span>
+        <span class="s">&#39;LOCATION&#39;</span><span class="p">:</span> <span class="s">&#39;/tmp/eregs_cache&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s">&#39;api_cache&#39;</span><span class="p">:{</span>
+        <span class="s">&#39;BACKEND&#39;</span><span class="p">:</span> <span class="s">&#39;django.core.cache.backends.locmem.LocMemCache&#39;</span><span class="p">,</span>
+        <span class="s">&#39;LOCATION&#39;</span><span class="p">:</span> <span class="s">&#39;api_cache_memory&#39;</span><span class="p">,</span>
+        <span class="s">&#39;TIMEOUT&#39;</span><span class="p">:</span> <span class="mi">3600</span><span class="p">,</span>
+        <span class="s">&#39;OPTIONS&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&#39;MAX_ENTRIES&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">CACHE_MIDDLEWARE_ALIAS</span> <span class="o">=</span> <span class="s">&#39;default&#39;</span>
+<span class="n">CACHE_MIDDLEWARE_KEY_PREFIX</span> <span class="o">=</span> <span class="s">&#39;eregs&#39;</span>
+<span class="n">CACHE_MIDDLEWARE_SECONDS</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="c"># A sample logging configuration. The only tangible logging</span>
+<span class="c"># performed by this configuration is to send an email to</span>
+<span class="c"># the site admins on every HTTP 500 error when DEBUG=False.</span>
+<span class="c"># See http://docs.djangoproject.com/en/dev/topics/logging for</span>
+<span class="c"># more details on how to customize your logging configuration.</span>
+<span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">&#39;disable_existing_loggers&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">&#39;filters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;require_debug_false&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&#39;()&#39;</span><span class="p">:</span> <span class="s">&#39;django.utils.log.RequireDebugFalse&#39;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;mail_admins&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&#39;level&#39;</span><span class="p">:</span> <span class="s">&#39;ERROR&#39;</span><span class="p">,</span>
+            <span class="s">&#39;filters&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;require_debug_false&#39;</span><span class="p">],</span>
+            <span class="s">&#39;class&#39;</span><span class="p">:</span> <span class="s">&#39;django.utils.log.AdminEmailHandler&#39;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s">&#39;loggers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;django.request&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;mail_admins&#39;</span><span class="p">],</span>
+            <span class="s">&#39;level&#39;</span><span class="p">:</span> <span class="s">&#39;ERROR&#39;</span><span class="p">,</span>
+            <span class="s">&#39;propagate&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

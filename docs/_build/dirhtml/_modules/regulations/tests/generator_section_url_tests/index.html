@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.generator_section_url_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.generator_section_url_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator.section_url</span> <span class="kn">import</span> <span class="n">SectionUrl</span>
+
+
+<div class="viewcode-block" id="SectionUrlTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.generator_section_url_tests.SectionUrlTest">[docs]</a><span class="k">class</span> <span class="nc">SectionUrlTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.section_url.fetch_toc&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="SectionUrlTest.test_interp"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.generator_section_url_tests.SectionUrlTest.test_interp">[docs]</a>    <span class="k">def</span> <span class="nf">test_interp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch_toc</span><span class="p">):</span>
+        <span class="n">fetch_toc</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">],</span> <span class="s">&#39;is_section&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">],</span> <span class="s">&#39;is_section&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">],</span> <span class="s">&#39;is_appendix&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;200-Subpart-Interp&#39;</span><span class="p">,</span>
+                         <span class="n">SectionUrl</span><span class="p">()</span><span class="o">.</span><span class="n">interp</span><span class="p">([</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;200-Subpart-Interp&#39;</span><span class="p">,</span>
+                         <span class="n">SectionUrl</span><span class="p">()</span><span class="o">.</span><span class="n">interp</span><span class="p">([</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;200-Appendices-Interp&#39;</span><span class="p">,</span>
+                         <span class="n">SectionUrl</span><span class="p">()</span><span class="o">.</span><span class="n">interp</span><span class="p">([</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+
+        <span class="n">fetch_toc</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">],</span> <span class="s">&#39;is_subpart&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+             <span class="s">&#39;sub_toc&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">],</span> <span class="s">&#39;is_section&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+                         <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">],</span> <span class="s">&#39;is_section&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}]},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">],</span> <span class="s">&#39;is_appendix&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;is_supplement&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+             <span class="s">&#39;sub_toc&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">],</span>
+                          <span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;200-Interp-h1&#39;</span><span class="p">},</span>
+                         <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span>
+                          <span class="s">&#39;is_subterp&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+                         <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;Appendices&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span>
+                          <span class="s">&#39;is_subterp&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}]}]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;200-Subpart-A-Interp&#39;</span><span class="p">,</span>
+                         <span class="n">SectionUrl</span><span class="p">()</span><span class="o">.</span><span class="n">interp</span><span class="p">([</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;200-Subpart-A-Interp&#39;</span><span class="p">,</span>
+                         <span class="n">SectionUrl</span><span class="p">()</span><span class="o">.</span><span class="n">interp</span><span class="p">([</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;200-Appendices-Interp&#39;</span><span class="p">,</span>
+                         <span class="n">SectionUrl</span><span class="p">()</span><span class="o">.</span><span class="n">interp</span><span class="p">([</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;200-Interp-h1&#39;</span><span class="p">,</span>
+                         <span class="n">SectionUrl</span><span class="p">()</span><span class="o">.</span><span class="n">interp</span><span class="p">([</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">,</span> <span class="s">&#39;p1&#39;</span><span class="p">],</span>
+                         <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;200-Interp-h1&#39;</span><span class="p">,</span>
+                         <span class="n">SectionUrl</span><span class="p">()</span><span class="o">.</span><span class="n">interp</span><span class="p">([</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;200-Subpart-A&#39;</span><span class="p">,</span>
+                        <span class="n">SectionUrl</span><span class="p">()</span><span class="o">.</span><span class="n">interp</span><span class="p">([</span><span class="s">&#39;200&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">],</span>
+                                            <span class="s">&#39;verver&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="SectionUrlTest.test_of"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.generator_section_url_tests.SectionUrlTest.test_of">[docs]</a>    <span class="k">def</span> <span class="nf">test_of</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">SectionUrl</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="s">&#39;303&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">],</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&#39;#303-1&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="n">SectionUrl</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="s">&#39;303&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">],</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&#39;#303-1-b&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="n">SectionUrl</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="s">&#39;303&#39;</span><span class="p">],</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&#39;#303&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="n">SectionUrl</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="s">&#39;303&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">],</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&#39;/303-1/vvv#303-1-b&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;999-88/verver#999-88-e&#39;</span> <span class="ow">in</span>
+                        <span class="n">SectionUrl</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="s">&#39;999&#39;</span><span class="p">,</span> <span class="s">&#39;88&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">],</span> <span class="s">&#39;verver&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="s">&#39;#999-88-e&#39;</span><span class="p">,</span> <span class="n">SectionUrl</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="s">&#39;999&#39;</span><span class="p">,</span> <span class="s">&#39;88&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">],</span> <span class="s">&#39;verver&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="s">&#39;#999-Subpart-Interp&#39;</span><span class="p">,</span>
+            <span class="n">SectionUrl</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="s">&#39;999&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;verver&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="s">&#39;#999-Subpart-A-Interp&#39;</span><span class="p">,</span>
+            <span class="n">SectionUrl</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="s">&#39;999&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;verver&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="s">&#39;#999-Appendices-Interp&#39;</span><span class="p">,</span>
+            <span class="n">SectionUrl</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="s">&#39;999&#39;</span><span class="p">,</span> <span class="s">&#39;Appendices&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;verver&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

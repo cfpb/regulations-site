@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.layers_definitions_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.layers_definitions_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator.layers.definitions</span> <span class="kn">import</span> <span class="n">DefinitionsLayer</span>
+
+
+<div class="viewcode-block" id="DefinitionsLayerTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_definitions_tests.DefinitionsLayerTest">[docs]</a><span class="k">class</span> <span class="nc">DefinitionsLayerTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="DefinitionsLayerTest.test_create_definition_link"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_definitions_tests.DefinitionsLayerTest.test_create_definition_link">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_definition_link</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;202-3&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;ref&#39;</span><span class="p">:</span> <span class="s">&#39;account:202-2-a&#39;</span><span class="p">},</span>
+            <span class="s">&#39;referenced&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;account:202-2-a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;reference&#39;</span><span class="p">:</span> <span class="s">&#39;202-2-a&#39;</span><span class="p">}}</span>
+            <span class="p">}</span>
+        <span class="n">dl</span> <span class="o">=</span> <span class="n">DefinitionsLayer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="n">definition_link</span> <span class="o">=</span> <span class="n">dl</span><span class="o">.</span><span class="n">create_definition_link</span><span class="p">(</span><span class="s">&#39;account&#39;</span><span class="p">,</span>
+                                            <span class="p">[</span><span class="s">&#39;202&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">],</span> <span class="s">&#39;account&#39;</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="s">&#39;&lt;a href=&quot;#202-3&quot; class=&quot;citation definition&quot; &#39;</span>
+        <span class="n">url</span> <span class="o">+=</span> <span class="s">&#39;data-definition=&quot;202-3&quot; data-defined-term=&quot;account&quot;&gt;&#39;</span>
+        <span class="n">url</span> <span class="o">+=</span> <span class="s">&#39;account&lt;/a&gt;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">definition_link</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

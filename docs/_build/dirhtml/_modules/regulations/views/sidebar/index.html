@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.views.sidebar &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.views.sidebar</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.views.generic.base</span> <span class="kn">import</span> <span class="n">TemplateView</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">Http404</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator</span> <span class="kn">import</span> <span class="n">api_reader</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.layers.analyses</span> <span class="kn">import</span> <span class="n">SectionBySectionLayer</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.node_types</span> <span class="kn">import</span> <span class="n">label_to_text</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.subterp</span> <span class="kn">import</span> <span class="n">filter_by_subterp</span>
+
+
+<div class="viewcode-block" id="SideBarView"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.sidebar.SideBarView">[docs]</a><span class="k">class</span> <span class="nc">SideBarView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; View for handling the right-side sidebar &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SideBarView.get_template_names"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.sidebar.SideBarView.get_template_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_template_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s">&#39;regulations/custom-sidebar.html&#39;</span><span class="p">,</span> <span class="s">&#39;regulations/sidebar.html&#39;</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="SideBarView.add_sxs"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.sidebar.SideBarView.add_sxs">[docs]</a>    <span class="k">def</span> <span class="nf">add_sxs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">node_trees</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Finds sxs associated with this section, adds them to the</span>
+<span class="sd">        context&quot;&quot;&quot;</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">]</span>
+        <span class="n">label_id</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;label_id&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s">&#39;Interp&#39;</span> <span class="ow">in</span> <span class="n">label_id</span><span class="p">:</span>
+            <span class="n">reg_part</span> <span class="o">=</span> <span class="n">label_id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">sxs_layer_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="s">&#39;analyses&#39;</span><span class="p">,</span> <span class="n">reg_part</span> <span class="o">+</span> <span class="s">&#39;-Interp&#39;</span><span class="p">,</span>
+                                          <span class="n">version</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sxs_layer_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="s">&#39;analyses&#39;</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">result_key</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">sxs_layer_data</span><span class="p">:</span>
+            <span class="n">sxs_layer</span> <span class="o">=</span> <span class="n">SectionBySectionLayer</span><span class="p">(</span><span class="n">sxs_layer_data</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">node_trees</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">sxs_layer</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]))</span>
+                <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                    <span class="n">result_key</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">result_key</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="n">result_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span>
+</div>
+<div class="viewcode-block" id="SideBarView.is_subterp"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.sidebar.SideBarView.is_subterp">[docs]</a>    <span class="k">def</span> <span class="nf">is_subterp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s">&#39;Interp&#39;</span> <span class="ow">in</span> <span class="n">label</span> <span class="ow">and</span> <span class="p">(</span><span class="s">&#39;Subpart&#39;</span> <span class="ow">in</span> <span class="n">label</span>
+                                       <span class="ow">or</span> <span class="s">&#39;Appendices&#39;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">))</span>
+</div>
+    <span class="k">def</span> <span class="nf">_get_node_trees</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If using subterps, we might be getting a list of relevant trees</span>
+<span class="sd">        rather than a single node.&quot;&quot;&quot;</span>
+        <span class="n">tree_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="s">&#39;Interp&#39;</span> <span class="ow">in</span> <span class="n">label</span> <span class="ow">and</span> <span class="p">(</span><span class="s">&#39;Subpart&#39;</span> <span class="ow">in</span> <span class="n">label</span>
+                                  <span class="ow">or</span> <span class="s">&#39;Appendices&#39;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">):</span>
+            <span class="c">#   Subterp</span>
+            <span class="n">interp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">regulation</span><span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;-Interp&#39;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">interp</span><span class="p">:</span>
+                <span class="n">tree_nodes</span> <span class="o">=</span> <span class="n">filter_by_subterp</span><span class="p">(</span><span class="n">interp</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">],</span> <span class="n">label</span><span class="p">,</span>
+                                               <span class="n">version</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">regulation</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">label</span><span class="p">),</span> <span class="n">version</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">node</span><span class="p">:</span>
+                <span class="n">tree_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tree_nodes</span>
+
+<div class="viewcode-block" id="SideBarView.get_context_data"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.sidebar.SideBarView.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SideBarView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">label</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;label_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s">&#39;human_label_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_to_text</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">include_marker</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="p">()</span>
+
+        <span class="n">node_trees</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_node_trees</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_sxs</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">node_trees</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">context</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

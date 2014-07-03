@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.layers_appliers_test &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.layers_appliers_test</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.layers</span> <span class="kn">import</span> <span class="n">layers_applier</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.layers</span> <span class="kn">import</span> <span class="n">location_replace</span>
+
+<div class="viewcode-block" id="LayersApplierTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest">[docs]</a><span class="k">class</span> <span class="nc">LayersApplierTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="LayersApplierTest.test_enqueue"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_enqueue">[docs]</a>    <span class="k">def</span> <span class="nf">test_enqueue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">applier</span> <span class="o">=</span> <span class="n">layers_applier</span><span class="o">.</span><span class="n">LayersApplier</span><span class="p">()</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;abcd&#39;</span><span class="p">,</span> <span class="s">&#39;ABCD&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+        <span class="n">priority</span><span class="p">,</span> <span class="n">retrieved</span> <span class="o">=</span> <span class="n">applier</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">priority</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">retrieved</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_list_enqueue"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_list_enqueue">[docs]</a>    <span class="k">def</span> <span class="nf">test_list_enqueue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">applier</span> <span class="o">=</span> <span class="n">layers_applier</span><span class="o">.</span><span class="n">LayersApplier</span><span class="p">()</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;abcd&#39;</span><span class="p">,</span> <span class="s">&#39;ABCD&#39;</span><span class="p">,</span> <span class="p">[]),</span> <span class="p">(</span><span class="s">&#39;efghi&#39;</span><span class="p">,</span> <span class="s">&#39;EFG&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">12</span><span class="p">])]</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">enqueue_from_list</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span>
+
+        <span class="n">priority</span><span class="p">,</span> <span class="n">retrieved</span> <span class="o">=</span> <span class="n">applier</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">priority</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">retrieved</span><span class="p">)</span>
+
+        <span class="n">priority</span><span class="p">,</span> <span class="n">retrieved</span> <span class="o">=</span> <span class="n">applier</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">priority</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">retrieved</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_replace_all"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_replace_all">[docs]</a>    <span class="k">def</span> <span class="nf">test_replace_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">applier</span> <span class="o">=</span> <span class="n">layers_applier</span><span class="o">.</span><span class="n">LayersApplier</span><span class="p">()</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Prefix test &lt;a href=&quot;url&quot; data=&quot;test&quot;&gt;link test&lt;/a&gt; postfix text&#39;</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">replace_all</span><span class="p">(</span><span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="s">&#39;linksecondword&#39;</span><span class="p">)</span>
+
+        <span class="n">replaced</span> <span class="o">=</span> <span class="s">&#39;Prefix linksecondword &lt;a href=&quot;url&quot; data=&quot;test&quot;&gt;link linksecondword&lt;/a&gt; postfix text&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">applier</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">replaced</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_find_all_offsets"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_find_all_offsets">[docs]</a>    <span class="k">def</span> <span class="nf">test_find_all_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;ABCD&#39;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;The grey fox ABCD jumped over the fence ABCD&#39;</span>
+        <span class="n">offsets</span> <span class="o">=</span> <span class="n">location_replace</span><span class="o">.</span><span class="n">LocationReplace</span><span class="o">.</span><span class="n">find_all_offsets</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">offsets</span><span class="p">,</span> <span class="p">[(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">44</span><span class="p">)])</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_find_offsets_no_pattern"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_find_offsets_no_pattern">[docs]</a>    <span class="k">def</span> <span class="nf">test_find_offsets_no_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;ABCD&#39;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;The grey fox jumped over the fence&#39;</span>
+        <span class="n">offsets</span> <span class="o">=</span> <span class="n">location_replace</span><span class="o">.</span><span class="n">LocationReplace</span><span class="o">.</span><span class="n">find_all_offsets</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">offsets</span><span class="p">,</span> <span class="p">[])</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_replace_at_offset"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_replace_at_offset">[docs]</a>    <span class="k">def</span> <span class="nf">test_replace_at_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;ABCD&#39;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;The grey fox ABCD jumped over the fence ABCD&#39;</span>
+
+        <span class="n">first_offset</span> <span class="o">=</span> <span class="n">location_replace</span><span class="o">.</span><span class="n">LocationReplace</span><span class="o">.</span><span class="n">find_all_offsets</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">location_replace</span><span class="o">.</span><span class="n">LocationReplace</span><span class="o">.</span><span class="n">replace_at_offset</span><span class="p">(</span><span class="n">first_offset</span><span class="p">,</span> <span class="s">&#39;giraffe&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s">&#39;The grey fox giraffe jumped over the fence ABCD&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_replace_at"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_replace_at">[docs]</a>    <span class="k">def</span> <span class="nf">test_replace_at</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;The grey fox ABCD jumped ABCD over the fence ABCD&#39;</span>
+
+        <span class="n">applier</span> <span class="o">=</span> <span class="n">layers_applier</span><span class="o">.</span><span class="n">LayersApplier</span><span class="p">()</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">replace_at</span><span class="p">(</span><span class="s">&#39;ABCD&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;a&gt;ABCD&lt;/a&gt;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">applier</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s">&#39;The grey fox &lt;a&gt;ABCD&lt;/a&gt; jumped ABCD over the fence &lt;a&gt;ABCD&lt;/a&gt;&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_update_offsets"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_update_offsets">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lr</span> <span class="o">=</span> <span class="n">location_replace</span><span class="o">.</span><span class="n">LocationReplace</span><span class="p">()</span>
+        <span class="n">lr</span><span class="o">.</span><span class="n">offset_starter</span> <span class="o">=</span> <span class="mi">5</span>
+
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;ABCD&#39;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;The grey &lt;a href=&quot;link&quot;&gt;ABCD&lt;/a&gt; jumped over the ABCD fence on a ABCD day&#39;</span>
+
+        <span class="n">lr</span><span class="o">.</span><span class="n">update_offsets</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">counter</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">offset_starter</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">offset_counters</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">offsets</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">offsets</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">28</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_update_offset_starter"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_update_offset_starter">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_offset_starter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lr</span> <span class="o">=</span> <span class="n">location_replace</span><span class="o">.</span><span class="n">LocationReplace</span><span class="p">()</span>
+        <span class="n">lr</span><span class="o">.</span><span class="n">offset_counters</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+        <span class="n">lr</span><span class="o">.</span><span class="n">update_offset_starter</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">offset_starter</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_replace_at_case_sensitive"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_replace_at_case_sensitive">[docs]</a>    <span class="k">def</span> <span class="nf">test_replace_at_case_sensitive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">original</span> <span class="o">=</span>  <span class="s">&#39;state&#39;</span>
+        <span class="n">replacement</span> <span class="o">=</span> <span class="s">&#39;&lt;a href=&quot;link_url&quot;&gt;state&lt;/a&gt;&#39;</span>
+        <span class="n">locations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+        <span class="n">applier</span> <span class="o">=</span> <span class="n">layers_applier</span><span class="o">.</span><span class="n">LayersApplier</span><span class="p">()</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&lt;em&gt;(6)&lt;/em&gt; &lt;dfn&gt; Under state law. &lt;/dfn&gt; State law.&quot;</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">replace_at</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">locations</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="s">u&quot;&lt;em&gt;(6)&lt;/em&gt; &lt;dfn&gt; Under &lt;a href=</span><span class="se">\&quot;</span><span class="s">link_url</span><span class="se">\&quot;</span><span class="s">&gt;state&lt;/a&gt; law. &lt;/dfn&gt; State law.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">applier</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_replace_no_original"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_replace_no_original">[docs]</a>    <span class="k">def</span> <span class="nf">test_replace_no_original</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">original</span> <span class="o">=</span>  <span class="s">&#39;federal&#39;</span>
+        <span class="n">replacement</span> <span class="o">=</span> <span class="s">&#39;&lt;a href=&quot;link_url&quot;&gt;state&lt;/a&gt;&#39;</span>
+        <span class="n">locations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+        <span class="n">applier</span> <span class="o">=</span> <span class="n">layers_applier</span><span class="o">.</span><span class="n">LayersApplier</span><span class="p">()</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&lt;em&gt;(6)&lt;/em&gt; &lt;dfn&gt; Under state law. &lt;/dfn&gt; State law.&quot;</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">replace_at</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">locations</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;&lt;em&gt;(6)&lt;/em&gt; &lt;dfn&gt; Under state law. &lt;/dfn&gt; State law.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">applier</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LayersApplierTest.test_replace_skip_location"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_appliers_test.LayersApplierTest.test_replace_skip_location">[docs]</a>    <span class="k">def</span> <span class="nf">test_replace_skip_location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">original</span> <span class="o">=</span>  <span class="s">&#39;state&#39;</span>
+        <span class="n">replacement</span> <span class="o">=</span> <span class="s">&#39;&lt;a href=&quot;link_url&quot;&gt;state&lt;/a&gt;&#39;</span>
+        <span class="n">locations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+        <span class="n">applier</span> <span class="o">=</span> <span class="n">layers_applier</span><span class="o">.</span><span class="n">LayersApplier</span><span class="p">()</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&lt;em&gt;(6)&lt;/em&gt; &lt;dfn&gt; Under state law. &lt;/dfn&gt; state law. &lt;dfn&gt; state liability. &lt;/dfn&gt;&quot;</span>
+        <span class="n">applier</span><span class="o">.</span><span class="n">replace_at</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">locations</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;&lt;em&gt;(6)&lt;/em&gt; &lt;dfn&gt; Under &lt;a href=</span><span class="se">\&quot;</span><span class="s">link_url</span><span class="se">\&quot;</span><span class="s">&gt;state&lt;/a&gt; law. &lt;/dfn&gt; state law. &lt;dfn&gt; &lt;a href=</span><span class="se">\&quot;</span><span class="s">link_url</span><span class="se">\&quot;</span><span class="s">&gt;state&lt;/a&gt; liability. &lt;/dfn&gt;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">applier</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

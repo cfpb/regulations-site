@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.generator_subterp_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.generator_subterp_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator</span> <span class="kn">import</span> <span class="n">subterp</span>
+
+
+<div class="viewcode-block" id="SubterpTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.generator_subterp_tests.SubterpTest">[docs]</a><span class="k">class</span> <span class="nc">SubterpTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.subterp.fetch_toc&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="SubterpTest.test_filter_by_subterp"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.generator_subterp_tests.SubterpTest.test_filter_by_subterp">[docs]</a>    <span class="k">def</span> <span class="nf">test_filter_by_subterp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch_toc</span><span class="p">):</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                 <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                 <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                 <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                 <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                 <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;A_B&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                 <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]}]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">subterp</span><span class="o">.</span><span class="n">filter_by_subterp</span><span class="p">(</span>
+            <span class="n">nodes</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">fetch_toc</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">4</span><span class="p">:],</span> <span class="n">subterp</span><span class="o">.</span><span class="n">filter_by_subterp</span><span class="p">(</span>
+            <span class="n">nodes</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;Appendices&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">fetch_toc</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+
+        <span class="n">fetch_toc</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">],</span>
+             <span class="s">&#39;sub_toc&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">]}]},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">],</span>
+             <span class="s">&#39;sub_toc&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">]}]},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">]},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">]},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span>
+             <span class="s">&#39;sub_toc&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                         <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]},</span>
+                         <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;Appendices&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]}]}]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">subterp</span><span class="o">.</span><span class="n">filter_by_subterp</span><span class="p">(</span>
+            <span class="n">nodes</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">subterp</span><span class="o">.</span><span class="n">filter_by_subterp</span><span class="p">(</span>
+            <span class="n">nodes</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;1005&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;vvvv&#39;</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

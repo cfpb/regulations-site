@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.node_types_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.node_types_tests</h1><div class="highlight"><pre>
+<span class="c">#vim: set encoding=utf-8</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator.node_types</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="NodeTypesTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.node_types_tests.NodeTypesTest">[docs]</a><span class="k">class</span> <span class="nc">NodeTypesTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="NodeTypesTest.test_change_appendix"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.node_types_tests.NodeTypesTest.test_change_appendix">[docs]</a>    <span class="k">def</span> <span class="nf">test_change_appendix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">node_parts_before</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;243&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;30(a)&#39;</span><span class="p">]</span>
+        <span class="n">node_parts_after</span> <span class="o">=</span> <span class="n">to_markup_id</span><span class="p">(</span><span class="n">node_parts_before</span><span class="p">)</span>
+        <span class="n">node_string</span> <span class="o">=</span> <span class="s">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node_parts_after</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;243-A-30a&#39;</span><span class="p">,</span> <span class="n">node_string</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="NodeTypesTest.test_type_from_label"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.node_types_tests.NodeTypesTest.test_type_from_label">[docs]</a>    <span class="k">def</span> <span class="nf">test_type_from_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">REGTEXT</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">APPENDIX</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;A2&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">APPENDIX</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">APPENDIX</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;3(b)&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">REGTEXT</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">REGTEXT</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">REGTEXT</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">EMPTYPART</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">SUBPART</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">INTERP</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">INTERP</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">INTERP</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">INTERP</span><span class="p">,</span> <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">INTERP</span><span class="p">,</span>
+                         <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">INTERP</span><span class="p">,</span>
+                         <span class="n">type_from_label</span><span class="p">([</span><span class="s">&#39;250&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">]))</span>
+</div>
+<div class="viewcode-block" id="NodeTypesTest.test_transform_part_none"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.node_types_tests.NodeTypesTest.test_transform_part_none">[docs]</a>    <span class="k">def</span> <span class="nf">test_transform_part_none</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">part</span> <span class="o">=</span> <span class="s">&#39;30&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;30&#39;</span><span class="p">,</span> <span class="n">transform_part</span><span class="p">(</span><span class="n">part</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="NodeTypesTest.test_label_to_text"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.node_types_tests.NodeTypesTest.test_label_to_text">[docs]</a>    <span class="k">def</span> <span class="nf">test_label_to_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;2323.4&#39;</span><span class="p">,</span> <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;2323.5(r)(3)&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;4&#39;</span><span class="p">,</span> <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">],</span> <span class="bp">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;5(r)(3)&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">],</span> <span class="bp">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">u&#39;§ 2323.1&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">u&#39;§ 1&#39;</span><span class="p">,</span> <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">],</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="s">&#39;Appendix A to Part 2323&#39;</span><span class="p">,</span> <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Appendix A-4&#39;</span><span class="p">,</span> <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Appendix A-4(b)(2)&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Comment for 2323.5&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Comment for 2323.7(b)-1.v&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;7&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Comment for Appendix Z to Part 2323&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;2323&#39;</span><span class="p">,</span> <span class="s">&#39;Z&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Regulation 204&#39;</span><span class="p">,</span> <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;204&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Supplement I to Part 204&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Interpretations for Regulation Text of Part 204&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Interpretations for Subpart C of Part 204&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Interpretations for Appendices of Part 204&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;Appendices&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;This Section&#39;</span><span class="p">,</span>
+                         <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="s">&#39;Appendix M2 to Part 204&#39;</span><span class="p">,</span> <span class="n">label_to_text</span><span class="p">([</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;M2&#39;</span><span class="p">]))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

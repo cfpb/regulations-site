@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.uitests.definition_test &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.uitests.definition_test</h1><div class="highlight"><pre>
+<span class="c">#vim: set encoding=utf-8</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">base_test</span> <span class="kn">import</span> <span class="n">BaseTest</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support.ui</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+
+<div class="viewcode-block" id="DefinitionTest"><a class="viewcode-back" href="../../../../regulations.uitests/#regulations.uitests.definition_test.DefinitionTest">[docs]</a><span class="k">class</span> <span class="nc">DefinitionTest</span><span class="p">(</span><span class="n">BaseTest</span><span class="p">,</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DefinitionTest.job_name"><a class="viewcode-back" href="../../../../regulations.uitests/#regulations.uitests.definition_test.DefinitionTest.job_name">[docs]</a>    <span class="k">def</span> <span class="nf">job_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;Definitions test&#39;</span>
+
+</div>
+<div class="viewcode-block" id="DefinitionTest.test_definition"><a class="viewcode-back" href="../../../../regulations.uitests/#regulations.uitests.definition_test.DefinitionTest.test_definition">[docs]</a>    <span class="k">def</span> <span class="nf">test_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">set_window_size</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_url</span> <span class="o">+</span> <span class="s">&#39;/1005-1/2012-12121&#39;</span><span class="p">)</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_tag_name</span><span class="p">(</span><span class="s">&#39;html&#39;</span><span class="p">)</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">driver</span><span class="p">:</span> <span class="s">&#39;selenium-start&#39;</span> <span class="ow">in</span> <span class="n">html</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">))</span>
+        <span class="n">definition_link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-1-a&quot;]/p/a&#39;</span><span class="p">)</span>
+        <span class="c"># term link should have correct data attr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;1005-2-a-1&#39;</span> <span class="ow">in</span>  <span class="n">definition_link</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;data-definition&#39;</span><span class="p">))</span>
+
+        <span class="n">definition_link</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+        <span class="c"># term link should get active class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;active&#39;</span> <span class="ow">in</span> <span class="n">definition_link</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">))</span>
+
+        <span class="n">definition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-2-a-1&quot;]&#39;</span><span class="p">)</span>
+        <span class="n">definition_close_button</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-2-a-1&quot;]/div[1]/h4/a&#39;</span><span class="p">)</span>
+
+        <span class="c"># definition should appear in sidebar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">definition</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="n">definition_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-2-a-1&quot;]/div[3]/p/dfn&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\u201c</span><span class="s">voided tosser</span><span class="se">\u201d</span><span class="s">&#39;</span> <span class="ow">in</span> <span class="n">definition_term</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="n">definition_close_button</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="c"># definition should close</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="s">&#39;active&#39;</span> <span class="ow">in</span> <span class="n">definition_link</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">))</span>
+
+        <span class="n">definition_link</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+        <span class="c"># continue link should load full def</span>
+        <span class="n">definition_cont_link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-2-a-1&quot;]/div[3]/a[1]&#39;</span><span class="p">)</span>
+        <span class="n">definition_cont_link</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">driver</span><span class="p">:</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-2&quot;]&#39;</span><span class="p">))</span>
+        
+        <span class="c"># test definition scope notifications</span>
+        <span class="n">toc_toggle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;panel-link&quot;]&#39;</span><span class="p">)</span>
+        <span class="n">toc_toggle</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+        <span class="n">toc_1005_3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;toc&quot;]/ol/li[3]/a&#39;</span><span class="p">)</span>
+        <span class="n">toc_1005_3</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+        <span class="c"># close toc</span>
+        <span class="n">toc_toggle</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+        <span class="c"># load 1005.3, open definition</span>
+        <span class="n">new_definition_link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-3-a&quot;]/p/a[1]&#39;</span><span class="p">)</span>
+        <span class="n">new_definition_link</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="n">new_definition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-2-b-1&quot;]&#39;</span><span class="p">)</span>
+        
+        <span class="c"># navigate back to 1005.1</span>
+        <span class="n">toc_toggle</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;toc&quot;]/ol/li[1]/a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        
+        <span class="c"># make sure that the scope notice displays</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-2-b-1&quot;]/div[2]/div&#39;</span><span class="p">)</span>
+
+        <span class="c"># go to 1005-1-a</span>
+        <span class="n">toc_toggle</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="s">&quot;window.scrollTo(0, document.body.scrollHeight);&quot;</span><span class="p">)</span>
+        <span class="n">wayfinding_header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;active-title&quot;]/em&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">wayfinding_header</span><span class="o">.</span><span class="n">text</span> <span class="ow">in</span> <span class="p">(</span><span class="s">u&#39;</span><span class="se">\xa7</span><span class="s">1005.1&#39;</span><span class="p">,</span> <span class="s">u&#39;</span><span class="se">\xa7</span><span class="s">1005.1(a)&#39;</span><span class="p">))</span> 
+
+        <span class="n">definition_update_link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-2-b-1&quot;]/div[2]/div/a&#39;</span><span class="p">)</span>
+        <span class="n">definition_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-2-b-1&quot;]/div[3]&#39;</span><span class="p">)</span>
+        
+        <span class="c"># make sure text is grayed out</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;inactive&#39;</span> <span class="ow">in</span> <span class="n">definition_text</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">))</span>
+
+        <span class="c"># load in scope definition</span>
+        <span class="n">definition_update_link</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">driver</span><span class="p">:</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//*[@id=&quot;1005-2-a-1&quot;]&#39;</span><span class="p">))</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

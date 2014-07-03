@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.generator.node_types &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.generator.node_types</h1><div class="highlight"><pre>
+<span class="c">#vim: set encoding=utf-8</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">takewhile</span>
+
+<span class="n">APPENDIX</span> <span class="o">=</span> <span class="s">u&#39;appendix&#39;</span>
+<span class="n">INTERP</span> <span class="o">=</span> <span class="s">u&#39;interp&#39;</span>
+<span class="n">REGTEXT</span> <span class="o">=</span> <span class="s">u&#39;regtext&#39;</span>
+<span class="n">SUBPART</span> <span class="o">=</span> <span class="s">u&#39;subpart&#39;</span>
+<span class="n">EMPTYPART</span> <span class="o">=</span> <span class="s">u&#39;emptypart&#39;</span>
+
+
+<div class="viewcode-block" id="transform_part"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.node_types.transform_part">[docs]</a><span class="k">def</span> <span class="nf">transform_part</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Transform a part of the id of a node. &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="to_markup_id"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.node_types.to_markup_id">[docs]</a><span class="k">def</span> <span class="nf">to_markup_id</span><span class="p">(</span><span class="n">id_parts</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given the id parts from the JSON tree, convert to an id that can</span>
+<span class="sd">    be used in the front end&quot;&quot;&quot;</span>
+    <span class="n">new_id</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">id_parts</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">type_from_label</span><span class="p">(</span><span class="n">id_parts</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="n">APPENDIX</span><span class="p">,</span> <span class="n">INTERP</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">transform_part</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">new_id</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">new_id</span>
+
+</div>
+<div class="viewcode-block" id="type_from_label"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.node_types.type_from_label">[docs]</a><span class="k">def</span> <span class="nf">type_from_label</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a list of label parts, determine the associated node&#39;s type&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s">&#39;Interp&#39;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">INTERP</span>
+    <span class="k">if</span> <span class="n">label</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Subpart&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">EMPTYPART</span>
+    <span class="k">if</span> <span class="s">&#39;Subpart&#39;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>  <span class="c"># but not the final segment</span>
+        <span class="k">return</span> <span class="n">SUBPART</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">APPENDIX</span>
+    <span class="k">return</span> <span class="n">REGTEXT</span>
+
+</div>
+<div class="viewcode-block" id="label_to_text"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.node_types.label_to_text">[docs]</a><span class="k">def</span> <span class="nf">label_to_text</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">include_section</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">include_marker</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert a label:list[string] into a human-readable string&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;Regulation </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c"># Use short circuiting to grab the *first* type of label that matches</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">_l2t_subterp</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="ow">or</span> <span class="n">_l2t_interp</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="ow">or</span> <span class="n">_l2t_appendix</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">_l2t_section</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">include_section</span><span class="p">,</span> <span class="n">include_marker</span><span class="p">))</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_l2t_subterp</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function converting subterp labels to text. Assumes label has</span>
+<span class="sd">    more then one segment&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="p">[</span><span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="s">&#39;Interpretations for Regulation Text of Part &#39;</span> <span class="o">+</span> <span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="p">[</span><span class="s">&#39;Appendices&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="s">&#39;Interpretations for Appendices of Part &#39;</span> <span class="o">+</span> <span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Subpart&#39;</span> <span class="ow">and</span> <span class="n">label</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Interp&#39;</span><span class="p">:</span>
+        <span class="n">interpretations_for</span> <span class="o">=</span> <span class="s">&#39;Interpretations for Subpart &#39;</span>
+        <span class="k">return</span> <span class="n">interpretations_for</span> <span class="o">+</span> <span class="n">label</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39; of Part &#39;</span> <span class="o">+</span> <span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_l2t_interp</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function converting interpretation labels to text. Assumes</span>
+<span class="sd">    _l2t_subterp failed&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s">&#39;Interp&#39;</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
+        <span class="c"># Interpretation</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span> <span class="o">!=</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="n">label</span><span class="p">[</span><span class="n">label</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;Interp&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">suffix</span><span class="p">:</span>
+            <span class="c"># Interpretation introduction; for now we cop out</span>
+            <span class="k">return</span> <span class="s">&#39;This Section&#39;</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&#39;Supplement I to Part </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">prefix</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">suffix</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&#39;Comment for </span><span class="si">%s</span><span class="s">-</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label_to_text</span><span class="p">(</span><span class="n">prefix</span><span class="p">),</span>
+                                          <span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">suffix</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&#39;Comment for </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">label_to_text</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_l2t_appendix</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function converting appendix labels to text. Assumes</span>
+<span class="sd">    _l2t_subterp and _l2t_interp failed&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">type_from_label</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">==</span> <span class="n">APPENDIX</span><span class="p">:</span>
+        <span class="c"># Appendix</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c"># e.g. 225-B</span>
+            <span class="k">return</span> <span class="s">&#39;Appendix &#39;</span> <span class="o">+</span> <span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39; to Part &#39;</span> <span class="o">+</span> <span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c"># e.g. 225-B-3</span>
+            <span class="k">return</span> <span class="s">&#39;Appendix </span><span class="si">%s</span><span class="s">-</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c"># e.g. 225-B-3-a-4-i</span>
+            <span class="k">return</span> <span class="s">&#39;Appendix </span><span class="si">%s</span><span class="s">-</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                                           <span class="s">&#39;)(&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="mi">3</span><span class="p">:]))</span>
+
+
+<span class="k">def</span> <span class="nf">_l2t_section</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">include_section</span><span class="p">,</span> <span class="n">include_marker</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function converting section labels to text. Assumes</span>
+<span class="sd">    _l2t_subterp, _l2t_interp, and _l2t_appendix failed&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">include_marker</span><span class="p">:</span>
+        <span class="n">marker</span> <span class="o">=</span> <span class="s">u&#39;§ &#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">marker</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">include_section</span><span class="p">:</span>
+        <span class="c"># Regulation Text with section number</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c"># e.g. 225-2</span>
+            <span class="k">return</span> <span class="n">marker</span> <span class="o">+</span> <span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c"># e.g. 225-2-b-4-i-A</span>
+            <span class="k">return</span> <span class="n">marker</span> <span class="o">+</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                           <span class="s">&#39;)(&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="mi">2</span><span class="p">:]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># Regulation Text without section number</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c"># e.g. 225-2</span>
+            <span class="k">return</span> <span class="n">marker</span> <span class="o">+</span> <span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c"># e.g. 225-2-b-4-i-A</span>
+            <span class="k">return</span> <span class="n">marker</span> <span class="o">+</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&#39;)(&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="mi">2</span><span class="p">:]))</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

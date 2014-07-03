@@ -1,0 +1,869 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.generator.layers package &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../" />
+    <link rel="up" title="regulations.generator package" href="../regulations.generator/" />
+    <link rel="next" title="regulations.management package" href="../regulations.management/" />
+    <link rel="prev" title="regulations.generator package" href="../regulations.generator/" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../regulations.management/" title="regulations.management package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../regulations.generator/" title="regulations.generator package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../regulations/" >regulations package</a> &raquo;</li>
+          <li><a href="../regulations.generator/" accesskey="U">regulations.generator package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="regulations-generator-layers-package">
+<h1>regulations.generator.layers package<a class="headerlink" href="#regulations-generator-layers-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-regulations.generator.layers.analyses">
+<span id="regulations-generator-layers-analyses-module"></span><h2>regulations.generator.layers.analyses module<a class="headerlink" href="#module-regulations.generator.layers.analyses" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.analyses.SectionBySectionLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.analyses.</tt><tt class="descname">SectionBySectionLayer</tt><big>(</big><em>layer</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/analyses/#SectionBySectionLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.analyses.SectionBySectionLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="regulations.generator.layers.analyses.SectionBySectionLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/analyses/#SectionBySectionLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.analyses.SectionBySectionLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a pair of field-name + analyses if they apply; include all
+children</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.analyses.SectionBySectionLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'sxs'</em><a class="headerlink" href="#regulations.generator.layers.analyses.SectionBySectionLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.analyses.SectionBySectionLayer.to_template_dict">
+<tt class="descname">to_template_dict</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/analyses/#SectionBySectionLayer.to_template_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.analyses.SectionBySectionLayer.to_template_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take the reference associated with this SxS and turn it into data
+which can be used in the template</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.analyses.sort_analyses">
+<tt class="descclassname">regulations.generator.layers.analyses.</tt><tt class="descname">sort_analyses</tt><big>(</big><em>analyses</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/analyses/#sort_analyses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.analyses.sort_analyses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the labels, so that the list of section-by-section analyses
+can be displayed in the correct order.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.analyses.sort_regtext_label">
+<tt class="descclassname">regulations.generator.layers.analyses.</tt><tt class="descname">sort_regtext_label</tt><big>(</big><em>label</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/analyses/#sort_regtext_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.analyses.sort_regtext_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a regtext label sortable</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.defined">
+<span id="regulations-generator-layers-defined-module"></span><h2>regulations.generator.layers.defined module<a class="headerlink" href="#module-regulations.generator.layers.defined" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.defined.DefinedLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.defined.</tt><tt class="descname">DefinedLayer</tt><big>(</big><em>layer</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/defined/#DefinedLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.defined.DefinedLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="regulations.generator.layers.defined.DefinedLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text</em>, <em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/defined/#DefinedLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.defined.DefinedLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Catch all terms which are defined in this paragraph, replace them
+with a span</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.defined.DefinedLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'defined'</em><a class="headerlink" href="#regulations.generator.layers.defined.DefinedLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.definitions">
+<span id="regulations-generator-layers-definitions-module"></span><h2>regulations.generator.layers.definitions module<a class="headerlink" href="#module-regulations.generator.layers.definitions" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.definitions.DefinitionsLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.definitions.</tt><tt class="descname">DefinitionsLayer</tt><big>(</big><em>layer</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/definitions/#DefinitionsLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.definitions.DefinitionsLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="regulations.generator.layers.definitions.DefinitionsLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text</em>, <em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/definitions/#DefinitionsLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.definitions.DefinitionsLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Catch all terms which are defined elsewhere and replace them with
+a link</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.definitions.DefinitionsLayer.create_definition_link">
+<tt class="descname">create_definition_link</tt><big>(</big><em>original_text</em>, <em>citation</em>, <em>term</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/definitions/#DefinitionsLayer.create_definition_link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.definitions.DefinitionsLayer.create_definition_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the link that takes you to the definition of the term.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.definitions.DefinitionsLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'terms'</em><a class="headerlink" href="#regulations.generator.layers.definitions.DefinitionsLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.diff_applier">
+<span id="regulations-generator-layers-diff-applier-module"></span><h2>regulations.generator.layers.diff_applier module<a class="headerlink" href="#module-regulations.generator.layers.diff_applier" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.diff_applier.</tt><tt class="descname">DiffApplier</tt><big>(</big><em>diff_json</em>, <em>label_requested</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Diffs between two versions of a regulation are represented in our
+particular JSON format. This class applies that diff to the older version
+of the regulation, generating HTML that clearly shows the changes between
+old and new.</p>
+<dl class="attribute">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.ADDED_OP">
+<tt class="descname">ADDED_OP</tt><em class="property"> = 'added'</em><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.ADDED_OP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.DELETE">
+<tt class="descname">DELETE</tt><em class="property"> = u'delete'</em><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.DELETE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.DELETED_OP">
+<tt class="descname">DELETED_OP</tt><em class="property"> = 'deleted'</em><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.DELETED_OP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.INSERT">
+<tt class="descname">INSERT</tt><em class="property"> = u'insert'</em><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.INSERT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.add_all">
+<tt class="descname">add_all</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.add_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.add_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark all the text passed in as deleted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.add_nodes_to_tree">
+<tt class="descname">add_nodes_to_tree</tt><big>(</big><em>original</em>, <em>adds</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.add_nodes_to_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.add_nodes_to_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add all the nodes from new_nodes into the original tree.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.apply_diff">
+<tt class="descname">apply_diff</tt><big>(</big><em>original</em>, <em>label</em>, <em>component='text'</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.apply_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.apply_diff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.apply_diff_changes">
+<tt class="descname">apply_diff_changes</tt><big>(</big><em>original</em>, <em>diff_list</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.apply_diff_changes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.apply_diff_changes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.deconstruct_text">
+<tt class="descname">deconstruct_text</tt><big>(</big><em>original</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.deconstruct_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.deconstruct_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.delete_all">
+<tt class="descname">delete_all</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.delete_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.delete_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark all the text passed in as deleted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.delete_text">
+<tt class="descname">delete_text</tt><big>(</big><em>start</em>, <em>end</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.delete_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.delete_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.get_text">
+<tt class="descname">get_text</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.get_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.insert_text">
+<tt class="descname">insert_text</tt><big>(</big><em>pos</em>, <em>new_text</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.insert_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.insert_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.is_child_of_requested">
+<tt class="descname">is_child_of_requested</tt><big>(</big><em>label</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.is_child_of_requested"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.is_child_of_requested" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if the label is a child of the requested label.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.relevant_added">
+<tt class="descname">relevant_added</tt><big>(</big><em>label</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.relevant_added"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.relevant_added" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the operations that add nodes, for the requested
+section/pargraph.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.diff_applier.DiffApplier.tree_changes">
+<tt class="descname">tree_changes</tt><big>(</big><em>original_tree</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/diff_applier/#DiffApplier.tree_changes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.diff_applier.DiffApplier.tree_changes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply additions to the regulation tree.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.external_citation">
+<span id="regulations-generator-layers-external-citation-module"></span><h2>regulations.generator.layers.external_citation module<a class="headerlink" href="#module-regulations.generator.layers.external_citation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.external_citation.ExternalCitationLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.external_citation.</tt><tt class="descname">ExternalCitationLayer</tt><big>(</big><em>layer</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/external_citation/#ExternalCitationLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.external_citation.ExternalCitationLayer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="regulations.generator.layers.external_citation.ExternalCitationLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text</em>, <em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/external_citation/#ExternalCitationLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.external_citation.ExternalCitationLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.external_citation.ExternalCitationLayer.citation_type_to_generator">
+<tt class="descname">citation_type_to_generator</tt><big>(</big><em>citation_type</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/external_citation/#ExternalCitationLayer.citation_type_to_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.external_citation.ExternalCitationLayer.citation_type_to_generator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.external_citation.ExternalCitationLayer.create_link">
+<tt class="descname">create_link</tt><big>(</big><em>text</em>, <em>layer_element</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/external_citation/#ExternalCitationLayer.create_link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.external_citation.ExternalCitationLayer.create_link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="regulations.generator.layers.external_citation.ExternalCitationLayer.generate_cfr_link">
+<em class="property">static </em><tt class="descname">generate_cfr_link</tt><big>(</big><em>text</em>, <em>citation</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/external_citation/#ExternalCitationLayer.generate_cfr_link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.external_citation.ExternalCitationLayer.generate_cfr_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the CFR references into an HTML &lt;a href&gt; tag.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="regulations.generator.layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag">
+<em class="property">static </em><tt class="descname">generate_fdsys_href_tag</tt><big>(</big><em>text</em>, <em>parameters</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/external_citation/#ExternalCitationLayer.generate_fdsys_href_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an href tag to FDSYS.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="regulations.generator.layers.external_citation.ExternalCitationLayer.generate_public_law_link">
+<em class="property">static </em><tt class="descname">generate_public_law_link</tt><big>(</big><em>text</em>, <em>citation</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/external_citation/#ExternalCitationLayer.generate_public_law_link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.external_citation.ExternalCitationLayer.generate_public_law_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the Public Law references into an HTML &lt;a href&gt; tag.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="regulations.generator.layers.external_citation.ExternalCitationLayer.generate_statutes_at_large_link">
+<em class="property">static </em><tt class="descname">generate_statutes_at_large_link</tt><big>(</big><em>text</em>, <em>citation</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/external_citation/#ExternalCitationLayer.generate_statutes_at_large_link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.external_citation.ExternalCitationLayer.generate_statutes_at_large_link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="regulations.generator.layers.external_citation.ExternalCitationLayer.generate_uscode_link">
+<em class="property">static </em><tt class="descname">generate_uscode_link</tt><big>(</big><em>text</em>, <em>citation</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/external_citation/#ExternalCitationLayer.generate_uscode_link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.external_citation.ExternalCitationLayer.generate_uscode_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the US Code references into an HTML &lt;a href&gt; tag.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.external_citation.ExternalCitationLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'external'</em><a class="headerlink" href="#regulations.generator.layers.external_citation.ExternalCitationLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.formatting">
+<span id="regulations-generator-layers-formatting-module"></span><h2>regulations.generator.layers.formatting module<a class="headerlink" href="#module-regulations.generator.layers.formatting" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.formatting.FormattingLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.formatting.</tt><tt class="descname">FormattingLayer</tt><big>(</big><em>layer_data</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/formatting/#FormattingLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.formatting.FormattingLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="regulations.generator.layers.formatting.FormattingLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/formatting/#FormattingLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.formatting.FormattingLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert all plaintext tables into html tables</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.formatting.FormattingLayer.render_code">
+<tt class="descname">render_code</tt><big>(</big><em>fence_data</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/formatting/#FormattingLayer.render_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.formatting.FormattingLayer.render_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic code rendering. Not language specific</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.formatting.FormattingLayer.render_note">
+<tt class="descname">render_note</tt><big>(</big><em>fence_data</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/formatting/#FormattingLayer.render_note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.formatting.FormattingLayer.render_note" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.formatting.FormattingLayer.render_table">
+<tt class="descname">render_table</tt><big>(</big><em>table</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/formatting/#FormattingLayer.render_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.formatting.FormattingLayer.render_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.formatting.FormattingLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'formatting'</em><a class="headerlink" href="#regulations.generator.layers.formatting.FormattingLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.graphics">
+<span id="regulations-generator-layers-graphics-module"></span><h2>regulations.generator.layers.graphics module<a class="headerlink" href="#module-regulations.generator.layers.graphics" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.graphics.GraphicsLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.graphics.</tt><tt class="descname">GraphicsLayer</tt><big>(</big><em>layer_data</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/graphics/#GraphicsLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.graphics.GraphicsLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="regulations.generator.layers.graphics.GraphicsLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/graphics/#GraphicsLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.graphics.GraphicsLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace all instances of graphics with an img tag</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.graphics.GraphicsLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'graphics'</em><a class="headerlink" href="#regulations.generator.layers.graphics.GraphicsLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.internal_citation">
+<span id="regulations-generator-layers-internal-citation-module"></span><h2>regulations.generator.layers.internal_citation module<a class="headerlink" href="#module-regulations.generator.layers.internal_citation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.internal_citation.InternalCitationLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.internal_citation.</tt><tt class="descname">InternalCitationLayer</tt><big>(</big><em>layer</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/internal_citation/#InternalCitationLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.internal_citation.InternalCitationLayer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="regulations.generator.layers.internal_citation.InternalCitationLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text</em>, <em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/internal_citation/#InternalCitationLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.internal_citation.InternalCitationLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.internal_citation.InternalCitationLayer.render_url">
+<tt class="descname">render_url</tt><big>(</big><em>label</em>, <em>text</em>, <em>template_name='regulations/layers/internal_citation.html'</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/internal_citation/#InternalCitationLayer.render_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.internal_citation.InternalCitationLayer.render_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.internal_citation.InternalCitationLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'internal'</em><a class="headerlink" href="#regulations.generator.layers.internal_citation.InternalCitationLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.interpretations">
+<span id="regulations-generator-layers-interpretations-module"></span><h2>regulations.generator.layers.interpretations module<a class="headerlink" href="#module-regulations.generator.layers.interpretations" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.interpretations.InterpretationsLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.interpretations.</tt><tt class="descname">InterpretationsLayer</tt><big>(</big><em>layer</em>, <em>version=None</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/interpretations/#InterpretationsLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.interpretations.InterpretationsLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Fetches the (rendered) interpretation for this node, if available</p>
+<dl class="method">
+<dt id="regulations.generator.layers.interpretations.InterpretationsLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/interpretations/#InterpretationsLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.interpretations.InterpretationsLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a pair of field-name + interpretation if one applies.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.interpretations.InterpretationsLayer.preprocess_root">
+<tt class="descname">preprocess_root</tt><big>(</big><em>root</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/interpretations/#InterpretationsLayer.preprocess_root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.interpretations.InterpretationsLayer.preprocess_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root label will allow us to use a single set of layer
+appliers and grab all interp data at once.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.interpretations.InterpretationsLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'interp'</em><a class="headerlink" href="#regulations.generator.layers.interpretations.InterpretationsLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.key_terms">
+<span id="regulations-generator-layers-key-terms-module"></span><h2>regulations.generator.layers.key_terms module<a class="headerlink" href="#module-regulations.generator.layers.key_terms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.key_terms.KeyTermsLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.key_terms.</tt><tt class="descname">KeyTermsLayer</tt><big>(</big><em>layer</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/key_terms/#KeyTermsLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.key_terms.KeyTermsLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="regulations.generator.layers.key_terms.KeyTermsLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/key_terms/#KeyTermsLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.key_terms.KeyTermsLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.key_terms.KeyTermsLayer.generate_tag">
+<tt class="descname">generate_tag</tt><big>(</big><em>key_term</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/key_terms/#KeyTermsLayer.generate_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.key_terms.KeyTermsLayer.generate_tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.key_terms.KeyTermsLayer.remove_punctuation">
+<tt class="descname">remove_punctuation</tt><big>(</big><em>punctuated</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/key_terms/#KeyTermsLayer.remove_punctuation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.key_terms.KeyTermsLayer.remove_punctuation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.key_terms.KeyTermsLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'keyterms'</em><a class="headerlink" href="#regulations.generator.layers.key_terms.KeyTermsLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.layers_applier">
+<span id="regulations-generator-layers-layers-applier-module"></span><h2>regulations.generator.layers.layers_applier module<a class="headerlink" href="#module-regulations.generator.layers.layers_applier" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.layers_applier.InlineLayersApplier">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.layers_applier.</tt><tt class="descname">InlineLayersApplier</tt><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#InlineLayersApplier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.InlineLayersApplier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.generator.layers.layers_applier.LayersBase" title="regulations.generator.layers.layers_applier.LayersBase"><tt class="xref py py-class docutils literal"><span class="pre">regulations.generator.layers.layers_applier.LayersBase</span></tt></a></p>
+<p>Apply multiple inline layers to given text (e.g. links,
+highlighting, etc.)</p>
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.InlineLayersApplier.get_layer_pairs">
+<tt class="descname">get_layer_pairs</tt><big>(</big><em>text_index</em>, <em>original_text</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#InlineLayersApplier.get_layer_pairs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.InlineLayersApplier.get_layer_pairs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.generator.layers.layers_applier.LayersApplier">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.layers_applier.</tt><tt class="descname">LayersApplier</tt><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersApplier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersApplier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Most layers replace content. We try to do this intelligently here,
+so that layers don&#8217;t step over each other.</p>
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.LayersApplier.apply_layers">
+<tt class="descname">apply_layers</tt><big>(</big><em>original_text</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersApplier.apply_layers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersApplier.apply_layers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.LayersApplier.enqueue">
+<tt class="descname">enqueue</tt><big>(</big><em>layer_element</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersApplier.enqueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersApplier.enqueue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.LayersApplier.enqueue_from_list">
+<tt class="descname">enqueue_from_list</tt><big>(</big><em>elements_list</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersApplier.enqueue_from_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersApplier.enqueue_from_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.LayersApplier.location_replace">
+<tt class="descname">location_replace</tt><big>(</big><em>xml_node</em>, <em>original</em>, <em>replacement</em>, <em>locations</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersApplier.location_replace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersApplier.location_replace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.LayersApplier.replace">
+<tt class="descname">replace</tt><big>(</big><em>xml_node</em>, <em>original</em>, <em>replacement</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersApplier.replace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersApplier.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method for replace_all(), this actually does the replace.
+This deals with XML nodes, not nodes in the tree.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.LayersApplier.replace_all">
+<tt class="descname">replace_all</tt><big>(</big><em>original</em>, <em>replacement</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersApplier.replace_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersApplier.replace_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace all occurrences of original with replacement. This is HTML
+aware.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.LayersApplier.replace_at">
+<tt class="descname">replace_at</tt><big>(</big><em>original</em>, <em>replacement</em>, <em>locations</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersApplier.replace_at"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersApplier.replace_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace the occurrences of original at all the locations with
+replacement.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.LayersApplier.unescape_text">
+<tt class="descname">unescape_text</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersApplier.unescape_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersApplier.unescape_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Because of the way we do replace_all(), we need to unescape HTML
+entities.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.generator.layers.layers_applier.LayersBase">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.layers_applier.</tt><tt class="descname">LayersBase</tt><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base class which keeps track of multiple laeyrs.</p>
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.LayersBase.add_layer">
+<tt class="descname">add_layer</tt><big>(</big><em>layer</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#LayersBase.add_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.LayersBase.add_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.generator.layers.layers_applier.ParagraphLayersApplier">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.layers_applier.</tt><tt class="descname">ParagraphLayersApplier</tt><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#ParagraphLayersApplier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.ParagraphLayersApplier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.generator.layers.layers_applier.LayersBase" title="regulations.generator.layers.layers_applier.LayersBase"><tt class="xref py py-class docutils literal"><span class="pre">regulations.generator.layers.layers_applier.LayersBase</span></tt></a></p>
+<p>Handle layers which apply to the whole paragraph. Layers include
+interpretations, section-by-section analyses, table of contents, etc.</p>
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.ParagraphLayersApplier.apply_layers">
+<tt class="descname">apply_layers</tt><big>(</big><em>node</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#ParagraphLayersApplier.apply_layers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.ParagraphLayersApplier.apply_layers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="regulations.generator.layers.layers_applier.SearchReplaceLayersApplier">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.layers_applier.</tt><tt class="descname">SearchReplaceLayersApplier</tt><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#SearchReplaceLayersApplier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.SearchReplaceLayersApplier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#regulations.generator.layers.layers_applier.LayersBase" title="regulations.generator.layers.layers_applier.LayersBase"><tt class="xref py py-class docutils literal"><span class="pre">regulations.generator.layers.layers_applier.LayersBase</span></tt></a></p>
+<dl class="method">
+<dt id="regulations.generator.layers.layers_applier.SearchReplaceLayersApplier.get_layer_pairs">
+<tt class="descname">get_layer_pairs</tt><big>(</big><em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/layers_applier/#SearchReplaceLayersApplier.get_layer_pairs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.layers_applier.SearchReplaceLayersApplier.get_layer_pairs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.location_replace">
+<span id="regulations-generator-layers-location-replace-module"></span><h2>regulations.generator.layers.location_replace module<a class="headerlink" href="#module-regulations.generator.layers.location_replace" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.location_replace.LocationReplace">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.location_replace.</tt><tt class="descname">LocationReplace</tt><a class="reference internal" href="../_modules/regulations/generator/layers/location_replace/#LocationReplace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.location_replace.LocationReplace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Applies location based layers to XML nodes. We use XML so that we only
+take into account the original text when we&#8217;re doing a replacement.</p>
+<dl class="staticmethod">
+<dt id="regulations.generator.layers.location_replace.LocationReplace.find_all_offsets">
+<em class="property">static </em><tt class="descname">find_all_offsets</tt><big>(</big><em>pattern</em>, <em>text</em>, <em>offset=0</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/location_replace/#LocationReplace.find_all_offsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.location_replace.LocationReplace.find_all_offsets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Don&#8217;t use regular expressions as they are a tad slow</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.location_replace.LocationReplace.location_replace">
+<tt class="descname">location_replace</tt><big>(</big><em>xml_node</em>, <em>original</em>, <em>replacement</em>, <em>locations</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/location_replace/#LocationReplace.location_replace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.location_replace.LocationReplace.location_replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>For the xml_node, replace the locations instances of orginal with
+replacement.
+&#64;todo: This doesn&#8217;t appear to be used anymore?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.location_replace.LocationReplace.location_replace_text">
+<tt class="descname">location_replace_text</tt><big>(</big><em>text</em>, <em>original</em>, <em>replacement</em>, <em>locations</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/location_replace/#LocationReplace.location_replace_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.location_replace.LocationReplace.location_replace_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given plain text, do replacements</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="regulations.generator.layers.location_replace.LocationReplace.replace_at_offset">
+<em class="property">static </em><tt class="descname">replace_at_offset</tt><big>(</big><em>offset</em>, <em>replacement</em>, <em>text</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/location_replace/#LocationReplace.replace_at_offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.location_replace.LocationReplace.replace_at_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.location_replace.LocationReplace.update_offset_starter">
+<tt class="descname">update_offset_starter</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/location_replace/#LocationReplace.update_offset_starter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.location_replace.LocationReplace.update_offset_starter" title="Permalink to this definition">¶</a></dt>
+<dd><p>As we&#8217;re navigating the XML node, we need to keep track of how many
+offsets we&#8217;ve already seen.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.location_replace.LocationReplace.update_offsets">
+<tt class="descname">update_offsets</tt><big>(</big><em>original</em>, <em>text</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/location_replace/#LocationReplace.update_offsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.location_replace.LocationReplace.update_offsets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Offsets change everytime we replace the text, since we add more
+characters. Update the offsets.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.meta">
+<span id="regulations-generator-layers-meta-module"></span><h2>regulations.generator.layers.meta module<a class="headerlink" href="#module-regulations.generator.layers.meta" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.meta.MetaLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.meta.</tt><tt class="descname">MetaLayer</tt><big>(</big><em>layer_data</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/meta/#MetaLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.meta.MetaLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="regulations.generator.layers.meta.MetaLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/meta/#MetaLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.meta.MetaLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a pair of field-name (meta) + the layer data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.meta.MetaLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'meta'</em><a class="headerlink" href="#regulations.generator.layers.meta.MetaLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.paragraph_markers">
+<span id="regulations-generator-layers-paragraph-markers-module"></span><h2>regulations.generator.layers.paragraph_markers module<a class="headerlink" href="#module-regulations.generator.layers.paragraph_markers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.paragraph_markers.ParagraphMarkersLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.paragraph_markers.</tt><tt class="descname">ParagraphMarkersLayer</tt><big>(</big><em>layer</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/paragraph_markers/#ParagraphMarkersLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.paragraph_markers.ParagraphMarkersLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="regulations.generator.layers.paragraph_markers.ParagraphMarkersLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/paragraph_markers/#ParagraphMarkersLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.paragraph_markers.ParagraphMarkersLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.paragraph_markers.ParagraphMarkersLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'paragraph'</em><a class="headerlink" href="#regulations.generator.layers.paragraph_markers.ParagraphMarkersLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.toc_applier">
+<span id="regulations-generator-layers-toc-applier-module"></span><h2>regulations.generator.layers.toc_applier module<a class="headerlink" href="#module-regulations.generator.layers.toc_applier" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.toc_applier.TableOfContentsLayer">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.toc_applier.</tt><tt class="descname">TableOfContentsLayer</tt><big>(</big><em>layer</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/toc_applier/#TableOfContentsLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.toc_applier.TableOfContentsLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="staticmethod">
+<dt id="regulations.generator.layers.toc_applier.TableOfContentsLayer.appendix_supplement">
+<em class="property">static </em><tt class="descname">appendix_supplement</tt><big>(</big><em>element</em>, <em>data</em>, <em>seen_appendix=False</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/toc_applier/#TableOfContentsLayer.appendix_supplement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.toc_applier.TableOfContentsLayer.appendix_supplement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.toc_applier.TableOfContentsLayer.apply_layer">
+<tt class="descname">apply_layer</tt><big>(</big><em>text_index</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/toc_applier/#TableOfContentsLayer.apply_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.toc_applier.TableOfContentsLayer.apply_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="regulations.generator.layers.toc_applier.TableOfContentsLayer.section">
+<em class="property">static </em><tt class="descname">section</tt><big>(</big><em>element</em>, <em>data</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/toc_applier/#TableOfContentsLayer.section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.toc_applier.TableOfContentsLayer.section" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="regulations.generator.layers.toc_applier.TableOfContentsLayer.shorthand">
+<tt class="descname">shorthand</tt><em class="property"> = 'toc'</em><a class="headerlink" href="#regulations.generator.layers.toc_applier.TableOfContentsLayer.shorthand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.tree_builder">
+<span id="regulations-generator-layers-tree-builder-module"></span><h2>regulations.generator.layers.tree_builder module<a class="headerlink" href="#module-regulations.generator.layers.tree_builder" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="regulations.generator.layers.tree_builder.AddQueue">
+<em class="property">class </em><tt class="descclassname">regulations.generator.layers.tree_builder.</tt><tt class="descname">AddQueue</tt><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#AddQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.AddQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Maintain a sorted list of nodes to add. This maintains a sorted queue
+of (label, node) tuples.</p>
+<dl class="method">
+<dt id="regulations.generator.layers.tree_builder.AddQueue.delete">
+<tt class="descname">delete</tt><big>(</big><em>label</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#AddQueue.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.AddQueue.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.tree_builder.AddQueue.find">
+<tt class="descname">find</tt><big>(</big><em>label</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#AddQueue.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.AddQueue.find" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.tree_builder.AddQueue.insert">
+<tt class="descname">insert</tt><big>(</big><em>item</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#AddQueue.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.AddQueue.insert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.tree_builder.AddQueue.insert_all">
+<tt class="descname">insert_all</tt><big>(</big><em>items</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#AddQueue.insert_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.AddQueue.insert_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="regulations.generator.layers.tree_builder.AddQueue.sort">
+<tt class="descname">sort</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#AddQueue.sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.AddQueue.sort" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.tree_builder.add_child">
+<tt class="descclassname">regulations.generator.layers.tree_builder.</tt><tt class="descname">add_child</tt><big>(</big><em>parent_node</em>, <em>node</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#add_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a child node to a parent, maintaining the order of the children.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.tree_builder.add_node_to_tree">
+<tt class="descclassname">regulations.generator.layers.tree_builder.</tt><tt class="descname">add_node_to_tree</tt><big>(</big><em>node</em>, <em>parent_label</em>, <em>tree_hash</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#add_node_to_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.add_node_to_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the node to the tree by adding it to it&#8217;s parent in order.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.tree_builder.all_children_are_roman">
+<tt class="descclassname">regulations.generator.layers.tree_builder.</tt><tt class="descname">all_children_are_roman</tt><big>(</big><em>parent_node</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#all_children_are_roman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.all_children_are_roman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if all the children of the parent node have roman labels</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.tree_builder.build_label">
+<tt class="descclassname">regulations.generator.layers.tree_builder.</tt><tt class="descname">build_label</tt><big>(</big><em>node</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#build_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.build_label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.tree_builder.build_tree_hash">
+<tt class="descclassname">regulations.generator.layers.tree_builder.</tt><tt class="descname">build_tree_hash</tt><big>(</big><em>tree</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#build_tree_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.build_tree_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a hash map of a tree&#8217;s nodes, so that we don&#8217;t
+have to keep walking the tree.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.tree_builder.make_label_sortable">
+<tt class="descclassname">regulations.generator.layers.tree_builder.</tt><tt class="descname">make_label_sortable</tt><big>(</big><em>label</em>, <em>roman=False</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#make_label_sortable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.make_label_sortable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make labels sortable, but converting them as appropriate.
+Also, appendices have labels that look like 30(a), we make those
+appropriately sortable.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.tree_builder.parent_in_tree">
+<tt class="descclassname">regulations.generator.layers.tree_builder.</tt><tt class="descname">parent_in_tree</tt><big>(</big><em>parent_label</em>, <em>tree_hash</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#parent_in_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.parent_in_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the parent of node_label is in the tree</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.tree_builder.parent_label">
+<tt class="descclassname">regulations.generator.layers.tree_builder.</tt><tt class="descname">parent_label</tt><big>(</big><em>node</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#parent_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.parent_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is not perfect. It can not handle children of subparts, for
+example</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.tree_builder.roman_nums">
+<tt class="descclassname">regulations.generator.layers.tree_builder.</tt><tt class="descname">roman_nums</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/tree_builder/#roman_nums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.tree_builder.roman_nums" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for roman numerals.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers.utils">
+<span id="regulations-generator-layers-utils-module"></span><h2>regulations.generator.layers.utils module<a class="headerlink" href="#module-regulations.generator.layers.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="regulations.generator.layers.utils.convert_to_python">
+<tt class="descclassname">regulations.generator.layers.utils.</tt><tt class="descname">convert_to_python</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/utils/#convert_to_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.utils.convert_to_python" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert raw data (e.g. from json conversion) into the appropriate
+Python objects</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="regulations.generator.layers.utils.render_template">
+<tt class="descclassname">regulations.generator.layers.utils.</tt><tt class="descname">render_template</tt><big>(</big><em>template</em>, <em>context</em><big>)</big><a class="reference internal" href="../_modules/regulations/generator/layers/utils/#render_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#regulations.generator.layers.utils.render_template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-regulations.generator.layers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-regulations.generator.layers" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">regulations.generator.layers package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.analyses">regulations.generator.layers.analyses module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.defined">regulations.generator.layers.defined module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.definitions">regulations.generator.layers.definitions module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.diff_applier">regulations.generator.layers.diff_applier module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.external_citation">regulations.generator.layers.external_citation module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.formatting">regulations.generator.layers.formatting module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.graphics">regulations.generator.layers.graphics module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.internal_citation">regulations.generator.layers.internal_citation module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.interpretations">regulations.generator.layers.interpretations module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.key_terms">regulations.generator.layers.key_terms module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.layers_applier">regulations.generator.layers.layers_applier module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.location_replace">regulations.generator.layers.location_replace module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.meta">regulations.generator.layers.meta module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.paragraph_markers">regulations.generator.layers.paragraph_markers module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.toc_applier">regulations.generator.layers.toc_applier module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.tree_builder">regulations.generator.layers.tree_builder module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers.utils">regulations.generator.layers.utils module</a></li>
+<li><a class="reference internal" href="#module-regulations.generator.layers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../regulations.generator/"
+                        title="previous chapter">regulations.generator package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../regulations.management/"
+                        title="next chapter">regulations.management package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/regulations.generator.layers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../regulations.management/" title="regulations.management package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../regulations.generator/" title="regulations.generator package"
+             >previous</a> |</li>
+        <li><a href="../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../regulations/" >regulations package</a> &raquo;</li>
+          <li><a href="../regulations.generator/" >regulations.generator package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

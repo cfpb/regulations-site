@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.generator.html_builder &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.generator.html_builder</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c">#vim: set fileencoding=utf-8</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">ifilter</span><span class="p">,</span> <span class="n">ifilterfalse</span><span class="p">,</span> <span class="n">takewhile</span>
+
+<span class="kn">from</span> <span class="nn">node_types</span> <span class="kn">import</span> <span class="n">to_markup_id</span><span class="p">,</span> <span class="n">APPENDIX</span><span class="p">,</span> <span class="n">INTERP</span>
+<span class="kn">from</span> <span class="nn">layers.layers_applier</span> <span class="kn">import</span> <span class="n">LayersApplier</span>
+<span class="kn">from</span> <span class="nn">layers.internal_citation</span> <span class="kn">import</span> <span class="n">InternalCitationLayer</span>
+
+
+<div class="viewcode-block" id="HTMLBuilder"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.html_builder.HTMLBuilder">[docs]</a><span class="k">class</span> <span class="nc">HTMLBuilder</span><span class="p">():</span>
+    <span class="n">header_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">ur&#39;^(§&amp;nbsp;)(\s*\d+\.\d+)(.*)$&#39;</span><span class="p">)</span>
+    <span class="n">section_number_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">ur&quot;(§+)\s+&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">inline_applier</span><span class="p">,</span> <span class="n">p_applier</span><span class="p">,</span>
+            <span class="n">search_applier</span><span class="p">,</span> <span class="n">diff_applier</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">markup</span> <span class="o">=</span> <span class="s">u&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sections</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inline_applier</span> <span class="o">=</span> <span class="n">inline_applier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_applier</span> <span class="o">=</span> <span class="n">p_applier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_applier</span> <span class="o">=</span> <span class="n">search_applier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diff_applier</span> <span class="o">=</span> <span class="n">diff_applier</span>
+
+<div class="viewcode-block" id="HTMLBuilder.generate_all_html"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.html_builder.HTMLBuilder.generate_all_html">[docs]</a>    <span class="k">def</span> <span class="nf">generate_all_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_html</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilder.generate_html"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.html_builder.HTMLBuilder.generate_html">[docs]</a>    <span class="k">def</span> <span class="nf">generate_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">diff_applier</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">diff_applier</span><span class="o">.</span><span class="n">tree_changes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_applier</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="s">&#39;preprocess_root&#39;</span><span class="p">):</span>
+                <span class="n">layer</span><span class="o">.</span><span class="n">preprocess_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilder.parse_doc_title"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.html_builder.HTMLBuilder.parse_doc_title">[docs]</a>    <span class="k">def</span> <span class="nf">parse_doc_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reg_title</span><span class="p">):</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">r&quot;[(].+[)]$&quot;</span><span class="p">,</span> <span class="n">reg_title</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="HTMLBuilder.section_space"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.html_builder.HTMLBuilder.section_space">[docs]</a>    <span class="k">def</span> <span class="nf">section_space</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; After a section sign, insert a non-breaking space. &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">HTMLBuilder</span><span class="o">.</span><span class="n">section_number_regex</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">ur&#39;\1&amp;nbsp;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilder.list_level"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.html_builder.HTMLBuilder.list_level">[docs]</a>    <span class="k">def</span> <span class="nf">list_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parts</span><span class="p">,</span> <span class="n">node_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the list level and the list type. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">node_type</span> <span class="o">==</span> <span class="n">INTERP</span><span class="p">:</span>
+            <span class="n">level_type_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s">&#39;1&#39;</span><span class="p">}</span>
+            <span class="n">prefix_length</span> <span class="o">=</span> <span class="n">parts</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;Interp&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">node_type</span> <span class="o">==</span> <span class="n">APPENDIX</span><span class="p">:</span>
+            <span class="n">level_type_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s">&#39;i&#39;</span><span class="p">}</span>
+            <span class="n">prefix_length</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">level_type_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s">&#39;i&#39;</span><span class="p">}</span>
+            <span class="n">prefix_length</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">prefix_length</span><span class="p">:</span>
+            <span class="n">list_level</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">-</span> <span class="n">prefix_length</span>
+            <span class="n">list_type</span> <span class="o">=</span> <span class="n">level_type_map</span><span class="p">[</span><span class="n">list_level</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="p">(</span><span class="n">list_level</span><span class="p">,</span> <span class="n">list_type</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilder.process_node_title"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.html_builder.HTMLBuilder.process_node_title">[docs]</a>    <span class="k">def</span> <span class="nf">process_node_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&#39;title&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">diff_applier</span><span class="p">:</span>
+                <span class="n">node</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diff_applier</span><span class="o">.</span><span class="n">apply_diff</span><span class="p">(</span>
+                    <span class="n">node</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;label_id&#39;</span><span class="p">],</span> <span class="n">component</span><span class="o">=</span><span class="s">&#39;title&#39;</span><span class="p">)</span>
+
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="o">.</span><span class="n">section_space</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilder.process_node"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.html_builder.HTMLBuilder.process_node">[docs]</a>    <span class="k">def</span> <span class="nf">process_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;label_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_node_title</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;html_label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_markup_id</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span>
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;markup_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;html_label&#39;</span><span class="p">])</span>
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;tree_level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="n">list_level</span><span class="p">,</span> <span class="n">list_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_level</span><span class="p">(</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;node_type&#39;</span><span class="p">])</span>
+
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;list_level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_level</span>
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;list_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_type</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">]):</span>
+            <span class="n">inline_elements</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inline_applier</span><span class="o">.</span><span class="n">get_layer_pairs</span><span class="p">(</span>
+                <span class="n">node</span><span class="p">[</span><span class="s">&#39;label_id&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">])</span>
+            <span class="n">search_elements</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_applier</span><span class="o">.</span><span class="n">get_layer_pairs</span><span class="p">(</span>
+                <span class="n">node</span><span class="p">[</span><span class="s">&#39;label_id&#39;</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">diff_applier</span><span class="p">:</span>
+                <span class="n">node</span><span class="p">[</span><span class="s">&#39;marked_up&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diff_applier</span><span class="o">.</span><span class="n">apply_diff</span><span class="p">(</span>
+                    <span class="n">node</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;label_id&#39;</span><span class="p">])</span>
+
+            <span class="n">layers_applier</span> <span class="o">=</span> <span class="n">LayersApplier</span><span class="p">()</span>
+            <span class="n">layers_applier</span><span class="o">.</span><span class="n">enqueue_from_list</span><span class="p">(</span><span class="n">inline_elements</span><span class="p">)</span>
+            <span class="n">layers_applier</span><span class="o">.</span><span class="n">enqueue_from_list</span><span class="p">(</span><span class="n">search_elements</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="s">&#39;marked_up&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
+                <span class="n">node</span><span class="p">[</span><span class="s">&#39;marked_up&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">layers_applier</span><span class="o">.</span><span class="n">apply_layers</span><span class="p">(</span>
+                    <span class="n">node</span><span class="p">[</span><span class="s">&#39;marked_up&#39;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">node</span><span class="p">[</span><span class="s">&#39;marked_up&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">layers_applier</span><span class="o">.</span><span class="n">apply_layers</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">])</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;marked_up&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="o">.</span><span class="n">section_space</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;marked_up&#39;</span><span class="p">])</span>
+
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_applier</span><span class="o">.</span><span class="n">apply_layers</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s">&#39;TOC&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;TOC&#39;</span><span class="p">]:</span>
+                <span class="n">l</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="o">.</span><span class="n">section_space</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="s">&#39;interp&#39;</span> <span class="ow">in</span> <span class="n">node</span> <span class="ow">and</span> <span class="s">&#39;markup&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;interp&#39;</span><span class="p">]:</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;interp&#39;</span><span class="p">][</span><span class="s">&#39;markup&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">HTMLBuilder</span><span class="o">.</span><span class="n">section_space</span><span class="p">(</span>
+                <span class="n">node</span><span class="p">[</span><span class="s">&#39;interp&#39;</span><span class="p">][</span><span class="s">&#39;markup&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;node_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">INTERP</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modify_interp_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_node</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilder.modify_interp_node"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.html_builder.HTMLBuilder.modify_interp_node">[docs]</a>    <span class="k">def</span> <span class="nf">modify_interp_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add extra fields which only exist on interp nodes&quot;&quot;&quot;</span>
+        <span class="c">#   [&#39;105&#39;, &#39;22&#39;, &#39;Interp&#39;] =&gt; section header</span>
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;section_header&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span>
+
+        <span class="n">is_header</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">child</span><span class="p">:</span> <span class="n">child</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Interp&#39;</span>
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;header_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ifilter</span><span class="p">(</span><span class="n">is_header</span><span class="p">,</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">]))</span>
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;par_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ifilterfalse</span><span class="p">(</span><span class="n">is_header</span><span class="p">,</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="s">&#39;header&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;header_markup&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]</span>
+            <span class="n">citation</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span> <span class="o">!=</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span>
+                                      <span class="n">node</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]))</span>
+            <span class="n">icl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inline_applier</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">InternalCitationLayer</span><span class="o">.</span><span class="n">shorthand</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">icl</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">citation</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">citation</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&#39;)(&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">citation</span><span class="p">[</span><span class="mi">2</span><span class="p">:]))</span>
+                <span class="n">node</span><span class="p">[</span><span class="s">&#39;header_markup&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;header_markup&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                    <span class="n">text</span><span class="p">,</span> <span class="n">icl</span><span class="o">.</span><span class="n">render_url</span><span class="p">(</span><span class="n">citation</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="HTMLBuilder.get_title"><a class="viewcode-back" href="../../../../regulations.generator/#regulations.generator.html_builder.HTMLBuilder.get_title">[docs]</a>    <span class="k">def</span> <span class="nf">get_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">titles</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;part&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s">&#39;reg_name&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="n">reg_title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_doc_title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">reg_title</span><span class="p">:</span>
+            <span class="n">titles</span><span class="p">[</span><span class="s">&#39;reg_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_title</span>
+        <span class="k">return</span> <span class="n">titles</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

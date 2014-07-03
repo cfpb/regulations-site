@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.title_parsing_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.title_parsing_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">regulations.generator</span> <span class="kn">import</span> <span class="n">title_parsing</span>
+
+
+<div class="viewcode-block" id="RegTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.title_parsing_tests.RegTest">[docs]</a><span class="k">class</span> <span class="nc">RegTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="RegTest.test_try_split"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.title_parsing_tests.RegTest.test_try_split">[docs]</a>    <span class="k">def</span> <span class="nf">test_try_split</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;xb&#39;</span><span class="p">],</span>
+            <span class="n">title_parsing</span><span class="o">.</span><span class="n">try_split</span><span class="p">(</span><span class="s">&#39;a:xb&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)))</span>
+</div>
+<div class="viewcode-block" id="RegTest.test_appendix_supplement_ap"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.title_parsing_tests.RegTest.test_appendix_supplement_ap">[docs]</a>    <span class="k">def</span> <span class="nf">test_appendix_supplement_ap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="n">title_parsing</span><span class="o">.</span><span class="n">appendix_supplement</span><span class="p">({</span>
+            <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;A2&#39;</span><span class="p">],</span>
+            <span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;Appendix A2 to 204-First Appendix&#39;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="s">&#39;is_appendix&#39;</span><span class="p">])</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="n">title_parsing</span><span class="o">.</span><span class="n">appendix_supplement</span><span class="p">({</span>
+            <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">],</span>
+            <span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;Appendix A to 204-First Appendix&#39;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="s">&#39;is_appendix&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="RegTest.test_section"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.title_parsing_tests.RegTest.test_section">[docs]</a>    <span class="k">def</span> <span class="nf">test_section</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="n">title_parsing</span><span class="o">.</span><span class="n">section</span><span class="p">({</span>
+            <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">],</span>
+            <span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;204.4 Sauce&#39;</span><span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="s">&#39;is_section&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&#39;Sauce&#39;</span><span class="p">,</span> <span class="n">elements</span><span class="p">[</span><span class="s">&#39;sub_label&#39;</span><span class="p">])</span>
+
+        <span class="n">elements</span> <span class="o">=</span> <span class="n">title_parsing</span><span class="o">.</span><span class="n">section</span><span class="p">({</span>
+            <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">],</span>
+            <span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;204.4 [Reserved]&#39;</span><span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="s">&#39;is_section&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">&#39;[Reserved]&#39;</span><span class="p">,</span> <span class="n">elements</span><span class="p">[</span><span class="s">&#39;sub_label&#39;</span><span class="p">])</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

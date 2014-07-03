@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.generator.layers.formatting &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../../" />
+    <link rel="up" title="Module code" href="../../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.generator.layers.formatting</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">dropwhile</span><span class="p">,</span> <span class="n">takewhile</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">loader</span><span class="p">,</span> <span class="n">Context</span>
+
+
+<div class="viewcode-block" id="FormattingLayer"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.formatting.FormattingLayer">[docs]</a><span class="k">class</span> <span class="nc">FormattingLayer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">shorthand</span> <span class="o">=</span> <span class="s">&#39;formatting&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_data</span> <span class="o">=</span> <span class="n">layer_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table_tpl</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s">&#39;regulations/layers/table.html&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">note_tpl</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s">&#39;regulations/layers/note.html&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code_tpl</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s">&#39;regulations/layers/code.html&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subscript_tpl</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span>
+            <span class="s">&#39;regulations/layers/subscript.html&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FormattingLayer.render_table"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.formatting.FormattingLayer.render_table">[docs]</a>    <span class="k">def</span> <span class="nf">render_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="n">max_width</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">header_row</span> <span class="ow">in</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]:</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s">&#39;colspan&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">header_row</span><span class="p">)</span>
+            <span class="n">max_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_width</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
+
+        <span class="c">#  Just in case a row is longer than the header</span>
+        <span class="n">row_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;rows&#39;</span><span class="p">])</span>
+        <span class="n">max_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_width</span><span class="p">,</span> <span class="n">row_max</span><span class="p">)</span>
+
+        <span class="c">#  Now pad rows if needed</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;rows&#39;</span><span class="p">]:</span>
+            <span class="n">row</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s">&#39;&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_width</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)))</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="c">#   Remove new lines so that they don&#39;t get escaped on display</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">table_tpl</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FormattingLayer.render_note"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.formatting.FormattingLayer.render_note">[docs]</a>    <span class="k">def</span> <span class="nf">render_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fence_data</span><span class="p">):</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">fence_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;lines&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span>
+                 <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;Note:&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;Notes:&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="p">({</span><span class="s">&#39;lines&#39;</span><span class="p">:</span> <span class="n">lines</span><span class="p">})</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">note_tpl</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FormattingLayer.render_code"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.formatting.FormattingLayer.render_code">[docs]</a>    <span class="k">def</span> <span class="nf">render_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fence_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generic code rendering. Not language specific&quot;&quot;&quot;</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">fence_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;lines&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="p">({</span><span class="s">&#39;lines&#39;</span><span class="p">:</span> <span class="n">lines</span><span class="p">})</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">code_tpl</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FormattingLayer.apply_layer"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.formatting.FormattingLayer.apply_layer">[docs]</a>    <span class="k">def</span> <span class="nf">apply_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert all plaintext tables into html tables&quot;&quot;&quot;</span>
+        <span class="n">layer_pairs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">text_index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_data</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_data</span><span class="p">[</span><span class="n">text_index</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="s">&#39;table_data&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">layer_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">],</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">render_table</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;table_data&#39;</span><span class="p">]),</span>
+                                        <span class="n">data</span><span class="p">[</span><span class="s">&#39;locations&#39;</span><span class="p">]))</span>
+                <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fence_data&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;type&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&#39;note&#39;</span><span class="p">:</span>
+                    <span class="n">layer_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">],</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">render_note</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;fence_data&#39;</span><span class="p">]),</span>
+                                        <span class="n">data</span><span class="p">[</span><span class="s">&#39;locations&#39;</span><span class="p">]))</span>
+                <span class="k">elif</span> <span class="s">&#39;fence_data&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">layer_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">],</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">render_code</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;fence_data&#39;</span><span class="p">]),</span>
+                                        <span class="n">data</span><span class="p">[</span><span class="s">&#39;locations&#39;</span><span class="p">]))</span>
+                <span class="k">if</span> <span class="s">&#39;subscript_data&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">layer_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span>
+                        <span class="n">data</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">],</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">subscript_tpl</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">Context</span><span class="p">(</span>
+                            <span class="n">data</span><span class="p">[</span><span class="s">&#39;subscript_data&#39;</span><span class="p">]))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
+                        <span class="n">data</span><span class="p">[</span><span class="s">&#39;locations&#39;</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="n">layer_pairs</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

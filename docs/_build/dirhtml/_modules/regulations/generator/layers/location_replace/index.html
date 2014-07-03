@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.generator.layers.location_replace &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../../" />
+    <link rel="up" title="Module code" href="../../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.generator.layers.location_replace</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="LocationReplace"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.location_replace.LocationReplace">[docs]</a><span class="k">class</span> <span class="nc">LocationReplace</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Applies location based layers to XML nodes. We use XML so that we only</span>
+<span class="sd">    take into account the original text when we&#39;re doing a replacement. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset_starter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset_counters</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="LocationReplace.find_all_offsets"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.location_replace.LocationReplace.find_all_offsets">[docs]</a>    <span class="k">def</span> <span class="nf">find_all_offsets</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Don&#39;t use regular expressions as they are a tad slow&quot;&quot;&quot;</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">pattern_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+        <span class="n">next_match</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">next_match</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">next_match</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span>
+                            <span class="n">next_match</span> <span class="o">+</span> <span class="n">pattern_len</span> <span class="o">+</span> <span class="n">offset</span><span class="p">))</span>
+            <span class="n">next_match</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">next_match</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">matches</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="LocationReplace.replace_at_offset"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.location_replace.LocationReplace.replace_at_offset">[docs]</a>    <span class="k">def</span> <span class="nf">replace_at_offset</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">text</span><span class="p">[:</span><span class="n">offset</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">replacement</span> <span class="o">+</span> <span class="n">text</span><span class="p">[</span><span class="n">offset</span><span class="p">[</span><span class="mi">1</span><span class="p">]:]</span>
+</div>
+<div class="viewcode-block" id="LocationReplace.update_offsets"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.location_replace.LocationReplace.update_offsets">[docs]</a>    <span class="k">def</span> <span class="nf">update_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Offsets change everytime we replace the text, since we add more</span>
+<span class="sd">        characters. Update the offsets. &quot;&quot;&quot;</span>
+        <span class="n">list_offsets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">lt</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;&lt;&#39;</span><span class="p">)</span>
+        <span class="n">gt</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">while</span> <span class="n">lt</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">subtext</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">gt</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span> <span class="n">lt</span><span class="p">]</span>
+            <span class="n">list_offsets</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">LocationReplace</span><span class="o">.</span><span class="n">find_all_offsets</span><span class="p">(</span>
+                <span class="n">original</span><span class="p">,</span> <span class="n">subtext</span><span class="p">,</span> <span class="n">gt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">gt</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;&gt;&#39;</span><span class="p">,</span> <span class="n">lt</span><span class="p">)</span>
+            <span class="n">lt</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;&lt;&#39;</span><span class="p">,</span> <span class="n">gt</span><span class="p">)</span>
+        <span class="n">list_offsets</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">LocationReplace</span><span class="o">.</span><span class="n">find_all_offsets</span><span class="p">(</span>
+            <span class="n">original</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">gt</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span> <span class="n">gt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset_counters</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset_starter</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">offset_starter</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_offsets</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset_counters</span><span class="p">,</span> <span class="n">list_offsets</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="LocationReplace.update_offset_starter"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.location_replace.LocationReplace.update_offset_starter">[docs]</a>    <span class="k">def</span> <span class="nf">update_offset_starter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; As we&#39;re navigating the XML node, we need to keep track of how many</span>
+<span class="sd">        offsets we&#39;ve already seen. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset_counters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offset_starter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_counters</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+</div>
+<div class="viewcode-block" id="LocationReplace.location_replace_text"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.location_replace.LocationReplace.location_replace_text">[docs]</a>    <span class="k">def</span> <span class="nf">location_replace_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">locations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given plain text, do replacements&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_offsets</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+
+        <span class="n">text_segments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">relevant_locations</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offsets</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">relevant_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">relevant_locations</span> <span class="k">if</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">]</span>
+        <span class="n">text_begin</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">relevant_locations</span><span class="p">:</span>
+            <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span><span class="p">[</span><span class="n">location</span><span class="p">]</span>
+            <span class="c"># unrelated text</span>
+            <span class="n">text_segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">text_begin</span><span class="p">:</span><span class="n">start</span><span class="p">])</span>
+            <span class="c"># s/original/replacement</span>
+            <span class="n">text_segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">replacement</span><span class="p">)</span>
+            <span class="n">text_begin</span> <span class="o">=</span> <span class="n">end</span>
+        <span class="c"># tail of unrelated text</span>
+        <span class="n">text_segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">text_begin</span><span class="p">:])</span>
+
+        <span class="c"># offset_starter is shared between segments of xml nodes (in </span>
+        <span class="c"># location_replace, below)</span>
+        <span class="k">if</span> <span class="n">original</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">replacement</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offset_starter</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">locations</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_offset_starter</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text_segments</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LocationReplace.location_replace"><a class="viewcode-back" href="../../../../../regulations.generator.layers/#regulations.generator.layers.location_replace.LocationReplace.location_replace">[docs]</a>    <span class="k">def</span> <span class="nf">location_replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml_node</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">locations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; For the xml_node, replace the locations instances of orginal with</span>
+<span class="sd">        replacement.</span>
+<span class="sd">        @todo: This doesn&#39;t appear to be used anymore?&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">xml_node</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+            <span class="n">xml_node</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">location_replace_text</span><span class="p">(</span>
+                <span class="n">xml_node</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">locations</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">xml_node</span><span class="o">.</span><span class="n">getchildren</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">location_replace</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">locations</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">xml_node</span><span class="o">.</span><span class="n">tail</span><span class="p">:</span>
+            <span class="n">xml_node</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">location_replace_text</span><span class="p">(</span>
+                <span class="n">xml_node</span><span class="o">.</span><span class="n">tail</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">locations</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

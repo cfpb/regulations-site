@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.external_citations_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.external_citations_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator.layers.external_citation</span> <span class="kn">import</span> <span class="n">ExternalCitationLayer</span>
+
+<div class="viewcode-block" id="ExternalCitationsTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.external_citations_tests.ExternalCitationsTest">[docs]</a><span class="k">class</span> <span class="nc">ExternalCitationsTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ExternalCitationsTest.test_statues_at_large_link"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.external_citations_tests.ExternalCitationsTest.test_statues_at_large_link">[docs]</a>    <span class="k">def</span> <span class="nf">test_statues_at_large_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">generate_fdsys_href_tag</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;124 Stat. 2859&#39;</span>
+        <span class="n">citation</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">ExternalCitationLayer</span><span class="o">.</span><span class="n">generate_statutes_at_large_link</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">citation</span><span class="p">)</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">generate_fdsys_href_tag</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&#39;statutecitation&#39;</span><span class="p">],</span> <span class="s">&#39;124 stat 2859&#39;</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ExternalCitationsTest.test_public_law_link"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.external_citations_tests.ExternalCitationsTest.test_public_law_link">[docs]</a>    <span class="k">def</span> <span class="nf">test_public_law_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">generate_fdsys_href_tag</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Public Law 111-203&#39;</span>
+        <span class="n">citation</span> <span class="o">=</span> <span class="p">[</span><span class="mi">111</span><span class="p">,</span> <span class="mi">203</span><span class="p">]</span>
+        <span class="n">ExternalCitationLayer</span><span class="o">.</span><span class="n">generate_public_law_link</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">citation</span><span class="p">)</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">generate_fdsys_href_tag</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="p">[</span><span class="s">&#39;collection&#39;</span><span class="p">,</span> <span class="s">&#39;lawnum&#39;</span><span class="p">,</span> <span class="s">&#39;congress&#39;</span><span class="p">,</span> <span class="s">&#39;lawtype&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&#39;collection&#39;</span><span class="p">],</span> <span class="s">&#39;plaw&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&#39;congress&#39;</span><span class="p">],</span> <span class="mi">111</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&#39;lawnum&#39;</span><span class="p">],</span> <span class="mi">203</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&#39;lawtype&#39;</span><span class="p">],</span> <span class="s">&#39;public&#39;</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.external_citation.ExternalCitationLayer.generate_fdsys_href_tag&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ExternalCitationsTest.test_cfr_link"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.external_citations_tests.ExternalCitationsTest.test_cfr_link">[docs]</a>    <span class="k">def</span> <span class="nf">test_cfr_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">generate_fdsys_href_tag</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;12 CFR part 200&quot;</span>
+        <span class="n">citation</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+        <span class="n">ExternalCitationLayer</span><span class="o">.</span><span class="n">generate_cfr_link</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">citation</span><span class="p">)</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">generate_fdsys_href_tag</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="p">[</span><span class="s">&#39;titlenum&#39;</span><span class="p">,</span> <span class="s">&#39;link-type&#39;</span><span class="p">,</span> <span class="s">&#39;collection&#39;</span><span class="p">,</span> <span class="s">&#39;partnum&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&#39;titlenum&#39;</span><span class="p">],</span> <span class="mi">12</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&#39;link-type&#39;</span><span class="p">],</span> <span class="s">&#39;xml&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&#39;collection&#39;</span><span class="p">],</span> <span class="s">&#39;cfr&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s">&#39;partnum&#39;</span><span class="p">],</span> <span class="mi">200</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ExternalCitationsTest.test_citation_type_to_generator"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.external_citations_tests.ExternalCitationsTest.test_citation_type_to_generator">[docs]</a>    <span class="k">def</span> <span class="nf">test_citation_type_to_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">citation_type</span> <span class="o">=</span> <span class="s">&#39;STATUTES_AT_LARGE&#39;</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="n">ExternalCitationLayer</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+        <span class="n">generator</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">citation_type_to_generator</span><span class="p">(</span><span class="n">citation_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">generator</span><span class="p">,</span> <span class="n">ExternalCitationLayer</span><span class="o">.</span><span class="n">generate_statutes_at_large_link</span><span class="p">)</span>
+
+        <span class="n">citation_type</span> <span class="o">=</span> <span class="s">&#39;PUBLIC_LAW&#39;</span>
+        <span class="n">generator</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">citation_type_to_generator</span><span class="p">(</span><span class="n">citation_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">generator</span><span class="p">,</span> <span class="n">ExternalCitationLayer</span><span class="o">.</span><span class="n">generate_public_law_link</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

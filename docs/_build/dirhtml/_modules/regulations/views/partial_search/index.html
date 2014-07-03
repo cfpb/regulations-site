@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.views.partial_search &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.views.partial_search</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponseBadRequest</span>
+<span class="kn">from</span> <span class="nn">django.template.defaultfilters</span> <span class="kn">import</span> <span class="n">title</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator</span> <span class="kn">import</span> <span class="n">api_reader</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.node_types</span> <span class="kn">import</span> <span class="n">label_to_text</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.section_url</span> <span class="kn">import</span> <span class="n">SectionUrl</span>
+<span class="kn">from</span> <span class="nn">regulations.generator.versions</span> <span class="kn">import</span> <span class="n">fetch_grouped_history</span>
+<span class="kn">from</span> <span class="nn">regulations.views.partial</span> <span class="kn">import</span> <span class="n">PartialView</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">API_PAGE_SIZE</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">PAGE_SIZE</span> <span class="o">=</span> <span class="mi">10</span>
+
+
+<div class="viewcode-block" id="PartialSearch"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.partial_search.PartialSearch">[docs]</a><span class="k">class</span> <span class="nc">PartialSearch</span><span class="p">(</span><span class="n">PartialView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Display search results without any chrome.&quot;&quot;&quot;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s">&#39;regulations/search-results.html&#39;</span>
+
+<div class="viewcode-block" id="PartialSearch.get"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.partial_search.PartialSearch.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Override this method so we can return a 400 if needed&quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;q&#39;</span><span class="p">)</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;version&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">query</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">version</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">HttpResponseBadRequest</span><span class="p">(</span><span class="s">&quot;missing query or version&quot;</span><span class="p">)</span>
+
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;q&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">version</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">PartialSearch</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="PartialSearch.add_prev_next"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.partial_search.PartialSearch.add_prev_next">[docs]</a>    <span class="k">def</span> <span class="nf">add_prev_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_page</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">context</span><span class="p">[</span><span class="s">&#39;current&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="n">current_page</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                <span class="s">&#39;total&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">][</span><span class="s">&#39;total_hits&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">PAGE_SIZE</span><span class="p">))}</span>
+        <span class="k">if</span> <span class="n">current_page</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="n">PAGE_SIZE</span><span class="p">,</span>
+                                   <span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="n">current_page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="n">max_this_page</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_page</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">PAGE_SIZE</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">][</span><span class="s">&#39;total_hits&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">max_this_page</span>
+        <span class="k">if</span> <span class="n">remaining</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="n">current_page</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                               <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">remaining</span><span class="p">,</span> <span class="n">PAGE_SIZE</span><span class="p">)}</span>
+</div>
+<div class="viewcode-block" id="PartialSearch.get_context_data"><a class="viewcode-back" href="../../../../regulations.views/#regulations.views.partial_search.PartialSearch.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c"># We don&#39;t want to run the content data of PartialView -- it assumes</span>
+        <span class="c"># we will be applying layers</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">PartialView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s">&#39;regulation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;label_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;page&#39;</span><span class="p">,</span> <span class="s">&#39;0&#39;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">page</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c"># API page size is API_PAGE_SIZE, but we show only PAGE_SIZE</span>
+        <span class="n">api_page</span> <span class="o">=</span> <span class="n">page</span> <span class="o">//</span> <span class="p">(</span><span class="n">API_PAGE_SIZE</span><span class="o">/</span><span class="n">PAGE_SIZE</span><span class="p">)</span>
+        <span class="n">page_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">page</span> <span class="o">%</span> <span class="p">(</span><span class="n">API_PAGE_SIZE</span><span class="o">/</span><span class="n">PAGE_SIZE</span><span class="p">))</span> <span class="o">*</span> <span class="n">PAGE_SIZE</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="p">()</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+            <span class="n">context</span><span class="p">[</span><span class="s">&#39;q&#39;</span><span class="p">],</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">],</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;regulation&#39;</span><span class="p">],</span> <span class="n">api_page</span><span class="p">)</span>
+
+        <span class="c"># Ignore results found in the root (i.e. not a section), adjust</span>
+        <span class="c"># the number of results accordingly.</span>
+        <span class="n">original_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">])</span>
+        <span class="n">results</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">]</span>
+                              <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">num_results_ignored</span> <span class="o">=</span> <span class="n">original_count</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">])</span>
+        <span class="n">results</span><span class="p">[</span><span class="s">&#39;total_hits&#39;</span><span class="p">]</span> <span class="o">-=</span> <span class="n">num_results_ignored</span>
+        <span class="n">results</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">][</span><span class="n">page_idx</span><span class="p">:</span><span class="n">page_idx</span> <span class="o">+</span> <span class="n">PAGE_SIZE</span><span class="p">]</span>
+
+        <span class="n">section_url</span> <span class="o">=</span> <span class="n">SectionUrl</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">]:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_to_text</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s">&#39;title&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="n">title</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">])</span>
+            <span class="n">result</span><span class="p">[</span><span class="s">&#39;section_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">section_url</span><span class="o">.</span><span class="n">view_label_id</span><span class="p">(</span>
+                <span class="n">result</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">],</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">])</span>
+            <span class="n">result</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">section_url</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+                <span class="n">result</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">],</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">],</span> <span class="n">sectional</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span>
+
+        <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">fetch_grouped_history</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;regulation&#39;</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">notice</span> <span class="ow">in</span> <span class="n">version</span><span class="p">[</span><span class="s">&#39;notices&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">notice</span><span class="p">[</span><span class="s">&#39;document_number&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">]:</span>
+                    <span class="n">context</span><span class="p">[</span><span class="s">&#39;version_by_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">notice</span><span class="p">[</span><span class="s">&#39;effective_on&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_prev_next</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">final_context</span> <span class="o">=</span> <span class="n">context</span>
+
+        <span class="k">return</span> <span class="n">context</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

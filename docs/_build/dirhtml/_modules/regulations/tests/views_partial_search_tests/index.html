@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.views_partial_search_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.views_partial_search_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">django.test.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">regulations.views.partial_search</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="PartialSearchTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_partial_search_tests.PartialSearchTest">[docs]</a><span class="k">class</span> <span class="nc">PartialSearchTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Integration tests for search&quot;&quot;&quot;</span>
+
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.partial_search.api_reader&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.partial_search.fetch_grouped_history&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="PartialSearchTest.test_get"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_partial_search_tests.PartialSearchTest.test_get">[docs]</a>    <span class="k">def</span> <span class="nf">test_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch_grouped_history</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">):</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">search</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;total_hits&#39;</span><span class="p">:</span> <span class="mi">3333</span><span class="p">,</span>
+            <span class="s">&#39;results&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;111&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">],</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;tttt&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span> <span class="s">&#39;title&#39;</span><span class="p">:</span><span class="s">&quot;consumer&#39;s&quot;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;111&#39;</span><span class="p">,</span> <span class="s">&#39;24&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">],</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;111&#39;</span><span class="p">,</span> <span class="s">&#39;25&#39;</span><span class="p">],</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;more&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">fetch_grouped_history</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;notices&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;bbb&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">)}]},</span>
+            <span class="p">{</span><span class="s">&#39;notices&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;ccc&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2001</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)},</span>
+                         <span class="p">{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2003</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)}],</span>
+             <span class="s">&#39;timeline&#39;</span><span class="p">:</span> <span class="s">&#39;timeytimey&#39;</span><span class="p">}</span>
+        <span class="p">]</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/partial/search/111?version=vvv&amp;q=none&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;111-22&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;111.22&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;111-24-a&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;111.24(a)&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;111-25&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;111.25&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;3333&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;Consumer&amp;#39;s&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.partial_search.api_reader&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.partial_search.fetch_grouped_history&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="PartialSearchTest.test_root_info"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_partial_search_tests.PartialSearchTest.test_root_info">[docs]</a>    <span class="k">def</span> <span class="nf">test_root_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch_grouped_history</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">):</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">search</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;total_hits&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s">&#39;results&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;444&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">],</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;tttt&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span> <span class="s">&#39;title&#39;</span><span class="p">:</span><span class="s">&quot;consumer&#39;s&quot;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;444&#39;</span><span class="p">,</span> <span class="s">&#39;24&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">],</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;444&#39;</span><span class="p">],</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;more&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">fetch_grouped_history</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;notices&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;bbb&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">)}]},</span>
+            <span class="p">{</span><span class="s">&#39;notices&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;ccc&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2001</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)},</span>
+                         <span class="p">{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2003</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)}],</span>
+             <span class="s">&#39;timeline&#39;</span><span class="p">:</span> <span class="s">&#39;timeytimey&#39;</span><span class="p">}</span>
+        <span class="p">]</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/partial/search/444?version=vvv&amp;q=none&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;2 results&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.partial_search.api_reader&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.partial_search.fetch_grouped_history&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.section_url.fetch_toc&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="PartialSearchTest.test_subinterp"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_partial_search_tests.PartialSearchTest.test_subinterp">[docs]</a>    <span class="k">def</span> <span class="nf">test_subinterp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch_toc</span><span class="p">,</span> <span class="n">fetch_grouped_history</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">):</span>
+        <span class="n">fetch_toc</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;444&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">],</span> <span class="s">&#39;is_subpart&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+             <span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;444-Subpart-B&#39;</span><span class="p">,</span> <span class="s">&#39;sub_toc&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;444&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">],</span> <span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;444-22&#39;</span><span class="p">,</span>
+                 <span class="s">&#39;is_section&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}]},</span>
+            <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;444&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;444-Interp&#39;</span><span class="p">,</span>
+             <span class="s">&#39;sub_toc&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;444&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">],</span>
+                 <span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;444-Interp-h1&#39;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;444&#39;</span><span class="p">,</span> <span class="s">&#39;Subpart&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span>
+                 <span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;444-Subpart-B-Interp&#39;</span><span class="p">}]}</span>
+        <span class="p">]</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">search</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;total_hits&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s">&#39;results&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;444&#39;</span><span class="p">,</span> <span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">],</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;tttt&#39;</span><span class="p">,</span>
+                 <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span> <span class="s">&#39;title&#39;</span><span class="p">:</span><span class="s">&quot;consumer&#39;s&quot;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;444&#39;</span><span class="p">,</span> <span class="s">&#39;Interp&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">,</span> <span class="s">&#39;p5&#39;</span><span class="p">],</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;o&#39;</span><span class="p">,</span>
+                 <span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">fetch_grouped_history</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;notices&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;bbb&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">)}]},</span>
+            <span class="p">{</span><span class="s">&#39;notices&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;ccc&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2001</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)},</span>
+                         <span class="p">{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2003</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)}],</span>
+             <span class="s">&#39;timeline&#39;</span><span class="p">:</span> <span class="s">&#39;timeytimey&#39;</span><span class="p">}</span>
+        <span class="p">]</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/partial/search/444?version=vvv&amp;q=other&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;444-Subpart-B-Interp&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;444-Interp-h1&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.partial_search.api_reader&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.partial_search.fetch_grouped_history&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="PartialSearchTest.test_no_results"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_partial_search_tests.PartialSearchTest.test_no_results">[docs]</a>    <span class="k">def</span> <span class="nf">test_no_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch_grouped_history</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">):</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">search</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;total_hits&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s">&#39;results&#39;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="p">}</span>
+        <span class="n">fetch_grouped_history</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;notices&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;bbb&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">)}]},</span>
+            <span class="p">{</span><span class="s">&#39;notices&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;ccc&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2001</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)},</span>
+                         <span class="p">{</span><span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;vvv&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;effective_on&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2003</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)}],</span>
+             <span class="s">&#39;timeline&#39;</span><span class="p">:</span> <span class="s">&#39;timeytimey&#39;</span><span class="p">}</span>
+        <span class="p">]</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/partial/search/121?version=vvv&amp;q=none&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;4/5/2003&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="PartialSearchTest.test_get_400"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_partial_search_tests.PartialSearchTest.test_get_400">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_400</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/partial/search/111?version=vvv&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/partial/search/111?q=vvv&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="PartialSearchTest.test_add_prev_next"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_partial_search_tests.PartialSearchTest.test_add_prev_next">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_prev_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="n">PartialSearch</span><span class="p">()</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;results&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;total_hits&#39;</span><span class="p">:</span> <span class="mi">77</span><span class="p">}}</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">add_prev_next</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="s">&#39;previous&#39;</span> <span class="ow">in</span> <span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+
+        <span class="k">del</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">]</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">add_prev_next</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+
+        <span class="k">del</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">]</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">add_prev_next</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">})</span>
+
+        <span class="k">del</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;next&#39;</span><span class="p">]</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">add_prev_next</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s">&#39;previous&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="s">&#39;next&#39;</span> <span class="ow">in</span> <span class="n">context</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

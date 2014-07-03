@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.layers_interpretations_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.layers_interpretations_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">patch</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator.layers.interpretations</span> <span class="kn">import</span> <span class="n">InterpretationsLayer</span>
+
+
+<div class="viewcode-block" id="InterpretationsLayerTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_interpretations_tests.InterpretationsLayerTest">[docs]</a><span class="k">class</span> <span class="nc">InterpretationsLayerTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="InterpretationsLayerTest.setUp"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_interpretations_tests.InterpretationsLayerTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">settings</span><span class="o">.</span><span class="n">configured</span><span class="p">:</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">TEMPLATE_DEBUG</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">API_BASE</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.generator&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.SectionUrl&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="InterpretationsLayerTest.test_apply_layer_extra_fields"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_interpretations_tests.InterpretationsLayerTest.test_apply_layer_extra_fields">[docs]</a>    <span class="k">def</span> <span class="nf">test_apply_layer_extra_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">su</span><span class="p">,</span> <span class="n">generator</span><span class="p">):</span>
+        <span class="n">su</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">interp</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">&#39;200-Subpart-Interp&#39;</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;200-2-b-3-i&quot;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&#39;reference&#39;</span><span class="p">:</span> <span class="s">&#39;200-2-b-3-i-Interp&#39;</span><span class="p">,</span>
+                <span class="s">&quot;text&quot;</span><span class="p">:</span> <span class="s">&quot;Some contents are here&quot;</span>
+            <span class="p">}],</span>
+        <span class="p">}</span>
+        <span class="n">il</span> <span class="o">=</span> <span class="n">InterpretationsLayer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="s">&#39;content&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">il</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;200-2-b-3-i&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;interp&#39;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s">&#39;for_markup_id&#39;</span><span class="p">:</span> <span class="s">&#39;200-2-b-3-i&#39;</span><span class="p">,</span>
+            <span class="s">&#39;for_label&#39;</span><span class="p">:</span> <span class="s">&#39;2(b)(3)(i)&#39;</span><span class="p">,</span>
+            <span class="s">&#39;interps&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&#39;label_id&#39;</span><span class="p">:</span> <span class="s">&#39;200-2-b-3-i-Interp&#39;</span><span class="p">,</span>
+                <span class="s">&#39;markup&#39;</span><span class="p">:</span> <span class="s">&#39;content&#39;</span><span class="p">,</span>
+                <span class="s">&#39;section_id&#39;</span><span class="p">:</span> <span class="s">&#39;200-Subpart-Interp&#39;</span><span class="p">}]</span>
+        <span class="p">}))</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.generator&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.SectionUrl&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="InterpretationsLayerTest.test_apply_layer_section"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_interpretations_tests.InterpretationsLayerTest.test_apply_layer_section">[docs]</a>    <span class="k">def</span> <span class="nf">test_apply_layer_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">su</span><span class="p">,</span> <span class="n">generator</span><span class="p">):</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;200-2&quot;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&quot;reference&quot;</span><span class="p">:</span> <span class="s">&quot;200-2-Interp&quot;</span><span class="p">,</span>
+                <span class="s">&quot;text&quot;</span><span class="p">:</span> <span class="s">&quot;Some contents are here&quot;</span>
+            <span class="p">}],</span>
+        <span class="p">}</span>
+        <span class="n">il</span> <span class="o">=</span> <span class="n">InterpretationsLayer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="s">&#39;content&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="n">il</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;200-2&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;for_label&#39;</span><span class="p">])</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.generator&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.SectionUrl&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="InterpretationsLayerTest.test_apply_layer_multiple_matches"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_interpretations_tests.InterpretationsLayerTest.test_apply_layer_multiple_matches">[docs]</a>    <span class="k">def</span> <span class="nf">test_apply_layer_multiple_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">su</span><span class="p">,</span> <span class="n">generator</span><span class="p">):</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;200-2&quot;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&quot;reference&quot;</span><span class="p">:</span> <span class="s">&quot;200-2-Interp&quot;</span><span class="p">,</span>
+                <span class="s">&quot;text&quot;</span><span class="p">:</span> <span class="s">&quot;Some contents are here&quot;</span>
+            <span class="p">},</span> <span class="p">{</span>
+                <span class="s">&quot;reference&quot;</span><span class="p">:</span> <span class="s">&quot;200-2_3-Interp&quot;</span><span class="p">,</span>
+                <span class="s">&quot;text&quot;</span><span class="p">:</span> <span class="s">&quot;Some more contents are here&quot;</span>
+            <span class="p">}],</span>
+        <span class="p">}</span>
+        <span class="n">il</span> <span class="o">=</span> <span class="n">InterpretationsLayer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="s">&#39;content&#39;</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">il</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;200-2&#39;</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">interp</span><span class="p">[</span><span class="s">&#39;label_id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">interp</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;interps&#39;</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;200-2-Interp&#39;</span><span class="p">,</span> <span class="s">&#39;200-2_3-Interp&#39;</span><span class="p">])</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.generator&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.SectionUrl&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="InterpretationsLayerTest.test_apply_layer_appendix"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_interpretations_tests.InterpretationsLayerTest.test_apply_layer_appendix">[docs]</a>    <span class="k">def</span> <span class="nf">test_apply_layer_appendix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">su</span><span class="p">,</span> <span class="n">piv</span><span class="p">):</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;200-Q-5&quot;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&quot;reference&quot;</span><span class="p">:</span> <span class="s">&quot;200-Q-5-Interp&quot;</span><span class="p">,</span>
+                <span class="s">&quot;text&quot;</span><span class="p">:</span> <span class="s">&quot;Some contents are here&quot;</span>
+            <span class="p">}],</span>
+        <span class="p">}</span>
+        <span class="n">il</span> <span class="o">=</span> <span class="n">InterpretationsLayer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="s">&#39;content&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Appendix Q-5&#39;</span><span class="p">,</span>
+                         <span class="n">il</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;200-Q-5&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;for_label&#39;</span><span class="p">])</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.generator&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.SectionUrl&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="InterpretationsLayerTest.test_apply_layer_section_different"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_interpretations_tests.InterpretationsLayerTest.test_apply_layer_section_different">[docs]</a>    <span class="k">def</span> <span class="nf">test_apply_layer_section_different</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">su</span><span class="p">,</span> <span class="n">generator</span><span class="p">):</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;200-2-a&quot;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&quot;reference&quot;</span><span class="p">:</span> <span class="s">&quot;200-2-a-Interp&quot;</span><span class="p">,</span>
+                <span class="s">&quot;text&quot;</span><span class="p">:</span> <span class="s">&quot;Some contents are here&quot;</span>
+            <span class="p">}],</span>
+            <span class="s">&quot;200-2-b&quot;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&quot;reference&quot;</span><span class="p">:</span> <span class="s">&quot;200-2-a-Interp&quot;</span><span class="p">,</span>
+                <span class="s">&quot;text&quot;</span><span class="p">:</span> <span class="s">&quot;Some contents are here&quot;</span>
+            <span class="p">}],</span>
+        <span class="p">}</span>
+        <span class="n">il</span> <span class="o">=</span> <span class="n">InterpretationsLayer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="s">&#39;content&#39;</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">il</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;200-2-a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;2(a)&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;for_label&#39;</span><span class="p">])</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">il</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;200-2-b&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;2(b)&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;for_label&#39;</span><span class="p">])</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.generator&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.SectionUrl&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="InterpretationsLayerTest.test_apply_layer_cache"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_interpretations_tests.InterpretationsLayerTest.test_apply_layer_cache">[docs]</a>    <span class="k">def</span> <span class="nf">test_apply_layer_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">secturl</span><span class="p">,</span> <span class="n">generator</span><span class="p">):</span>
+        <span class="n">il</span> <span class="o">=</span> <span class="n">InterpretationsLayer</span><span class="p">({</span>
+            <span class="s">&#39;1234-56-a&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;reference&#39;</span><span class="p">:</span> <span class="s">&#39;1234-56-a-Interp&#39;</span><span class="p">}]},</span> <span class="n">version</span><span class="o">=</span><span class="s">&#39;vvvv&#39;</span><span class="p">)</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">root_interp_label</span> <span class="o">=</span> <span class="s">&#39;1234-56-Interp&#39;</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">partial_view</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="s">&#39;content&#39;</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;1234-56&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">generator</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">get_tree_paragraph</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+
+        <span class="n">il</span><span class="o">.</span><span class="n">apply_layer</span><span class="p">(</span><span class="s">&#39;1234-56-a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">generator</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">get_tree_paragraph</span><span class="o">.</span><span class="n">called</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">get_tree_paragraph</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c"># Note that this is grabbing the section&#39;s interps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;1234-56-Interp&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;vvvv&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.layers.interpretations.views&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="InterpretationsLayerTest.test_preprocess_root"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.layers_interpretations_tests.InterpretationsLayerTest.test_preprocess_root">[docs]</a>    <span class="k">def</span> <span class="nf">test_preprocess_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">views</span><span class="p">):</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;tttt&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;node_type&#39;</span><span class="p">:</span> <span class="s">&#39;regtext&#39;</span><span class="p">,</span>
+                <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;1234&#39;</span><span class="p">,</span> <span class="s">&#39;56&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">]}</span>
+        <span class="n">il</span> <span class="o">=</span> <span class="n">InterpretationsLayer</span><span class="p">({})</span>
+        <span class="n">il</span><span class="o">.</span><span class="n">preprocess_root</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">il</span><span class="o">.</span><span class="n">root_interp_label</span><span class="p">,</span> <span class="s">&#39;1234-56-a-Interp&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

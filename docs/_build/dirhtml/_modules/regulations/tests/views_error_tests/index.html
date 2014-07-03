@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.views_error_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.views_error_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">RequestFactory</span>
+
+<span class="kn">from</span> <span class="nn">regulations.views</span> <span class="kn">import</span> <span class="n">error_handling</span>
+
+
+<div class="viewcode-block" id="ErrorHandlingTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_error_tests.ErrorHandlingTest">[docs]</a><span class="k">class</span> <span class="nc">ErrorHandlingTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.error_handling.api_reader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ErrorHandlingTest.test_check_regulation_none"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_error_tests.ErrorHandlingTest.test_check_regulation_none">[docs]</a>    <span class="k">def</span> <span class="nf">test_check_regulation_none</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">):</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">regversions</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span>
+            <span class="n">error_handling</span><span class="o">.</span><span class="n">MissingContentException</span><span class="p">,</span>
+            <span class="n">error_handling</span><span class="o">.</span><span class="n">check_regulation</span><span class="p">,</span> <span class="s">&#39;204&#39;</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.error_handling.api_reader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ErrorHandlingTest.test_check_regulation_exists"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_error_tests.ErrorHandlingTest.test_check_regulation_exists">[docs]</a>    <span class="k">def</span> <span class="nf">test_check_regulation_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">):</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">regversions</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">error_handling</span><span class="o">.</span><span class="n">check_regulation</span><span class="p">(</span><span class="s">&#39;204&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.error_handling.api_reader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ErrorHandlingTest.test_check_version"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_error_tests.ErrorHandlingTest.test_check_version">[docs]</a>    <span class="k">def</span> <span class="nf">test_check_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">):</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">regversions</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span>\
+            <span class="p">{</span><span class="s">&#39;versions&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;2&#39;</span><span class="p">}]}</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">error_handling</span><span class="o">.</span><span class="n">check_version</span><span class="p">(</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.error_handling.api_reader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ErrorHandlingTest.test_check_no_version"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_error_tests.ErrorHandlingTest.test_check_no_version">[docs]</a>    <span class="k">def</span> <span class="nf">test_check_no_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">):</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">regversions</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span>\
+            <span class="p">{</span><span class="s">&#39;versions&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;3&#39;</span><span class="p">}]}</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">error_handling</span><span class="o">.</span><span class="n">check_version</span><span class="p">(</span><span class="s">&#39;204&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ErrorHandlingTest.test_handle_generic_404"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_error_tests.ErrorHandlingTest.test_handle_generic_404">[docs]</a>    <span class="k">def</span> <span class="nf">test_handle_generic_404</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">RequestFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/fake-path&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">error_handling</span><span class="o">.</span><span class="n">handle_generic_404</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s">&#39;Regulation content not found&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.error_handling.add_to_chrome&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.views.error_handling.api_reader&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ErrorHandlingTest.test_handle_missing_section_404"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.views_error_tests.ErrorHandlingTest.test_handle_missing_section_404">[docs]</a>    <span class="k">def</span> <span class="nf">test_handle_missing_section_404</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_reader</span><span class="p">,</span> <span class="n">add_to_chrome</span><span class="p">):</span>
+        <span class="n">api_reader</span><span class="o">.</span><span class="n">ApiReader</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">regversions</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span>\
+            <span class="p">{</span><span class="s">&#39;versions&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;version&#39;</span><span class="p">:</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;by_date&#39;</span><span class="p">:</span><span class="s">&#39;2013-03-26&#39;</span><span class="p">}]}</span>
+        <span class="n">add_to_chrome</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">RequestFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/fake-path&#39;</span><span class="p">)</span>
+
+        <span class="n">extra_content</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;passed&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;env&#39;</span><span class="p">:</span> <span class="s">&#39;source&#39;</span><span class="p">}</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">error_handling</span><span class="o">.</span><span class="n">handle_missing_section_404</span><span class="p">(</span>
+            <span class="n">request</span><span class="p">,</span> <span class="s">&#39;204-1&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="n">extra_content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">add_to_chrome</span><span class="o">.</span><span class="n">called</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

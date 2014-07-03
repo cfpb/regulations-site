@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.notices_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.notices_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">patch</span>
+
+<span class="kn">from</span> <span class="nn">regulations.generator</span> <span class="kn">import</span> <span class="n">notices</span>
+
+
+<div class="viewcode-block" id="NoticesTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest">[docs]</a><span class="k">class</span> <span class="nc">NoticesTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="NoticesTest.test_fetch_all"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_fetch_all">[docs]</a>    <span class="k">def</span> <span class="nf">test_fetch_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">api</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">api</span><span class="o">.</span><span class="n">notices</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;results&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&quot;document_number&quot;</span><span class="p">:</span> <span class="s">&quot;1234&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;document_number&quot;</span><span class="p">:</span> <span class="s">&quot;9898&quot;</span><span class="p">}</span>
+        <span class="p">]}</span>
+        <span class="c">#   Would normally return a notice object</span>
+        <span class="n">api</span><span class="o">.</span><span class="n">notice</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">d_num</span><span class="p">:</span> <span class="n">d_num</span> <span class="o">+</span> <span class="n">d_num</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&quot;12341234&quot;</span><span class="p">,</span> <span class="s">&quot;98989898&quot;</span><span class="p">],</span> <span class="n">notices</span><span class="o">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="n">api</span><span class="p">))</span>
+</div>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.notices.loader.get_template&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;regulations.generator.notices.sxs_markup&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="NoticesTest.test_markup"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_markup">[docs]</a>    <span class="k">def</span> <span class="nf">test_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sxs_markup</span><span class="p">,</span> <span class="n">get_template</span><span class="p">):</span>
+        <span class="n">get_template</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">&#39;[html]&#39;</span>
+        <span class="n">sxs_markup</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">&#39;[sxs-html]&#39;</span>
+
+        <span class="n">notices</span><span class="o">.</span><span class="n">markup</span><span class="p">({</span>
+            <span class="s">&#39;cfr_part&#39;</span><span class="p">:</span> <span class="s">&#39;2222&#39;</span><span class="p">,</span>
+            <span class="s">&#39;document_number&#39;</span><span class="p">:</span> <span class="s">&#39;888-2222&#39;</span><span class="p">,</span>
+            <span class="s">&#39;section_by_section&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s">&#39;child1&#39;</span><span class="p">,</span>
+                <span class="s">&#39;child2&#39;</span><span class="p">,</span>
+                <span class="s">&#39;child3&#39;</span>
+            <span class="p">]</span>
+        <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">sxs_markup</span><span class="o">.</span><span class="n">call_count</span><span class="p">)</span>  <span class="c"># per child</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;child1&#39;</span><span class="p">,</span> <span class="n">sxs_markup</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;child2&#39;</span><span class="p">,</span> <span class="n">sxs_markup</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;child3&#39;</span><span class="p">,</span> <span class="n">sxs_markup</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="n">get_template</span><span class="o">.</span><span class="n">return_value</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">call_args</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;2222&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;cfr_part&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;888-2222&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;document_number&#39;</span><span class="p">])</span>
+        <span class="c">#   get the markup for children</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span>
+            <span class="s">&#39;[sxs-html]&#39;</span><span class="p">,</span> <span class="s">&#39;[sxs-html]&#39;</span><span class="p">,</span> <span class="s">&#39;[sxs-html]&#39;</span><span class="p">],</span>
+            <span class="n">context</span><span class="p">[</span><span class="s">&#39;sxs_markup&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_sxs_markup"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_sxs_markup">[docs]</a>    <span class="k">def</span> <span class="nf">test_sxs_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">&quot;[html]&quot;</span>
+
+        <span class="n">sxs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;label&quot;</span><span class="p">:</span> <span class="s">&quot;999-22&quot;</span><span class="p">,</span>
+            <span class="s">&quot;paragraphs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;P1&quot;</span><span class="p">,</span> <span class="s">&quot;P2&quot;</span><span class="p">],</span>
+            <span class="s">&quot;title&quot;</span><span class="p">:</span> <span class="s">&quot;999-22 Title&quot;</span><span class="p">,</span>
+            <span class="s">&quot;children&quot;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&quot;paragraphs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;p1&quot;</span><span class="p">],</span>
+                <span class="s">&quot;title&quot;</span><span class="p">:</span> <span class="s">&quot;Some Other Title&quot;</span><span class="p">,</span>
+                <span class="s">&quot;children&quot;</span><span class="p">:</span> <span class="p">[]</span>
+            <span class="p">}]</span>
+        <span class="p">}</span>
+        <span class="n">notices</span><span class="o">.</span><span class="n">sxs_markup</span><span class="p">(</span><span class="n">sxs</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">template</span><span class="p">)</span>
+        <span class="c">#   One call in the child, one in the parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">))</span>
+
+        <span class="n">child_render_context</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;p1&#39;</span><span class="p">],</span> <span class="n">child_render_context</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Some Other Title&#39;</span><span class="p">,</span> <span class="n">child_render_context</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">child_render_context</span><span class="p">[</span><span class="s">&#39;depth&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([],</span> <span class="n">child_render_context</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">])</span>
+
+        <span class="n">parent_context</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;P1&#39;</span><span class="p">,</span> <span class="s">&#39;P2&#39;</span><span class="p">],</span> <span class="n">parent_context</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;999-22 Title&#39;</span><span class="p">,</span> <span class="n">parent_context</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">parent_context</span><span class="p">[</span><span class="s">&#39;depth&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;999-22&#39;</span><span class="p">,</span> <span class="n">parent_context</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span>
+        <span class="c">#   Replaced children with their markup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;[html]&#39;</span><span class="p">],</span> <span class="n">parent_context</span><span class="p">[</span><span class="s">&#39;children&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_find_label_in_sxs_found"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_find_label_in_sxs_found">[docs]</a>    <span class="k">def</span> <span class="nf">test_find_label_in_sxs_found</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sxs_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-1&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[]},</span>
+            <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2-a&#39;</span><span class="p">,</span>
+                <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-3&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]}],</span>
+                <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">]}]}]</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-2-a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;204-2-a&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;abc&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;204-3&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;x&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+
+        <span class="n">sxs_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204-1&#39;</span><span class="p">],</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[]},</span>
+            <span class="p">{</span><span class="s">&#39;labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204-2&#39;</span><span class="p">],</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&#39;labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204-2-a&#39;</span><span class="p">,</span> <span class="s">&#39;204-2-b&#39;</span><span class="p">],</span>
+                <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span><span class="s">&#39;labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204-3&#39;</span><span class="p">],</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]}],</span>
+                <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">]}]}]</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-2-b&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;204-2-a&#39;</span><span class="p">,</span> <span class="s">&#39;204-2-b&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;labels&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;abc&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;204-3&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;labels&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;x&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_find_label_in_sxs_top_no_label"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_find_label_in_sxs_top_no_label">[docs]</a>    <span class="k">def</span> <span class="nf">test_find_label_in_sxs_top_no_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sxs_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;Awesome, SXS title here&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-3&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]}],</span>
+                <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">]}]</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;204-3&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;x&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+
+        <span class="n">sxs_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;Awesome, SXS title here&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s">&#39;labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204-3&#39;</span><span class="p">],</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]}],</span>
+                <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">]}]</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;204-3&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;labels&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;x&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_find_label_in_sxs_page"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_find_label_in_sxs_page">[docs]</a>    <span class="k">def</span> <span class="nf">test_find_label_in_sxs_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sxs_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204-3&#39;</span><span class="p">],</span> <span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">],</span>
+             <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s">&#39;labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204-3-a&#39;</span><span class="p">],</span> <span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">],</span>
+                 <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[]}]},</span>
+            <span class="p">{</span><span class="s">&#39;labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204-3&#39;</span><span class="p">],</span> <span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">3456</span><span class="p">,</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">],</span>
+             <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s">&#39;labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204-3-a&#39;</span><span class="p">],</span> <span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">3457</span><span class="p">,</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;d&#39;</span><span class="p">],</span>
+                 <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[]},</span>
+                <span class="p">{</span><span class="s">&#39;labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;204-3-a&#39;</span><span class="p">],</span> <span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="mi">3460</span><span class="p">,</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;e&#39;</span><span class="p">],</span>
+                 <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[]}]}]</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;a&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3&#39;</span><span class="p">,</span> <span class="mi">1234</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;a&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3&#39;</span><span class="p">,</span> <span class="mi">9999</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;a&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3&#39;</span><span class="p">,</span> <span class="mi">3456</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;c&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3-a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;b&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3-a&#39;</span><span class="p">,</span> <span class="mi">1234</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;b&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3-a&#39;</span><span class="p">,</span> <span class="mi">9999</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;b&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3-a&#39;</span><span class="p">,</span> <span class="mi">3457</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;d&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;204-3-a&#39;</span><span class="p">,</span> <span class="mi">3460</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">&#39;e&#39;</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;paragraphs&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_non_empty_sxs"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_non_empty_sxs">[docs]</a>    <span class="k">def</span> <span class="nf">test_non_empty_sxs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sxs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2-a&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">notices</span><span class="o">.</span><span class="n">non_empty_sxs</span><span class="p">(</span><span class="n">sxs</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_non_empty_sxs_no_paragraph"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_non_empty_sxs_no_paragraph">[docs]</a>    <span class="k">def</span> <span class="nf">test_non_empty_sxs_no_paragraph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sxs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2-a&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">notices</span><span class="o">.</span><span class="n">non_empty_sxs</span><span class="p">(</span><span class="n">sxs</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_non_empty_sxs_has_children"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_non_empty_sxs_has_children">[docs]</a>    <span class="k">def</span> <span class="nf">test_non_empty_sxs_has_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sxs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2-a&#39;</span><span class="p">,</span>
+            <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;abc&#39;</span><span class="p">}],</span>
+            <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">notices</span><span class="o">.</span><span class="n">non_empty_sxs</span><span class="p">(</span><span class="n">sxs</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_find_label_in_sxs_not_found"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_find_label_in_sxs_not_found">[docs]</a>    <span class="k">def</span> <span class="nf">test_find_label_in_sxs_not_found</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sxs_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-1&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[]},</span>
+            <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2&#39;</span><span class="p">,</span> <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2-a&#39;</span><span class="p">,</span>
+                <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[]}]}]</span>
+
+        <span class="n">s</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">find_label_in_sxs</span><span class="p">(</span><span class="n">sxs_list</span><span class="p">,</span> <span class="s">&#39;202-a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_filter_children"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_filter_children">[docs]</a>    <span class="k">def</span> <span class="nf">test_filter_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sxs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-a&#39;</span><span class="p">,</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;me&#39;</span><span class="p">]},</span>
+            <span class="p">{</span><span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;abcd&#39;</span><span class="p">]}]}</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">filter_labeled_children</span><span class="p">(</span><span class="n">sxs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">filtered</span><span class="p">,</span> <span class="p">[{</span><span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;abcd&#39;</span><span class="p">]}])</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_filter_children_no_candidates"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_filter_children_no_candidates">[docs]</a>    <span class="k">def</span> <span class="nf">test_filter_children_no_candidates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sxs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-a&#39;</span><span class="p">,</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;me&#39;</span><span class="p">]},</span>
+            <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-b&#39;</span><span class="p">,</span> <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;abcd&#39;</span><span class="p">]}]}</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">notices</span><span class="o">.</span><span class="n">filter_labeled_children</span><span class="p">(</span><span class="n">sxs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">filtered</span><span class="p">,</span> <span class="p">[])</span>
+</div>
+<div class="viewcode-block" id="NoticesTest.test_add_depths"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.notices_tests.NoticesTest.test_add_depths">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_depths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sxs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2-a&#39;</span><span class="p">,</span>
+                <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">]}]}</span>
+        <span class="n">notices</span><span class="o">.</span><span class="n">add_depths</span><span class="p">(</span><span class="n">sxs</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">depth_sxs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2&#39;</span><span class="p">,</span>
+            <span class="s">&#39;depth&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s">&#39;depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;204-2-a&#39;</span><span class="p">,</span>
+                <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s">&#39;paragraphs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">]}]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">depth_sxs</span><span class="p">,</span> <span class="n">sxs</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

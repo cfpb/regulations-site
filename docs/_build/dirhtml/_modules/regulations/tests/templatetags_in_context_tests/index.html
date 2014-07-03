@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>regulations.tests.templatetags_in_context_tests &mdash; regulations  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="regulations  documentation" href="../../../../" />
+    <link rel="up" title="Module code" href="../../../" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for regulations.tests.templatetags_in_context_tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">Context</span><span class="p">,</span> <span class="n">Template</span>
+
+
+<div class="viewcode-block" id="TemplatetagsInContextTest"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.templatetags_in_context_tests.TemplatetagsInContextTest">[docs]</a><span class="k">class</span> <span class="nc">TemplatetagsInContextTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TemplatetagsInContextTest.test_in_context"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.templatetags_in_context_tests.TemplatetagsInContextTest.test_in_context">[docs]</a>    <span class="k">def</span> <span class="nf">test_in_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;{</span><span class="si">% lo</span><span class="s">ad in_context %}&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;1. {{ f1 }}{{ f2 }}{{ f3 }}{{ f4 }}</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;{% begincontext c1 %}</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;2. {{ f1 }}{{ f2 }}{{ f3 }}{{ f4 }}</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;{</span><span class="si">% e</span><span class="s">ndcontext %}{% begincontext c1 c2 %}</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;3. {{ f1 }}{{ f2 }}{{ f3 }}{{ f4 }}</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;{% begincontext c2a %}</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;4. {{ f1 }}{{ f2 }}{{ f3 }}{{ f4 }}</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;{</span><span class="si">% e</span><span class="s">ndcontext %}{</span><span class="si">% e</span><span class="s">ndcontext %}</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;5. {{ f1 }}{{ f2 }}{{ f3 }}{{ f4 }}&quot;</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;f1&#39;</span><span class="p">:</span> <span class="s">&#39;f1&#39;</span><span class="p">,</span>
+                   <span class="s">&#39;c1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;f2&#39;</span><span class="p">:</span> <span class="s">&#39;c1.f2&#39;</span><span class="p">,</span> <span class="s">&#39;f1&#39;</span><span class="p">:</span> <span class="s">&#39;c1.f1&#39;</span><span class="p">},</span>
+                   <span class="s">&#39;c2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;f2&#39;</span><span class="p">:</span> <span class="s">&#39;c2.f2&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;f3&#39;</span><span class="p">:</span> <span class="s">&#39;c2.f3&#39;</span><span class="p">,</span> <span class="s">&#39;c2a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;f4&#39;</span><span class="p">:</span> <span class="s">&#39;c2a.f4&#39;</span><span class="p">}}}</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">Context</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;1. f1&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;2. c1.f1c1.f2&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;3. c1.f1c2.f2c2.f3&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;4. c2a.f4&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;5. f1&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="TemplatetagsInContextTest.test_in_context_cascade"><a class="viewcode-back" href="../../../../regulations.tests/#regulations.tests.templatetags_in_context_tests.TemplatetagsInContextTest.test_in_context_cascade">[docs]</a>    <span class="k">def</span> <span class="nf">test_in_context_cascade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make sure fields that are not dicts get passed along&quot;&quot;&quot;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;{</span><span class="si">% lo</span><span class="s">ad in_context %}{% begincontext c1 f2 %}&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;{{ f1 }}{{ f2 }}</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;{</span><span class="si">% e</span><span class="s">ndcontext %}&quot;</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&quot;{{ f1 }}{{ f2 }}&quot;</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;f1&#39;</span><span class="p">:</span> <span class="s">&#39;f1&#39;</span><span class="p">,</span> <span class="s">&#39;f2&#39;</span><span class="p">:</span> <span class="s">&#39;f2&#39;</span><span class="p">,</span> <span class="s">&#39;c1&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;f1&#39;</span><span class="p">:</span> <span class="s">&#39;c1.f1&#39;</span><span class="p">}}</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">Context</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;c1.f1f2&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;f1f2&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search/" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex/" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex/" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../">regulations  documentation</a> &raquo;</li>
+          <li><a href="../../../" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
