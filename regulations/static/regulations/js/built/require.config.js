@@ -1,8 +1,9 @@
 var require = { "paths" :
 {
-        "jquery": "./lib/jquery/dist/jquery",
+        "jquery": "./lib/jquery/jquery",
         "underscore": "./lib/underscore/underscore",
         "backbone": "./lib/backbone/backbone",
+        "samplejson": "../tests/grunt/js/fixtures/sample-json",
         "jquery-scrollstop": "./lib/jquery.scrollstop/index",
         "queryparams": "./lib/backbone.queryparams/index",
         "unveil": "./lib/unveil/jquery.unveil",
