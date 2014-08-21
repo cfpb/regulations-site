@@ -82,3 +82,6 @@ bin
 develop-eggs
 eggs
 regulations.egg-info
+
+# docs output
+docs/_build
