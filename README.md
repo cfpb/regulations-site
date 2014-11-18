@@ -1,14 +1,14 @@
 regulations-site
 ================
 
-[![Build Status](https://travis-ci.org/eregs/regulations-site.png?branch=master)](https://travis-ci.org/eregs/regulations-site)
+[![Build Status](https://travis-ci.org/cfpb/regulations-site.png?branch=master)](https://travis-ci.org/cfpb/regulations-site)
 
 An interface for viewing regulations data. This project combines all of the
 data from a parsed regulation and generates navigable, accessible HTML,
 complete with associated information.
 
 This repository is part of a larger project. To read about it, please see 
-[http://eregs.github.io/eregulations/](http://eregs.github.io/eregulations/).
+[http://cfpb.github.io/eregulations/](http://cfpb.github.io/eregulations/).
 
 ## Features
 
@@ -86,6 +86,25 @@ With that, you can start the development server:
 $ ./bin/django runserver
 ```
 
+## Building the documentation
+
+For most tweaks, you will simply need to run the Sphinx documentation
+builder again.
+
+```
+$ ./bin/sphinx-build -b dirhtml -d docs/_build/doctrees/ docs/ docs/_build/dirhtml/
+```
+
+The output will be in ```docs/_build/dirhtml```.
+
+If you are adding new modules, you may need to re-run the skeleton build
+script first:
+
+```
+$ rm docs/regulations*.rst
+$ ./bin/sphinx-apidoc -F -o docs regulations
+```
+
 ## JavaScript Application 
 ### Code
 The application code in JavaScript uses [Backbone.js](http://backbonejs.org/) as a foundation, though in some non-standard ways. If you plan to do work on this layer, it is recommended that you acquaint yourself with this [starter documentation](README_BACKBONE.md).
@@ -138,7 +157,7 @@ bower install
 The UI uses [RequireJS](http://requirejs.org/) for script loading and modularity in the UI code. The configuration for RequireJS modules is needed in a couple of different locations for testing and codebase compression. There is a script in the repository that takes care of most of this for you.
 
 Run ```./require.sh``` from the root of the repository.
-If you need to make changes to modules in your instance of the application, edit [require.paths.json](https://github.com/eregs/regulations-site/blob/master/require.paths.json) and [require.shim.json](https://github.com/eregs/regulations-site/blob/master/require.shim.json) accordingly. These files map to the ```paths``` and ```shim``` objects in the RequireJS configuration object. For more information: http://requirejs.org/docs/api.html#config
+If you need to make changes to modules in your instance of the application, edit [require.paths.json](https://github.com/cfpb/regulations-site/blob/master/require.paths.json) and [require.shim.json](https://github.com/cfpb/regulations-site/blob/master/require.shim.json) accordingly. These files map to the ```paths``` and ```shim``` objects in the RequireJS configuration object. For more information: http://requirejs.org/docs/api.html#config
 
 #### Configuration JSON
 In the root of the repository, copy ```example-config.json``` to ```config.json``` and edit as necessary. Grunt depends on these settings to carry out tasks.
@@ -147,7 +166,7 @@ In the root of the repository, copy ```example-config.json``` to ```config.json`
 - ```testPath``` is the path to the functional test specs.
 
 #### Running Grunt tasks
-There are a number of tasks configured in [Gruntfile.js](https://github.com/eregs/regulations-site/blob/master/Gruntfile.js). On the last lines, you will find tasks that group subtasks into common goals. Running ```grunt build``` will run unit, functional and lint tests, and compress static assets. Its recommended that you run this task before deploying changes. 
+There are a number of tasks configured in [Gruntfile.js](https://github.com/cfpb/regulations-site/blob/master/Gruntfile.js). On the last lines, you will find tasks that group subtasks into common goals. Running ```grunt build``` will run unit, functional and lint tests, and compress static assets. Its recommended that you run this task before deploying changes. 
 
 #### Unit and Functional Tests
 The Grunt build will run a suite of Selenium tests written in Python and a small suite of [Mocha.js](http://visionmedia.github.io/mocha/) unit tests. All tests run in [Sauce Labs](https://saucelabs.com). These tests run as part of the ```grunt build``` tasks. To use these, a little extra environment setup is required.
