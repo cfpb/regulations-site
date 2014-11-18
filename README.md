@@ -86,6 +86,25 @@ With that, you can start the development server:
 $ ./bin/django runserver
 ```
 
+## Building the documentation
+
+For most tweaks, you will simply need to run the Sphinx documentation
+builder again.
+
+```
+$ ./bin/sphinx-build -b dirhtml -d docs/_build/doctrees/ docs/ docs/_build/dirhtml/
+```
+
+The output will be in ```docs/_build/dirhtml```.
+
+If you are adding new modules, you may need to re-run the skeleton build
+script first:
+
+```
+$ rm docs/regulations*.rst
+$ ./bin/sphinx-apidoc -F -o docs regulations
+```
+
 ## JavaScript Application 
 ### Code
 The application code in JavaScript uses [Backbone.js](http://backbonejs.org/) as a foundation, though in some non-standard ways. If you plan to do work on this layer, it is recommended that you acquaint yourself with this [starter documentation](README_BACKBONE.md).
