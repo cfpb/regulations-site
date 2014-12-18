@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.conf.urls import patterns, url
+from django.views.decorators.cache import cache_page
 
 from regulations.views.about import about
 from regulations.views.chrome_breakaway import ChromeSXSView
@@ -31,6 +33,9 @@ interp_pattern = r'(?P<label_id>[-\d\w]+[-]Interp)'
 paragraph_pattern = r'(?P<label_id>[-\d\w]+)'
 subterp_pattern = r'(?P<label_id>[\d]+-(Appendices|Subpart(-[A-Z]+)?)-Interp)'
 
+lt_cache = cache_page(settings.CACHES['eregs_longterm_cache']['TIMEOUT'],
+                      cache='eregs_longterm_cache')
+
 
 urlpatterns = patterns(
     '',
@@ -48,7 +53,7 @@ urlpatterns = patterns(
     #A section by section paragraph with chrome
     #Example: http://.../sxs/201-2-g/2011-1738
     url(r'^sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
-        ChromeSXSView.as_view(),
+        lt_cache(ChromeSXSView.as_view()),
         name='chrome_sxs_view'),
     # Search results for non-JS viewers
     # Example: http://.../search?q=term&version=2011-1738
@@ -59,41 +64,41 @@ urlpatterns = patterns(
     # Example: http://.../diff/201-4/2011-1738/2013-10704
     url(r'^diff/%s/%s/%s$' %
         (section_pattern, version_pattern, newer_version_pattern),
-        ChromeSectionDiffView.as_view(),
+        lt_cache(ChromeSectionDiffView.as_view()),
         name='chrome_section_diff_view'),
     # Redirect to version by date
-    # Example: http://.../regulations/201-3-v/1999/11/8
+    # Example: http://.../201-3-v/1999/11/8
     url(r'^%s/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})$'
         % paragraph_pattern, redirect_by_date, name='redirect_by_date'),
     #A regulation section with chrome
-    #Example: http://.../regulation/201-4/2013-10704
+    #Example: http://.../201-4/2013-10704
     url(r'^%s/%s$' % (section_pattern, version_pattern),
-        ChromeSectionView.as_view(),
+        lt_cache(ChromeSectionView.as_view()),
         name='chrome_section_view'),
     # Subterp, interpretations of a while subpart, emptypart or appendices
     # Example: http://.../201-Subpart-A-Interp/2013-10706
     #          http://.../201-Subpart-Interp/2013-10706
     #          http://.../201-Appendices-Interp/2013-10706
     url(r'^%s/%s$' % (subterp_pattern, version_pattern),
-        ChromeSubterpView.as_view(),
+        lt_cache(ChromeSubterpView.as_view()),
         name=ChromeSubterpView.version_switch_view),
     #Interpretation of a section/paragraph or appendix
-    #Example: http://.../regulation/201-4-Interp/2013-10704
+    #Example: http://.../201-4-Interp/2013-10704
     url(r'^%s/%s$' % (interp_pattern, version_pattern),
-        ChromeInterpView.as_view(),
+        lt_cache(ChromeInterpView.as_view()),
         name='chrome_interp_view'),
     #The whole regulation with chrome
-    #Example: http://.../regulation/201/2013-10704
+    #Example: http://.../201/2013-10704
     url(r'^%s/%s$' % (reg_pattern, version_pattern),
-        ChromeRegulationView.as_view(),
+        lt_cache(ChromeRegulationView.as_view()),
         name='chrome_regulation_view'),
     #A regulation paragraph with chrome
-    #Example: http://.../regulation/201-2-g/2013-10704
+    #Example: http://.../201-2-g/2013-10704
     url(r'^%s/%s$' % (paragraph_pattern, version_pattern),
-        ChromeParagraphView.as_view(),
+        lt_cache(ChromeParagraphView.as_view()),
         name='chrome_paragraph_view'),
     #A regulation landing page
-    #Example: http://.../regulation/201
+    #Example: http://.../201
     url(r'^%s$' % reg_pattern, ChromeLandingView.as_view(),
         name='regulation_landing_view'),
 
@@ -111,43 +116,43 @@ urlpatterns = patterns(
     #A diff view of a section (without chrome)
     url(r'^partial/diff/%s/%s/%s$' % (
         section_pattern, version_pattern, newer_version_pattern),
-        PartialSectionDiffView.as_view(),
+        lt_cache(PartialSectionDiffView.as_view()),
         name='partial_section_diff_view'),
     #A section by section paragraph (without chrome)
     #Example: http://.../partial/sxs/201-2-g/2011-1738
     url(r'^partial/sxs/%s/%s$' % (paragraph_pattern, notice_pattern),
-        ParagraphSXSView.as_view(),
+        lt_cache(ParagraphSXSView.as_view()),
         name='paragraph_sxs_view'),
     #A definition templated to be displayed in the sidebar (without chrome)
     #Example: http://.../partial/definition/201-2-g/2011-1738
     url(r'^partial/definition/%s/%s$' % (paragraph_pattern, version_pattern),
-        PartialDefinitionView.as_view(),
+        lt_cache(PartialDefinitionView.as_view()),
         name='partial_definition_view'),
     #A regulation section without chrome
     #Example: http://.../partial/201-4/2013-10704
     url(r'^partial/%s/%s$' % (section_pattern, version_pattern),
-        PartialSectionView.as_view(),
+        lt_cache(PartialSectionView.as_view()),
         name='partial_section_view'),
     # Subterp, interpretations of a whole subpart, emptypart or appendices
     # Example: http://.../partial/201-Subpart-A-Interp/2013-10706
     #          http://.../partial/201-Subpart-Interp/2013-10706
     #          http://.../partial/201-Appendices-Interp/2013-10706
     url(r'^partial/%s/%s$' % (subterp_pattern, version_pattern),
-        partial_interp.PartialSubterpView.as_view(),
+        lt_cache(partial_interp.PartialSubterpView.as_view()),
         name='partial_subterp_view'),
     #An interpretation of a section/paragraph or appendix without chrome.
     #Example: http://.../partial/201-2-Interp/2013-10704
     url(r'^partial/%s/%s$' % (interp_pattern, version_pattern),
-        partial_interp.PartialInterpView.as_view(),
+        lt_cache(partial_interp.PartialInterpView.as_view()),
         name='partial_interp_view'),
     #The whole regulation without chrome; not too useful; added for symmetry
     #Example: http://.../partial/201/2013-10704
     url(r'^partial/%s/%s$' % (reg_pattern, version_pattern),
-        PartialRegulationView.as_view(),
+        lt_cache(PartialRegulationView.as_view()),
         name='partial_regulation_view'),
     #A regulation paragraph without chrome.
     #Example: http://.../partial/201-2-g/2013-10704
     url(r'^partial/%s/%s$' % (paragraph_pattern, version_pattern),
-        PartialParagraphView.as_view(),
+        lt_cache(PartialParagraphView.as_view()),
         name='partial_paragraph_view'),
 )
