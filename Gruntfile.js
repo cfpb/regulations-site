@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 
     /**
      * JSHint: https://github.com/gruntjs/grunt-contrib-jshint
-     * 
+     *
      * Validate files with JSHint.
      * Below are options that conform to idiomatic.js standards.
      * Feel free to add/remove your favorites: http://www.jshint.com/docs/#options
@@ -98,6 +98,22 @@ module.exports = function(grunt) {
         }
     },
 
+    uglify: {
+      options: {
+        mangle: false
+      },
+      require: {
+        files: {
+          '<%= env.frontEndPath %>/js/built/lib/requirejs/require.js': ['<%= env.frontEndPath %>/js/source/lib/requirejs/require.js']
+        }
+      },
+      requireConfig: {
+        files: {
+          '<%= env.frontEndPath %>/js/built/require.config.js': ['<%= env.frontEndPath %>/js/built/require.config.js']
+        }
+      }
+    },
+
     shell: {
       'build-require': {
         command: './require.sh',
@@ -139,7 +155,7 @@ module.exports = function(grunt) {
 
     /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
-     * 
+     *
      * Run predefined tasks whenever watched file patterns are added, changed or deleted.
      * Add files to monitor below.
      */
@@ -161,6 +177,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
     /**
     * Create task aliases by registering new tasks
@@ -168,5 +185,5 @@ module.exports = function(grunt) {
     grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
     grunt.registerTask('test', ['jshint', 'nose', 'shell:run-mocha-tests']);
     grunt.registerTask('build', ['squish', 'test']);
-    grunt.registerTask('squish', ['requirejs', 'less']);
+    grunt.registerTask('squish', ['requirejs', 'uglify', 'less']);
 };
