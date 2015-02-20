@@ -89,8 +89,7 @@ module.exports = function(grunt) {
                 baseUrl: '<%= env.frontEndPath %>/js/source',
                 dir: "<%= env.frontEndPath %>/js/built",
                 modules: [ {name: "regulations"} ],
-                paths: grunt.file.readJSON('require.paths.json'),
-                shim: grunt.file.readJSON('require.shim.json'),
+                mainConfigFile: 'require.config.json',
                 skipDirOptimize: true,
                 optimizeCss: 'none',
                 removeCombined: 'true'
