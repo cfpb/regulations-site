@@ -1,7 +1,9 @@
 'use strict';
+var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var RegsHelpers = require('../helpers');
+var Helpers = require('../helpers');
+Backbone.$ = $;
 
 var MetaModel = Backbone.Model.extend({
 
