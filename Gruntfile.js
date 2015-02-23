@@ -103,7 +103,7 @@ module.exports = function(grunt) {
         dest: '<%= env.frontEndPath %>/js/built/bundle.js'
       },
       options: {
-        transform: ['debowerify'],
+        transform: ['browserify-shim', 'debowerify'],
         debug: true
       }
     },

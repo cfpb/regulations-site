@@ -4,7 +4,7 @@ var Backbone = require('backbone');
 var MainView = require('./views/main/main-view');
 var MainEvents = require('./events/main-events');
 var BreakawayEvents = require('./events/breakaway-events');
-require('backbone.queryparams');
+//require('backbone.queryparams');
 
 var RegsRouter;
 
@@ -74,7 +74,7 @@ else {
         },
 
         start:  function() {
-            var root = window.APP_PREFIX;
+            var root = window.APP_PREFIX || '';
 
             Backbone.history.start({
                 pushState: 'pushState' in window.history,

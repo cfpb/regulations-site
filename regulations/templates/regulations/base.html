@@ -20,14 +20,18 @@ CSS/Javascript etc., should inherit from this template.
         <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
         <script src="{%static "regulations/js/source/otherlibs/modernizr.js" %}"></script>
         {% block app_js %}
-        <script src="{%static "regulations/js/"|add:env|add:"/require.config.js" %}"></script>
+        <script>
+            window.APP_PREFIX = "{{ APP_PREFIX }}";
+        </script>
+        <script src="{%static "regulations/js/built/bundle.js" %}"></script>
+        <!--<script src="{%static "regulations/js/"|add:env|add:"/require.config.js" %}"></script>
         <script>
             if (typeof require !== 'undefined') {
                 require.baseUrl = "{%static "regulations/js/"|add:env|add:"/"%}";
             }
             window.APP_PREFIX = "{{ APP_PREFIX }}";
         </script>
-        <script data-main="regulations" src="{%static "regulations/js/"|add:env|add:"/lib/requirejs/require.js" %}"></script>
+        <script data-main="regulations" src="{%static "regulations/js/"|add:env|add:"/lib/requirejs/require.js" %}"></script>-->
         {% endblock %}
 
         <!--[if lt IE 9]>

@@ -2,8 +2,8 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var jQScroll = require('jquery.scrollstop');
-var jQUnveil = require('unveil');
+var jQScroll = require('jquery-scrollstop');
+//var unveil = require('unveil');
 var DefinitionView = require('../sidebar/definition-view');
 var RegModel = require('../../models/reg-model');
 var SectionFooterView = require('./section-footer-view');
@@ -288,7 +288,7 @@ var RegView = ChildView.extend({
 
     // lazy load images as the user scrolls
     loadImages: function() {
-        $('.reg-image').unveil();
+        //$('.reg-image').unveil();
     }
 });
 

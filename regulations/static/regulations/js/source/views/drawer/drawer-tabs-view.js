@@ -98,16 +98,9 @@ var DrawerTabsView = Backbone.View.extend({
     // update active pane based on click or external input
     updatePaneTabs: function(e) {
         e.preventDefault();
+        console.log('test');
 
-        var $target = $(e.target),
-            linkValue = _.last($target.closest('a').attr('href').split('#'));
-        this.activePane = linkValue;
 
-        if ($('.panel').css('left') === '-200px') {
-            this.openDrawer();
-        }
-
-        this.externalEvents.trigger('pane:change', linkValue);
     }
 });
 
