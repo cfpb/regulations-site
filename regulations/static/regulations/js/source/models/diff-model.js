@@ -1,10 +1,12 @@
-define('diff-model', ['underscore', 'backbone', 'meta-model'], function(_, Backbone, MetaModel) {
-    'use strict';
-    Backbone.DiffModel = MetaModel.extend({});
+'use strict';
+var _ = require('underscore');
+var Backbone = require('backbone');
+var MetaModel = require('./meta-model');
 
-    var diffModel = new Backbone.DiffModel({
-        supplementalPath: 'diff'
-    });
+Backbone.DiffModel = MetaModel.extend({});
 
-    return diffModel;
+var diffModel = new Backbone.DiffModel({
+    supplementalPath: 'diff'
 });
+
+module.exports = diffModel;

@@ -97,6 +97,17 @@ module.exports = function(grunt) {
         }
     },
 
+    browserify: {
+      all: {
+        src: '<%= env.frontEndPath %>/js/source/regulations.js',
+        dest: '<%= env.frontEndPath %>/js/built/bundle.js'
+      },
+      options: {
+        transform: ['debowerify'],
+        debug: true
+      }
+    },
+
     uglify: {
       options: {
         mangle: false
@@ -177,6 +188,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-browserify');
 
     /**
     * Create task aliases by registering new tasks

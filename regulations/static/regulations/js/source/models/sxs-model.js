@@ -1,11 +1,12 @@
-define('sxs-model', ['underscore', 'backbone', './meta-model'], function(_, Backbone, MetaModel) {
-    'use strict';
+'use strict';
+var _ = require('underscore');
+var Backbone = require('backbone');
+var MetaModel = require('./meta-model');
 
-    Backbone.SxSModel = MetaModel.extend({});
+Backbone.SxSModel = MetaModel.extend({});
 
-    var sxsModel = new Backbone.SxSModel({
-        supplementalPath: 'sxs'
-    });
-
-    return sxsModel;
+var sxsModel = new Backbone.SxSModel({
+    supplementalPath: 'sxs'
 });
+
+module.exports = sxsModel;

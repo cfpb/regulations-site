@@ -1,7 +1,6 @@
-define('ga-events', ['underscore', 'backbone'], function(_, Backbone) {
-    'use strict';
+'use strict';
+var _ = require('underscore');
+var Backbone = require('backbone');
 
-    var GAEvents = _.clone(Backbone.Events);
-
-    return GAEvents;
-});
+var GAEvents = _.clone(Backbone.Events);
+module.exports = GAEvents;

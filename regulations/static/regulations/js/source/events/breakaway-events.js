@@ -1,7 +1,6 @@
-define('breakaway-events', ['underscore', 'backbone'], function(_, Backbone) {
-    'use strict';
+'use strict';
+var _ = require('underscore');
+var Backbone = require('backbone');
 
-    var BreakawayEvents = _.clone(Backbone.Events);
-
-    return BreakawayEvents;
-});
+var BreakawayEvents = _.clone(Backbone.Events);
+module.exports = BreakawayEvents;

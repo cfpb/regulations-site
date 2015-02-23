@@ -1,7 +1,6 @@
-define('main-events', ['underscore', 'backbone'], function(_, Backbone) {
-    'use strict';
+'use strict';
+var _ = require('underscore');
+var Backbone = require('backbone');
 
-    var MainEvents = _.clone(Backbone.Events);
-
-    return MainEvents;
-});
+var MainEvents = _.clone(Backbone.Events);
+module.exports = MainEvents;

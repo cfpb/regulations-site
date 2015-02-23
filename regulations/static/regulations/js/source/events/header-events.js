@@ -1,7 +1,6 @@
-define('header-events', ['underscore', 'backbone'], function(_, Backbone) {
-    'use strict';
+'use strict';
+var _ = require('underscore');
+var Backbone = require('backbone');
 
-    var HeaderEvents = _.clone(Backbone.Events);
-
-    return HeaderEvents;
-});
+var HeaderEvents = _.clone(Backbone.Events);
+module.exports = HeaderEvents;
