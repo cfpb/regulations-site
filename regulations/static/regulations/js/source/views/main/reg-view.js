@@ -2,8 +2,8 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var jQScroll = require('jquery-scrollstop');
-//var unveil = require('unveil');
+require('../../events/scroll-stop.js');
+var unveil = require('unveil');
 var DefinitionView = require('../sidebar/definition-view');
 var RegModel = require('../../models/reg-model');
 var SectionFooterView = require('./section-footer-view');
@@ -15,6 +15,7 @@ var Helpers = require('../../helpers');
 var DrawerEvents = require('../../events/drawer-events');
 var ChildView = require('./child-view');
 var GAEvents = require('../../events/ga-events');
+var lazy = require('lazy-images')('reg-image');
 Backbone.$ = $;
 
 var RegView = ChildView.extend({
@@ -288,7 +289,7 @@ var RegView = ChildView.extend({
 
     // lazy load images as the user scrolls
     loadImages: function() {
-        //$('.reg-image').unveil();
+        $('.reg-image').unveil();
     }
 });
 

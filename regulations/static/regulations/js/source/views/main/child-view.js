@@ -2,7 +2,7 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var jQScroll = require('jquery-scrollstop');
+require('../../events/scroll-stop.js');
 var Router = require('../../router');
 var HeaderEvents = require('../../events/header-events');
 var DrawerEvents = require('../../events/drawer-events');
