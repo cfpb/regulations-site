@@ -15,7 +15,6 @@ var Helpers = require('../../helpers');
 var DrawerEvents = require('../../events/drawer-events');
 var ChildView = require('./child-view');
 var GAEvents = require('../../events/ga-events');
-var lazy = require('lazy-images')('reg-image');
 Backbone.$ = $;
 
 var RegView = ChildView.extend({
