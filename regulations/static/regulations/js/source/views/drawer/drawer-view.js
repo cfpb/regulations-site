@@ -25,6 +25,7 @@ var DrawerView = Backbone.View.extend({
         this.childViews['table-of-contents'] = new TOCView();
         this.childViews['timeline'] = new HistoryView();
         this.childViews['search'] = new SearchView();
+        this.childViews['drawer-tabs'] = new DrawerTabs();
 
         this.setActivePane('table-of-contents');
     },

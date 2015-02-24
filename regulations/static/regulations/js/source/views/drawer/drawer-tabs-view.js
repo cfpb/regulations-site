@@ -2,7 +2,6 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var SxS = require('../breakaway/sxs-view');
 var DrawerEvents = require('../../events/drawer-events');
 var GAEvents = require('../../events/ga-events');
 Backbone.$ = $;
@@ -111,5 +110,4 @@ var DrawerTabsView = Backbone.View.extend({
     }
 });
 
-var drawerTabs = new DrawerTabsView();
-module.exports = drawerTabs;
+module.exports = DrawerTabsView;
