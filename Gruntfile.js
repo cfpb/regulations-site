@@ -62,11 +62,12 @@ module.exports = function(grunt) {
         quotmark: true,
         undef: true,
         strict: true,
-        unused: true,
+        unused: false,
         boss: true,
         browser: true,
         globalstrict: true,
         sub: true,
+        node: true,
         globals: {
           jQuery: true,
           $: true,
