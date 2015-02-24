@@ -3,17 +3,30 @@
     <meta charset="utf-8">
     <title></title>
     <link href="lib/mocha.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="../built/regulations.js"></script>
   </head>
   <body>
     <div id="mocha"></div>
+    <!-- load and configure mocha -->
     <script type="text/javascript" src="lib/expect.js"></script>
     <script type="text/javascript" src="lib/mocha.js"></script>
     <script type="text/javascript">
         mocha.setup({
             'ui': 'bdd',
-            'reporter': 'html'
+            //'reporter': 'html'
         });
+        mocha.slow(500)
+        mocha.timeout(3000)
     </script>
-    <script data-main="test.config.js" src="lib/require.js"></script>
+    <!-- load test suite -->
+    <script src="compiled_tests.js"></script>
+    <!-- kick off tests -->
+    <script>
+      if (window.mochaPhantomJS) {
+        window.mochaPhantomJS.run()
+      } else {
+        mocha.run()
+      }
+    </script>
   </body>
 </html>

@@ -105,6 +105,15 @@ module.exports = function(grunt) {
             debug: false
           }
         }
+      },
+      tests: {
+        files: {
+          '<%= env.frontEndPath %>/js/unittests/compiled_tests.js': ['<%= env.frontEndPath %>/js/unittests/specs/*.js']
+        },
+        options: {
+          watch: true,
+          debug: true
+        }
       }
     },
 
@@ -114,6 +123,15 @@ module.exports = function(grunt) {
           '<%= env.frontEndPath %>/js/built/regulations.min.js': ['<%= env.frontEndPath %>/js/built/regulations.js']
         }
       }
+    },
+
+    mocha: {
+      test: {
+        src: ['<%= env.frontEndPath %>/js/unittests/runner.html'],
+        options: {
+          run: true,
+        },
+      },
     },
 
     shell: {
@@ -131,14 +149,6 @@ module.exports = function(grunt) {
 
       'nose-ie10': {
         command: 'nosetests -s <%= env.testPath %> --tc=webdriver.browser:ie10 --tc=testUrl:<%= env.testUrl %>',
-        options: {
-            stdout: true,
-            stderr: true
-        }
-      },
-
-      'run-mocha-tests': {
-        command: '<%= env.frontEndPath %>/js/unittests/sauce_unit_tests.sh <%= env.testUrl %>',
         options: {
             stdout: true,
             stderr: true
@@ -180,12 +190,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-mocha');
 
     /**
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
-    grunt.registerTask('test', ['jshint', 'nose', 'shell:run-mocha-tests']);
+    grunt.registerTask('test', ['jshint', 'nose', 'browserify:tests', 'mocha']);
     grunt.registerTask('build', ['squish', 'test']);
     grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less']);
 };
