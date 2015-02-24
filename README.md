@@ -153,12 +153,6 @@ npm install
 bower install
 ```
 
-#### Create RequireJS module configuration files
-The UI uses [RequireJS](http://requirejs.org/) for script loading and modularity in the UI code. The configuration for RequireJS modules is needed in a couple of different locations for testing and codebase compression. There is a script in the repository that takes care of most of this for you.
-
-Run ```./require.sh``` from the root of the repository.
-If you need to make changes to modules in your instance of the application, edit [require.paths.json](https://github.com/cfpb/regulations-site/blob/master/require.paths.json) and [require.shim.json](https://github.com/cfpb/regulations-site/blob/master/require.shim.json) accordingly. These files map to the ```paths``` and ```shim``` objects in the RequireJS configuration object. For more information: http://requirejs.org/docs/api.html#config
-
 #### Configuration JSON
 In the root of the repository, copy ```example-config.json``` to ```config.json``` and edit as necessary. Grunt depends on these settings to carry out tasks.
 - ```testURL``` is the environment that you would like tests to run on.
