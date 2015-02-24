@@ -83,43 +83,35 @@ module.exports = function(grunt) {
       all: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js', '<%= env.frontEndPath %>/js/source/views/*/*.js', '!<%= env.frontEndPath %>/js/source/require.config.js']
     },
 
-    requirejs: {
-        compile: {
-            options: {
-                baseUrl: '<%= env.frontEndPath %>/js/source',
-                dir: "<%= env.frontEndPath %>/js/built",
-                modules: [ {name: "regulations"} ],
-                mainConfigFile: 'require.config.json',
-                skipDirOptimize: true,
-                optimizeCss: 'none',
-                removeCombined: 'true'
-            }
-        }
-    },
-
     browserify: {
-      all: {
-        src: '<%= env.frontEndPath %>/js/source/regulations.js',
-        dest: '<%= env.frontEndPath %>/js/built/bundle.js'
+      dev: {
+        files: {
+          '<%= env.frontEndPath %>/js/built/regulations.js': ['<%= env.frontEndPath %>/js/source/regulations.js']
+        },
+        options: {
+          transform: ['browserify-shim', 'debowerify'],
+          browserifyOptions: {
+            debug: true
+          }
+        }
       },
-      options: {
-        transform: ['browserify-shim', 'debowerify'],
-        debug: true
+      dist: {
+        files: {
+          '<%= env.frontEndPath %>/js/built/regulations.js': ['<%= env.frontEndPath %>/js/source/regulations.js']
+        },
+        options: {
+          transform: ['browserify-shim', 'debowerify'],
+          browserifyOptions: {
+            debug: false
+          }
+        }
       }
     },
 
     uglify: {
-      options: {
-        mangle: false
-      },
-      require: {
+      dist: {
         files: {
-          '<%= env.frontEndPath %>/js/built/lib/requirejs/require.js': ['<%= env.frontEndPath %>/js/source/lib/requirejs/require.js']
-        }
-      },
-      requireConfig: {
-        files: {
-          '<%= env.frontEndPath %>/js/built/require.config.js': ['<%= env.frontEndPath %>/js/built/require.config.js']
+          '<%= env.frontEndPath %>/js/built/regulations.min.js': ['<%= env.frontEndPath %>/js/built/regulations.js']
         }
       }
     },
@@ -171,8 +163,8 @@ module.exports = function(grunt) {
      */
     watch: {
       gruntfile: {
-        files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/*.less', '<%= env.frontEndPath %>/css/less/module/*.less', '<%= env.frontEndPath %>/css/less/media-queries/breakpoints/*.less','<%= env.frontEndPath %>/js/tests/specs/*.js', '<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js', '<%= env.frontEndPath %>/js/source/views/*/*.js', '<%= env.frontEndPath %>/js/tests/functional/*.js'],
-        tasks: ['less']
+        files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/**/*.less', '<%= env.frontEndPath %>/js/source/**/*.js'],
+        tasks: ['less', 'browserify:dev']
       }
     }
   });
@@ -183,7 +175,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-bower-task');
@@ -196,5 +187,5 @@ module.exports = function(grunt) {
     grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
     grunt.registerTask('test', ['jshint', 'nose', 'shell:run-mocha-tests']);
     grunt.registerTask('build', ['squish', 'test']);
-    grunt.registerTask('squish', ['requirejs', 'uglify', 'less']);
+    grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less']);
 };

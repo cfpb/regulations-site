@@ -23,15 +23,11 @@ CSS/Javascript etc., should inherit from this template.
         <script>
             window.APP_PREFIX = "{{ APP_PREFIX }}";
         </script>
-        <script src="{%static "regulations/js/built/bundle.js" %}"></script>
-        <!--<script src="{%static "regulations/js/"|add:env|add:"/require.config.js" %}"></script>
-        <script>
-            if (typeof require !== 'undefined') {
-                require.baseUrl = "{%static "regulations/js/"|add:env|add:"/"%}";
-            }
-            window.APP_PREFIX = "{{ APP_PREFIX }}";
-        </script>
-        <script data-main="regulations" src="{%static "regulations/js/"|add:env|add:"/lib/requirejs/require.js" %}"></script>-->
+        {% if env == 'built' %}
+          <script src="{%static "regulations/js/built/regulations.min.js" %}"></script>
+        {% else %}
+          <script src="{%static "regulations/js/built/regulations.js" %}"></script>
+        {% endif %}
         {% endblock %}
 
         <!--[if lt IE 9]>
