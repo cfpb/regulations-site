@@ -131,11 +131,11 @@ Panel Slide Button
 
 /* use the icon font for the drawer toggle arrow in browsers that support it */
 .panel-slide:before {
-    .minicon;
-    content: "\e006";
+    .cf-icon;
+    content: "\e002";
 
     .active & {
-        content: "\e002";
+        content: "\e000";
     }
 }
 
@@ -167,6 +167,7 @@ currently these are TOC, History, and Search
     }
     
     /* Fall back to PNG images for drawer icons when @font-face isn't supported */
+    .cf-icon,
     .minicon-menu,
     .minicon-history,
     .minicon-search, {
@@ -177,13 +178,14 @@ currently these are TOC, History, and Search
         }
     }
 
-    .minicon-menu {
+    .minicon-menu,
+    .cf-icon-menu {
         html.no-fontface & {
             background: url(../img/nav-link.png) center center no-repeat;
         }
     }
 
-    .minicon-search {
+    .cf-icon-search {
         html.no-fontface & {
             background: url(../img/search.png) center center no-repeat;
         }

@@ -22,7 +22,7 @@
     <div class="browser-warning displayed">
         <h2>Please note that the eRegulations tool does not support Internet Explorer version 7 or below.</h2>
         <ul>
-            <li>To improve your experience, please <a href="http://browsehappy.com/">upgrade your browser <span class="minicon-right"></span></a></li>
+            <li>To improve your experience, please <a href="http://browsehappy.com/">upgrade your browser <span class="cf-icon cf-icon-right"></span></a></li>
             <li>If you are using IE8 or later, you may need to turn off "Compatibility View."</li>
         </ul>
     </div>
@@ -37,13 +37,13 @@
         <a href="#" id="panel-link" class="toc-toggle panel-slide"><span class="icon-text">Navigation</span></a>
         <ul class="drawer-toggles">
             {% block sidebar-toc-link %}
-            <li><a href="#table-of-contents" id="menu-link" class="toc-nav-link current" title="Table of Contents"><span class="icon-text">Table of Contents</span><span class="minicon-menu"></span></a></li>
+            <li><a href="#table-of-contents" id="menu-link" class="toc-nav-link current" title="Table of Contents"><span class="icon-text">Table of Contents</span><span class="cf-icon cf-icon-menu"></span></a></li>
             {% endblock %}
             {% block sidebar-history-link %}
             <li><a href="#timeline" id="timeline-link" class="toc-nav-link" title="Regulation Timeline"><span class="icon-text">Regulation Timeline</span><span class="minicon-history"></span></a></li>
             {% endblock %}
             {% block sidebar-search-link %}
-            <li><a href="#search" id="search-link" class="toc-nav-link" title="Search"><span class="icon-text">Search</span><span class="minicon-search"></span></a></li>
+            <li><a href="#search" id="search-link" class="toc-nav-link" title="Search"><span class="icon-text">Search</span><span class="cf-icon cf-icon-search"></span></a></li>
             {% endblock %}
         </ul>
     </div> <!-- /toc-head-->
@@ -134,7 +134,7 @@
         <div class="drawer-content">
             <form action="{% url 'chrome_search' reg_part %}" method="GET">
                 <div class="search-box">
-                    <input type="text" name="q" value="{{ q }}" /><button type="submit"><i class="minicon-search"></i><strong class="icon-text">Search</strong></button>
+                    <input type="text" name="q" value="{{ q }}" /><button type="submit"><i class="cf-icon cf-icon-search"></i><strong class="icon-text">Search</strong></button>
                 </div><!--/.search-box-->
                 <div class="version-search">
                     <h4>Search in regulation effective:</h4>

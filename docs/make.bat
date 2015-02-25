@@ -5,9 +5,9 @@ REM Command file for Sphinx documentation
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
-set BUILDDIR=/home/vagrant/regulations-site/docs
-set ALLSPHINXOPTS=-d %BUILDDIR%/doctrees %SPHINXOPTS% /home/vagrant/regulations-site/docs-source
-set I18NSPHINXOPTS=%SPHINXOPTS% /home/vagrant/regulations-site/docs-source
+set BUILDDIR=/Users/munozk/Projects/regulations-site/docs
+set ALLSPHINXOPTS=-d %BUILDDIR%/doctrees %SPHINXOPTS% /Users/munozk/Projects/regulations-site/docs-source
+set I18NSPHINXOPTS=%SPHINXOPTS% /Users/munozk/Projects/regulations-site/docs-source
 if NOT "%PAPER%" == "" (
 	set ALLSPHINXOPTS=-D latex_paper_size=%PAPER% %ALLSPHINXOPTS%
 	set I18NSPHINXOPTS=-D latex_paper_size=%PAPER% %I18NSPHINXOPTS%

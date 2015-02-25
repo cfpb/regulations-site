@@ -3,16 +3,16 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD = /home/vagrant/regulations-site/bin/sphinx-build
+SPHINXBUILD = /Users/munozk/Projects/regulations-site/bin/sphinx-build
 PAPER         =
-BUILDDIR      = /home/vagrant/regulations-site/docs
+BUILDDIR      = /Users/munozk/Projects/regulations-site/docs
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) /home/vagrant/regulations-site/docs-source
+ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) /Users/munozk/Projects/regulations-site/docs-source
 # the i18n builder cannot share the environment and doctrees with the others
-I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) /home/vagrant/regulations-site/docs-source
+I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) /Users/munozk/Projects/regulations-site/docs-source
 
 .PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext
 

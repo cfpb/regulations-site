@@ -34,7 +34,7 @@ define('sxs-view', ['jquery', 'underscore', 'backbone', './sxs-model', 'breakawa
                     this.render(returned);
                 }
                 else {
-                    this.render('<div class="error"><span class="minicon-warning"></span>Due to a network error, we were unable to retrieve the requested information.</div>'); 
+                    this.render('<div class="error"><span class="cf-icon cf-icon-error icon-warning"></span>Due to a network error, we were unable to retrieve the requested information.</div>'); 
                 }
 
                 this.$el.addClass('open-sxs');
