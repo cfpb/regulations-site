@@ -188,9 +188,13 @@ module.exports = function(grunt) {
      * Add files to monitor below.
      */
     watch: {
-      files: {
-        files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/**/*.less', '<%= env.frontEndPath %>/js/source/**/*.js'],
-        tasks: ['less:dev', 'browserify:dev']
+      js: {
+        files: ['Gruntfile.js', '<%= env.frontEndPath %>/js/source/**/*.js'],
+        tasks: ['browserify:dev']
+      },
+      css: {
+        files: ['<%= env.frontEndPath %>/css/less/**/*.less'],
+        tasks: ['less:dev']
       },
       options: {
         livereload: true
