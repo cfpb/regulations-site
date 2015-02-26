@@ -24,7 +24,10 @@ module.exports = function(grunt) {
             options: {
                 paths: ['<%= env.frontEndPath %>/css/less'],
                 compress: false,
-                sourceMap: true
+                sourceMap: true,
+                sourceMapFilename: '<%= env.frontEndPath %>/css/style.css.map',
+                sourceMapBasepath: '<%= env.frontEndPath %>/css/less/',
+                sourceMapURL: 'style.css.map'
             },
             files: {
                 "<%= env.frontEndPath %>/css/style.css": "<%= env.frontEndPath %>/css/less/main.less"
@@ -34,7 +37,8 @@ module.exports = function(grunt) {
           options: {
               paths: ['<%= env.frontEndPath %>/css/less'],
               compress: true,
-              sourceMap: false
+              sourceMap: false,
+              ieCompat: true
           },
           files: {
               "<%= env.frontEndPath %>/css/style.min.css": "<%= env.frontEndPath %>/css/less/main.less"
