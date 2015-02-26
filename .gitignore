@@ -75,6 +75,7 @@ regulations/static/regulations/js/built/*
 !regulations/static/regulations/js/built/lib/respond/respond.min.js
 docs/Makefile
 docs/make.bat
+regulations-core/
 
 # Buildout cruft
 .installed.cfg
