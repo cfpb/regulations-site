@@ -20,15 +20,26 @@ module.exports = function(grunt) {
      * https://github.com/gruntjs/grunt-contrib-less
      */
     less: {
-        development: {
+        dev: {
             options: {
                 paths: ['<%= env.frontEndPath %>/css/less'],
-                yuicompress: true
+                compress: false,
+                sourceMap: true
             },
             files: {
-                "<%= env.frontEndPath %>/css/style.min.css": "<%= env.frontEndPath %>/css/less/main.less"
+                "<%= env.frontEndPath %>/css/style.css": "<%= env.frontEndPath %>/css/less/main.less"
             }
-        }
+        },
+        dist: {
+          options: {
+              paths: ['<%= env.frontEndPath %>/css/less'],
+              compress: true,
+              sourceMap: false
+          },
+          files: {
+              "<%= env.frontEndPath %>/css/style.min.css": "<%= env.frontEndPath %>/css/less/main.less"
+          }
+      }
     },
 
     styleguide: {
@@ -175,7 +186,7 @@ module.exports = function(grunt) {
     watch: {
       gruntfile: {
         files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/**/*.less', '<%= env.frontEndPath %>/js/source/**/*.js'],
-        tasks: ['less', 'browserify:dev']
+        tasks: ['less:dev', 'browserify:dev']
       }
     }
   });
@@ -199,5 +210,5 @@ module.exports = function(grunt) {
     grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
     grunt.registerTask('test', ['jshint', 'nose', 'browserify:tests', 'mocha']);
     grunt.registerTask('build', ['squish', 'test']);
-    grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less']);
+    grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less:dist']);
 };
