@@ -76,6 +76,7 @@ regulations/static/regulations/js/built/*
 docs/Makefile
 docs/make.bat
 regulations-core/
+style.css.map
 
 # Buildout cruft
 .installed.cfg
