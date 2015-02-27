@@ -62,11 +62,12 @@ module.exports = function(grunt) {
         quotmark: true,
         undef: true,
         strict: true,
-        unused: true,
+        unused: false,
         boss: true,
         browser: true,
         globalstrict: true,
         sub: true,
+        node: true,
         globals: {
           jQuery: true,
           $: true,
@@ -83,34 +84,55 @@ module.exports = function(grunt) {
       all: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js', '<%= env.frontEndPath %>/js/source/views/*/*.js', '!<%= env.frontEndPath %>/js/source/require.config.js']
     },
 
-    requirejs: {
-        compile: {
-            options: {
-                baseUrl: '<%= env.frontEndPath %>/js/source',
-                dir: "<%= env.frontEndPath %>/js/built",
-                modules: [ {name: "regulations"} ],
-                mainConfigFile: 'require.config.json',
-                skipDirOptimize: true,
-                optimizeCss: 'none',
-                removeCombined: 'true'
-            }
+    browserify: {
+      dev: {
+        files: {
+          '<%= env.frontEndPath %>/js/built/regulations.js': ['<%= env.frontEndPath %>/js/source/regulations.js']
+        },
+        options: {
+          transform: ['browserify-shim', 'debowerify'],
+          browserifyOptions: {
+            debug: true
+          }
         }
+      },
+      dist: {
+        files: {
+          '<%= env.frontEndPath %>/js/built/regulations.js': ['<%= env.frontEndPath %>/js/source/regulations.js']
+        },
+        options: {
+          transform: ['browserify-shim', 'debowerify'],
+          browserifyOptions: {
+            debug: false
+          }
+        }
+      },
+      tests: {
+        files: {
+          '<%= env.frontEndPath %>/js/unittests/compiled_tests.js': ['<%= env.frontEndPath %>/js/unittests/specs/*.js']
+        },
+        options: {
+          watch: true,
+          debug: true
+        }
+      }
     },
 
     uglify: {
-      options: {
-        mangle: false
-      },
-      require: {
+      dist: {
         files: {
-          '<%= env.frontEndPath %>/js/built/lib/requirejs/require.js': ['<%= env.frontEndPath %>/js/source/lib/requirejs/require.js']
-        }
-      },
-      requireConfig: {
-        files: {
-          '<%= env.frontEndPath %>/js/built/require.config.js': ['<%= env.frontEndPath %>/js/built/require.config.js']
+          '<%= env.frontEndPath %>/js/built/regulations.min.js': ['<%= env.frontEndPath %>/js/built/regulations.js']
         }
       }
+    },
+
+    mocha: {
+      test: {
+        src: ['<%= env.frontEndPath %>/js/unittests/runner.html'],
+        options: {
+          run: true,
+        },
+      },
     },
 
     shell: {
@@ -128,14 +150,6 @@ module.exports = function(grunt) {
 
       'nose-ie10': {
         command: 'nosetests -s <%= env.testPath %> --tc=webdriver.browser:ie10 --tc=testUrl:<%= env.testUrl %>',
-        options: {
-            stdout: true,
-            stderr: true
-        }
-      },
-
-      'run-mocha-tests': {
-        command: '<%= env.frontEndPath %>/js/unittests/sauce_unit_tests.sh <%= env.testUrl %>',
         options: {
             stdout: true,
             stderr: true
@@ -160,8 +174,8 @@ module.exports = function(grunt) {
      */
     watch: {
       gruntfile: {
-        files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/*.less', '<%= env.frontEndPath %>/css/less/module/*.less', '<%= env.frontEndPath %>/css/less/media-queries/breakpoints/*.less','<%= env.frontEndPath %>/js/tests/specs/*.js', '<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js', '<%= env.frontEndPath %>/js/source/views/*/*.js', '<%= env.frontEndPath %>/js/tests/functional/*.js'],
-        tasks: ['less']
+        files: ['Gruntfile.js', '<%= env.frontEndPath %>/css/less/**/*.less', '<%= env.frontEndPath %>/js/source/**/*.js'],
+        tasks: ['less', 'browserify:dev']
       }
     }
   });
@@ -172,17 +186,18 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-mocha');
 
     /**
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
-    grunt.registerTask('test', ['jshint', 'nose', 'shell:run-mocha-tests']);
+    grunt.registerTask('test', ['jshint', 'nose', 'browserify:tests', 'mocha']);
     grunt.registerTask('build', ['squish', 'test']);
-    grunt.registerTask('squish', ['requirejs', 'uglify', 'less']);
+    grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less']);
 };

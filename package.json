@@ -6,18 +6,38 @@
   },
   "devDependencies": {
     "bower": "~1.3.9",
+    "browserify": "^9.0.3",
+    "browserify-shim": "^3.8.3",
+    "deamdify": "^0.1.1",
+    "debowerify": "^1.2.0",
     "expect.js": "~0.2.0",
     "grunt": "~0.4.1",
     "grunt-bower-task": "~0.4.0",
+    "grunt-browserify": "^3.4.0",
     "grunt-contrib-jshint": "~0.3.0",
     "grunt-contrib-less": "~0.5.2",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-uglify": "^0.8.0",
     "grunt-contrib-watch": "~0.3.1",
+    "grunt-mocha": "^0.4.11",
     "grunt-shell": "~0.4.0",
     "grunt-styleguide": "~0.2.6",
     "tmp": "0.0.23",
     "watch": "~0.8.0"
   },
-  "keywords": []
+  "keywords": [],
+  "browser": {
+    "jquery": "./node_modules/jquery/dist/jquery.js"
+  },
+  "browserify-shim": {
+    "jquery": {
+      "exports": "jQuery"
+    }
+  },
+  "dependencies": {
+    "backbone": "1.0.0",
+    "jquery": "1.11.0",
+    "jquery-scrollstop": "^1.2.0",
+    "underscore": "1.4.4"
+  }
 }

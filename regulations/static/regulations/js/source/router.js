@@ -1,87 +1,91 @@
-define('regs-router', ['underscore', 'backbone', 'main-events', 'breakaway-events', 'queryparams'], function(_, Backbone, MainEvents, BreakawayEvents) {
-    'use strict';
+'use strict';
+var _ = require('underscore');
+var Backbone = require('backbone');
+var MainView = require('./views/main/main-view');
+var MainEvents = require('./events/main-events');
+var BreakawayEvents = require('./events/breakaway-events');
+//require('backbone.queryparams');
 
-    var RegsRouter;
+var RegsRouter;
 
-    if (typeof window.history.pushState === 'undefined') {
-        RegsRouter = function() {
-            this.start = function() {};
-            this.navigate = function() {};
-            this.hasPushState = false;
-        };
-    }
-    else {
-        RegsRouter = Backbone.Router.extend({
-            routes: {
-                'sxs/:section/:version': 'loadSxS',
-                'search/:reg': 'loadSearchResults',
-                'diff/:section/:baseVersion/:newerVersion': 'loadDiffSection',
-                ':section/:version': 'loadSection'
-            },
+if (typeof window.history.pushState === 'undefined') {
+    RegsRouter = function() {
+        this.start = function() {};
+        this.navigate = function() {};
+        this.hasPushState = false;
+    };
+}
+else {
+    RegsRouter = Backbone.Router.extend({
+        routes: {
+            'sxs/:section/:version': 'loadSxS',
+            'search/:reg': 'loadSearchResults',
+            'diff/:section/:baseVersion/:newerVersion': 'loadDiffSection',
+            ':section/:version': 'loadSection'
+        },
 
-            loadSection: function(section) {
-                var options = {id: section};
+        loadSection: function(section) {
+            var options = {id: section};
 
-                // to scroll to paragraph if there is a hadh
-                options.scrollToId = Backbone.history.getHash();
+            // to scroll to paragraph if there is a hadh
+            options.scrollToId = Backbone.history.getHash();
 
-                // ask the view not to route, its not needed
-                options.noRoute = true;
+            // ask the view not to route, its not needed
+            options.noRoute = true;
 
-                MainEvents.trigger('section:open', section, options, 'reg-section'); 
-            },
+            MainEvents.trigger('section:open', section, options, 'reg-section');
+        },
 
-            loadDiffSection: function(section, baseVersion, newerVersion, params) {
-                /* jshint camelcase: false */
-                var options = {};
+        loadDiffSection: function(section, baseVersion, newerVersion, params) {
+            /* jshint camelcase: false */
+            var options = {};
 
-                options.id = section;
-                options.baseVersion = baseVersion;
-                options.newerVersion = newerVersion;
-                options.noRoute = true;
-                options.fromVersion = params.from_version;
+            options.id = section;
+            options.baseVersion = baseVersion;
+            options.newerVersion = newerVersion;
+            options.noRoute = true;
+            options.fromVersion = params.from_version;
 
-                MainEvents.trigger('diff:open', section, options, 'diff');
-            },
+            MainEvents.trigger('diff:open', section, options, 'diff');
+        },
 
-            loadSxS: function(section, version, params) {
-                /* jshint camelcase: false */
-                BreakawayEvents.trigger('sxs:open', {
-                    'regParagraph': section,
-                    'docNumber': version,
-                    'fromVersion': params.from_version
-                });
-            },
+        loadSxS: function(section, version, params) {
+            /* jshint camelcase: false */
+            BreakawayEvents.trigger('sxs:open', {
+                'regParagraph': section,
+                'docNumber': version,
+                'fromVersion': params.from_version
+            });
+        },
 
-            loadSearchResults: function(reg, params) {
-                /* jshint unused: false */
-                var config = {
-                    query: params.q,
-                    regVersion: params.regVersion
-                };
+        loadSearchResults: function(reg, params) {
+            /* jshint unused: false */
+            var config = {
+                query: params.q,
+                regVersion: params.regVersion
+            };
 
-                // if there is a page number for the query string
-                if (typeof params.page !== 'undefined') {
-                    config.page = params.page;
-                }
+            // if there is a page number for the query string
+            if (typeof params.page !== 'undefined') {
+                config.page = params.page;
+            }
 
-                MainEvents.trigger('search-results:open', null, config, 'search-results');
-            },
+            MainEvents.trigger('search-results:open', null, config, 'search-results');
+        },
 
-            start:  function() {
-                var root = window.APP_PREFIX;
+        start:  function() {
+            var root = window.APP_PREFIX || '';
 
-                Backbone.history.start({
-                    pushState: 'pushState' in window.history,
-                    silent: true,
-                    root: root
-                });
-            },
+            Backbone.history.start({
+                pushState: 'pushState' in window.history,
+                silent: true,
+                root: root
+            });
+        },
 
-            hasPushState: true
-        });
-    }
+        hasPushState: true
+    });
+}
 
-    var router = new RegsRouter();
-    return router;
-});
+var router = new RegsRouter();
+module.exports = router;

@@ -1,40 +1,44 @@
-define('header-view', ['jquery', 'underscore', 'backbone', 'sub-head-view'], function($, _, Backbone, SubHead) {
-    'use strict';
-    var HeaderView = Backbone.View.extend({
-        el: '.reg-header',
+'use strict';
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+var SubHead = require('./sub-head-view');
+Backbone.$ = $;
 
-        initialize: function() {
-            this.subHeadView = new SubHead();
-        },
+var HeaderView = Backbone.View.extend({
+    el: '.reg-header',
 
-        events: {
-            'click .mobile-nav-trigger': 'toggleNav'
-        },
+    initialize: function() {
+        this.subHeadView = new SubHead();
+    },
 
-        toggleNav: function(e) {
-            e.preventDefault();
-            $('.app-nav-list, .mobile-nav-trigger').toggleClass('open');
-        },
+    events: {
+        'click .mobile-nav-trigger': 'toggleNav'
+    },
 
-        contextMap: {
-            'changeSubHeadText': '_updateSubHead'
-        },
+    toggleNav: function(e) {
+        e.preventDefault();
+        $('.app-nav-list, .mobile-nav-trigger').toggleClass('open');
+    },
 
-        ask: function(message, context) {
-            if (typeof this.contextMap[message] !== 'undefined') {
-                this.contextMap[message].apply(context);
-            }
-        },
+    contextMap: {
+        'changeSubHeadText': '_updateSubHead'
+    },
 
-        // type = wayfinding or search
-        // content = new content
-        _updateSubHead: function(context) {
-            this.subHeadView.change(
-                context.type,
-                context.content
-            );
+    ask: function(message, context) {
+        if (typeof this.contextMap[message] !== 'undefined') {
+            this.contextMap[message].apply(context);
         }
-    });
+    },
 
-    return HeaderView;
+    // type = wayfinding or search
+    // content = new content
+    _updateSubHead: function(context) {
+        this.subHeadView.change(
+            context.type,
+            context.content
+        );
+    }
 });
+
+module.exports = HeaderView;
