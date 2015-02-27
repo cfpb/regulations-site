@@ -66,7 +66,6 @@ class Command(BaseCommand):
         return self.base_url  + href
 
 
-
     def handle(self, *args, **options):
 
         url = urlparse(sys.argv[2])
