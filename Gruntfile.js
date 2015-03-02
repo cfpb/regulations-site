@@ -58,47 +58,25 @@ module.exports = function(grunt) {
         },
 
     /**
-     * JSHint: https://github.com/gruntjs/grunt-contrib-jshint
+     * ESLint: https://github.com/sindresorhus/grunt-eslint
      *
-     * Validate files with JSHint.
+     * Validate files with ESLint.
      * Below are options that conform to idiomatic.js standards.
-     * Feel free to add/remove your favorites: http://www.jshint.com/docs/#options
      */
-    jshint: {
-      options: {
-        camelcase: true,
-        curly: true,
-        eqeqeq: true,
-        forin: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        quotmark: true,
-        undef: true,
-        strict: true,
-        unused: false,
-        boss: true,
-        browser: true,
-        globalstrict: true,
-        sub: true,
-        node: true,
-        globals: {
-          jQuery: true,
-          $: true,
-          Backbone: true,
-          _: true,
-          require: true,
-          define: true,
-          subhead: true,
-          toc: true,
-          sidebar: true,
-          regContent: true
-        }
-      },
-      all: ['<%= env.frontEndPath %>/js/source/*.js', '<%= env.frontEndPath %>/js/source/views/*.js', '<%= env.frontEndPath %>/js/source/views/*/*.js', '!<%= env.frontEndPath %>/js/source/require.config.js']
+    eslint: {
+        target: [
+          '<%= env.frontEndPath %>/js/source/*.js',
+          '<%= env.frontEndPath %>/js/source/events/**/*.js',
+          '<%= env.frontEndPath %>/js/source/models/**/*.js',
+          '<%= env.frontEndPath %>/js/source/views/**/*.js'
+        ]
     },
 
+    /**
+    * Browserify:
+    *
+    * Require('modules') in the browser/bundle up dependencies.
+    */
     browserify: {
       dev: {
         files: {
@@ -205,21 +183,13 @@ module.exports = function(grunt) {
   /**
    * The above tasks are loaded here.
    */
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-styleguide');
-    grunt.loadNpmTasks('grunt-bower-task');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-browserify');
-    grunt.loadNpmTasks('grunt-mocha');
+    require('load-grunt-tasks')(grunt);
 
     /**
     * Create task aliases by registering new tasks
     */
     grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
-    grunt.registerTask('test', ['jshint', 'nose', 'browserify:tests', 'mocha']);
+    grunt.registerTask('test', ['eslint', 'nose', 'browserify:tests', 'mocha']);
     grunt.registerTask('build', ['squish', 'test']);
     grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less:dist']);
 };
