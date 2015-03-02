@@ -46,17 +46,6 @@ module.exports = function(grunt) {
       }
     },
 
-    styleguide: {
-            dist: {
-                options: {
-                    name: 'eRegs Styleguide'
-                },
-                files: {
-                    '<%= env.frontEndPath %>/docs/styleguide': '<%= env.frontEndPath %>/css/'
-                }
-            }
-        },
-
     /**
      * ESLint: https://github.com/sindresorhus/grunt-eslint
      *
@@ -168,7 +157,7 @@ module.exports = function(grunt) {
     watch: {
       js: {
         files: ['Gruntfile.js', '<%= env.frontEndPath %>/js/source/**/*.js'],
-        tasks: ['browserify:dev']
+        tasks: ['eslint','browserify:dev']
       },
       css: {
         files: ['<%= env.frontEndPath %>/css/less/**/*.less'],
