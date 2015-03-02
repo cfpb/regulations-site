@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from BeautifulSoup import BeautifulSoup
 import urllib2
 from urlparse import urlparse
-from threading import Thread
+import threading
 import sys
 import time
 
@@ -21,16 +21,6 @@ class Command(BaseCommand):
             print "Cached: " + without_anchor
         except Exception, errtxt:
             print "    Failed: " + without_anchor
-            print "    " + str(errtxt)
-
-        try:
-            without_anchor = args[1].split("#")[0]
-            temp = urllib2.urlopen(without_anchor)
-            temp.read()
-            temp.close()
-            print "Cached: " + without_anchor
-        except Exception, errtxt:
-            print "    Failed: " +  without_anchor
             print "    " + str(errtxt)
 
 
@@ -52,6 +42,7 @@ class Command(BaseCommand):
             print "    " + str(errtxt)
 
 
+    #figure out the partial path depending on root location of eregs
     def get_partial_url(self,  href):
 
         href = href.split("/")
@@ -72,9 +63,6 @@ class Command(BaseCommand):
         self.base_url = url.scheme + "://" + url.netloc
         self.full_url = sys.argv[2]
 
-        #TODO: make this an argument
-        wait_in_seconds = 2
-
         print self.base_url
         print self.full_url
         self.regulations = None
@@ -90,8 +78,6 @@ class Command(BaseCommand):
             else:
                 regulations_links = self.regulations.split(",")
 
-            counter = 0
-
             for link in regulations_links:
                 print "Getting NAV links from " + self.base_url + link
 
@@ -99,23 +85,24 @@ class Command(BaseCommand):
                 soup = BeautifulSoup(reg_nav)
                 reg_soup = soup.findAll("a")
 
-
-
                 for a in reg_soup:
                     if a.has_key('data-section-id'):
-                        counter = counter + 2
+
                         partial = self.get_partial_url( a["href"])
-                        Thread(target=self.access_url, args=(self.base_url + a["href"],partial ) ).start()
 
-                        if counter >= 10 and ((counter % 10) == 0):
+                        thread_count = len(threading.enumerate())
 
-                            print "Total URLs so far: " + str(counter)
+                        #process 5 web pages at time. Some servers hate a lot of requests at once.
+                        if thread_count <= 5:
+                            threading.Thread(target=self.access_url, args=(partial, ) ).start()
+                        else:
+                            print "Currently Processing " + str(thread_count) + " Urls"
                             print "Waiting..."
-                            time.sleep(wait_in_seconds)
+                            time.sleep(thread_count * 2)
 
-
-                print "Waiting..."
-                time.sleep(30)
+                #let the threads catch up before doing the next batch
+                if len(threading.enumerate()) > 1:
+                    time.sleep(len(threading.enumerate()) * 2)
 
         except Exception, errtxt:
             print "    " + str(errtxt)
