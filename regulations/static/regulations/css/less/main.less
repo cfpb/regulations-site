@@ -1,6 +1,6 @@
 /*
 Main.less
-========================================================================== 
+==========================================================================
 main.less imports all supporting less files
 and includes any non-semantic helper classes
 */
@@ -8,36 +8,36 @@ and includes any non-semantic helper classes
 /*
 Type & Layout
 ------------- */
-@import url(normalize.less);
-@import url(mixins.less);
-@import url(fonts.less);
-@import url(icons.less);
-@import url(typography.less);
-@import url(layout.less);
+@import "normalize.less";
+@import "mixins.less";
+@import "fonts.less";
+@import "icons.less";
+@import "typography.less";
+@import "layout.less";
 
 /*
 Modules
 ------- */
-@import url(module/navigation.less);
-@import url(module/drawer.less);
-@import url(module/interpretations.less);
-@import url(module/header.less);
-@import url(module/footer.less);
-@import url(module/sidebar.less);
-@import url(module/sxs.less);
-@import url(module/search-results.less);
-@import url(module/forms.less);
-@import url(module/diffs.less);
-@import url(module/expandables.less);
-@import url(module/reg-landing.less);
-@import url(module/universal-landing.less);
-@import url(module/about.less);
-@import url(module/error.less);
+@import "module/navigation.less";
+@import "module/drawer.less";
+@import "module/interpretations.less";
+@import "module/header.less";
+@import "module/footer.less";
+@import "module/sidebar.less";
+@import "module/sxs.less";
+@import "module/search-results.less";
+@import "module/forms.less";
+@import "module/diffs.less";
+@import "module/expandables.less";
+@import "module/reg-landing.less";
+@import "module/universal-landing.less";
+@import "module/about.less";
+@import "module/error.less";
 
 /*
 Media Queries
 ------------- */
-@import url(media-queries/media-queries.less);
+@import "media-queries/media-queries.less";
 
 
 /*
@@ -52,7 +52,7 @@ Media Queries
 /*.lt-ie10 {
   *, *:before, *:after {
       box-sizing: content-box;
-  }   
+  }
 }*/
  /* hide sxs links */
 .sxs-ref {
@@ -286,10 +286,10 @@ img.reg-image {
     }
  }
 
-/* 
+/*
 Clearfix
 --------
-* Use .group class as clearfix...  
+* Use .group class as clearfix...
 * It just sounds nicer!
 */
 .group:before,
@@ -312,7 +312,7 @@ Clearfix
 }
 
 /*
-Import no-js.less and print.less at the end, since they overrides other rules
+Import no-js.less and print.less at the end, since they override other rules
 */
-@import url(module/no-js.less);
-@import url(print.less);
+@import "module/no-js.less";
+@import "print.less";

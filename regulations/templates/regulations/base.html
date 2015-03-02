@@ -17,7 +17,11 @@ CSS/Javascript etc., should inherit from this template.
         {% endblock %}
         </title>
         <link rel="shortcut icon" type="image/x-icon" href="{%static "eregsip/favicon.ico" %}"/>
-        <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
+        {% if env == 'built' %}
+          <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
+        {% else %}
+          <link rel="stylesheet" href="{%static "regulations/css/style.css" %}"/>
+        {% endif %}
         <script src="{%static "regulations/js/source/otherlibs/modernizr.js" %}"></script>
         {% block app_js %}
         <script>
@@ -26,6 +30,8 @@ CSS/Javascript etc., should inherit from this template.
         {% if env == 'built' %}
           <script src="{%static "regulations/js/built/regulations.min.js" %}"></script>
         {% else %}
+          <!-- enable livereload and serve non minified js in debug mode -->
+          <script src="//localhost:35729/livereload.js"></script>
           <script src="{%static "regulations/js/built/regulations.js" %}"></script>
         {% endif %}
         {% endblock %}
