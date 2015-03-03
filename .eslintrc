@@ -14,7 +14,7 @@ globals:
 rules:
   # Possible errors
   no-cond-assign: 0
-  no-comma-dangle: 0
+  no-comma-dangle: 2
   no-console: 1
   no-extra-parens: 2
   no-irregular-whitespace: 2
