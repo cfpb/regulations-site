@@ -5065,6 +5065,31 @@ Import no-js.less and print.less at the end, since they override other rules
     min-height: auto;
     background: none;
   }
+  /*
+ eRegs Home Page Styles/Resets
+ ========================================================================== */
+  .hero-header,
+  .hero-text,
+  .read-more-link,
+  .reg-list {
+    line-height: 1.5;
+  }
+  .landing-content {
+    margin-top: 0;
+  }
+  .landing-content .content-primary,
+  .landing-content .content-secondary {
+    width: 100%;
+  }
+  .notices {
+    min-height: 0;
+  }
+  .hero {
+    background-color: #ffffff;
+  }
+  .hero .inner-wrap {
+    height: 180px;
+  }
 }
 @media print and (-webkit-min-device-pixel-ratio: 2), print and (min-resolution: 192dpi) {
   a[href^="http://"] {
