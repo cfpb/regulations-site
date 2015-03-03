@@ -37,7 +37,6 @@ else {
         },
 
         loadDiffSection: function(section, baseVersion, newerVersion, params) {
-            /* jshint camelcase: false */
             var options = {};
 
             options.id = section;
@@ -50,7 +49,6 @@ else {
         },
 
         loadSxS: function(section, version, params) {
-            /* jshint camelcase: false */
             BreakawayEvents.trigger('sxs:open', {
                 'regParagraph': section,
                 'docNumber': version,
@@ -59,7 +57,6 @@ else {
         },
 
         loadSearchResults: function(reg, params) {
-            /* jshint unused: false */
             var config = {
                 query: params.q,
                 regVersion: params.regVersion
