@@ -50,7 +50,6 @@ module.exports = function(grunt) {
      * ESLint: https://github.com/sindresorhus/grunt-eslint
      *
      * Validate files with ESLint.
-     * Below are options that conform to idiomatic.js standards.
      */
     eslint: {
         target: [
