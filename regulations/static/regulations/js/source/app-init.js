@@ -1,7 +1,4 @@
 // Module called on app load, once doc.ready
-//
-/* jshint unused: false */
-/* jshint camelcase: false */
 'use strict';
 
 var $ = require('jquery');
