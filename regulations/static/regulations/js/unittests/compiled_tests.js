@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/scotta/Projects/regulations-site/node_modules/jquery/dist/jquery.js":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/munozk/Projects/regulations-site/node_modules/jquery/dist/jquery.js":[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v1.11.0
  * http://jquery.com/
@@ -10337,7 +10337,7 @@ return jQuery;
 
 }));
 
-},{}],"/Users/scotta/Projects/regulations-site/node_modules/underscore/underscore.js":[function(require,module,exports){
+},{}],"/Users/munozk/Projects/regulations-site/node_modules/underscore/underscore.js":[function(require,module,exports){
 //     Underscore.js 1.4.4
 //     http://underscorejs.org
 //     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -11565,7 +11565,7 @@ return jQuery;
 
 }).call(this);
 
-},{}],"/Users/scotta/Projects/regulations-site/regulations/static/regulations/js/source/helpers.js":[function(require,module,exports){
+},{}],"/Users/munozk/Projects/regulations-site/regulations/static/regulations/js/source/helpers.js":[function(require,module,exports){
 // Defines some globally useful helper functions
 'use strict';
 var $ = require('jquery');
@@ -11873,7 +11873,7 @@ if (!Array.prototype.indexOf) {
         };
     }
 };
-},{"jquery":"/Users/scotta/Projects/regulations-site/node_modules/jquery/dist/jquery.js","underscore":"/Users/scotta/Projects/regulations-site/node_modules/underscore/underscore.js"}],"/Users/scotta/Projects/regulations-site/regulations/static/regulations/js/unittests/specs/helpers-spec.js":[function(require,module,exports){
+},{"jquery":"/Users/munozk/Projects/regulations-site/node_modules/jquery/dist/jquery.js","underscore":"/Users/munozk/Projects/regulations-site/node_modules/underscore/underscore.js"}],"/Users/munozk/Projects/regulations-site/regulations/static/regulations/js/unittests/specs/helpers-spec.js":[function(require,module,exports){
 var $ = require('jquery');
 var Helpers = require('../../source/helpers');
 
@@ -11943,4 +11943,4 @@ describe("Helper functions", function() {
     });
 });
 
-},{"../../source/helpers":"/Users/scotta/Projects/regulations-site/regulations/static/regulations/js/source/helpers.js","jquery":"/Users/scotta/Projects/regulations-site/node_modules/jquery/dist/jquery.js"}]},{},["/Users/scotta/Projects/regulations-site/regulations/static/regulations/js/unittests/specs/helpers-spec.js"]);
+},{"../../source/helpers":"/Users/munozk/Projects/regulations-site/regulations/static/regulations/js/source/helpers.js","jquery":"/Users/munozk/Projects/regulations-site/node_modules/jquery/dist/jquery.js"}]},{},["/Users/munozk/Projects/regulations-site/regulations/static/regulations/js/unittests/specs/helpers-spec.js"]);
