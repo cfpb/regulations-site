@@ -4903,7 +4903,6 @@ Import no-js.less and print.less at the end, since they override other rules
   /*
  Hidden Elements
  ========================================================================== */
-  img,
   nav,
   #table-of-contents,
   .panel,
@@ -4917,6 +4916,9 @@ Import no-js.less and print.less at the end, since they override other rules
   .sxs-back-button,
   footer {
     display: none !important;
+  }
+  img {
+    display: none;
   }
   /*
  Single Column Layout
@@ -5089,6 +5091,32 @@ Import no-js.less and print.less at the end, since they override other rules
   }
   .hero .inner-wrap {
     height: 180px;
+  }
+  /*
+ eRegs About Page Styles/Resets
+ ========================================================================== */
+  .about-content img {
+    display: inline-block;
+  }
+  .about-content .about-section {
+    padding: 2em 0;
+  }
+  .about-content .easy-read {
+    margin-top: 2em;
+  }
+  .about-content .column-3 {
+    width: 100%;
+    margin: 0 10px;
+  }
+  #related-info .content-primary,
+  #related-info .content-secondary {
+    width: 48%;
+  }
+  .dev-well .minicon-octocat {
+    height: 20px;
+  }
+  .title-hero {
+    background-color: #ffffff;
   }
 }
 @media print and (-webkit-min-device-pixel-ratio: 2), print and (min-resolution: 192dpi) {

@@ -65,7 +65,6 @@ p {
  Hidden Elements
  ========================================================================== */
 
- img,
  nav,
  #table-of-contents,
  .panel,
@@ -80,6 +79,8 @@ p {
  footer {
     display: none !important;
  }
+
+ img{display: none;}
 
  /*
  Single Column Layout
@@ -302,5 +303,41 @@ a[href^="http://"] {
         height: 180px;
     }
 }
+
+/*
+ eRegs About Page Styles/Resets
+ ========================================================================== */
+
+.about-content {
+    img {
+        display: inline-block;
+    }
+
+    .about-section{
+        padding: 2em 0;
+    }
+
+    .easy-read{
+        margin-top: 2em;
+    }
+    .column-3 {
+        width: 100%;
+        margin: 0 10px;
+    }
+}
+
+#related-info .content-primary,
+#related-info .content-secondary {
+    width: 48%;
+}
+
+.dev-well .minicon-octocat {
+    height: 20px;
+}
+
+.title-hero {
+    background-color: #ffffff;
+}
+
 
 } /* end /@media print media query */
