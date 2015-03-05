@@ -4881,7 +4881,8 @@ Import no-js.less and print.less at the end, since they override other rules
   .lt-ie9 .continue-link,
   .lt-ie9 .reference-num,
   .lt-ie9 .analysis-list a,
-  .lt-ie9 .sxs-metadata {
+  .lt-ie9 .sxs-metadata,
+  .lt-ie9 .reg-header {
     font-family: Arial, sans-serif !important;
   }
   /* ensure that styling the list markers doesn't override the body font style */
@@ -4908,14 +4909,26 @@ Import no-js.less and print.less at the end, since they override other rules
   .panel,
   #menu-link,
   .hidden,
-  .reg-header,
   .main-head,
-  .sub-head,
+  .toc-head,
+  .header-main,
   .next-prev,
   .regs-meta,
   .sxs-back-button,
   footer {
     display: none !important;
+  }
+  .reg-header,
+  .main-head,
+  .sub-head {
+    position: static;
+  }
+  .reg-header {
+    height: auto;
+    border-bottom: 0;
+  }
+  .effective-date {
+    padding-right: 0;
   }
   img {
     display: none;
@@ -4936,24 +4949,6 @@ Import no-js.less and print.less at the end, since they override other rules
     float: none !important;
     margin: 0;
     padding: 0;
-  }
-  .open-definition {
-    position: relative;
-    padding: 0;
-    margin: 10px;
-    border: 1px solid #d7d2cb;
-  }
-  .open-definition .sidebar-header {
-    display: none;
-  }
-  .open-definition .definition-text p:before {
-    content: "*";
-  }
-  .secondary-content {
-    border-left: none;
-  }
-  .definition.active:after {
-    content: "*";
   }
   /*
  Margin/Padding Resets
@@ -4996,7 +4991,7 @@ Import no-js.less and print.less at the end, since they override other rules
     padding-right: 0px;
   }
   /*
- Inline Interpretations
+ Inline Interpretations & Definitions
  ========================================================================== */
   .inline-interpretation {
     background: #f2f2f2;
@@ -5013,6 +5008,24 @@ Import no-js.less and print.less at the end, since they override other rules
   }
   .inline-interpretation .section-link {
     display: none;
+  }
+  .open-definition {
+    position: relative;
+    padding: 0;
+    margin: 10px;
+    border: 1px solid #d7d2cb;
+  }
+  .open-definition .sidebar-header {
+    display: none;
+  }
+  .open-definition .definition-text p:before {
+    content: "*";
+  }
+  .secondary-content {
+    border-left: none;
+  }
+  .definition.active:after {
+    content: "*";
   }
   /*
  Layout Styles/Resets
