@@ -76,8 +76,7 @@ p {
  .header-main,
  .next-prev,
  .regs-meta,
- .sxs-back-button,
- {
+ .sxs-back-button {
     display: none !important;
  }
 
@@ -96,9 +95,15 @@ p {
     padding-right: 0;
 }
 
- img {
+img,
+footer {
     display: none;
- }
+}
+
+footer.search-nav {
+    display: block;
+}
+
 
  /*
  Single Column Layout
@@ -253,6 +258,10 @@ a[href^="http://"] {
 
 .reg-text > section {
     border-bottom: none;
+}
+
+.sidebar-inner {
+    padding-bottom: 0;
 }
 
 /* Reset internal navigation offsets */

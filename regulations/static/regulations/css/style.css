@@ -4914,8 +4914,7 @@ Import no-js.less and print.less at the end, since they override other rules
   .header-main,
   .next-prev,
   .regs-meta,
-  .sxs-back-button,
-  footer {
+  .sxs-back-button {
     display: none !important;
   }
   .reg-header,
@@ -4930,8 +4929,12 @@ Import no-js.less and print.less at the end, since they override other rules
   .effective-date {
     padding-right: 0;
   }
-  img {
+  img,
+  footer {
     display: none;
+  }
+  footer.search-nav {
+    display: block;
   }
   /*
  Single Column Layout
@@ -5048,6 +5051,9 @@ Import no-js.less and print.less at the end, since they override other rules
   }
   .reg-text > section {
     border-bottom: none;
+  }
+  .sidebar-inner {
+    padding-bottom: 0;
   }
   /* Reset internal navigation offsets */
   .reg-section .level-1 li,
