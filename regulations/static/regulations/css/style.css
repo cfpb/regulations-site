@@ -4939,11 +4939,21 @@ Import no-js.less and print.less at the end, since they override other rules
   }
   .open-definition {
     position: relative;
-    width: 100%;
     padding: 0;
+    margin: 10px;
+    border: 1px solid #d7d2cb;
+  }
+  .open-definition .sidebar-header {
+    display: none;
+  }
+  .open-definition .definition-text p:before {
+    content: "*";
   }
   .secondary-content {
     border-left: none;
+  }
+  .definition.active:after {
+    content: "*";
   }
   /*
  Margin/Padding Resets
@@ -5013,12 +5023,6 @@ Import no-js.less and print.less at the end, since they override other rules
   }
   .main-content {
     border-right: none;
-  }
-  .open-definition {
-    display: none;
-    position: relative;
-    padding-left: 0px;
-    width: 0px;
   }
   .regs-meta {
     position: relative;

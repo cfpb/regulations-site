@@ -105,13 +105,28 @@ p {
 
 .open-definition {
     position: relative;
-    width: 100%;
     padding: 0;
+    margin: 10px;
+    border: 1px solid @light_neutral;
+
+    .sidebar-header {
+        display: none;
+    }
+
+    .definition-text p:before {
+        content: "*"
+    }
 }
 
 .secondary-content {
     border-left: none;
 }
+
+.definition.active:after {
+    content: "*";
+}
+
+
 
 
  /*
@@ -196,6 +211,7 @@ a[href^="http://"] {
         display: none;
      }
 }
+
 /*
  Layout Styles/Resets
  ========================================================================== */
@@ -207,13 +223,6 @@ a[href^="http://"] {
 
 .main-content {
     border-right: none;
-}
-
-.open-definition {
-    display: none;
-    position: relative;
-    padding-left: 0px;
-    width: 0px;
 }
 
 .regs-meta {
