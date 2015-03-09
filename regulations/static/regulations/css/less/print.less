@@ -40,7 +40,8 @@ strong,
 .continue-link,
 .reference-num,
 .analysis-list a,
-.sxs-metadata {
+.sxs-metadata,
+.reg-header {
     .lt-ie9 & {
         font-family: Arial, sans-serif !important;
     }
@@ -70,19 +71,39 @@ p {
  .panel,
  #menu-link,
  .hidden,
- .reg-header,
  .main-head,
- .sub-head,
+ .toc-head,
+ .header-main,
  .next-prev,
  .regs-meta,
- .sxs-back-button,
- footer {
+ .sxs-back-button {
     display: none !important;
  }
 
- img {
+.reg-header,
+.main-head,
+.sub-head {
+    position: static;
+}
+
+.reg-header {
+    height: auto;
+    border-bottom: 0;
+}
+
+.effective-date {
+    padding-right: 0;
+}
+
+img,
+footer {
     display: none;
- }
+}
+
+footer.search-nav {
+    display: block;
+}
+
 
  /*
  Single Column Layout
@@ -102,17 +123,6 @@ p {
     margin: 0;
     padding: 0;
 }
-
-.open-definition {
-    position: relative;
-    width: 100%;
-    padding: 0;
-}
-
-.secondary-content {
-    border-left: none;
-}
-
 
  /*
  Margin/Padding Resets
@@ -170,8 +180,9 @@ a[href^="http://"] {
 }
 
 /*
- Inline Interpretations
+ Inline Interpretations & Definitions
  ========================================================================== */
+
 .inline-interpretation {
 
     background: @bg_gray;
@@ -196,6 +207,31 @@ a[href^="http://"] {
         display: none;
      }
 }
+
+.open-definition {
+    position: relative;
+    padding: 0;
+    margin: 10px;
+    border: 1px solid @light_neutral;
+
+    .sidebar-header {
+        display: none;
+    }
+
+    .definition-text p:before {
+        content: "*"
+    }
+}
+
+.secondary-content {
+    border-left: none;
+}
+
+.definition.active:after {
+    content: "*";
+}
+
+
 /*
  Layout Styles/Resets
  ========================================================================== */
@@ -207,13 +243,6 @@ a[href^="http://"] {
 
 .main-content {
     border-right: none;
-}
-
-.open-definition {
-    display: none;
-    position: relative;
-    padding-left: 0px;
-    width: 0px;
 }
 
 .regs-meta {
@@ -229,6 +258,10 @@ a[href^="http://"] {
 
 .reg-text > section {
     border-bottom: none;
+}
+
+.sidebar-inner {
+    padding-bottom: 0;
 }
 
 /* Reset internal navigation offsets */
