@@ -14414,7 +14414,7 @@ var _ = require('underscore');
 
 // indexOf polyfill
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
-// to do: this may make sense to move elsewhere
+// TODO this may make sense to move elsewhere
 if (!Array.prototype.indexOf) {
   Array.prototype.indexOf = function (searchElement, fromIndex) {
     if ( this === undefined || this === null ) {
@@ -14446,7 +14446,7 @@ if (!Array.prototype.indexOf) {
   };
 }
 
- module.exports = {
+module.exports = {
     isIterable: function(obj) {
         if (typeof obj === 'array' || typeof obj === 'object') {
             return true;
@@ -14719,7 +14719,9 @@ var Helpers = require('../../source/helpers');
 var expect = require('expect.js');
 
 describe("Helper functions", function() {
-    it("isIterable should do what it says on the tin", function(){
+    'use strict';
+
+    it('isIterable should tell you if something is iterable', function(){
         expect(Helpers.isIterable([])).to.be.ok();
 
         expect(Helpers.isIterable({})).to.be.ok();
@@ -14729,7 +14731,7 @@ describe("Helper functions", function() {
         expect(Helpers.isIterable(4345)).to.be(false);
     });
 
-    it("interpId should return the correct title for the type of supplement", function(){
+    it('interpId should return the correct title for the type of supplement', function(){
         expect(Helpers.interpId(['123'])).to.be('Supplement I to Part ');
 
         expect(Helpers.interpId(['123', 'G'])).to.be('Supplement I to Appendix ');
@@ -14745,7 +14747,7 @@ describe("Helper functions", function() {
         expect(Helpers.appendixId('234', 'G')).to.be('Appendix G to Part 234');
     });
 
-    xit("idToRef should turn IDs to titles", function() {
+    it("idToRef should turn IDs to titles", function() {
         expect('§234.4(a)(2)').to.be(Helpers.idToRef('234-4-a-2'));
 
         expect('§87324.34(b)(23)(iv)(H)').to.be(Helpers.idToRef('87324-34-b-23-iv-H'));

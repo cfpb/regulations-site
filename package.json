@@ -20,7 +20,6 @@
     "grunt-contrib-watch": "~0.6.1",
     "grunt-eslint": "^7.0.1",
     "grunt-mocha-istanbul": "^2.3.1",
-    "grunt-mocha-test": "^0.12.7",
     "grunt-shell": "~0.4.0",
     "grunt-styleguide": "~0.2.6",
     "istanbul": "^0.3.7",

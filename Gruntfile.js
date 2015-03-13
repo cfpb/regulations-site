@@ -122,10 +122,9 @@ module.exports = function(grunt) {
           coverageFolder: '<%= env.frontEndPath %>/js/unittests/coverage',
           coverage: false,
           check: {
-            lines: 75,
-            statements: 75
+            lines: 5,
+            statements: 5
           },
-          dryRun: true // Comment this out after we add our new tests.
         }
       }
      },
