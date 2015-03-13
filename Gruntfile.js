@@ -107,14 +107,28 @@ module.exports = function(grunt) {
       }
     },
 
-    mocha: {
+    /*mocha: {
       test: {
         src: ['<%= env.frontEndPath %>/js/unittests/runner.html'],
         options: {
           run: true,
         },
       },
-    },
+    },*/
+    mocha_istanbul: {
+      coverage: {
+        src: ['<%= env.frontEndPath %>/js/unittests/compiled_tests.js'],
+        options: {
+          coverageFolder: '<%= env.frontEndPath %>/js/unittests/coverage',
+          coverage: false,
+          check: {
+            lines: 75,
+            statements: 75
+          },
+          dryRun: true // Comment this out after we add our new tests.
+        }
+      }
+     },
 
     shell: {
       'build-require': {
@@ -168,16 +182,24 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.event.on('coverage', function( lcov, done ) {
+    require('coveralls').handleInput( lcov, function( err ) {
+      if ( err ) {
+        return done( err );
+      }
+      done();
+    });
+  });
   /**
    * The above tasks are loaded here.
    */
-    require('load-grunt-tasks')(grunt);
+  require('load-grunt-tasks')(grunt);
 
     /**
     * Create task aliases by registering new tasks
     */
-    grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
-    grunt.registerTask('test', ['eslint', 'nose', 'browserify:tests', 'mocha']);
-    grunt.registerTask('build', ['squish', 'test']);
-    grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less:dist']);
+  grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
+  grunt.registerTask('test', ['eslint', 'browserify:tests', 'mocha_istanbul']);
+  grunt.registerTask('build', ['squish', 'test']);
+  grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less:dist']);
 };

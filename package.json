@@ -8,6 +8,7 @@
     "bower": "~1.3.9",
     "browserify": "^9.0.3",
     "browserify-shim": "^3.8.3",
+    "coveralls": "^2.11.2",
     "deamdify": "^0.1.1",
     "debowerify": "^1.2.0",
     "expect.js": "~0.2.0",
@@ -18,10 +19,13 @@
     "grunt-contrib-uglify": "^0.8.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-eslint": "^7.0.1",
-    "grunt-mocha": "^0.4.11",
+    "grunt-mocha-istanbul": "^2.3.1",
+    "grunt-mocha-test": "^0.12.7",
     "grunt-shell": "~0.4.0",
     "grunt-styleguide": "~0.2.6",
+    "istanbul": "^0.3.7",
     "load-grunt-tasks": "^3.1.0",
+    "mocha": "^2.2.1",
     "tmp": "0.0.23",
     "watch": "~0.8.0"
   },
@@ -39,5 +43,10 @@
     "jquery": "1.11.0",
     "jquery-scrollstop": "^1.2.0",
     "underscore": "1.4.4"
+  },
+  "config": {
+    "travis-cov": {
+      "threshold": 70
+    }
   }
 }
