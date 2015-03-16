@@ -3669,7 +3669,7 @@ Main Content Area
 }
 /*
  Universal Landing
- ========================================================================== 
+ ==========================================================================
  universal-landing.less defines styles for the application landing page
  */
 /* offset the persistent header */
@@ -3738,14 +3738,15 @@ Main Content Area
   border-top: 1px solid #d0d0ce;
 }
 .reg-list li {
-  border-bottom: 1px solid #d0d0ce;
+  display: block;
   margin: 0;
+  border-bottom: 1px solid #d0d0ce;
 }
 .reg-list a {
-  display: block;
+  display: table;
   height: 94px;
-  padding: 15px;
   width: 100%;
+  padding: 15px;
 }
 .reg-list a:link,
 .reg-list a:visited {
@@ -3785,11 +3786,12 @@ Main Content Area
   font-size: 1.25em;
 }
 .reg-list .mini-alert {
-  font-size: 0.875em;
+  display: block;
   margin-left: 100px;
-  border-top: 1px solid #d0d0ce;
   margin-bottom: 0.5em;
   padding: 0.5em 15px 0 0;
+  border-top: 1px solid #d0d0ce;
+  font-size: 0.875em;
   clear: both;
   overflow: auto;
 }
