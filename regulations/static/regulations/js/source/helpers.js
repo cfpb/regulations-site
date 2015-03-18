@@ -5,7 +5,8 @@ var _ = require('underscore');
 
 // indexOf polyfill
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
-// to do: this may make sense to move elsewhere
+// TODO this may make sense to move elsewhere
+/* istanbul ignore if */
 if (!Array.prototype.indexOf) {
   Array.prototype.indexOf = function (searchElement, fromIndex) {
     if ( this === undefined || this === null ) {
