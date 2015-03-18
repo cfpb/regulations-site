@@ -87,15 +87,6 @@ module.exports = function(grunt) {
             debug: false
           }
         }
-      },
-      tests: {
-        files: {
-          '<%= env.frontEndPath %>/js/unittests/compiled_tests.js': ['<%= env.frontEndPath %>/js/unittests/specs/*.js']
-        },
-        options: {
-          watch: true,
-          debug: true
-        }
       }
     },
 
@@ -117,14 +108,12 @@ module.exports = function(grunt) {
     },*/
     mocha_istanbul: {
       coverage: {
-        src: ['<%= env.frontEndPath %>/js/unittests/compiled_tests.js'],
+        src: ['<%= env.frontEndPath %>/js/unittests/specs/'],
         options: {
+          mask:'*-spec.js',
           coverageFolder: '<%= env.frontEndPath %>/js/unittests/coverage',
-          coverage: false,
-          check: {
-            lines: 5,
-            statements: 5
-          },
+          //excludes: '<%= env.frontEndPath %>/js/unittests/specs/*-spec.js',
+          coverage: false
         }
       }
      },
@@ -198,7 +187,7 @@ module.exports = function(grunt) {
     * Create task aliases by registering new tasks
     */
   grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
-  grunt.registerTask('test', ['eslint', 'browserify:tests', 'mocha_istanbul']);
+  grunt.registerTask('test', ['eslint', 'mocha_istanbul']);
   grunt.registerTask('build', ['squish', 'test']);
   grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less:dist']);
 };
