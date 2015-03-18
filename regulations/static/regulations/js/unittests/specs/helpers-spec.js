@@ -86,14 +86,18 @@ describe('Helper functions:', function() {
 
         expect(Helpers.isSupplement('87324-34-b-23-iv-H')).isFalse;
 
+        expect(Helpers.isSupplement('50')).isFalse;
+
     });
 
     it('isAppendix should find Appendices', function () {
-        expect(Helpers.isSupplement('13-Interp')).isFalse;
+        expect(Helpers.isAppendix('13-Interp')).isFalse;
 
-        expect(Helpers.isSupplement('123-Appendices-Interp')).isTrue;
+        expect(Helpers.isAppendix('123-Appendices-Interp')).isTrue;
 
-        expect(Helpers.isSupplement('87324-34-b-23-iv-H')).isFalse;
+        expect(Helpers.isAppendix('87324-34-b-23-iv-H')).isFalse;
+
+        expect(Helpers.isAppendix('50')).isFalse;
     });
 
     it('formatSubpartLabel should format correctly', function(){
