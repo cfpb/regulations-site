@@ -68,7 +68,7 @@ module.exports = function(grunt) {
     browserify: {
       dev: {
         files: {
-          '<%= env.frontEndPath %>/js/built/regulations.js': ['<%= env.frontEndPath %>/js/source/regulations.js']
+          '<%= env.frontEndPath %>/js/built/regulations.js': ['<%= env.frontEndPath %>/js/source/regulations.js','<%= env.frontEndPath %>/js/source/regulations.js']
         },
         options: {
           transform: ['browserify-shim', 'debowerify'],
@@ -98,14 +98,6 @@ module.exports = function(grunt) {
       }
     },
 
-    /*mocha: {
-      test: {
-        src: ['<%= env.frontEndPath %>/js/unittests/runner.html'],
-        options: {
-          run: true,
-        },
-      },
-    },*/
     mocha_istanbul: {
       coverage: {
         src: ['<%= env.frontEndPath %>/js/unittests/specs/'],

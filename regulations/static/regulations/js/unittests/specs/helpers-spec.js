@@ -1,9 +1,21 @@
-var $ = require('jquery');
-var Helpers = require('../../source/helpers');
 var expect = require('chai').expect;
+var jsdom = require('mocha-jsdom');
 
-describe('Helper functions:', function() {
+describe('Non-DOM Helper functions:', function() {
     'use strict';
+
+    var $, Helpers;
+
+    jsdom();
+
+    before(function (){
+        $ = require('jquery');
+        Helpers = require('../../source/helpers');
+    });
+
+    beforeEach(function(){
+
+    });
 
     it('isIterable should tell you if something is iterable', function() {
         expect(Helpers.isIterable([])).to.be.ok;
@@ -101,12 +113,119 @@ describe('Helper functions:', function() {
     });
 
     it('formatSubpartLabel should format correctly', function(){
+
         expect(Helpers.formatSubpartLabel('123-Subpart-C')).to.equal('Subpart C');
 
         expect(Helpers.formatSubpartLabel('13-Interp')).to.equal('Subpart ');
     });
+});
 
-    xit('parseURL should parse correctly', function(){
+describe('Version Finder Helper Functions:', function() {
+    'use strict';
+
+    var $, Helpers;
+
+    jsdom();
+
+    var navMenu, navMenu_blank, section, section_blank, timeline, timeline_blank;
+
+    before(function () {
+        $ = require('jquery');
+        Helpers = require('../../source/helpers');
+    });
+
+    it('should return version when "nav#toc" present on the element', function() {
+
+        var tocTest = {
+            toc: $('<nav id="toc" data-toc-version="nav-date"></nav>')
+        };
+
+        var sectionTest = {
+            toc: $('<nav id="toc"></nav>'),
+            regLandingPage: $('<section data-base-version="section-date"></section>')
+        };
+
+        var timelineTest = {
+            toc: $('<nav id="toc"></nav>'),
+            timelineStopButton: $('<a id="timeline"><li class="current"><a class="stop-button" data-version="timeline-date"></a></li></a>')
+        };
+
+        expect(Helpers.findVersion(tocTest)).to.equal('nav-date');
+        expect(Helpers.findVersion(sectionTest)).to.equal('section-date');
+        expect(Helpers.findVersion(timelineTest)).to.equal('timeline-date');
+
+        //Add a different date somewhere. It should grab the date in the Nav first.
+        tocTest.regLandingPage = $('<section data-base-version="section-date"></section>');
+
+        expect(Helpers.findVersion(tocTest)).to.not.equal('section-date');
+    });
+
+    it('should find version on section when "nav#toc" is not present', function() {
+
+        var sectionTest = {
+            toc: $('<nav id="toc"></nav>'),
+            regLandingPage: $('<section data-base-version="section-date"></section>')
+        };
+
+        var timelineTest = {
+            toc: $('<nav id="toc"></nav>'),
+            regLandingPage: $('<section data-base-version="section-date"></section>'),
+            timelineStopButton: $('<a id="timeline"><li class="current"><a class="stop-button" data-version="timeline-date"></a></li></a>')
+        };
+
+        expect(Helpers.findVersion(sectionTest)).to.equal('section-date');
+        expect(Helpers.findVersion(timelineTest)).to.not.equal('timeline-date');
+
+    });
+
+    it('should find version on timeline if version isn\'t available anywhere else', function() {
+
+        var timelineTest = {
+            toc: $('<nav id="toc"></nav>'),
+            regLandingPage: $('<section data-base-version="section-date"></section>'),
+            timelineStopButton: $('<a id="timeline"><li class="current"><a class="stop-button" data-version="timeline-date"></a></li></a>')
+        };
+
+        // It searches for the stop button because of the diff version.
+        var diffVersion = {
+            timelineStopButton: $('<a id="timeline"><li class="current"><a data-version="timeline-date"></a></li></a>')
+        };
+
+        expect(Helpers.findVersion(timelineTest)).to.not.equal('timeline-date');
+        expect(Helpers.findVersion(diffVersion)).to.not.be.ok;
+    });
+
+    it('works with findDiffVersion', function() {
+
+        var tocTest = {
+            toc: $('<nav id="toc" data-toc-version="nav-date"></nav>'),
+            diffToc: $('<div id="table-of-contents" data-from-version="diff-toc-date"></div>'),
+            diffVersionLink: $('<div id="timeline"><li class="current"><a class="version-link" data-version="version-link-date"></a></li></div>')
+        };
+
+        expect(Helpers.findDiffVersion(tocTest)).to.equal('diff-toc-date');
+
+    });
+
+    it('returns the right data when diffVersion = version', function(){
+        var tocTest = {
+            toc: $('<nav id="toc" data-toc-version="same-date"></nav>'),
+            diffToc: $('<div id="table-of-contents" data-from-version="same-date"></div>'),
+            diffVersionLink: $('<div id="timeline"><li class="current"><a class="version-link" data-version="diff-date">Regulation</a></li></div>')
+        };
+
+        expect(Helpers.findDiffVersion(tocTest, 'same-date')).to.equal('diff-date');
+        //expect(Helpers.findDiffVersion(tocTest)).to.equal('diff-date');
+    });
+
+});
+
+describe('Other Helper Functions:', function() {
+
+    'use strict';
+
+    xit('parseURL should parse correctly', function() {
         // This method requires the DOM
+
     });
 });

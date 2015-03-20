@@ -6,7 +6,6 @@ var _ = require('underscore');
 // indexOf polyfill
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
 // TODO this may make sense to move elsewhere
-/* istanbul ignore if */
 if (!Array.prototype.indexOf) {
   Array.prototype.indexOf = function (searchElement, fromIndex) {
     if ( this === undefined || this === null ) {
@@ -196,39 +195,38 @@ module.exports = {
         return parts[0] + '-' + parts[1];
     },
 
+    // Unpaired this function from the DOM to make
+    // it more testable. Look at resources.js
+    // to add places to look for version elements.
+
+    // -- old message --
     // these next two are a little desperate and heavy handed
     // the next step, if the app were going to do more
     // interesting things, is to introduce the concept of reg
     // version and maybe effective dates to the architecture
     // at that time, this should be removed
-    findVersion: function() {
-        var version;
-
-        version = $('nav#toc').attr('data-toc-version') ||
-                  $('section[data-base-version]').attr('data-base-version');
-
-        // includes .stop-button to be sure its not the comparison
-        // version in diff mode
-        if (!version) {
-            version = $('#timeline li.current').find('.stop-button').attr('data-version');
-        }
-
-        return version;
+    findVersion: function(versionElements) {
+      return $(versionElements.toc).attr('data-toc-version') ||
+                  $(versionElements.regLandingPage).attr('data-base-version')||
+                  $(versionElements.timelineStopButton).find('.stop-button').attr('data-version');
+                    // includes .stop-button to be sure its not
+                    // the comparison version in diff mode
     },
 
     // returns newer version. findVersion will return base version
-    findDiffVersion: function(currentVersion) {
+    findDiffVersion: function(versionElements, currentVersion) {
         var version;
-        currentVersion = currentVersion || this.findVersion();
+        currentVersion = currentVersion || this.findVersion(versionElements);
 
-        version = $('#table-of-contents').attr('data-from-version');
-
+        version = $(versionElements.diffToc).attr('data-from-version');
+        console.log(currentVersion + ' | ' + version);
         if (!version || version === currentVersion) {
-            version = $('#timeline li.current .version-link').filter(function() {
-                return $(this).attr('data-version') !== currentVersion;
-            }).attr('data-version');
+            if ($(versionElements.diffVersionLink).attr('data-version') !== currentVersion) {
+                console.log(versionElements.diffVersionLink);
+                version = $(versionElements.diffVersionLink).attr('data-version');
+                console.log(version);
+            }
         }
-
         return version;
     },
 

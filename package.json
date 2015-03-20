@@ -24,8 +24,10 @@
     "grunt-shell": "~0.4.0",
     "grunt-styleguide": "~0.2.6",
     "istanbul": "^0.3.7",
+    "jsdom": "^4.0.3",
     "load-grunt-tasks": "^3.1.0",
     "mocha": "^2.2.1",
+    "mocha-jsdom": "^0.2.1",
     "tmp": "0.0.23",
     "watch": "~0.8.0"
   },
