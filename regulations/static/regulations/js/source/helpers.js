@@ -196,7 +196,7 @@ module.exports = {
     },
 
     // Unpaired this function from the DOM to make
-    // it more testable. Look at resources.js
+    // it more testable and flexible. Look at resources.js
     // to add places to look for version elements.
 
     // -- old message --
@@ -208,7 +208,7 @@ module.exports = {
     findVersion: function(versionElements) {
       return $(versionElements.toc).attr('data-toc-version') ||
                   $(versionElements.regLandingPage).attr('data-base-version')||
-                  $(versionElements.timelineStopButton).find('.stop-button').attr('data-version');
+                  $(versionElements.timelineList).find('.stop-button').attr('data-version');
                     // includes .stop-button to be sure its not
                     // the comparison version in diff mode
     },
@@ -217,16 +217,13 @@ module.exports = {
     findDiffVersion: function(versionElements, currentVersion) {
         var version;
         currentVersion = currentVersion || this.findVersion(versionElements);
-
         version = $(versionElements.diffToc).attr('data-from-version');
-        console.log(currentVersion + ' | ' + version);
         if (!version || version === currentVersion) {
-            if ($(versionElements.diffVersionLink).attr('data-version') !== currentVersion) {
-                console.log(versionElements.diffVersionLink);
-                version = $(versionElements.diffVersionLink).attr('data-version');
-                console.log(version);
+            if ($(versionElements.timelineList).find('.version-link').attr('data-version') !== currentVersion) {
+                version = $(versionElements.timelineList).find('.version-link').attr('data-version');
             }
         }
+
         return version;
     },
 
