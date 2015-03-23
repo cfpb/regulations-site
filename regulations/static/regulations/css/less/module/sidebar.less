@@ -1,10 +1,10 @@
 /*
 Sidebar.less
-========================================================================== 
+==========================================================================
 sidebar.less styles all of the right sidebar content
 */
 
-/* 
+/*
 add a margin to sidebar content
 this offsets the persistent header & ensures long content is inside the viewport
 */
@@ -33,7 +33,7 @@ Sidebar
     li {
         .reset;
     }
-/* 
+/*
 Headers within the sidebar should be <h4>
 */
 
@@ -85,7 +85,7 @@ Sidebar Expandables
         &.expandable a:before {
             .cf-icon;
             content: "\e109";
-            color: @pacific;            
+            color: @pacific;
         }
 
         &.open a:before {
@@ -147,8 +147,8 @@ Sidebar Headers
         background-position-x: 92%;
     }
 
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
+    @media
+    (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi) {
         .close-button {
             background: @bg_gray url(../img/close@2x.png) no-repeat 0 0;
@@ -258,9 +258,9 @@ When open definitions appear in the right sidebar
 .open-definition {
 
     .sidebar-header {
-      .border-bottom-light;  
+      .border-bottom-light;
     }
-    
+
     .close-button {
         cursor: pointer;
 
@@ -314,7 +314,7 @@ When open definitions appear in the right sidebar
             .avenir-next;
             font-size: .9em;
         }
-        
+
         .msg {
             padding-bottom: 0;
             border-bottom: none;
@@ -341,7 +341,7 @@ When open definitions appear in the right sidebar
     display: none;
 }
 
-/* 
+/*
 continue links */
 .continue-link,
 .update-definition {
@@ -378,7 +378,7 @@ Styles for the UI help slide down
         margin-top: -4px;
     }
 
-    .minicon-history {
+    .cf-icon-history {
         font-size: 1.142857143em;
     }
 

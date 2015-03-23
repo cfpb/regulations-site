@@ -184,7 +184,7 @@ var MainView = Backbone.View.extend({
     displayError: function() {
         // get ID of still rendered last section
         var oldId = this.$el.find('section[data-page-type]').attr('id'),
-            $error = this.$el.prepend('<div class="error"><span class="minicon-warning"></span>Due to a network error, we were unable to retrieve the requested information.</div>');
+            $error = this.$el.prepend('<div class="error"><span class="cf-icon cf-icon-error icon-warning"></span>Due to a network error, we were unable to retrieve the requested information.</div>');
 
         DrawerEvents.trigger('section:open', oldId);
         HeaderEvents.trigger('section:open', oldId);
