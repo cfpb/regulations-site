@@ -1,6 +1,6 @@
 /*
  Universal Landing
- ========================================================================== 
+ ==========================================================================
  universal-landing.less defines styles for the application landing page
  */
 
@@ -31,8 +31,8 @@
     }
 }
 
-@media 
-(-webkit-min-device-pixel-ratio: 2), 
+@media
+(-webkit-min-device-pixel-ratio: 2),
 (min-resolution: 192dpi) {
     .hero .inner-wrap {
         background: url('../img/hero@2x.png') 96% -100% no-repeat;
@@ -45,8 +45,8 @@
          background: none;
     }
 
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
+    @media
+    (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi) {
         .hero .inner-wrap {
             background: none;
@@ -79,15 +79,16 @@
     .border-top-light;
 
     li {
-        .border-bottom-light;
+        display: block;
         margin: 0;
+        .border-bottom-light;
     }
 
     a {
-        display: block;
+        display: table;
         height: 94px;
-        padding: 15px;
         width: 100%;
+        padding: 15px;
     }
 
     a:link,
@@ -129,16 +130,17 @@
         color: @pacific;
         font-size: 1.25em;
     }
-    
+
     .mini-alert {
-        font-size: 0.875em;
+        display: block;
         margin-left: 100px;
-        .border-top-light;
         margin-bottom: 0.5em;
         padding: 0.5em 15px 0 0;
+        .border-top-light;
+        font-size: 0.875em;
         clear: both;
         overflow: auto;
-        
+
         a {
             display: inline-block;
             float: right;
@@ -147,7 +149,7 @@
             padding: 0;
             height: auto;
             width: auto;
-            
+
             &:hover {
                 background-color: inherit;
             }

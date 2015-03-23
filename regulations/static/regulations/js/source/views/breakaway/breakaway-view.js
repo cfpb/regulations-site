@@ -1,32 +1,40 @@
-define('breakaway-view', ['jquery', 'underscore', 'backbone', 'sxs-view', './regs-router', 'breakaway-events', 'main-events', 'sidebar-events'], function($, _, Backbone, SxS, Router, BreakawayEvents, MainEvents, SidebarEvents) {
-    'use strict';
-    var BreakawayView = Backbone.View.extend({
-        childViews: {},
+'use strict';
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+var SxS = require('./sxs-view');
+var Router = require('../../router');
+var BreakawayEvents = require('../../events/breakaway-events');
+var MainEvents = require('../../events/main-events');
+var SidebarEvents = require('../../events/sidebar-events');
+Backbone.$ = $;
 
-        initialize: function() {
-            this.externalEvents = BreakawayEvents;
-            this.listenTo(this.externalEvents, 'sxs:open', this.openSxS);
-        },
+var BreakawayView = Backbone.View.extend({
+    childViews: {},
 
-        openSxS: function(context) {
-            context.url = context.regParagraph + '/' + context.docNumber + '?from_version=' + context.fromVersion;
+    initialize: function() {
+        this.externalEvents = BreakawayEvents;
+        this.listenTo(this.externalEvents, 'sxs:open', this.openSxS);
+    },
 
-            this.childViews.sxs = new SxS(context);
+    openSxS: function(context) {
+        context.url = context.regParagraph + '/' + context.docNumber + '?from_version=' + context.fromVersion;
 
-            if (Router.hasPushState) {
-                Router.navigate('sxs/' + context.url);
-            }
+        this.childViews.sxs = new SxS(context);
 
-            MainEvents.trigger('breakaway:open', _.bind(this.removeChild, this));
-            SidebarEvents.trigger('breakaway:open');
-        },
-
-        removeChild: function() {
-            this.childViews.sxs.remove();
-            delete(this.childViews.sxs);
+        if (Router.hasPushState) {
+            Router.navigate('sxs/' + context.url);
         }
-    });
 
-    var breakaway = new BreakawayView();
-    return breakaway;
+        MainEvents.trigger('breakaway:open', _.bind(this.removeChild, this));
+        SidebarEvents.trigger('breakaway:open');
+    },
+
+    removeChild: function() {
+        this.childViews.sxs.remove();
+        delete(this.childViews.sxs);
+    }
 });
+
+var breakaway = new BreakawayView();
+module.exports = breakaway;

@@ -7,7 +7,7 @@ env:
         - secure: KUZAbAiGyBfiCePYo0MJVpu4YgWvYsPVxrhMOmN3vyEP2O1PpMcFJR/ESyK9mDCJ4Xck5Fc3sDfjRCDW2N6AdVPe313ERIAUxHEw9wFoeRuYl/0B/31KMSO/IjHmHwc1wW2vgtlLP/P3pa3vwr1jsJAhcrF3FBw0EnW5sz7OZQY=
         - secure: SOpgDODtfEwNPWssGj5CQfQKBFxbJ1w3HZGbG/B9iMS4DtMz/8pBY9G4uzF0KLpNfsllzjOSlMmTFn0tQIE2QR+ifkuIBl+ksvC2/ZagNNRVg7mSe427WeGY4SnH1tvBbarFbJYlFgGjnRJylwyUar7RGqEQ4My2e6/PHreGx6I=
 before_script:
-    - if [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then SAUCE_OK=1; else SAUCE_OK=0; fi 
+    - if [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then SAUCE_OK=1; else SAUCE_OK=0; fi
     - function START_SAUCE_CONNECT { curl -L https://gist.githubusercontent.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash & }
     - if [ "$SAUCE_OK" == 1 ]; then START_SAUCE_CONNECT; fi;
 install:
@@ -21,7 +21,6 @@ install:
     - bower install
     - cp example-config.json config.json
 script:
-    - ./require.sh
     - ./bin/test
     - ./dummy_api/start.sh
     - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py

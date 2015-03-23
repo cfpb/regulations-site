@@ -3,14 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "backbone.queryparams": "https://raw.github.com/jhudson8/backbone-query-parameters/b62a0a5e67a8c63fe95990f18fd8ed59687ff471/backbone.queryparams.js",
-    "jquery": "1.11.0",
-    "backbone": "1.0.0",
     "html5shiv": "3.6.2",
     "respond": "1.1.0",
-    "underscore": "1.4.4",
-    "requirejs": "2.1.10",
-    "jquery.scrollstop": "https://raw.github.com/ssorallen/jquery-scrollstop/v1.0.1/jquery.scrollstop.js",
-    "unveil": "~1.3.0",
-    "konami": "https://raw.githubusercontent.com/snaptortoise/konami-js/master/konami.js"
+    "unveil": "~1.3.0"
   }
 }

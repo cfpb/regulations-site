@@ -1,8 +1,8 @@
 {% extends "regulations/base.html" %}
 {% load static from staticfiles %}
 
-{% comment %} 
-    The empty app_js block excludes things from base.html 
+{% comment %}
+    The empty app_js block excludes things from base.html
 {% endcomment %}
 {% block app_js %}{% endblock %}
 
@@ -14,7 +14,7 @@
 
 {% block body %}
 <header id="site-header" class="reg-header">
-    {% include "regulations/main-header.html" %} 
+    {% include "regulations/main-header.html" %}
 </header>
 
 <div class="landing-content">
@@ -76,8 +76,8 @@
           <p>eRegulations is a web-based tool that makes regulations easy
           to find, read and understand with features such as inline
           official interpretations, highlighted defined terms, and a
-          revision comparison view.</p> 
-          
+          revision comparison view.</p>
+
           <p><a href="{% url 'about' %}" class="go">Learn more about eRegulations&#8217; features</a></p>
         </div> <!-- /.primart -->
 
