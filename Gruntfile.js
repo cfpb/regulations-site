@@ -1,6 +1,6 @@
-module.exports = function(grunt) {
+'use strict';
 
-  'use strict';
+module.exports = function(grunt) {
 
   grunt.initConfig({
 
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
                 sourceMapURL: 'style.css.map'
             },
             files: {
-                "<%= env.frontEndPath %>/css/style.css": "<%= env.frontEndPath %>/css/less/main.less"
+                '<%= env.frontEndPath %>/css/style.css': '<%= env.frontEndPath %>/css/less/main.less'
             }
         },
         dist: {
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
               ieCompat: true
           },
           files: {
-              "<%= env.frontEndPath %>/css/style.min.css": "<%= env.frontEndPath %>/css/less/main.less"
+              '<%= env.frontEndPath %>/css/style.min.css': '<%= env.frontEndPath %>/css/less/main.less'
           }
       }
     },
@@ -53,6 +53,7 @@ module.exports = function(grunt) {
      */
     eslint: {
         target: [
+          'Gruntfile.js',
           '<%= env.frontEndPath %>/js/source/*.js',
           '<%= env.frontEndPath %>/js/source/events/**/*.js',
           '<%= env.frontEndPath %>/js/source/models/**/*.js',
@@ -112,7 +113,7 @@ module.exports = function(grunt) {
 
     shell: {
       'build-require': {
-        command: './require.sh',
+        command: './require.sh'
       },
 
       'nose-chrome': {

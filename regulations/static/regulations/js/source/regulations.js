@@ -42,6 +42,7 @@ window.AccessibilityTest = function() {
     // I think this will keep IE from crying?
     var console = console || {error: function() {}};
 
+    /* eslint-disable */
     $('img').each(function() {
         if (typeof this.attributes.alt === 'undefined') {
             console.error('Image does not have alt text', this);
@@ -53,4 +54,5 @@ window.AccessibilityTest = function() {
             console.error('Font size is set in px, not ems', this);
         }
     });
+    /* eslint-enable */
 };

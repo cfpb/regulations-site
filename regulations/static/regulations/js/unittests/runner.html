@@ -8,8 +8,8 @@
   <body>
     <div id="mocha"></div>
     <!-- load and configure mocha -->
-    <script type="text/javascript" src="lib/chai.js"></script>
-    <script type="text/javascript" src="lib/mocha.js"></script>
+    <script src="lib/chai.js"></script>
+    <script src="lib/mocha.js"></script>
     <script type="text/javascript">
         mocha.setup({
             'ui': 'bdd',
@@ -19,7 +19,7 @@
         mocha.timeout(3000)
     </script>
     <!-- load test suite -->
-    <script src="compiled_tests.js"></script>
+    <script src="specs/helpers-spec.js"></script>
     <!-- kick off tests -->
     <script>
       if (window.mochaPhantomJS) {

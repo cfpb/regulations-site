@@ -36,6 +36,9 @@ CSS/Javascript etc., should inherit from this template.
         {% endif %}
         {% endblock %}
 
+        {% block preload %}
+        {% endblock %}
+
         <!--[if lt IE 9]>
             <script src="{%static "regulations/js/built/lib/respond/respond.min.js" %}"></script>
         <![endif]-->
