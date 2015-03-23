@@ -179,7 +179,8 @@ module.exports = function(grunt) {
     * Create task aliases by registering new tasks
     */
   grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
-  grunt.registerTask('test', ['eslint', 'mocha_istanbul']);
+  grunt.registerTask('test', ['eslint', 'mocha_istanbul', 'nose']);
   grunt.registerTask('build', ['squish', 'test']);
   grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less:dist']);
+  grunt.registerTask('default', ['eslint', 'browserify:dev', 'less:dev']);
 };

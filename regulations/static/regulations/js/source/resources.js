@@ -6,6 +6,6 @@ module.exports = {
     toc: $('nav#toc'),
     regLandingPage: $('section[data-base-version]'),
     timelineList: $('#timeline li.current'),
-    diffToc: $('#table-of-contents'),
+    diffToc: $('#table-of-contents')
   }
 };
