@@ -3090,10 +3090,6 @@ html.no-fontface .toc-nav-link .cf-icon-table-of-contents {
 html.no-fontface .toc-nav-link .cf-icon-search {
   background: url(../img/search.png) center center no-repeat;
 }
-.toc-nav-link .cf-icon-history {
-  font-size: 1.25em;
-  /* bump up the history minicon-history size because it is wider/shorter than other icons */
-}
 html.no-fontface .toc-nav-link .cf-icon-history {
   background: url(../img/history.png) center center no-repeat;
 }
@@ -3695,8 +3691,8 @@ This contains all of the styles specific to the search
   /*aligns with list marker */
   border-bottom: 0px;
   position: relative;
-  /* 
-    reset borders 
+  /*
+    reset borders
     -------------
     */
   /* reset padding used to accomodate permalink marker in main content */
@@ -4217,6 +4213,8 @@ Next/Previous Links
 .previous .cf-icon-left {
   font-size: 0.875em;
   margin-left: -15px;
+  margin-top: 6px;
+  float: left;
 }
 .next {
   float: right;
@@ -4581,9 +4579,6 @@ Styles for the UI help slide down
 .help-list .cf-icon-right {
   margin-top: -4px;
 }
-.help-list .cf-icon-history {
-  font-size: 1.142857143em;
-}
 .help-list .modified {
   border-right: 8px solid #addc91;
 }
@@ -4601,10 +4596,12 @@ Styles for the UI help slide down
 }
 .help-icon {
   display: inline-block;
-  background-color: #f2f2f2;
+  width: 40px;
   padding: 10px;
   margin-right: 15px;
   border-radius: 4px;
+  background-color: #f2f2f2;
+  text-align: center;
   vertical-align: middle;
 }
 .help-sample {
@@ -5524,9 +5521,9 @@ custom styles
   -webkit-font-smoothing: antialiased;
   content: "\e642";
   color: #2cb34a;
-  margin-left: -37px;
+  margin-left: -32px;
   padding-right: 12px;
-  font-size: 20px;
+  font-size: 18px;
 }
 .small-disclaimer {
   display: block;
