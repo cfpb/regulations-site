@@ -86,7 +86,14 @@ class HTMLBuilder():
             node['label'], node['node_type'])
 
         node['list_level'] = list_level
-        node['list_type'] = list_type
+
+        # exception for situations in which we have unnumbered definitions
+        # unnumbered defs have the last part of their label in CamelCase
+        # and the word "means" in their text
+        if re.search('([A-Z][a-z]+)+', node['label'][-1]) and re.search('means', node['text']):
+            node['list_type'] = 'no-marker'
+        else:
+            node['list_type'] = list_type
 
         if len(node['text']):
             inline_elements = self.inline_applier.get_layer_pairs(
