@@ -3,6 +3,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var Helpers = require('../helpers');
+var Resources = require('../resources');
 Backbone.$ = $;
 
 var MetaModel = Backbone.Model.extend({
@@ -125,7 +126,7 @@ var MetaModel = Backbone.Model.extend({
         url += id;
 
         if (id.indexOf('/') === -1) {
-            url += '/' + Helpers.findVersion();
+            url += '/' + Helpers.findVersion(Resources.versionElements);
         }
 
         return url;
