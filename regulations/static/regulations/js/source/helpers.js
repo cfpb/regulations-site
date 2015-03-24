@@ -198,6 +198,7 @@ module.exports = {
     // Unpaired this function from the DOM to make
     // it more testable and flexible. Look at resources.js
     // to add places to look for version elements.
+    // To call: `findVersion(Resources.versionElements)`
 
     // -- old message --
     // these next two are a little desperate and heavy handed
