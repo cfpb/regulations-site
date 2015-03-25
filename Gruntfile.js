@@ -88,7 +88,17 @@ module.exports = function(grunt) {
             debug: false
           }
         }
+      },
+      tests: {
+        src: [ 'browser/test/suite.js' ],
+        dest: './browser/test/browserified_tests.js',
+        options: {
+          external: [ './<%= pkg.name %>.js' ],
+          // Embed source map for tests
+          debug: true
+        }
       }
+
     },
 
     uglify: {
