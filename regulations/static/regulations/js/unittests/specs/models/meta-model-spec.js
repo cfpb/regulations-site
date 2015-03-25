@@ -16,15 +16,19 @@ describe('MetaModel', function() {
     });
 
     beforeEach(function(){
-
+        this.metamodel = new MetaModel({
+            content: {'1005-2-a': '<li id="1005-2-a">Paragraph content</li>'}
+        });
     });
 
-    it('.has returns a boolean correctly', function() {
-        var has = MetaModel.prototype.has.Function;
-        expect(has).to.be.ok;
-        console.log(has);//.to.be.not.ok;
-        //console.log(MetaModel.__super__.has);
-        //console.log(MetaModel.prototype.has);
+    it('.has is called correctly.', function() {
+        expect(this.metamodel.has).to.be.ok; // Returns ok
+        expect(this.metamodel.has()).to.be.not.ok; // Returns ok
+    });
+
+    it('.has can tell if an id exists', function() {
+        console.log(this.metamodel);
+        expect(this.metamodel.has('1005-2-a')).to.be.ok; // Returns false. Can't find foo in content.
     });
 
 });
