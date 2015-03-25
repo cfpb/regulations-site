@@ -101,7 +101,7 @@ module.exports = function(grunt) {
 
     mocha_istanbul: {
       coverage: {
-        src: ['<%= env.frontEndPath %>/js/unittests/specs/'],
+        src: ['<%= env.frontEndPath %>/js/unittests/specs/**/*'],
         options: {
           mask:'*-spec.js',
           coverageFolder: '<%= env.frontEndPath %>/js/unittests/coverage',
