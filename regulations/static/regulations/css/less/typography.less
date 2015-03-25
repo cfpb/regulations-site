@@ -174,18 +174,11 @@ a:visited {
     <a href="#" class="external"">some other website</a>
 */
 
-.external {
-    background: url(../img/external-link.png) center right no-repeat;
-    padding: 0 19px 0 0;
-}
-
-@media
-(-webkit-min-device-pixel-ratio: 2),
-(min-resolution: 192dpi) {
-    .external {
-        background: url(../img/external-link@2x.png) center right no-repeat;
-        background-size: 19px 16px;
-    }
+.external:after{
+    .cf-icon;
+    content: "\e610";
+    padding: 0 0 0 5px;
+    font-size: 16px;
 }
 
 .phone:link,
@@ -194,19 +187,19 @@ a:visited {
 }
 
 .phone:before {
-    .minicon;
-    content: "\e00c";
+    .cf-icon;
+    content: "\e306";
     margin-right: 6px;
 }
 
 .mail:before {
-    .minicon;
-    content: "\e00e";
+    .cf-icon;
+    content: "\e302";
     margin-right: 6px;
 }
 
 .go:after {
-   .minicon;
+   .cf-icon;
     content: "\e002";
     font-size: 0.75em;
     margin-left: 6px;
@@ -214,8 +207,8 @@ a:visited {
 }
 
 .pdf:after {
-   .minicon;
-    content: "\e00d";
+   .cf-icon;
+    content: "\e402";
     margin-left: 6px;
 }
 

@@ -68,7 +68,7 @@ var DefinitionView = SidebarModuleView.extend({
         this.$el.html('');
         this.renderHeader();
         this.$el.children().removeClass('spinner');
-        this.$el.append('<div class="error"><span class="minicon-warning"></span>' + error + '</div>');
+        this.$el.append('<div class="error"><span class="cf-icon cf-icon-error icon-warning"></span>' + error + '</div>');
     },
 
     close: function(e) {

@@ -1,10 +1,10 @@
 /*
 Sidebar.less
-========================================================================== 
+==========================================================================
 sidebar.less styles all of the right sidebar content
 */
 
-/* 
+/*
 add a margin to sidebar content
 this offsets the persistent header & ensures long content is inside the viewport
 */
@@ -33,7 +33,7 @@ Sidebar
     li {
         .reset;
     }
-/* 
+/*
 Headers within the sidebar should be <h4>
 */
 
@@ -83,14 +83,14 @@ Sidebar Expandables
 
     header {
         &.expandable a:before {
-            .minicon;
-            content: "\e003";
-            color: @pacific;            
+            .cf-icon;
+            content: "\e109";
+            color: @pacific;
         }
 
         &.open a:before {
-            .minicon;
-            content: "\e004";
+            .cf-icon;
+            content: "\e111";
             color: @pacific;
         }
     }
@@ -147,8 +147,8 @@ Sidebar Headers
         background-position-x: 92%;
     }
 
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
+    @media
+    (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi) {
         .close-button {
             background: @bg_gray url(../img/close@2x.png) no-repeat 0 0;
@@ -209,7 +209,7 @@ Regs Meta contains the sub-content meta data found in the sidebar
             padding: .5em;
             text-decoration: none;
 
-            .minicon-right {
+            .cf-icon-right {
                 float: right;
                 font-size: 0.875em;
                 line-height: 2;
@@ -220,7 +220,7 @@ Regs Meta contains the sub-content meta data found in the sidebar
                 text-decoration: none;
                 color: @pacific;
 
-                .minicon-right {
+                .cf-icon-right {
                     color: @pacific;
                 }
             }
@@ -258,9 +258,9 @@ When open definitions appear in the right sidebar
 .open-definition {
 
     .sidebar-header {
-      .border-bottom-light;  
+      .border-bottom-light;
     }
-    
+
     .close-button {
         cursor: pointer;
 
@@ -314,7 +314,7 @@ When open definitions appear in the right sidebar
             .avenir-next;
             font-size: .9em;
         }
-        
+
         .msg {
             padding-bottom: 0;
             border-bottom: none;
@@ -341,7 +341,7 @@ When open definitions appear in the right sidebar
     display: none;
 }
 
-/* 
+/*
 continue links */
 .continue-link,
 .update-definition {
@@ -374,12 +374,8 @@ Styles for the UI help slide down
         color: @dark_text;
     }
 
-    .minicon-right {
+    .cf-icon-right {
         margin-top: -4px;
-    }
-
-    .minicon-history {
-        font-size: 1.142857143em;
     }
 
     .modified {
@@ -405,10 +401,12 @@ Styles for the UI help slide down
 
 .help-icon {
     display: inline-block;
-    background-color: @bg_gray;
+    width: 40px;
     padding: 10px;
     margin-right: 15px;
     border-radius: 4px;
+    background-color: @bg_gray;
+    text-align: center;
     vertical-align: middle;
 }
 

@@ -41,15 +41,15 @@
     }
 
     .expand-button:before {
-        .minicon;
-        content: "\e003";
+        .cf-icon;
+        content: "\e109"; // cf-icon-plus-round
         float: right;
         padding-left: 6px;
         line-height: 24px;
     }
 
     .open.expand-button:before {
-        content: "\e004";
+        content: "\e111"; // cf-icon-minus-round
     }
 
     h5 {
@@ -64,8 +64,8 @@
         text-transform: uppercase;
     }
 
-    @media 
-    (-webkit-min-device-pixel-ratio: 2), 
+    @media
+    (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi) {
         h4 {
             background: url(../img/interpretation@2x.png) no-repeat 0 3px;
@@ -87,12 +87,12 @@
         padding-top: 0;
     }
 
-    /* 
-    reset borders 
+    /*
+    reset borders
     -------------
     */
 
-    li { 
+    li {
         border: none;
         margin-left: 5px; /* inline interp lists are hanging into the margin, this accomodates to align content TODO: clean up all alignment in interps*/
     }
@@ -141,18 +141,18 @@
         padding: 0;
         margin: 0;
     }
-    
+
     li {
         margin: 0 0 1em 0;
         padding: 0;
     }
-    
+
     h4 {
         .avenir-next-demi;
         background: none;
         padding: 0;
     }
-    
+
     &:hover {
         cursor: default;
         background-color: @bg_gray;
