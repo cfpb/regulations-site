@@ -2315,6 +2315,11 @@ li {
 address {
   font-style: normal;
 }
+ol[type="no-marker"] {
+  list-style-type: none;
+  padding-left: 0;
+  /* margin-left: 1em; */
+}
 /*
  Link Styles
  ========================================================================== */

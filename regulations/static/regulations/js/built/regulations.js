@@ -36,8 +36,7 @@ Backbone.$ = $;
         }, 5000);
     }
 };
-
-},{"./lib/backbone/backbone.js":10,"./lib/jquery/dist/jquery.js":11,"./lib/underscore/underscore.js":12,"./router":21,"./views/analytics-handler-view":22,"./views/drawer/drawer-view":26,"./views/header/header-view":30,"./views/main/main-view":34,"./views/sidebar/sidebar-view":42}],2:[function(require,module,exports){
+},{"./lib/backbone/backbone.js":10,"./lib/jquery/dist/jquery.js":11,"./lib/underscore/underscore.js":12,"./router":22,"./views/analytics-handler-view":23,"./views/drawer/drawer-view":27,"./views/header/header-view":31,"./views/main/main-view":35,"./views/sidebar/sidebar-view":43}],2:[function(require,module,exports){
 'use strict';
 var $ = require("./../lib/jquery/dist/jquery.js");
 var _ = require("./../lib/underscore/underscore.js");
@@ -173,10 +172,9 @@ module.exports = SidebarEvents;
 var $ = require("./lib/jquery/dist/jquery.js");
 var _ = require("./lib/underscore/underscore.js");
 
-
 // indexOf polyfill
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
-// to do: this may make sense to move elsewhere
+// TODO this may make sense to move elsewhere
 if (!Array.prototype.indexOf) {
   Array.prototype.indexOf = function (searchElement, fromIndex) {
     if ( this === undefined || this === null ) {
@@ -208,7 +206,7 @@ if (!Array.prototype.indexOf) {
   };
 }
 
- module.exports = {
+module.exports = {
     isIterable: function(obj) {
         if (typeof obj === 'array' || typeof obj === 'object') {
             return true;
@@ -246,20 +244,20 @@ if (!Array.prototype.indexOf) {
     //
     // **Returns** Reg entity marker formatted for human readability
     idToRef: function(id) {
-        var ref = '',
-            parts, i, len, dividers, item, interpIndex, interpParts, subpartIndex;
+        var ref = '';
+        var parts, i, len, dividers, item, interpIndex, interpParts, subpartIndex;
         parts = id.split('-');
         len = parts.length - 1;
         subpartIndex = parts.indexOf('Subpart');
         dividers = ['§ .', '', '( )', '( )', '( )', '( )'];
 
-        /* if we've got only the reg part number */
+        // if we've got only the reg part number
         if (len === 0) {
             ref = parts[0];
             return ref;
         }
 
-        /* if there is a subpart */
+        // if there is a subpart
         if (subpartIndex !== -1) {
             parts.splice(1, subpartIndex);
 
@@ -272,13 +270,13 @@ if (!Array.prototype.indexOf) {
             len = parts.length - 1;
         }
 
-        /* if we have a supplement */
-        interpIndex = $.inArray('Interp', parts);
+        // if we have a supplement
+        interpIndex = parts.indexOf('Interp');
         if (interpIndex >= 0) {
             interpParts = parts.slice(0, interpIndex);
             ref += this.interpId(interpParts);
         }
-        /* if we have an appendix */
+        // if we have an appendix
         else if (isNaN(parseInt(parts[1], 10))) {
             return this.appendixId(parts[0], parts[1]);
         }
@@ -288,17 +286,16 @@ if (!Array.prototype.indexOf) {
             len = parts.length -1;
         }
 
-        /* we have a subpart interpretation to appendices */
+        // we have a subpart interpretation to appendices
         if (parts.indexOf('Appendices') !== -1) {
             return 'Supplement I to Appendices';
         }
 
-        /* the second part of a supplement to an appendix */
+        // the second part of a supplement to an appendix
         if (len === 1 && isNaN(parts[1])) {
             return ref += parts[1];
-        }
-        else {
-            /* we have a paragraph */
+        } else {
+            // we have a paragraph
             for (i = 0; i <= len; i++) {
                 // return part number alone
                 if (len < 1) {
@@ -308,8 +305,7 @@ if (!Array.prototype.indexOf) {
                 // top paragraph has no punctuation
                 if (i === 1) {
                     ref += parts[i];
-                }
-                else {
+                } else {
                     item = dividers[i].split(' ');
                     ref += item[0] + parts[i] + item[1];
                 }
@@ -317,6 +313,7 @@ if (!Array.prototype.indexOf) {
         }
 
         return ref;
+
     },
 
     // Finds parent-most reg paragraph
@@ -367,37 +364,34 @@ if (!Array.prototype.indexOf) {
         return parts[0] + '-' + parts[1];
     },
 
+    // Unpaired this function from the DOM to make
+    // it more testable and flexible. Look at resources.js
+    // to add places to look for version elements.
+    // To call: `findVersion(Resources.versionElements)`
+
+    // -- old message --
     // these next two are a little desperate and heavy handed
     // the next step, if the app were going to do more
     // interesting things, is to introduce the concept of reg
     // version and maybe effective dates to the architecture
     // at that time, this should be removed
-    findVersion: function() {
-        var version;
-
-        version = $('nav#toc').attr('data-toc-version') ||
-                  $('section[data-base-version]').attr('data-base-version');
-
-        // includes .stop-button to be sure its not the comparison
-        // version in diff mode
-        if (!version) {
-            version = $('#timeline li.current').find('.stop-button').attr('data-version');
-        }
-
-        return version;
+    findVersion: function(versionElements) {
+      return $(versionElements.toc).attr('data-toc-version') ||
+                  $(versionElements.regLandingPage).attr('data-base-version')||
+                  $(versionElements.timelineList).find('.stop-button').attr('data-version');
+                    // includes .stop-button to be sure its not
+                    // the comparison version in diff mode
     },
 
     // returns newer version. findVersion will return base version
-    findDiffVersion: function(currentVersion) {
+    findDiffVersion: function(versionElements, currentVersion) {
         var version;
-        currentVersion = currentVersion || this.findVersion();
-
-        version = $('#table-of-contents').attr('data-from-version');
-
+        currentVersion = currentVersion || this.findVersion(versionElements);
+        version = $(versionElements.diffToc).attr('data-from-version');
         if (!version || version === currentVersion) {
-            version = $('#timeline li.current .version-link').filter(function() {
-                return $(this).attr('data-version') !== currentVersion;
-            }).attr('data-version');
+            if ($(versionElements.timelineList).find('.version-link').attr('data-version') !== currentVersion) {
+                version = $(versionElements.timelineList).find('.version-link').attr('data-version');
+            }
         }
 
         return version;
@@ -13694,6 +13688,7 @@ var $ = require("./../lib/jquery/dist/jquery.js");
 var _ = require("./../lib/underscore/underscore.js");
 var Backbone = require("./../lib/backbone/backbone.js");
 var Helpers = require('../helpers');
+var Resources = require('../resources');
 Backbone.$ = $;
 
 var MetaModel = Backbone.Model.extend({
@@ -13816,7 +13811,7 @@ var MetaModel = Backbone.Model.extend({
         url += id;
 
         if (id.indexOf('/') === -1) {
-            url += '/' + Helpers.findVersion();
+            url += '/' + Helpers.findVersion(Resources.versionElements);
         }
 
         return url;
@@ -13825,7 +13820,7 @@ var MetaModel = Backbone.Model.extend({
 
 module.exports = MetaModel;
 
-},{"../helpers":9,"./../lib/backbone/backbone.js":10,"./../lib/jquery/dist/jquery.js":11,"./../lib/underscore/underscore.js":12}],16:[function(require,module,exports){
+},{"../helpers":9,"../resources":21,"./../lib/backbone/backbone.js":10,"./../lib/jquery/dist/jquery.js":11,"./../lib/underscore/underscore.js":12}],16:[function(require,module,exports){
 // **Extends** MetaModel
 //
 // **Usage** ```require(['reg-model'], function(RegModel) {})```
@@ -14026,6 +14021,22 @@ window.AccessibilityTest = function() {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./app-init":1,"./lib/jquery/dist/jquery.js":11}],21:[function(require,module,exports){
+// Resources.js pulls out pieces tied to the DOM
+// for easier testing.
+
+'use strict';
+
+module.exports = {
+  // These are elements for the findVersion and findBaseVersion
+  // functions in helpers.js
+  versionElements: {
+    toc: 'nav#toc',
+    regLandingPage: 'section[data-base-version]',
+    timelineList: '#timeline li.current',
+    diffToc: '#table-of-contents'
+  }
+};
+},{}],22:[function(require,module,exports){
 'use strict';
 var _ = require("./lib/underscore/underscore.js");
 var Backbone = require("./lib/backbone/backbone.js");
@@ -14115,7 +14126,7 @@ else {
 var router = new RegsRouter();
 module.exports = router;
 
-},{"./events/breakaway-events":2,"./events/main-events":6,"./lib/backbone/backbone.js":10,"./lib/underscore/underscore.js":12,"./views/main/main-view":34}],22:[function(require,module,exports){
+},{"./events/breakaway-events":2,"./events/main-events":6,"./lib/backbone/backbone.js":10,"./lib/underscore/underscore.js":12,"./views/main/main-view":35}],23:[function(require,module,exports){
 'use strict';
 var $ = require("./../lib/jquery/dist/jquery.js");
 var _ = require("./../lib/underscore/underscore.js");
@@ -14210,7 +14221,7 @@ var AnalyticsHandler = Backbone.View.extend({
 
 module.exports = AnalyticsHandler;
 
-},{"../events/ga-events":4,"./../lib/backbone/backbone.js":10,"./../lib/jquery/dist/jquery.js":11,"./../lib/underscore/underscore.js":12}],23:[function(require,module,exports){
+},{"../events/ga-events":4,"./../lib/backbone/backbone.js":10,"./../lib/jquery/dist/jquery.js":11,"./../lib/underscore/underscore.js":12}],24:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -14252,7 +14263,7 @@ var BreakawayView = Backbone.View.extend({
 var breakaway = new BreakawayView();
 module.exports = breakaway;
 
-},{"../../events/breakaway-events":2,"../../events/main-events":6,"../../events/sidebar-events":8,"../../router":21,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./sxs-view":24}],24:[function(require,module,exports){
+},{"../../events/breakaway-events":2,"../../events/main-events":6,"../../events/sidebar-events":8,"../../router":22,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./sxs-view":25}],25:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -14333,7 +14344,7 @@ var SxSView = Backbone.View.extend({
 
 module.exports = SxSView;
 
-},{"../../events/breakaway-events":2,"../../events/main-events":6,"../../models/sxs-model":19,"../../router":21,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./sxs-view":24}],25:[function(require,module,exports){
+},{"../../events/breakaway-events":2,"../../events/main-events":6,"../../models/sxs-model":19,"../../router":22,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./sxs-view":25}],26:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -14448,7 +14459,7 @@ var DrawerTabsView = Backbone.View.extend({
 
 module.exports = DrawerTabsView;
 
-},{"../../events/drawer-events":3,"../../events/ga-events":4,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],26:[function(require,module,exports){
+},{"../../events/drawer-events":3,"../../events/ga-events":4,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],27:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -14507,7 +14518,7 @@ var DrawerView = Backbone.View.extend({
 });
 
 module.exports = DrawerView;
-},{"../../events/drawer-events":3,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./drawer-tabs-view":25,"./history-view":27,"./search-view":28,"./toc-view":29}],27:[function(require,module,exports){
+},{"../../events/drawer-events":3,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./drawer-tabs-view":26,"./history-view":28,"./search-view":29,"./toc-view":30}],28:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -14577,7 +14588,7 @@ var HistoryView = Backbone.View.extend({
 
 module.exports = HistoryView;
 
-},{"../../events/main-events":6,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],28:[function(require,module,exports){
+},{"../../events/main-events":6,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],29:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -14616,7 +14627,7 @@ var SearchView = Backbone.View.extend({
 });
 
 module.exports = SearchView;
-},{"../../events/main-events":6,"../../router":21,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],29:[function(require,module,exports){
+},{"../../events/main-events":6,"../../router":22,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],30:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -14626,6 +14637,7 @@ var Router = require('../../router');
 var MainEvents = require('../../events/main-events');
 var DrawerEvents = require('../../events/drawer-events');
 var HeaderEvents = require('../../events/header-events');
+var Resources = require('../../resources.js');
 Backbone.$ = $;
 
 var TOCView = Backbone.View.extend({
@@ -14698,8 +14710,8 @@ var TOCView = Backbone.View.extend({
             sectionId = $link.data('section-id'),
             config = {};
 
-        config.newerVersion = Helpers.findDiffVersion();
-        config.baseVersion = Helpers.findVersion();
+        config.newerVersion = Helpers.findDiffVersion(Resources.versionElements);
+        config.baseVersion = Helpers.findVersion(Resources.versionElements);
         DrawerEvents.trigger('section:open', sectionId);
         MainEvents.trigger('diff:open', sectionId, config, 'diff');
     },
@@ -14717,7 +14729,7 @@ var TOCView = Backbone.View.extend({
 
 module.exports = TOCView;
 
-},{"../../events/drawer-events":3,"../../events/header-events":5,"../../events/main-events":6,"../../helpers":9,"../../router":21,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],30:[function(require,module,exports){
+},{"../../events/drawer-events":3,"../../events/header-events":5,"../../events/main-events":6,"../../helpers":9,"../../resources.js":21,"../../router":22,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],31:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -14763,7 +14775,7 @@ var HeaderView = Backbone.View.extend({
 
 module.exports = HeaderView;
 
-},{"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./sub-head-view":31}],31:[function(require,module,exports){
+},{"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./sub-head-view":32}],32:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -14825,7 +14837,7 @@ var SubHeadView = Backbone.View.extend({
 
 module.exports = SubHeadView;
 
-},{"../../events/header-events":5,"../../helpers":9,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],32:[function(require,module,exports){
+},{"../../events/header-events":5,"../../helpers":9,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],33:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -15004,7 +15016,7 @@ var ChildView = Backbone.View.extend({
 });
 
 module.exports = ChildView;
-},{"../../events/drawer-events":3,"../../events/ga-events":4,"../../events/header-events":5,"../../events/main-events":6,"../../events/scroll-stop.js":7,"../../helpers":9,"../../router":21,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],33:[function(require,module,exports){
+},{"../../events/drawer-events":3,"../../events/ga-events":4,"../../events/header-events":5,"../../events/main-events":6,"../../events/scroll-stop.js":7,"../../helpers":9,"../../router":22,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],34:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -15013,6 +15025,7 @@ var Router = require('../../router');
 var HeaderEvents = require('../../events/header-events');
 var DrawerEvents = require('../../events/drawer-events');
 var Helpers = require('../../helpers');
+var Resources = require('../../resources');
 var MainEvents = require('../../events/main-events');
 var ChildView = require('./child-view');
 Backbone.$ = $;
@@ -15021,7 +15034,7 @@ var DiffView = ChildView.extend({
     initialize: function() {
         this.id = this.options.id;
         this.baseVersion = this.options.baseVersion;
-        this.newerVersion = this.options.newerVersion || Helpers.findDiffVersion(this.baseVersion);
+        this.newerVersion = this.options.newerVersion || Helpers.findDiffVersion(Resources.versionElements, this.baseVersion);
         this.fromVersion = this.options.fromVersion || this.newerVersion;
         // we preserve the section id as is in config obj because
         this.options.sectionId = this.id;
@@ -15057,7 +15070,7 @@ var DiffView = ChildView.extend({
 
 module.exports = DiffView;
 
-},{"../../events/drawer-events":3,"../../events/header-events":5,"../../events/main-events":6,"../../helpers":9,"../../router":21,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./child-view":32}],34:[function(require,module,exports){
+},{"../../events/drawer-events":3,"../../events/header-events":5,"../../events/main-events":6,"../../helpers":9,"../../resources":21,"../../router":22,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./child-view":33}],35:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -15078,6 +15091,7 @@ var DrawerEvents = require('../../events/drawer-events');
 var Helpers = require('../../helpers');
 var MainEvents = require('../../events/main-events');
 var ChildView = require('./child-view');
+var Resources = require('../../resources.js');
 Backbone.$ = $;
 
 var MainView = Backbone.View.extend({
@@ -15102,7 +15116,7 @@ var MainView = Backbone.View.extend({
         // which page are we starting on?
         this.contentType = this.$topSection.data('page-type');
         // what version of the reg?
-        this.regVersion = Helpers.findVersion();
+        this.regVersion = Helpers.findVersion(Resources.versionElements);
         // what section do we have open?
         this.sectionId = this.$topSection.attr('id');
         if (typeof this.sectionId === 'undefined') {
@@ -15203,8 +15217,8 @@ var MainView = Backbone.View.extend({
 
         // diffs need some more version context
         if (this.contentType === 'diff') {
-            options.baseVersion = this.regVersion || Helpers.findVersion();
-            options.newerVersion = Helpers.findDiffVersion();
+            options.baseVersion = this.regVersion || Helpers.findVersion(Resources.versionElements);
+            options.newerVersion = Helpers.findDiffVersion(Resources.versionElements);
             if (typeof options.fromVersion === 'undefined') {
                 options.fromVersion = $('#table-of-contents').data('from-version');
             }
@@ -15299,7 +15313,7 @@ var MainView = Backbone.View.extend({
 });
 module.exports = MainView;
 
-},{"../../events/drawer-events":3,"../../events/header-events":5,"../../events/main-events":6,"../../events/sidebar-events":8,"../../helpers":9,"../../models/diff-model":14,"../../models/reg-model":16,"../../models/search-model":17,"../../router":21,"../header/sub-head-view":31,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./child-view":32,"./diff-view":33,"./reg-view":35,"./search-results-view":36,"./section-footer-view":37}],35:[function(require,module,exports){
+},{"../../events/drawer-events":3,"../../events/header-events":5,"../../events/main-events":6,"../../events/sidebar-events":8,"../../helpers":9,"../../models/diff-model":14,"../../models/reg-model":16,"../../models/search-model":17,"../../resources.js":21,"../../router":22,"../header/sub-head-view":32,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./child-view":33,"./diff-view":34,"./reg-view":36,"./search-results-view":37,"./section-footer-view":38}],36:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -15596,7 +15610,7 @@ var RegView = ChildView.extend({
 
 module.exports = RegView;
 
-},{"../../events/drawer-events":3,"../../events/ga-events":4,"../../events/header-events":5,"../../events/main-events":6,"../../events/scroll-stop.js":7,"../../events/sidebar-events":8,"../../helpers":9,"../../models/reg-model":16,"../../router":21,"../sidebar/definition-view":38,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./../../lib/unveil/jquery.unveil.js":13,"./child-view":32,"./section-footer-view":37}],36:[function(require,module,exports){
+},{"../../events/drawer-events":3,"../../events/ga-events":4,"../../events/header-events":5,"../../events/main-events":6,"../../events/scroll-stop.js":7,"../../events/sidebar-events":8,"../../helpers":9,"../../models/reg-model":16,"../../router":22,"../sidebar/definition-view":39,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./../../lib/unveil/jquery.unveil.js":13,"./child-view":33,"./section-footer-view":38}],37:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -15703,7 +15717,7 @@ var SearchResultsView = ChildView.extend({
 });
 
 module.exports = SearchResultsView;
-},{"../../events/drawer-events":3,"../../events/header-events":5,"../../events/main-events":6,"../../models/search-model.js":17,"../../router":21,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./child-view":32}],37:[function(require,module,exports){
+},{"../../events/drawer-events":3,"../../events/header-events":5,"../../events/main-events":6,"../../models/search-model.js":17,"../../router":22,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./child-view":33}],38:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -15740,7 +15754,7 @@ var SectionFooterView = Backbone.View.extend({
 
 module.exports = SectionFooterView;
 
-},{"../../events/main-events":6,"../../router":21,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],38:[function(require,module,exports){
+},{"../../events/main-events":6,"../../router":22,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],39:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -15939,7 +15953,7 @@ var DefinitionView = SidebarModuleView.extend({
 
 module.exports = DefinitionView;
 
-},{"../../events/ga-events":4,"../../events/main-events":6,"../../events/sidebar-events":8,"../../helpers":9,"../../router":21,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./sidebar-module-view":41}],39:[function(require,module,exports){
+},{"../../events/ga-events":4,"../../events/main-events":6,"../../events/sidebar-events":8,"../../helpers":9,"../../router":22,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./sidebar-module-view":42}],40:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -15952,7 +15966,7 @@ var HelpView = Backbone.View.extend({
 
 module.exports = HelpView;
 
-},{"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],40:[function(require,module,exports){
+},{"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],41:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -15964,7 +15978,7 @@ var SidebarListView = Backbone.View.extend({
 
 module.exports = SidebarListView;
 
-},{"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],41:[function(require,module,exports){
+},{"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],42:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -15995,7 +16009,7 @@ var SidebarModuleView = Backbone.View.extend({
 
 module.exports = SidebarModuleView;
 
-},{"../../models/reg-model":16,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],42:[function(require,module,exports){
+},{"../../models/reg-model":16,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12}],43:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -16202,7 +16216,7 @@ var SidebarView = Backbone.View.extend({
 
 module.exports = SidebarView;
 
-},{"../../events/main-events":6,"../../events/sidebar-events":8,"../../models/meta-model":15,"../../models/reg-model":16,"../../models/sidebar-model":18,"../breakaway/breakaway-view":23,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./definition-view":38,"./help-view":39,"./sxs-list-view":43}],43:[function(require,module,exports){
+},{"../../events/main-events":6,"../../events/sidebar-events":8,"../../models/meta-model":15,"../../models/reg-model":16,"../../models/sidebar-model":18,"../breakaway/breakaway-view":24,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./definition-view":39,"./help-view":40,"./sxs-list-view":44}],44:[function(require,module,exports){
 'use strict';
 var $ = require("./../../lib/jquery/dist/jquery.js");
 var _ = require("./../../lib/underscore/underscore.js");
@@ -16277,4 +16291,4 @@ var SxSListView = SidebarListView.extend({
 
 module.exports = SxSListView;
 
-},{"../../events/breakaway-events":2,"../../events/ga-events":4,"../../router":21,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./sidebar-list-view":40,"./sxs-list-view":43}]},{},[20]);
+},{"../../events/breakaway-events":2,"../../events/ga-events":4,"../../router":22,"./../../lib/backbone/backbone.js":10,"./../../lib/jquery/dist/jquery.js":11,"./../../lib/underscore/underscore.js":12,"./sidebar-list-view":41,"./sxs-list-view":44}]},{},[20]);
