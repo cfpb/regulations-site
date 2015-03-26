@@ -52,9 +52,20 @@ describe('MetaModel', function() {
         expect(this.metamodel.retrieve('1005-2-a')).to.have.property('promise');
     });
 
-    it('request returns promise', function(){
+    it('request returns promise', function() {
         expect(this.metamodel.request('1005-2-a')).to.be.ok;
         expect(this.metamodel.request('1005-2-a')).to.have.property('promise');
+    });
+
+    it('get returns something', function() {
+        var cb = function(success, returned) {
+          if (success) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+        expect(this.metamodel.get('1005-2-a', cb)).to.be.ok;
     });
 });
 
