@@ -27,8 +27,8 @@ describe('MetaModel', function() {
     });
 
     it('.has can tell if an id exists', function() {
-        console.log(this.metamodel);
-        expect(this.metamodel.has('1005-2-a')).to.be.ok; // Returns false. Can't find foo in content.
+        expect(this.metamodel.has('1005-2-a')).to.be.ok;
+        expect(this.metamodel.has('foo')).to.be.not.ok; // Returns false. Can't find foo in content.
     });
 
 });
