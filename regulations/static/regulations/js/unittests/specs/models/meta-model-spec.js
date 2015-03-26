@@ -54,6 +54,13 @@ describe('MetaModel', function() {
 
     it('getAJAXUrl returns the correct URL endpoint', function() {
         expect(this.metamodel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/1005-2/2014-20681');
+
+
+        window.APP_PREFIX = ''; // Test without a urlPrefix
+        expect(this.metamodel.getAJAXUrl('1005-2')).to.equal('/partial/1005-2/2014-20681');
+
+        window.APP_PREFIX = '/eregulations/'; //Return to normal
+
     });
 
     it('retrieve returns true with a promise', function() {
@@ -66,7 +73,7 @@ describe('MetaModel', function() {
         expect(this.metamodel.request('1005-2-a')).to.have.property('promise');
     });
 
-    it('get returns something', function() {
+    it('get calls the callback correctly', function() {
         var cb = sinon.spy();
         var cbfail = sinon.spy();
 
