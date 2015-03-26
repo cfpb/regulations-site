@@ -22,15 +22,9 @@ describe('Sidebar Model:', function() {
         Resources.versionElements = {
             toc: $('<nav id="toc" data-toc-version="2014-20681"></nav>'),
         };
-        this.sidebarmodel = new SidebarModel;
     });
 
-    it('run', function() {
-        console.log(SidebarModel);
-        console.log(this.sidebarmodel);
-
-    });
-    xit('getAJAXUrl returns the correct URL endpoint with /sidebar supplemental path', function() {
+    it('getAJAXUrl returns the correct URL endpoint with /sidebar supplemental path', function() {
         expect(SidebarModel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/sidebar/1005-2/2014-20681');
 
 
