@@ -5,7 +5,7 @@ var MetaModel = require('./meta-model');
 
 Backbone.DefinitionModel = MetaModel.extend({});
 
-var definitionModel = new Backbone.DiffModel({
+var definitionModel = new Backbone.DefinitionModel({
     supplementalPath: 'definition'
 });
 

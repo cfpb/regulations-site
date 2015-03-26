@@ -1,0 +1,31 @@
+var chai = require('chai');
+var expect = chai.expect;
+var jsdom = require('mocha-jsdom');
+
+describe('Definition Model:', function() {
+    'use strict';
+
+    var $, Backbone, DefinitionModel, Resources;
+
+    jsdom();
+
+    before(function (){
+        Backbone = require('backbone');
+        $ = require('jquery');
+        Backbone.$ = $;
+        DefinitionModel = require('../../../source/models/definition-model');
+        Resources = require('../../../source/resources');
+        window.APP_PREFIX = '/eregulations/';
+    });
+
+    beforeEach(function(){
+        Resources.versionElements = {
+            toc: $('<nav id="toc" data-toc-version="2014-20681"></nav>'),
+        };
+    });
+
+    it('getAJAXUrl returns the correct URL endpoint with /definition supplemental path', function() {
+
+
+    });
+});
