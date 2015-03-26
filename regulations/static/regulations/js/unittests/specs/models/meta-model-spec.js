@@ -1,5 +1,11 @@
-var expect = require('chai').expect;
+var chai = require('chai');
+var expect = chai.expect;
+var sinon = require('sinon'); // Run npm install for this.
+var sinonChai = require('sinon-chai');
 var jsdom = require('mocha-jsdom');
+
+chai.use(sinonChai);
+
 
 describe('MetaModel', function() {
     'use strict';
@@ -19,7 +25,10 @@ describe('MetaModel', function() {
 
     beforeEach(function(){
         this.metamodel = new MetaModel({
-            content: {'1005-2-a': '<li id="1005-2-a">Paragraph content</li>'}
+            content: {
+              '1005-2-a': '<li id="1005-2-a">Paragraph content</li>',
+              '1005-3-a': '<li id="1005-3-a">Paragraph content</li>'
+            }
         });
 
         Resources.versionElements = {
@@ -58,14 +67,14 @@ describe('MetaModel', function() {
     });
 
     it('get returns something', function() {
-        var cb = function(success, returned) {
-          if (success) {
-            return true;
-          } else {
-            return false;
-          }
-        };
-        expect(this.metamodel.get('1005-2-a', cb)).to.be.ok;
+        var cb = sinon.spy();
+        var cbfail = sinon.spy();
+
+        expect(this.metamodel.get('1005-2-a', cb)).to.be.ok; // Test a cached regulation
+        expect(cb).to.have.been.called;
+
+        expect(this.metamodel.get('1005-5-a', cb)).to.be.ok; // Test a reg that doesn't exist
+        expect(cb).to.have.been.calledWith(false);
     });
 });
 
