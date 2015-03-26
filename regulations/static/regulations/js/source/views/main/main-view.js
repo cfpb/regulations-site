@@ -18,6 +18,7 @@ var DrawerEvents = require('../../events/drawer-events');
 var Helpers = require('../../helpers');
 var MainEvents = require('../../events/main-events');
 var ChildView = require('./child-view');
+var Resources = require('../../resources.js');
 Backbone.$ = $;
 
 var MainView = Backbone.View.extend({
@@ -42,7 +43,7 @@ var MainView = Backbone.View.extend({
         // which page are we starting on?
         this.contentType = this.$topSection.data('page-type');
         // what version of the reg?
-        this.regVersion = Helpers.findVersion();
+        this.regVersion = Helpers.findVersion(Resources.versionElements);
         // what section do we have open?
         this.sectionId = this.$topSection.attr('id');
         if (typeof this.sectionId === 'undefined') {
@@ -143,8 +144,8 @@ var MainView = Backbone.View.extend({
 
         // diffs need some more version context
         if (this.contentType === 'diff') {
-            options.baseVersion = this.regVersion || Helpers.findVersion();
-            options.newerVersion = Helpers.findDiffVersion();
+            options.baseVersion = this.regVersion || Helpers.findVersion(Resources.versionElements);
+            options.newerVersion = Helpers.findDiffVersion(Resources.versionElements);
             if (typeof options.fromVersion === 'undefined') {
                 options.fromVersion = $('#table-of-contents').data('from-version');
             }
@@ -184,7 +185,7 @@ var MainView = Backbone.View.extend({
     displayError: function() {
         // get ID of still rendered last section
         var oldId = this.$el.find('section[data-page-type]').attr('id'),
-            $error = this.$el.prepend('<div class="error"><span class="minicon-warning"></span>Due to a network error, we were unable to retrieve the requested information.</div>');
+            $error = this.$el.prepend('<div class="error"><span class="cf-icon cf-icon-error icon-warning"></span>Due to a network error, we were unable to retrieve the requested information.</div>');
 
         DrawerEvents.trigger('section:open', oldId);
         HeaderEvents.trigger('section:open', oldId);

@@ -3,10 +3,9 @@
 var $ = require('jquery');
 var _ = require('underscore');
 
-
 // indexOf polyfill
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
-// to do: this may make sense to move elsewhere
+// TODO this may make sense to move elsewhere
 if (!Array.prototype.indexOf) {
   Array.prototype.indexOf = function (searchElement, fromIndex) {
     if ( this === undefined || this === null ) {
@@ -38,7 +37,7 @@ if (!Array.prototype.indexOf) {
   };
 }
 
- module.exports = {
+module.exports = {
     isIterable: function(obj) {
         if (typeof obj === 'array' || typeof obj === 'object') {
             return true;
@@ -76,20 +75,20 @@ if (!Array.prototype.indexOf) {
     //
     // **Returns** Reg entity marker formatted for human readability
     idToRef: function(id) {
-        var ref = '',
-            parts, i, len, dividers, item, interpIndex, interpParts, subpartIndex;
+        var ref = '';
+        var parts, i, len, dividers, item, interpIndex, interpParts, subpartIndex;
         parts = id.split('-');
         len = parts.length - 1;
         subpartIndex = parts.indexOf('Subpart');
         dividers = ['§ .', '', '( )', '( )', '( )', '( )'];
 
-        /* if we've got only the reg part number */
+        // if we've got only the reg part number
         if (len === 0) {
             ref = parts[0];
             return ref;
         }
 
-        /* if there is a subpart */
+        // if there is a subpart
         if (subpartIndex !== -1) {
             parts.splice(1, subpartIndex);
 
@@ -102,13 +101,13 @@ if (!Array.prototype.indexOf) {
             len = parts.length - 1;
         }
 
-        /* if we have a supplement */
-        interpIndex = $.inArray('Interp', parts);
+        // if we have a supplement
+        interpIndex = parts.indexOf('Interp');
         if (interpIndex >= 0) {
             interpParts = parts.slice(0, interpIndex);
             ref += this.interpId(interpParts);
         }
-        /* if we have an appendix */
+        // if we have an appendix
         else if (isNaN(parseInt(parts[1], 10))) {
             return this.appendixId(parts[0], parts[1]);
         }
@@ -118,17 +117,16 @@ if (!Array.prototype.indexOf) {
             len = parts.length -1;
         }
 
-        /* we have a subpart interpretation to appendices */
+        // we have a subpart interpretation to appendices
         if (parts.indexOf('Appendices') !== -1) {
             return 'Supplement I to Appendices';
         }
 
-        /* the second part of a supplement to an appendix */
+        // the second part of a supplement to an appendix
         if (len === 1 && isNaN(parts[1])) {
             return ref += parts[1];
-        }
-        else {
-            /* we have a paragraph */
+        } else {
+            // we have a paragraph
             for (i = 0; i <= len; i++) {
                 // return part number alone
                 if (len < 1) {
@@ -138,8 +136,7 @@ if (!Array.prototype.indexOf) {
                 // top paragraph has no punctuation
                 if (i === 1) {
                     ref += parts[i];
-                }
-                else {
+                } else {
                     item = dividers[i].split(' ');
                     ref += item[0] + parts[i] + item[1];
                 }
@@ -147,6 +144,7 @@ if (!Array.prototype.indexOf) {
         }
 
         return ref;
+
     },
 
     // Finds parent-most reg paragraph
@@ -197,37 +195,34 @@ if (!Array.prototype.indexOf) {
         return parts[0] + '-' + parts[1];
     },
 
+    // Unpaired this function from the DOM to make
+    // it more testable and flexible. Look at resources.js
+    // to add places to look for version elements.
+    // To call: `findVersion(Resources.versionElements)`
+
+    // -- old message --
     // these next two are a little desperate and heavy handed
     // the next step, if the app were going to do more
     // interesting things, is to introduce the concept of reg
     // version and maybe effective dates to the architecture
     // at that time, this should be removed
-    findVersion: function() {
-        var version;
-
-        version = $('nav#toc').attr('data-toc-version') ||
-                  $('section[data-base-version]').attr('data-base-version');
-
-        // includes .stop-button to be sure its not the comparison
-        // version in diff mode
-        if (!version) {
-            version = $('#timeline li.current').find('.stop-button').attr('data-version');
-        }
-
-        return version;
+    findVersion: function(versionElements) {
+      return $(versionElements.toc).attr('data-toc-version') ||
+                  $(versionElements.regLandingPage).attr('data-base-version')||
+                  $(versionElements.timelineList).find('.stop-button').attr('data-version');
+                    // includes .stop-button to be sure its not
+                    // the comparison version in diff mode
     },
 
     // returns newer version. findVersion will return base version
-    findDiffVersion: function(currentVersion) {
+    findDiffVersion: function(versionElements, currentVersion) {
         var version;
-        currentVersion = currentVersion || this.findVersion();
-
-        version = $('#table-of-contents').attr('data-from-version');
-
+        currentVersion = currentVersion || this.findVersion(versionElements);
+        version = $(versionElements.diffToc).attr('data-from-version');
         if (!version || version === currentVersion) {
-            version = $('#timeline li.current .version-link').filter(function() {
-                return $(this).attr('data-version') !== currentVersion;
-            }).attr('data-version');
+            if ($(versionElements.timelineList).find('.version-link').attr('data-version') !== currentVersion) {
+                version = $(versionElements.timelineList).find('.version-link').attr('data-version');
+            }
         }
 
         return version;

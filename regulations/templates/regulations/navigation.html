@@ -11,7 +11,7 @@
             <a href="{{ prev.url }}"
                class="navigation-link backward next-prev-link"
                data-linked-section="{{prev.section_id}}"
-            ><i class="minicon-left"> </i><span class="next-prev-label">Previous section - </span>{{ prev.markup_prefix|safe }}{{prev.label}} </a> <span class="next-prev-title">{{prev.sub_label}}</span>
+            ><span class="cf-icon cf-icon-left"></span><span class="next-prev-label">Previous section - </span>{{ prev.markup_prefix|safe }}{{prev.label}} </a> <span class="next-prev-title">{{prev.sub_label}}</span>
         </li>
 {% endwith %}
 {% endif %}
@@ -22,7 +22,7 @@
             <a href="{{ next.url }}"
                class="navigation-link forward next-prev-link"
                data-linked-section="{{next.section_id}}"
-            ><i class="minicon-right"></i><span class="next-prev-label">Next section - </span>{{ next.markup_prefix|safe }}{{next.label}}</a> <span class="next-prev-title">{{next.sub_label}}</span>
+            ><span class="cf-icon cf-icon-right"></span><span class="next-prev-label">Next section - </span>{{ next.markup_prefix|safe }}{{next.label}}</a> <span class="next-prev-title">{{next.sub_label}}</span>
         </li>
 {% endwith %}
 {% endif %}

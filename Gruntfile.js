@@ -69,7 +69,7 @@ module.exports = function(grunt) {
     browserify: {
       dev: {
         files: {
-          '<%= env.frontEndPath %>/js/built/regulations.js': ['<%= env.frontEndPath %>/js/source/regulations.js']
+          '<%= env.frontEndPath %>/js/built/regulations.js': ['<%= env.frontEndPath %>/js/source/regulations.js','<%= env.frontEndPath %>/js/source/regulations.js']
         },
         options: {
           transform: ['browserify-shim', 'debowerify'],
@@ -88,15 +88,6 @@ module.exports = function(grunt) {
             debug: false
           }
         }
-      },
-      tests: {
-        files: {
-          '<%= env.frontEndPath %>/js/unittests/compiled_tests.js': ['<%= env.frontEndPath %>/js/unittests/specs/*.js']
-        },
-        options: {
-          watch: true,
-          debug: true
-        }
       }
     },
 
@@ -108,14 +99,17 @@ module.exports = function(grunt) {
       }
     },
 
-    mocha: {
-      test: {
-        src: ['<%= env.frontEndPath %>/js/unittests/runner.html'],
+    mocha_istanbul: {
+      coverage: {
+        src: ['<%= env.frontEndPath %>/js/unittests/specs/'],
         options: {
-          run: true
+          mask:'*-spec.js',
+          coverageFolder: '<%= env.frontEndPath %>/js/unittests/coverage',
+          excludes: ['<%= env.frontEndPath %>/js/unittests/specs/*'],
+          coverage: false
         }
       }
-    },
+     },
 
     shell: {
       'build-require': {
@@ -169,16 +163,25 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.event.on('coverage', function( lcov, done ) {
+    require('coveralls').handleInput( lcov, function( err ) {
+      if ( err ) {
+        return done( err );
+      }
+      done();
+    });
+  });
   /**
    * The above tasks are loaded here.
    */
-    require('load-grunt-tasks')(grunt);
+  require('load-grunt-tasks')(grunt);
 
     /**
     * Create task aliases by registering new tasks
     */
-    grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
-    grunt.registerTask('test', ['eslint', 'nose', 'browserify:tests', 'mocha']);
-    grunt.registerTask('build', ['squish', 'test']);
-    grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less:dist']);
+  grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
+  grunt.registerTask('test', ['eslint', 'mocha_istanbul', 'nose']);
+  grunt.registerTask('build', ['squish', 'test']);
+  grunt.registerTask('squish', ['browserify:dist', 'uglify', 'less:dist']);
+  grunt.registerTask('default', ['eslint', 'browserify:dev', 'less:dev']);
 };

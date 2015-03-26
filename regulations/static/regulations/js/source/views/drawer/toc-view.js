@@ -7,6 +7,7 @@ var Router = require('../../router');
 var MainEvents = require('../../events/main-events');
 var DrawerEvents = require('../../events/drawer-events');
 var HeaderEvents = require('../../events/header-events');
+var Resources = require('../../resources.js');
 Backbone.$ = $;
 
 var TOCView = Backbone.View.extend({
@@ -79,8 +80,8 @@ var TOCView = Backbone.View.extend({
             sectionId = $link.data('section-id'),
             config = {};
 
-        config.newerVersion = Helpers.findDiffVersion();
-        config.baseVersion = Helpers.findVersion();
+        config.newerVersion = Helpers.findDiffVersion(Resources.versionElements);
+        config.baseVersion = Helpers.findVersion(Resources.versionElements);
         DrawerEvents.trigger('section:open', sectionId);
         MainEvents.trigger('diff:open', sectionId, config, 'diff');
     },
