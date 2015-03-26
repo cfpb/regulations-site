@@ -47,5 +47,14 @@ describe('MetaModel', function() {
         expect(this.metamodel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/1005-2/2014-20681');
     });
 
+    it('retrieve returns true with a promise', function() {
+        expect(this.metamodel.retrieve('1005-2-a')).to.be.ok;
+        expect(this.metamodel.retrieve('1005-2-a')).to.have.property('promise');
+    });
+
+    it('request returns promise', function(){
+        expect(this.metamodel.request('1005-2-a')).to.be.ok;
+        expect(this.metamodel.request('1005-2-a')).to.have.property('promise');
+    });
 });
 
