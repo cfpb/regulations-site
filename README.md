@@ -81,6 +81,11 @@ located in ```bin```, including ```bin/django``` and ```bin/test```. The
 latter will run our test suite while the former is equivalent to running
 manage.py in a traditional Django environment.
 
+Before starting the development server, you also need to specify the ```STATICFILES_DIRS```
+and  ```STATIC_ROOT``` variables in your ```local_settings.py``` file.
+Then run ```bin/django collectstatic``` to move all static resources into
+your ```STATIC_ROOT``` directory.
+
 With that, you can start the development server:
 ```bash
 $ ./bin/django runserver
