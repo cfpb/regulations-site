@@ -2,10 +2,10 @@ var chai = require('chai');
 var expect = chai.expect;
 var jsdom = require('mocha-jsdom');
 
-describe('Diff Model:', function() {
+describe('Sidebar Model:', function() {
     'use strict';
 
-    var $, Backbone, DiffModel, Resources;
+    var $, Backbone, SidebarModel, Resources;
 
     jsdom();
 
@@ -13,7 +13,7 @@ describe('Diff Model:', function() {
         Backbone = require('backbone');
         $ = require('jquery');
         Backbone.$ = $;
-        DiffModel = require('../../../source/models/diff-model');
+        SidebarModel = require('../../../source/models/sidebar-model');
         Resources = require('../../../source/resources');
         window.APP_PREFIX = '/eregulations/';
     });
@@ -22,14 +22,20 @@ describe('Diff Model:', function() {
         Resources.versionElements = {
             toc: $('<nav id="toc" data-toc-version="2014-20681"></nav>'),
         };
+        this.sidebarmodel = new SidebarModel;
     });
 
-    it('getAJAXUrl returns the correct URL endpoint with /diff supplemental path', function() {
-        expect(DiffModel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/diff/1005-2/2014-20681');
+    it('run', function() {
+        console.log(SidebarModel);
+        console.log(this.sidebarmodel);
+
+    });
+    xit('getAJAXUrl returns the correct URL endpoint with /sidebar supplemental path', function() {
+        expect(SidebarModel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/sidebar/1005-2/2014-20681');
 
 
         window.APP_PREFIX = ''; // Test without a urlPrefix
-        expect(DiffModel.getAJAXUrl('1005-2')).to.equal('/partial/diff/1005-2/2014-20681');
+        expect(SidebarModel.getAJAXUrl('1005-2')).to.equal('/partial/sidebar/1005-2/2014-20681');
 
         window.APP_PREFIX = '/eregulations/'; //Return to normalt
 

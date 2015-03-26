@@ -2,10 +2,10 @@ var chai = require('chai');
 var expect = chai.expect;
 var jsdom = require('mocha-jsdom');
 
-describe('Diff Model:', function() {
+describe('Search Model:', function() {
     'use strict';
 
-    var $, Backbone, DiffModel, Resources;
+    var $, Backbone, SearchModel, Resources;
 
     jsdom();
 
@@ -13,7 +13,7 @@ describe('Diff Model:', function() {
         Backbone = require('backbone');
         $ = require('jquery');
         Backbone.$ = $;
-        DiffModel = require('../../../source/models/diff-model');
+        SearchModel = require('../../../source/models/search-model');
         Resources = require('../../../source/resources');
         window.APP_PREFIX = '/eregulations/';
     });
@@ -24,14 +24,15 @@ describe('Diff Model:', function() {
         };
     });
 
-    it('getAJAXUrl returns the correct URL endpoint with /diff supplemental path', function() {
-        expect(DiffModel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/diff/1005-2/2014-20681');
+    // A Twist on the normal getAJAXUrl test: This shouldn't return a date on the URL.
+    it('getAJAXUrl returns the correct URL endpoint with /search supplemental path', function() {
+        expect(SearchModel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/search/1005-2');
 
 
         window.APP_PREFIX = ''; // Test without a urlPrefix
-        expect(DiffModel.getAJAXUrl('1005-2')).to.equal('/partial/diff/1005-2/2014-20681');
+        expect(SearchModel.getAJAXUrl('1005-2')).to.equal('/partial/search/1005-2');
 
-        window.APP_PREFIX = '/eregulations/'; //Return to normalt
+        window.APP_PREFIX = '/eregulations/'; //Return to normal
 
     });
 });

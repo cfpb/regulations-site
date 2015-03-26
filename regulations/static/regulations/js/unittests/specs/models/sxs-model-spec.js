@@ -2,10 +2,10 @@ var chai = require('chai');
 var expect = chai.expect;
 var jsdom = require('mocha-jsdom');
 
-describe('Diff Model:', function() {
+describe('SxS Model:', function() {
     'use strict';
 
-    var $, Backbone, DiffModel, Resources;
+    var $, Backbone, SxSModel, Resources;
 
     jsdom();
 
@@ -13,7 +13,7 @@ describe('Diff Model:', function() {
         Backbone = require('backbone');
         $ = require('jquery');
         Backbone.$ = $;
-        DiffModel = require('../../../source/models/diff-model');
+        SxSModel = require('../../../source/models/sxs-model');
         Resources = require('../../../source/resources');
         window.APP_PREFIX = '/eregulations/';
     });
@@ -24,12 +24,12 @@ describe('Diff Model:', function() {
         };
     });
 
-    it('getAJAXUrl returns the correct URL endpoint with /diff supplemental path', function() {
-        expect(DiffModel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/diff/1005-2/2014-20681');
+    it('getAJAXUrl returns the correct URL endpoint with /sxs supplemental path', function() {
+        expect(SxSModel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/sxs/1005-2/2014-20681');
 
 
         window.APP_PREFIX = ''; // Test without a urlPrefix
-        expect(DiffModel.getAJAXUrl('1005-2')).to.equal('/partial/diff/1005-2/2014-20681');
+        expect(SxSModel.getAJAXUrl('1005-2')).to.equal('/partial/sxs/1005-2/2014-20681');
 
         window.APP_PREFIX = '/eregulations/'; //Return to normalt
 
