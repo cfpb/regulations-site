@@ -7,7 +7,7 @@ var jsdom = require('mocha-jsdom');
 chai.use(sinonChai);
 
 
-describe('MetaModel', function() {
+describe('MetaModel:', function() {
     'use strict';
 
     var $, Backbone, MetaModel, Resources;
@@ -28,8 +28,7 @@ describe('MetaModel', function() {
             content: {
               '1005-2-a': '<li id="1005-2-a">Paragraph content</li>',
               '1005-3-a': '<li id="1005-3-a">Paragraph content</li>'
-            },
-            supplementalPath: 'test'
+            }
         });
 
         Resources.versionElements = {
@@ -54,11 +53,11 @@ describe('MetaModel', function() {
     });
 
     it('getAJAXUrl returns the correct URL endpoint', function() {
-        expect(this.metamodel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/test/1005-2/2014-20681');
+        expect(this.metamodel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/1005-2/2014-20681');
 
 
         window.APP_PREFIX = ''; // Test without a urlPrefix
-        expect(this.metamodel.getAJAXUrl('1005-2')).to.equal('/partial/test/1005-2/2014-20681');
+        expect(this.metamodel.getAJAXUrl('1005-2')).to.equal('/partial/1005-2/2014-20681');
 
         window.APP_PREFIX = '/eregulations/'; //Return to normalt
 
