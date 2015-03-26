@@ -37,7 +37,7 @@ describe('Sidebar Model:', function() {
         window.APP_PREFIX = ''; // Test without a urlPrefix
         expect(SidebarModel.getAJAXUrl('1005-2')).to.equal('/partial/sidebar/1005-2/2014-20681');
 
-        window.APP_PREFIX = '/eregulations/'; //Return to normalt
+        window.APP_PREFIX = '/eregulations/'; //Return to normal
 
     });
 });
