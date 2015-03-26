@@ -3,8 +3,10 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var MetaModel = require('./meta-model');
 
-var SidebarModel = MetaModel.extend({
+Backbone.SidebarModel = MetaModel.extend({});
+
+var sidebarModel = new Backbone.SidebarModel({
     supplementalPath: 'sidebar'
 });
 
-module.exports = SidebarModel;
+module.exports = sidebarModel;

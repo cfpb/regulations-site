@@ -33,7 +33,7 @@ var SidebarView = Backbone.View.extend({
         this.childViews = {};
         this.openRegFolders();
 
-        this.model = new SidebarModel();
+        this.model = SidebarModel;
 
         this.definitionModel = new MetaModel({
             supplementalPath: 'definition'
