@@ -4,7 +4,7 @@ var jsdom = require('mocha-jsdom');
 describe('MetaModel', function() {
     'use strict';
 
-    var $, Backbone, MetaModel;
+    var $, Backbone, MetaModel, Resources;
 
     jsdom();
 
@@ -13,12 +13,18 @@ describe('MetaModel', function() {
         $ = require('jquery');
         Backbone.$ = $;
         MetaModel = require('../../../source/models/meta-model');
+        Resources = require('../../../source/resources');
+        window.APP_PREFIX = '/eregulations/';
     });
 
     beforeEach(function(){
         this.metamodel = new MetaModel({
             content: {'1005-2-a': '<li id="1005-2-a">Paragraph content</li>'}
         });
+
+        Resources.versionElements = {
+            toc: $('<nav id="toc" data-toc-version="2014-20681"></nav>'),
+        };
     });
 
     it('has is called correctly.', function() {
@@ -35,6 +41,10 @@ describe('MetaModel', function() {
         expect(this.metamodel.set('1005-2-a', '<li id="1005-2-a">Paragraph content</li>')).to.be.ok;
         expect(this.metamodel.set('1005-4-a', '<li id="1005-4-a">Paragraph content</li>')).to.be.ok;
         expect(this.metamodel.set('', '')).to.be.not.ok;
+    });
+
+    it('getAJAXUrl returns the correct URL endpoint', function() {
+        expect(this.metamodel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/1005-2/2014-20681');
     });
 
 });
