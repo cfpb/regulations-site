@@ -25,7 +25,12 @@ describe('Definition Model:', function() {
     });
 
     it('getAJAXUrl returns the correct URL endpoint with /definition supplemental path', function() {
+        expect(DefinitionModel.getAJAXUrl('1005-2')).to.equal('/eregulations/partial/definition/1005-2/2014-20681');
 
+        window.APP_PREFIX = ''; // Test without a urlPrefix
+        expect(DefinitionModel.getAJAXUrl('1005-2')).to.equal('/partial/definition/1005-2/2014-20681');
+
+        window.APP_PREFIX = '/eregulations/'; //Return to normal
 
     });
 });
