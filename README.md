@@ -8,7 +8,7 @@ data from a parsed regulation and generates navigable, accessible HTML,
 complete with associated information.
 
 This repository is part of a larger project. To read about it, please see 
-[http://cfpb.github.io/eregulations/](http://cfpb.github.io/eregulations/).
+[http://cfpb.github.io/eregulations/](http://cfpb.github.io/eRegulations/).
 
 ## Features
 
@@ -198,6 +198,6 @@ After you create a [Sauce Labs](https://saucelabs.com) account:
 - The tests run using [nose](http://nose.readthedocs.org/en/latest/). If you wish to run the tests outside of the Grunt environment, you may by running ```nosetests regulations/uitests/*.py``` from the root of the repo.
 
 ##### For unit tests
-- To run unit tests individually: ```regulations/static/regulations/js/unittests/sauce_unit_tests.sh http://url.of/test/site``` from the root of the repo.
 - Unit tests do not require running the dummy API.
-- You may also run the unit tests locally with no additional configuration by loading the following URL in a web browser: ```http://your.site/static/regulations/js/unittests/runner.html```.
+- To run the unit tests along with the functional tests: ```grunt test``` from the root of the repo.
+- To run unit tests individually: ```grunt mocha_istanbul``` from the root of the repo.
