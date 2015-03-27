@@ -42,8 +42,7 @@ This repository is part of a larger project. To read about it, please see
 
 This application lives in two worlds, roughly translating to a Python,
 Django app, and a Backbone, Javascript app, which communicate through the
-Django templates. To get started quickly, we provide a default, pre-compiled
-version of the Javascript assets.
+Django templates.
 
 ## Quick start
 
