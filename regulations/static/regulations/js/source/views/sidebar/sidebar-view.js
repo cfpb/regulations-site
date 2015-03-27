@@ -6,6 +6,7 @@ var RegModel = require('../../models/reg-model');
 var SxSList = require('./sxs-list-view');
 var HelpView = require('./help-view');
 var SidebarModel = require('../../models/sidebar-model');
+var DefinitionModel = require('../../models/definition-model');
 var Breakaway = require('../breakaway/breakaway-view');
 var SidebarEvents = require('../../events/sidebar-events');
 var Definition = require('./definition-view');
@@ -33,11 +34,8 @@ var SidebarView = Backbone.View.extend({
         this.childViews = {};
         this.openRegFolders();
 
-        this.model = new SidebarModel();
-
-        this.definitionModel = new MetaModel({
-            supplementalPath: 'definition'
-        });
+        this.model = SidebarModel;
+        this.definitionModel = DefinitionModel;
     },
 
     openDefinition: function(config) {
