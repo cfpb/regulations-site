@@ -26,7 +26,7 @@ var MetaModel = Backbone.Model.extend({
         // in the case of reg-model
         // content = markup to string representations of each reg paragraph/entity
         // loaded into the browser (rendered or not)
-        this.structure = this.strutcture || [];
+        this.structure = this.structure || [];
 
         Backbone.Model.apply(this, arguments);
     },
