@@ -33,29 +33,40 @@ mixins.less contains any mixins or variables to be used throughout the LESS file
 @red_orange_80: #D96A4F;
 @red_orange_50: #E9A193;
 
-/* 
+/*
  Type Variables/Mixins
  ----------------------
 */
 
 @body-font: Georgia, serif;
- 
+
 .avenir-next {
-    font-family: "Avenir Next", Arial, sans-serif;
+    font-family: "AvenirNextLTW01-Regular", Arial, sans-serif;
     font-weight: normal;
     font-style: normal;
+    & strong,
+    & b {
+        .avenir-next-demi();
+    }
 }
 
 .avenir-next-demi {
-    font-family: "Avenir Next Demi", Arial, sans-serif;
-    font-weight: normal;
+    font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+    font-weight: 700;
     font-style: normal;
+    .lt-ie9 & {
+        font-weight: normal !important;
+    }
 }
 
 .avenir-next-demi-italic {
-    font-family: "Avenir Next Demi Italic", Arial, sans-serif;
-    font-weight: normal;
+    font-family: "AvenirNextLTW01-DemiItalic", Arial, sans-serif;
+    font-weight: 700;
     font-style: italic;
+    .lt-ie9 & {
+        font-weight: normal !important;
+        font-style: normal !important;
+    }
 }
 
 /*
@@ -94,10 +105,10 @@ mixins.less contains any mixins or variables to be used throughout the LESS file
 
 .slide (@direction: left, @speed: 300ms) {
     transform: translate3d(0,0,0);
-    -webkit-transition: @direction @speed ease; 
-       -moz-transition: @direction @speed ease; 
-        -ms-transition: @direction @speed ease; 
-         -o-transition: @direction @speed ease; 
+    -webkit-transition: @direction @speed ease;
+       -moz-transition: @direction @speed ease;
+        -ms-transition: @direction @speed ease;
+         -o-transition: @direction @speed ease;
             transition: @direction @speed ease;
 }
 
