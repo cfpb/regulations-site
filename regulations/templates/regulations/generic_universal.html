@@ -2,9 +2,15 @@
 {% load static from staticfiles %}
 
 {% comment %}
-    The empty app_js block excludes things from base.html
+    Replaces application's loaded scripts and styles with just styles.
 {% endcomment %}
-{% block app_js %}{% endblock %}
+{% block app_js %}
+        {% if env == 'built' %}
+        <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
+        {% else %}
+        <link rel="stylesheet" href="{%static "regulations/css/style.css" %}"/>
+        {% endif %}
+{% endblock %}
 
 {% comment %}
     Universal application landing page

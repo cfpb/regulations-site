@@ -16,31 +16,29 @@ CSS/Javascript etc., should inherit from this template.
         {% endblock %}
         </title>
         <link rel="shortcut icon" type="image/x-icon" href="{%static "eregsip/favicon.ico" %}"/>
-        {% if env == 'built' %}
-          <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
-        {% else %}
-          <link rel="stylesheet" href="{%static "regulations/css/style.css" %}"/>
-        {% endif %}
-        <script src="{%static "regulations/js/source/otherlibs/modernizr.js" %}"></script>
         {% block app_js %}
         <script>
             window.APP_PREFIX = "{{ APP_PREFIX }}";
         </script>
         {% if env == 'built' %}
+          <link rel="stylesheet" href="{%static "regulations/css/style.min.css" %}"/>
+          <script src="{%static "regulations/js/source/otherlibs/modernizr.js" %}"></script>
           <script src="{%static "regulations/js/built/regulations.min.js" %}"></script>
         {% else %}
+          <link rel="stylesheet" href="{%static "regulations/css/style.css" %}"/>
           <!-- enable livereload and serve non minified js in debug mode -->
           <script src="//localhost:35729/livereload.js"></script>
+          <script src="{%static "regulations/js/source/otherlibs/modernizr.js" %}"></script>
           <script src="{%static "regulations/js/built/regulations.js" %}"></script>
         {% endif %}
-        {% endblock %}
-
-        {% block preload %}
         {% endblock %}
 
         <!--[if lt IE 9]>
             <script src="{%static "regulations/js/built/lib/respond/respond.min.js" %}"></script>
         <![endif]-->
+        {% block preload %}
+        {% endblock %}
+
     </head>
     <!--[if lt IE 7]>      <body class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
     <!--[if IE 7]>         <body class="lt-ie9 lt-ie8"> <![endif]-->
