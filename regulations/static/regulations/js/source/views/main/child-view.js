@@ -151,15 +151,19 @@ var ChildView = Backbone.View.extend({
             var url = this.url,
                 hashPosition;
 
+            console.log(options);
+
             // if a hash has been passed in
             if (options && typeof options.scrollToId !== 'undefined') {
                 url += '#' + options.scrollToId;
-            }
-            else {
+            } else {
                 hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
                 //  Be sure not to lose any hash info
                 if (hashPosition !== -1) {
-                    url += Backbone.history.fragment.substr(hashPosition);
+                    url = url.slice(0, hashPosition) + '#' + options.id;
+                    //url += Backbone.history.fragment.substr(hashPosition);
+                } else if (options.type !== 'diff') {
+                    url += '#' + options.id;
                 }
             }
             Router.navigate(url);
