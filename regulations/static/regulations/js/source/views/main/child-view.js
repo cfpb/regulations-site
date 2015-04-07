@@ -151,8 +151,6 @@ var ChildView = Backbone.View.extend({
             var url = this.url,
                 hashPosition;
 
-            console.log(options);
-
             // if a hash has been passed in
             if (options && typeof options.scrollToId !== 'undefined') {
                 url += '#' + options.scrollToId;
