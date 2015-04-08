@@ -157,7 +157,7 @@ var ChildView = Backbone.View.extend({
                 $('html, body').scrollTop($('#' + options.scrollToId).offset().top);
             } else if (typeof Backbone.history.fragment !== 'undefined') {
                 // Don't lose the hash info.
-                //hashPosition =  Backbone.history.fragment.indexOf('#');
+                hashPosition =  Backbone.history.fragment.indexOf('#');
                 url = url.slice(0, hashPosition) + '#' + options.id;
                 this.navigate(url);
             } else if (options.type !== 'diff')  {
