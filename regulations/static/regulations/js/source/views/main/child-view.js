@@ -146,14 +146,15 @@ var ChildView = Backbone.View.extend({
         }
     },
 
-    route: function(options) {
-        if (Router.hasPushState && typeof options.noRoute === 'undefined') {
+    route: function(options) {        if (Router.hasPushState && typeof options.noRoute === 'undefined') {
             var url = this.url,
                 hashPosition;
 
             // if a hash has been passed in
             if (options && typeof options.scrollToId !== 'undefined') {
                 url += '#' + options.scrollToId;
+                Router.navigate(url);
+                $('html, body').scrollTop($('#' + options.scrollToId).offset().top);
             } else {
                 hashPosition = (typeof Backbone.history.fragment === 'undefined') ? -1 : Backbone.history.fragment.indexOf('#');
                 //  Be sure not to lose any hash info
@@ -163,8 +164,9 @@ var ChildView = Backbone.View.extend({
                 } else if (options.type !== 'diff') {
                     url += '#' + options.id;
                 }
-            }
             Router.navigate(url);
+            }
+
             document.title = this.title;
         }
     },
