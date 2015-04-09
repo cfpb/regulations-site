@@ -150,21 +150,24 @@ var ChildView = Backbone.View.extend({
             var url = this.url,
                 hashPosition;
 
+            // if a hash has been passed in
             if (options && typeof options.scrollToId !== 'undefined') {
                 url += '#' + options.scrollToId;
                 this.navigate(url);
-                // ensure we scroll to the correct position
                 $('html, body').scrollTop($('#' + options.scrollToId).offset().top);
-            } else if (typeof Backbone.history.fragment !== 'undefined') {
-                // Don't lose the hash info.
-                hashPosition =  Backbone.history.fragment.indexOf('#');
-                url = url.slice(0, hashPosition) + '#' + options.id;
-                this.navigate(url);
-            } else if (options.type !== 'diff')  {
-                url += '#' + options.id;
-                this.navigate(url);
             } else {
-                this.navigate(url);
+                if (typeof Backbone.history.fragment === 'undefined') {
+                    hashPosition = -1;
+                } else {
+                    hashPosition = Backbone.history.fragment.indexOf('#');
+                }
+
+                if (hashPosition !== -1) {
+                    url = url.slice(0, hashPosition) + '#' + options.id;
+                } else if (options.type !== 'diff') {
+                    url += '#' + options.id;
+                }
+            this.navigate(url);
             }
         }
     },
