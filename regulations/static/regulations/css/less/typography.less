@@ -524,9 +524,11 @@ tbody > tr:nth-child(odd){
 }
 
 /* make tables horizontally scroll on small screens */
-.table-wrap {
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch; // smoother scrolling
+@media only screen and ( max-width: 480px ) {
+    .table-wrap {
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch; // smoother scrolling
+    }
 }
 
 /*
