@@ -1,7 +1,7 @@
 // Launches app
 'use strict';
-var $ = require('jquery');
-global.jQuery = require('jquery'); // make jQuery globally accessible for plugins and analytics
+// make jQuery globally accessible for plugins and analytics
+global.$ = global.jQuery = require('jquery');
 var app = require('./app-init');
 
 // A `bind()` polyfill
