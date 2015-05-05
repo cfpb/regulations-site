@@ -46,6 +46,7 @@ oldphantomjs/
 # Minified assets #
 ###############
 *.min.js
+*.min.css
 
 # Floobits #
 ###############
