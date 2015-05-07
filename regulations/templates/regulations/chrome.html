@@ -89,7 +89,7 @@
                   <button type="submit" class="find-button">Find</button>
                 </form>
                 </div><!--./date-form-->
-                <ul class="version-list">
+                <ul class="version-list" id="history-toc-list">
                 {% for version in history %}
                     <li class="{% if version.version == active_version %}current {% endif %}status-list" data-base-version="{{version.version}}">
                     <a href="{% url version_switch_view label_id version.version %}" class="version-link" data-version="{{ version.version }}" id="link-{{ version.version }}">
