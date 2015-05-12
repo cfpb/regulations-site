@@ -1,7 +1,7 @@
 {% load static from staticfiles %}
 
 <section id="sxs-list" class="regs-meta">
-    <header class="expandable group">
+    <header id="sxs-expandable-header" class="expandable sxs-expand group">
         <h4 tabindex="0">Section-by-section Analysis</h4>
         <a href="#" tabindex="0"><span class="icon-text">Show/Hide Contents</span></a>
     </header>
@@ -20,7 +20,7 @@
     </div>
 </section> <!-- /.regs-meta -->
 <section id="help" class="regs-meta">
-     {% include "regulations/generic_help.html" %} 
+     {% include "regulations/generic_help.html" %}
         <div class="sidebar-subsection">
             <h5 class="help-title">Textual Help</h5>
             <a class="what" href="{% url 'about' %}#related-info">(What's this?)</a>

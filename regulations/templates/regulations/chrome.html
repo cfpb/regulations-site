@@ -89,10 +89,10 @@
                   <button type="submit" class="find-button">Find</button>
                 </form>
                 </div><!--./date-form-->
-                <ul class="version-list">
+                <ul class="version-list" id="history-toc-list">
                 {% for version in history %}
                     <li class="{% if version.version == active_version %}current {% endif %}status-list" data-base-version="{{version.version}}">
-                    <a href="{% url version_switch_view label_id version.version %}" class="version-link" data-version="{{ version.version }}">
+                    <a href="{% url version_switch_view label_id version.version %}" class="version-link" data-version="{{ version.version }}" id="link-{{ version.version }}">
                         {% if version.timeline == 'current' %}
                             <h4>Current Law</h4>
                         {% endif %}
@@ -134,12 +134,12 @@
         <div class="drawer-content">
             <form action="{% url 'chrome_search' reg_part %}" method="GET">
                 <div class="search-box">
-                    <input type="text" name="q" value="{{ q }}" /><button type="submit"><i class="cf-icon cf-icon-search"></i><strong class="icon-text">Search</strong></button>
+                    <input type="text" name="q" value="{{ q }}" id="search-input" /><button type="submit"><i class="cf-icon cf-icon-search"></i><strong class="icon-text">Search</strong></button>
                 </div><!--/.search-box-->
                 <div class="version-search">
                     <h4>Search in regulation effective:</h4>
                     <div class="select-content">
-                        <select name="version">
+                        <select name="version" id="version-select">
                         {% for version in history %}
                             <option value="{{version.version}}"{% if active_version == version.version %} selected="selected"{% endif %}>{{version.by_date|date}}</option>
                         {% endfor %}
