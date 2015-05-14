@@ -183,5 +183,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['eslint', 'mocha_istanbul', 'nose']);
   grunt.registerTask('build', ['squish', 'test']);
   grunt.registerTask('squish', ['browserify', 'uglify', 'less:dist']);
-  grunt.registerTask('default', ['browserify', 'less']);
+  grunt.registerTask('default', ['browserify', 'less', 'uglify']);
 };
