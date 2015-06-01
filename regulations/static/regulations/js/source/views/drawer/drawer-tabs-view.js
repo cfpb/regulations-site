@@ -31,13 +31,15 @@ var DrawerTabsView = Backbone.View.extend({
         this.$tocLinks = $('.toc-nav-link');
         this.$toggleArrow = $('#panel-link');
 
+        // default the drawer state to closed
+        this.drawerState = 'closed';
+
         // For browser widths above 1100px apply the 'open' class
+        //  and set drawer state to open
         if (document.documentElement.clientWidth > 1100) {
             this.$toggleArrow.addClass('open');
+            this.drawerState = 'open';
         }
-
-        // set initial drawer state
-        this.drawerState = (this.$toggleArrow.hasClass('open')) ? 'open' : 'closed';
     },
 
     setStartingTab: function(tab) {
@@ -88,7 +90,7 @@ var DrawerTabsView = Backbone.View.extend({
     // update the open/close arrow
     // set state
     toggleDrawerState: function() {
-        var state = (this.$toggleArrow.hasClass('open')) ? 'close' : 'open';
+        var state = (this.drawerState === 'open') ? 'close' : 'open';
         this.reflowUI();
         this.$toggleArrow.toggleClass('open');
         this.drawerState = state;
