@@ -61,9 +61,8 @@ var DrawerTabsView = Backbone.View.extend({
     // this.$activeEls are structural els that need to have
     // CSS applied to work with the drawer conditionally based
     // on its state
-    reflowUI: function() {
+    updateDOMState: function() {
         if (typeof this.$activeEls !== 'undefined') {
-            //this.$activeEls.toggleClass('active');
             this.$activeEls.toggleClass(this.drawerState);
         }
     },
@@ -94,10 +93,10 @@ var DrawerTabsView = Backbone.View.extend({
     // set state
     toggleDrawerState: function() {
         var state = (this.drawerState === 'open') ? 'close' : 'open';
-        this.reflowUI();
+        this.updateDOMState();
         this.$toggleArrow.toggleClass('open');
         this.drawerState = state;
-        this.reflowUI();
+        this.updateDOMState();
     },
 
     // update active pane based on click or external input
