@@ -2,12 +2,9 @@
 Regulation Drawer
 =========================
 * drawer.less contains and imports styles for the left-hand navigation drawer
-* On large displays it is on the screen by default. It can be toggled with the "active" class.
-* The majority of styles defined here must be reversed in drawer-small-screen.less (sorry)
+* On large displays it is on the screen by default.
+* It can be toggled with the "open" and "close" classes.
 */
-
-@large: ~"only screen and (min-width: 1100px)";
-
 
 /*
 Universal drawer styles
@@ -32,10 +29,9 @@ Universal drawer styles
 Drawer Behavior
 ===============
 
-* The default state of the drawer is open
-* In the default state the `active` class closes the drawer
+* The default state of the drawer is open on large screens
+* In the default state the `close` class closes the drawer
 * Browsers with resolutions below 1100px wide will default to a closed drawer
-* Below 1100px the active class causes the panel navigation to slide off screen
 
 Drawer default state
 ==================== */
