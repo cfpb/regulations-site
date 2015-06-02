@@ -29,17 +29,6 @@ Universal drawer styles
 }
 
 /*
-Animate
--------
-drop any selectors that should be animated on drawer open/closed here */
-
-.panel,
-.toc-head,
-.toc-type {
-    .slide (@direction: left, @speed: 300ms);
-}
-
-/*
 Drawer Behavior
 ===============
 
@@ -118,7 +107,7 @@ Panel Slide Button
         color: transparent;
     }
 
-    .active & {
+    .close & {
         border-bottom: 1px solid @medium_gray;
 
         .lt-ie8 &,
@@ -134,7 +123,7 @@ Panel Slide Button
     .cf-icon;
     content: "\e002";
 
-    .active & {
+    .close & {
         content: "\e000";
     }
 }
@@ -159,7 +148,7 @@ currently these are TOC, History, and Search
     border-right: 1px solid @medium_gray;
     vertical-align: center;
 
-    .active & {
+    .close & {
         display: block;
         *display: block;
         border-right: none;
@@ -193,20 +182,18 @@ currently these are TOC, History, and Search
     }
 }
 
-.active {
-    @media @large {
-       .toc-nav-link {
-            &.current {
-                background-color: @bg_gray;
-                border-bottom: none;
-            }
-        }
+.close {
+     .toc-nav-link {
+          &.current {
+              background-color: @bg_gray;
+              border-bottom: none;
+          }
+      }
 
-        .toc-nav-link:hover {
-            background-color: @light_field;
-            border-bottom: none;
-        }
-    }
+      .toc-nav-link:hover {
+          background-color: @light_field;
+          border-bottom: none;
+      }
 }
 
 /* align the drawer toggle list*/
@@ -217,7 +204,7 @@ currently these are TOC, History, and Search
     margin: 0;
     width: 200px;
 
-    .active & {
+    .close & {
         position: absolute;
         width: 40px;
         top: 33px;
@@ -234,7 +221,7 @@ currently these are TOC, History, and Search
     margin-left: -4px;
     border-right: 1px solid @medium_gray;
 
-    .active & {
+    .close & {
         margin-left: 0;
         display: list-item;
         border-bottom: 1px solid @medium_gray;
@@ -247,29 +234,27 @@ currently these are TOC, History, and Search
 Drawer default closed state
 ---------------------------- */
 
-@media @large {
-    .panel.active {
-        left: -200px;
-        top: 200px;
-        overflow-y: hidden;
+.panel.close {
+    left: -200px;
+    top: 200px;
+    overflow-y: hidden;
 
-    /* slide content fully offscreen*/
-        .drawer-content {
-            position: absolute;
-            left: -999px;
-        }
+/* slide content fully offscreen*/
+    .drawer-content {
+        position: absolute;
+        left: -999px;
+    }
 
-        .drawer-header {
-            left: -260px; /*60px extra to accomodate for stacked buttons*/
+    .drawer-header {
+        left: -260px; /*60px extra to accomodate for stacked buttons*/
 
-            .toc-type {
-                display: none;
-            }
+        .toc-type {
+            display: none;
         }
     }
 }
 
-.active .toc-head {
+.close .toc-head {
     left: -200px;
     margin-right: 15px;
     height: 150px; /* extra height for TOC toggle buttons */
@@ -279,6 +264,4 @@ Drawer default closed state
 Small resolution drawer state
 ============================= */
 
-@import "drawer-small-screen.less";
 @import "drawer-content.less";
-
