@@ -28,7 +28,7 @@
     </div>
 <![endif]-->
 
-<header id="site-header" class="reg-header chrome-header">
+<header id="site-header" class="reg-header chrome-header" role="banner">
 {% include "regulations/main-header.html" %}
 
 <div class="sub-head">
@@ -132,7 +132,7 @@
             <h2 class="toc-type">Search</h2>
         </div><!-- /.drawer-header -->
         <div class="drawer-content">
-            <form action="{% url 'chrome_search' reg_part %}" method="GET">
+            <form action="{% url 'chrome_search' reg_part %}" method="GET" role="search">
                 <div class="search-box">
                     <input type="text" name="q" value="{{ q }}" id="search-input" /><button type="submit"><i class="cf-icon cf-icon-search"></i><strong class="icon-text">Search</strong></button>
                 </div><!--/.search-box-->
@@ -155,20 +155,22 @@
 <div class="wrap group">
 
 {% block chrome-content %}
-<div id="content-body" class="main-content">
-    {% load in_context %}
-    {{ main_content|safe }}
-    {% begincontext main_content_context main_content_template %}
-        {% if main_content_template %}
-            {% include main_content_template %}
-        {% endif %}
-    {% endcontext %}
+<main role="main">
+  <div id="content-body" class="main-content">
+      {% load in_context %}
+      {{ main_content|safe }}
+      {% begincontext main_content_context main_content_template %}
+          {% if main_content_template %}
+              {% include main_content_template %}
+          {% endif %}
+      {% endcontext %}
 
-</div> <!-- /.main-content -->
+  </div> <!-- /.main-content -->
+</main>
 {% endblock %}
 
 {% block chrome-sidebar %}
-<div id="sidebar" class="secondary-content">
+<div id="sidebar" class="secondary-content" role="complementary">
     <div id="sidebar-content" class="sidebar-inner">
         <section id="definition"></section>
         {% block reg_sidebar %}
