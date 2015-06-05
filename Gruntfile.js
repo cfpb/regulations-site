@@ -181,7 +181,8 @@ module.exports = function(grunt) {
     */
   grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
   grunt.registerTask('test', ['eslint', 'mocha_istanbul', 'nose']);
-  grunt.registerTask('build', ['squish', 'test']);
+  grunt.registerTask('test-js', ['eslint', 'mocha_istanbul']);
+  grunt.registerTask('build', ['browserify', 'uglify', 'less', 'test-js']);
   grunt.registerTask('squish', ['browserify', 'uglify', 'less:dist']);
   grunt.registerTask('default', ['browserify', 'less', 'uglify']);
 };
