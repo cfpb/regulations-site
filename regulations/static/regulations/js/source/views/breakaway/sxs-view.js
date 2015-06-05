@@ -22,6 +22,9 @@ var SxSView = Backbone.View.extend({
         var render;
         this.externalEvents = BreakawayEvents;
 
+        // visibly open the SxS panel immediately
+        this.$el.addClass('open-sxs');
+
         // callback to be sent to model's get method
         // called after ajax resolves sucessfully
         render = function(success, returned) {
@@ -31,8 +34,6 @@ var SxSView = Backbone.View.extend({
             else {
                 this.render('<div class="error"><span class="cf-icon cf-icon-error icon-warning"></span>Due to a network error, we were unable to retrieve the requested information.</div>');
             }
-
-            this.$el.addClass('open-sxs');
         }.bind(this);
 
         SxSModel.get(this.options.url, render),

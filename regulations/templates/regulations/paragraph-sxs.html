@@ -1,6 +1,6 @@
 {% if sxs.label %}
     <div class="sxs-header">
-        <a class="sxs-back-button" href="{{ back_url }}"><span class="cf-icon cf-icon-left"></span> {{sxs.header}}</a>
+        <a class="sxs-back-button" href="{{ back_url }}"><span class="cf-icon cf-icon-arrow-left-round"></span> {{sxs.header}}</a>
         <h2><span class="sxs-label">Section-by-section analysis - </span>{{ notice.fr_volume }} FR {{ sxs.page }}</h2>
     </div>
     <div class="sxs-content group">
@@ -70,13 +70,13 @@
             <h3>Further Analysis:</h3>
             <ul class="analysis-list">
             {% for analysis in further_analyses %}
-                <li><a 
-                    href="{% url 'chrome_sxs_view' analysis.reference.1 analysis.reference.0 %}?from_version={{version}}&fr_page={{analysis.fr_page}}" 
+                <li><a
+                    href="{% url 'chrome_sxs_view' analysis.reference.1 analysis.reference.0 %}?from_version={{version}}&fr_page={{analysis.fr_page}}"
                     data-sxs-pararaph-id="{{analysis.reference.1}}"
                     data-doc-number="{{analysis.reference.0}}"
                     class="internal"
                     >{{ analysis.fr_volume }} FR {{ analysis.fr_page }}</a>
-                    <br />Published {{ analysis.publication_date|date:"F j, Y" }} 
+                    <br />Published {{ analysis.publication_date|date:"F j, Y" }}
                 </li>
             {% endfor %}
             </ul>
@@ -90,4 +90,3 @@
 {% if sxs.label %}
     </div>
 {% endif %}
-
