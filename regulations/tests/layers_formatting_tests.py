@@ -35,7 +35,7 @@ class FormattingLayerTest(TestCase):
     @patch('regulations.generator.layers.formatting.loader')
     def test_apply_layer_note(self, loader):
         mocks = {'table': Mock(), 'note': Mock(), 'code': Mock(),
-                 'subscript': Mock()}
+                 'subscript': Mock(), 'dash': Mock()}
 
         def ret_mock(arg):
             for key in mocks:
@@ -69,7 +69,7 @@ class FormattingLayerTest(TestCase):
     @patch('regulations.generator.layers.formatting.loader')
     def test_apply_layer_code(self, loader):
         mocks = {'table': Mock(), 'note': Mock(), 'code': Mock(),
-                 'subscript': Mock()}
+                 'subscript': Mock(), 'dash': Mock()}
 
         def ret_mock(arg):
             for key in mocks:
@@ -103,7 +103,7 @@ class FormattingLayerTest(TestCase):
     @patch('regulations.generator.layers.formatting.loader')
     def test_apply_layer_subscript(self, loader):
         mocks = {'table': Mock(), 'note': Mock(), 'code': Mock(),
-                 'subscript': Mock()}
+                 'subscript': Mock(), 'dash': Mock()}
 
         def ret_mock(arg):
             for key in mocks:
@@ -132,3 +132,36 @@ class FormattingLayerTest(TestCase):
         context = render.call_args[0][0]
         self.assertEqual(context['variable'], 'abc')
         self.assertEqual(context['subscript'], '123')
+
+
+    @patch('regulations.generator.layers.formatting.loader')
+    def test_apply_layer_dash(self, loader):
+        mocks = {'table': Mock(), 'note': Mock(), 'code': Mock(),
+                 'subscript': Mock(), 'dash': Mock()}
+
+        def ret_mock(arg):
+            for key in mocks:
+                if key in arg:
+                    return mocks[key]
+
+        loader.get_template.side_effect = ret_mock
+        render = mocks['dash'].render
+
+        dash_data = {'text': 'This is an fp-dash'}
+        data = {'111-1': [],
+                '111-2': [{}],
+                '111-3': [{'text': 'This is an fp-dash_____', 'locations': [0],
+                           'dash_data': dash_data}]}
+        fl = FormattingLayer(data)
+        self.assertEqual([], fl.apply_layer('111-0'))
+        self.assertEqual([], fl.apply_layer('111-1'))
+        self.assertEqual([], fl.apply_layer('111-2'))
+        self.assertFalse(render.called)
+
+        result = fl.apply_layer('111-3')
+        self.assertEqual(len(result), 1)
+        self.assertEqual('This is an fp-dash_____', result[0][0])
+        self.assertEqual([0], result[0][2])
+        self.assertTrue(render.called)
+        context = render.call_args[0][0]
+        self.assertEqual(context['text'], 'This is an fp-dash')

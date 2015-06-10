@@ -14,6 +14,7 @@ class FormattingLayer(object):
         self.code_tpl = loader.get_template('regulations/layers/code.html')
         self.subscript_tpl = loader.get_template(
             'regulations/layers/subscript.html')
+        self.dash_tpl = loader.get_template('regulations/layers/dash.html')
 
     def render_table(self, table):
         max_width = 0
@@ -46,6 +47,11 @@ class FormattingLayer(object):
         context = Context({'lines': lines})
         return self.code_tpl.render(context)
 
+    def render_dash(self, dash_data):
+        text = dash_data.get('text')
+        context = Context({'text': text})
+        return self.dash_tpl.render(context).replace('\n', '')
+
     def apply_layer(self, text_index):
         """Convert all plaintext tables into html tables"""
         layer_pairs = []
@@ -55,6 +61,7 @@ class FormattingLayer(object):
                     layer_pairs.append((data['text'],
                                         self.render_table(data['table_data']),
                                         data['locations']))
+
                 if data.get('fence_data', {}).get('type') == 'note':
                     layer_pairs.append((data['text'],
                                         self.render_note(data['fence_data']),
@@ -63,11 +70,20 @@ class FormattingLayer(object):
                     layer_pairs.append((data['text'],
                                         self.render_code(data['fence_data']),
                                         data['locations']))
+
                 if 'subscript_data' in data:
                     layer_pairs.append((
                         data['text'],
                         self.subscript_tpl.render(Context(
                             data['subscript_data'])).replace('\n', ''),
                         data['locations']))
+
+                if 'dash_data' in data:
+                    layer_pairs.append(
+                            (data['text'], 
+                             self.dash_tpl.render(
+                                    Context(data['dash_data'])
+                                ).replace('\n', ''),
+                             data['locations']))
 
         return layer_pairs
