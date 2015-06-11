@@ -47,11 +47,6 @@ class FormattingLayer(object):
         context = Context({'lines': lines})
         return self.code_tpl.render(context)
 
-    def render_dash(self, dash_data):
-        text = dash_data.get('text')
-        context = Context({'text': text})
-        return self.dash_tpl.render(context).replace('\n', '')
-
     def apply_layer(self, text_index):
         """Convert all plaintext tables into html tables"""
         layer_pairs = []
