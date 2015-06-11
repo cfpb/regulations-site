@@ -34,16 +34,9 @@ class FormattingLayerTest(TestCase):
 
     @patch('regulations.generator.layers.formatting.loader')
     def test_apply_layer_note(self, loader):
-        mocks = {'table': Mock(), 'note': Mock(), 'code': Mock(),
-                 'subscript': Mock(), 'dash': Mock()}
-
-        def ret_mock(arg):
-            for key in mocks:
-                if key in arg:
-                    return mocks[key]
-
-        loader.get_template.side_effect = ret_mock
-        render = mocks['note'].render
+        note_mock = Mock()
+        loader.get_template.side_effect = lambda arg: note_mock if "note" in arg else Mock()
+        render = note_mock.render
 
         fence_data = {'type': 'note',
                       'lines': ['Note:', '1. Content1', '2. Content2']}
@@ -68,16 +61,9 @@ class FormattingLayerTest(TestCase):
 
     @patch('regulations.generator.layers.formatting.loader')
     def test_apply_layer_code(self, loader):
-        mocks = {'table': Mock(), 'note': Mock(), 'code': Mock(),
-                 'subscript': Mock(), 'dash': Mock()}
-
-        def ret_mock(arg):
-            for key in mocks:
-                if key in arg:
-                    return mocks[key]
-
-        loader.get_template.side_effect = ret_mock
-        render = mocks['code'].render
+        code_mock = Mock()
+        loader.get_template.side_effect = lambda arg: code_mock if "code" in arg else Mock()
+        render = code_mock.render
 
         fence_data = {'type': 'python',
                       'lines': ['def double(x):', '    return x + x']}
@@ -102,16 +88,9 @@ class FormattingLayerTest(TestCase):
 
     @patch('regulations.generator.layers.formatting.loader')
     def test_apply_layer_subscript(self, loader):
-        mocks = {'table': Mock(), 'note': Mock(), 'code': Mock(),
-                 'subscript': Mock(), 'dash': Mock()}
-
-        def ret_mock(arg):
-            for key in mocks:
-                if key in arg:
-                    return mocks[key]
-
-        loader.get_template.side_effect = ret_mock
-        render = mocks['subscript'].render
+        subscript_mock = Mock()
+        loader.get_template.side_effect = lambda arg: subscript_mock if "subscript" in arg else Mock()
+        render = subscript_mock.render
 
         subscript_data = {'variable': 'abc', 'subscript': '123'}
         data = {'111-1': [],
@@ -136,16 +115,9 @@ class FormattingLayerTest(TestCase):
 
     @patch('regulations.generator.layers.formatting.loader')
     def test_apply_layer_dash(self, loader):
-        mocks = {'table': Mock(), 'note': Mock(), 'code': Mock(),
-                 'subscript': Mock(), 'dash': Mock()}
-
-        def ret_mock(arg):
-            for key in mocks:
-                if key in arg:
-                    return mocks[key]
-
-        loader.get_template.side_effect = ret_mock
-        render = mocks['dash'].render
+        dash_mock = Mock()
+        loader.get_template.side_effect = lambda arg: dash_mock if "dash" in arg else Mock()
+        render = dash_mock.render
 
         dash_data = {'text': 'This is an fp-dash'}
         data = {'111-1': [],
