@@ -549,3 +549,92 @@ pre {
     max-width: 500px;
   }
 }
+
+/*
+  Small screens
+ ==============
+*/
+
+@media only screen and ( max-width: 480px ) {
+
+    .reg-text {
+        margin-top: 20px;
+
+        ol {
+            padding: 0;
+        }
+    }
+
+    .main-content,
+    .secondary-content,
+    .about-content,
+    .landing-content {
+        font-size: 0.875em;
+    }
+
+    .section-number,
+    .appendix-heading,
+    .supplement-section h3 {
+        font-size: 1.571428571em;
+    }
+}
+
+@media only screen and ( max-width: 600px ) {
+
+    .main-content {
+
+        ol {
+            list-style-position: inside;
+        }
+    }
+}
+
+@media only screen and ( max-width: 780px ) {
+
+    /*
+    Typography
+    ========================
+    */
+
+    .section-number {
+        text-indent: 0;
+    }
+
+    /*
+    Main Content
+    =====================
+    */
+
+
+    .level-1 > li:after {
+        margin-left: -5em;
+    }
+
+    h1 .title {
+        display: none;
+    }
+
+     /*
+    Appendix Content
+    =====================
+    */
+
+    .appendix-section .stripped-marker {
+      display: inline-block;
+      float: left;
+      margin-left: 0;
+      width: auto;
+      padding-right: 4px;
+    }
+
+    .appendix-section ol {
+        padding: 0;
+    }
+}
+
+@media only screen and ( max-width: 1100px ) {
+
+    .level-1 > li:after {
+        margin-left: -10em;
+    }
+}
