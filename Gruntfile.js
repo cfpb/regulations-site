@@ -35,6 +35,11 @@ module.exports = function(grunt) {
         }
     },
 
+    /**
+     * CSSMin: https://github.com/gruntjs/grunt-contrib-cssmin
+     *
+     * Minify CSS for production
+     */
     cssmin: {
       target: {
         files: {
