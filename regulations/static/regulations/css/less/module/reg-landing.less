@@ -1,6 +1,6 @@
 /*
 Reg-Landing.less
-========================================================================== 
+==========================================================================
 reg-landing.less contains styles specific to the regulation landing page
 */
 
@@ -169,4 +169,23 @@ Main Content Area
 
 .about-the-tool {
     margin: 40px 0;
+}
+
+/*
+Small screens
+--------------
+*/
+
+@media only screen and ( max-width: 780px ) {
+
+    .reg-tags {
+        width: 100%;
+        padding-right: none;
+        float: none;
+    }
+
+    .secondary-content .landing-sidebar .alert {
+        margin-top: 0;
+        border-top: 1px solid @light_field;
+    }
 }
