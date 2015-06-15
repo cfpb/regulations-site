@@ -38,80 +38,6 @@
     }
 
 
-
-
-    /*
-    Sidebar
-    =====================
-    */
-
-    .secondary-content {
-        position: static;
-        width: auto;
-        max-width: 100%;
-        margin: 0 auto;
-        border-left: none;
-        padding-left: 40px;
-
-        .regs-meta {
-            width: 100%;
-            float: left;
-        }
-
-        /* reset expandable styles */
-        .expandable {
-            h4 {
-                font-size: .875em;
-            }
-
-            a {
-                margin-right: 25px;
-            }
-        }
-    }
-
-    #sxs-list {
-        border-top: 1px solid @light_neutral;
-    }
-
-    /*
-    Definitions
-    ------------
-    definitions are positioned in a fixed window at the bottom of the viewport
-    */
-    .open-definition {
-        position: fixed;
-        top: 60%;
-        bottom: 0;
-        left: 0;
-        min-width: 100%;
-        min-height: 200px;
-        padding: 0 20px 80px 50px;
-        background: @bg_gray;
-        .border-top-light(@width: 2px);
-        z-index: 200;
-        overflow-y: scroll;
-
-        .definition-text {
-            border-bottom: none;
-        }
-
-        .sidebar-header,
-        .definition-warning {
-            border-bottom: 0px;
-        }
-    }
-
-    .lt-ie9 {
-        .definition-text {
-            padding-bottom: 160px;
-        }
-    }
-
-    .sidebar-header {
-        background-color: @bg_gray;
-    }
-
     /*
     SxS Analysis
     =====================
@@ -126,24 +52,6 @@
     .sxs-metadata {
         float: none;
         width: 100%;
-    }
-
-    /*
-    Footer
-    =====================
-    */
-
-    .landing-footer {
-
-        .logo-wrap {
-            width: 100%;
-            float: none;
-        }
-
-        .footer-links {
-            width: 100%;
-            float: none;
-        }
     }
 
 }

@@ -447,11 +447,6 @@ Small screens
 
 @media only screen and ( max-width: 780px ) {
 
-    /*
-    Sidebar
-    =====================
-    */
-
     .secondary-content {
         position: static;
         width: auto;
@@ -479,6 +474,44 @@ Small screens
 
     #sxs-list {
         border-top: 1px solid @light_neutral;
+    }
+
+    /*
+    Definitions
+    ------------
+    definitions are positioned in a fixed window at the bottom of the viewport
+    */
+    .open-definition {
+        position: fixed;
+        top: 60%;
+        bottom: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 200px;
+        padding: 0 20px 80px 50px;
+        background: @bg_gray;
+        .border-top-light(@width: 2px);
+        z-index: 200;
+        overflow-y: scroll;
+
+        .definition-text {
+            border-bottom: none;
+        }
+
+        .sidebar-header,
+        .definition-warning {
+            border-bottom: 0px;
+        }
+    }
+
+    .lt-ie9 {
+        .definition-text {
+            padding-bottom: 160px;
+        }
+    }
+
+    .sidebar-header {
+        background-color: @bg_gray;
     }
 }
 
@@ -509,7 +542,7 @@ Large screens
 -------------- */
 
 @media only screen and ( min-width: 1100px ) {
-  
+
     .sidebar-header.spinner {
         background-position-x: 94%;
     }
