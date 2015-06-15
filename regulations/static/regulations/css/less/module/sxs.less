@@ -22,7 +22,7 @@ SxS window
     position: fixed;
     left: 0;
     width: 100%;
-    height: 100%; 
+    height: 100%;
     min-height: 100%;
     background: #fff;
     z-index: 9999;
@@ -112,7 +112,7 @@ SxS content wrapper
     }
 }
 
-/* 
+/*
 Main content of the SxS Analysis
 ================================
 */
@@ -123,7 +123,7 @@ Main content of the SxS Analysis
     padding-bottom: 100px;
 }
 
-/* 
+/*
 Metadata info for the SxS Analysis
 ==================================
 */
@@ -179,7 +179,7 @@ Metadata info for the SxS Analysis
     }
 }
 
-/* 
+/*
 Footnotes
 ==================================
 */
@@ -231,4 +231,36 @@ Footnotes
             background-color: @bg_gray;
         }
     }
+}
+
+/*
+Small screens
+-------------
+*/
+
+@media only screen and ( max-width: 480px ) {
+
+    #breakaway-view.open-sxs,
+    .full-breakaway {
+        position: fixed;
+    }
+
+    .sxs-label {
+        display: none;
+    }
+}
+
+@media only screen and ( max-width: 780px ) {
+
+    .sxs-main-content {
+        float: none;
+        padding-bottom: 1em; /*accomodate for persistent header*/
+        width: 100%
+    }
+
+    .sxs-metadata {
+        float: none;
+        width: 100%;
+    }
+
 }
