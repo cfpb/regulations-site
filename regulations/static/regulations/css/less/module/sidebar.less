@@ -432,3 +432,86 @@ Styles for the UI help slide down
     border-top: 1px solid @medium_gray;
 }
 
+/*
+Small screens
+---------------
+*/
+
+@media only screen and ( max-width: 480px ) {
+
+    .sidebar-inner {
+        padding-bottom: 30px;
+    }
+
+}
+
+@media only screen and ( max-width: 780px ) {
+
+    /*
+    Sidebar
+    =====================
+    */
+
+    .secondary-content {
+        position: static;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        border-left: none;
+        padding-left: 40px;
+
+        .regs-meta {
+            width: 100%;
+            float: left;
+        }
+
+        /* reset expandable styles */
+        .expandable {
+            h4 {
+                font-size: .875em;
+            }
+
+            a {
+                margin-right: 25px;
+            }
+        }
+    }
+
+    #sxs-list {
+        border-top: 1px solid @light_neutral;
+    }
+}
+
+@media only screen and ( max-width: 860px ) {
+
+    /* Prevent expandables from going to two lines for as long as possible */
+    .secondary-content {
+        .expandable {
+            h4 {
+                font-size: .75em;
+            }
+
+            a {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+@media only screen and ( max-width: 1100px ) {
+    .sidebar-header.spinner {
+        background-position-x: 93%;
+    }
+}
+
+/*
+Large screens
+-------------- */
+
+@media only screen and ( min-width: 1100px ) {
+  
+    .sidebar-header.spinner {
+        background-position-x: 94%;
+    }
+
+}
