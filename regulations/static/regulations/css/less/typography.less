@@ -478,6 +478,36 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
     line-height: 1.4;
 }
 
+.model-form-dash {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    
+    span {
+        display: inline-block;
+        vertical-align: baseline;
+        zoom: 1;
+        *display: inline;
+        *vertical-align: auto;
+        position: relative;
+        padding-right: 0.4em;
+
+        &:after {
+            content: '';
+            display: block;
+            width: 1000px;
+            position: absolute;
+            top: 1.2em;
+            border-top: 1px solid @black;
+        }
+
+        &:after { left: 100%; }
+    }
+}
+
+
+
 /*
   Table Styles
  ========================================================================== */
