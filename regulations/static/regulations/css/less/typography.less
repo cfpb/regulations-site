@@ -478,18 +478,23 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
     line-height: 1.4;
 }
 
+
+/* some model forms have dashes in the regulation, such as
+* Location ________
+* we mark those up with span tags and insert the dash with css
+*/
 .model-form-dash {
     position: relative;
     overflow: hidden;
     display: inline-block;
     width: 100%;
-    
+
     span {
         display: inline-block;
-        vertical-align: baseline;
-        zoom: 1;
         *display: inline;
+        vertical-align: baseline;
         *vertical-align: auto;
+        zoom: 1;
         position: relative;
         padding-right: 0.4em;
 
@@ -502,7 +507,9 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
             border-top: 1px solid @black;
         }
 
-        &:after { left: 100%; }
+        &:after {
+          left: 100%;
+        }
     }
 }
 
