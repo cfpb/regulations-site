@@ -83,15 +83,26 @@ Secondary Content
 ============
 */
 
+.secondary-content {
+    position: static;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    border-left: none;
+    padding-left: 40px;
+}
+
 @media only screen and ( min-width: 780px ) {
     .secondary-content {
         position: fixed;
+        overflow-y: auto;
         border-left: 1px solid @light_field;
         top: 94px;
         right: 0px;
         bottom: 0;
         height: 100%;
         width: 25%;
+        padding-left: 0px;
         background: #fff;
         z-index: 100;
         margin-left: 15px;
