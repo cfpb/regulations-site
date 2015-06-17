@@ -32,19 +32,11 @@ Main Content
   }
 }
 
-@media only screen and ( min-width: 1100px ) {
-  .main-content {
-      padding-left: 65px;
-      padding-top: 94px;
-  }
-}
-
 @media only screen and ( min-width: 780px ) {
 
   .main-content {
       float: left;
       margin-right: 32%; /* offset .secondary-content */
-      margin-left: 15em; /*240px; - offsets .panel */
       overflow-x: none;
   }
 
@@ -52,7 +44,6 @@ Main Content
   active state layouts for large screens
   --------------------------------------
   */
-
   .active {
       .header-main {
           margin-left: 40px;
@@ -63,18 +54,21 @@ Main Content
           margin-left: -14em;
       }
   }
-
-  .main-content {
-      &.close {
-          margin-left: 40px;
-          max-width: 73.6%;
-      }
-  }
 }
 
 @media only screen and ( min-width: 1100px ) {
     .main-content {
       margin-right: 25%; /* offset .secondary-content */
+      margin-left: 240px; /*240px; - offsets .panel */
+      padding-left: 65px;
+      padding-top: 94px;
+    }
+
+    .main-content {
+        &.close {
+            margin-left: 40px;
+            max-width: 73.6%;
+        }
     }
 }
 
