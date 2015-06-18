@@ -32,20 +32,21 @@ module.exports = function(grunt) {
             files: {
                 '<%= env.frontEndPath %>/css/style.css': '<%= env.frontEndPath %>/css/less/main.less'
             }
-        },
-        dist: {
-          options: {
-              paths: ['<%= env.frontEndPath %>/css/less'],
-              compress: true,
-              sourceMap: false,
-              ieCompat: true
-          },
-          files: {
-              '<%= env.frontEndPath %>/css/style.min.css': '<%= env.frontEndPath %>/css/less/main.less'
-          }
-      }
+        }
     },
 
+    /**
+     * CSSMin: https://github.com/gruntjs/grunt-contrib-cssmin
+     *
+     * Minify CSS for production
+     */
+    cssmin: {
+      target: {
+        files: {
+          '<%= env.frontEndPath %>/css/regulations.min.css': ['<%= env.frontEndPath %>/css/style.min.css']
+        }
+      }
+    },
     /**
      * ESLint: https://github.com/sindresorhus/grunt-eslint
      *
@@ -178,11 +179,12 @@ module.exports = function(grunt) {
 
     /**
     * Create task aliases by registering new tasks
+    * Let's remove `squish` since it's a duplicate task
     */
   grunt.registerTask('nose', ['shell:nose-chrome', 'shell:nose-ie10']);
   grunt.registerTask('test', ['eslint', 'mocha_istanbul', 'nose']);
   grunt.registerTask('test-js', ['eslint', 'mocha_istanbul']);
-  grunt.registerTask('build', ['browserify', 'uglify', 'less', 'test-js']);
-  grunt.registerTask('squish', ['browserify', 'uglify', 'less:dist']);
-  grunt.registerTask('default', ['browserify', 'less', 'uglify']);
+  grunt.registerTask('build', ['default', 'test-js']);
+  grunt.registerTask('squish', ['browserify', 'uglify', 'less', 'cssmin']);
+  grunt.registerTask('default', ['browserify', 'uglify', 'less', 'cssmin']);
 };

@@ -158,3 +158,37 @@
         background-color: @bg_gray;
     }
 }
+
+/*
+Small screens
+-------------
+*/
+
+@media only screen and ( max-width: 480px ) {
+
+
+    .inline-interpretation {
+         h4 {
+            padding: 0;
+            background: none;
+        }
+
+        @media
+        (-webkit-min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi) {
+            h4 {
+                background: none;
+            }
+        }
+    }
+}
+
+@media only screen and ( max-width: 600px ) {
+    .inline-interpretation {
+        margin-left: 0;
+
+        .expand-text {
+            display: none;
+        }
+    }
+}
