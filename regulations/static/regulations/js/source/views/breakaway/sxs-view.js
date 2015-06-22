@@ -25,9 +25,13 @@ var SxSView = Backbone.View.extend({
         // visibly open the SxS panel immediately
         this.$el.addClass('open-sxs');
 
+        // give it a state of `progress` until content loads
+        this.changeState('inprogress');
+
         // callback to be sent to model's get method
         // called after ajax resolves sucessfully
         render = function(success, returned) {
+            this.changeState('completed');
             if (success) {
                 this.render(returned);
             }
@@ -49,6 +53,13 @@ var SxSView = Backbone.View.extend({
 
     render: function(analysis) {
         this.$el.html(analysis);
+    },
+
+    changeState: function(state) {
+        // if a previous state exists remove the class before updating
+        this.$el.removeClass(this.loadingState);
+        this.loadingState = state;
+        this.$el.addClass(state);
     },
 
     footnoteHighlight: function(e) {
