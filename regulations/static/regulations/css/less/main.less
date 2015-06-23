@@ -9,9 +9,9 @@ and includes any non-semantic helper classes
 Type & Layout
 ------------- */
 @import "normalize.less";
+@import "cf-icons.less";
 @import "mixins.less";
 @import "fonts.less";
-@import "cf-icons.less";
 @import "typography.less";
 @import "layout.less";
 
@@ -102,17 +102,7 @@ Modules
 }
 
 .loading-spinner:after {
-    .cf-icon;
-    .cf-icon__spin;
-    display: block;
-    width: 1em;
-    height: 1em;
-    margin: 0 auto;
-    content: "\e112";
-    color: @pacific;
-    text-align: center;
-    font-size: 1.375em;
-    margin-top: 2em;
+    .spinner;
 }
 
 .important {
