@@ -43,7 +43,7 @@ module.exports = function(grunt) {
     cssmin: {
       target: {
         files: {
-          '<%= env.frontEndPath %>/css/regulations.min.css': ['<%= env.frontEndPath %>/css/style.min.css']
+          '<%= env.frontEndPath %>/css/regulations.min.css': ['<%= env.frontEndPath %>/css/style.css']
         }
       }
     },
