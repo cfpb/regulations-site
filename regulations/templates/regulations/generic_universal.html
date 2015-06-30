@@ -10,6 +10,8 @@
         {% else %}
         <link rel="stylesheet" href="{%static "regulations/css/style.css" %}"/>
         {% endif %}
+        {% block headscripts %}
+        {% endblock %}
 {% endblock %}
 
 {% comment %}
@@ -98,6 +100,7 @@
 
 </div> <!-- /.landing-content -->
 
+{% include "regulations/full_footer.html" %}
 
 {% block endscripts %}
 {% endblock %}
