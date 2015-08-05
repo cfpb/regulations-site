@@ -1,4 +1,8 @@
+import os
 from os.path import join, abspath, dirname
+
+from django.utils.crypto import get_random_string
+
 
 here = lambda *x: join(abspath(dirname(__file__)), *x)
 PROJECT_ROOT = here("..", "..")
@@ -86,8 +90,7 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '&cdbo5qx4d9(*mi%yl49)2g%2+wgl=vvq9y-de1=0(g3%yc2$5'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_string(50))
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

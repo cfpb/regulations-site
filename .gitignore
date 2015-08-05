@@ -77,13 +77,7 @@ docs/Makefile
 docs/make.bat
 regulations-core/
 style.css.map
-
-# Buildout cruft
-.installed.cfg
-bin
-develop-eggs
-eggs
-regulations.egg-info
+.coverage
 
 # docs output
 docs/_build

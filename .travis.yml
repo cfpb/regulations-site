@@ -11,18 +11,11 @@ before_script:
     - function START_SAUCE_CONNECT { curl -L https://gist.githubusercontent.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash & }
     - if [ "$SAUCE_OK" == 1 ]; then START_SAUCE_CONNECT; fi;
 install:
-    - pip install zc.buildout distribute selenium nose-testconfig
-    - buildout
-    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
-    - sudo apt-get update
-    - sudo apt-get install nodejs phantomjs
-    - sudo npm install -g grunt-cli grunt-init bower
-    - sudo npm install
-    - bower install
-    - cp example-config.json config.json
+    - pip install -r requirements.txt
+    - pip install -r requirements_test.txt
 script:
     - grunt test-js
-    - ./bin/test
+    - python manage.py test
     - ./dummy_api/start.sh
     - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
     - ./run_server.sh &
