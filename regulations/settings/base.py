@@ -8,7 +8,7 @@ here = lambda *x: join(abspath(dirname(__file__)), *x)
 PROJECT_ROOT = here("..", "..")
 root = lambda *x: join(abspath(PROJECT_ROOT), *x)
 
-DEBUG = False 
+DEBUG = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -69,7 +69,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = os.environ.get('TMPDIR', '/tmp') + '/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -132,7 +132,7 @@ INSTALLED_APPS = (
 #eregs specific settings
 
 #The base URL for the API that we use to access layers and the regulation. 
-API_BASE = ''
+API_BASE = os.environ.get('EREGS_API_BASE', '')
 
 #When we generate an full HTML version of the regulation, we want to 
 #write it out somewhere. This is where. 

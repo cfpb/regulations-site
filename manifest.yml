@@ -1,0 +1,4 @@
+---
+# all applications use these settings and services
+buildpack: https://github.com/cloudfoundry/python-buildpack.git
+command: waitress-serve --port=$VCAP_APP_PORT regulations.settings.wsgi_cf:application
