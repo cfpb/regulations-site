@@ -127,25 +127,6 @@ Sidebar
             margin-top: 0.5em;
         }
 
-        .alert {
-            border-right: none;
-            border-left: none;
-            border-top: none;
-            border-bottom: 1px solid @light_field;
-
-            a {
-                .avenir-next-demi;
-            }
-
-            ul {
-                margin-bottom: 0;
-            }
-
-            h3 {
-                margin: 0;
-            }
-        }
-
     }
 }
 
@@ -166,6 +147,19 @@ Main Content Area
 
 .disclaimer {
     margin: 40px 0;
+}
+
+.effective-alert {
+    padding: 10px;
+}
+
+@media only screen and ( min-width: 1000px ) {
+  .alert_effective-date {
+      float: left;
+  }
+  .alert_view-link {
+    float: right;
+  }
 }
 
 .about-the-tool {
