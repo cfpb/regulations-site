@@ -77,10 +77,6 @@
             color: @medium_gray;
         }
     }
-
-    .header-main {
-        max-width: 100%;
-    }
 }
 
 .title a:link,
@@ -144,7 +140,11 @@
     margin-left: 0;
 }
 
-.header-secondary {
+.header-main {
+  .wayfinding {
+    float: left;
+  }
+
   .effective-date {
       float: right;
   }
@@ -350,15 +350,6 @@ Small Screens
         height: 24px;
     }
 
-    .header-secondary {
-        padding: 0;
-        width: 100%;
-        float: none;
-        height: 24px;
-        line-height: 24px;
-    }
-
-
     .sub-head {
         height: 50px;
         line-height: 34px;
@@ -371,8 +362,6 @@ Small Screens
 
     .effective-date {
         display: block;
-        margin-left: 60px;
-        float: none;
 
         strong {
             .avenir-next;
