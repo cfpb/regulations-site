@@ -164,6 +164,8 @@ var SidebarView = Backbone.View.extend({
     },
 
     toggleExpandable: function(e) {
+      var $expandable;
+
         if (typeof e.stopPropagation !== 'undefined') {
             e.stopPropagation();
             $expandable = $(e.currentTarget);
