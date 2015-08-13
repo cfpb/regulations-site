@@ -25,7 +25,7 @@ var DrawerTabsView = Backbone.View.extend({
 
         this.listenTo(this.externalEvents, 'pane:change', this.changeActiveTab);
         this.listenTo(this.externalEvents, 'pane:init', this.setStartingTab);
-        this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer');
+        this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer, #content-header');
 
         // view switcher buttons - TOC, calendar, search
         this.$tocLinks = $('.toc-nav-link');
