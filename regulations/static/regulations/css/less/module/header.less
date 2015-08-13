@@ -140,16 +140,28 @@
     margin-left: 0;
 }
 
-.header-main {
-  .wayfinding {
-    float: left;
-  }
 
-  .effective-date {
-      float: right;
-  }
+@media only screen and ( min-width: 480px ) {
+    .header-main {
+        .wayfinding {
+            float: left;
+        }
+
+        .effective-date {
+            float: right;
+        }
+    }
 }
 
+@media only screen and ( max-width: 480px ) {
+  .header-main {
+      .effective-date {
+          float: none;
+          font-size: .75em;
+          line-height: 1;
+      }
+  }
+}
 
 /*
 Application Nav
