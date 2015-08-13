@@ -273,6 +273,14 @@ module.exports = {
         return label;
     },
 
+    // accepts to params:
+    // element to be expanded
+    // animation duration
+    toggleExpandable: function($expandable, dur) {
+        $expandable.toggleClass('open')
+          .next('.chunk').slideToggle(dur);
+    },
+
     // thanks, James Padolsey http://james.padolsey.com/javascript/parsing-urls-with-the-dom/
     parseURL: function(url) {
         var a =  document.createElement('a');
