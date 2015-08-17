@@ -48,10 +48,10 @@
         </ul>
     </div> <!-- /toc-head-->
     <div id="content-header" class="header-main">
-        <span class="subpart"></span>
-        <span id="active-title">{% block active_title %}<em class="header-label"><span class="reg_part">§{{ reg_part }}</span></em>{% endblock %}</span>
-    </div>
-    <div class="header-secondary">
+        <div class="wayfinding">
+            <span class="subpart"></span>
+            <span id="active-title">{% block active_title %}<em class="header-label"><span class="reg_part">§{{ reg_part }}</span></em>{% endblock %}</span>
+        </div>
         {% block header-secondary %}
         <span class="effective-date"><strong>Effective Date:</strong> {{ meta.effective_date|date }}</span>
         <h2> </h2>

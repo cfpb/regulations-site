@@ -188,10 +188,28 @@ TOC Header Navigation
 
 .header-main { /* TODO: closely matches main content layout - should unify into single class*/
     float: left;
-    width: 50%;
+    width: 88%;
     margin-right: -4px;
     margin-left: 15em;
     padding-left: 15px;
+}
+
+@media only screen and ( min-width: 780px ) {
+  .header-main {
+      width: 55%;
+      margin-right: -4px;
+      margin-left: 15em;
+      padding-left: 15px;
+  }
+}
+
+@media only screen and ( min-width: 1100px ) {
+    .header-main {
+        &.close {
+            margin-left: 40px;
+            width: 71.7%;
+        }
+    }
 }
 
 .header-secondary {
