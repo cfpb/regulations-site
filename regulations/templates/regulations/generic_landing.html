@@ -3,6 +3,18 @@
         <section data-base-version="{{ current_version.version }}" class="landing" data-page-type="landing-page" data-reg-part="{{reg_part}}">
             {% block reg_title %}
             {% endblock %}
+
+            {% if new_version %}
+            <div class="alert effective-alert group">
+              <div class="alert_effective-date">
+                  New amendments effective: <strong>{{new_version.by_date|date:"m/d/Y"}}</strong>
+              </div>
+              <div class="alert_view-link">
+                  <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}" class="go">View amended regulation</a></li>
+              </div>
+            </div><!--/.alert-->
+            {% endif %}
+
             {% block reg_main_content %}
             {% endblock %}
             {% block reg_addtl_content %}
@@ -21,17 +33,6 @@
     <div id="sidebar-content" class="sidebar-inner">
     <section id="definition"></section>
     <section class="landing-sidebar">
-        {% if new_version %}
-        <div class="alert">
-            <h3> New amendments effective: <strong>{{new_version.by_date|date:"m/d/Y"}}</strong></h3>
-            <ul>
-                <li> <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}" class="go">View amended regulation</a></li>
-                {%comment %} 
-                <li> <a href="{% url 'chome_section_diff_view' reg_first_section current_version.version new_version.version %}" class="go">Compare new version</a></li>
-                {% endcomment %}
-            </ul>
-        </div><!--/.alert-->
-        {% endif %}
 
         {% block reg_sidebar %}
         {% endblock %}

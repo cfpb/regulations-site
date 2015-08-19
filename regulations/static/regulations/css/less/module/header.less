@@ -77,10 +77,6 @@
             color: @medium_gray;
         }
     }
-
-    .header-main {
-        max-width: 100%;
-    }
 }
 
 .title a:link,
@@ -120,7 +116,6 @@
 
     .subpart {
         .avenir-next-demi;
-        color: @dark_gray;
         display: inline;
     }
     .with-subpart:before {
@@ -145,13 +140,29 @@
     margin-left: 0;
 }
 
-.effective-date {
-    float: right;
-    font-size: .75em;
-    padding-right: 15px;
-    text-transform: uppercase;
+
+@media only screen and ( min-width: 480px ) {
+    .header-main {
+        .wayfinding {
+            float: left;
+        }
+
+        .effective-date {
+            float: right;
+            margin-right: 45px;
+        }
+    }
 }
 
+@media only screen and ( max-width: 480px ) {
+  .header-main {
+      .effective-date {
+          display: block;
+          font-size: .75em;
+          line-height: 1;
+      }
+  }
+}
 
 /*
 Application Nav
@@ -352,15 +363,6 @@ Small Screens
         height: 24px;
     }
 
-    .header-secondary {
-        padding: 0;
-        width: 100%;
-        float: none;
-        height: 24px;
-        line-height: 24px;
-    }
-
-
     .sub-head {
         height: 50px;
         line-height: 34px;
@@ -373,8 +375,6 @@ Small Screens
 
     .effective-date {
         display: block;
-        margin-left: 60px;
-        float: none;
 
         strong {
             .avenir-next;

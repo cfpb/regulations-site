@@ -187,24 +187,32 @@ TOC Header Navigation
 }
 
 .header-main { /* TODO: closely matches main content layout - should unify into single class*/
-    float: left;
-    width: 50%;
-    margin-right: -4px;
-    margin-left: 15em;
-    padding-left: 15px;
+    margin-right: 25%;
+    margin-left: 240px;
+    padding-left: 65px;
 }
 
-.header-secondary {
-    float: right;
-    padding-right: 15px;
-    margin-right: -4px;
+@media only screen and ( min-width: 780px ) {
+  .header-main {
+    margin-right: 25%;
+    margin-left: 240px;
+    padding-left: 65px;
+  }
+}
+
+@media only screen and ( min-width: 1100px ) {
+    .header-main {
+        &.close {
+            margin-left: 40px;
+        }
+    }
 }
 
 @media only screen and ( max-width: 1100px ) {
 
     .header-main {
         margin-left: 40px;
-        max-width: 100%;
+        margin-right: 32%;
     }
 
     .content-header {
