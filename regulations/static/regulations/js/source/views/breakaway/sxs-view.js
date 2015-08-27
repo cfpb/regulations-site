@@ -22,17 +22,22 @@ var SxSView = Backbone.View.extend({
         var render;
         this.externalEvents = BreakawayEvents;
 
+        // visibly open the SxS panel immediately
+        this.$el.addClass('open-sxs');
+
+        // give it a state of `progress` until content loads
+        this.changeState('inprogress');
+
         // callback to be sent to model's get method
         // called after ajax resolves sucessfully
         render = function(success, returned) {
+            this.changeState('completed');
             if (success) {
                 this.render(returned);
             }
             else {
                 this.render('<div class="error"><span class="cf-icon cf-icon-error icon-warning"></span>Due to a network error, we were unable to retrieve the requested information.</div>');
             }
-
-            this.$el.addClass('open-sxs');
         }.bind(this);
 
         SxSModel.get(this.options.url, render),
@@ -48,6 +53,13 @@ var SxSView = Backbone.View.extend({
 
     render: function(analysis) {
         this.$el.html(analysis);
+    },
+
+    changeState: function(state) {
+        // if a previous state exists remove the class before updating
+        this.$el.removeClass(this.loadingState);
+        this.loadingState = state;
+        this.$el.addClass(state);
     },
 
     footnoteHighlight: function(e) {

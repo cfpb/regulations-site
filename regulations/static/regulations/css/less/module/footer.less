@@ -137,3 +137,80 @@ Link Styles
     color: @pacific;
     text-decoration: none;
 }
+
+
+/*
+Small Screens
+-------------
+*/
+
+@media only screen and ( max-width: 480px ) {
+    .section-nav {
+
+        .next-prev {
+            font-size: 1.125em;
+        }
+    }
+
+    .application-footer {
+        .title-logo {
+            display: block;
+            margin-bottom: 1em;
+
+            h1 {
+                //display: inline-block;
+                font-size: 1em;
+                margin-bottom: 1em;
+            }
+        }
+    }
+}
+
+@media only screen and ( max-width: 600px ) {
+
+    .section-nav {
+        margin-top: 1.5em;
+    }
+
+    .next-prev {
+        border-top: none;
+        margin-bottom: 1.5em;
+    }
+
+    .next-prev-title {
+        display: none;
+    }
+
+    .next-prev-label {
+        display: none;
+    }
+
+    .previous {
+        margin-left: -25px;
+    }
+}
+
+@media only screen and ( max-width: 780px ) {
+
+    .landing-footer {
+
+        .logo-wrap {
+            width: 100%;
+            float: none;
+        }
+
+        .footer-links {
+            width: 100%;
+            float: none;
+        }
+    }
+
+}
+
+@media only screen and ( max-width: 1100px ) {
+
+    .application-footer {
+        margin-left: 40px;
+    }
+
+}

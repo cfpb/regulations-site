@@ -6,11 +6,14 @@ var RegModel = require('../../models/reg-model');
 var SxSList = require('./sxs-list-view');
 var HelpView = require('./help-view');
 var SidebarModel = require('../../models/sidebar-model');
+var DefinitionModel = require('../../models/definition-model');
 var Breakaway = require('../breakaway/breakaway-view');
 var SidebarEvents = require('../../events/sidebar-events');
 var Definition = require('./definition-view');
 var MetaModel = require('../../models/meta-model');
 var MainEvents = require('../../events/main-events');
+var Helpers = require('../../helpers.js');
+
 Backbone.$ = $;
 
 var SidebarView = Backbone.View.extend({
@@ -33,11 +36,8 @@ var SidebarView = Backbone.View.extend({
         this.childViews = {};
         this.openRegFolders();
 
-        this.model = new SidebarModel();
-
-        this.definitionModel = new MetaModel({
-            supplementalPath: 'definition'
-        });
+        this.model = SidebarModel;
+        this.definitionModel = DefinitionModel;
     },
 
     openDefinition: function(config) {
@@ -164,7 +164,8 @@ var SidebarView = Backbone.View.extend({
     },
 
     toggleExpandable: function(e) {
-        var $expandable = $(e.currentTarget);
+      var $expandable;
+
         if (typeof e.stopPropagation !== 'undefined') {
             e.stopPropagation();
             $expandable = $(e.currentTarget);
@@ -172,9 +173,7 @@ var SidebarView = Backbone.View.extend({
         else {
             $expandable = e;
         }
-
-        $expandable.toggleClass('open')
-            .next('.chunk').slideToggle();
+        Helpers.toggleExpandable($expandable, 400);
     },
 
     closeChildren: function(except) {

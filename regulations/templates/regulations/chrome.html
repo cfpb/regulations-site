@@ -28,7 +28,7 @@
     </div>
 <![endif]-->
 
-<header id="site-header" class="reg-header chrome-header">
+<header id="site-header" class="reg-header chrome-header" role="banner">
 {% include "regulations/main-header.html" %}
 
 <div class="sub-head">
@@ -47,11 +47,11 @@
             {% endblock %}
         </ul>
     </div> <!-- /toc-head-->
-    <div id="content-header" class="header-main">
-        <span class="subpart"></span>
-        <span id="active-title">{% block active_title %}<em class="header-label"><span class="reg_part">§{{ reg_part }}</span></em>{% endblock %}</span>
-    </div>
-    <div class="header-secondary">
+    <div id="content-header" class="header-main group">
+        <div class="wayfinding">
+            <span class="subpart"></span>
+            <span id="active-title">{% block active_title %}<em class="header-label"><span class="reg_part">§{{ reg_part }}</span></em>{% endblock %}</span>
+        </div>
         {% block header-secondary %}
         <span class="effective-date"><strong>Effective Date:</strong> {{ meta.effective_date|date }}</span>
         <h2> </h2>
@@ -89,10 +89,10 @@
                   <button type="submit" class="find-button">Find</button>
                 </form>
                 </div><!--./date-form-->
-                <ul class="version-list">
+                <ul class="version-list" id="history-toc-list">
                 {% for version in history %}
                     <li class="{% if version.version == active_version %}current {% endif %}status-list" data-base-version="{{version.version}}">
-                    <a href="{% url version_switch_view label_id version.version %}" class="version-link" data-version="{{ version.version }}">
+                    <a href="{% url version_switch_view label_id version.version %}" class="version-link" data-version="{{ version.version }}" id="link-{{ version.version }}">
                         {% if version.timeline == 'current' %}
                             <h4>Current Law</h4>
                         {% endif %}
@@ -132,14 +132,14 @@
             <h2 class="toc-type">Search</h2>
         </div><!-- /.drawer-header -->
         <div class="drawer-content">
-            <form action="{% url 'chrome_search' reg_part %}" method="GET">
+            <form action="{% url 'chrome_search' reg_part %}" method="GET" role="search">
                 <div class="search-box">
-                    <input type="text" name="q" value="{{ q }}" /><button type="submit"><i class="cf-icon cf-icon-search"></i><strong class="icon-text">Search</strong></button>
+                    <input type="text" name="q" value="{{ q }}" id="search-input" /><button type="submit"><i class="cf-icon cf-icon-search"></i><strong class="icon-text">Search</strong></button>
                 </div><!--/.search-box-->
                 <div class="version-search">
                     <h4>Search in regulation effective:</h4>
                     <div class="select-content">
-                        <select name="version">
+                        <select name="version" id="version-select">
                         {% for version in history %}
                             <option value="{{version.version}}"{% if active_version == version.version %} selected="selected"{% endif %}>{{version.by_date|date}}</option>
                         {% endfor %}
@@ -155,20 +155,22 @@
 <div class="wrap group">
 
 {% block chrome-content %}
-<div id="content-body" class="main-content">
-    {% load in_context %}
-    {{ main_content|safe }}
-    {% begincontext main_content_context main_content_template %}
-        {% if main_content_template %}
-            {% include main_content_template %}
-        {% endif %}
-    {% endcontext %}
+<main role="main">
+  <div id="content-body" class="main-content">
+      {% load in_context %}
+      {{ main_content|safe }}
+      {% begincontext main_content_context main_content_template %}
+          {% if main_content_template %}
+              {% include main_content_template %}
+          {% endif %}
+      {% endcontext %}
 
-</div> <!-- /.main-content -->
+  </div> <!-- /.main-content -->
+</main>
 {% endblock %}
 
 {% block chrome-sidebar %}
-<div id="sidebar" class="secondary-content">
+<div id="sidebar" class="secondary-content" role="complementary">
     <div id="sidebar-content" class="sidebar-inner">
         <section id="definition"></section>
         {% block reg_sidebar %}

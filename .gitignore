@@ -46,6 +46,7 @@ oldphantomjs/
 # Minified assets #
 ###############
 *.min.js
+*.min.css
 
 # Floobits #
 ###############
@@ -71,6 +72,7 @@ regulations/static/regulations/js/tests/browser/test.config.js
 regulations/static/regulations/js/unittests/coverage/
 regulations/static/regulations/js/built/*
 regulations/static/regulations/js/built/regulations.js
+regulations/static/regulations/css/style.css
 docs/Makefile
 docs/make.bat
 regulations-core/

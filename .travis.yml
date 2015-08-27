@@ -1,6 +1,6 @@
 language: python
+sudo: true
 python:
-    - '2.6'
     - '2.7'
 env:
     global:
@@ -21,6 +21,7 @@ install:
     - bower install
     - cp example-config.json config.json
 script:
+    - grunt test-js
     - ./bin/test
     - ./dummy_api/start.sh
     - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py

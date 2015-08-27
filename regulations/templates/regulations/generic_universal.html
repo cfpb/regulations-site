@@ -2,9 +2,17 @@
 {% load static from staticfiles %}
 
 {% comment %}
-    The empty app_js block excludes things from base.html
+    Replaces application's loaded scripts and styles with just styles.
 {% endcomment %}
-{% block app_js %}{% endblock %}
+{% block app_js %}
+        {% if env == 'built' %}
+        <link rel="stylesheet" href="{%static "regulations/css/regulations.min.css" %}"/>
+        {% else %}
+        <link rel="stylesheet" href="{%static "regulations/css/style.css" %}"/>
+        {% endif %}
+        {% block headscripts %}
+        {% endblock %}
+{% endblock %}
 
 {% comment %}
     Universal application landing page
@@ -23,7 +31,7 @@
     <div class="inner-wrap group">
       <div class="primary">
         <h2 class="hero-header">A platform to read regulations.</h2>
-        <p class="hero-text">eRegulations makes regulations easy to find, read, and understand.</p>
+        <p class="hero-text">eRegulations makes regulations easier to find, read, and understand.</p>
 
         <p class="read-more-link"><a href="{% url 'about' %}" class="go">About eRegulations</a></p>
       </div>
@@ -73,7 +81,7 @@
         <h2 class="light-header">About eRegulations</h2>
         <div class="content-primary column-l">
 
-          <p>eRegulations is a web-based tool that makes regulations easy
+          <p>eRegulations is a web-based tool that makes regulations easier
           to find, read and understand with features such as inline
           official interpretations, highlighted defined terms, and a
           revision comparison view.</p>
@@ -92,6 +100,7 @@
 
 </div> <!-- /.landing-content -->
 
+{% include "regulations/full_footer.html" %}
 
 {% block endscripts %}
 {% endblock %}

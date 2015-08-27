@@ -9,9 +9,9 @@ and includes any non-semantic helper classes
 Type & Layout
 ------------- */
 @import "normalize.less";
+@import "cf-icons.less";
 @import "mixins.less";
 @import "fonts.less";
-@import "cf-icons.less";
 @import "typography.less";
 @import "layout.less";
 
@@ -33,11 +33,6 @@ Modules
 @import "module/universal-landing.less";
 @import "module/about.less";
 @import "module/error.less";
-
-/*
-Media Queries
-------------- */
-@import "media-queries/media-queries.less";
 
 
 /*
@@ -106,6 +101,10 @@ Media Queries
     }
 }
 
+.loading-spinner:after {
+    .u_spinner;
+}
+
 .important {
     color: @red_orange;
 }
@@ -113,8 +112,6 @@ Media Queries
 .alert {
     background-color: #F6D9D3;
     border: 1px solid #E8A091;
-    padding: 30px 15px;
-    margin-bottom: 2em;
     .avenir-next;
 
     ul {

@@ -7,6 +7,8 @@ var SidebarListView = require('./sidebar-list-view');
 var Router = require('../../router');
 var BreakawayEvents = require('../../events/breakaway-events');
 var GAEvents = require('../../events/ga-events');
+var Helpers = require('../../helpers.js');
+
 Backbone.$ = $;
 
 var SxSListView = SidebarListView.extend({
@@ -61,11 +63,17 @@ var SxSListView = SidebarListView.extend({
         var $folderContent = this.$el.find('.expand-drawer');
         if ($folderContent.children().length > 1) {
             this.highlightHeader();
+            // toggle the SxS slider open if there is content
+            this.toggleSxS();
         }
     },
 
     highlightHeader: function() {
         this.$el.find('header').addClass('has-content');
+    },
+
+    toggleSxS: function() {
+      Helpers.toggleExpandable($('#sxs-expandable-header'), 0);
     }
 
 });

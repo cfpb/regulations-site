@@ -25,19 +25,23 @@ var DrawerTabsView = Backbone.View.extend({
 
         this.listenTo(this.externalEvents, 'pane:change', this.changeActiveTab);
         this.listenTo(this.externalEvents, 'pane:init', this.setStartingTab);
-        this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer');
+        this.$activeEls = $('#menu, #site-header, #content-body, #primary-footer, #content-header');
 
         // view switcher buttons - TOC, calendar, search
         this.$tocLinks = $('.toc-nav-link');
         this.$toggleArrow = $('#panel-link');
 
+        // default the drawer state to close
+        this.drawerState = 'close';
+
         // For browser widths above 1100px apply the 'open' class
+        //  and set drawer state to open
         if (document.documentElement.clientWidth > 1100) {
             this.$toggleArrow.addClass('open');
+            this.drawerState = 'open';
         }
 
-        // set initial drawer state
-        this.drawerState = (this.$toggleArrow.hasClass('open')) ? 'open' : 'closed';
+        this.$activeEls.addClass(this.drawerState);
     },
 
     setStartingTab: function(tab) {
@@ -57,9 +61,9 @@ var DrawerTabsView = Backbone.View.extend({
     // this.$activeEls are structural els that need to have
     // CSS applied to work with the drawer conditionally based
     // on its state
-    reflowUI: function() {
+    updateDOMState: function() {
         if (typeof this.$activeEls !== 'undefined') {
-            this.$activeEls.toggleClass('active');
+            this.$activeEls.toggleClass(this.drawerState);
         }
     },
 
@@ -88,10 +92,11 @@ var DrawerTabsView = Backbone.View.extend({
     // update the open/close arrow
     // set state
     toggleDrawerState: function() {
-        var state = (this.$toggleArrow.hasClass('open')) ? 'close' : 'open';
-        this.reflowUI();
+        var state = (this.drawerState === 'open') ? 'close' : 'open';
+        this.updateDOMState();
         this.$toggleArrow.toggleClass('open');
         this.drawerState = state;
+        this.updateDOMState();
     },
 
     // update active pane based on click or external input

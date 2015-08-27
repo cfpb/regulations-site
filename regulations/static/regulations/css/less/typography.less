@@ -106,6 +106,11 @@ h6 {
     text-transform: none;
 }
 
+.effective-date {
+    font-size: .875em;
+    padding-right: 15px;
+}
+
 /*  Lists
     ------
     <ul>
@@ -243,17 +248,17 @@ a:visited {
 .definition:visited {
     color: @black;
     text-decoration: none;
-    border-bottom: 1px solid #d0d0ce;
+    border-bottom: 1px solid @light_field;
 }
 
 .definition:hover,
 .definition:active {
-    border-bottom: 1px solid #babbbd;
-    background-color: #e7e7e6;
+    border-bottom: 1px solid @medium_gray;
+    background-color: @grey;
 }
 
 .definition.active {
-    background-color: #e7e7e6;
+    background-color: @grey;
 }
 
 .inline-interpretation {
@@ -261,6 +266,40 @@ a:visited {
     .definition:visited {
          border-bottom: 1px solid @medium_gray;
     }
+}
+
+/* button styles */
+
+.btn {
+    .avenir-next;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: .57142857em 1em;
+    border: 0;
+    border-radius: .28571429em;
+    margin: 0;
+    vertical-align: middle;
+    font-size: .875em;
+    line-height: normal;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .1s;
+    -webkit-appearance: none;
+}
+
+.btn, .btn:link, .btn:visited {
+    background-color: #0072ce;
+    color: #fff;
+}
+
+.btn.hover, .btn:hover {
+    background-color: #328ed8;
+}
+
+.btn.focus, .btn:focus {
+    background-color: #328ed8;
+    outline: #0072ce dotted 1px;
+    outline-offset: 1px;
 }
 
 /*
@@ -478,6 +517,45 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
     line-height: 1.4;
 }
 
+
+/* some model forms have dashes in the regulation, such as
+* Location ________
+* we mark those up with span tags and insert the dash with css
+*/
+.model-form-dash {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+
+    span {
+        display: inline-block;
+        *display: inline;
+        min-width: 1em;
+        min-height: 1em;
+        vertical-align: baseline;
+        *vertical-align: auto;
+        zoom: 1;
+        position: relative;
+        padding-right: 0.4em;
+
+        &:after {
+            content: '';
+            display: block;
+            width: 1000px;
+            position: absolute;
+            top: 1.2em;
+            border-top: 1px solid @black;
+        }
+
+        &:after {
+          left: 100%;
+        }
+    }
+}
+
+
+
 /*
   Table Styles
  ========================================================================== */
@@ -486,7 +564,6 @@ table {
     padding: 0;
     font-size: .75em;
     .avenir-next;
-    background: #F8F8F8;
     table-layout: fixed;
     width: 100%;
 }
@@ -495,17 +572,7 @@ th,
 td {
     padding: 15px;
     line-height: 20px;
-    border: 0;
-}
-
-thead {
-    background: #515355; /* dark-grey */
-}
-
-thead th,
-thead td {
-    color: #ffffff;
-    background: #515355; /* dark-grey */
+    border: 1px solid @80_gray;
 }
 
 th {
@@ -515,18 +582,12 @@ th {
     text-align: left;
 }
 
-tr {
-    background: #F8F8F8; /* grey-05% */
-}
-
-tbody > tr:nth-child(odd){
-    background: #F1F2F2; /* grey-10% */
-}
-
 /* make tables horizontally scroll on small screens */
-.table-wrap {
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch; // smoother scrolling
+@media only screen and ( max-width: 480px ) {
+    .table-wrap {
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch; // smoother scrolling
+    }
 }
 
 /*
@@ -565,4 +626,93 @@ pre {
   pre {
     max-width: 500px;
   }
+}
+
+/*
+  Small screens
+ ==============
+*/
+
+@media only screen and ( max-width: 480px ) {
+
+    .reg-text {
+        margin-top: 20px;
+
+        ol {
+            padding: 0;
+        }
+    }
+
+    .main-content,
+    .secondary-content,
+    .about-content,
+    .landing-content {
+        font-size: 0.875em;
+    }
+
+    .section-number,
+    .appendix-heading,
+    .supplement-section h3 {
+        font-size: 1.571428571em;
+    }
+}
+
+@media only screen and ( max-width: 600px ) {
+
+    .main-content {
+
+        ol {
+            list-style-position: inside;
+        }
+    }
+}
+
+@media only screen and ( max-width: 780px ) {
+
+    /*
+    Typography
+    ========================
+    */
+
+    .section-number {
+        text-indent: 0;
+    }
+
+    /*
+    Main Content
+    =====================
+    */
+
+
+    .level-1 > li:after {
+        margin-left: -5em;
+    }
+
+    h1 .title {
+        display: none;
+    }
+
+     /*
+    Appendix Content
+    =====================
+    */
+
+    .appendix-section .stripped-marker {
+      display: inline-block;
+      float: left;
+      margin-left: 0;
+      width: auto;
+      padding-right: 4px;
+    }
+
+    .appendix-section ol {
+        padding: 0;
+    }
+}
+
+@media only screen and ( max-width: 1100px ) {
+
+    .level-1 > li:after {
+        margin-left: -10em;
+    }
 }

@@ -51,6 +51,7 @@ var DefinitionView = SidebarModuleView.extend({
         if (Router.hasPushState) {
             this.events['click .continue-link.interp'] = 'openInterpretation';
             this.events['click .continue-link.full-def'] = 'openFullDefinition';
+            this.events['click .definition'] = 'openFullDefinition';
             this.delegateEvents(this.events);
         }
     },
@@ -156,7 +157,7 @@ var DefinitionView = SidebarModuleView.extend({
 
     openFullDefinition: function(e) {
         e.preventDefault();
-        var id = this.id || $(e.target).data('linked-section'),
+        var id = $(e.target).data('linked-section') || $(e.target).data('definition'),
             parentId = Helpers.findBaseSection(id);
 
         MainEvents.trigger('section:open', parentId, {

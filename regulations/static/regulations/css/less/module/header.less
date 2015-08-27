@@ -77,10 +77,6 @@
             color: @medium_gray;
         }
     }
-
-    .header-main {
-        max-width: 100%;
-    }
 }
 
 .title a:link,
@@ -120,7 +116,6 @@
 
     .subpart {
         .avenir-next-demi;
-        color: @dark_gray;
         display: inline;
     }
     .with-subpart:before {
@@ -145,13 +140,29 @@
     margin-left: 0;
 }
 
-.effective-date {
-    float: right;
-    font-size: .75em;
-    padding-right: 15px;
-    text-transform: uppercase;
+
+@media only screen and ( min-width: 480px ) {
+    .header-main {
+        .wayfinding {
+            float: left;
+        }
+
+        .effective-date {
+            float: right;
+            margin-right: 45px;
+        }
+    }
 }
 
+@media only screen and ( max-width: 480px ) {
+  .header-main {
+      .effective-date {
+          display: block;
+          font-size: .75em;
+          line-height: 1;
+      }
+  }
+}
 
 /*
 Application Nav
@@ -316,5 +327,84 @@ tiny screens
 
     .title {
         width: 90%;
+    }
+}
+
+/*
+Small Screens
+==============
+*/
+
+@media only screen and ( max-width: 480px ) {
+
+    .chrome-header {
+        .title {
+            .site-title {
+                display: none;
+            }
+
+            .reg-title {
+                padding-left: 10px;
+                font-size: 1em;
+            }
+        }
+    }
+
+    /*
+    Subhead Styles
+    ----------------------
+    */
+
+    .header-main {
+        display: block;
+        width: auto;
+        float: none;
+        padding: 0 0 0 14px;
+        height: 24px;
+    }
+
+    .sub-head {
+        height: 50px;
+        line-height: 34px;
+    }
+
+    /* match wayfinding padding to > icon */
+    .header-label {
+        padding-top: 4px;
+    }
+
+    .effective-date {
+        display: block;
+
+        strong {
+            .avenir-next;
+        }
+    }
+
+
+}
+
+@media only screen and ( max-width: 600px ) {
+
+    .header-label {
+        margin-left: 6px;
+    }
+}
+
+@media only screen and ( max-width: 780px ) {
+
+    .header-label {
+        margin-left: 10px;
+    }
+
+    #content-header {
+        padding-left: 20px;
+    }
+}
+
+@media only screen and ( max-width: 1100px ) {
+
+    #content-header {
+        padding-left: 4%;
     }
 }
