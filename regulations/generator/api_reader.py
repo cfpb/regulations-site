@@ -1,11 +1,11 @@
-from django.core.cache import get_cache
+from django.core.cache import caches
 from regulations.generator import api_client
 
 
 class ApiCache(object):
     """ Interface with the cache. """
     def __init__(self):
-        self.cache = get_cache('api_cache')
+        self.cache = caches['api_cache']
 
     def get(self, key):
         return self.cache.get(key)
@@ -57,7 +57,7 @@ class ApiReader(object):
             return cached
         else:
             regulation = self.client.get('regulation/%s/%s' % (label, version))
-            #Add the tree to the cache
+            # Add the tree to the cache
             if regulation:
                 self.cache_root_and_interps(regulation, version)
                 return regulation
