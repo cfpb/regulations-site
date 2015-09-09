@@ -78,6 +78,8 @@ docs/make.bat
 regulations-core/
 style.css.map
 .coverage
+regulations.egg-info
+
 
 # docs output
 docs/_build

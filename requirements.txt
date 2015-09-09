@@ -1,7 +1,2 @@
-django==1.8
-lxml
-requests
-
-# cloud foundry
-waitress
-whitenoise
+# Import setup.py
+-e .
