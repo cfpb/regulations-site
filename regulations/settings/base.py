@@ -103,10 +103,12 @@ TEMPLATES = [{
 }]
 
 
+# Note order:
+# https://docs.djangoproject.com/en/1.8/topics/cache/#the-per-site-cache
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
