@@ -12,13 +12,14 @@ def fetch_toc(reg_part, version, flatten=False):
     toc = api.layer('toc', reg_part, version)
 
     toc_list = []
-    for data in toc[reg_part]:
-        if 'Subpart' in data['index']:
-            toc_list.append(toc_subpart(data, toc_list, toc))
-        elif 'Interp' in data['index']:
-            toc_list.append(toc_interp(data, toc_list, toc))
-        else:
-            toc_list.append(toc_sect_appendix(data, toc_list))
+    if reg_part in toc:
+        for data in toc[reg_part]:
+            if 'Subpart' in data['index']:
+                toc_list.append(toc_subpart(data, toc_list, toc))
+            elif 'Interp' in data['index']:
+                toc_list.append(toc_interp(data, toc_list, toc))
+            else:
+                toc_list.append(toc_sect_appendix(data, toc_list))
     if flatten:
         flattened = []
         for el in toc_list:
