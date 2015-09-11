@@ -41,7 +41,6 @@ class bdist_egg(_bdist_egg):
 setup(
     name="regulations",
     version="2.0.0",
-    license="public domain",
     packages=find_packages(),
     cmdclass={
         'build_frontend': build_frontend,
@@ -52,5 +51,9 @@ setup(
         'django==1.8',
         'lxml',
         'requests'
+    ],
+    classifiers=[
+        'License :: Public Domain',
+        'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication'
     ]
 )
