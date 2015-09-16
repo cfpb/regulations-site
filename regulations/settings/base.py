@@ -1,10 +1,14 @@
+import os
 from os.path import join, abspath, dirname
+
+from django.utils.crypto import get_random_string
+
 
 here = lambda *x: join(abspath(dirname(__file__)), *x)
 PROJECT_ROOT = here("..", "..")
 root = lambda *x: join(abspath(PROJECT_ROOT), *x)
 
-DEBUG = False 
+DEBUG = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -13,17 +17,6 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {}
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-#        'NAME': '',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-#        'USER': '',
-#        'PASSWORD': '',
-#        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-#        'PORT': '',                      # Set to empty string for default.
-#    }
-#}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -65,7 +58,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = os.environ.get('TMPDIR', '/tmp') + '/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -83,56 +76,56 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '&cdbo5qx4d9(*mi%yl49)2g%2+wgl=vvq9y-de1=0(g3%yc2$5'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_string(50))
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',)),
-#     'django.template.loaders.eggs.Loader',
-)
+TEMPLATES = [{
+    "BACKEND": "django.template.backends.django.DjangoTemplates",
+    "OPTIONS": {
+        "context_processors": (
+            # "django.contrib.auth.context_processors.auth",
+            "django.template.context_processors.debug",
+            "django.template.context_processors.i18n",
+            "django.template.context_processors.media",
+            "django.template.context_processors.static",
+            "django.template.context_processors.tz",
+            "django.contrib.messages.context_processors.messages"
+        ),
+        # List of callables that know how to import templates from various
+        # sources.
+        "loaders": [
+            ('django.template.loaders.cached.Loader', (
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader'))
+        ],
+    }
+}]
 
+
+# Note order:
+# https://docs.djangoproject.com/en/1.8/topics/cache/#the-per-site-cache
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware', 
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'regulations.urls'
 
 INSTALLED_APPS = (
-    #'django.contrib.auth',
-    #'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    #'django.contrib.sites',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
     'regulations',
 )
 
-#eregs specific settings
+# eregs specific settings
 
-#The base URL for the API that we use to access layers and the regulation. 
-API_BASE = ''
+# The base URL for the API that we use to access layers and the regulation.
+API_BASE = os.environ.get('EREGS_API_BASE', '')
 
-#When we generate an full HTML version of the regulation, we want to 
-#write it out somewhere. This is where. 
+# When we generate an full HTML version of the regulation, we want to write it
+# out somewhere. This is where.
 OFFLINE_OUTPUT_DIR = ''
 
 DATE_FORMAT = 'n/j/Y'
@@ -143,13 +136,12 @@ EREGS_GA_SITE = ''
 #   Use the 'source' directory; useful for development
 JS_DEBUG = False
 
-#Django by default tries to setup a databse when running 
-#tests. We don't have a database, so we override the default 
-#test runner. 
+# Django by default tries to setup a databse when running tests. We don't have
+# a database, so we override the default test runner.
 TEST_RUNNER = 'regulations.tests.runner.DatabaselessTestRunner'
 
 CACHES = {
-    'default' : {
+    'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/eregs_cache',
     },
@@ -161,7 +153,7 @@ CACHES = {
             'MAX_ENTRIES': 10000,
         },
     },
-    'api_cache':{
+    'api_cache': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'api_cache_memory',
         'TIMEOUT': 3600,

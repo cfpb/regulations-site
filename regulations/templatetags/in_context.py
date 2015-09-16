@@ -16,7 +16,8 @@ class InContextNode(template.Node):
                 new_context.update(context.get(field, {}))
             else:
                 new_context[field] = value
-        return self.nodelist.render(template.Context(new_context))
+        new_context = context.new(new_context)
+        return self.nodelist.render(new_context)
 
 
 @register.tag('begincontext')
