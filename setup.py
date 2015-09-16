@@ -19,7 +19,6 @@ class build_frontend(Command):
         pass
 
     def run(self):
-        print __file__
         call(['./frontendbuild.sh'],
              cwd=os.path.dirname(os.path.abspath(__file__)))
 
@@ -48,7 +47,7 @@ setup(
         'bdist_egg': bdist_egg,
     },
     install_requires=[
-        'django==1.8',
+        'django==1.6',
         'lxml',
         'requests'
     ],
