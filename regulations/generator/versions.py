@@ -46,8 +46,10 @@ def fetch_grouped_history(part):
     for notice in client.notices(part)['results']:
         notice = convert_to_python(notice)
         for v in (v for v in versions
-                  if v['by_date'] == notice['effective_on']):
-            v['notices'].append(notice)
+                if v['by_date'] == notice['effective_on']):
+            # Continue if a notice with the same fr_url is already in the list
+            if not any(n['fr_url'] == notice['fr_url'] for n in v['notices']):
+                v['notices'].append(notice)
 
     for version in versions:
         version['notices'] = sorted(version['notices'], reverse=True,
