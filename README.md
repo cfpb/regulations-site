@@ -51,10 +51,9 @@ If you're familiar with Python and Node environments, after cloning this repo:
 ```bash
 $ mkvirtualenv regsite
 $ workon regsite
-$ pip install zc.buildout
-$ buildout
-$ npm install # this also runs bower install and the default grunt task post install
-$ $ ./bin/django runserver
+$ pip install -r requirements.txt
+$ ./frontendbuild.sh
+$ python manage.py runserver
 ```
 
 ### Python
