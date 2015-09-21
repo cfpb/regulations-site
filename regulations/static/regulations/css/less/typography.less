@@ -421,6 +421,16 @@ The `<ol>` tag needs to have the appropriate list type applied
     width: 24px;
 }
 
+/* remove paragraph markers that have the markerless class */
+.markerless {
+  list-style-type: none;
+
+  /* don't indent the markerless paragraph */
+  >p {
+    margin-left: -1em;
+  }
+}
+
 
 /*  Definition Styles
     ==========================================================================
