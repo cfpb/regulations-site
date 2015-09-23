@@ -75,6 +75,7 @@ class HTMLBuilder():
             node['header'] = HTMLBuilder.section_space(node['header'])
 
     def process_node(self, node):
+
         node['label_id'] = '-'.join(node['label'])
         self.process_node_title(node)
 
@@ -90,7 +91,10 @@ class HTMLBuilder():
         # exception for situations in which we have unnumbered definitions
         # unnumbered defs have the last part of their label in CamelCase
         # and the word "means" in their text
-        if re.search('([A-Z][a-z]+)+', node['label'][-1]) and re.search('means', node['text']):
+
+        if node.get('marker', '') == 'none':
+            node['list_type'] = 'no-marker'
+        elif re.search('([A-Z][a-z]+)+', node['label'][-1]) and re.search('means', node['text']):
             node['list_type'] = 'no-marker'
         else:
             node['list_type'] = list_type

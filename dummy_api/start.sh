@@ -1,12 +1,11 @@
 #!/bin/bash
-git clone https://github.com/eregs/regulations-core.git
+git clone https://github.com/cfpb/regulations-core.git
 cd regulations-core
-pip install zc.buildout
-buildout
+pip install -r requirements.txt
 
-./bin/django syncdb
-./bin/django migrate
-./bin/django runserver 8282 &
+python manage.py syncdb
+python manage.py migrate
+python manage.py runserver 8282 &
 sleep 5 # give django enough time to startup
 
 # Load the data

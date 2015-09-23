@@ -19,10 +19,9 @@ class build_frontend(Command):
         pass
 
     def run(self):
-        print __file__
-        call(['./frontendbuild.sh'], 
-                cwd=os.path.dirname(os.path.abspath(__file__)))
-        
+        call(['./frontendbuild.sh'],
+             cwd=os.path.dirname(os.path.abspath(__file__)))
+
 
 class build_ext(_build_ext):
     """ A build_ext subclass that adds build_frontend """
@@ -39,14 +38,21 @@ class bdist_egg(_bdist_egg):
 
 
 setup(
-    name = "regulations",
-    version = "0.1.0", 
-    license = "public domain", 
-    packages = find_packages(),
+    name="regulations",
+    version="2.0.0",
+    packages=find_packages(),
     cmdclass={
         'build_frontend': build_frontend,
         'build_ext': build_ext,
         'bdist_egg': bdist_egg,
     },
-
+    install_requires=[
+        'django==1.6',
+        'lxml',
+        'requests'
+    ],
+    classifiers=[
+        'License :: Public Domain',
+        'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication'
+    ]
 )

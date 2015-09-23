@@ -1,0 +1,2 @@
+# Import setup.py
+-e .

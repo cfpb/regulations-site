@@ -1,7 +1,11 @@
 {% comment %}
     Wrap tree.html in a list item. 
 {% endcomment %}
+
 <li
+    {% if node.marker == "none"%}
+        class="markerless"
+    {% endif %}
     {% if not inline %}id="{{node.markup_id}}" data-permalink-section{% endif %}
     {% if node.interp %}data-interp-id="{{node.interp.markup_id}}"{% endif %}
 >

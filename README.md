@@ -51,19 +51,15 @@ If you're familiar with Python and Node environments, after cloning this repo:
 ```bash
 $ mkvirtualenv regsite
 $ workon regsite
-$ pip install zc.buildout
-$ buildout
-$ npm install # this also runs bower install and the default grunt task post install
-$ $ ./bin/django runserver
+$ pip install -r requirements.txt
+$ ./frontendbuild.sh
+$ python manage.py runserver
 ```
 
 ### Python
 
-Requirements are retrieved and/or build automatically via buildout (see
-below).
+Requirements are retrieved and/or build automatically via pip (see below).
 
-* zc-buildout - Tool used for building the application and handling
-  dependencies
 * lxml - Used to convert strings into XML for processing
 * requests - Client library for reading data from an API
 
@@ -75,23 +71,52 @@ If running tests:
 * nose-testconfig - pass configuration data to tests; used to configure
   selenium tests
 * coverage - provides test-coverage metrics
-* selenium - functional testing via a headless web browser
 
-## Buildout
+## Setup & Running
 
-Buildout is a simple tool for building and distributing python applications
-quickly. We use it to get a version of the API up and running without
-needing all of the fuss usually associated with setting up Django. Just run
+This project uses `requirements*.txt` files for defining dependencies, so you
+can get up and running with `pip`:
 
 ```bash
-$ pip install zc.buildout
-$ buildout
+$ pip install -r requirements.txt       # modules required for execution
+$ pip install -r requirements_test.txt  # modules required for running tests
+$ pip install -r requirements_dev.txt   # helpful modules for developers
 ```
 
-After downloading the internet, you'll notice that some helpful scripts are
-located in ```bin```, including ```bin/django``` and ```bin/test```. The
-latter will run our test suite while the former is equivalent to running
-manage.py in a traditional Django environment.
+With that, you can start the development server:
+```bash
+$ python manage.py runserver
+```
+
+## Building the documentation
+
+For most tweaks, you will simply need to run the Sphinx documentation
+builder again.
+
+```
+$ ./bin/sphinx-build -b dirhtml -d docs/_build/doctrees/ docs/ docs/_build/dirhtml/
+```
+
+The output will be in ```docs/_build/dirhtml```.
+
+If you are adding new modules, you may need to re-run the skeleton build
+script first:
+
+```
+$ rm docs/regulations*.rst
+$ ./bin/sphinx-apidoc -F -o docs regulations
+```
+
+## JavaScript Application 
+### Code
+The application code in JavaScript uses [Backbone.js](http://backbonejs.org/) as a foundation, though in some non-standard ways. If you plan to do work on this layer, it is recommended that you acquaint yourself with this [starter documentation](README_BACKBONE.md).
+
+### Environment
+The front end of the site uses a number of JavaScript libraries and frameworks to create the unique experience of navigating and reading a regulation, as you can see at http://consumerfinance.gov/eregulations. If you'd like to modify the JavaScript layer, you should set up the build and testing environment.
+
+If you run the application with ```env = "built"``` in your ```local_settings.py``` and would like to use the UI as it ships with this project, you can skip this.
+
+The application's UI itself uses a number of dependencies that you can see in package.json and bower.json. To start, we are going to be concerned with the foundations of the environment:
 
 ## Front end environment setup
 
@@ -160,21 +185,6 @@ script first:
 $ rm docs/regulations*.rst
 $ ./bin/sphinx-apidoc -F -o docs regulations
 ```
-
-## JavaScript Application
-### Code
-The application code in JavaScript uses [Backbone.js](http://backbonejs.org/) as a foundation, though in some non-standard ways. If you plan to do work on this layer, it is recommended that you acquaint yourself with this [starter documentation](README_BACKBONE.md).
-
-### Environment
-The front end of the site uses a number of JavaScript libraries and frameworks to create the unique experience of navigating and reading a regulation, as you can see at http://consumerfinance.gov/eregulations. If you'd like to modify the JavaScript layer, you should set up the build and testing environment.
-
-If you run the application with ```env = "built"``` in your ```local_settings.py``` and would like to use the UI as it ships with this project, you can skip this.
-
-The application's UI itself uses a number of dependencies that you can see in package.json and bower.json. To start, we are going to be concerned with the foundations of the environment:
-
-- npm, a package manager to install dependencies in the development environment: <https://npmjs.org/>
-- Grunt, a task runner that modules to build and run tests depend on: <http://gruntjs.com/>
-- Bower, a utility to fetch dependencies for the: UI <http://bower.io/>
 
 ## Additional front end information
 
