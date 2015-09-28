@@ -1,25 +1,35 @@
-var chai = require('chai');
-var expect = chai.expect;
-var jsdom = require('mocha-jsdom');
+require('../../../setup');
 
-describe('Definition View:', function() {
-    'use strict';
+describe('Definition View:', function () {
 
-    var view, $, Backbone, _, DefinitionView, SidebarModuleView, RegModel, Helpers, Router, MainEvents, SidebarEvents, GAEvents;
+  var view, $, DefinitionView;
 
-    jsdom();
+  before(function () {
+    $ = require('jquery');
+    DefinitionView = require('../../../../source/views/sidebar/definition-view');
+  });
 
-    before(function (){
-        $ = require('jquery');
-        Backbone = require('backbone');
-        DefinitionView = require('../../../../source/views/sidebar/definition-view');
-    });
+  beforeEach(function(){
+      view = new DefinitionView({
+        id: '1',
+        term: 'Peanut Butter Jelly'
+      });
 
-    beforeEach(function(){
-        view = new DefinitionView();
-    });
+      view.render();
+  });
 
-    it('should construct a veiw', function() {
-        expect(view).to.be.ok;
-    });
+  it('works', function () {
+    document.body.innerHTML = '<div>hola</div>';
+    expect($("div").html()).eql('hola');
+  });
+
+  it('has document', function () {
+    var div = document.createElement('div');
+    expect(div.nodeName).eql('DIV');
+  });
+
+  it('should construct a veiw', function() {
+      expect(view).to.be.ok;
+  });
+
 });
