@@ -4,6 +4,6 @@ if (typeof process === 'object') {
   global.expect = require('chai').expect;
   require('mocha-jsdom')();
 } else {
-  window.expect = window.chai.expect
-  window.require = function () { /* noop */ }
+  window.expect = window.chai.expect;
+  window.require = function () { /* noop */ };
 }
