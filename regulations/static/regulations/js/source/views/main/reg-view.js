@@ -3,7 +3,6 @@ var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 require('../../events/scroll-stop.js');
-var unveil = require('unveil');
 var DefinitionView = require('../sidebar/definition-view');
 var RegModel = require('../../models/reg-model');
 var SectionFooterView = require('./section-footer-view');
@@ -288,6 +287,8 @@ var RegView = ChildView.extend({
 
     // lazy load images as the user scrolls
     loadImages: function() {
+        // require inside of the loadImages function to accomodate testing dependencies
+        var unveil = require('unveil');
         $('.reg-image').unveil();
     }
 });
