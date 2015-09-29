@@ -49,18 +49,56 @@ describe('Definition View:', function () {
 
   describe('Render methods:', function () {
 
-    it('renders the header with loading indicator', function () {
+    it('should render the header with loading indicator', function () {
       view.renderHeader();
       expect(view.$el.html()).to.eql(
         '<div class="sidebar-header group spinner"><h4>Defined Term</h4></div>'
       );
     });
 
-    it('renders definition HTML', function() {
+    it('should render definition HTML', function() {
       view.render(content);
       expect(view.$el.html()).to.contain('90s narwhal vegan artisan');
     });
 
+    it('should display an error when renderError is called', function() {
+      var err = new Error('Oh snap!');
+      view.renderError(err);
+      expect(view.$el.html()).to.contain('Oh snap!');
+    });
+
   });
+
+  describe('Definitions with content:', function () {
+
+    beforeEach(function(){
+      view.render(content);
+    });
+
+    it('should be closeable', function() {
+      $('.close-button').trigger('click');
+      expect(view.$el.html()).to.not.contain('90s narwhal vegan artisan');
+    });
+
+    it('should display a scope warning when called', function() {
+      view.displayScopeMsg('1005-2-a-1');
+      expect(view.$el.html()).to.contain(
+        'This term has a different definition for some portions of'
+      );
+
+      it('should be able to remove the scope warning', function() {
+        view.displayScopeMsg('1005-2-a-1');
+        view.removeScopeMsg();
+        expect(view.$el.html()).to.not.contain(
+          'This term has a different definition for some portions of'
+        );
+      });
+    });
+
+  });
+
+
+
+
 
 });
