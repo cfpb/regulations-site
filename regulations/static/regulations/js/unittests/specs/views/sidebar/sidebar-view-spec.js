@@ -1,7 +1,7 @@
 require('../../../setup');
 var sinon = require( 'sinon' );
 
-describe('SxS List View:', function () {
+describe('Sidebar View:', function () {
 
   var view, definition, $, SidebarView;
 
@@ -18,7 +18,7 @@ describe('SxS List View:', function () {
     );
 
     function sidebarModelMock () {
-      
+
     }
 
 
