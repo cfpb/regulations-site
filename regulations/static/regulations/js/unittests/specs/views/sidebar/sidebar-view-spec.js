@@ -12,6 +12,16 @@ describe('SxS List View:', function () {
   });
 
   beforeEach(function(){
+
+    $( 'body' ).html(
+      '<div id="sidebar-content"></div>'
+    );
+
+    function sidebarModelMock () {
+      
+    }
+
+
     // create a new instance of the view
     view = new SidebarView();
 
