@@ -106,7 +106,7 @@ module.exports = function(grunt) {
         options: {
           mask:'**/*-spec.js',
           coverageFolder: '<%= env.frontEndPath %>/js/unittests/coverage',
-          excludes: ['<%= env.frontEndPath %>/js/unittests/specs/*'],
+          excludes: ['<%= env.frontEndPath %>/js/unittests/specs/**/*'],
           coverage: false
         }
       }
