@@ -3,7 +3,6 @@ var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 require('../../events/scroll-stop.js');
-var unveil = require('unveil');
 var DefinitionView = require('../sidebar/definition-view');
 var RegModel = require('../../models/reg-model');
 var SectionFooterView = require('./section-footer-view');
@@ -179,6 +178,33 @@ var RegView = ChildView.extend({
         this.loadImages();
     },
 
+    openDef: function(defId, term, $link) {
+        // if its the same definition, diff term link
+        if ($('.open-definition').attr('id') === defId) {
+            this.toggleDefinition($link);
+        }
+        else {
+            // close old definition, if there is one
+            SidebarEvents.trigger('definition:close');
+            GAEvents.trigger('definition:close', {
+                type: 'defintion',
+                by: 'opening new definition'
+            });
+
+            // open new definition
+            this.setActiveTerm($link);
+            SidebarEvents.trigger('definition:open', {
+                'id': defId,
+                'term': term
+            });
+            GAEvents.trigger('definition:open', {
+                id: defId,
+                from: this.activeSection,
+                type: 'definition'
+            });
+        }
+    },
+
     // content section key term link click handler
     termLinkHandler: function(e) {
         e.preventDefault();
@@ -197,30 +223,7 @@ var RegView = ChildView.extend({
             this.clearActiveTerms();
         }
         else {
-            // if its the same definition, diff term link
-            if ($('.open-definition').attr('id') === defId) {
-                this.toggleDefinition($link);
-            }
-            else {
-                // close old definition, if there is one
-                SidebarEvents.trigger('definition:close');
-                GAEvents.trigger('definition:close', {
-                    type: 'defintion',
-                    by: 'opening new definition'
-                });
-
-                // open new definition
-                this.setActiveTerm($link);
-                SidebarEvents.trigger('definition:open', {
-                    'id': defId,
-                    'term': term
-                });
-                GAEvents.trigger('definition:open', {
-                    id: defId,
-                    from: this.activeSection,
-                    type: 'definition'
-                });
-            }
+            this.openDef(defId, term, $link);
         }
 
         return this;
@@ -288,6 +291,8 @@ var RegView = ChildView.extend({
 
     // lazy load images as the user scrolls
     loadImages: function() {
+        // require inside of the loadImages function to accomodate testing dependencies
+        var unveil = require('unveil');
         $('.reg-image').unveil();
     }
 });
