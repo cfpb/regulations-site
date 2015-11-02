@@ -27,7 +27,6 @@ describe('Section Footer View:', function () {
   });
 
   it('should construct a view', function() {
-     console.log(Router.hasPushState);
     expect(view).to.be.defined;
     expect(view.events).to.be.defined;
     expect(view.events).to.deep.equal({'click .navigation-link': 'sendNavEvent'});
