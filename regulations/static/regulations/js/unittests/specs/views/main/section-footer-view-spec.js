@@ -3,26 +3,24 @@ var sinon = require( 'sinon' );
 
 describe('Section Footer View:', function () {
 
-  var view, $, e, FooterView, Router;
+  var view, $, e, FooterView, MainEvents;
 
   before(function () {
     $ = require('jquery');
-    Router= require('../../../../source/router');
     FooterView = require('../../../../source/views/main/section-footer-view');
+    MainEvents = require('../../../../source/events/main-events');
     sandbox = sinon.sandbox.create();
   });
 
   beforeEach(function(){
-    //  Adding a simplified version of the thing we want to test.
-    $( 'body' ).html(
-
-    );
-
     // create a new instance of the view
     view = new FooterView();
 
-    Router.hasPushState = false;
-
+    e = {
+      preventDefault: function() {
+        return true;
+      }
+    };
 
   });
 
@@ -31,6 +29,18 @@ describe('Section Footer View:', function () {
     expect(view.events).to.be.defined;
     expect(view.events).to.deep.equal({'click .navigation-link': 'sendNavEvent'});
     expect(view.events['click .navigation-link']).to.equal('sendNavEvent');
+  });
+
+  it('should trigger the nav event when send', function() {
+    sinon.spy(MainEvents, 'trigger');
+    view.sendNavEvent(e);
+    expect(MainEvents.trigger.calledOnce).to.be.true;
+  });
+
+  it('should stop listening to the view when remove is called', function() {
+    sinon.spy(view, 'stopListening');
+    view.remove();
+    expect(view.stopListening.calledOnce).to.be.true;
   });
 
 });
