@@ -1,10 +1,9 @@
 require('../../../setup');
 var sinon = require( 'sinon' );
-var _ = require('underscore');
 
 describe('Diff View:', function () {
 
-  var view, $, e, DiffView;
+  var view, $, DiffView;
 
   before(function () {
     $ = require('jquery');
@@ -38,7 +37,7 @@ describe('Diff View:', function () {
       baseVersion: '2011-12121',
       newerVersion: '2012-11111',
       fromVersion: '2012-11111'
-    }
+    };
     var constructedUrl = view.assembleDiffURL(options);
     var url = '1005-1/2011-12121/2012-11111?from_version=2012-11111';
     expect(constructedUrl).to.be.equal(url);
