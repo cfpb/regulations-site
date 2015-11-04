@@ -292,7 +292,7 @@ var RegView = ChildView.extend({
     // lazy load images as the user scrolls
     loadImages: function() {
         // require inside of the loadImages function to accomodate testing dependencies
-        var unveil = require('unveil');
+        var unveil = require('unveilable');
         $('.reg-image').unveil();
     }
 });
