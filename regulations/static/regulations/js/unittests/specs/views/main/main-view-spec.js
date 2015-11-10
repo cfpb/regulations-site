@@ -13,20 +13,13 @@ describe('Main View:', function () {
 
   beforeEach(function(){
 
-    regSection = '<div id="content-body" class="main-content open">' +
-      '<section id="content-wrapper" class="reg-text">' +
-      '<section id="1026-29" class="reg-section ' +
-      'data-permalink-section="" data-base-version="2015-18239" ' +
-      'data-page-type="reg-section">' +
-      '</section>' +
+    regSection = '<div id="content-body">' +
+      '<section id="1026-29" data-page-type="reg-section">' +
       '</section>' +
       '</div>';
 
-    appendixSection = '<div id="content-body" class="main-content open">' +
-      '<section id="content-wrapper" class="reg-text">' +
-      '<section id="1026-J" class="appendix-section" ' +
-      'data-base-version="2015-18239" data-page-type="appendix">' +
-      '</section>' +
+    appendixSection = '<div id="content-body">' +
+      '<section id="1026-J" data-page-type="appendix">' +
       '</section>' +
       '</div>';
 
