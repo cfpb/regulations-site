@@ -21,7 +21,6 @@ describe('Diff View:', function () {
 
   it('should construct a view', function() {
     expect(view).to.be.defined;
-    expect(document.title).to.be.equal('Comparison of 12 CFR § 1002.4 | eRegulations');
   });
 
   it('should assemble the title', function() {
