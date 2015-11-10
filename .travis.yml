@@ -1,5 +1,5 @@
 language: python
-sudo: true
+sudo: false
 python:
     - '2.7'
 env:
@@ -14,10 +14,10 @@ install:
     - pip install -r requirements.txt
     - pip install -r requirements_test.txt
     - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
-    - sudo apt-get update
-    - sudo apt-get install nodejs phantomjs
-    - sudo npm install -g grunt-cli grunt-init bower
-    - sudo npm install
+    - apt-get update
+    - apt-get install nodejs phantomjs
+    - npm install -g grunt-cli grunt-init bower
+    - npm install
     - bower install
     - cp example-config.json config.json
 script:
