@@ -9,7 +9,6 @@ describe('Section Footer View:', function () {
     $ = require('jquery');
     FooterView = require('../../../../source/views/main/section-footer-view');
     MainEvents = require('../../../../source/events/main-events');
-    sandbox = sinon.sandbox.create();
   });
 
   beforeEach(function(){

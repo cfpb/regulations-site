@@ -8,7 +8,6 @@ describe('SxS List View:', function () {
   before(function () {
     $ = require('jquery');
     SxSList = require('../../../../source/views/sidebar/sxs-list-view');
-    sandbox = sinon.sandbox.create();
   });
 
   beforeEach(function(){

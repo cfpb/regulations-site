@@ -8,7 +8,6 @@ describe('Definition View:', function () {
   before(function () {
     $ = require('jquery');
     DefinitionView = require('../../../../source/views/sidebar/definition-view');
-    sandbox = sinon.sandbox.create();
   });
 
   beforeEach(function(){

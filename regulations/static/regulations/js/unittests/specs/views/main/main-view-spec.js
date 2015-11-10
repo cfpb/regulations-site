@@ -8,7 +8,6 @@ describe('Main View:', function () {
   before(function () {
     $ = window.jQuery = require('jquery');
     MainView = require('../../../../source/views/main/main-view');
-    sandbox = sinon.sandbox.create();
   });
 
   beforeEach(function(){

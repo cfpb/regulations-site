@@ -8,7 +8,6 @@ describe('Help View:', function () {
   before(function () {
     $ = require('jquery');
     HelpView = require('../../../../source/views/sidebar/help-view');
-    sandbox = sinon.sandbox.create();
   });
 
   beforeEach(function(){

@@ -8,7 +8,6 @@ describe('Sidebar List View:', function () {
   before(function () {
     $ = require('jquery');
     SidebarList = require('../../../../source/views/sidebar/sidebar-list-view');
-    sandbox = sinon.sandbox.create();
   });
 
   beforeEach(function(){

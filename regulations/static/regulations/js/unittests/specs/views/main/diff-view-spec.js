@@ -8,7 +8,6 @@ describe('Diff View:', function () {
   before(function () {
     $ = require('jquery');
     DiffView = require('../../../../source/views/main/diff-view');
-    sandbox = sinon.sandbox.create();
   });
 
   beforeEach(function(){
