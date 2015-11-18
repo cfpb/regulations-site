@@ -9,7 +9,6 @@ describe('Sidebar Module View:', function () {
     $ = require('jquery');
     SidebarModule = require('../../../../source/views/sidebar/sidebar-module-view');
     RegModel = require('../../../../source/models/reg-model');
-    sandbox = sinon.sandbox.create();
   });
 
   beforeEach(function(){
