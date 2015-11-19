@@ -1,0 +1,23 @@
+/*
+ Overrides
+ ==========================================================================
+ overrides.less allows us to apply instance specific style overrides
+ */
+
+
+
+/*
+Wayfinding Overrides
+=====================
+In CFPB regs we sometimes have markerless paragraphs
+The markup contains these ID's so that we can link to them
+but we want to hide them in the wayfinding header.
+*/
+
+#wayfind-1004-2 {
+    &.wayfinding {
+        .wayfinding-paragraph {
+            display: none;
+        }
+    }
+}
