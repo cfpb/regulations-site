@@ -59,6 +59,17 @@ describe('Sub Head View:', function () {
     expect($('.effective-date').text()).to.have.string('Effective date: ');
   });
 
+  it('adds the wayfinding id to the wayfinding class', function() {
+    view.addWayfindID('1999-1');
+    expect($('.wayfinding')).to.have.$attr('id', 'wayfind-1999-1');
+  });
+
+  it('adds a class around subparagraphs when the user scrolls', function(){
+    view.changeTitle('1004-2-a-3');
+    expect($('.header-label span').text()).to.contain('(a)(3)');
+    expect($('.header-label span')).to.have.$attr('class', 'wayfinding-paragraph');
+  });
+
   it('should render the subpart', function() {
     view.renderSubpart('pepperoni');
     var $classes = view.$activeTitle.attr('class');
