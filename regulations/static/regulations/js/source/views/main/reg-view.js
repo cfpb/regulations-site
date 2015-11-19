@@ -26,6 +26,7 @@ var RegView = ChildView.extend({
 
     initialize: function() {
         this.externalEvents = MainEvents;
+        this.listenTo(this.externalEvents, 'section:rendered', ChildView.setElement);
 
         this.listenTo(this.externalEvents, 'definition:close', this.closeDefinition);
         this.listenTo(this.externalEvents, 'definition:carriedOver', this.checkDefinitionScope);

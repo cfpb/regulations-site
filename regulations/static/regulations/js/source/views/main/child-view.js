@@ -48,8 +48,10 @@ var ChildView = Backbone.View.extend({
             this.model.get(this.options.id, cb);
         }
         else if (this.options.id) {
+            // hard code the id update for users who directly load a section
+            $('.wayfinding').attr('id', 'wayfind-' + this.id);
+            // attach wayfinding and trigger the section:open drawer event
             this.attachWayfinding();
-
             DrawerEvents.trigger('section:open', this.id);
         }
 
@@ -76,7 +78,7 @@ var ChildView = Backbone.View.extend({
 
     render: function() {
         this.updateWayfinding();
-        HeaderEvents.trigger('section:open', this.id);
+        HeaderEvents.trigger('section:rendered', this.id);
         DrawerEvents.trigger('section:open', this.id);
     },
 

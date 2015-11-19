@@ -13,6 +13,7 @@ var SubHeadView = Backbone.View.extend({
         this.externalEvents = HeaderEvents;
 
         this.listenTo(this.externalEvents, 'section:open', this.changeTitle);
+        this.listenTo(this.externalEvents, 'section:rendered', this.addWayfindID);
         this.listenTo(this.externalEvents, 'search-results:open', this.displayCount);
         this.listenTo(this.externalEvents, 'search-results:open', this.changeDate);
         this.listenTo(this.externalEvents, 'search-results:open', this.removeSubpart);
@@ -25,11 +26,33 @@ var SubHeadView = Backbone.View.extend({
 
         // same for subpart label
         this.$subpartLabel = this.$el.find('.subpart');
+
+        // same for wayfinding container
+        this.$wayfinding = this.$el.find('.wayfinding');
     },
 
     // populates subhead with new title
     changeTitle: function(id) {
-        this.$activeTitle.html(RegsHelpers.idToRef(id));
+        this.paraTitle = RegsHelpers.idToRef(id).split('(');
+        this.paraSectionTitle = this.paraTitle.shift();
+        // if the user scrolls add the paragraphs with a span class
+        if (this.paraTitle.length > 0) {
+            this.$activeTitle.html(
+                this.paraSectionTitle +
+                '<span class="wayfinding-paragraph">(' +
+                this.paraTitle.join('(') +
+                '</span>'
+            );
+            return;
+        }
+        // add the section title on page load
+        this.$activeTitle.html(this.paraSectionTitle);
+    },
+
+    // we add a class to the wayfinding container so that we can choose to hide
+    // pieces of the content by section when needed
+    addWayfindID:function(id) {
+      this.$wayfinding.attr('id', 'wayfind-' + id);
     },
 
     displayCount: function(resultCount) {
