@@ -4,6 +4,7 @@ from HTMLParser import HTMLParser
 
 from regulations.generator.layers.location_replace import LocationReplace
 
+import logging
 
 class LayersApplier(object):
     """ Most layers replace content. We try to do this intelligently here,
@@ -132,8 +133,8 @@ class InlineLayersApplier(LayersBase):
                 locations = [offset_locations.index(offset)]
                 layer_elements.append((o, r, locations))
             except Exception as ex:
-                print ex
-                print offset_locations, offset
+                logging.info('{0!s}'.format(ex))
+                logging.info('Problem interpolating offsets: {0}, {1}'.format(offset_locations, offset))
         return layer_elements
 
 
