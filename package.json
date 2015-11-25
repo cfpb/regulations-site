@@ -30,6 +30,7 @@
     "browserify": "^9.0.3",
     "browserify-shim": "^3.8.3",
     "chai": "^2.1.1",
+    "chai-jq": "0.0.9",
     "coveralls": "^2.11.2",
     "deamdify": "^0.1.1",
     "debowerify": "^1.2.0",
@@ -68,7 +69,8 @@
     "backbone-query-parameters": "^0.4.0",
     "jquery": "1.11.0",
     "jquery-scrollstop": "^1.2.0",
-    "underscore": "1.4.4"
+    "underscore": "1.4.4",
+    "unveilable": "^0.2.0"
   },
   "config": {
     "travis-cov": {

@@ -1,18 +1,13 @@
-var chai = require('chai');
-var expect = chai.expect;
+require('../../setup');
 var sinon = require('sinon'); // Run npm install for this.
 var sinonChai = require('sinon-chai');
-var jsdom = require('mocha-jsdom');
 
 chai.use(sinonChai);
-
 
 describe('MetaModel:', function() {
     'use strict';
 
     var $, Backbone, MetaModel, Resources;
-
-    jsdom();
 
     before(function (){
         Backbone = require('backbone');
@@ -84,4 +79,3 @@ describe('MetaModel:', function() {
         expect(cb).to.have.been.calledWith(false);
     });
 });
-

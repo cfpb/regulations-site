@@ -104,9 +104,9 @@ module.exports = function(grunt) {
       coverage: {
         src: ['<%= env.frontEndPath %>/js/unittests/specs/**/*'],
         options: {
-          mask:'*-spec.js',
+          mask:'**/*-spec.js',
           coverageFolder: '<%= env.frontEndPath %>/js/unittests/coverage',
-          excludes: ['<%= env.frontEndPath %>/js/unittests/specs/*'],
+          excludes: ['<%= env.frontEndPath %>/js/unittests/specs/**/*'],
           coverage: false
         }
       }
@@ -118,7 +118,7 @@ module.exports = function(grunt) {
       },
 
       'nose-chrome': {
-        command: 'nosetests -s <%= env.testPath %> --tc=webdriver.browser:chrome --tc=testUrl:<%= env.testUrl %>',
+        command: 'nosetests <%= env.testPath %> --tc=webdriver.browser:chrome --tc=testUrl:<%= env.testUrl %>',
         options: {
             stdout: true,
             stderr: true
@@ -126,7 +126,7 @@ module.exports = function(grunt) {
       },
 
       'nose-ie10': {
-        command: 'nosetests -s <%= env.testPath %> --tc=webdriver.browser:ie10 --tc=testUrl:<%= env.testUrl %>',
+        command: 'nosetests <%= env.testPath %> --tc=webdriver.browser:ie10 --tc=testUrl:<%= env.testUrl %>',
         options: {
             stdout: true,
             stderr: true
