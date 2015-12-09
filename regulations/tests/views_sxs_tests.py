@@ -25,22 +25,22 @@ class ParagrasphSXSViewTests(TestCase):
 
         psv = ParagraphSXSView()
         self.assertEqual(
-            psv.further_analyses('1212-31', 'doc1', 98989, 'v1'),
+            psv.further_analyses('1212-31', 'doc1', 'v1', 98989),
             convert_to_python([doc3, doc2]))
         self.assertEqual(
-            psv.further_analyses('1212-31', 'doc5', 0, 'v1'),
+            psv.further_analyses('1212-31', 'doc5', 'v1', 0),
             convert_to_python([doc3, doc2, doc1]))
         self.assertEqual(
-            psv.further_analyses('1212-31', 'doc3', 90123, 'v1'),
+            psv.further_analyses('1212-31', 'doc3', 'v1', 90123),
             convert_to_python([doc2, doc1]))
 
         self.assertEqual(
-            psv.further_analyses('1212-31-b', 'doc3', 90123, 'v1'),
+            psv.further_analyses('1212-31-b', 'doc3', 'v1', 90123),
             convert_to_python([doc4]))
-        self.assertEqual(psv.further_analyses('1212-31-b', 'doc4', 98888,
-                                              'v1'), [])
-        self.assertEqual(psv.further_analyses('1212-31-c', 'doc1', 98989,
-                                              'v1'), [])
+        self.assertEqual(psv.further_analyses('1212-31-b', 'doc4',
+                                              'v1', 98888), [])
+        self.assertEqual(psv.further_analyses('1212-31-c', 'doc1', 
+                                              'v1', 98989), [])
 
         # Same notice + label. Different page
         doc5 = {'publication_date': '2009-04-05', 'fr_volume': 21,
@@ -50,13 +50,13 @@ class ParagrasphSXSViewTests(TestCase):
             '1212-31-b': [doc4]
         }
         self.assertEqual(
-            psv.further_analyses('1212-31', 'doc1', 98989, 'v1'),
+            psv.further_analyses('1212-31', 'doc1', 'v1', 98989),
             convert_to_python([doc5, doc3, doc2]))
         self.assertEqual(
-            psv.further_analyses('1212-31', 'doc1', 10101, 'v1'),
+            psv.further_analyses('1212-31', 'doc1', 'v1', 10101),
             convert_to_python([doc3, doc2, doc1]))
         self.assertEqual(
-            psv.further_analyses('1212-31', 'doc3', 90123, 'v1'),
+            psv.further_analyses('1212-31', 'doc3', 'v1', 90123),
             convert_to_python([doc5, doc2, doc1]))
 
     def test_footnotes(self):
