@@ -3,7 +3,7 @@ from django.template import loader, Context
 from regulations.generator.layers.utils import convert_to_python
 
 
-def fetch_all(api_client):
+def fetch_all(api_client, part):
     """Pull down all known notices from the API"""
     notices = []
     for notice in api_client.notices()['results']:
@@ -11,8 +11,8 @@ def fetch_all(api_client):
     return notices
 
 
-def get_notice(api_client, document_number):
-    return api_client.notice(document_number)
+def get_notice(api_client, part, document_number):
+    return api_client.notice(part, document_number)
 
 
 def markup(notice):

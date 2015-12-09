@@ -14,8 +14,8 @@ class NoticesTest(TestCase):
         ]}
         #   Would normally return a notice object
         api.notice.side_effect = lambda d_num: d_num + d_num
-
-        self.assertEqual(["12341234", "98989898"], notices.fetch_all(api))
+        self.assertEqual(["12341234", "98989898"],
+                notices.fetch_all(api, '111'))
 
     @patch('regulations.generator.notices.loader.get_template')
     @patch('regulations.generator.notices.sxs_markup')
