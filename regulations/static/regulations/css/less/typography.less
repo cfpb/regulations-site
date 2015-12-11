@@ -409,15 +409,15 @@ The `<ol>` tag needs to have the appropriate list type applied
   display: none;
 }
 
-.appendix-section .stripped-marker {
-  display: block;
-  float: left;
-  margin-left: -20px;
-  width: 20px;
+.appendix-section {
+  .stripped-marker {
+    display: inline-block;
+    margin-left: -16px;
+    margin-right: 4px;
+  }
 }
-
 .appendix-section .inline-interpretation-content .stripped-marker {
-    margin-left: -24px;
+    margin-left: -20px;
     width: 24px;
 }
 
@@ -440,12 +440,19 @@ within the context of the regulation.
 
 See [MDN's `<dfn>` tag reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dfn) for more info.
 
-All key-terms are displayed as block elements to force a line-break.
+All key-terms are displayed as block elements to force a line-break,
+except in the appendix where we use inline-block to accomodate the marker styles
 
 */
 
 .key-term {
     display: block;
+}
+
+.appendix-section {
+  .key-term {
+    display: inline-block;
+  }
 }
 
 /*  Level-1 Key-Terms
