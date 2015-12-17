@@ -1,5 +1,5 @@
 language: python
-sudo: true
+sudo: required
 python:
     - '2.7'
 env:
@@ -17,9 +17,7 @@ install:
     - sudo apt-get update
     - sudo apt-get install nodejs phantomjs
     - sudo npm install -g grunt-cli grunt-init bower
-    - sudo npm install
-    - bower install
-    - cp example-config.json config.json
+    - ./frontendbuild.sh
 script:
     - grunt test-js
     - python manage.py test

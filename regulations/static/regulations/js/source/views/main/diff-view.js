@@ -38,7 +38,7 @@ var DiffView = ChildView.extend({
         return newTitle.join(' ');
     },
 
-    // ex: diff/1005-1/2011-12121/2012-11111/?from_version=2012-11111
+    // ex: diff/1005-1/2011-12121/2012-11111?from_version=2012-11111
     assembleDiffURL: function(options) {
         var url = options.id + '/' + options.baseVersion;
         url += '/' + options.newerVersion;

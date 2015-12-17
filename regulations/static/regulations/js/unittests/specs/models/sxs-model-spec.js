@@ -1,13 +1,9 @@
-var chai = require('chai');
-var expect = chai.expect;
-var jsdom = require('mocha-jsdom');
+require('../../setup');
 
 describe('SxS Model:', function() {
     'use strict';
 
     var $, Backbone, SxSModel, Resources;
-
-    jsdom();
 
     before(function (){
         Backbone = require('backbone');

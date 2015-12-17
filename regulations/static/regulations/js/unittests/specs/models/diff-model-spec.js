@@ -1,13 +1,9 @@
-var chai = require('chai');
-var expect = chai.expect;
-var jsdom = require('mocha-jsdom');
+require('../../setup');
 
 describe('Diff Model:', function() {
     'use strict';
 
     var $, Backbone, DiffModel, Resources;
-
-    jsdom();
 
     before(function (){
         Backbone = require('backbone');

@@ -1,12 +1,9 @@
-var expect = require('chai').expect;
-var jsdom = require('mocha-jsdom');
+require('../setup');
 
 describe('Non-DOM Helper functions:', function() {
     'use strict';
 
     var $, Helpers;
-
-    jsdom();
 
     before(function (){
         $ = require('jquery');
@@ -124,8 +121,6 @@ describe('Version Finder Helper Functions:', function() {
     'use strict';
 
     var $, Helpers;
-
-    jsdom();
 
     var navMenu, navMenu_blank, section, section_blank, timeline, timeline_blank;
 

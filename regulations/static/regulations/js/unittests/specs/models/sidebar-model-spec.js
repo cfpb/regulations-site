@@ -1,13 +1,9 @@
-var chai = require('chai');
-var expect = chai.expect;
-var jsdom = require('mocha-jsdom');
+require('../../setup');
 
 describe('Sidebar Model:', function() {
     'use strict';
 
     var $, Backbone, SidebarModel, Resources;
-
-    jsdom();
 
     before(function (){
         Backbone = require('backbone');
