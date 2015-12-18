@@ -38,7 +38,8 @@ class ParagraphSXSView(TemplateView):
         return super(ParagraphSXSView, self).get(request, *args,
                                                  **kwargs)
 
-    def further_analyses(self, label_id, notice_id, fr_page, version):
+    def further_analyses(self, label_id, notice_id, version,
+            fr_page=None):
         """Grab other analyses for this same paragraph (limiting to those
            visible from this regulation version.) Make them in descending
            order"""
@@ -51,7 +52,7 @@ class ParagraphSXSView(TemplateView):
             return [convert_to_python(a)
                     for a in reversed(sxs_layer_data[label_id])
                     if (a['reference'] != [notice_id, label_id]
-                        or a['fr_page'] != fr_page)]
+                        or a.get('fr_page') != fr_page)]
 
     def footnote_refs(self, sxs):
         """Add footnote references to paragraph text"""
@@ -86,10 +87,11 @@ class ParagraphSXSView(TemplateView):
         context = super(ParagraphSXSView, self).get_context_data(**kwargs)
 
         label_id = context['label_id']
+        part = label_id.split('-')[0]
         notice_id = context['notice_id']
         fr_page = context.get('fr_page')
 
-        notice = generator.get_notice(notice_id)
+        notice = generator.get_notice(part, notice_id)
         if not notice:
             raise error_handling.MissingContentException()
         notice = convert_to_python(notice)
@@ -113,6 +115,6 @@ class ParagraphSXSView(TemplateView):
         context['sxs']['all_footnotes'] = self.footnotes(notice, paragraph_sxs)
         context['notice'] = notice
         context['further_analyses'] = self.further_analyses(
-            label_id, notice_id, paragraph_sxs['page'], context['version'])
+            label_id, notice_id, context['version'], paragraph_sxs.get('page'))
 
         return context

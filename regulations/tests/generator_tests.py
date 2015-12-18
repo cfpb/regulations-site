@@ -62,10 +62,10 @@ class GeneratorTest(TestCase):
     def test_get_notice(self, api_reader):
         notice = {'some': 'notice'}
         api_reader.ApiReader.return_value.notice.return_value = notice
-        n = generator.get_notice('204-1234')
+        n = generator.get_notice('111', '204-1234')
         self.assertEqual(notice, n)
         self.assertEqual(
-            ('204-1234',),
+            ('111', '204-1234',),
             api_reader.ApiReader.return_value.notice.call_args[0])
 
     @patch('regulations.generator.generator.get_diff_json')

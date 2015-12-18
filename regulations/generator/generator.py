@@ -195,17 +195,17 @@ def get_builder(regulation, version, inline_applier, p_applier, s_applier):
     return builder
 
 
-def get_all_notices():
+def get_all_notices(part):
     api = api_reader.ApiReader()
-    return notices.fetch_all(api)
+    return notices.fetch_all(api, part)
 
 
-def get_notice(document_number):
+def get_notice(part, document_number):
     """ Get a the data from a particular notice, given the Federal Register
     document number. """
 
     api = api_reader.ApiReader()
-    return api.notice(document_number)
+    return api.notice(part, document_number)
 
 
 def get_sxs(label_id, notice, fr_page=None):

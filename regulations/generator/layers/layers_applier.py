@@ -128,8 +128,12 @@ class InlineLayersApplier(LayersBase):
         for o, r, offset in layer_pairs:
             offset_locations = LocationReplace.find_all_offsets(o,
                                                                 original_text)
-            locations = [offset_locations.index(offset)]
-            layer_elements.append((o, r, locations))
+            try:
+                locations = [offset_locations.index(offset)]
+                layer_elements.append((o, r, locations))
+            except Exception as ex:
+                print ex
+                print offset_locations, offset
         return layer_elements
 
 

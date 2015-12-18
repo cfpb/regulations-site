@@ -56,14 +56,14 @@ class ClientTest(TestCase):
         to_return = {'example': 1}
         api_client.ApiClient.return_value.get.return_value = to_return
         reader = ApiReader()
+
         self.assertEqual(to_return, reader.notices())
         get = api_client.ApiClient.return_value.get
         self.assertTrue(get.called)
-        param = get.call_args[0][0]
 
         self.assertEqual(to_return, reader.notices(part='p'))
         self.assertTrue(get.called)
-        self.assertEqual({'part': 'p'}, get.call_args[0][1])
+        self.assertEqual('notice/p', get.call_args[0][0])
 
     @patch('regulations.generator.api_reader.api_client')
     def test_regversion(self, api_client):
@@ -81,11 +81,11 @@ class ClientTest(TestCase):
         to_return = {'example': 1}
         api_client.ApiClient.return_value.get.return_value = to_return
         reader = ApiReader()
-        self.assertEqual(to_return, reader.notice("doc"))
+
+        self.assertEqual(to_return, reader.notice("p", "doc"))
         get = api_client.ApiClient.return_value.get
-        self.assertTrue(get.called)
         param = get.call_args[0][0]
-        self.assertTrue('doc' in param)
+        self.assertTrue('notice/p/doc' in param)
 
     @patch('regulations.generator.api_reader.api_client')
     def test_diff(self, api_client):
