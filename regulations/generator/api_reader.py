@@ -92,18 +92,17 @@ class ApiReader(object):
         if part:
             return self._get(
                 ['notices', part],
-                'notice',
-                {'part': part})
+                'notice/%s' % part)
         else:
             return self._get(
                 ['notices'],
                 'notices')
 
-    def notice(self, fr_document_number):
+    def notice(self, part, fr_document_number):
         """ End point for retrieving a single notice. """
         return self._get(
-            ['notice', fr_document_number],
-            'notice/%s' % fr_document_number)
+            ['notice', part, fr_document_number],
+            'notice/%s/%s' % (part, fr_document_number))
 
     def search(self, query, version=None, regulation=None, page=0):
         """Search via the API. Never cache these (that's the duty of the search

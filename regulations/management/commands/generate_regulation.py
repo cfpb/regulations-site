@@ -67,7 +67,7 @@ class Command(BaseCommand):
         if not path.exists(settings.OFFLINE_OUTPUT_DIR + 'notice'):
             mkdir(settings.OFFLINE_OUTPUT_DIR + 'notice')
 
-        all_notices = generator.get_all_notices()
+        all_notices = generator.get_all_notices(options.get('regulation_part'))
         for notice in all_notices: #notices.fetch_all(api):
             self.write_file(settings.OFFLINE_OUTPUT_DIR + 'notice/' + 
                 notice['document_number'] + ".html", notices.markup(notice))
