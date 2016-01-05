@@ -92,7 +92,7 @@ class HTMLBuilder():
         # unnumbered defs have the last part of their label in CamelCase
         # and the word "means" in their text
 
-        if node.get('marker', '') == 'none':
+        if node.get('marker', '') in ['none', '']:
             node['list_type'] = 'no-marker'
         elif re.search('([A-Z][a-z]+)+', node['label'][-1]) and re.search('means', node['text']):
             node['list_type'] = 'no-marker'
