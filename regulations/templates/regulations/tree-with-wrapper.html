@@ -3,7 +3,7 @@
 {% endcomment %}
 
 <li
-    {% if node.marker == "none"%}
+    {% if node.marker == "none" or node.marker == "" %}
         class="markerless"
     {% endif %}
     {% if not inline %}id="{{node.markup_id}}" data-permalink-section{% endif %}

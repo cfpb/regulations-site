@@ -1,3 +1,4 @@
+{% load formatting %}
 {% comment %}
     Template for inner paragraphs of a reg section
 {% endcomment %}
@@ -15,10 +16,16 @@
 </p>
 {% endif %}
 {% if node.children %}
-<ol class="level-{{node.children.0.list_level}}" 
-    type="{{node.children.0.list_type}}">
+<ol class="level-{{node.children.0.list_level}} {% if node.marker == 'none' or node.marker == '' %}markerless{% endif %}"
+    marker="{{ node.marker }}"
+    {% if node.children.0.marker %}
+        type="{{node.children.0.marker|format_marker}}"
+    {% else %}
+        type="{{node.children.0.list_type}}"
+    {% endif %}>
+
     {% for c in node.children %}
-        {%with node=c template_name="regulations/tree-with-wrapper.html" %}
+        {% with node=c template_name="regulations/tree-with-wrapper.html" %}
             {% include template_name %}
         {% endwith %}
     {% endfor %}
