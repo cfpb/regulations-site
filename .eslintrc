@@ -55,7 +55,6 @@ rules:
 
   # Outstanding issues
   no-unused-vars: 0
-  no-extend-native: 0
   valid-typeof: 0
   brace-style: 0
   no-multi-spaces: 0
