@@ -127,7 +127,7 @@ def subterps(so_far, reg_part, version=None):
         found_appendix = True
     else:
         found_appendix = False
-    print so_far, reg_part
+
     for el in so_far:
         if el.get('is_subpart'):
             found_subpart = True
