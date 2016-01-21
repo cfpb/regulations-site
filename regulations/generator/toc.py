@@ -5,6 +5,21 @@ layer"""
 from regulations.generator import title_parsing
 from regulations.generator.api_reader import ApiReader
 
+# Sometimes the reg has interps for the regtext but NOT for the appendices,
+# even though the appendices exist. Unfortunately the logic here appears to
+# render a TOC entry for interps to appendices whenever an appendix is present
+# at all, regardless of whether it has interps or not. This is obviously wrong
+# but so deeply entrenched in the rendering logic that I can't figure out how
+# to work around it, and I'm not prepared to uproot the entire thing just so
+# I can get this done. So I'm just going to add a little config setting in here
+# that will ignore interps to appendices for versions in which those do not exist.
+# -JV 2016-01-21
+
+IGNORE_APPENDIX_INTERPS = ['2011-31712', '2012-31311', '2012-3460',
+                           '2013-31223', '2014-30404', '2015-26607_20170101',
+                           '2015-26607_20180101', '2015-26607_20190101',
+                           '2015-26607_20200101']
+
 
 def fetch_toc(reg_part, version, flatten=False):
     """Fetch the toc, transform it into a list usable by navigation, etc."""
@@ -17,7 +32,7 @@ def fetch_toc(reg_part, version, flatten=False):
             if 'Subpart' in data['index']:
                 toc_list.append(toc_subpart(data, toc_list, toc))
             elif 'Interp' in data['index']:
-                toc_list.append(toc_interp(data, toc_list, toc))
+                toc_list.append(toc_interp(data, toc_list, toc, version))
             else:
                 toc_list.append(toc_sect_appendix(data, toc_list))
     if flatten:
@@ -65,7 +80,7 @@ def toc_subpart(data, so_far, toc):
     return element
 
 
-def toc_interp(data, so_far, toc):
+def toc_interp(data, so_far, toc, version=None):
     """Transforms a subpart, expanding it into subterps (collections of
     interpreted subparts, empty part, and appendices"""
     segments = title_parsing.try_split(data['title'])
@@ -82,7 +97,7 @@ def toc_interp(data, so_far, toc):
 
     reg_part = data['index'][0]
     element['sub_toc'].extend(intro_interps(toc, reg_part))
-    element['sub_toc'].extend(subterps(so_far, reg_part))
+    element['sub_toc'].extend(subterps(so_far, reg_part, version))
     return element
 
 
@@ -102,12 +117,17 @@ def intro_interps(toc, reg_part):
     return elements
 
 
-def subterps(so_far, reg_part):
+def subterps(so_far, reg_part, version=None):
     """Logic to build subterps, collections of interpretations for subparts,
     the empty subpart, or appendices"""
+
     elements = []
     found_subpart = False
-    found_appendix = False
+    if version in IGNORE_APPENDIX_INTERPS:
+        found_appendix = True
+    else:
+        found_appendix = False
+    print so_far, reg_part
     for el in so_far:
         if el.get('is_subpart'):
             found_subpart = True
