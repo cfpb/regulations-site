@@ -89,9 +89,10 @@ class ParagraphSXSView(TemplateView):
         label_id = context['label_id']
         part = label_id.split('-')[0]
         notice_id = context['notice_id']
+        version = context['version']
         fr_page = context.get('fr_page')
 
-        notice = generator.get_notice(part, notice_id)
+        notice = generator.get_notice(part, version)
         if not notice:
             raise error_handling.MissingContentException()
         notice = convert_to_python(notice)
