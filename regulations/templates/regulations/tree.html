@@ -16,7 +16,7 @@
 </p>
 {% endif %}
 {% if node.children %}
-<ol class="level-{{node.children.0.list_level}} {% if node.marker == 'none' or node.marker == '' %}markerless{% endif %}"
+<ol class="level-{{node.children.0.list_level}}"
     {% if node.children.0.marker %}
         type="{{node.children.0.marker|format_marker}}"
     {% else %}

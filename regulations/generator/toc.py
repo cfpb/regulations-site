@@ -18,7 +18,7 @@ from regulations.generator.api_reader import ApiReader
 IGNORE_APPENDIX_INTERPS = ['2011-31712', '2012-31311', '2012-3460',
                            '2013-31223', '2014-30404', '2015-26607_20170101',
                            '2015-26607_20180101', '2015-26607_20190101',
-                           '2015-26607_20200101']
+                           '2015-26607_20200101', '2015-32285']
 
 
 def fetch_toc(reg_part, version, flatten=False):
