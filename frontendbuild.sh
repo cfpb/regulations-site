@@ -7,5 +7,4 @@ if [ ! -f config.json ]; then
 fi
 
 npm install
-bower install
 grunt build

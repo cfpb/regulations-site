@@ -16,6 +16,21 @@ module.exports = function(grunt) {
      */
     env: grunt.file.readJSON('config.json'),
 
+    /* copy any npm installed files that need a new home*/
+    copy: {
+      main: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['node_modules/respond.js/dest/*'],
+            dest: '<%= env.frontEndPath %>/js/built/lib/respond/',
+            filter: 'isFile'
+          }
+        ]
+      }
+    },
+
     /**
      * https://github.com/gruntjs/grunt-contrib-less
      */
@@ -73,7 +88,6 @@ module.exports = function(grunt) {
           '<%= env.frontEndPath %>/js/built/regulations.js': ['<%= env.frontEndPath %>/js/source/regulations.js','<%= env.frontEndPath %>/js/source/regulations.js']
         },
         options: {
-          transform: ['browserify-shim', 'debowerify'],
           browserifyOptions: {
             debug: true
           }
@@ -84,7 +98,6 @@ module.exports = function(grunt) {
           '<%= env.frontEndPath %>/js/built/regulations.js': ['<%= env.frontEndPath %>/js/source/regulations.js']
         },
         options: {
-          transform: ['browserify-shim', 'debowerify'],
           browserifyOptions: {
             debug: false
           }
@@ -134,15 +147,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // https://github.com/yatskevich/grunt-bower-task
-    bower: {
-        install: {
-            options: {
-                targetDir: '<%= env.frontEndPath %>/js/source/lib'
-            }
-        }
-    },
-
     /**
      * Watch: https://github.com/gruntjs/grunt-contrib-watch
      *
@@ -186,5 +190,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test-js', ['eslint', 'mocha_istanbul']);
   grunt.registerTask('build', ['default', 'test-js']);
   grunt.registerTask('squish', ['browserify', 'uglify', 'less', 'cssmin']);
-  grunt.registerTask('default', ['browserify', 'uglify', 'less', 'cssmin']);
+  grunt.registerTask('default', ['copy', 'browserify', 'uglify', 'less', 'cssmin']);
 };
