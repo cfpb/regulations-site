@@ -16,7 +16,7 @@ install:
     - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
     - sudo apt-get update
     - sudo apt-get install nodejs phantomjs
-    - sudo npm install -g grunt-cli grunt-init bower
+    - sudo npm install -g grunt-cli grunt-init
     - ./frontendbuild.sh
 script:
     - grunt test-js
