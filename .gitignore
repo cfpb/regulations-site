@@ -67,7 +67,7 @@ _SpecRunner.html
 head/public/fonts
 regulations/static/regulations/docs/*
 regulations/static/regulations/js/source/require.config.js
-regulations/static/regulations/js/source/lib/
+regulations/static/regulations/js/source/lib/**
 regulations/static/regulations/js/tests/browser/test.config.js
 regulations/static/regulations/js/unittests/coverage/
 regulations/static/regulations/js/built/*
