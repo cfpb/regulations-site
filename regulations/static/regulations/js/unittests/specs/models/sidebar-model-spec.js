@@ -5,7 +5,7 @@ describe('Sidebar Model:', function() {
 
     var $, Backbone, SidebarModel, Resources;
 
-    before(function (){
+    before(function(){
         Backbone = require('backbone');
         $ = require('jquery');
         Backbone.$ = $;

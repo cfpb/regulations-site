@@ -1,11 +1,11 @@
 require('../../../setup');
 var sinon = require( 'sinon' );
 
-describe('Help View:', function () {
+describe('Help View:', function() {
 
   var view, definition, $, HelpView;
 
-  before(function () {
+  before(function() {
     $ = require('jquery');
     HelpView = require('../../../../source/views/sidebar/help-view');
   });

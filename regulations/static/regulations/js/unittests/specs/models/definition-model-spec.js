@@ -5,7 +5,7 @@ describe('Definition Model:', function() {
 
     var $, Backbone, DefinitionModel, Resources;
 
-    before(function (){
+    before(function(){
         Backbone = require('backbone');
         $ = require('jquery');
         Backbone.$ = $;

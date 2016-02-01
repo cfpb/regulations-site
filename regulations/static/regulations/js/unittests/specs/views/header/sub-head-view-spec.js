@@ -1,11 +1,11 @@
 require('../../../setup');
 var sinon = require( 'sinon' );
 
-describe('Sub Head View:', function () {
+describe('Sub Head View:', function() {
 
   var view, $, e, SubHeadView;
 
-  before(function () {
+  before(function() {
     $ = require('jquery');
     SubHeadView = require('../../../../source/views/header/sub-head-view');
     sandbox = sinon.sandbox.create();

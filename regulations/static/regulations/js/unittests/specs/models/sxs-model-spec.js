@@ -5,7 +5,7 @@ describe('SxS Model:', function() {
 
     var $, Backbone, SxSModel, Resources;
 
-    before(function (){
+    before(function(){
         Backbone = require('backbone');
         $ = require('jquery');
         Backbone.$ = $;

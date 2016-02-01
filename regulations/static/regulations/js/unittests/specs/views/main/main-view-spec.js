@@ -1,11 +1,11 @@
 require('../../../setup');
 var sinon = require( 'sinon' );
 
-describe('Main View:', function () {
+describe('Main View:', function() {
 
   var view, $, e, MainView, regSection, appendixSection, interpSection;
 
-  before(function () {
+  before(function() {
     $ = window.jQuery = require('jquery');
     MainView = require('../../../../source/views/main/main-view');
   });
