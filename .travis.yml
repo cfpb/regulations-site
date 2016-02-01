@@ -12,7 +12,7 @@ before_script:
     - if [ "$SAUCE_OK" == 1 ]; then START_SAUCE_CONNECT; fi;
 before_install:
     - rm -rf ~/.nvm
-    - curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+    - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
     - source ~/.nvm/nvm.sh
     - nvm install 4
 install:
