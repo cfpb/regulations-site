@@ -121,37 +121,37 @@ The application's UI itself uses a number of dependencies that you can see in pa
 ## Front end environment setup
 
 ### Node/npm
-First we will need npm. npm ships with Node.js. If you don't already have it installed, there are a few ways to get it.
-- You can grab and install a binary or installer from http://nodejs.org/download/
+
+The front-end development environment relies on on Node (version 4+) and npm for package management. To install Node, we recommend [nvm](https://github.com/creationix/nvm):
+
+```sh
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash # install nvm and run it's setup scripts
+nvm install 4 # install node 4
+nvm alias default 4 # set node 4 as the default
+```
+
+Alternately you can install Node by:
+
+- Install a binary or installer from http://nodejs.org/download/
 - If you're on OS X, you can use [Homebrew](http://brew.sh/)
-- If you are using Ubuntu, the default apt-get package is out of date. Do:
-
-```
-sudo add-apt-repository ppa:chris-lea/node.js
-sudo apt-get update
-sudo apt-get install nodejs
-```
-
-If you receive an error about ```add-apt-repository``` not being found, do:
-
-```
-sudo apt-get install python-software-properties
-```
 
 #### Global npm packages
 You will need to install the Grunt command line interface using npm.
-```
+
+```sh
 cd regulations-site
 npm install -g grunt-cli
 ```
 
 #### Installing dependencies
 The rest of the dependencies you will need are managed by npm. Do:
-```
+
+```sh
 npm install
 ```
 
 #### Configuration JSON
+
 In the root of the repository, copy ```example-config.json``` to ```config.json``` and edit as necessary. Grunt depends on these settings to carry out tasks.
 - ```testURL``` is the environment that you would like tests to run on.
 - ```frontEndPath``` is the path to the root of your codebase where the ```css/``` and ```js/``` directories are.
@@ -161,7 +161,7 @@ In the root of the repository, copy ```example-config.json``` to ```config.json`
 
 Once all of the Python and front end dependencies have been met, compile the CSS and JavaScript and start the server:
 
-```bash
+```sh
 $ grunt
 $ ./bin/django runserver
 ```
