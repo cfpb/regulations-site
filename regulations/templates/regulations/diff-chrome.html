@@ -78,7 +78,7 @@ Comparison of {{meta.cfr_title_number}} CFR {{formatted_id}} | eRegulations
                     <div class="timeline-content-wrap">
                     <ul class="rule-list">
                         {% for notice in version.notices %}
-                            <li><a class="fr-notice external" href="{{notice.fr_url}}" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
+                            <li><a class="fr-notice external" href="{{notice.fr_url}}" aria-label="Link opens in a new window" target="_blank">Final Rule &#8211; {{notice.publication_date|date}}</a></li>
                         {% endfor %}
                     </ul>
                         {% if version.version == left_version %}
