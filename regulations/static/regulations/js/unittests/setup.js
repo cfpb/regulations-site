@@ -5,7 +5,7 @@ if (typeof process === 'object') {
   var plugin  = require("chai-jq");
   global.chai.use(plugin);
 
-  require('mocha-jsdom')();
+  require('jsdom-global')();
 } else {
   window.expect = window.chai.expect;
   window.require = function() { /* noop */ };
