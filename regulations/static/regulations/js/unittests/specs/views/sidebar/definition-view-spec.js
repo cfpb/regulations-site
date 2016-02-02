@@ -1,11 +1,11 @@
 require('../../../setup');
 var sinon = require( 'sinon' );
 
-describe('Definition View:', function () {
+describe('Definition View:', function() {
 
   var view, definition, content, $, DefinitionView;
 
-  before(function () {
+  before(function() {
     $ = require('jquery');
     DefinitionView = require('../../../../source/views/sidebar/definition-view');
   });
@@ -46,9 +46,9 @@ describe('Definition View:', function () {
     expect(view).to.be.defined;
   });
 
-  describe('Render methods:', function () {
+  describe('Render methods:', function() {
 
-    it('should render the header with loading indicator', function () {
+    it('should render the header with loading indicator', function() {
       view.renderHeader();
       expect(view.$el.html()).to.eql(
         '<div class="sidebar-header group spinner"><h4>Defined Term</h4></div>'
@@ -68,7 +68,7 @@ describe('Definition View:', function () {
 
   });
 
-  describe('Definitions with content:', function () {
+  describe('Definitions with content:', function() {
 
     beforeEach(function(){
       view.render(content);

@@ -5,7 +5,7 @@ describe('Non-DOM Helper functions:', function() {
 
     var $, Helpers;
 
-    before(function (){
+    before(function(){
         $ = require('jquery');
         Helpers = require('../../source/helpers');
     });
@@ -88,7 +88,7 @@ describe('Non-DOM Helper functions:', function() {
         expect(Helpers.findBaseSection('123-A')).to.equal('123-A');
     });
 
-    it('isSupplement should be able to tell if it\'s a supplement', function () {
+    it('isSupplement should be able to tell if it\'s a supplement', function() {
         expect(Helpers.isSupplement('13-Interp')).isTrue;
 
         expect(Helpers.isSupplement('123-Appendices-Interp')).isTrue;
@@ -99,7 +99,7 @@ describe('Non-DOM Helper functions:', function() {
 
     });
 
-    it('isAppendix should find Appendices', function () {
+    it('isAppendix should find Appendices', function() {
         expect(Helpers.isAppendix('13-Interp')).isFalse;
 
         expect(Helpers.isAppendix('123-Appendices-Interp')).isTrue;
@@ -124,7 +124,7 @@ describe('Version Finder Helper Functions:', function() {
 
     var navMenu, navMenu_blank, section, section_blank, timeline, timeline_blank;
 
-    before(function () {
+    before(function() {
         $ = require('jquery');
         Helpers = require('../../source/helpers');
     });

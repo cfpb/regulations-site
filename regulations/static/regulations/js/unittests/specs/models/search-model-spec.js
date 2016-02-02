@@ -5,7 +5,7 @@ describe('Search Model:', function() {
 
     var $, Backbone, SearchModel, Resources;
 
-    before(function (){
+    before(function(){
         Backbone = require('backbone');
         $ = require('jquery');
         Backbone.$ = $;

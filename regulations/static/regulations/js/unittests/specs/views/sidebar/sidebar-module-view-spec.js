@@ -1,11 +1,11 @@
 require('../../../setup');
 var sinon = require( 'sinon' );
 
-describe('Sidebar Module View:', function () {
+describe('Sidebar Module View:', function() {
 
   var view, definition, $, SidebarList;
 
-  before(function () {
+  before(function() {
     $ = require('jquery');
     SidebarModule = require('../../../../source/views/sidebar/sidebar-module-view');
     RegModel = require('../../../../source/models/reg-model');

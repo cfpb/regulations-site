@@ -1,11 +1,11 @@
 require('../../../setup');
 var sinon = require( 'sinon' );
 
-describe('Sidebar List View:', function () {
+describe('Sidebar List View:', function() {
 
   var view, definition, $, SidebarList;
 
-  before(function () {
+  before(function() {
     $ = require('jquery');
     SidebarList = require('../../../../source/views/sidebar/sidebar-list-view');
   });

@@ -1,5 +1,5 @@
 language: python
-sudo: required
+sudo: false
 python:
     - '2.7'
 env:
@@ -10,13 +10,15 @@ before_script:
     - if [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY" ]; then SAUCE_OK=1; else SAUCE_OK=0; fi
     - function START_SAUCE_CONNECT { curl -L https://gist.githubusercontent.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash & }
     - if [ "$SAUCE_OK" == 1 ]; then START_SAUCE_CONNECT; fi;
+before_install:
+    - rm -rf ~/.nvm
+    - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
+    - source ~/.nvm/nvm.sh
+    - nvm install 4
+    - npm install -g grunt-cli
 install:
     - pip install -r requirements.txt
     - pip install -r requirements_test.txt
-    - echo "yes" | sudo add-apt-repository ppa:chris-lea/node.js
-    - sudo apt-get update
-    - sudo apt-get install nodejs phantomjs
-    - sudo npm install -g grunt-cli grunt-init
     - ./frontendbuild.sh
 script:
     - grunt test-js
