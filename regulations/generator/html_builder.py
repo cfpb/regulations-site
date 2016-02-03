@@ -87,17 +87,7 @@ class HTMLBuilder():
             node['label'], node['node_type'])
 
         node['list_level'] = list_level
-
-        # exception for situations in which we have unnumbered definitions
-        # unnumbered defs have the last part of their label in CamelCase
-        # and the word "means" in their text
-
-        if node.get('marker', '') in ['none', '']:
-            node['list_type'] = 'no-marker'
-        elif re.search('([A-Z][a-z]+)+', node['label'][-1]) and re.search('means', node['text']):
-            node['list_type'] = 'no-marker'
-        else:
-            node['list_type'] = list_type
+        node['list_type'] = list_type
 
         if len(node['text']):
             inline_elements = self.inline_applier.get_layer_pairs(
@@ -113,6 +103,17 @@ class HTMLBuilder():
             layers_applier.enqueue_from_list(inline_elements)
             layers_applier.enqueue_from_list(search_elements)
 
+            if 'marked_up' in node:
+                node['marked_up'] = layers_applier.apply_layers(
+                    node['marked_up'])
+            else:
+                node['marked_up'] = layers_applier.apply_layers(node['text'])
+            node['marked_up'] = HTMLBuilder.section_space(node['marked_up'])
+        elif 'header' in node and node['header'].lower().startswith('table'):
+            layers_applier = LayersApplier()
+            search_elements = self.search_applier.get_layer_pairs(
+                node['label_id'])
+            layers_applier.enqueue_from_list(search_elements)
             if 'marked_up' in node:
                 node['marked_up'] = layers_applier.apply_layers(
                     node['marked_up'])
