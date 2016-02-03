@@ -1,11 +1,11 @@
 require('../../../setup');
 var sinon = require( 'sinon' );
 
-describe('Section Footer View:', function () {
+describe('Section Footer View:', function() {
 
   var view, $, e, FooterView, MainEvents;
 
-  before(function () {
+  before(function() {
     $ = require('jquery');
     FooterView = require('../../../../source/views/main/section-footer-view');
     MainEvents = require('../../../../source/events/main-events');

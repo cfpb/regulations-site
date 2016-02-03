@@ -1,9 +1,0 @@
-{
-  "name": "regulations-site",
-  "version": "0.0.0",
-  "dependencies": {
-    "html5shiv": "3.7.2",
-    "respond": "1.4.2",
-    "unveil": "~1.3.0"
-  }
-}

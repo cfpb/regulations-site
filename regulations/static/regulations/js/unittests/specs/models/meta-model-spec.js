@@ -9,7 +9,7 @@ describe('MetaModel:', function() {
 
     var $, Backbone, MetaModel, Resources;
 
-    before(function (){
+    before(function(){
         Backbone = require('backbone');
         $ = require('jquery');
         Backbone.$ = $;

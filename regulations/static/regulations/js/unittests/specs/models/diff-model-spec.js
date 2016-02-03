@@ -5,7 +5,7 @@ describe('Diff Model:', function() {
 
     var $, Backbone, DiffModel, Resources;
 
-    before(function (){
+    before(function(){
         Backbone = require('backbone');
         $ = require('jquery');
         Backbone.$ = $;

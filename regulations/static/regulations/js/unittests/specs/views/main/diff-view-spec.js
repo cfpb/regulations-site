@@ -1,11 +1,11 @@
 require('../../../setup');
 var sinon = require( 'sinon' );
 
-describe('Diff View:', function () {
+describe('Diff View:', function() {
 
   var view, $, DiffView;
 
-  before(function () {
+  before(function() {
     $ = require('jquery');
     DiffView = require('../../../../source/views/main/diff-view');
   });
