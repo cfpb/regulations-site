@@ -89,6 +89,19 @@ class HTMLBuilder():
         node['list_level'] = list_level
         node['list_type'] = list_type
 
+        format_layer_data = self.search_applier.layers['formatting'].layer_data
+
+        def is_table(node_label, layer_data):
+            if node_label not in layer_data:
+                return False
+            else:
+                for item in layer_data[node_label]:
+                    if 'table_data' in item:
+                        return True
+            return False
+
+        print node['label_id'], format_layer_data
+
         if len(node['text']):
             inline_elements = self.inline_applier.get_layer_pairs(
                 node['label_id'], node['text'])
@@ -109,7 +122,9 @@ class HTMLBuilder():
             else:
                 node['marked_up'] = layers_applier.apply_layers(node['text'])
             node['marked_up'] = HTMLBuilder.section_space(node['marked_up'])
-        elif 'header' in node and node['header'].lower().startswith('table'):
+
+        elif is_table(node['label_id'], format_layer_data):
+            # if this is a table, render it anyway
             layers_applier = LayersApplier()
             search_elements = self.search_applier.get_layer_pairs(
                 node['label_id'])
