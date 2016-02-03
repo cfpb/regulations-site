@@ -100,8 +100,6 @@ class HTMLBuilder():
                         return True
             return False
 
-        print node['label_id'], format_layer_data
-
         if len(node['text']):
             inline_elements = self.inline_applier.get_layer_pairs(
                 node['label_id'], node['text'])
