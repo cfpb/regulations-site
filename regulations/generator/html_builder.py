@@ -89,7 +89,10 @@ class HTMLBuilder():
         node['list_level'] = list_level
         node['list_type'] = list_type
 
-        format_layer_data = self.search_applier.layers['formatting'].layer_data
+        if 'formatting' in self.search_applier.layers:
+            format_layer_data = self.search_applier.layers['formatting'].layer_data
+        else:
+            format_layer_data = {}
 
         def is_table(node_label, layer_data):
             if node_label not in layer_data:
