@@ -9,7 +9,6 @@ var Router = require('./router');
 var SidebarView = require('./views/sidebar/sidebar-view');
 var HeaderView = require('./views/header/header-view');
 var DrawerView = require('./views/drawer/drawer-view');
-//var AnalyticsHandler = require('./views/analytics-handler-view');
 var analyticsEvents = require('./events/ga-events');
 Backbone.$ = $;
 
