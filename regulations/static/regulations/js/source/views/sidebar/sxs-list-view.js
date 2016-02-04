@@ -43,12 +43,7 @@ var SxSListView = SidebarListView.extend({
             'fromVersion': version
         });
 
-        GAEvents.trigger('sxs:open', {
-            id: id,
-            docNumber: docNumber,
-            regVersion: version,
-            type: 'sxs'
-        });
+        GAEvents.sendEvent('sxs:open', id);
     },
 
     render: function(html) {
