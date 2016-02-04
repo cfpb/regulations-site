@@ -9,7 +9,8 @@ var Router = require('./router');
 var SidebarView = require('./views/sidebar/sidebar-view');
 var HeaderView = require('./views/header/header-view');
 var DrawerView = require('./views/drawer/drawer-view');
-var AnalyticsHandler = require('./views/analytics-handler-view');
+//var AnalyticsHandler = require('./views/analytics-handler-view');
+var analyticsEvents = require('./events/ga-events');
 Backbone.$ = $;
 
  module.exports = {
@@ -25,8 +26,8 @@ Backbone.$ = $;
     init: function() {
         Router.start();
         this.bindEvents();
-        var gaview = new AnalyticsHandler(),
-            main = new MainView(),
+        analyticsEvents.init();
+        var main = new MainView(),
             sidebar = new SidebarView(),
             header = new HeaderView(),  // Header before Drawer as Drawer sends Header events
             drawer = new DrawerView();

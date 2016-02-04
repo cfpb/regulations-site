@@ -33,7 +33,7 @@ var ChildView = Backbone.View.extend({
 
                 this.route(this.options);
 
-                GAEvents.trigger('section:open', this.options);
+                GAEvents.sendEvent('section:open', this.options.id);
 
                 this.attachWayfinding();
                 this.render();
