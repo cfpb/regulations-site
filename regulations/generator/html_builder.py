@@ -87,17 +87,21 @@ class HTMLBuilder():
             node['label'], node['node_type'])
 
         node['list_level'] = list_level
+        node['list_type'] = list_type
 
-        # exception for situations in which we have unnumbered definitions
-        # unnumbered defs have the last part of their label in CamelCase
-        # and the word "means" in their text
-
-        if node.get('marker', '') in ['none', '']:
-            node['list_type'] = 'no-marker'
-        elif re.search('([A-Z][a-z]+)+', node['label'][-1]) and re.search('means', node['text']):
-            node['list_type'] = 'no-marker'
+        if 'formatting' in self.search_applier.layers:
+            format_layer_data = self.search_applier.layers['formatting'].layer_data
         else:
-            node['list_type'] = list_type
+            format_layer_data = {}
+
+        def is_table(node_label, layer_data):
+            if node_label not in layer_data:
+                return False
+            else:
+                for item in layer_data[node_label]:
+                    if 'table_data' in item:
+                        return True
+            return False
 
         if len(node['text']):
             inline_elements = self.inline_applier.get_layer_pairs(
@@ -113,6 +117,19 @@ class HTMLBuilder():
             layers_applier.enqueue_from_list(inline_elements)
             layers_applier.enqueue_from_list(search_elements)
 
+            if 'marked_up' in node:
+                node['marked_up'] = layers_applier.apply_layers(
+                    node['marked_up'])
+            else:
+                node['marked_up'] = layers_applier.apply_layers(node['text'])
+            node['marked_up'] = HTMLBuilder.section_space(node['marked_up'])
+
+        elif is_table(node['label_id'], format_layer_data):
+            # if this is a table, render it anyway
+            layers_applier = LayersApplier()
+            search_elements = self.search_applier.get_layer_pairs(
+                node['label_id'])
+            layers_applier.enqueue_from_list(search_elements)
             if 'marked_up' in node:
                 node['marked_up'] = layers_applier.apply_layers(
                     node['marked_up'])

@@ -25,6 +25,7 @@ class HTMLBuilderTest(TestCase):
         par.apply_layers.return_value = node
         sr = Mock()
         sr.get_layer_pairs.return_value = []
+        sr.layers = {}
 
         builder = HTMLBuilder(inline, par, sr)
         builder.process_node(node)
@@ -138,13 +139,16 @@ class HTMLBuilderTest(TestCase):
         p.apply_layers.return_value = node
         inline.get_layer_pairs.return_value = []
         sr.get_layer_pairs.return_value = []
+        sr.layers = {}
         builder.process_node(node)
         layer_parameters = inline.get_layer_pairs.call_args[0]
         self.assertEqual('Interpretation with a link', layer_parameters[1])
         self.assertEqual('999-5-Interp', layer_parameters[0])
 
     def test_process_node_header(self):
-        builder = HTMLBuilder(None, ParagraphLayersApplier(), None)
+        sr = Mock()
+        sr.layers = {}
+        builder = HTMLBuilder(None, ParagraphLayersApplier(), sr)
         node = {'text': '', 'children': [], 'label': ['99', '22'],
                 'node_type': REGTEXT}
         builder.process_node(node)
@@ -257,7 +261,9 @@ class HTMLBuilderTest(TestCase):
         p_applier = Mock()
         p_applier.layers = {'exex': exex}
         p_applier.apply_layers.side_effect = lambda n: n    # identity
-        builder = HTMLBuilder(None, p_applier, None)
+        s_applier = Mock()
+        s_applier.layers = {}
+        builder = HTMLBuilder(None, p_applier, s_applier)
         builder.tree = {'label': ['1234'], 'children': [],
                         'node_type': 'regtext', 'text': ''}
         builder.generate_html()
@@ -267,7 +273,7 @@ class HTMLBuilderTest(TestCase):
         p_applier = Mock()
         p_applier.layers = {'exex': exex}
         p_applier.apply_layers.side_effect = lambda n: n    # identity
-        builder = HTMLBuilder(None, p_applier, None)
+        builder = HTMLBuilder(None, p_applier, s_applier)
         builder.tree = {'label': ['1234'], 'children': [],
                         'node_type': 'regtext', 'text': ''}
         builder.generate_html()
