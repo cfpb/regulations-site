@@ -4,35 +4,89 @@ LESS Mixins & Variables
 mixins.less contains any mixins or variables to be used throughout the LESS files
 */
 
-/*
- Color Variables
- ----------------
- */
+// Official palette.
+// Current as of November 13, 2015.
+// To view the colors in the Design Manual, visit:
+// https://cfpb.github.io/design-manual/identity/color-principles.html#palette
 
-@green: #2CB34A;
-@green_midtone: #ADDC91;
-@green_light: #DBEDD4;
-@black: #101820;
-@dark_field: #5C6065;
-@light_field: #D1D3D5;
-@grey: #E6E7E9;
-@red_orange: #D12124;
-@pacific: #0072CE;
-@link_blue: #348dc9; /* blue used for link borders and search results */
-@light_neutral: #D7D2CB;
-@dark_gray: #797D81
-; /* dark border */
-@bg_gray: #F7F8F9; /* background header */
-@medium_gray: #B8BABD; /* light border */
-@80_gray: #9A9DA1;
-@dark_text: #797D81;
-@mid_text: #43484E;
-@orange: #FBCD92;
-@light_orange: #FFECD1;
-@pacific_hover: #328ED8;
-@pacific_light: #CCE3F5;
-@red_orange_80: #D96A4F;
-@red_orange_50: #E9A193;
+// Green family
+@dark-green:   #1e9642;
+@green:        #20aa3f; // Primary brand green color
+@green-80:     #66c368;
+@green-60:     #addc91; // Formerly known as "Green: Midtone"
+@green-40:     #c7e5b3;
+@green-20:     #e2efd8;
+
+
+// Teal family
+@dark-teal:    #005e5d; // Formerly known as regular ol' "Teal"
+@teal:         #257675; // Close to what was previously called "Teal 80"
+@teal-80:      #579695;
+@teal-60:      #89b6b5;
+@teal-40:      #b4d2d1;
+@teal-20:      #d4e7e6;
+
+
+// Pacific family
+@dark-pacific: #0050b4;
+@pacific:      #0072ce;
+@pacific-80:   #4497dc;
+@pacific-60:   #7eb7e8;
+@pacific-40:   #afd2f2;
+@pacific-20:   #d6e8fa;
+
+
+// Navy family
+@dark-navy:    #002d72; // Formerly known as regular ol' "Navy"
+@navy:         #254b87; // Close to what was previously called "Navy 80"
+@navy-80:      #5674a3;
+@navy-60:      #889cc0;
+@navy-40:      #b3c0d9;
+@navy-20:      #d3daeb;
+
+
+// Red family (formerly known as "Red Orange")
+@dark-red:     #b63014;
+@red:          #d14124;
+@red-80:       #dd735d;
+@red-60:       #e79e8e;
+@red-40:       #f0c3b8;
+@red-20:       #f7e0d9;
+
+
+// Gold family
+@dark-gold:    #dc731c;
+@gold:         #ff9e1b;
+@gold-80:      #ffb858;
+@gold-60:      #ffce8d;
+@gold-40:      #ffe1b9;
+@gold-20:      #fff0dd;
+
+
+
+// Neutral family
+@dark-neutral: #63574e;
+@neutral:      #796e65;
+@neutral-80:   #948b84;
+@neutral-60:   #b5aca5;
+@neutral-40:   #cdc7c2;
+@neutral-20:   #e3e2df;
+
+
+// Gray family
+@black:        #101820; // Also known as "CFPB Black"
+
+@dark-gray:    #43484e;
+@gray:         #5a5d61;
+@gray-80:      #75787b; // Formerly known as regular ol' "Gray"
+@gray-60:      #919395; // Formerly known as "Gray 80"
+@gray-40:      #b4b5b6; // Close to what was known as "Gray 50"
+@gray-20:      #d2d3d5;
+@gray-10:      #e7e8e9; // Close to what was known as "Gray 20"
+@gray-5:       #f7f8f9;
+
+@white:        #fff;
+
 
 /*
  Type Variables/Mixins
@@ -65,27 +119,27 @@ mixins.less contains any mixins or variables to be used throughout the LESS file
 */
 
 .border-bottom-medium (@width: 1px) {
-    border-bottom: @width solid @medium_gray;
+    border-bottom: @width solid @gray-40;
 }
 
 .border-bottom-light (@width: 1px) {
-    border-bottom: @width solid @light_field;
+    border-bottom: @width solid @gray-20;
 }
 
 .border-bottom-dark (@width: 1px) {
-    border-bottom: @width solid @dark_gray;
+    border-bottom: @width solid @gray;
  }
 
  .border-top-light (@width: 1px) {
-    border-top: @width solid @light_field;
+    border-top: @width solid @gray-20;
  }
 
  .border-top-medium (@width: 1px) {
-    border-top: @width solid @medium_gray;
+    border-top: @width solid @gray-40;
 }
 
 .border-right-light (@width: 1px){
-    border-right: @width solid @light_field;
+    border-right: @width solid @gray-20;
 }
 
 /*
