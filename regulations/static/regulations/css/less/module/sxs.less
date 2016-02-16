@@ -62,7 +62,7 @@ SxS header
 }
 
 .full-breakaway .sxs-header {
-    position: fixed;
+    position: absolute;
 }
 
 /*
@@ -187,6 +187,18 @@ Metadata info for the SxS Analysis
 Footnotes
 ==================================
 */
+
+/*
+* <sup>s are used as footnote links in the SxS
+* this accomodates the persistent header offset
+*/
+.full-breakaway {
+    sup {
+        padding-top: 70px;
+        margin-top: -70px;
+  }
+}
+
 
 .footnote-title {
     margin-top: 2em;
