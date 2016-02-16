@@ -79,7 +79,8 @@ regulations-core/
 style.css.map
 .coverage
 regulations.egg-info
-
+build/
+dist/
 
 # docs output
 docs/_build

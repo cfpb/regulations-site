@@ -116,13 +116,44 @@ class ParagrasphSXSViewTests(TestCase):
     @patch.object(ParagraphSXSView, 'further_analyses')
     def test_get_context_data(self, further_analyses, notices, generator):
         psv = ParagraphSXSView()
-        generator.get_sxs.return_value = {
+        generator.get_notice_and_sxs.return_value = ({}, {
             'labels': ['lablab', 'another-label'],
             'children': [],
             'page': 1234,
             'paragraphs': ['some', 'content']
-        }
+        })
         context = psv.get_context_data(label_id='lablab', notice_id='nnnn',
                                        version='vvv')
         self.assertTrue('sxs' in context)
         self.assertTrue('label' in context['sxs'])
+
+    @patch('regulations.views.partial_sxs.generator')
+    @patch('regulations.views.partial_sxs.notices')
+    @patch.object(ParagraphSXSView, 'further_analyses')
+    def test_get_context_data_notice_id_fallback(self, further_analyses, 
+            notices, generator):
+        """ If the version number fails, try to fetch by notice_id """
+        psv = ParagraphSXSView()
+        generator.get_notice_and_sxs.side_effect = [(None, None), ({}, {
+            'labels': ['lablab', 'another-label'],
+            'children': [],
+            'page': 1234,
+            'paragraphs': ['some', 'content']
+        })]
+        context = psv.get_context_data(label_id='lablab', notice_id='nnnn',
+                                       version='vvv')
+
+        # Should be called twice
+        self.assertEqual(generator.get_notice_and_sxs.call_count, 2)
+
+        # Once with version
+        self.assertEqual(generator.get_notice_and_sxs.call_args_list[0][0][1],
+                'vvv')
+
+        # Once with notice
+        self.assertEqual(generator.get_notice_and_sxs.call_args_list[1][0][1],
+                'nnnn')
+
+        self.assertTrue('sxs' in context)
+        self.assertTrue('label' in context['sxs'])
+
