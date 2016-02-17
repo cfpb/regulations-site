@@ -242,11 +242,11 @@ var RegView = ChildView.extend({
         button.toggleClass('open');
         buttonText.html(section.hasClass('open') ? 'Hide' : 'Show');
 
-        if (section.hasClass('open')) {
-            GAEvents.sendEvent('interp:expand', context);
+        if (section.hasClass('open') && section.hasClass('inline-interpretation')) {
+            GAEvents.sendEvent('interexpandables:open', context);
         }
-        else {
-            GAEvents.sendEvent('interp:collapse', context);
+        else if (section.hasClass('inline-interpretation')) {
+            GAEvents.sendEvent('interexpandables:close', context);
         }
 
         return this;
