@@ -178,9 +178,9 @@ var SidebarView = Backbone.View.extend({
         Helpers.toggleExpandable($expandable, 400);
 
         if ($expandable.hasClass('open')) {
-          GAEvents.sendEvent('expandables:open', $expandable.data('expandable'));
+          GAEvents.sendEvent('sidebarexpanable:open', $expandable.data('expandable'));
         } else {
-          GAEvents.sendEvent('expandables:close', $expandable.data('expandable'));
+          GAEvents.sendEvent('sidebarexpanable:close', $expandable.data('expandable'));
         }
 
     },
