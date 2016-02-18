@@ -187,16 +187,14 @@ var RegView = ChildView.extend({
         else {
             // close old definition, if there is one
             SidebarEvents.trigger('definition:close');
-            GAEvents.sendEvent('definition:close', defId);
-
             // open new definition
             this.setActiveTerm($link);
             SidebarEvents.trigger('definition:open', {
                 'id': defId,
                 'term': term
             });
-            GAEvents.sendEvent('definition:open', defId);
         }
+        GAEvents.sendEvent('definition:open', term);
     },
 
     // content section key term link click handler
@@ -243,10 +241,10 @@ var RegView = ChildView.extend({
         buttonText.html(section.hasClass('open') ? 'Hide' : 'Show');
 
         if (section.hasClass('open') && section.hasClass('inline-interpretation')) {
-            GAEvents.sendEvent('interexpandables:open', context);
+            GAEvents.sendEvent('interpexpandables:open', context.to);
         }
         else if (section.hasClass('inline-interpretation')) {
-            GAEvents.sendEvent('interexpandables:close', context);
+            GAEvents.sendEvent('interpexpandables:close', context.to);
         }
 
         return this;

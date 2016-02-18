@@ -76,10 +76,10 @@ var DrawerTabsView = Backbone.View.extend({
         // only send click event if there was an actual click
         if (e) {
             if ($(e.target).hasClass('open')) {
-                GAEvents.sendEvent('drawer:open', 'drawer');
+                GAEvents.sendEvent('drawer', 'drawer:open');
             }
             else {
-                GAEvents.sendEvent('drawer:close', 'drawer');
+                GAEvents.sendEvent('drawer', 'drawer:close');
             }
         }
     },
