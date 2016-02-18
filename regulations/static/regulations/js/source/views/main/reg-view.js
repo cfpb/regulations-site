@@ -187,16 +187,14 @@ var RegView = ChildView.extend({
         else {
             // close old definition, if there is one
             SidebarEvents.trigger('definition:close');
-            GAEvents.sendEvent('definition:close', defId);
-
             // open new definition
             this.setActiveTerm($link);
             SidebarEvents.trigger('definition:open', {
                 'id': defId,
                 'term': term
             });
-            GAEvents.sendEvent('definition:open', defId);
         }
+        GAEvents.sendEvent('definition:open', term);
     },
 
     // content section key term link click handler
