@@ -78,8 +78,9 @@ var DefinitionView = SidebarModuleView.extend({
         $('.definition.active').focus();
 
         MainEvents.trigger('definition:close');
-        GAEvents.sendEvent('definition:close', this.term);
         this.remove();
+
+        GAEvents.sendEvent('definition:close', this.term);
     },
 
     updateDefinition: function(e) {
@@ -181,6 +182,7 @@ var DefinitionView = SidebarModuleView.extend({
         this.stopListening();
         this.off();
         this.$el.html('');
+        this.$el.unbind();
 
         return this;
     }
