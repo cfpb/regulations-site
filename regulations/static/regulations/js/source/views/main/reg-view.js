@@ -22,7 +22,7 @@ var RegView = ChildView.extend({
     events: {
         'click .definition': 'termLinkHandler',
         'click .inline-interp-header': 'expandInterp',
-        'click .citation': 'logCitation'
+        'click .internal': 'logCitation'
     },
 
     initialize: function() {
@@ -283,8 +283,12 @@ var RegView = ChildView.extend({
     },
 
     logCitation: function(e) {
-        var sectionId = $(e.target).data('section-id');
-        GAEvents.sendEvent('link:followCitation', sectionId);
+        var $e = $(e.target);
+
+        if ($e.hasClass('citation')) {
+            GAEvents.sendEvent('link:followCitation', $e.data('section-id'));
+        }
+
     }
 });
 
