@@ -21,7 +21,8 @@ var RegView = ChildView.extend({
 
     events: {
         'click .definition': 'termLinkHandler',
-        'click .inline-interp-header': 'expandInterp'
+        'click .inline-interp-header': 'expandInterp',
+        'click .citation': 'logCitation'
     },
 
     initialize: function() {
@@ -279,6 +280,11 @@ var RegView = ChildView.extend({
         // require inside of the loadImages function to accomodate testing dependencies
         var unveil = require('unveilable');
         $('.reg-image').unveil();
+    },
+
+    logCitation: function(e) {
+        var sectionId = $(e.target).data('section-id');
+        GAEvents.sendEvent('link:followCitation', sectionId);
     }
 });
 
