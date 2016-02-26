@@ -4,12 +4,14 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var Router = require('../../router');
 var MainEvents = require('../../events/main-events');
+var GAEvents = require('../../events/ga-events');
 Backbone.$ = $;
 
 var SearchView = Backbone.View.extend({
     el: '#search',
 
     events: {
+        'change #version-select': 'logSearchVersion',
         'submit': 'openSearchResults'
     },
 
@@ -19,6 +21,11 @@ var SearchView = Backbone.View.extend({
         if (Router.hasPushState === false) {
             this.events = {};
         }
+    },
+
+    logSearchVersion: function(e) {
+        var version = $(e.target).val();
+        GAEvents.sendEvent('searchVersion:change', version);
     },
 
     openSearchResults: function(e) {
