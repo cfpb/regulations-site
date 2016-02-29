@@ -92,15 +92,15 @@ class ParagraphSXSView(TemplateView):
         fr_page = context.get('fr_page')
         version = context.get('version', notice_id)
 
-        notice = generator.get_notice(part, version)
-        if not notice:
-            raise error_handling.MissingContentException()
-        notice = convert_to_python(notice)
-
-        paragraph_sxs = generator.get_sxs(label_id, notice, fr_page)
-
-        if paragraph_sxs is None:
-            raise error_handling.MissingContentException()
+        # Try first to get the notice and SxS with the version.
+        notice, paragraph_sxs = generator.get_notice_and_sxs(part, version,
+                label_id, fr_page)
+        if notice is None or paragraph_sxs is None:
+            # If that didn't work, try again with the notice_id
+            notice, paragraph_sxs = generator.get_notice_and_sxs(part, 
+                    notice_id, label_id, fr_page)
+            if notice is None or paragraph_sxs is None:
+                raise error_handling.MissingContentException()
 
         notices.add_depths(paragraph_sxs, 3)
 
