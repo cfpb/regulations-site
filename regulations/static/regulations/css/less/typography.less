@@ -395,10 +395,10 @@ The `<ol>` tag needs to have the appropriate list type applied
 .main-content ol, dfn, .stripped-marker {
   .avenir-next-demi;
 }
-
-.appendix-section ol {
-  list-style-type: none;
-}
+//
+// .appendix-section ol {
+//   list-style-type: none;
+// }
 
 .main-content p {
   font-family: @body-font;
@@ -407,18 +407,6 @@ The `<ol>` tag needs to have the appropriate list type applied
 
 .paragraph-marker, .stripped-marker {
   display: none;
-}
-
-.appendix-section {
-  .stripped-marker {
-    display: inline-block;
-    margin-left: -16px;
-    margin-right: 4px;
-  }
-}
-.appendix-section .inline-interpretation-content .stripped-marker {
-    margin-left: -20px;
-    width: 24px;
 }
 
 /* remove paragraph markers that have the markerless class */
@@ -447,12 +435,6 @@ except in the appendix where we use inline-block to accomodate the marker styles
 
 .key-term {
     display: block;
-}
-
-.appendix-section {
-  .key-term {
-    display: inline-block;
-  }
 }
 
 /*  Level-1 Key-Terms
@@ -713,18 +695,18 @@ pre {
     Appendix Content
     =====================
     */
-
-    .appendix-section .stripped-marker {
-      display: inline-block;
-      float: left;
-      margin-left: 0;
-      width: auto;
-      padding-right: 4px;
-    }
-
-    .appendix-section ol {
-        padding: 0;
-    }
+    //
+    // .appendix-section .stripped-marker {
+    //   display: inline-block;
+    //   float: left;
+    //   margin-left: 0;
+    //   width: auto;
+    //   padding-right: 4px;
+    // }
+    //
+    // .appendix-section ol {
+    //     padding: 0;
+    // }
 }
 
 @media only screen and ( max-width: 1100px ) {
