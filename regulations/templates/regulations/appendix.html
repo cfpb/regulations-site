@@ -1,3 +1,4 @@
+{% load formatting %}
 {% comment %}
     Display an appendix section. 
 {% endcomment %}
@@ -25,7 +26,12 @@
             {% endif %}
 
             {% if level_one.children %}
-                <ol class="level-{{level_one.children.0.list_level}}" type="{{level_one.children.0.list_type}}">
+                <ol class="{% if level_one.children.0.list_level != None %}level-{{level_one.children.0.list_level}}{% else %}level-1{% endif %}"
+                    {% if level_one.children.0.marker %}
+                        type="{{level_one.children.0.marker|format_marker}}"
+                    {% else %}
+                        type="{{level_one.children.0.list_type}}"
+                    {% endif %}>
                 {% for node in level_one.children  %}
                     {% include "regulations/tree-with-wrapper.html" %}
                 {% endfor %}
