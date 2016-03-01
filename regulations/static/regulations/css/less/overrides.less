@@ -21,3 +21,55 @@ but we want to hide them in the wayfinding header.
         }
     }
 }
+
+/*
+Appendix Marker Overrides
+=========================
+In regs that are transformed using the original parsing process,
+rather than based on RegML, there are inconsistencies in the Appendix markers.
+These styles normalize those. Once Regulations D, G, and H are moved to the
+RegML process these overrides will need to be removed.
+*/
+
+.content-1004-A,
+.content-1007-A,
+.content-1008-A,
+.content-1008-B,
+.content-1008-C,
+.content-1008-D, {
+
+    .appendix-section {
+        .stripped-marker {
+            display: inline-block;
+            margin-left: -16px;
+            margin-right: 4px;
+        }
+    }
+
+    .appendix-section .inline-interpretation-content .stripped-marker {
+        margin-left: -20px;
+        width: 24px;
+    }
+
+    .appendix-section {
+      .key-term {
+          display: inline-block;
+      }
+    }
+
+    @media only screen and ( max-width: 780px ) {
+
+
+        .appendix-section .stripped-marker {
+          display: inline-block;
+          float: left;
+          margin-left: 0;
+          width: auto;
+          padding-right: 4px;
+        }
+
+        .appendix-section ol {
+            padding: 0;
+        }
+    }
+}
