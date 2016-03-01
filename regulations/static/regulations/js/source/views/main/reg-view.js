@@ -21,7 +21,8 @@ var RegView = ChildView.extend({
 
     events: {
         'click .definition': 'termLinkHandler',
-        'click .inline-interp-header': 'expandInterp'
+        'click .inline-interp-header': 'expandInterp',
+        'click .internal': 'logCitation'
     },
 
     initialize: function() {
@@ -187,23 +188,14 @@ var RegView = ChildView.extend({
         else {
             // close old definition, if there is one
             SidebarEvents.trigger('definition:close');
-            GAEvents.trigger('definition:close', {
-                type: 'defintion',
-                by: 'opening new definition'
-            });
-
             // open new definition
             this.setActiveTerm($link);
             SidebarEvents.trigger('definition:open', {
                 'id': defId,
                 'term': term
             });
-            GAEvents.trigger('definition:open', {
-                id: defId,
-                from: this.activeSection,
-                type: 'definition'
-            });
         }
+        GAEvents.sendEvent('definition:open', term);
     },
 
     // content section key term link click handler
@@ -217,10 +209,7 @@ var RegView = ChildView.extend({
         // if this link is already active, toggle def shut
         if ($link.data('active')) {
             SidebarEvents.trigger('definition:close');
-            GAEvents.trigger('definition:close', {
-                type: 'defintion',
-                by: 'toggling term link'
-            });
+            GAEvents.sendEvent('definition:close', defId);
             this.clearActiveTerms();
         }
         else {
@@ -252,11 +241,11 @@ var RegView = ChildView.extend({
         button.toggleClass('open');
         buttonText.html(section.hasClass('open') ? 'Hide' : 'Show');
 
-        if (section.hasClass('open')) {
-            GAEvents.trigger('interp:expand', context);
+        if (section.hasClass('open') && section.hasClass('inline-interpretation')) {
+            GAEvents.sendEvent('interpexpandables:open', context.to);
         }
-        else {
-            GAEvents.trigger('interp:collapse', context);
+        else if (section.hasClass('inline-interpretation')) {
+            GAEvents.sendEvent('interpexpandables:close', context.to);
         }
 
         return this;
@@ -283,11 +272,7 @@ var RegView = ChildView.extend({
 
         Router.navigate(sectionId + '/' + version + '#' + subSectionId, {trigger: true});
 
-        GAEvents.trigger('interp:followCitation', {
-            id: subSectionId,
-            regVersion: version,
-            type: 'inline-interp'
-        });
+        GAEvents.sendEvent('interp:followCitation', subSectionId);
     },
 
     // lazy load images as the user scrolls
@@ -295,6 +280,15 @@ var RegView = ChildView.extend({
         // require inside of the loadImages function to accomodate testing dependencies
         var unveil = require('unveilable');
         $('.reg-image').unveil();
+    },
+
+    logCitation: function(e) {
+        var $e = $(e.target);
+
+        if ($e.hasClass('citation')) {
+            GAEvents.sendEvent('link:followCitation', $e.data('section-id'));
+        }
+
     }
 });
 

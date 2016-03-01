@@ -165,7 +165,7 @@ a:visited {
 .internal:visited {
     color: @black;
     text-decoration: none;
-    border-bottom: 1px solid @link_blue;
+    border-bottom: 1px solid @pacific;
 }
 
 .internal:hover,
@@ -248,23 +248,23 @@ a:visited {
 .definition:visited {
     color: @black;
     text-decoration: none;
-    border-bottom: 1px solid @light_field;
+    border-bottom: 1px dotted @gray-80;
 }
 
 .definition:hover,
 .definition:active {
-    border-bottom: 1px solid @medium_gray;
-    background-color: @grey;
+    border-bottom: 1px solid @gray-40;
+    background-color: @gray-10;
 }
 
 .definition.active {
-    background-color: @grey;
+    background-color: @gray-10;
 }
 
 .inline-interpretation {
     .definition:link,
     .definition:visited {
-         border-bottom: 1px solid @medium_gray;
+         border-bottom: 1px solid @gray-40;
     }
 }
 
@@ -589,7 +589,7 @@ th,
 td {
     padding: 15px;
     line-height: 20px;
-    border: 1px solid @80_gray;
+    border: 1px solid @gray-80;
 }
 
 th {
@@ -617,7 +617,7 @@ pre {
     margin: 0 auto;
     max-width: 600px;
     padding: 10px;
-    background-color: @bg_gray;
+    background-color: @gray-5;
     overflow-x: scroll;
     word-wrap: normal;
     white-space: pre;

@@ -41,11 +41,11 @@ Headers within the sidebar should be <h4>
         margin: 0;
         text-transform: uppercase;
         letter-spacing: 1px;
-        color: @mid_text;
+        color: @dark-gray;
         .avenir-next-demi;
 
         &.important {
-            color: @red_orange;
+            color: @red;
         }
 
         h5 {
@@ -61,11 +61,15 @@ Sidebar Expandables
 
     .expandable {
         cursor: pointer;
-        background-color: @bg_gray;
+        background-color: @gray-5;
         width: 100%;
 
         &.has-content {
-            background-color: @light_orange;
+            background-color: @gold-20;
+
+            &:hover {
+                background-color: @gold-40;
+            }
         }
 
         h4 {
@@ -100,7 +104,7 @@ Sidebar Expandables
     */
 
     .sidebar-subsection {
-        border-bottom: 1px solid @light_neutral;
+        border-bottom: 1px solid @neutral-40;
         padding-bottom: 28px;
         padding-top: 28px;
     }
@@ -122,10 +126,10 @@ Sidebar Headers
 */
 .sidebar-header {
     .group;
-    background-color: @bg_gray;
+    background-color: @gray-5;
 
     h4 {
-        color: @dark_gray;
+        color: @gray;
         padding: .5em 0 .5em .9375em;
         .avenir-next-demi;
         text-transform: uppercase;
@@ -142,7 +146,7 @@ Sidebar Headers
     }
 
     &.spinner {
-        background: @bg_gray url(../img/blue_spinner.gif) no-repeat center right;
+        background: @gray-5 url(../img/blue_spinner.gif) no-repeat center right;
         background-position-x: 92%;
     }
 
@@ -150,12 +154,12 @@ Sidebar Headers
     (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi) {
         .close-button {
-            background: @bg_gray url(../img/close@2x.png) no-repeat 0 0;
+            background: @gray-5 url(../img/close@2x.png) no-repeat 0 0;
             background-size: 13px 13px;
         }
 
         &.spinner {
-            background: @bg_gray url(../img/blue_spinner@2x.gif) no-repeat center right;
+            background: @gray-5 url(../img/blue_spinner@2x.gif) no-repeat center right;
             background-position-x: 92%;
             background-size: 19px 19px;
         }
@@ -192,7 +196,7 @@ Regs Meta contains the sub-content meta data found in the sidebar
 
     .sxs-list {
         margin-top: 12px;
-        border-top: 1px solid @light_neutral;
+        border-top: 1px solid @neutral-40;
     }
 
     .chunk {
@@ -211,7 +215,7 @@ Regs Meta contains the sub-content meta data found in the sidebar
                 float: right;
                 font-size: 0.875em;
                 line-height: 2;
-                color: @dark_gray;
+                color: @gray;
             }
 
             &:hover, &:active {
@@ -284,7 +288,7 @@ When open definitions appear in the right sidebar
     }
 
     .open-definition {
-        border-bottom: 1px solid @medium_gray;
+        border-bottom: 1px solid @gray-40;
     }
 
     .definition-text,
@@ -298,13 +302,13 @@ When open definitions appear in the right sidebar
         &.inactive,
         &.inactive a.continue-link.internal,
         &.inactive a.citation.definition {
-            color: @80_gray;
+            color: @gray-80;
         }
     }
 
     .definition-warning {
-        color: @red_orange;
-        border-bottom: 1px solid @light_field;
+        color: @red;
+        border-bottom: 1px solid @gray-20;
         margin: 0 1em;
         padding: 1em 0 0 0;
 
@@ -322,7 +326,7 @@ When open definitions appear in the right sidebar
     .msg {
         width: 85%;
         float: left;
-        border-bottom: 1px solid @light_field;
+        border-bottom: 1px solid @gray-20;
         padding-bottom: 1em;
     }
 
@@ -369,7 +373,7 @@ Styles for the UI help slide down
 
     li {
         margin-top: 15px;
-        color: @mid_text;
+        color: @dark-gray;
     }
 
     .cf-icon-right {
@@ -377,13 +381,13 @@ Styles for the UI help slide down
     }
 
     .modified {
-        border-right: 8px solid @green_midtone;
+        border-right: 8px solid @green-60;
     }
 
     .deleted {
-        border-right: 8px solid @red_orange_80;
+        border-right: 8px solid @red-40;
         text-decoration: line-through;
-        color: @80_gray;
+        color: @gray-80;
     }
 
 }
@@ -403,7 +407,7 @@ Styles for the UI help slide down
     padding: 10px;
     margin-right: 15px;
     border-radius: 4px;
-    background-color: @bg_gray;
+    background-color: @gray-5;
     text-align: center;
     vertical-align: middle;
 }
@@ -421,13 +425,13 @@ Styles for the UI help slide down
 
 .sample-menu {
     display: block;
-    background: @bg_gray;
+    background: @gray-5;
     padding: 15px;
-    border-bottom: 1px solid @medium_gray;
+    border-bottom: 1px solid @gray-40;
 }
 
 .sample-menu:first-child {
-    border-top: 1px solid @medium_gray;
+    border-top: 1px solid @gray-40;
 }
 
 /*
@@ -471,7 +475,7 @@ Small screens
     }
 
     #sxs-list {
-        border-top: 1px solid @light_neutral;
+        border-top: 1px solid @neutral-40;
     }
 
     /*
@@ -487,7 +491,7 @@ Small screens
         min-width: 100%;
         min-height: 200px;
         padding: 0 20px 80px 50px;
-        background: @bg_gray;
+        background: @gray-5;
         .border-top-light(@width: 2px);
         z-index: 200;
         overflow-y: scroll;
@@ -509,7 +513,7 @@ Small screens
     }
 
     .sidebar-header {
-        background-color: @bg_gray;
+        background-color: @gray-5;
     }
 }
 

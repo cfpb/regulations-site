@@ -8,6 +8,7 @@ var MainEvents = require('../../events/main-events');
 var DrawerEvents = require('../../events/drawer-events');
 var HeaderEvents = require('../../events/header-events');
 var Resources = require('../../resources.js');
+var GAEvents = require('../../events/ga-events');
 Backbone.$ = $;
 
 var TOCView = Backbone.View.extend({
@@ -71,6 +72,7 @@ var TOCView = Backbone.View.extend({
         var sectionId = $(e.currentTarget).data('section-id');
         DrawerEvents.trigger('section:open', sectionId);
         MainEvents.trigger('section:open', sectionId, {}, 'reg-section');
+        GAEvents.sendEvent('toc:click', sectionId);
     },
 
     sendDiffClickEvent: function(e) {

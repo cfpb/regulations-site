@@ -11,8 +11,8 @@ Universal drawer styles
 --------------------- */
 
 .panel {
-    background-color: @bg_gray;
-    border-right: 2px solid @medium_gray;
+    background-color: @gray-5;
+    border-right: 2px solid @gray-40;
     .avenir-next-demi;
     font-size: .875em;
     overflow-y: scroll; /* allow content to be scrollable */
@@ -21,7 +21,7 @@ Universal drawer styles
 .toc-head {
     a:hover,
     a:active {
-        background-color: @light_field;
+        background-color: @gray-20;
     }
 }
 
@@ -48,15 +48,15 @@ Panel Header
         width: 240px;
         height: 40px;
         line-height: 40px;
-        background-color: @bg_gray;
-        border-right: 2px solid @medium_gray;
+        background-color: @gray-5;
+        border-right: 2px solid @gray-40;
         z-index: 100;
-        border-bottom: 1px solid @medium_gray;
+        border-bottom: 1px solid @gray-40;
         padding: 0 15px;
     }
 
     h2 {
-        color: @mid_text;
+        color: @dark-gray;
         font-size: .875em; /* 12px / (26px * .875em) */
         .avenir-next-demi;
         text-transform: uppercase;
@@ -70,14 +70,14 @@ Drawer Links
 .toc-head {
     a:link,
     a:visited {
-        color: @dark_gray;
+        color: @gray;
         text-decoration: none;
     }
 
     a:hover,
     a:active {
-            background-color: @light_field;
-            border-bottom: 1px solid @medium_gray;
+            background-color: @gray-20;
+            border-bottom: 1px solid @gray-40;
     }
 }
 
@@ -104,7 +104,7 @@ Panel Slide Button
     }
 
     .close & {
-        border-bottom: 1px solid @medium_gray;
+        border-bottom: 1px solid @gray-40;
 
         .lt-ie8 &,
          html.no-fontface & {
@@ -141,12 +141,12 @@ currently these are TOC, History, and Search
     margin: 0;
     width: 56px;
     text-align: center;
-    border-right: 1px solid @medium_gray;
+    border-right: 1px solid @gray-40;
     vertical-align: center;
 
     &.current {
-        background-color: @light_field;
-        border-bottom: 1px solid @medium_gray;
+        background-color: @gray-20;
+        border-bottom: 1px solid @gray-40;
     }
 
     .close & {
@@ -186,13 +186,13 @@ currently these are TOC, History, and Search
 .close {
      .toc-nav-link {
           &.current {
-              background-color: @bg_gray;
+              background-color: @gray-5;
               border-bottom: none;
           }
       }
 
       .toc-nav-link:hover {
-          background-color: @light_field;
+          background-color: @gray-20;
           border-bottom: none;
       }
 }
@@ -209,7 +209,7 @@ currently these are TOC, History, and Search
         position: absolute;
         width: 40px;
         top: 33px;
-        border-top: 1px solid @medium_gray;
+        border-top: 1px solid @gray-40;
         right: 0;
         left: 198px;
     }
@@ -220,12 +220,12 @@ currently these are TOC, History, and Search
     zoom: 1;
     *display: inline;
     margin-left: -4px;
-    border-right: 1px solid @medium_gray;
+    border-right: 1px solid @gray-40;
 
     .close & {
         margin-left: 0;
         display: list-item;
-        border-bottom: 1px solid @medium_gray;
+        border-bottom: 1px solid @gray-40;
         border-right: none;
     }
 }

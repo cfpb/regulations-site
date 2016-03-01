@@ -78,11 +78,9 @@ var DefinitionView = SidebarModuleView.extend({
         $('.definition.active').focus();
 
         MainEvents.trigger('definition:close');
-        GAEvents.trigger('definition:close', {
-            type: 'definition',
-            by: 'header close button'
-        });
         this.remove();
+
+        GAEvents.sendEvent('definition:close', this.term);
     },
 
     updateDefinition: function(e) {
@@ -164,10 +162,7 @@ var DefinitionView = SidebarModuleView.extend({
             scrollToId: id
         }, 'reg-section');
 
-        GAEvents.trigger('definition:followCitation', {
-            id: id,
-            type: 'definition'
-        });
+        GAEvents.sendEvent('definition:followCitation', id);
     },
 
     openInterpretation: function(e) {
@@ -180,16 +175,14 @@ var DefinitionView = SidebarModuleView.extend({
             scrollToId: pid
         }, 'interpretation');
 
-        GAEvents.trigger('definition:followCitation', {
-            id: id,
-            type: 'definition'
-        });
+        GAEvents.sendEvent('definition:followCitation', id);
     },
 
     remove: function() {
         this.stopListening();
         this.off();
         this.$el.html('');
+        this.$el.unbind();
 
         return this;
     }

@@ -52,10 +52,7 @@ var DrawerTabsView = Backbone.View.extend({
         this.$tocLinks.removeClass('current');
         $(this.idMap[tab]).addClass('current');
 
-        GAEvents.trigger('drawer:switchTab', {
-            id: tab,
-            type: 'drawer'
-        });
+        GAEvents.sendEvent('drawer:switchTab', tab);
     },
 
     // this.$activeEls are structural els that need to have
@@ -79,10 +76,10 @@ var DrawerTabsView = Backbone.View.extend({
         // only send click event if there was an actual click
         if (e) {
             if ($(e.target).hasClass('open')) {
-                GAEvents.trigger('drawer:open', context);
+                GAEvents.sendEvent('drawer', 'drawer:open');
             }
             else {
-                GAEvents.trigger('drawer:close', context);
+                GAEvents.sendEvent('drawer', 'drawer:close');
             }
         }
     },

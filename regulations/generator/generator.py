@@ -20,6 +20,7 @@ from layers.paragraph_markers import ParagraphMarkersLayer
 from layers.toc_applier import TableOfContentsLayer
 from layers.graphics import GraphicsLayer
 from layers.diff_applier import DiffApplier
+from layers.utils import convert_to_python
 from html_builder import HTMLBuilder
 import notices
 
@@ -217,6 +218,14 @@ def get_sxs(label_id, notice, fr_page=None):
     relevant_sxs = notices.find_label_in_sxs(all_sxs, label_id, fr_page)
 
     return relevant_sxs
+
+
+def get_notice_and_sxs(part, notice_id, label_id, fr_page):
+    """ Wrap calls to get_notice() and get_sxs() """
+    notice = get_notice(part, notice_id)
+    notice = convert_to_python(notice)
+    paragraph_sxs = get_sxs(label_id, notice, fr_page)
+    return notice, paragraph_sxs
 
 
 def get_diff_json(regulation, older, newer):

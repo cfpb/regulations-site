@@ -8,7 +8,6 @@ var HeaderEvents = require('../../events/header-events');
 var DrawerEvents = require('../../events/drawer-events');
 var Helpers = require('../../helpers');
 var MainEvents = require('../../events/main-events');
-var GAEvents = require('../../events/ga-events');
 Backbone.$ = $;
 
 var ChildView = Backbone.View.extend({
@@ -32,9 +31,6 @@ var ChildView = Backbone.View.extend({
                 }
 
                 this.route(this.options);
-
-                GAEvents.trigger('section:open', this.options);
-
                 this.attachWayfinding();
                 this.render();
             }

@@ -50,7 +50,7 @@ This contains all of the styles specific to the TOC
     a:active,
     .current {
         color: @black;
-        background-color: @green_light;
+        background-color: @green-20;
     }
 
     /*
@@ -64,15 +64,15 @@ This contains all of the styles specific to the TOC
     .added a,
     .added a:link,
     .added a:visited {
-        border-right: 8px solid @green_midtone;
+        border-right: 8px solid @green-60;
     }
 
     .deleted a,
     .deleted a:link,
     .deleted a:visited {
-        border-right: 8px solid @red_orange_80;
+        border-right: 8px solid @red;
         text-decoration: line-through;
-        color: @80_gray;
+        color: @gray-80;
     }
 }
 
@@ -88,7 +88,7 @@ This contains all of the styles specific to the TOC
     margin: 0;
     padding: 10px 15px;
     display: block;
-    color: @mid_text;
+    color: @dark-gray;
     background-color: #F8F8F8;
     font-size: 1em;
     .border-bottom-light (@width: 1px);
@@ -123,17 +123,17 @@ This contains all of the styles specific to the history
     .effective-label {
         padding: 0 15px;
         .avenir-next;
-        color: @dark_gray;
+        color: @gray;
     }
 
     /*TODO: unify link styles with TOC*/
 
     .version-list {
-        border-top: 1px solid @light_field;
+        border-top: 1px solid @gray-20;
     }
 
     .status-list {
-        border-bottom: 1px solid @light_field;
+        border-bottom: 1px solid @gray-20;
     }
 
     .version-link {
@@ -149,16 +149,16 @@ This contains all of the styles specific to the history
     .current {
         .version-link {
             padding: 10px 15px 0px 15px;
-            background: @green_light;
+            background: @green-20;
         }
 
         .timeline-content-wrap {
-            background: @green_light;
+            background: @green-20;
         }
 
         .rule-list {
             display: block;
-            background: @green_light;
+            background: @green-20;
         }
     }
 
@@ -175,7 +175,7 @@ This contains all of the styles specific to the history
     .version-link:target,
     .current {
         color: @black;
-        background: @green_light;
+        background: @green-20;
         display: block;
     }
 
@@ -189,14 +189,14 @@ This contains all of the styles specific to the history
         .reset;
         font-size: 0.875em;
         text-transform: uppercase;
-        color: @dark_text;
+        color: @gray-80;
     }
 
     h5 {
         .reset;
         font-size: 0.875em;
         text-transform: uppercase;
-        color: @dark_text;
+        color: @gray-80;
     }
 
     .final-rule {
@@ -206,11 +206,11 @@ This contains all of the styles specific to the history
     .compare-title {
         margin: 10px 15px 0 15px;
         padding-top: 15px;
-        border-top: 1px dashed @light_field;
+        border-top: 1px dashed @gray-20;
     }
 
     .rule-status {
-        color: @dark_text;
+        color: @gray-80;
         text-transform: lowercase;
         .avenir-next;
         display: block;
@@ -269,9 +269,9 @@ This contains all of the styles specific to the history
         margin: 15px;
         background-color: #fff;
         line-height: 32px;
-        border-top: 1px solid @light_field;
-        border-bottom: 1px solid @light_field;
-        border-left: 1px solid @light_field;
+        border-top: 1px solid @gray-20;
+        border-bottom: 1px solid @gray-20;
+        border-left: 1px solid @gray-20;
    }
 
    input[type=text]{
@@ -302,7 +302,7 @@ This contains all of the styles specific to the history
     #history {
         li:hover,
         li.current {
-            background-color: @green_light;
+            background-color: @green-20;
         }
     }
 }
@@ -320,7 +320,7 @@ This contains all of the styles specific to the history
     -webkit-border-radius: 3px;
     border-radius: 3px;
     margin: 15px;
-    background-color: @red_orange;
+    background-color: @red;
     padding: 10px;
     text-align: center;
 }
@@ -333,7 +333,7 @@ This contains all of the styles specific to the history
 .stop-button:hover,
 .stop-button:active,
 .stop-button:focus {
-    background-color: @red_orange_50;
+    background-color: @red-40;
     color: @black;
 }
 
@@ -351,19 +351,19 @@ This contains all of the styles specific to the search
     }
 
     h4 {
-        color: @dark_text;
+        color: @gray-80;
         .avenir-next;
         text-transform: none;
         margin-bottom: 0.5em;
     }
 
     .version-search {
-        border-bottom: 2px solid @medium_gray;
+        border-bottom: 2px solid @gray-40;
         padding: 0 15px 20px 15px;
     }
 
     .search-box {
-        border-bottom: 1px solid @medium_gray;
+        border-bottom: 1px solid @gray-40;
         padding: 20px 15px;
     }
 
@@ -387,9 +387,9 @@ This contains all of the styles specific to the search
     input[type=text]{
         padding: 0 10px;
         text-align: left;
-        border-top: 1px solid @light_field;
+        border-top: 1px solid @gray-20;
         border-right: none;
-        border-bottom: 1px solid @light_field;
-        border-left: 1px solid @light_field;
+        border-bottom: 1px solid @gray-20;
+        border-left: 1px solid @gray-20;
     }
 }

@@ -13,6 +13,7 @@ var Definition = require('./definition-view');
 var MetaModel = require('../../models/meta-model');
 var MainEvents = require('../../events/main-events');
 var Helpers = require('../../helpers.js');
+var GAEvents = require('../../events/ga-events');
 
 Backbone.$ = $;
 
@@ -173,7 +174,15 @@ var SidebarView = Backbone.View.extend({
         else {
             $expandable = e;
         }
+
         Helpers.toggleExpandable($expandable, 400);
+
+        if ($expandable.hasClass('open')) {
+          GAEvents.sendEvent('sidebarexpanable:open', $expandable.data('expandable'));
+        } else {
+          GAEvents.sendEvent('sidebarexpanable:close', $expandable.data('expandable'));
+        }
+
     },
 
     closeChildren: function(except) {
