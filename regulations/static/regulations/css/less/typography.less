@@ -413,8 +413,12 @@ The `<ol>` tag needs to have the appropriate list type applied
 .markerless {
   list-style-type: none;
 
-  /* don't indent the markerless paragraph */
-  >p {
+  /* don't indent the markerless headings, paragraphs, tables, and images */
+  >h3,
+  >h4,
+  >p,
+  >img,
+  >.table-wrap, {
     margin-left: -1em;
   }
 }
