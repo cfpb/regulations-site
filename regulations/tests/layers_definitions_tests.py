@@ -14,6 +14,6 @@ class DefinitionsLayerTest(TestCase):
                                             ['202', '3'], 'account')
 
         url = '<a href="#202-3" class="citation definition" '
-        url += 'data-definition="202-3" data-defined-term="account">'
+        url += 'data-definition="202-3" data-defined-term="account" data-gtm_ignore="true">'
         url += 'account</a>'
         self.assertEquals(definition_link, url)
