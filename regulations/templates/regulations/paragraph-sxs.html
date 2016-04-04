@@ -1,7 +1,7 @@
 {% if sxs.label %}
     <div class="sxs-header">
         <a class="sxs-back-button" href="{{ back_url }}"><span class="cf-icon cf-icon-arrow-left-round"></span> {{sxs.header}}</a>
-        <h2><span class="sxs-label">Section-by-section analysis - </span>{{ notice.fr_volume }} FR {{ sxs.page }}</h2>
+        <h2><span class="sxs-label">Section-by-section analysis</h2>
     </div>
     <div class="sxs-content group">
         <div id="{{sxs.label}}" class="sxs-main-content">
@@ -75,7 +75,7 @@
                     data-sxs-pararaph-id="{{analysis.reference.1}}"
                     data-doc-number="{{analysis.reference.0}}"
                     class="internal"
-                    >{{ analysis.fr_volume }} FR {{ analysis.fr_page }}</a>
+                    >{{ analysis.reference|first }}</a>
                     <br />Published {{ analysis.publication_date|date:"F j, Y" }}
                 </li>
             {% endfor %}
