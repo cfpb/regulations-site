@@ -15,7 +15,7 @@ before_install:
     - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
     - source ~/.nvm/nvm.sh
     - nvm install 4
-    - npm install -g grunt-cli
+    - npm install -g npm grunt-cli
 install:
     - pip install -r requirements.txt
     - pip install -r requirements_test.txt
