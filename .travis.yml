@@ -22,7 +22,6 @@ install:
     - pip install -r requirements_test.txt
     - ./frontendbuild.sh
 script:
-    - grunt test-js
     - python manage.py test
     - ./dummy_api/start.sh
     - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
