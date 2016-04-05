@@ -65,7 +65,7 @@ class NodeTypesTest(TestCase):
                          label_to_text(['204', 'Subpart', 'C', 'Interp']))
         self.assertEqual('Interpretations for Appendices of Part 204',
                          label_to_text(['204', 'Appendices', 'Interp']))
-        self.assertEqual('This Section',
+        self.assertEqual('Supplement I to Part 204',
                          label_to_text(['204', 'Interp', 'h1']))
         self.assertEqual(
             'Appendix M2 to Part 204', label_to_text(['204', 'M2']))

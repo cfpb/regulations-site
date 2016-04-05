@@ -64,10 +64,7 @@ def _l2t_interp(label):
         # Interpretation
         prefix = list(takewhile(lambda l: l != 'Interp', label))
         suffix = label[label.index('Interp')+1:]
-        if len(prefix) == 1 and suffix:
-            # Interpretation introduction; for now we cop out
-            return 'This Section'
-        elif len(prefix) == 1:
+        if len(prefix) == 1:
             return 'Supplement I to Part %s' % prefix[0]
         elif suffix:
             return 'Comment for %s-%s' % (label_to_text(prefix),
