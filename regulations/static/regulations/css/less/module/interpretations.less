@@ -28,7 +28,7 @@
           background: url(../img/interpretation.png) no-repeat 0 3px;
       }
     }
-    
+
     .expand-button {
         color: @pacific;
         .avenir-next-demi;
@@ -147,6 +147,11 @@
     li {
         margin: 0 0 1em 0;
         padding: 0;
+    }
+
+    // remove markers from direct descendent lists
+    >ol li {
+        list-style-type: none;
     }
 
     h4 {
