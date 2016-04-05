@@ -1587,9 +1587,9 @@
           "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13.tgz"
         },
         "request": {
-          "version": "2.67.0",
+          "version": "2.70.0",
           "from": "request@2.x",
-          "resolved": "https://registry.npmjs.org/request/-/request-2.67.0.tgz"
+          "resolved": "https://registry.npmjs.org/request/-/request-2.70.0.tgz"
         },
         "rimraf": {
           "version": "2.4.4",
@@ -3270,9 +3270,9 @@
       }
     },
     "request": {
-      "version": "2.67.0",
-      "from": "request@2.67.0",
-      "resolved": "https://registry.npmjs.org/request/-/request-2.67.0.tgz"
+      "version": "2.70.0",
+      "from": "request@2.70.0",
+      "resolved": "https://registry.npmjs.org/request/-/request-2.70.0.tgz"
     },
     "require-main-filename": {
       "version": "1.0.1",
