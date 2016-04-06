@@ -50,6 +50,7 @@
     "mocha": "2.4.5",
     "sinon": "1.14.1",
     "sinon-chai": "2.7.0",
+    "snyk": "1.13.2",
     "tmp": "0.0.23",
     "watch": "0.8.0"
   },
@@ -68,7 +69,6 @@
     "jquery": "1.11.3",
     "jquery-scrollstop": "1.2.0",
     "respond.js": "1.4.2",
-    "snyk": "^1.13.2",
     "underscore": "1.4.4",
     "unveilable": "0.2.0"
   },
