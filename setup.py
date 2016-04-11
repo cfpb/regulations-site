@@ -5,6 +5,7 @@ from subprocess import call
 from setuptools import Command
 from distutils.command.build_ext import build_ext as _build_ext
 from setuptools.command.bdist_egg import bdist_egg as _bdist_egg
+from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 
 
 class build_frontend(Command):
@@ -37,6 +38,12 @@ class bdist_egg(_bdist_egg):
         _bdist_egg.run(self)
 
 
+class bdist_wheel(_bdist_wheel):
+    """ A bdist_wheel subclass that runs build_frontend """
+    def run(self):
+        self.run_command('build_frontend')
+        _bdist_wheel.run(self)
+
 setup(
     name="regulations",
     version="2.0.0",
@@ -46,6 +53,7 @@ setup(
         'build_frontend': build_frontend,
         'build_ext': build_ext,
         'bdist_egg': bdist_egg,
+        'bdist_wheel': bdist_wheel,
     },
     install_requires=[
         'django==1.8',
