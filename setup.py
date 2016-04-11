@@ -47,7 +47,7 @@ setup(
         'bdist_egg': bdist_egg,
     },
     install_requires=[
-        'django==1.6',
+        'django==1.8',
         'lxml',
         'requests'
     ],
