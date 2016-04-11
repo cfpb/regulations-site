@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include regulations/static *
+global-include *.html *.txt *.ttf *.woff
