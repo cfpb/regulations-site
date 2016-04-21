@@ -46,7 +46,7 @@ class bdist_wheel(_bdist_wheel):
 
 setup(
     name="regulations",
-    version="2.1.0",
+    version="2.1.1",
     packages=find_packages(),
     include_package_data=True,
     cmdclass={
