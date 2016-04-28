@@ -44,9 +44,10 @@ class bdist_wheel(_bdist_wheel):
         self.run_command('build_frontend')
         _bdist_wheel.run(self)
 
+
 setup(
     name="regulations",
-    version="2.1.1",
+    version="2.1.2",
     packages=find_packages(),
     include_package_data=True,
     cmdclass={
