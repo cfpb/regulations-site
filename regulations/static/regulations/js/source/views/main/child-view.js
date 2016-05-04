@@ -144,7 +144,8 @@ var ChildView = Backbone.View.extend({
         }
     },
 
-    route: function(options) {        if (Router.hasPushState && typeof options.noRoute === 'undefined') {
+    route: function(options) {
+      if (Router.hasPushState && typeof options.noRoute === 'undefined') {
             var url = this.url,
                 hashPosition;
 
@@ -165,6 +166,13 @@ var ChildView = Backbone.View.extend({
                 } else if (options.type !== 'diff') {
                     url += '#' + options.id;
                 }
+
+                // explicit url pattern for reg-sections
+                // it may be worth doing this for each url pattern
+                if (options.type === 'reg-section') {
+                  url = options.id + '/' + options.regVersion + '#' + options.id;
+                }
+
             this.navigate(url);
             }
         }
