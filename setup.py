@@ -57,9 +57,9 @@ setup(
         'bdist_wheel': bdist_wheel,
     },
     install_requires=[
-        'django==1.8',
+        'django>=1.8',
         'lxml',
-        'requests'
+        'requests',
     ],
     classifiers=[
         'License :: Public Domain',
