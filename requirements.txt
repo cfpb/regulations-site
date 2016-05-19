@@ -1,2 +1,5 @@
+django>=1.8,<=1.8.99
+lxml
+requests
 # Import setup.py
 -e .
