@@ -27,7 +27,7 @@ else {
         loadSection: function(section) {
             var options = {id: section};
 
-            // to scroll to paragraph if there is a hadh
+            // to scroll to paragraph if there is a hash
             options.scrollToId = Backbone.history.getHash();
 
             // ask the view not to route, its not needed
