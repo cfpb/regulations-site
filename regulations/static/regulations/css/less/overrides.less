@@ -74,3 +74,20 @@ RegML process these overrides will need to be removed.
         }
     }
 }
+
+/*
+Section-by-section Analysis Overrides
+=====================================
+For Reg Z, we want to disable the SxS list entirely because there are 
+just too many errors in the SxS content. Once those errors are resolved
+we can reveal SxS again. Doing this ehre permits continued work on the 
+content while not exposing it through the UI.
+*/
+
+.secondary-content-1026 {
+
+    #sxs-list {
+        display: none;
+    }
+
+}
