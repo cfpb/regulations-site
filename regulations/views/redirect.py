@@ -50,7 +50,7 @@ def redirect_by_date_get(request, label_id):
 
         return redirect_by_date(request, label_id, "%04d" % year,
                                 "%02d" % month, "%02d" % day)
-    except ValueError, TypeError:
+    except (ValueError, TypeError):
         return handle_generic_404(request)
 
 

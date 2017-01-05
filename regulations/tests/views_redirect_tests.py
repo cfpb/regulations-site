@@ -66,6 +66,11 @@ class ViewsRedirectTest(TestCase):
             redirect_by_date_get(request, 'lablab')
             self.assertTrue(handle.called)
 
+            handle.reset_mock()
+            request = RequestFactory().get('?year=2222')
+            redirect_by_date_get(request, 'lablab')
+            self.assertTrue(handle.called)
+
     def test_diff_redirect_bad_version(self):
         request = RequestFactory().get('?new_version=A+Bad+Version')
         response = diff_redirect(request, 'lablab', 'verver')
