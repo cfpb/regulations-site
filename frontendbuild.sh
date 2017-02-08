@@ -7,5 +7,5 @@ if [ ! -f config.json ]; then
 fi
 
 npm install
-npm test
+npm run test:js
 grunt

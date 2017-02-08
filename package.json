@@ -24,7 +24,9 @@
   },
   "scripts": {
     "postinstall": "grunt",
-    "test": "grunt test-js && snyk test"
+    "test": "npm run test:js && npm run test:snyk",
+    "test:js": "grunt test-js",
+    "test:snyk": "snyk test"
   },
   "devDependencies": {
     "browserify": "9.0.3",
