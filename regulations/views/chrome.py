@@ -49,6 +49,8 @@ class ChromeView(TemplateView):
                 request, e.label_id, e.version, e.context)
         except error_handling.MissingContentException, e:
             return error_handling.handle_generic_404(request)
+        except TypeError:
+            return error_handling.handle_generic_404(request)
 
     def _assert_good(self, response):
         if response.status_code != 200:
