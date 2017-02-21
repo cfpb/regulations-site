@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.http import Http404
 from django.views.generic.base import TemplateView
 
 from regulations.generator import generator
@@ -100,10 +101,13 @@ class ChromeView(TemplateView):
         context['node_type'] = type_from_label(label_id_list)
 
         error_handling.check_regulation(reg_part)
-        self.set_chrome_context(context, reg_part, version)
 
-        self.check_tree(context)
-        self.add_main_content(context)
+        try:
+            self.set_chrome_context(context, reg_part, version)
+            self.check_tree(context)
+            self.add_main_content(context)
+        except (IndexError, TypeError):
+            raise Http404
 
         if self.has_sidebar:
             sidebar_view = SideBarView.as_view()
