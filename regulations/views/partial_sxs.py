@@ -3,6 +3,7 @@ from collections import defaultdict
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseBadRequest
+from django.http import Http404
 from django.template import Context, loader
 from django.views.generic.base import TemplateView
 
@@ -93,11 +94,15 @@ class ParagraphSXSView(TemplateView):
         version = context.get('version', notice_id)
 
         # Try first to get the notice and SxS with the version.
-        notice, paragraph_sxs = generator.get_notice_and_sxs(part, version,
-                label_id, fr_page)
+        try:
+            notice, paragraph_sxs = generator.get_notice_and_sxs(part, version,
+                    label_id, fr_page)
+        except TypeError:
+            raise Http404
+
         if notice is None or paragraph_sxs is None:
             # If that didn't work, try again with the notice_id
-            notice, paragraph_sxs = generator.get_notice_and_sxs(part, 
+            notice, paragraph_sxs = generator.get_notice_and_sxs(part,
                     notice_id, label_id, fr_page)
             if notice is None or paragraph_sxs is None:
                 raise error_handling.MissingContentException()
