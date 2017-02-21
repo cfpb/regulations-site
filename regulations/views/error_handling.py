@@ -89,8 +89,12 @@ def handle_missing_section_404(
     context = {
         'request_path': request.path,
         'reg_section':reg_section,
-        'effective_date':req_version['by_date']
     }
+    try:
+        context['effective_date'] = req_version['by_date']
+    except KeyError:
+        context['effective_date'] = ''
+
     context.update(extra_context)
 
     template = loader.get_template('regulations/missing_section_404.html')
