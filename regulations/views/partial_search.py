@@ -1,3 +1,5 @@
+from urllib2 import HTTPError
+
 from django.http import HttpResponseBadRequest
 from django.template.defaultfilters import title
 
@@ -25,7 +27,10 @@ class PartialSearch(PartialView):
 
         kwargs['q'] = query
         kwargs['version'] = version
-        return super(PartialSearch, self).get(request, *args, **kwargs)
+        try:
+            return super(PartialSearch, self).get(request, *args, **kwargs)
+        except HTTPError:
+            return HttpResponseBadRequest("bad query or version")
 
     def add_prev_next(self, current_page, context):
         context['current'] = { 'page': current_page + 1,
