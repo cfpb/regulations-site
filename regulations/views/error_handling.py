@@ -33,7 +33,7 @@ class MissingSectionException(Exception):
 
 
 def handle_generic_404(request):
-    raise Http404
+    raise http.Http404
 
 
 def check_regulation(reg_part):

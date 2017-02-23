@@ -1,6 +1,7 @@
 from unittest import TestCase
 from mock import patch
 
+from django.http import Http404
 from django.test import RequestFactory
 
 from regulations.views import error_handling
@@ -39,9 +40,8 @@ class ErrorHandlingTest(TestCase):
 
     def test_handle_generic_404(self):
         request = RequestFactory().get('/fake-path')
-        result = error_handling.handle_generic_404(request)
-        self.assertEqual(result.status_code, 404)
-        self.assertTrue('Regulation content not found' in result.content)
+        with self.assertRaises(Http404):
+            error_handling.handle_generic_404(request)
 
     @patch('regulations.views.error_handling.add_to_chrome')
     @patch('regulations.views.error_handling.api_reader')
