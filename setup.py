@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="regulations",
-    version="2.1.7",
+    version="2.1.8",
     packages=find_packages(),
     include_package_data=True,
     setup_requires=['cfgov_setup==1.2',],
