@@ -27,7 +27,7 @@
     "test": "grunt test-js && snyk test"
   },
   "devDependencies": {
-    "browserify": "9.0.3",
+    "browserify": "14.1.0",
     "browserify-shim": "3.8.3",
     "chai": "2.1.1",
     "chai-jq": "0.0.9",
