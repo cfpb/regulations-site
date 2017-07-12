@@ -1,12 +1,12 @@
 'use strict';
-var _ = require('underscore');
-var Backbone = require('backbone');
-var MetaModel = require('./meta-model');
+var _ = require( 'underscore' );
+var Backbone = require( 'backbone' );
+var MetaModel = require( './meta-model' );
 
-Backbone.SxSModel = MetaModel.extend({});
+Backbone.SxSModel = MetaModel.extend( {} );
 
-var sxsModel = new Backbone.SxSModel({
-    supplementalPath: 'sxs'
-});
+var sxsModel = new Backbone.SxSModel( {
+  supplementalPath: 'sxs'
+} );
 
 module.exports = sxsModel;
