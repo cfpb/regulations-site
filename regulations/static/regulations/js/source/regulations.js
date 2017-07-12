@@ -1,48 +1,48 @@
 // Launches app
 'use strict';
 // make jQuery globally accessible for plugins and analytics
-global.$ = global.jQuery = require('jquery');
-var app = require('./app-init');
+global.$ = global.jQuery = require( 'jquery' );
+var app = require( './app-init' );
 
 // A `bind()` polyfill
-if (!Function.prototype.bind) {
-    Function.prototype.bind = function (oThis) {
-        if (typeof this !== 'function') {
-            // closest thing possible to the ECMAScript 5 internal IsCallable function
-            throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
-        }
+if ( !Function.prototype.bind ) {
+  Function.prototype.bind = function( oThis ) {
+    if ( typeof this !== 'function' ) {
+      // closest thing possible to the ECMAScript 5 internal IsCallable function
+      throw new TypeError( 'Function.prototype.bind - what is trying to be bound is not callable' );
+    }
 
-      var aArgs = Array.prototype.slice.call(arguments, 1),
-          fToBind = this,
-          FNOP = function () {},
-          fBound = function () {
-            return fToBind.apply(this instanceof FNOP && oThis ? this : oThis, aArgs.concat(Array.prototype.slice.call(arguments)));
-          };
+    var aArgs = Array.prototype.slice.call( arguments, 1 ),
+        fToBind = this,
+        FNOP = function() {},
+        fBound = function() {
+          return fToBind.apply( this instanceof FNOP && oThis ? this : oThis, aArgs.concat( Array.prototype.slice.call( arguments ) ) );
+        };
 
-      FNOP.prototype = this.prototype;
-      fBound.prototype = new FNOP();
+    FNOP.prototype = this.prototype;
+    fBound.prototype = new FNOP();
 
-      return fBound;
-    };
+    return fBound;
+  };
 }
 
 // a 'window.location.origin' polyfill for IE10
 // http://tosbourn.com/2013/08/javascript/a-fix-for-window-location-origin-in-internet-explorer/
-if (!window.location.origin) {
-  window.location.origin = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+if ( !window.location.origin ) {
+  window.location.origin = window.location.protocol + '//' + window.location.hostname + ( window.location.port ? ':' + window.location.port : '' );
 }
 
-$(document).ready(function() {
-    app.init();
-});
+$( document ).ready( function() {
+  app.init();
+} );
 
 // tests for some accessibility misses
 // use in browser console with AccessibilityTest()
 window.AccessibilityTest = function() {
-    // I think this will keep IE from crying?
-    var console = console || {error: function() {}};
+  // I think this will keep IE from crying?
+  var console = console || { error: function() {} };
 
-    /* eslint-disable */
+  /* eslint-disable */
     $('img').each(function() {
         if (typeof this.attributes.alt === 'undefined') {
             console.error('Image does not have alt text', this);
