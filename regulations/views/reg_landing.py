@@ -24,7 +24,10 @@ def get_versions(label_id):
             next_version = None
 
         current = [h for h in history if h['timeline'] == 'current']
-        current_version = current[0]
+        if current:
+            current_version = current[0]
+        else:
+            current_version = next_version
         return (current_version, next_version)
 
 
