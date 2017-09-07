@@ -34,3 +34,12 @@ class LandingViewTest(TestCase):
         current_ver, next_ver = reg_landing.get_versions('204')
         self.assertEqual({'timeline': 'current', 'version': 'b'}, current_ver)
         self.assertEqual(None, next_ver)
+
+    @patch('regulations.views.reg_landing.fetch_grouped_history')
+    def test_get_versions_no_current(self, fetch_grouped_history):
+        fetch_grouped_history.return_value = [
+            {'timeline': 'future', 'version': 'b'}
+        ]
+        current_ver, next_ver = reg_landing.get_versions('204')
+        self.assertEqual({'timeline': 'future', 'version': 'b'}, current_ver)
+        self.assertEqual({'timeline': 'future', 'version': 'b'}, next_ver)
