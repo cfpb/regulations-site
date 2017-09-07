@@ -312,7 +312,6 @@ a:visited {
 */
 
 .section-number,
-.appendix-heading,
 .supplement-section h3 {
     font-size: 1.8125em; /* 29px / 16 */
     .avenir-next-demi;
@@ -413,10 +412,16 @@ The `<ol>` tag needs to have the appropriate list type applied
 .markerless {
   list-style-type: none;
 
-  /* don't indent the markerless paragraph */
-  >p {
-    margin-left: -1em;
-  }
+    /* don't indent the markerless headings, paragraphs, tables, and images */
+    @media screen and (min-width: 600px) {
+        >h3,
+        >h4,
+        >p,
+        >img,
+        >.table-wrap {
+            margin-left: -1.2em;
+        }
+    }
 }
 
 

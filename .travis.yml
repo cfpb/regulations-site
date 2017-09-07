@@ -14,14 +14,13 @@ before_install:
     - rm -rf ~/.nvm
     - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
     - source ~/.nvm/nvm.sh
-    - nvm install 4
+    - nvm install 6
     - npm install -g grunt-cli
 install:
     - pip install -r requirements.txt
     - pip install -r requirements_test.txt
     - ./frontendbuild.sh
 script:
-    - grunt test-js
     - python manage.py test
     - ./dummy_api/start.sh
     - echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py

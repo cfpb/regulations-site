@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from django.conf import settings
-from django.http import HttpResponseGone
+from django.http import HttpResponseGone, Http404
 from django.test import Client, RequestFactory
 from mock import patch
 
@@ -36,8 +36,8 @@ class ViewsChromeTest(TestCase):
 
         view = FakeView()
         view.request = RequestFactory().get('/')
-        response = view.get(view.request, label_id='lab', version='ver')
-        self.assertEqual(404, response.status_code)
+        with self.assertRaises(Http404):
+            view.get(view.request, label_id='lab', version='ver')
 
     @patch('regulations.views.chrome.error_handling')
     @patch('regulations.views.chrome.generator')

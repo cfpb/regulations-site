@@ -1,0 +1,48 @@
+{
+  "name": "regulations-site",
+  "version": "0.1.0",
+  "dependencies": {
+    "backbone": {
+      "version": "1.0.0",
+      "from": "backbone@1.0.0",
+      "resolved": "https://registry.npmjs.org/backbone/-/backbone-1.0.0.tgz"
+    },
+    "backbone-query-parameters": {
+      "version": "0.4.0",
+      "from": "backbone-query-parameters@0.4.0",
+      "resolved": "https://registry.npmjs.org/backbone-query-parameters/-/backbone-query-parameters-0.4.0.tgz",
+      "dependencies": {
+        "underscore": {
+          "version": "1.8.3",
+          "from": "underscore@>=1.5.1",
+          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
+        }
+      }
+    },
+    "jquery": {
+      "version": "1.12.3",
+      "from": "jquery@1.12.3",
+      "resolved": "https://registry.npmjs.org/jquery/-/jquery-1.12.3.tgz"
+    },
+    "jquery-scrollstop": {
+      "version": "1.2.0",
+      "from": "jquery-scrollstop@1.2.0",
+      "resolved": "https://registry.npmjs.org/jquery-scrollstop/-/jquery-scrollstop-1.2.0.tgz"
+    },
+    "respond.js": {
+      "version": "1.4.2",
+      "from": "respond.js@1.4.2",
+      "resolved": "https://registry.npmjs.org/respond.js/-/respond.js-1.4.2.tgz"
+    },
+    "underscore": {
+      "version": "1.4.4",
+      "from": "underscore@1.4.4",
+      "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.4.4.tgz"
+    },
+    "unveilable": {
+      "version": "0.2.0",
+      "from": "unveilable@0.2.0",
+      "resolved": "https://registry.npmjs.org/unveilable/-/unveilable-0.2.0.tgz"
+    }
+  }
+}

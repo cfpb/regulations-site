@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from django.http import Http404
 from django.test import RequestFactory
 from mock import patch
 
@@ -66,10 +67,15 @@ class ViewsRedirectTest(TestCase):
             redirect_by_date_get(request, 'lablab')
             self.assertTrue(handle.called)
 
+            handle.reset_mock()
+            request = RequestFactory().get('?year=2222')
+            redirect_by_date_get(request, 'lablab')
+            self.assertTrue(handle.called)
+
     def test_diff_redirect_bad_version(self):
         request = RequestFactory().get('?new_version=A+Bad+Version')
-        response = diff_redirect(request, 'lablab', 'verver')
-        self.assertEqual(404, response.status_code)
+        with self.assertRaises(Http404):
+            diff_redirect(request, 'lablab', 'verver')
 
     @patch('regulations.views.redirect.fetch_grouped_history')
     def test_diff_redirect_order(self, fgh):

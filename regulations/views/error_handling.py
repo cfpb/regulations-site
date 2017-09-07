@@ -33,12 +33,7 @@ class MissingSectionException(Exception):
 
 
 def handle_generic_404(request):
-    template = loader.get_template('regulations/generic_404.html')
-    context = {'request_path': request.path}
-    utils.add_extras(context)
-    body = template.render(RequestContext(
-        request, context))
-    return http.HttpResponseNotFound(body, content_type='text/html')
+    raise http.Http404
 
 
 def check_regulation(reg_part):
@@ -89,8 +84,12 @@ def handle_missing_section_404(
     context = {
         'request_path': request.path,
         'reg_section':reg_section,
-        'effective_date':req_version['by_date']
     }
+    try:
+        context['effective_date'] = req_version['by_date']
+    except KeyError:
+        context['effective_date'] = ''
+
     context.update(extra_context)
 
     template = loader.get_template('regulations/missing_section_404.html')

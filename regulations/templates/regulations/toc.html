@@ -20,7 +20,7 @@
                     {% if item.is_first_appendix %}
                         <li data-subpart-heading><h3 class="subpart-heading">Appendices</h3></li>
                     {% endif %}
-                    <li><a href="{{item.url}}" data-section-id="{{item.section_id}}"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
+                    <li><a href="{{item.url}}" data-section-id="{{item.section_id}}" data-gtm_ignore="true"><span class="toc-section-marker">{{item.label|safe}}</span> {{item.sub_label|safe}}</a></li>
                 {% endif %}
             {% endfor %}
         </ol>

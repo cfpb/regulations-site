@@ -81,6 +81,8 @@ style.css.map
 regulations.egg-info
 build/
 dist/
+.snyk
+eregsip/
 
 # docs output
 docs/_build
