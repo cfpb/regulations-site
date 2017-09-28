@@ -1,8 +1,10 @@
 from unittest import TestCase
 
 from django.template import Template
+from django.test import RequestFactory
 from mock import patch
 
+from regulations.views import error_handling
 from regulations.views.partial_sxs import *
 from regulations.generator.layers.utils import convert_to_python
 
@@ -157,3 +159,15 @@ class ParagrasphSXSViewTests(TestCase):
         self.assertTrue('sxs' in context)
         self.assertTrue('label' in context['sxs'])
 
+    @patch(
+        'regulations.views.partial_sxs.ParagraphSXSView.get_context_data',
+        side_effect=error_handling.MissingContentException
+    )
+    def test_missing_content_raises_404(self, get_context_data):
+        with self.assertRaises(Http404):
+            request = RequestFactory().get('/partial/sxs/1005-31-a/2012-1728')
+            ParagraphSXSView.as_view()(
+                request,
+                label_id='1005-31-a',
+                notice_id='2012-1728'
+            )
