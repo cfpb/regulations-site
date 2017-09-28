@@ -29,15 +29,19 @@ class ParagraphSXSView(TemplateView):
                 'regulations/paragraph-sxs.html']
 
     def get(self, request, *args, **kwargs):
-        """Override this method so that we can grab the GET variables"""
+        """Override this method so that we can grab the GET variables
+        and properly handle any errors."""
         kwargs['version'] = request.GET.get('from_version')
         kwargs['back_url'] = SectionUrl.of(
             kwargs['label_id'].split('-'), kwargs['version'], sectional=True)
         kwargs['fr_page'] = request.GET.get('fr_page')
         if kwargs['fr_page'] and kwargs['fr_page'].isdigit():
             kwargs['fr_page'] = int(kwargs['fr_page'])
-        return super(ParagraphSXSView, self).get(request, *args,
-                                                 **kwargs)
+
+        try:
+            return super(ParagraphSXSView, self).get(request, *args, **kwargs)
+        except error_handling.MissingContentException as e:
+            raise Http404
 
     def further_analyses(self, label_id, notice_id, version,
             fr_page=None):
