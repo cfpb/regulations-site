@@ -32,3 +32,31 @@ class RegTest(TestCase):
 
         self.assertTrue(elements['is_section'])
         self.assertEquals('[Reserved]', elements['sub_label'])
+
+    def test_section_with_leading_symbol(self):
+        elements = title_parsing.section({
+            'index': ['204', '4'],
+            'title': '\xc2\xa7 204.4 Foo bar',
+        })
+        self.assertEqual(elements['sub_label'], 'Foo bar')
+
+    def test_section_with_leading_section(self):
+        elements = title_parsing.section({
+            'index': ['204', '4'],
+            'title': '204.4 Foo bar',
+        })
+        self.assertEqual(elements['sub_label'], 'Foo bar')
+
+    def test_section_without_leading_section(self):
+        elements = title_parsing.section({
+            'index': ['204', '4'],
+            'title': 'Foo bar',
+        })
+        self.assertEqual(elements['sub_label'], 'Foo bar')
+
+    def test_section_with_leading_symbol_but_without_leading_section(self):
+        elements = title_parsing.section({
+            'index': ['204', '4'],
+            'title': '\xc2\xa7 Foo bar',
+        })
+        self.assertEqual(elements['sub_label'], 'Foo bar')

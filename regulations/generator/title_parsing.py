@@ -44,6 +44,18 @@ def section(data):
         element['is_section'] = True
         element['label'] = '.'.join(data['index'])
         element['section_id'] = '-'.join(data['index'])
-        element['sub_label'] = re.search(
-            element['label'] + r'[^\w\[]*(.*)', data['title']).group(1)
+
+        # Due to inconsistencies in source data we need to be able to handle
+        # several different possible section title formats:
+        #
+        # 1003.2 Something
+        # § 1003.2 Something
+        # Something
+        # § Something
+        #
+        # In all of these cases, the sublabel should be "Something".
+        title_no_label = data['title'].split(element['label'])[-1]
+        sublabel_regex = re.compile(r'[^\w\[]*(.*)')
+        element['sub_label'] = sublabel_regex.search(title_no_label).group(1)
+
         return element
