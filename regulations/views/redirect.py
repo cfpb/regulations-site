@@ -28,7 +28,7 @@ def redirect_by_date(request, label_id, year, month, day):
     if last_version and len(label_parts) == 2:
         return redirect('chrome_section_view', label_id, last_version)
     elif last_version and label_parts[-1] == 'Interp':
-        return redirect('chrome_section_view', label_id, last_version)
+        return redirect('chrome_interp_view', label_id, last_version)
     elif last_version and len(label_parts) == 1:
         return redirect('chrome_regulation_view', label_id, last_version)
     elif last_version:

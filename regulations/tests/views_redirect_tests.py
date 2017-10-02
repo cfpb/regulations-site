@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.test import RequestFactory
 from mock import patch
@@ -105,3 +106,20 @@ class ViewsRedirectTest(TestCase):
         response = diff_redirect(request, '1111-22', '3')
         self.assertTrue('diff/1111-22/1/3' in response['Location'])
         self.assertTrue('from_version=3' in response['Location'])
+
+    @patch('regulations.views.redirect.ApiReader')
+    def test_redirect_to_interp_view(self, ApiReader):
+        ApiReader.return_value.regversions.return_value = {'versions': [
+            {'by_date': '2017-01-01', 'version': 'aaa'},
+        ]}
+
+        request = RequestFactory().get('/')
+        label_id = '1001-Subpart-X-Interp'
+        response = redirect_by_date(request, label_id, '2017', '01', '01')
+        self.assertEqual(
+            (response.status_code, response['Location']),
+            (302, reverse('chrome_interp_view', kwargs={
+                'version': 'aaa',
+                'label_id': label_id,
+            }))
+        )
