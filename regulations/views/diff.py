@@ -85,6 +85,10 @@ class PartialSectionDiffView(PartialView):
 
         builder = HTMLBuilder(*appliers)
         builder.tree = tree
+
+        if not builder.tree:
+            return error_handling.handle_generic_404(self.request)
+
         builder.generate_html()
 
         child_of_root = builder.tree
