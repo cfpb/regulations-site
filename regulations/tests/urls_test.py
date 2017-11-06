@@ -33,3 +33,9 @@ class UrlTests(TestCase):
             args=('201-2', '2011-1738_20121011', '2012-22345_20131022'))
         self.assertEqual(
             r, '/diff/201-2/2011-1738_20121011/2012-22345_20131022')
+
+    def test_diff_url_supports_multiple_dashes(self):
+        r = reverse(
+            'chrome_section_diff_view',
+            args=('201-Interp-XYZ', '2011-1738', '2012-22345'))
+        self.assertEqual(r, '/diff/201-Interp-XYZ/2011-1738/2012-22345')

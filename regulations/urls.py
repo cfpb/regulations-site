@@ -28,7 +28,7 @@ newer_version_pattern = meta_version % 'newer_version'
 notice_pattern = meta_version % 'notice_id'
 
 reg_pattern = r'(?P<label_id>[\d]+)'
-section_pattern = r'(?P<label_id>[\d]+[-][\w]+)'
+section_pattern = r'(?P<label_id>[\d]+[-][\w-]+)'
 interp_pattern = r'(?P<label_id>[-\d\w]+[-]Interp)'
 paragraph_pattern = r'(?P<label_id>[-\d\w]+)'
 subterp_pattern = r'(?P<label_id>[\d]+-(Appendices|Subpart(-[A-Z]+)?)-Interp)'
