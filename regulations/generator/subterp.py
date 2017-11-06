@@ -1,3 +1,4 @@
+import re
 from itertools import dropwhile, takewhile
 
 from regulations.generator.toc import fetch_toc
@@ -12,14 +13,16 @@ def filter_by_subterp(nodes, subterp_label, version):
     is_section = lambda n: n['label'][1].isdigit()
     not_section = lambda n: not is_section(n)
 
+    def is_app_section(node):
+        return re.search('^[A-Z]', node['label'][1]) is not None
+
     if subterp_label[1:] == ['Subpart', 'Interp']:      # Empty part
         skip_intros = dropwhile(not_section, nodes)
         sections = takewhile(is_section, skip_intros)
         return list(sections)
     elif subterp_label[1:] == ['Appendices', 'Interp']:  # Appendices
-        skip_intros = dropwhile(not_section, nodes)
-        skip_sections = dropwhile(is_section, skip_intros)
-        return list(skip_sections)
+        sections = [sec for sec in nodes if is_app_section(sec)]
+        return sections
     else:   # A Subpart. Most costly as we need to know the toc
         subpart_label = subterp_label[:-1]
         not_subpart = lambda el: el['index'] != subpart_label

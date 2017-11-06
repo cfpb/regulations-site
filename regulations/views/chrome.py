@@ -175,8 +175,10 @@ class ChromeSubterpView(ChromeView):
 
         interp = generator.get_tree_paragraph(reg_part + '-Interp', version)
         if not interp:
-            raise error_handling.MissingSectionException(label_id, version,
-                                                         context)
+            interp = generator.get_tree_paragraph(label_id, version)
+            if not interp:
+                raise error_handling.MissingSectionException(label_id, version,
+                                                             context)
 
         subterp_sects = filter_by_subterp(interp['children'], label, version)
         if not subterp_sects:
