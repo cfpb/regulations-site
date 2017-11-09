@@ -12,9 +12,7 @@ def filter_by_subterp(nodes, subterp_label, version):
     the range"""
     is_section = lambda n: n['label'][1].isdigit()
     not_section = lambda n: not is_section(n)
-
-    def is_app_section(node):
-        return re.search('^[A-Z]', node['label'][1]) is not None
+    is_app_section = lambda n: re.search('^[A-Z]', n['label'][1]) is not None
 
     if subterp_label[1:] == ['Subpart', 'Interp']:      # Empty part
         skip_intros = dropwhile(not_section, nodes)
