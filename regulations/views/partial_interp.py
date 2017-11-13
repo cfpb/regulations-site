@@ -48,7 +48,9 @@ class PartialSubterpView(PartialSectionView):
 
         interp = generator.get_tree_paragraph(reg_part + '-Interp', version)
         if not interp:
-            raise Http404
+            interp = generator.get_tree_paragraph(label_id, version)
+            if not interp:
+                raise Http404
 
         subterp_sects = filter_by_subterp(interp['children'], label, version)
         if not subterp_sects:
