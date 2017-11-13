@@ -28,10 +28,19 @@ newer_version_pattern = meta_version % 'newer_version'
 notice_pattern = meta_version % 'notice_id'
 
 reg_pattern = r'(?P<label_id>[\d]+)'
-section_pattern = r'(?P<label_id>[\d]+[-][\w-]+)'
+section_pattern = r'(?P<label_id>[\d]+[-][\w]+)'
 interp_pattern = r'(?P<label_id>[-\d\w]+[-]Interp)'
 paragraph_pattern = r'(?P<label_id>[-\d\w]+)'
 subterp_pattern = r'(?P<label_id>[\d]+-(Appendices|Subpart(-[A-Z]+)?)-Interp)'
+section_or_subterp_pattern = (
+    r'(?P<label_id>'
+    '[\d]+'
+    '('
+    '([-][\w]+)|'
+    '(-(Appendices|Subpart(-[A-Z]+)?)-Interp)'
+    ')'
+    ')'
+)
 
 lt_cache = cache_page(settings.CACHES['eregs_longterm_cache']['TIMEOUT'],
                       cache='eregs_longterm_cache')
@@ -63,7 +72,7 @@ urlpatterns = patterns(
     # Diff view of a section for non-JS viewers (or book markers)
     # Example: http://.../diff/201-4/2011-1738/2013-10704
     url(r'^diff/%s/%s/%s$' %
-        (section_pattern, version_pattern, newer_version_pattern),
+        (section_or_subterp_pattern, version_pattern, newer_version_pattern),
         lt_cache(ChromeSectionDiffView.as_view()),
         name='chrome_section_diff_view'),
     # Redirect to version by date

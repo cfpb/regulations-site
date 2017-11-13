@@ -1,5 +1,26 @@
+import re
+
 from unittest import TestCase
 from django.core.urlresolvers import reverse, resolve
+
+from regulations.urls import section_or_subterp_pattern
+
+
+class RegexTests(TestCase):
+    def test_section_or_subterp_matches_section(self):
+        self.assertRegexpMatches('201-2', section_or_subterp_pattern)
+
+    def test_section_or_subterp_matches_subterp_appendices(self):
+        self.assertRegexpMatches(
+            '201-Appendices-Interp',
+            section_or_subterp_pattern
+        )
+
+    def test_section_or_subterp_matches_subterp_subpart(self):
+        self.assertRegexpMatches(
+            '201-Subpart-XY-Interp',
+            section_or_subterp_pattern
+        )
 
 
 class UrlTests(TestCase):
@@ -33,9 +54,3 @@ class UrlTests(TestCase):
             args=('201-2', '2011-1738_20121011', '2012-22345_20131022'))
         self.assertEqual(
             r, '/diff/201-2/2011-1738_20121011/2012-22345_20131022')
-
-    def test_diff_url_supports_multiple_dashes(self):
-        r = reverse(
-            'chrome_section_diff_view',
-            args=('201-Interp-XYZ', '2011-1738', '2012-22345'))
-        self.assertEqual(r, '/diff/201-Interp-XYZ/2011-1738/2012-22345')
