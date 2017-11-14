@@ -1,3 +1,8 @@
+""" TODO: Search isn't working correctly when running locally, and any term
+you search for will return 100% of the dummy reg's sections as results. When
+search is working correctly locally, we should update this test to check for
+the correct number and text of results. """
+
 import os
 import unittest
 from base_test import BaseTest
@@ -10,9 +15,7 @@ class SearchTest(BaseTest, unittest.TestCase):
         return 'Search test'
 
     def test_search(self):
-        # make window wide enough so that the left panel defaults to open
-        self.driver.set_window_size(1366, 768)
-
+        self.driver.set_window_size(1024, 600)
         self.driver.get(self.test_url + '/1005')
         html = self.driver.find_element_by_tag_name('html')
         WebDriverWait(self.driver, 30).until(
@@ -33,6 +36,8 @@ class SearchTest(BaseTest, unittest.TestCase):
         search_submit.click()
         WebDriverWait(self.driver, 30).until(
             lambda driver: driver.find_element_by_class_name('result-list'))
+        drawer_toggle = self.driver.find_element_by_id('panel-link')
+        drawer_toggle.click()
         search_header = self.driver.find_element_by_xpath('//h2[@class="search-term"]')
         search_pager = self.driver.find_element_by_class_name('pager')
         search_results = self.driver.find_elements_by_xpath('//ul[@class="result-list"]/li/h3/a')
@@ -54,12 +59,12 @@ class SearchTest(BaseTest, unittest.TestCase):
             self.assertEqual(result.text, expected_results[index])
 
         # clicking a serrch result loads the appropriate subsection
-        search_result_link = search_results[7]
+        search_result_link = search_results[9]
         search_result_link.click()
         WebDriverWait(self.driver, 30).until(
             lambda driver: driver.find_element_by_id('1005-2'))
         wayfinding_header = self.driver.find_element_by_xpath('//*[@id="active-title"]/*[@class="header-label"]')
-        self.assertEqual(wayfinding_header.text, u'\xa71005.2(a)(2)')
+        self.assertEqual(wayfinding_header.text, u'\xa71005.2(a)(2)(i)')
 
 if __name__ == '__main__':
     unittest.main()
