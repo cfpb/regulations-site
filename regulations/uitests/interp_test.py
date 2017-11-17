@@ -27,7 +27,7 @@ class InterpTest(BaseTest, unittest.TestCase):
         self.assertTrue('OFFICIAL INTERPRETATION TO 2(h)' in interp_dropdown.text)
 
         # should have the "SHOW" link
-        self.assertTrue('SHOW' in interp_dropdown.text)
+        self.assertIn('SHOW', interp_dropdown.text)
 
         self.driver.execute_script('p10052h = document.getElementById("1005-2-h").offsetTop')
         self.driver.execute_script('window.scrollTo(0, p10052h)')

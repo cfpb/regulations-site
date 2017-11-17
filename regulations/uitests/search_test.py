@@ -55,10 +55,10 @@ class SearchTest(BaseTest, unittest.TestCase):
         ]
         self.assertEqual(search_header.text, u'Searching for \u201c' + search_term + u'\u201d')
         self.assertEqual(search_pager.text, u'Page 1 of 124')
-        for index, result in enumerate(search_results):
-            self.assertEqual(result.text, expected_results[index])
+        for index, expected_result in enumerate(expected_results):
+            self.assertEqual(search_results[index].text, expected_result)
 
-        # clicking a serrch result loads the appropriate subsection
+        # clicking a search result loads the appropriate subsection
         search_result_link = search_results[9]
         search_result_link.click()
         WebDriverWait(self.driver, 30).until(

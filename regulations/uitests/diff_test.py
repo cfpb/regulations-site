@@ -2,9 +2,9 @@ import os
 import unittest
 from base_test import BaseTest
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.color import Color
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
 
 class DiffTest(BaseTest, unittest.TestCase):
 
@@ -31,13 +31,13 @@ class DiffTest(BaseTest, unittest.TestCase):
         self.assertTrue('current' in drawer_button.get_attribute('class'))
 
         # drawer should display regulation history
-        timeline_list_items = self.driver.find_elements_by_class_name('history-toc-list')
+        timeline_list_items = self.driver.find_elements_by_css_selector('#history-toc-list .status-list')
         expected_timeline_versions = [
             '2011-11111',
             '2012-12121'
         ]
-        for index, item in enumerate(timeline_list_items):
-            self.assertEqual(item.get_attribute('data-base-version'), expected_timeline_versions[index])
+        for index, expected_version in enumerate(expected_timeline_versions):
+            self.assertEqual(timeline_list_items[index].get_attribute('data-base-version'), expected_version)
 
         # each timeline entry is a link to the rule effective on that date
         timeline_links = self.driver.find_elements_by_class_name('version-link')
@@ -45,8 +45,8 @@ class DiffTest(BaseTest, unittest.TestCase):
             self.test_url + '/1005-2/2011-11111',
             self.test_url + '/1005-2/2012-12121'
         ]
-        for index, link in enumerate(timeline_links):
-            self.assertEqual(link.get_attribute('href'), expected_timeline_urls[index])
+        for index, expected_url in enumerate(expected_timeline_urls):
+            self.assertEqual(timeline_links[index].get_attribute('href'), expected_url)
 
         diff_field = Select(self.driver.find_element_by_xpath('//*[@id="timeline"]/div[2]/ul/li[1]/div/div/div/form/select'))
         # select version to compare to
