@@ -30,6 +30,14 @@ class TOCTest(BaseTest, unittest.TestCase):
         # reg section should load in content area
         self.assertTrue('catharine and myriads' in self.driver.find_element_by_class_name('section-title').text)
 
+        # subpart number should display as the active title in the wayfinding subhead
+        active_title_1005_1 = self.driver.find_element_by_id('active-title').text
+        self.assertEqual(active_title_1005_1, u'\xa71005.1')
+
+        # effective date should display in the wayfinding subhead
+        effective_date = self.driver.find_element_by_class_name('effective-date').text
+        self.assertEqual(effective_date, 'Effective Date: 10/28/2012')
+
         # toc link should be highlighted
         self.assertTrue('current' in toc_link_1005_1.get_attribute('class'))
 

@@ -26,6 +26,9 @@ class InterpTest(BaseTest, unittest.TestCase):
         # should have the appropriate header
         self.assertTrue('OFFICIAL INTERPRETATION TO 2(h)' in interp_dropdown.text)
 
+        # should have the "SHOW" link
+        self.assertIn('SHOW', interp_dropdown.text)
+
         self.driver.execute_script('p10052h = document.getElementById("1005-2-h").offsetTop')
         self.driver.execute_script('window.scrollTo(0, p10052h)')
 
@@ -41,6 +44,11 @@ class InterpTest(BaseTest, unittest.TestCase):
 
         # should contain the appropriate reg section
         self.assertTrue('clicked. A finances centripetally curiousest stronghold cemeteries' in interp_text.text)
+
+        # should contain a link to the appropriate reg section
+        interp_link = self.driver.find_element_by_xpath('//*[@id="1005-2-h"]/section/section/p/a[@class="internal section-link"]')
+        self.assertEqual(self.test_url + '/1005-Subpart-Interp/2012-12121#1005-18-a', interp_link.get_attribute('href'))
+        self.assertEqual(u'See this interpretation in Supplement I', interp_link.text)
 
         self.driver.find_element_by_xpath('//*[@id="1005-2-h"]/section/header/a').click()
 
