@@ -3,8 +3,12 @@ from .base import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-STATICFILES_DIRS = (
-    root('static'),
+# Add static file directories that live in subdirectories under static.in.
+STATIC_IN = root('static.in')
+STATICFILES_DIRS += tuple(
+    os.path.join(STATIC_IN, d)
+    for d in os.listdir(STATIC_IN)
+    if os.path.isdir(os.path.join(STATIC_IN, d))
 )
 
 
