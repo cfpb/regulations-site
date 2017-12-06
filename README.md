@@ -212,10 +212,10 @@ After you create a [Sauce Labs](https://saucelabs.com) account:
 
 The CSS styles for this project refer to some font files which cannot be distributed publicly (see definitions in `regulations/static/regulations/css/less/fonts.less`). These fonts need to live under a `fonts` subdirectory of wherever static assets are served from, e.g. `/static/fonts`. There are fallback fonts defined which will be used if the desired fonts are not available.
 
-If you want to install self-hosted fonts locally for use in development, you can place the font files in `/static.in/cfgov-fonts/fonts/` and restart the local web server. If you are a CFPB employee, you can perform this step with:
+If you want to install self-hosted fonts locally for use in development, you can place the font files in repo subdirectory `static.in/cfgov-fonts/fonts/` and restart the local web server. If you are a CFPB employee, you can perform this step with:
 
 ```
-cd /static.in/ && git clone https://[GHE]/CFGOV/cfgov-fonts/
+cd static.in/ && git clone https://[GHE]/CFGOV/cfgov-fonts/
 ```
 where `[GHE]` is our GitHub Enterprise URL.
 
