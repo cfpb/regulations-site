@@ -1,0 +1,41 @@
+{% extends "regulations/landing_base.html" %}
+
+
+{% block reg_title %}
+<h2 class="banner-text">Regulation C requires many financial institutions to collect, report, and disclose information about their mortgage lending activity.</h2>
+{% endblock %}
+
+{% block reg_main_content %}
+<div class="group">
+<div class="reg-tags">
+        <h3 class="list-header">Financial institutions include:  </h3>
+        <ul class="tag-list">
+          <li>Banks</li>
+          <li>Savings associations</li>
+          <li>Credit unions</li>
+          <li>Mortgage lenders</li>
+        </ul>
+</div>
+
+<div class="reg-tags">
+        <h3 class="list-header">The regulation covers topics such as: </h3>
+        <ul class="tag-list">
+          <li>Data compilation</li>
+          <li>Reporting and disclosure</li>
+          <li>Recordkeeping</li>
+          <li>Mortgage</li>
+        </ul>
+</div>
+</div>
+{% endblock %}
+
+
+{% block additional_resources %}
+    <h4>Other resources</h4>
+
+    <ul>
+      <li><a href="http://www.consumerfinance.gov/hmda/" class="external" target="_blank">HMDA Data Tools</a></li>
+      <li><a href="http://www.ffiec.gov/hmda/" class="external" target="_blank">FFIEC HMDA Materials</a></li>
+      <li><a href="http://www.consumerfinance.gov/policy-compliance/guidance/implementation-guidance/hmda-implementation/" class="external" target="_blank">HMDA Rule Implementation</a></li>
+    </ul>
+{% endblock %}

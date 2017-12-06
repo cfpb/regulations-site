@@ -1,0 +1,50 @@
+{% extends "regulations/generic_landing.html" %}
+
+{% block reg_title %}
+<h2 class="banner-text"> Regulation {{meta.reg_letter}} - {{meta.statutory_name|title}} </h2>
+{% endblock %}
+
+{% block reg_main_content %}
+{% endblock %}
+
+{% block reg_addtl_content %}
+
+<div>
+    <p class="landing-curent-link"><a href="{% url 'chrome_section_view' reg_first_section current_version.version %}" class="go">View the currently effective Regulation {{meta.reg_letter}}</a></p>
+</div>
+
+<div class="well landing-contact-info contact">
+    <h4 class="sentence-header">We want to hear from you!</h4>
+    <p>Please take our <a class="external" href="https://www.surveymonkey.com/s/CFPB_eRegulations_survey" target="_blank">survey</a> to help the Bureau decide whether to expand and maintain eRegulations.</p>
+    <p>For questions or comments about the platform:</p>
+    <ul>
+        <li><address><a href="mailto:CFPB_eRegs_team@cfpb.gov" class="mail">CFPB_eRegs_team@cfpb.gov</a></address></li>
+    </ul>
+</div>
+
+<div class="contact">
+    <h4>Regulation inquiries</h4>
+    <p>Before submitting a question about a Bureau regulation, please review the implementation and guidance materials available on our <a class="standard" href="https://www.consumerfinance.gov/policy-compliance/guidance/implementation-guidance/">website</a>, as well as the regulations and official commentary.</p>
+    <ul>
+      <li><a class="standard" href="https://reginquiries.consumerfinance.gov/">Submit a question</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block legal_disclaimer %}
+
+<div class="disclaimer">
+    <h4 tabindex="0" class="important">Trust, but verify</h4>
+
+    <p>The CFPB’s eRegulations tool is an editorial compilation of material and not an official legal edition of the Code of Federal Regulations or the Federal Register. We have made every effort to ensure the material presented in this tool is accurate, but if you are relying on it for legal research you should consult the official editions of those sources to confirm your findings. Nothing in this tool binds the Bureau or creates any rights, benefits, or defenses, substantive or procedural, that are enforceable by any party in any manner.</p>
+</div> <!-- /.disclaimer -->
+{% endblock %}
+
+{% block reg_sidebar %}
+<div class="content-wrap">
+    <h3>Additional Resources</h3>
+
+    {% block additional_resources %}
+    {% endblock %}
+</div> <!-- /sidebar-wrap -->
+{% endblock %}
