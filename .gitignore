@@ -86,3 +86,7 @@ eregsip/
 
 # docs output
 docs/_build
+
+# Static assets #
+#################
+static.in/*/
