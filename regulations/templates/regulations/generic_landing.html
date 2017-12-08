@@ -1,3 +1,5 @@
+{% load reg_updates %}
+
 <div id="content-body" class="main-content">
     <section id="content-wrapper">
         <section data-base-version="{{ current_version.version }}" class="landing" data-page-type="landing-page" data-reg-part="{{reg_part}}">
@@ -13,6 +15,17 @@
                   <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}" class="go">View amended regulation</a></li>
               </div>
             </div><!--/.alert-->
+            {% endif %}
+
+            {% update_in_progress reg_part as reg_update_in_progress %}
+            {% if reg_update_in_progress %}
+            <div class="group">
+              <p>
+                We’re working on adding recently released updates to this regulation. In the meantime, you can see
+                <a href="https://www.consumerfinance.gov/policy-compliance/rulemaking/final-rules/"
+                  >all the final rules issued by the CFPB</a>.
+              </p>
+            </div>
             {% endif %}
 
             {% block reg_main_content %}
