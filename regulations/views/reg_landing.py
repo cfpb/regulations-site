@@ -54,7 +54,7 @@ def regulation(request, label_id):
     c = RequestContext(request, context)
 
     t = select_template([
-        'regulations/landing_%s.html' % label_id,
+        'regulations/specific/landing_%s.html' % label_id,
         'regulations/landing_base.html',
         'regulations/generic_landing.html'])
     return HttpResponse(t.render(c))

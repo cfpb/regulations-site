@@ -1,0 +1,52 @@
+{% extends "regulations/landing_base.html" %}
+
+
+{% block reg_title %}
+<h2 class="banner-text">Regulation D preempts any state law to the extent it would prohibit state housing creditors from offering certain mortgage types, with some restrictions.</h2>
+{% endblock %}
+
+{% block reg_main_content %}
+<div class="group">
+<div class="reg-tags">
+        <h3 class="list-header">State housing creditors include state-chartered or state-licensed:  </h3>
+        <ul class="tag-list">
+          <li>NCUA-insured credit unions</li>
+          <li>FDIC-insured banks</li>
+          <li>Savings banks</li>
+          <li>Mortgage lenders meeting certain criteria</li>
+        </ul>
+</div>
+
+<div class="reg-tags">
+        <h3 class="list-header">The regulation covers topics such as: </h3>
+        <ul class="tag-list">
+          <li>Alternative mortgage transactions</li>
+          <li>Fixed-rate mortgages</li>
+          <li>Fixed-rate balloon loans</li>
+          <li>Late fees</li>
+          <li>Rate increases</li>
+          <li>Prepayment penalties</li>
+          <li>Interest-only payment periods</li>
+          <li>Negative amortization</li>
+          <li>Home equity line of credit</li>
+        </ul>
+</div>
+</div>
+{% endblock %}
+
+{% block additional_resources %}
+    <h4>Ask CFPB </h4>
+    <ul>
+        <li><a href="http://www.consumerfinance.gov/askcfpb/search/?selected_facets=category_exact:mortgages" class="external" target="_blank">Mortgages</a></li>
+    </ul>
+{% endblock %}
+
+{% block legal_disclaimer %}
+  <div class="disclaimer">
+      <h4 tabindex="0" class="important">Trust, but verify</h4>
+
+      <p>The CFPB’s eRegulations tool is an editorial compilation of material and not an official legal edition of the Code of Federal Regulations or the Federal Register. We have made every effort to ensure the material presented in this tool is accurate, but if you are relying on it for legal research you should consult the official editions of those sources to confirm your findings. Nothing in this tool binds the Bureau or creates any rights, benefits, or defenses, substantive or procedural, that are enforceable by any party in any manner.</p>
+
+      <p>Unlike other regulations in this tool which contain inline official interpretations, the official commentary on Regulation D is contained in Appendix A.</p>
+  </div> <!-- /.disclaimer -->
+{% endblock %}

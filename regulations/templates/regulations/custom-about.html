@@ -1,0 +1,36 @@
+{% extends "regulations/about.html" %}
+{% load static from staticfiles %}
+
+{% block headscripts %}
+<script src="{%static "regulations/js/built/otherlibs/jquery.min.js" %}"></script>
+{% endblock %}
+
+    {% block about-timeline %}
+    <section class="about-section group" id="timeline">
+        <div class="inner-wrap">
+        <h3>Regulation timeline</h3>
+
+        <div class="content-secondary column-l">
+            <img src="{%static "regulations/img/regtimeline-01.png" %}" class="s-bump" alt="eRegulations timeline navigation screenshot">
+        </div>
+
+        <div class="content-primary column-r">
+            <p class="about-timeline">The <strong>regulation timeline</strong> shows recent revisions of the regulation organized by latest effective date.
+            Revisions are available from the CFPB’s restatement of the regulations forward.</p>
+
+            <ol class="about-ol bump">
+                <li>The <strong>date picker</strong> allows users to find what revision was effective on a specific date.</li>
+                <li><strong>Federal Register notice(s)</strong> associated with a revision are presented and organized by publication date. These links will
+                take you to the notice on the Office of the Federal Register’s website.</li>
+                <li><strong>Compare</strong> any two revisions of the regulation, word for word, by selecting a date in the menu.</li>
+            </ol>
+
+            <img src="{%static "regulations/img/regtimeline-02.png" %}" alt="eRegulations revision comparison screenshot">
+        </div>
+    </div>
+    </section>
+    {% endblock %}
+
+    {% block endscripts %}
+    <script src="{%static "regulations/js/landing.js" %}"></script>
+    {% endblock %}

@@ -2,4 +2,7 @@
 Logo image/text. Expected to be overwritten.
 {% endcomment %}
 
-<a href="#">organization logo</a>
+{% load static from staticfiles %}
+<a href="http://consumerfinance.gov">
+    <img src="{%static "regulations/img/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151">
+</a>

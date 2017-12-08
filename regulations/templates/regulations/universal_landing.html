@@ -1,0 +1,63 @@
+{% extends "regulations/generic_universal.html" %}
+{% load static from staticfiles %}
+
+{% block headscripts %}
+<script src="{%static "regulations/js/built/otherlibs/jquery.min.js" %}"></script>
+{% endblock %}
+
+{% block moreregulations %}
+<p class="sub-text">
+    <a class="go" href="http://www.consumerfinance.gov/policy-compliance/rulemaking/final-rules/code-federal-regulations/">More CFPB regulations</a>
+</p>
+{% endblock %}
+
+{% block secondcolumn_notices %}
+<div class="content-secondary column-r bump recent-rules">
+<h3 class="small-header light-header">Recently issued notices</h3>
+
+<ul class="notices"></ul>
+</div> <!-- /.secondary -->
+{% endblock %}
+
+{% block orgcontact %}
+<div class="content-secondary column-r">
+  <div class="contact well">
+    <h3 class="upper-header small-header">Contact the CFPB</h3>
+    <p>Before submitting a question about a Bureau regulation, please review the implementation and guidance materials available on our <a class="standard" href="https://www.consumerfinance.gov/policy-compliance/guidance/implementation-guidance/">website</a>, as well as the regulations and official commentary.</p>
+    <ul>
+      <li><a class="standard" href="https://reginquiries.consumerfinance.gov/">Submit a question</a></li>
+    </ul>
+    <h4 class="sentence-header">We want to hear from you!</h4>
+    <p>Please take our <a class="external" href="https://www.surveymonkey.com/s/CFPB_eRegulations_survey" target="_blank">survey</a> to help the Bureau decide whether to expand and maintain eRegulations.</p>
+    <p>For questions or comments about the platform:</p>
+    <ul>
+      <li><a href="mailto:CFPB_eRegs_team@cfpb.gov" class="mail">CFPB_eRegs_team@cfpb.gov</a></li>
+    </ul>
+  </div>
+</div> <!-- /.secondary -->
+{% endblock %}
+
+{% block legal%}
+<div class="content-primary column-l disclaimer">
+  <h3 class="upper-header xsmall-header">Trust, but verify</h3>
+
+  <p>The CFPB’s eRegulations tool is an editorial compilation of material and
+  not an official legal edition of the Code of Federal Regulations or the
+  Federal Register. We have made every effort to ensure the material presented
+  in this tool is accurate, but if you are relying on it for legal research you
+  should consult the official editions of those sources to confirm your
+  findings.  Nothing in this tool binds the Bureau or creates any rights,
+  benefits, or defenses, substantive or procedural, that are enforceable by any
+  party in any manner.</p>
+</div> <!-- /.primary -->
+{% endblock %}
+
+{% include "regulations/full_footer.html" %}
+
+{% block endscripts %}
+<script src="{%static "regulations/js/landing.js" %}"></script>
+{% endblock %}
+
+{% block preload %}
+<link rel="prefetch" src="{%static "regulations/js/built/regulations.min.js" %}" />
+{% endblock %}

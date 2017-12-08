@@ -2,6 +2,33 @@
 full_footer contains the larger footer used on the universal landing and about pages
 {% endcomment %}
 
-<footer>
-    Footer template
+<footer class="landing-footer group">
+  <div class="inner-wrap">
+    <div class="logo-wrap">
+      {% include "regulations/logo.html" %}
+    </div><!-- /.logo -->
+    <div class="footer-links">
+      <ul class="primary-footer-list">
+        <li><a href="http://www.consumerfinance.gov/" class="standard">consumerfinance.gov</a></li>
+        <li><a href="http://www.consumerfinance.gov/contact-us/" class="standard">Contact us</a></li>
+        <li><a href="http://www.consumerfinance.gov/newsroom/" class="standard">Newsroom</a></li>
+        <li><a href="http://www.consumerfinance.gov/jobs/" class="standard">Jobs</a></li>
+        <li><a href="http://www.consumerfinance.gov/open/" class="standard">Open Government</a></li>
+      </ul>
+
+      <ul class="secondary-footer-list">
+        <li><a href="http://www.consumerfinance.gov/privacy-policy/" class="standard">Privacy policy and legal notices</a></li>
+        <li><a href="http://www.consumerfinance.gov/accessibility/" class="standard">Accessibility</a></li>
+        <li><a href="http://www.consumerfinance.gov/plain-writing/" class="standard">Plain writing</a></li>
+        <li><a href="http://www.consumerfinance.gov/no-fear-act/" class="standard">No FEAR Act</a></li>
+      </ul>
+
+      <ul class="secondary-footer-list">
+        <li><a href="http://www.consumerfinance.gov/foia/" class="standard">FOIA</a></li>
+        <li><a href="http://usa.gov/" class="standard">USA.gov</a></li>
+        <li><a href="http://www.federalreserve.gov/oig/default.htm" class="standard">Office of Inspector General</a></li>
+        <li><a href="http://www.consumerfinance.gov/ombudsman/" class="standard">Ombudsman</a></li>
+      </ul>
+  </div> <!-- /.footer-links -->
+  </div> <!-- /.inner-content -->
 </footer>

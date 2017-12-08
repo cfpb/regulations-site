@@ -1,0 +1,52 @@
+{% extends "regulations/landing_base.html" %}
+
+
+{% block reg_title %}
+<h2 class="banner-text"> Regulation E protects consumers when they use electronic fund transfers.</h2>
+{% endblock %}
+
+{% block reg_main_content %}
+<div class="group">
+<div class="reg-tags">
+        <h3 class="list-header">Electronic fund transfers include: </h3>
+        <ul class="tag-list">
+            <li>ATMs</li>
+            <li>Direct Deposit</li>
+            <li>Gift cards</li>
+            <li>Overdraft</li>
+            <li>Point of sale transfers</li>
+            <li>Remittances</li>
+            <li>Telephone transfers</li>
+        </ul>
+</div>
+
+<div class="reg-tags">
+        <h3 class="list-header">The regulation covers topics such as: </h3>
+        <ul class="tag-list">
+            <li>Disclosure of fees and limits</li>
+            <li>Error correction</li>
+            <li>Liability</li>
+            <li>Preauthorized transfers</li>
+            <li>Receipts</li>
+        </ul>
+</div>
+</div>
+{% endblock %}
+
+
+
+{% block additional_resources %}
+    <h4>Ask CFPB </h4>
+    <ul>
+        <li><a href="http://www.consumerfinance.gov/askcfpb/search?selected_facets=category_exact:money-transfers" class="external" target="_blank">Money transfers</a></li>
+        <li><a href="http://www.consumerfinance.gov/askcfpb/search?selected_facets=category_exact:prepaid-cards" class="external" target="_blank">Prepaid cards</a></li>
+    </ul>
+
+    <h4>Other resources</h4>
+
+    <ul>
+        <li><a href="http://files.consumerfinance.gov/f/201308_cfpb_Intl-Money-Transfer-Small-Entity-Compliance-Guide.pdf" class="pdf" target="_blank">Small entity compliance guide</a></li>
+        <li><a href="http://files.consumerfinance.gov/f/201305_cfpb_remittance-transfer-rule_summary.pdf" class="pdf" target="_blank">Plain language summary of remittance transfer rule</a></li>
+        <li><a href="http://www.consumerfinance.gov/remittances-transfer-rule-amendment-to-regulation-e/" class="external" target="_blank">Information about the remittance transfer rule</a></li>
+    </ul>
+{% endblock %}

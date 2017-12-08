@@ -57,7 +57,6 @@ oldphantomjs/
 # Custom #
 ##########
 *.py[co]
-eregsip/
 *.swp
 local_settings.py
 dev_local_settings.py
@@ -82,7 +81,6 @@ regulations.egg-info
 build/
 dist/
 .snyk
-eregsip/
 
 # docs output
 docs/_build
