@@ -52,6 +52,8 @@ class ApiClient:
         try:
             func, args, kwargs = resolve(path, urlconf=self.regcore_urls)
         except Resolver404:
+            # This mimics the behavior of a 404 from the regcore API for
+            # an invalid request that doesn't match a URL pattern.
             return None
 
         request = self.request_factory.get(path, data=params)

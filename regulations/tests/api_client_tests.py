@@ -60,3 +60,6 @@ class ClientUsingRegCoreTests(TestCase):
     def test_request_raising_exception_returns_that_exception(self):
         with self.assertRaises(RuntimeError):
             ApiClient().get('raises-exception')
+
+    def test_unresolvable_request_returns_none(self):
+        self.assertIsNone(ApiClient().get('this-doesnt-resolve'))
