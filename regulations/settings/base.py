@@ -16,7 +16,14 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {}
+
+# This default database is required to use full Django unit test functionality.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
