@@ -1,10 +1,10 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
 
 setup(
     name="regulations",
     version_format='{tag}.dev{commitcount}+{gitsha}',
-    packages=['regulations'],
+    packages=find_packages(),
     include_package_data=True,
     setup_requires=[
         'cfgov_setup==1.2',
