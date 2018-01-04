@@ -40,7 +40,7 @@ class TreeBuilderTest(TestCase):
     def test_parent_in_tree(self):
         tree = self.build_tree()
         tree_hash = tree_builder.build_tree_hash(tree)
-        self.assertEqual(tree_hash.keys(), ['204-3', '204'])
+        self.assertItemsEqual(tree_hash.keys(), ['204-3', '204'])
 
         self.assertTrue(tree_builder.parent_in_tree('204-3', tree_hash))
 
@@ -54,7 +54,7 @@ class TreeBuilderTest(TestCase):
         }
         tree = self.build_tree()
         tree_hash = tree_builder.build_tree_hash(tree)
-        self.assertEqual(tree_hash.keys(), ['204-3', '204'])
+        self.assertItemsEqual(tree_hash.keys(), ['204-3', '204'])
 
         self.assertEqual(len(tree_hash['204']['children']), 1)
         tree_builder.add_node_to_tree(new_node, '204', tree_hash)
