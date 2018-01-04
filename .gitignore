@@ -88,3 +88,7 @@ docs/_build
 # Static assets #
 #################
 static.in/*/
+
+# Unit test / coverage reports #
+################################
+.tox/

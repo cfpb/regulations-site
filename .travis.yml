@@ -2,31 +2,15 @@ language: python
 sudo: false
 python:
 - '2.7'
-env:
-  global:
-  - secure: KUZAbAiGyBfiCePYo0MJVpu4YgWvYsPVxrhMOmN3vyEP2O1PpMcFJR/ESyK9mDCJ4Xck5Fc3sDfjRCDW2N6AdVPe313ERIAUxHEw9wFoeRuYl/0B/31KMSO/IjHmHwc1wW2vgtlLP/P3pa3vwr1jsJAhcrF3FBw0EnW5sz7OZQY=
-  - secure: SOpgDODtfEwNPWssGj5CQfQKBFxbJ1w3HZGbG/B9iMS4DtMz/8pBY9G4uzF0KLpNfsllzjOSlMmTFn0tQIE2QR+ifkuIBl+ksvC2/ZagNNRVg7mSe427WeGY4SnH1tvBbarFbJYlFgGjnRJylwyUar7RGqEQ4My2e6/PHreGx6I=
-before_script:
-- if [ "$TRAVIS_PULL_REQUEST" == false ] && [ "$SAUCE_USERNAME" ] && [ "$SAUCE_ACCESS_KEY"
-  ]; then SAUCE_OK=1; else SAUCE_OK=0; fi
-- function START_SAUCE_CONNECT { curl -L https://gist.githubusercontent.com/santiycr/5139565/raw/sauce_connect_setup.sh
-  | bash & }
-- if [ "$SAUCE_OK" == 1 ]; then START_SAUCE_CONNECT; fi;
 before_install:
 - nvm use 6
 - npm install -g grunt-cli
 install:
-- pip install -r requirements.txt
-- pip install -r requirements_test.txt
+- pip install tox
 - ./frontendbuild.sh
 script:
-- python manage.py test
-- ./dummy_api/start.sh
-- echo 'API_BASE = "http://localhost:8282/"' >> regulations/settings/local_settings.py
-- ./run_server.sh &
-- sleep 5
-- if [ "$SAUCE_OK" == 1 ]; then grunt nose; fi
-- python setup.py bdist_wheel
+- tox
+- python2.7 setup.py bdist_wheel
 deploy:
   provider: releases
   skip_cleanup: true

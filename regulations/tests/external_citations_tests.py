@@ -18,7 +18,7 @@ class ExternalCitationsTest(TestCase):
         citation = [111, 203]
         ExternalCitationLayer.generate_public_law_link(text, citation)
         parameters = generate_fdsys_href_tag.call_args[0][1]
-        self.assertEqual(parameters.keys(), ['collection', 'lawnum', 'congress', 'lawtype'])
+        self.assertItemsEqual(parameters.keys(), ['collection', 'lawnum', 'congress', 'lawtype'])
         self.assertEqual(parameters['collection'], 'plaw')
         self.assertEqual(parameters['congress'], 111)
         self.assertEqual(parameters['lawnum'], 203)
@@ -30,7 +30,7 @@ class ExternalCitationsTest(TestCase):
         citation = [12, 200]
         ExternalCitationLayer.generate_cfr_link(text, citation)
         parameters = generate_fdsys_href_tag.call_args[0][1]
-        self.assertEqual(parameters.keys(), ['titlenum', 'link-type', 'collection', 'partnum'])
+        self.assertItemsEqual(parameters.keys(), ['titlenum', 'link-type', 'collection', 'partnum'])
         self.assertEqual(parameters['titlenum'], 12)
         self.assertEqual(parameters['link-type'], 'xml')
         self.assertEqual(parameters['collection'], 'cfr')
