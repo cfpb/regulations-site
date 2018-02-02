@@ -6,7 +6,7 @@
             {% block reg_title %}
             {% endblock %}
 
-            {% update_in_progress reg_part as reg_update_in_progress %}
+            {% update_in_progress label_id as reg_update_in_progress %}
             {% if new_version or reg_update_in_progress %}
                 <div class="alert effective-alert group">
                     {% if new_version %}

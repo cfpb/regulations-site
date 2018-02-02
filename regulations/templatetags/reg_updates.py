@@ -6,7 +6,7 @@ register = template.Library()
 
 
 @register.assignment_tag
-def update_in_progress(reg_part):
+def update_in_progress(label_id):
     """Given a regulation, is there an update currently in progress?
 
     This template tag checks for a list in the Django setting
@@ -15,10 +15,11 @@ def update_in_progress(reg_part):
 
     Use it in a template like:
 
-        {% update_in_progress reg_part as reg_update_in_progress %}
+        {% update_in_progress label_id as reg_update_in_progress %}
         {% if reg_update_in_progress %}
         <p>An update is in progress to this regulation.</p>
         {% endif %}
     """
     regulation_updates = getattr(settings, 'EREGS_REGULATION_UPDATES', [])
+    reg_part = label_id.split('-')[0]
     return reg_part in regulation_updates
