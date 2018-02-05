@@ -1,3 +1,5 @@
+{% load reg_updates %}
+
 {% if sxs.label %}
     <div class="sxs-header">
         <a class="sxs-back-button" href="{{ back_url }}"><span class="cf-icon cf-icon-arrow-left-round"></span> {{sxs.header}}</a>
@@ -41,6 +43,13 @@
 
 {% if sxs.label %}
 <div id="metadata-{{sxs.label}}" class="sxs-metadata">
+
+    {% update_in_progress label_id as reg_update_in_progress %}
+    {% if reg_update_in_progress %}
+    <div class="alert effective-alert group">
+        {% include "regulations/update-alert.html" %}
+    </div>
+    {% endif %}
 
     <h3>ANALYSIS TAKEN FROM:</h3>
 

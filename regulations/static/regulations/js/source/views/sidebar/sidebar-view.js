@@ -5,6 +5,7 @@ var Backbone = require( 'backbone' );
 var RegModel = require( '../../models/reg-model' );
 var SxSList = require( './sxs-list-view' );
 var HelpView = require( './help-view' );
+var AlertView = require( './alert-view' );
 var SidebarModel = require( '../../models/sidebar-model' );
 var DefinitionModel = require( '../../models/definition-model' );
 var Breakaway = require( '../breakaway/breakaway-view' );
@@ -115,6 +116,7 @@ var SidebarView = Backbone.View.extend( {
     // new views to bind to new html
     this.childViews.sxs = new SxSList();
     this.childViews.help = new HelpView();
+    this.childViews.alert = new AlertView();
 
     this.loaded();
   },
@@ -124,6 +126,10 @@ var SidebarView = Backbone.View.extend( {
   },
 
   createPlaceholders: function() {
+    if ( this.$el.find( '#update-alert' ).length === 0 ) {
+      this.$el.append( '<section id="update-alert" class="regs-meta"></section>' );
+    }
+
     if ( this.$el.find( '#sxs-list' ).length === 0 ) {
       this.$el.append( '<section id="sxs-list" class="regs-meta"></section>' );
     }

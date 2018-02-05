@@ -1,5 +1,6 @@
 {% extends "regulations/chrome.html" %}
 {% load static from staticfiles %}
+{% load reg_updates %}
 
 {% comment %}
 Search results (and perhaps other pages) need a sidebar containing only help text
@@ -7,8 +8,17 @@ Search results (and perhaps other pages) need a sidebar containing only help tex
 
 {% block reg_sidebar %}
 
+{% update_in_progress label_id as reg_update_in_progress %}
+{% if reg_update_in_progress %}
+<section id="update-alert" class="regs-meta">
+    <div class="alert effective-alert group">
+        {% include "regulations/update-alert.html" %}
+    </div>
+</section>
+{% endif %}
+
 <section id="help" class="regs-meta">
-    {% include "regulations/generic_help.html" %} 
+    {% include "regulations/generic_help.html" %}
 
         {% comment %}
         The help-subsection block is used to offer contextual content in different
