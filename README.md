@@ -220,3 +220,16 @@ cd static.in/ && git clone https://[GHE]/CFGOV/cfgov-fonts/
 where `[GHE]` is our GitHub Enterprise URL.
 
 See the [cfgov-refresh Webfonts documentation](https://cfpb.github.io/cfgov-refresh/installation/#webfonts) for a similar setup.
+
+## Configuration
+
+### Update notices
+
+Define an `EREGS_REGULATION_UPDATES` Django setting in order to temporarily place a notice on the landing page of regulations that are in the process of being updated. For example, to turn on this notice for regulations for part 1003 and part 1005, define:
+
+```py
+# in your Django settings file
+EREGS_REGULATION_UPDATES = ['1003', '1005']
+```
+
+Content for this notice can be found in `regulations/templates/regulations/generic_landing.html`.

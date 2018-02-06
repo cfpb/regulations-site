@@ -1,18 +1,37 @@
+{% load reg_updates %}
+
 <div id="content-body" class="main-content">
     <section id="content-wrapper">
         <section data-base-version="{{ current_version.version }}" class="landing" data-page-type="landing-page" data-reg-part="{{reg_part}}">
             {% block reg_title %}
             {% endblock %}
 
-            {% if new_version %}
-            <div class="alert effective-alert group">
-              <div class="alert_effective-date">
-                  New amendments effective: <strong>{{new_version.by_date|date:"m/d/Y"}}</strong>
-              </div>
-              <div class="alert_view-link">
-                  <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}" class="go">View amended regulation</a></li>
-              </div>
-            </div><!--/.alert-->
+            {% update_in_progress reg_part as reg_update_in_progress %}
+            {% if new_version or reg_update_in_progress %}
+                <div class="alert effective-alert group">
+                    {% if new_version %}
+                        <div class="alert_section group">
+                            <div class="alert_effective-date">
+                                New amendments effective: <strong>{{new_version.by_date|date:"m/d/Y"}}</strong>
+                            </div>
+                            <div class="alert_view-link">
+                                <a href="{% url 'chrome_section_view' reg_first_section new_version.version %}" class="go">
+                                    View amended regulation
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if reg_update_in_progress %}
+                        <div class="alert_section group">
+                            <strong>
+                                We’re working on incorporating amendments to this regulation.
+                            </strong>
+                            In the meantime, please review
+                            <a href="https://www.consumerfinance.gov/policy-compliance/rulemaking/final-rules/" class="standard">
+                                CFPB rules recently published in the Federal Register</a>.
+                        </div>
+                    {% endif %}
+                </div><!--/.alert-->
             {% endif %}
 
             {% block reg_main_content %}
