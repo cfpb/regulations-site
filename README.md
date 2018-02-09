@@ -128,7 +128,7 @@ docker build . -t eregs_build`
 And run the front-end build with:
 
 ```sh
-docker run -v $(pwd):/src build_eregs ./frontendbuild.sh
+docker run -v $(pwd):/src eregs_build ./frontendbuild.sh
 ```
 
 ## Front end environment setup (native)
