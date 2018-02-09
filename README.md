@@ -118,7 +118,20 @@ If you run the application with ```env = "built"``` in your ```local_settings.py
 
 The application's UI itself uses a number of dependencies that you can see in package.json. To start, we are going to be concerned with the foundations of the environment:
 
-## Front end environment setup
+## Front end setup with Docker
+
+If you have Docker installed, you can create an image for running the front-end build using:
+
+```sh
+docker build . -t eregs_build`
+```
+And run the front-end build with:
+
+```sh
+docker run -v $(pwd):/src build_eregs ./frontendbuild.sh
+```
+
+## Front end environment setup (native)
 
 ### Node/npm
 
