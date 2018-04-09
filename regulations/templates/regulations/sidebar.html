@@ -1,4 +1,14 @@
 {% load static from staticfiles %}
+{% load reg_updates %}
+
+{% update_in_progress label_id as reg_update_in_progress %}
+{% if reg_update_in_progress %}
+<section id="update-alert" class="regs-meta">
+    <div class="alert effective-alert group">
+        {% include "regulations/update-alert.html" %}
+    </div>
+</section>
+{% endif %}
 
 <section id="sxs-list" class="regs-meta">
     <header id="sxs-expandable-header" class="expandable sxs-expand group" data-expandable="sxs-expandable">

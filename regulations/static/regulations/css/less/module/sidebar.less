@@ -435,6 +435,26 @@ Styles for the UI help slide down
 }
 
 /*
+Sidebar alert
+===============
+The alert that appears in the sidebar of any reg we're working on updating
+*/
+
+.sidebar-inner {
+    .alert {
+        border-top: none;
+        border-right: none;
+        border-bottom: 1px solid @gray-20;
+        border-left: none;
+    }
+
+    .effective-alert {
+        padding-left: 12px;
+        padding-right: 25px;
+    }
+}
+
+/*
 Small screens
 ---------------
 */
@@ -476,6 +496,13 @@ Small screens
 
     #sxs-list {
         border-top: 1px solid @neutral-40;
+    }
+
+    .sidebar-inner {
+        .alert {
+            border-top: 1px solid @gray-20;
+            border-bottom: none;
+        }
     }
 
     /*
@@ -529,6 +556,14 @@ Small screens
             a {
                 margin-right: 10px;
             }
+        }
+    }
+
+    /* Match sidebar alert margins to the expandables */
+    .sidebar-inner {
+        .effective-alert {
+            padding-left: 10px;
+            padding-right: 10px;
         }
     }
 }
