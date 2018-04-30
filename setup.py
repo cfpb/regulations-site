@@ -14,7 +14,7 @@ setup(
     install_requires=[
         'Django>=1.8,<1.9',
         'lxml==4.1.0',
-        'requests==2.12.4',
+        'requests==2.18.4',
     ],
     classifiers=[
         'Framework :: Django',
