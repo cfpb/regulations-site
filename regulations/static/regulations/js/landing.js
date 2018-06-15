@@ -42,7 +42,7 @@ var notices = {
                 var url = results[i].html_url,
                     title = results[i].title;
                 notices.config.$container.append(
-                  '<li><a class="external" href="' + url + '" target="_blank">' + title + '</a></li>'
+                  '<li><a class="external" href="' + url + '" target="_blank" rel="noopener noreferrer">' + title + '</a></li>'
                 );
             }
 

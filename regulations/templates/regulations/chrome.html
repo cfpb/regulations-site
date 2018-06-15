@@ -102,7 +102,7 @@
                             <h5 class="final-rule">Final Rule</h5>
                             <ul class="rule-list">
                             {% for notice in version.notices %}
-                                <li><a class="fr-notice external" href="{{notice.fr_url}}" ria-label="Link opens in a new window" target="_blank">Published {{notice.publication_date|date}}</a></li>
+                                <li><a class="fr-notice external" href="{{notice.fr_url}}" ria-label="Link opens in a new window" target="_blank" rel="noopener noreferrer">Published {{notice.publication_date|date}}</a></li>
                             {% endfor %}
                                 </ul>
                                 <div class="diff-selector group">
