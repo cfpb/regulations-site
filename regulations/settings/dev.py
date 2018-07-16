@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 # Add static file directories that live in subdirectories under static.in.
 STATIC_IN = root('static.in')

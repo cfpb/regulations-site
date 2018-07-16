@@ -3,6 +3,14 @@ Logo image/text. Expected to be overwritten.
 {% endcomment %}
 
 {% load static from staticfiles %}
-<a href="http://consumerfinance.gov">
-    <img src="{%static "regulations/img/logo.png" %}" class="logo" alt="Consumer Financial Protection Bureau" width="151">
+
+<a href="https://www.consumerfinance.gov/">
+    <img class="logo"
+         src="{% static 'regulations/img/bcfp-logo_160x34.png' %}"
+         srcset="{% static 'regulations/img/bcfp-logo_160x34.png' %} 160w,
+                 {% static 'regulations/img/bcfp-logo_160x34@2x.png' %} 320w,
+                 {% static 'regulations/img/bcfp-logo_160x34@3x.png' %} 480w,
+                 {% static 'regulations/img/bcfp-logo_160x34@4x.png' %} 640w"
+         sizes="160px"
+         alt="Bureau of Consumer Financial Protection">
 </a>
