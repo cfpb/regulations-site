@@ -1,3 +1,6 @@
+# :warning: THIS REPO IS DEPRECATED (12/3/2018) :warning:
+Please migrate to using [cfgov-refresh](https://github.com/cfpb/cfgov-refresh).
+
 regulations-site
 ================
 
